@@ -16,10 +16,10 @@ void log(const char file[], int line, const char* format, ...);
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
 #define HAVE_M_PI
-static float LerpNum(float a, float b, float t) 
-{
-	return a + (b - a) * t;
-}
+//static float LerpNum(float a, float b, float t) 
+//{
+//	return a + (b - a) * t;
+//}
 
 typedef unsigned int uint;
 
@@ -30,13 +30,17 @@ enum update_status
 	UPDATE_ERROR
 };
 
-// Configuration -----------
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 1024
+// Configuration ----------- ASK: Should we load this from an XML?
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
+
+#define MIN_WIDTH 960
+#define MIN_HEIGHT 540
+
 #define SCREEN_SIZE 1
 #define WIN_FULLSCREEN false
 #define WIN_RESIZABLE true
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
-#define VSYNC true	
-#define TITLE "Racing Game: NP CUP"
+#define VSYNC false
+#define TITLE "Diamond Engine v2020.0.01"
