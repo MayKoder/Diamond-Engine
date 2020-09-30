@@ -6,6 +6,9 @@
 
 M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+
+	windows.push_back(new W_Configuration());
+
 }
 
 M_Editor::~M_Editor()
@@ -35,11 +38,10 @@ bool M_Editor::Init()
 	style->Colors[ImGuiCol_MenuBarBg] = ImVec4(1.f, 1.f, 1.f, 1.f);
 
 	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
-	ImGuiStyle& style2 = ImGui::GetStyle();
 	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 	{
-		style2.WindowRounding = 0.0f;
-		style2.Colors[ImGuiCol_WindowBg].w = 1.0f;
+		style->WindowRounding = 0.0f;
+		style->Colors[ImGuiCol_WindowBg].w = 1.0f;
 	}
 
 
@@ -74,19 +76,12 @@ void M_Editor::Draw()
 	//ImGui::SetNextWindowPos(ImVec2(main_viewport->GetWorkPos().x + 650, main_viewport->GetWorkPos().y + 20), ImGuiCond_FirstUseEver);
 	//ImGui::SetNextWindowSize(ImVec2(550, 680), ImGuiCond_FirstUseEver);
 
-	ImGui::Begin("Configuration", NULL);
-	ImGui::BulletText("ImGui  v%s", ImGui::GetVersion());
-
-
-
-	ImGui::End();
-
-	ImGui::Begin("Configuration 2", NULL);
-	ImGui::BulletText("ImGui  v%s", ImGui::GetVersion());
-
-
-
-	ImGui::End();
+	for (unsigned int i = 0; i < windows.size(); i++)
+	{
+		if (windows[i]->active) {
+			windows[i]->Draw();
+		}
+	}
 
 	//Rendering
 	ImGui::Render();

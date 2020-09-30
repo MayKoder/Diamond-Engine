@@ -43,4 +43,4 @@ enum update_status
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC false
-#define TITLE "Diamond Engine v2020.0.01"
+#define TITLE "Diamond Engine v"

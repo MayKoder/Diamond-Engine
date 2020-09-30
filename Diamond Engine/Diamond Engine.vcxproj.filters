@@ -25,6 +25,18 @@
     <Filter Include="Sources\Tools\MMath">
       <UniqueIdentifier>{df17df8b-ee01-4043-8b01-4df44a76c89d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Editor">
+      <UniqueIdentifier>{75a56bd2-2f1a-414c-a33f-34ff4b8dd012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Editor\Windows">
+      <UniqueIdentifier>{42c4372c-1c8f-42f2-b33a-54b02dd58a09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Editor\Windows\Base">
+      <UniqueIdentifier>{b095445e-5215-4de2-a6ef-15a348ff7cae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Editor\Windows\Derived">
+      <UniqueIdentifier>{3ddf461c-663f-41e9-afb5-dba7922c1012}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -96,6 +108,12 @@
     <ClInclude Include="Source Code\OpenGL.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\Window.h">
+      <Filter>Sources\Editor\Windows\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\W_Configuration.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -157,6 +175,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\MaykMath.cpp">
       <Filter>Sources\Tools\MMath</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Window.cpp">
+      <Filter>Sources\Editor\Windows\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\W_Configuration.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "EngineVersion.h"
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -81,9 +82,8 @@ bool ModuleWindow::Init()
 	}
 
 	//Title Init
-	char title[80];
-	sprintf_s(title, "Racing Game: NP CUP");
-	SetTitle(title);
+	const std::string title(TITLE + EngineVersion::GetVersion());
+	SetTitle(title.c_str());
 
 	return ret;
 }
