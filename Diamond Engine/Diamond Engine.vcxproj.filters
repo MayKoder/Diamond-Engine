@@ -60,9 +60,6 @@
     <ClInclude Include="Source Code\ModuleCamera3D.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Secret_Engine\Motors\Mayk Engine\Source Code\MaykMath.h">
-      <Filter>Sources\Tools\MMath</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\EngineVersion.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
@@ -89,6 +86,15 @@
     </ClInclude>
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h">
       <Filter>Externals\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\M_Editor.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MaykMath.h">
+      <Filter>Sources\Tools\MMath</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\OpenGL.h">
+      <Filter>Sources\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -125,9 +131,6 @@
     <ClCompile Include="Source Code\ModuleCamera3D.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Secret_Engine\Motors\Mayk Engine\Source Code\MaykMath.cpp">
-      <Filter>Sources\Tools\MMath</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\EngineVersion.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
@@ -148,6 +151,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_draw.cpp">
       <Filter>Externals\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\M_Editor.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MaykMath.cpp">
+      <Filter>Sources\Tools\MMath</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -26,12 +26,11 @@ public:
 	
 	vec3 X, Y, Z, Position, Reference;
 
-	bool followCar;
+	Plane ground;
 
 private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 	mat4x4 followPoint;
-public:
-	vec3 cameraOffset;
+
 };

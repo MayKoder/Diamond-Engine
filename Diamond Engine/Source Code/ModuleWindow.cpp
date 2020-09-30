@@ -57,6 +57,17 @@ bool ModuleWindow::Init()
 
 		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
+		SDL_DisplayMode DM;
+		SDL_GetCurrentDisplayMode(0, &DM);
+		auto sWidth = DM.w;
+		auto sHeight = DM.h;
+
+		SDL_SetWindowSize(window, MIN_WIDTH, MIN_HEIGHT);
+		SDL_SetWindowPosition(window, (sWidth / 2) - (MIN_WIDTH / 2), (sHeight / 2) - (MIN_HEIGHT / 2));
+
+		SDL_SetWindowMinimumSize(window, MIN_WIDTH, MIN_HEIGHT);
+		SDL_MaximizeWindow(window);
+
 		if(window == NULL)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());

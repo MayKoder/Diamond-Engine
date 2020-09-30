@@ -15,7 +15,7 @@ enum main_states
 	MAIN_EXIT
 };
 
-int main(int argc, char ** argv)
+int main(int argc, char** argv)
 {
 	LOG("Starting game '%s'...", TITLE);
 
@@ -60,10 +60,10 @@ int main(int argc, char ** argv)
 				state = MAIN_EXIT;
 			}
 
-			if (update_return == UPDATE_STOP)
+			if (update_return == UPDATE_STOP || App->GetExitState())
 				state = MAIN_FINISH;
 		}
-			break;
+		break;
 
 		case MAIN_FINISH:
 

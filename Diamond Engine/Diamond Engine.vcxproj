@@ -89,7 +89,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Secret_Engine\Motors\Mayk Engine\Source Code\MaykMath.h" />
     <ClInclude Include="Source Code\Application.h" />
     <ClInclude Include="Source Code\Color.h" />
     <ClInclude Include="Source Code\EngineVersion.h" />
@@ -103,16 +102,18 @@
     <ClInclude Include="Source Code\External Libraries\ImGui\imstb_truetype.h" />
     <ClInclude Include="Source Code\glmath.h" />
     <ClInclude Include="Source Code\Globals.h" />
+    <ClInclude Include="Source Code\MaykMath.h" />
     <ClInclude Include="Source Code\Module.h" />
     <ClInclude Include="Source Code\ModuleCamera3D.h" />
     <ClInclude Include="Source Code\ModuleInput.h" />
     <ClInclude Include="Source Code\ModuleRenderer3D.h" />
     <ClInclude Include="Source Code\ModuleWindow.h" />
+    <ClInclude Include="Source Code\M_Editor.h" />
+    <ClInclude Include="Source Code\OpenGL.h" />
     <ClInclude Include="Source Code\Primitive.h" />
     <ClInclude Include="Source Code\Timer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Secret_Engine\Motors\Mayk Engine\Source Code\MaykMath.cpp" />
     <ClCompile Include="Source Code\Application.cpp" />
     <ClCompile Include="Source Code\Color.cpp" />
     <ClCompile Include="Source Code\EngineVersion.cpp" />
@@ -125,10 +126,12 @@
     <ClCompile Include="Source Code\glmath.cpp" />
     <ClCompile Include="Source Code\log.cpp" />
     <ClCompile Include="Source Code\Main.cpp" />
+    <ClCompile Include="Source Code\MaykMath.cpp" />
     <ClCompile Include="Source Code\ModuleCamera3D.cpp" />
     <ClCompile Include="Source Code\ModuleInput.cpp" />
     <ClCompile Include="Source Code\ModuleRenderer3D.cpp" />
     <ClCompile Include="Source Code\ModuleWindow.cpp" />
+    <ClCompile Include="Source Code\M_Editor.cpp" />
     <ClCompile Include="Source Code\Primitive.cpp" />
     <ClCompile Include="Source Code\Timer.cpp" />
   </ItemGroup>

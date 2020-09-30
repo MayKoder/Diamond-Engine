@@ -1,9 +1,9 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
-#include "SDL\include\SDL_opengl.h"
-#include <gl/GL.h>
-#include <gl/GLU.h>
+#include "MaykMath.h"
+
+#include"OpenGL.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -11,7 +11,7 @@
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	cube.axis = true;
+
 }
 
 // Destructor
@@ -24,12 +24,26 @@ bool ModuleRenderer3D::Init()
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
 	
+	//ASK: Can i do this inside the MM namespace?
+	MaykMath::Init();
+
 	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
 	if(context == NULL)
 	{
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
+	}
+
+	GLenum error = glewInit();
+	if (error != GL_NO_ERROR)
+	{
+		LOG("Error initializing glew library! %s", SDL_GetError());
+		ret = false;
+	}
+	else
+	{
+		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
 	}
 	
 	if(ret == true)
@@ -66,7 +80,7 @@ bool ModuleRenderer3D::Init()
 		glClearDepth(1.0f);
 		
 		//Initialize clear color
-		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glClearColor(0.2f, 0.2f, 0.2f, 1.f);
 
 		//Check for error
 		error = glGetError();
@@ -112,9 +126,15 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	SDL_GL_SwapWindow(App->window->window);
 
-	cube.Render();
+
+
+	//Render debug geometry
+	//Draw editor
+	App->moduleEditor->Draw();
+	//Swap buffers
+
+	SDL_GL_SwapWindow(App->window->window);
 
 	return UPDATE_CONTINUE;
 }

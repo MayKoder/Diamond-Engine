@@ -4,12 +4,6 @@
 #include "glmath.h"
 #include"Primitive.h"
 
-//ImGui Includes
-#include "ImGui/imgui.h"
-#include "ImGui/imgui_internal.h"
-#include "ImGui/imgui_impl_sdl.h"
-#include "ImGui/imgui_impl_opengl3.h"
-
 #define MAX_LIGHTS 8
 
 class ModuleRenderer3D : public Module
@@ -30,6 +24,4 @@ public:
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
-
-	Cube cube;
 };

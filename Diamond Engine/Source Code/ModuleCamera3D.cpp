@@ -10,8 +10,7 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	Y = vec3(0.0f, 1.0f, 0.0f);
 	Z = vec3(0.0f, 0.0f, 1.0f);
 
-	cameraOffset = { 0.f, 4.f, 0.f };
-	Position = vec3(0.0f, 0.0f, 5.0f);
+	Position = vec3(5.0f, 2.0f, 5.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
 }
 
@@ -23,7 +22,12 @@ bool ModuleCamera3D::Start()
 {
 	LOG("Setting up the camera");
 	bool ret = true;
-	followCar = true;
+
+	ground.axis = true;
+	ground.color = White;
+
+
+	LookAt(vec3(0, 0, 0));
 
 	return ret;
 }
@@ -40,8 +44,6 @@ bool ModuleCamera3D::CleanUp()
 update_status ModuleCamera3D::Update(float dt)
 {
 
-	if (!followCar) 
-	{
 		vec3 newPos(0, 0, 0);
 		float speed = 3.0f * dt;
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
@@ -96,9 +98,13 @@ update_status ModuleCamera3D::Update(float dt)
 
 			Position = Reference + Z * length(Position);
 		}
-	}
-	
+
 	CalculateViewMatrix();
+
+	Plane p(0, 1, 0, 0);
+	p.axis = true;
+	p.Render();
+
 
 	return UPDATE_CONTINUE;
 }
