@@ -42,7 +42,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
@@ -102,6 +102,7 @@
     <ClInclude Include="Source Code\External Libraries\ImGui\imstb_truetype.h" />
     <ClInclude Include="Source Code\glmath.h" />
     <ClInclude Include="Source Code\Globals.h" />
+    <ClInclude Include="Source Code\Light.h" />
     <ClInclude Include="Source Code\MaykMath.h" />
     <ClInclude Include="Source Code\Module.h" />
     <ClInclude Include="Source Code\ModuleCamera3D.h" />
@@ -126,6 +127,7 @@
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source Code\glmath.cpp" />
+    <ClCompile Include="Source Code\Light.cpp" />
     <ClCompile Include="Source Code\log.cpp" />
     <ClCompile Include="Source Code\Main.cpp" />
     <ClCompile Include="Source Code\MaykMath.cpp" />

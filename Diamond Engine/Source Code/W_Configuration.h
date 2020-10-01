@@ -15,6 +15,8 @@ public:
 
 	void Draw() override;
 
+	bool displayWindow;
+
 };
 
 

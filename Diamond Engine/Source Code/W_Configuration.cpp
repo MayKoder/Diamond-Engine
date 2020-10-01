@@ -1,7 +1,7 @@
 #include "W_Configuration.h"
 
 
-W_Configuration::W_Configuration()
+W_Configuration::W_Configuration() : displayWindow(false)
 {
 	name = "Configuration";
 }
@@ -16,9 +16,18 @@ void W_Configuration::Draw()
 	
 	if (ImGui::CollapsingHeader("Application"))
 	{
-
+		if (ImGui::Button("Display example")) 
+		{
+			displayWindow = !displayWindow;
+		}
 	}
 
+	if (displayWindow) 
+	{
+		ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_MenuBarBg, ImVec4(0.f, 0.f, 0.f, 1.f));
+		ImGui::ShowDemoWindow();
+		ImGui::PopStyleColor();
+	}
 
 	ImGui::End();
 }
