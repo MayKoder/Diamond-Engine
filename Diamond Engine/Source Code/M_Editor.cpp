@@ -7,7 +7,10 @@
 M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 
-	windows.push_back(new W_Configuration());
+	//reserve() does not work with [] operator
+	windows = std::vector<Window*>(static_cast<unsigned int>(EditorWindow::MAX), nullptr);
+
+	windows[static_cast<unsigned int>(EditorWindow::CONFIGURATION)] = new W_Configuration();
 
 }
 

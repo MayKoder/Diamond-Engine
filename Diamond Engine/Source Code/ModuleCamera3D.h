@@ -22,15 +22,22 @@ private:
 
 	void CalculateViewMatrix();
 
+	void OrbitalRotation(vec3 center);
+	void FreeRotation();
+	void FocusCamera(vec3 center, float offset);
+
 public:
 	
 	vec3 X, Y, Z, Position, Reference;
 
-	Plane ground;
+	float mouseSensitivity;
+	float cameraSpeed;
+
 
 private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 	mat4x4 followPoint;
+	Plane ground;
 
 };

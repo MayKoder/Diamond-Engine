@@ -11,6 +11,11 @@
 
 #include "W_Configuration.h"
 
+enum class EditorWindow {
+	CONFIGURATION,
+	MAX
+};
+
 class M_Editor : public Module
 {
 

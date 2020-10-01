@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ModuleCamera3D.h"
 
-ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled), mouseSensitivity(0.50f), cameraSpeed(1.f)
 {
 	CalculateViewMatrix();
 
@@ -10,7 +10,7 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	Y = vec3(0.0f, 1.0f, 0.0f);
 	Z = vec3(0.0f, 0.0f, 1.0f);
 
-	Position = vec3(5.0f, 2.0f, 5.0f);
+	Position = vec3(5.0f, 3.0f, 5.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
 }
 
@@ -27,7 +27,7 @@ bool ModuleCamera3D::Start()
 	ground.color = White;
 
 
-	LookAt(vec3(0, 0, 0));
+	LookAt(vec3(0.f, 0.f, 0.f));
 
 	return ret;
 }
@@ -44,60 +44,59 @@ bool ModuleCamera3D::CleanUp()
 update_status ModuleCamera3D::Update(float dt)
 {
 
-		vec3 newPos(0, 0, 0);
-		float speed = 3.0f * dt;
-		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-			speed = 8.0f * dt;
+	vec3 newPos(0, 0, 0);
+	float speed = cameraSpeed * dt;
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		speed *= 2.f;
 
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed * 20;
-		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed * 20;
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
+	//if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
 
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) newPos -= Z * speed * 20;
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) newPos += Z * speed * 20;
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
 
 
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) newPos -= X * speed * 20;
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) newPos += X * speed * 20;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
 
-		Position += newPos;
-		Reference += newPos;
+	if (App->input->GetMouseZ() != 0)
+	{
+		newPos += Z * speed * -App->input->GetMouseZ();
+	}
 
-		// Mouse motion ----------------
+	// Mouse motion ----------------
 
-		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
-		{
-			int dx = -App->input->GetMouseXMotion();
-			int dy = -App->input->GetMouseYMotion();
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN /*|| App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN*/)
+	{
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+		SDL_WarpMouseInWindow(App->window->window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	}
+	else if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_UP /*|| App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP*/)
+	{
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+		SDL_WarpMouseInWindow(App->window->window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	}
 
-			float Sensitivity = 0.25f;
+	//ASK: Is this really the best way to rotate the camera? Maybe i should use a matrix
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	{
+		FreeRotation();
+	}
 
-			Position -= Reference;
+	//Rotate around 0,0,0
+	//ASK: Should i also include Right alt?
+	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+	{
+		OrbitalRotation(vec3(0, 0, 0));
+	}
 
-			if (dx != 0)
-			{
-				float DeltaX = (float)dx * Sensitivity;
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		FocusCamera(vec3(0.f, 5.f, 0.f), 10.f);
+	}
 
-				X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-				Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-				Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			}
-
-			if (dy != 0)
-			{
-				float DeltaY = (float)dy * Sensitivity;
-
-				Y = rotate(Y, DeltaY, X);
-				Z = rotate(Z, DeltaY, X);
-
-				if (Y.y < 0.0f)
-				{
-					Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
-					Y = cross(Z, X);
-				}
-			}
-
-			Position = Reference + Z * length(Position);
-		}
+	Position += newPos;
+	Reference += newPos;
 
 	CalculateViewMatrix();
 
@@ -161,4 +160,91 @@ void ModuleCamera3D::CalculateViewMatrix()
 {
 	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
 	ViewMatrixInverse = inverse(ViewMatrix);
+}
+
+void ModuleCamera3D::OrbitalRotation(vec3 center)
+{
+	int dx = -App->input->GetMouseXMotion();
+	int dy = -App->input->GetMouseYMotion();
+
+	if (dx != 0)
+	{
+		float DeltaX = (float)dx * (mouseSensitivity * 0.5f);
+
+		//Get vector diference
+		vec3 ref = Position - center;
+
+		//Rotate diference
+		ref = rotate(ref, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+
+		//Move camera position to new diference
+		Position = ref;
+
+		//Look at object
+	}
+	if (dy != 0)
+	{
+
+		//BUG: Weird bug when looking at the same Y
+		float DeltaY = (float)dy * (mouseSensitivity * 0.5f);
+
+		vec3 ref = Position - center;
+		ref = rotate(ref, DeltaY, X);
+		Position = ref;
+	}
+
+	LookAt(center);
+}
+
+void ModuleCamera3D::FreeRotation()
+{
+	int dx = -App->input->GetMouseXMotion();
+	int dy = -App->input->GetMouseYMotion();
+
+	//Position -= Reference;
+
+	/*vec3 positionSave = Position;
+	Position = vec3(0.f, 0.f, 0.f);*/
+
+	if (dx != 0)
+	{
+		float DeltaX = (float)dx * mouseSensitivity;
+
+		vec3 rotationvector = vec3(0.0f, 1.0f, 0.0f);
+		X = rotate(X, DeltaX, rotationvector);
+		Y = rotate(Y, DeltaX, rotationvector);
+		Z = rotate(Z, DeltaX, rotationvector);
+
+	}
+
+	if (dy != 0)
+	{
+		float DeltaY = (float)dy * mouseSensitivity;
+
+		Y = rotate(Y, DeltaY, X);
+		Z = rotate(Z, DeltaY, X);
+
+		if (Y.y < 0.0f)
+		{
+			Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+			Y = cross(Z, X);
+		}
+	}
+
+	/*Position = positionSave;*/
+	//Position = Reference + Z * length(Position);
+}
+
+void ModuleCamera3D::FocusCamera(vec3 center, float offset)
+{
+
+	Position = center;
+
+	float mod = sqrt(pow(Z.x, 2) + pow(Z.y, 2) + pow(Z.z, 2));
+	vec3 normal = Z / mod;
+
+	Position += (normal) * offset;
+
+
+
 }
