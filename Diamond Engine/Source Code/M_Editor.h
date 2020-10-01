@@ -23,13 +23,13 @@ public:
 	M_Editor(Application* app, bool start_enabled = true);
 	~M_Editor();
 
-	bool Init();
-	bool Start();
+	bool Init() override;
+	bool Start() override;
 
 	void Draw();
 	void DrawMenuBar();
 
-	bool CleanUp();
+	bool CleanUp() override;
 
 private:
 

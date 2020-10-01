@@ -182,4 +182,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	App->window->s_width = width;
+	App->window->s_height = height;
 }

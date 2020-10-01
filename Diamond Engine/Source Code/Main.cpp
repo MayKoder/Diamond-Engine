@@ -15,6 +15,7 @@ enum main_states
 	MAIN_EXIT
 };
 
+//ASK IMPORTANT: Should the .sln file be placed outside the engine folder? 
 int main(int argc, char** argv)
 {
 	LOG("Starting game '%s'...", TITLE);

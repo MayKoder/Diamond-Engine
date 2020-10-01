@@ -37,6 +37,13 @@ void W_Configuration::Draw()
 
 	}
 
+	for (unsigned int i = 0; i < Engine->list_modules.size(); ++i)
+	{
+		Engine->list_modules[i]->OnGUI();
+	}
+
+	ImGui::End();
+
 	if (displayWindow) 
 	{
 		ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_MenuBarBg, ImVec4(0.f, 0.f, 0.f, 1.f));
@@ -44,7 +51,6 @@ void W_Configuration::Draw()
 		ImGui::PopStyleColor();
 	}
 
-	ImGui::End();
 }
 
 void W_Configuration::UpdateInfoLogs()

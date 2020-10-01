@@ -22,11 +22,12 @@ public:
 	ModuleCamera3D* camera;
 	M_Editor* moduleEditor;
 
+	std::vector<Module*> list_modules;
+
 private:
 
 	Timer	ms_timer;
 	float	dt;
-	std::vector<Module*> list_modules;
 	bool quitApplicationState;
 
 public:

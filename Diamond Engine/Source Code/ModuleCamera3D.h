@@ -9,9 +9,11 @@ public:
 	ModuleCamera3D(Application* app, bool start_enabled = true);
 	~ModuleCamera3D();
 
-	bool Start();
-	update_status Update(float dt);
-	bool CleanUp();
+	bool Start() override;
+	update_status Update(float dt) override;
+	bool CleanUp() override;
+
+	void OnGUI() override;
 
 	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
 	void LookAt(const vec3 &Spot);
@@ -39,5 +41,7 @@ private:
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 	mat4x4 followPoint;
 	Plane ground;
+
+	vec3 cameraMovement;
 
 };

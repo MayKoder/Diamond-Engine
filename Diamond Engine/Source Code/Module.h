@@ -47,4 +47,9 @@ public:
 		return true; 
 	}
 
+	virtual void OnGUI() 
+	{
+
+	}
+
 };

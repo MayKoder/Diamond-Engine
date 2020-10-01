@@ -3,7 +3,7 @@
 #include "ModuleWindow.h"
 #include "EngineVersion.h"
 
-ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled), s_width(0), s_height(0), brightness(1.f)
 {
 	window = NULL;
 	screen_surface = NULL;
@@ -102,6 +102,34 @@ bool ModuleWindow::CleanUp()
 	//Quit SDL subsystems
 	SDL_Quit();
 	return true;
+}
+
+void ModuleWindow::OnGUI()
+{
+	if (ImGui::CollapsingHeader("Window"))
+	{
+		if (ImGui::SliderFloat("Brightness", &brightness, 0.f, 1.f))
+		{
+			SDL_SetWindowBrightness(window, brightness);
+		}
+		if (ImGui::SliderInt("Width", &s_width, 1, 7680))
+		{
+			SDL_SetWindowSize(window, s_width, s_height);
+			Engine->renderer3D->OnResize(s_width, s_height);
+		}
+		if (ImGui::SliderInt("Height", &s_height, 1, 4320))
+		{
+			SDL_SetWindowSize(window, s_width, s_height);
+			Engine->renderer3D->OnResize(s_width, s_height);
+		}
+
+		SDL_DisplayMode current;
+		int i = 0;
+		SDL_GetCurrentDisplayMode(i, &current);
+		ImGui::Text("Refresh rate: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d", current.refresh_rate);
+
+		ImGui::NewLine();
+	}
 }
 
 void ModuleWindow::SetTitle(const char* title)

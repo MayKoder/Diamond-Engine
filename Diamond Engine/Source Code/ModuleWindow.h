@@ -15,8 +15,10 @@ public:
 	// Destructor
 	virtual ~ModuleWindow();
 
-	bool Init();
-	bool CleanUp();
+	bool Init() override;
+	bool CleanUp() override;
+
+	void OnGUI() override;
 
 	void SetTitle(const char* title);
 
@@ -26,6 +28,11 @@ public:
 
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
+
+	int s_width;
+	int s_height;
+	float brightness;
+
 };
 
 #endif // __ModuleWindow_H__

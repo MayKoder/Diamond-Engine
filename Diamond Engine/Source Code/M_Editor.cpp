@@ -157,7 +157,7 @@ void M_Editor::DrawMenuBar()
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
 			if (ImGui::MenuItem("MayKoder Github"))
 			{
-				ShellExecute(0, 0, "https://github.com/MayKoder", 0, 0, SW_SHOW);
+				ShellExecute(0, 0, "https://github.com/MayKoder/Diamond-Engine", 0, 0, SW_SHOW);
 			}
 			ImGui::PopStyleColor(1);
 			ImGui::EndMenu();
