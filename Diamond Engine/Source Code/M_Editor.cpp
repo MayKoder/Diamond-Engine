@@ -3,6 +3,10 @@
 #include "M_Editor.h"
 #include "MaykMath.h"
 
+//Window types
+#include "W_Configuration.h"
+#include "W_Console.h"
+
 
 M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -11,6 +15,7 @@ M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_ena
 	windows = std::vector<Window*>(static_cast<unsigned int>(EditorWindow::MAX), nullptr);
 
 	windows[static_cast<unsigned int>(EditorWindow::CONFIGURATION)] = new W_Configuration();
+	windows[static_cast<unsigned int>(EditorWindow::CONSOLE)] = new W_Console();
 
 }
 
@@ -115,6 +120,8 @@ bool M_Editor::CleanUp()
 	return true;
 }
 
+//Will draw the menu bar if the function call is placed 
+//between NewFrame() and Render()
 void M_Editor::DrawMenuBar()
 {
 	//UNITY: File edit assets gameobject component window help
@@ -171,3 +178,14 @@ void M_Editor::DrawMenuBar()
 	ImGui::PopStyleColor(1);
 }
 
+
+//Returns nullptr if the window doesn't exist in the editor.
+//Use dynamic_cast to convert from Window* to the type of editor window 
+//pointer you want to use
+Window* M_Editor::GetEditorWindow(EditorWindow type)
+{
+	unsigned int vecPosition = static_cast<unsigned int>(type);
+
+	//SDL_assert(vecPosition < windows.size());
+	return (vecPosition < windows.size()) ? windows[vecPosition] : nullptr;
+}

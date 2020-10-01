@@ -9,10 +9,9 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
-#include "W_Configuration.h"
-
 enum class EditorWindow {
 	CONFIGURATION,
+	CONSOLE,
 	MAX
 };
 
@@ -30,6 +29,8 @@ public:
 	void DrawMenuBar();
 
 	bool CleanUp() override;
+
+	Window* GetEditorWindow(EditorWindow type);
 
 private:
 

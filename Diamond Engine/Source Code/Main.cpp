@@ -16,6 +16,7 @@ enum main_states
 };
 
 //ASK IMPORTANT: Should the .sln file be placed outside the engine folder? 
+//ASK IMPORTANT: Is vector iteration faster with iterators or via index?
 int main(int argc, char** argv)
 {
 	LOG("Starting game '%s'...", TITLE);
