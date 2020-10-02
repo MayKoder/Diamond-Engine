@@ -33,6 +33,11 @@ public:
 	int s_height;
 	float brightness;
 
+	bool fullScreen;
+	bool borderless;
+	bool resizable;
+	bool fullScreenDesktop;
+
 };
 
 #endif // __ModuleWindow_H__

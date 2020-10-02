@@ -4,6 +4,7 @@
 #include "EngineVersion.h"
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled), s_width(0), s_height(0), brightness(1.f)
+, fullScreen(false), borderless(false), resizable(true), fullScreenDesktop(false)
 {
 	window = NULL;
 	screen_surface = NULL;
@@ -36,22 +37,22 @@ bool ModuleWindow::Init()
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-		if(WIN_FULLSCREEN == true)
+		if(fullScreen == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
-		if(WIN_RESIZABLE == true)
+		if(resizable == true)
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
 		}
 
-		if(WIN_BORDERLESS == true)
+		if(borderless == true)
 		{
 			flags |= SDL_WINDOW_BORDERLESS;
 		}
 
-		if(WIN_FULLSCREEN_DESKTOP == true)
+		if(fullScreenDesktop == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
@@ -127,6 +128,14 @@ void ModuleWindow::OnGUI()
 		int i = 0;
 		SDL_GetCurrentDisplayMode(i, &current);
 		ImGui::Text("Refresh rate: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d", current.refresh_rate);
+
+		if (ImGui::Checkbox("Fullscreen", &fullScreen)) 
+		{
+
+		}
+
+
+
 
 		ImGui::NewLine();
 	}

@@ -3,12 +3,8 @@
 #include "M_Editor.h"
 #include "MaykMath.h"
 
-//Window types
-#include "W_Configuration.h"
-#include "W_Console.h"
 
-
-M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_enabled)
+M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_enabled), displayWindow(false)
 {
 
 	//reserve() does not work with [] operator
@@ -44,6 +40,7 @@ bool M_Editor::Init()
 	style->Colors[ImGuiCol_TitleBgActive] = ImVec4(0.219f, 0.219f, 0.219f, 1.f);
 	style->Colors[ImGuiCol_TitleBg] = ImVec4(0.219f, 0.219f, 0.219f, 1.f);
 	style->Colors[ImGuiCol_MenuBarBg] = ImVec4(1.f, 1.f, 1.f, 1.f);
+	//style->WindowBorderSize = 0.0f;
 
 	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
 	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -57,8 +54,8 @@ bool M_Editor::Init()
 	ImGui_ImplOpenGL3_Init();
 
 	io.MouseDrawCursor = false;
-	//io.IniFilename = "imgui.ini";
-	io.IniFilename = NULL;
+	io.IniFilename = "imgui.ini";
+	//io.IniFilename = NULL;
 
 	return true;
 }
@@ -78,7 +75,8 @@ void M_Editor::Draw()
 
 	DrawMenuBar();
 
-	//ImGui::ShowDemoWindow();
+	DrawTopBar();
+
 
 	//ImGuiViewport* main_viewport = ImGui::GetMainViewport();
 	//ImGui::SetNextWindowPos(ImVec2(main_viewport->GetWorkPos().x + 650, main_viewport->GetWorkPos().y + 20), ImGuiCond_FirstUseEver);
@@ -89,6 +87,13 @@ void M_Editor::Draw()
 		if (windows[i]->active) {
 			windows[i]->Draw();
 		}
+	}
+
+	if (displayWindow)
+	{
+		ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_MenuBarBg, ImVec4(0.f, 0.f, 0.f, 1.f));
+		ImGui::ShowDemoWindow();
+		ImGui::PopStyleColor();
 	}
 
 	//Rendering
@@ -162,20 +167,86 @@ void M_Editor::DrawMenuBar()
 		if (ImGui::BeginMenu("Help"))
 		{
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
+			
+			//TODO: Put correct links on MenuItems
+			if (ImGui::MenuItem("ImGui Demo", nullptr, displayWindow))
+			{
+				displayWindow = !displayWindow;
+			}
+			if (ImGui::MenuItem("Documentation"))
+			{
+				ShellExecute(0, 0, "https://github.com/MayKoder/Diamond-Engine", 0, 0, SW_SHOW);
+			}
+			if (ImGui::MenuItem("Download latest"))
+			{
+				ShellExecute(0, 0, "https://github.com/MayKoder/Diamond-Engine", 0, 0, SW_SHOW);
+			}		
+			if (ImGui::MenuItem("Report a bug"))
+			{
+				ShellExecute(0, 0, "https://github.com/MayKoder/Diamond-Engine", 0, 0, SW_SHOW);
+			}
 			if (ImGui::MenuItem("MayKoder Github"))
 			{
 				ShellExecute(0, 0, "https://github.com/MayKoder/Diamond-Engine", 0, 0, SW_SHOW);
+			}
+			if (ImGui::MenuItem("About"))
+			{
+				//windows[EditorWindow::ABOUT]->active = !windows[EditorWindow::ABOUT]->active;
 			}
 			ImGui::PopStyleColor(1);
 			ImGui::EndMenu();
 		}
 
 		//Sets the play submenu in a dynamic dock position
-		/*ImGui::SetNextWindowPos(ImVec2(0.0f, ImGui::GetWindowSize().y));*/
+		//ImGui::SetNextWindowPos(ImVec2(0.0f, ImGui::GetWindowSize().y));
 
 		ImGui::EndMainMenuBar();
 	}
 	ImGui::PopStyleColor(1);
+}
+
+void M_Editor::DrawTopBar()
+{
+	//Main menu bar 2
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+
+	ImGui::SetNextWindowPos(viewport->GetWorkPos());
+	ImGui::SetNextWindowViewport(viewport->ID);
+	ImGuiContext& g = *GImGui;
+
+	g.NextWindowData.MenuBarOffsetMinVal = ImVec2(g.Style.DisplaySafeAreaPadding.x, ImMax(g.Style.DisplaySafeAreaPadding.y - g.Style.FramePadding.y, 0.0f));
+
+	ImGui::SetNextWindowSize(ImVec2(g.IO.DisplaySize.x, (g.NextWindowData.MenuBarOffsetMinVal.y + g.FontBaseSize + g.Style.FramePadding.y) * 1.5f));
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	g.NextWindowData.MenuBarOffsetMinVal = ImVec2(0.f, 0.f);
+	ImGui::PopStyleVar();
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.152f, 0.152f, 0.152f, 1.f));
+
+	ImGui::Begin("ButtonsNavBar", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoDocking);
+	//float halfWindowSize = ImGui::GetWindowSize().y - 15;
+
+	//ImGui::SetCursorPosY((ImGui::GetWindowSize().y / 2) - (halfWindowSize / 2));
+
+	//viewportCorSize = ImGui::GetWindowSize().y;
+
+	//float initPoint = (ImGui::GetWindowSize().x * 0.5f) - ((halfWindowSize * 3.f) / 2.f);
+	//ImGui::SetCursorPosX(initPoint + ((halfWindowSize + 10) * 0));
+	//ImGui::Button("Pl", ImVec2(halfWindowSize, halfWindowSize));
+	//ImGui::SameLine();
+
+	//ImGui::SetCursorPosX(initPoint + ((halfWindowSize + 10) * 1));
+	//ImGui::Button("Pa", ImVec2(halfWindowSize, halfWindowSize));
+	//ImGui::SameLine();
+
+	//ImGui::SetCursorPosX(initPoint + ((halfWindowSize + 10) * 2));
+	//ImGui::Button("St", ImVec2(halfWindowSize, halfWindowSize));
+	ImGui::End();
+
+	ImGui::PopStyleVar();
+	ImGui::PopStyleColor();
 }
 
 

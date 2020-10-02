@@ -6,6 +6,7 @@ void MaykMath::Init()
 	srand(time(NULL));
 }
 
+//ASK: Is this good?
 int MaykMath::Random(int minV, int maxV)
 {
 	assert(minV <= maxV);

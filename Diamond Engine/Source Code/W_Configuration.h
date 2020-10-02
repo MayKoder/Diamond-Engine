@@ -20,8 +20,6 @@ public:
 
 	void UpdateInfoLogs();
 
-	bool displayWindow;
-
 private:
 	std::vector<float> fps_log;
 	std::vector<float> ms_log;

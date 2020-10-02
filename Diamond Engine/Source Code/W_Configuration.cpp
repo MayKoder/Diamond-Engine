@@ -1,7 +1,7 @@
 #include "W_Configuration.h"
 
 
-W_Configuration::W_Configuration() : displayWindow(false)
+W_Configuration::W_Configuration()
 {
 	name = "Configuration";
 	fps_log.reserve(FPS_MS_LOG_MAXLENGHT);
@@ -29,12 +29,6 @@ void W_Configuration::Draw()
 		ImGui::PlotHistogram("##miliseconds", &ms_log[0], ms_log.size(), 0, "Miliseconds", 0.0f, 100.0f, ImVec2(310, 100));
 		ImGui::SliderInt("FPS CAP", &Engine->fpsCap, 1, 360);
 		ImGui::NewLine();
-
-		if(ImGui::Button("Display example")) 
-		{
-			displayWindow = !displayWindow;
-		}
-
 	}
 
 	for (unsigned int i = 0; i < Engine->list_modules.size(); ++i)
@@ -43,14 +37,6 @@ void W_Configuration::Draw()
 	}
 
 	ImGui::End();
-
-	if (displayWindow) 
-	{
-		ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_MenuBarBg, ImVec4(0.f, 0.f, 0.f, 1.f));
-		ImGui::ShowDemoWindow();
-		ImGui::PopStyleColor();
-	}
-
 }
 
 void W_Configuration::UpdateInfoLogs()

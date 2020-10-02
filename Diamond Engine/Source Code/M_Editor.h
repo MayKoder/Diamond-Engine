@@ -9,6 +9,10 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
+//Window types
+#include "W_Configuration.h"
+#include "W_Console.h"
+
 enum class EditorWindow {
 	CONFIGURATION,
 	CONSOLE,
@@ -27,6 +31,7 @@ public:
 
 	void Draw();
 	void DrawMenuBar();
+	void DrawTopBar();
 
 	bool CleanUp() override;
 
@@ -35,6 +40,7 @@ public:
 private:
 
 	std::vector<Window*> windows;
+	bool displayWindow;
 
 
 };
