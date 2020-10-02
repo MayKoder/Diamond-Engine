@@ -29,8 +29,8 @@ bool ModuleWindow::Init()
 	else
 	{
 		//Create window
-		int width = SCREEN_WIDTH * SCREEN_SIZE;
-		int height = SCREEN_HEIGHT * SCREEN_SIZE;
+		s_width = SCREEN_WIDTH * SCREEN_SIZE;
+		s_height = SCREEN_HEIGHT * SCREEN_SIZE;
 		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 		//Use OpenGL 2.1
@@ -57,7 +57,7 @@ bool ModuleWindow::Init()
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
 
-		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, s_width, s_height, flags);
 
 		SDL_DisplayMode DM;
 		SDL_GetCurrentDisplayMode(0, &DM);
@@ -134,15 +134,19 @@ void ModuleWindow::OnGUI()
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change fullscreen mode");
 
-		if (ImGui::Checkbox("Borderless", &borderless))
-			SDL_SetWindowBordered(App->window->window, static_cast<SDL_bool>(borderless));
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Change borderless mode");
+		ImGui::SameLine();
 
 		if (ImGui::Checkbox("Resizable", &resizable))
 			SDL_SetWindowResizable(App->window->window, static_cast<SDL_bool>(resizable));
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change resizable mode");
+
+		if (ImGui::Checkbox("Borderless", &borderless))
+			SDL_SetWindowBordered(App->window->window, static_cast<SDL_bool>(borderless));
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Change borderless mode");
+
+		ImGui::SameLine();
 
 		if (ImGui::Checkbox("Fullscreen Desktop", &fullScreenDesktop))
 			SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);

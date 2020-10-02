@@ -19,6 +19,14 @@ public:
 	bool CleanUp() override;
 
 	void OnResize(int width, int height);
+	void OnGUI() override;
+
+private:
+
+	void GetCAPS(std::string& caps);
+	std::string str_CAPS;
+
+	bool vsync;
 
 public:
 

@@ -3,6 +3,8 @@
 #include "M_Editor.h"
 #include "MaykMath.h"
 
+//#include"MathGeoLib/include/Math/float3.h"
+
 
 M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_enabled), displayWindow(false)
 {
@@ -12,6 +14,8 @@ M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_ena
 
 	windows[static_cast<unsigned int>(EditorWindow::CONFIGURATION)] = new W_Configuration();
 	windows[static_cast<unsigned int>(EditorWindow::CONSOLE)] = new W_Console();
+
+	//float3 a = float3(2.f, 2.f, 2.f);
 
 }
 
@@ -179,15 +183,15 @@ void M_Editor::DrawMenuBar()
 			}
 			if (ImGui::MenuItem("Download latest"))
 			{
-				ShellExecute(0, 0, "https://github.com/MayKoder/Diamond-Engine", 0, 0, SW_SHOW);
+				ShellExecute(0, 0, "https://github.com/MayKoder/Diamond-Engine/releases", 0, 0, SW_SHOW);
 			}		
 			if (ImGui::MenuItem("Report a bug"))
 			{
-				ShellExecute(0, 0, "https://github.com/MayKoder/Diamond-Engine", 0, 0, SW_SHOW);
+				ShellExecute(0, 0, "https://github.com/MayKoder/Diamond-Engine/issues", 0, 0, SW_SHOW);
 			}
 			if (ImGui::MenuItem("MayKoder Github"))
 			{
-				ShellExecute(0, 0, "https://github.com/MayKoder/Diamond-Engine", 0, 0, SW_SHOW);
+				ShellExecute(0, 0, "https://github.com/MayKoder", 0, 0, SW_SHOW);
 			}
 			if (ImGui::MenuItem("About"))
 			{

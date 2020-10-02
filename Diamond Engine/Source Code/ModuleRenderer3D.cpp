@@ -8,9 +8,10 @@
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
 
-ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), str_CAPS(""),
+vsync(false)
 {
-
+	GetCAPS(str_CAPS);
 }
 
 // Destructor
@@ -48,7 +49,7 @@ bool ModuleRenderer3D::Init()
 	if(ret == true)
 	{
 		//Use Vsync
-		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
+		if(SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		//Initialize Projection Matrix
@@ -71,6 +72,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
+			//ASK: Maybe glewGetErrorString is not the same as glutGerErrorString, so errors could be wrong
 			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
@@ -86,6 +88,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
+			//ASK: Maybe glewGetErrorString is not the same as glutGerErrorString, so errors could be wrong
 			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
@@ -184,4 +187,72 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	App->window->s_width = width;
 	App->window->s_height = height;
+}
+
+void ModuleRenderer3D::OnGUI()
+{
+	if (ImGui::CollapsingHeader("Hardware"))
+	{
+
+		//TODO: Store all this info as const char* and dont call the functions every frame
+		SDL_version ver;
+		SDL_GetVersion(&ver);
+		ImGui::Text("SDL Version: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d.%d.%d", ver.major, ver.minor, ver.patch);
+
+		ImGui::Separator();
+		ImGui::Text("CPUs: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d (Cache: %dkb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
+		ImGui::Text("System RAM: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.1fGb", SDL_GetSystemRAM() / 1000.f);
+
+#pragma region Caps
+		ImGui::Text("Caps:");
+		ImGui::SameLine();
+
+
+		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), str_CAPS.c_str());
+
+#pragma endregion
+
+
+		ImGui::Separator();
+		ImGui::Text("GPU: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), (const char*)glGetString(GL_VENDOR));
+		ImGui::Text("Brand: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), (const char*)glGetString(GL_RENDERER));
+
+		//#define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
+		//#define GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX 0x9049
+		//GLint total_mem_kb = 0;
+		//glGetIntegerv(GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX, &total_mem_kb);
+		//total_mem_kb /= 1000;
+
+		//GLint cur_avail_mem_kb = 0;
+		//glGetIntegerv(GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX, &cur_avail_mem_kb);
+		//cur_avail_mem_kb /= 1000;
+
+		ImGui::Text("VRAM Budget:");
+		ImGui::Text("VRAM Usage:");
+		ImGui::Text("VRAM Avaliable:");
+		ImGui::Text("VRAM Reserved:");
+
+		if(ImGui::Checkbox("Enable V-Sync", &vsync))
+		{
+			//Use Vsync
+			if (SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
+				LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+		}
+
+	}
+}
+
+void ModuleRenderer3D::GetCAPS(std::string& caps)
+{
+	caps += (SDL_HasRDTSC()) ? "RDTSC," : "";
+	caps += (SDL_HasMMX()) ? "MMX, " : "";
+	caps += (SDL_HasSSE()) ? "SSE, " : "";
+	caps += (SDL_HasSSE2()) ? "SSE2, " : "";
+	caps += (SDL_HasSSE3()) ? "SSE3, " : "";
+	caps += "\n";
+	caps += (SDL_HasSSE41()) ? "SSE41, " : "";
+	caps += (SDL_HasSSE42()) ? "SSE42, " : "";
+	caps += (SDL_HasAVX()) ? "AVX, " : "";
+	caps += (SDL_HasAltiVec()) ? "AltiVec, " : "";
+	caps += (SDL_Has3DNow()) ? "3DNow, " : "";
 }

@@ -55,6 +55,9 @@
     <Filter Include="Externals\MathGeoLib\Algorithm\Random">
       <UniqueIdentifier>{15176629-d637-47cb-9585-27372e936ae6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Externals\parson">
+      <UniqueIdentifier>{c53631bc-2e0b-4503-8068-fe913a4ad9f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -318,6 +321,9 @@
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Algorithm\Random\LCG.h">
       <Filter>Externals\MathGeoLib\Algorithm\Random</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\parson\parson.h">
+      <Filter>Externals\parson</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -487,6 +493,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Algorithm\Random\LCG.cpp">
       <Filter>Externals\MathGeoLib\Algorithm\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\parson\parson.c">
+      <Filter>Externals\parson</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

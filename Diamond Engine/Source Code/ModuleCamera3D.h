@@ -24,8 +24,8 @@ private:
 
 	void CalculateViewMatrix();
 
-	void OrbitalRotation(vec3 center);
-	void FreeRotation();
+	void OrbitalRotation(vec3 center, float dt);
+	void FreeRotation(float dt);
 	void FocusCamera(vec3 center, float offset);
 
 public:

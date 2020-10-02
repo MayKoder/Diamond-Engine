@@ -44,8 +44,8 @@ void ModuleCamera3D::OnGUI()
 {
 	if (ImGui::CollapsingHeader("3D Input Settings"))
 	{
-		ImGui::TextWrapped("Camera Rotation Speed"); ImGui::SameLine(); ImGui::PushItemWidth(100.f); ImGui::DragFloat("##crs", &mouseSensitivity, 0.01f, 0.f, 2.f);
-		ImGui::TextWrapped("Camera Movement Speed"); ImGui::SameLine(); ImGui::PushItemWidth(100.f); ImGui::DragFloat("##cms", &cameraSpeed, 0.01f, 0.f, 10.f);
+		ImGui::TextWrapped("Camera Rotation Speed"); ImGui::SameLine(); ImGui::PushItemWidth(100.f); ImGui::DragFloat("##crs", &mouseSensitivity, 0.01f, 0.f, 999.f);
+		ImGui::TextWrapped("Camera Movement Speed"); ImGui::SameLine(); ImGui::PushItemWidth(100.f); ImGui::DragFloat("##cms", &cameraSpeed, 0.01f, 0.f, 999.f);
 	}
 }
 
@@ -88,16 +88,17 @@ update_status ModuleCamera3D::Update(float dt)
 	}
 
 	//ASK: Is this really the best way to rotate the camera? Maybe i should use a matrix
+	//TODO: Camera rotation should not be affected by the program framerate
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
-		FreeRotation();
+		FreeRotation(dt);
 	}
 
 	//Rotate around 0,0,0
 	//ASK: Should i also include Right alt?
 	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
 	{
-		OrbitalRotation(vec3(0, 0, 0));
+		OrbitalRotation(vec3(0, 0, 0), dt);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
@@ -172,14 +173,14 @@ void ModuleCamera3D::CalculateViewMatrix()
 	ViewMatrixInverse = inverse(ViewMatrix);
 }
 
-void ModuleCamera3D::OrbitalRotation(vec3 center)
+void ModuleCamera3D::OrbitalRotation(vec3 center, float dt)
 {
 	int dx = -App->input->GetMouseXMotion();
 	int dy = -App->input->GetMouseYMotion();
 
 	if (dx != 0)
 	{
-		float DeltaX = (float)dx * (mouseSensitivity * 0.5f);
+		float DeltaX = (float)dx * mouseSensitivity;
 
 		//Get vector diference
 		vec3 ref = Position - center;
@@ -196,7 +197,7 @@ void ModuleCamera3D::OrbitalRotation(vec3 center)
 	{
 
 		//BUG: Weird bug when looking at the same Y
-		float DeltaY = (float)dy * (mouseSensitivity * 0.5f);
+		float DeltaY = (float)dy * mouseSensitivity;
 
 		vec3 ref = Position - center;
 		ref = rotate(ref, DeltaY, X);
@@ -206,7 +207,7 @@ void ModuleCamera3D::OrbitalRotation(vec3 center)
 	LookAt(center);
 }
 
-void ModuleCamera3D::FreeRotation()
+void ModuleCamera3D::FreeRotation(float dt)
 {
 	int dx = -App->input->GetMouseXMotion();
 	int dy = -App->input->GetMouseYMotion();

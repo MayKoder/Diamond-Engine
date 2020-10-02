@@ -38,5 +38,4 @@ enum update_status
 #define MIN_HEIGHT 540
 
 #define SCREEN_SIZE 1
-#define VSYNC false
 #define TITLE "Diamond Engine v"
