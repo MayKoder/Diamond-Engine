@@ -135,12 +135,12 @@ void ModuleWindow::OnGUI()
 			ImGui::SetTooltip("Change fullscreen mode");
 
 		if (ImGui::Checkbox("Borderless", &borderless))
-			SDL_SetWindowBordered(App->window->window, SDL_TRUE);
+			SDL_SetWindowBordered(App->window->window, static_cast<SDL_bool>(borderless));
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change borderless mode");
 
 		if (ImGui::Checkbox("Resizable", &resizable))
-			SDL_SetWindowResizable(App->window->window, SDL_TRUE);
+			SDL_SetWindowResizable(App->window->window, static_cast<SDL_bool>(resizable));
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change resizable mode");
 
