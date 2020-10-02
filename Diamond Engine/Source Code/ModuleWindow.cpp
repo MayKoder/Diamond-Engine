@@ -129,13 +129,25 @@ void ModuleWindow::OnGUI()
 		SDL_GetCurrentDisplayMode(i, &current);
 		ImGui::Text("Refresh rate: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d", current.refresh_rate);
 
-		if (ImGui::Checkbox("Fullscreen", &fullScreen)) 
-		{
+		if (ImGui::Checkbox("Fullscreen", &fullScreen))
+			SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN);
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Change fullscreen mode");
 
-		}
+		if (ImGui::Checkbox("Borderless", &borderless))
+			SDL_SetWindowBordered(App->window->window, SDL_TRUE);
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Change borderless mode");
 
+		if (ImGui::Checkbox("Resizable", &resizable))
+			SDL_SetWindowResizable(App->window->window, SDL_TRUE);
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Change resizable mode");
 
-
+		if (ImGui::Checkbox("Fullscreen Desktop", &fullScreenDesktop))
+			SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Change fullscreen desktop mode");
 
 		ImGui::NewLine();
 	}

@@ -75,7 +75,8 @@
 // If MATH_ENABLE_INSECURE_OPTIMIZATIONS, several security checks (unsafe index out of bounds accesses etc.) are disabled.
 // Use this for absolutely fastest performance on MathGeoLib, but only if you know your code is 100% well-formed and uses
 // MathGeoLib bug-free.
-// #define MATH_ENABLE_INSECURE_OPTIMIZATIONS
+//ASK: Should i keep this disabled?
+#define MATH_ENABLE_INSECURE_OPTIMIZATIONS
 
 #endif
 
