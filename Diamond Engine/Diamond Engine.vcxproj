@@ -94,6 +94,7 @@
     <ClInclude Include="Source Code\EngineVersion.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imconfig.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\ImGuiUtils.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui_internal.h" />
@@ -160,6 +161,8 @@
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Math\sse_mathfun.h" />
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Math\TransformOps.h" />
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Time\Clock.h" />
+    <ClInclude Include="Source Code\External Libraries\mmgr\mmgr.h" />
+    <ClInclude Include="Source Code\External Libraries\mmgr\nommgr.h" />
     <ClInclude Include="Source Code\External Libraries\parson\parson.h" />
     <ClInclude Include="Source Code\glmath.h" />
     <ClInclude Include="Source Code\Globals.h" />
@@ -175,6 +178,7 @@
     <ClInclude Include="Source Code\Primitive.h" />
     <ClInclude Include="Source Code\Timer.h" />
     <ClInclude Include="Source Code\Window.h" />
+    <ClInclude Include="Source Code\W_About.h" />
     <ClInclude Include="Source Code\W_Configuration.h" />
     <ClInclude Include="Source Code\W_Console.h" />
   </ItemGroup>
@@ -220,6 +224,7 @@
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Math\SSEMath.cpp" />
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Math\TransformOps.cpp" />
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Time\Clock.cpp" />
+    <ClCompile Include="Source Code\External Libraries\mmgr\mmgr.cpp" />
     <ClCompile Include="Source Code\External Libraries\parson\parson.c" />
     <ClCompile Include="Source Code\glmath.cpp" />
     <ClCompile Include="Source Code\Light.cpp" />
@@ -234,6 +239,7 @@
     <ClCompile Include="Source Code\Primitive.cpp" />
     <ClCompile Include="Source Code\Timer.cpp" />
     <ClCompile Include="Source Code\Window.cpp" />
+    <ClCompile Include="Source Code\W_About.cpp" />
     <ClCompile Include="Source Code\W_Configuration.cpp" />
     <ClCompile Include="Source Code\W_Console.cpp" />
   </ItemGroup>

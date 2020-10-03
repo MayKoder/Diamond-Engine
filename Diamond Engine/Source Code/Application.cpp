@@ -99,7 +99,7 @@ float Application::GetDT() const
 
 float Application::GetFrameRate() const
 {
-	return 0.0f;
+	return 1.f / GetDT();
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules

@@ -12,10 +12,12 @@
 //Window types
 #include "W_Configuration.h"
 #include "W_Console.h"
+#include "W_About.h"
 
 enum class EditorWindow {
 	CONFIGURATION,
 	CONSOLE,
+	ABOUT,
 	MAX
 };
 

@@ -42,8 +42,8 @@ void W_Configuration::Draw()
 void W_Configuration::UpdateInfoLogs()
 {
 
-	//ASK: We should not use ImGui get framerate, we must get our own
-	float currentFPS = ImGui::GetIO().Framerate;
+	//Do not use ImGui::GetFrameRate()
+	float currentFPS = 1.f / Engine->GetDT()/*ImGui::GetIO().Framerate*/;
 	float currentMS = 1000.f * Engine->GetDT();
 
 	//FPS Vector Update

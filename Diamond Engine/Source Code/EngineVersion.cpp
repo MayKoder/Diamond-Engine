@@ -1,6 +1,6 @@
 #include "EngineVersion.h"
 
-const std::string EngineVersion::GetVersion() 
+const std::string EngineVersion::GetVersion()
 {
 	std::string ret(std::to_string(DIAMONDENGINE_VERSION));
 	ret.insert(MAJOR_VERSION_LENGHT, ".");

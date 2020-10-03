@@ -14,6 +14,7 @@ M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_ena
 
 	windows[static_cast<unsigned int>(EditorWindow::CONFIGURATION)] = new W_Configuration();
 	windows[static_cast<unsigned int>(EditorWindow::CONSOLE)] = new W_Console();
+	windows[static_cast<unsigned int>(EditorWindow::ABOUT)] = new W_About();
 
 	//float3 a = float3(2.f, 2.f, 2.f);
 
@@ -125,6 +126,13 @@ bool M_Editor::CleanUp()
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 
+	for (unsigned int i = 0; i < windows.size(); ++i)
+	{
+		delete windows[i];
+		windows[i] = nullptr;
+	}
+	windows.clear();
+
 	LOG("ImGui Shutdown");
 	return true;
 }
@@ -161,10 +169,10 @@ void M_Editor::DrawMenuBar()
 		if (ImGui::BeginMenu("Window"))
 		{
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
-			//for (unsigned int i = 0; i < windows.size(); i++)
-			//{
-			//	ImGui::MenuItem(windows[i]->name.c_str(), nullptr, &windows[i]->active);
-			//}
+			for (unsigned int i = 0; i < windows.size(); i++)
+			{
+				ImGui::MenuItem(windows[i]->name.c_str(), nullptr, &windows[i]->active);
+			}
 			ImGui::PopStyleColor(1);
 			ImGui::EndMenu();
 		}
