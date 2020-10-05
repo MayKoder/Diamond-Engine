@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "MaykMath.h"
+#include "MMGui.h"
 
 #include"OpenGL.h"
 
@@ -9,7 +10,7 @@
 #pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), str_CAPS(""),
-vsync(false)
+vsync(false), wireframe(false)
 {
 	GetCAPS(str_CAPS);
 }
@@ -60,6 +61,7 @@ bool ModuleRenderer3D::Init()
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
+			//gluErrorString
 			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
@@ -95,8 +97,8 @@ bool ModuleRenderer3D::Init()
 
 		// Blend for transparency
 		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glBlendEquation(GL_FUNC_ADD);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
 		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
@@ -131,6 +133,8 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+
+	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
@@ -150,12 +154,19 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 
+	//App->level->Draw();
+	//if (debug_draw == true)
+	//{
+	//	BeginDebugDraw();
+	//	App->DebugDraw();
+	//	EndDebugDraw();
+	//}
+	//App->editor->Draw();		[DONE]
 
 
 	//Render debug geometry
 	//Draw editor
 	App->moduleEditor->Draw();
-	//Swap buffers
 
 	SDL_GL_SwapWindow(App->window->window);
 
@@ -199,7 +210,7 @@ void ModuleRenderer3D::OnGUI()
 		SDL_GetVersion(&ver);
 		ImGui::Text("SDL Version: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d.%d.%d", ver.major, ver.minor, ver.patch);
 
-		ImGui::Separator();
+		ImGui::GreySeparator();
 		ImGui::Text("CPUs: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d (Cache: %dkb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
 		ImGui::Text("System RAM: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.1fGb", SDL_GetSystemRAM() / 1000.f);
 
@@ -207,13 +218,12 @@ void ModuleRenderer3D::OnGUI()
 		ImGui::Text("Caps:");
 		ImGui::SameLine();
 
-
 		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), str_CAPS.c_str());
 
 #pragma endregion
 
 
-		ImGui::Separator();
+		ImGui::GreySeparator();
 		ImGui::Text("GPU: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), (const char*)glGetString(GL_VENDOR));
 		ImGui::Text("Brand: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), (const char*)glGetString(GL_RENDERER));
 
@@ -237,6 +247,11 @@ void ModuleRenderer3D::OnGUI()
 			//Use Vsync
 			if (SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
 				LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+		}
+
+		if (ImGui::Checkbox("Wireframe Mode", &wireframe))
+		{
+			(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
 
 	}

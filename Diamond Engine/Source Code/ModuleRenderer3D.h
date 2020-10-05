@@ -27,6 +27,7 @@ private:
 	std::string str_CAPS;
 
 	bool vsync;
+	bool wireframe;
 
 public:
 

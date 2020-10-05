@@ -1,4 +1,5 @@
 #include "W_Configuration.h"
+#include "MMGui.h"
 
 
 W_Configuration::W_Configuration()
@@ -20,7 +21,6 @@ void W_Configuration::Draw()
 	UpdateInfoLogs();
 
 	ImGui::Begin(name.c_str(), NULL, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize);
-	ImGui::Separator();
 
 	//ImGui::SetNextTreeNodeOpen(true);
 	if (ImGui::CollapsingHeader("Application"))
@@ -43,8 +43,8 @@ void W_Configuration::UpdateInfoLogs()
 {
 
 	//Do not use ImGui::GetFrameRate()
-	float currentFPS = 1.f / Engine->GetDT()/*ImGui::GetIO().Framerate*/;
-	float currentMS = 1000.f * Engine->GetDT();
+	float currentFPS = (1.f / Engine->GetDT())/*ImGui::GetIO().Framerate*/;
+	float currentMS = (1000.f * Engine->GetDT());
 
 	//FPS Vector Update
 	MaykMath::FixedVectorPushBack(fps_log, currentFPS);

@@ -13,11 +13,15 @@
 #include "W_Configuration.h"
 #include "W_Console.h"
 #include "W_About.h"
+#include "W_Inspector.h"
+#include "W_Hierarchy.h"
 
 enum class EditorWindow {
 	CONFIGURATION,
 	CONSOLE,
 	ABOUT,
+	INSPECTOR,
+	HIERARCHY,
 	MAX
 };
 
@@ -34,6 +38,7 @@ public:
 	void Draw();
 	void DrawMenuBar();
 	void DrawTopBar();
+	void CreateDockSpace();
 
 	bool CleanUp() override;
 
@@ -43,6 +48,9 @@ private:
 
 	std::vector<Window*> windows;
 	bool displayWindow;
+
+	float viewportCorSize;
+	ImGuiID dockspace_id;
 
 
 };

@@ -3,10 +3,13 @@
 #include "M_Editor.h"
 #include "MaykMath.h"
 
+#include"MMGui.h"
+
 //#include"MathGeoLib/include/Math/float3.h"
 
 
-M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_enabled), displayWindow(false)
+M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_enabled), displayWindow(false),
+viewportCorSize(0.f), dockspace_id(0)
 {
 
 	//reserve() does not work with [] operator
@@ -15,6 +18,8 @@ M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_ena
 	windows[static_cast<unsigned int>(EditorWindow::CONFIGURATION)] = new W_Configuration();
 	windows[static_cast<unsigned int>(EditorWindow::CONSOLE)] = new W_Console();
 	windows[static_cast<unsigned int>(EditorWindow::ABOUT)] = new W_About();
+	windows[static_cast<unsigned int>(EditorWindow::INSPECTOR)] = new W_Inspector();
+	windows[static_cast<unsigned int>(EditorWindow::HIERARCHY)] = new W_Hierarchy();
 
 	//float3 a = float3(2.f, 2.f, 2.f);
 
@@ -45,6 +50,14 @@ bool M_Editor::Init()
 	style->Colors[ImGuiCol_TitleBgActive] = ImVec4(0.219f, 0.219f, 0.219f, 1.f);
 	style->Colors[ImGuiCol_TitleBg] = ImVec4(0.219f, 0.219f, 0.219f, 1.f);
 	style->Colors[ImGuiCol_MenuBarBg] = ImVec4(1.f, 1.f, 1.f, 1.f);
+
+	style->Colors[ImGuiCol_TitleBg] = ImVec4(0.152f, 0.152f, 0.152f, 1.f);
+	style->Colors[ImGuiCol_TitleBgActive] = ImVec4(0.152f, 0.152f, 0.152f, 1.f);
+
+	style->Colors[ImGuiCol_Separator] = ImVec4(0.152f, 0.152f, 0.152f, 1.f);
+	style->Colors[ImGuiCol_SeparatorActive] = ImVec4(0.152f, 0.152f, 0.152f, 1.f);
+
+	style->Colors[ImGuiCol_WindowBg] = ImVec4(0.211, 0.211, 0.211, 1.f);
 	//style->WindowBorderSize = 0.0f;
 
 	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
@@ -80,16 +93,20 @@ void M_Editor::Draw()
 
 	DrawMenuBar();
 
+	ImGui::PushStyleVar(ImGuiStyleVar_::ImGuiStyleVar_WindowBorderSize, 0);
 	DrawTopBar();
+	ImGui::PopStyleVar();
 
+	CreateDockSpace();
 
-	//ImGuiViewport* main_viewport = ImGui::GetMainViewport();
-	//ImGui::SetNextWindowPos(ImVec2(main_viewport->GetWorkPos().x + 650, main_viewport->GetWorkPos().y + 20), ImGuiCond_FirstUseEver);
-	//ImGui::SetNextWindowSize(ImVec2(550, 680), ImGuiCond_FirstUseEver);
 
 	for (unsigned int i = 0; i < windows.size(); i++)
 	{
-		if (windows[i]->active) {
+		if (windows[i]->active) 
+		{
+			//ASK: Docked windows need a min size ASAP
+			//ImGui::SetNextWindowDockID(dockspace_id, ImGuiCond_FirstUseEver);
+			//ImGui::SetNextWindowSizeConstraints(ImVec2(300, 300), ImVec2(800, 800));
 			windows[i]->Draw();
 		}
 	}
@@ -238,6 +255,8 @@ void M_Editor::DrawTopBar()
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.152f, 0.152f, 0.152f, 1.f));
 
 	ImGui::Begin("ButtonsNavBar", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoDocking);
+	viewportCorSize = ImGui::GetWindowSize().y;
+	
 	//float halfWindowSize = ImGui::GetWindowSize().y - 15;
 
 	//ImGui::SetCursorPosY((ImGui::GetWindowSize().y / 2) - (halfWindowSize / 2));
@@ -259,6 +278,34 @@ void M_Editor::DrawTopBar()
 
 	ImGui::PopStyleVar();
 	ImGui::PopStyleColor();
+}
+
+void M_Editor::CreateDockSpace()
+{
+
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+
+	ImVec2 dockPos(viewport->GetWorkPos());
+	dockPos.y += viewportCorSize;
+	ImGui::SetNextWindowPos(dockPos);
+
+	ImVec2 dockSize(viewport->GetWorkSize());
+	dockSize.y -= viewportCorSize;
+	ImGui::SetNextWindowSize(dockSize);
+
+	//ImGui::SetNextWindowViewport(viewport->ID);
+	//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	////ImGui::PushStyleColor(ImGuiCol_::bg);
+
+	//ImGui::Begin("Main Dockspace", NULL, ImGuiWindowFlags_::ImGuiWindowFlags_NoTitleBar);
+
+	//dockspace_id = ImGui::GetID("Main Dockspace");
+	////ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
+	dockspace_id = ImGui::DockSpaceOverViewportCustom(viewport, ImGuiDockNodeFlags_PassthruCentralNode, dockPos, dockSize, nullptr);
+
+	//ImGui::End();
+	//ImGui::PopStyleVar();
+
 }
 
 

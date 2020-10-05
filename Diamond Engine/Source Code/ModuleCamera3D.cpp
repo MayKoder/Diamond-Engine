@@ -23,10 +23,6 @@ bool ModuleCamera3D::Start()
 	LOG("Setting up the camera");
 	bool ret = true;
 
-	ground.axis = true;
-	ground.color = White;
-
-
 	LookAt(vec3(0.f, 0.f, 0.f));
 
 	return ret;
@@ -97,14 +93,14 @@ update_status ModuleCamera3D::Update(float dt)
 	//Rotate around 0,0,0
 	//ASK: Should i also include Right alt?
 	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
-	{
 		OrbitalRotation(vec3(0, 0, 0), dt);
-	}
+
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-	{
 		FocusCamera(vec3(0.f, 0.f, 0.f), 10.f);
-	}
+	
+	if(App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
+		PanCamera(dt);
 
 	Position += cameraMovement;
 	Reference += cameraMovement;
@@ -114,6 +110,10 @@ update_status ModuleCamera3D::Update(float dt)
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
+
+	Cube cb(1.f, 1.f, 1.f);
+	cb.SetPos(0.f, 0.5f, 0.f);
+	cb.Render();
 
 
 	return UPDATE_CONTINUE;
@@ -248,14 +248,28 @@ void ModuleCamera3D::FreeRotation(float dt)
 
 void ModuleCamera3D::FocusCamera(vec3 center, float offset)
 {
-
 	Position = center;
 
-	float mod = sqrt(pow(Z.x, 2) + pow(Z.y, 2) + pow(Z.z, 2));
-	vec3 normal = Z / mod;
+	Position += normalize(Z) * offset;
+}
 
-	Position += (normal) * offset;
+void ModuleCamera3D::PanCamera(float dt)
+{
 
+	//WARNING: Need to normalize movement
+	int dx = -App->input->GetMouseXMotion();
+	int dy = -App->input->GetMouseYMotion();
 
+	if (dx != 0 || dy != 0) 
+	{
+		//vec3 mouseDir = normalize(vec3(dx, dy, 0.f));
 
+		//Move(X * (mouseDir.x * cameraSpeed * dt));
+		//Move(-Y * (mouseDir.y * cameraSpeed * dt));
+
+		vec3 movVector((X * dx) + (-Y * dy));
+
+		Position += movVector * dt;
+
+	}
 }

@@ -339,6 +339,15 @@
     <ClInclude Include="Source Code\External Libraries\mmgr\nommgr.h">
       <Filter>Externals\mmgr</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\MMGui.h">
+      <Filter>Sources\Tools\MMath</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\W_Inspector.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\W_Hierarchy.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -517,6 +526,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\mmgr\mmgr.cpp">
       <Filter>Externals\mmgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\W_Inspector.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\W_Hierarchy.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

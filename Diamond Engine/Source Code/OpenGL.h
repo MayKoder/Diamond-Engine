@@ -8,6 +8,7 @@
 #include <gl/GL.h>
 
 //ASK: Should i remove this too
+//You told me to remove glut so... i can't use it now
 //#include <gl/GLU.h>
 
 #endif

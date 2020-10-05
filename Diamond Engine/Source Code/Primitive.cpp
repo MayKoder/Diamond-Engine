@@ -54,10 +54,10 @@ void Primitive::Render() const
 
 	glColor3f(color.r, color.g, color.b);
 
-	if(wire)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	else
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//if(wire)
+	//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//else
+	//	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	InnerRender();
 

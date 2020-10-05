@@ -27,6 +27,7 @@ private:
 	void OrbitalRotation(vec3 center, float dt);
 	void FreeRotation(float dt);
 	void FocusCamera(vec3 center, float offset);
+	void PanCamera(float);
 
 public:
 	
@@ -40,7 +41,6 @@ private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 	mat4x4 followPoint;
-	Plane ground;
 
 	vec3 cameraMovement;
 

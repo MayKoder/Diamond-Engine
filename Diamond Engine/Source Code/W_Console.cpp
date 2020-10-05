@@ -1,4 +1,5 @@
 #include "W_Console.h"
+#include "MMGui.h"
 
 W_Console::W_Console() : collapseMode(true)
 {
@@ -31,7 +32,7 @@ void W_Console::Draw()
 		collapseMode = !collapseMode;
 	}
 
-	ImGui::Separator();
+	ImGui::GreySeparator();
 
 	ImVec2 windowSize = ImGui::GetWindowSize();
 	windowSize.y -= 63;
