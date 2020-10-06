@@ -16,6 +16,8 @@
 #include "W_Inspector.h"
 #include "W_Hierarchy.h"
 
+#define STYLES_PATH "styles.json"
+
 enum class EditorWindow {
 	CONFIGURATION,
 	CONSOLE,
@@ -43,6 +45,8 @@ public:
 	bool CleanUp() override;
 
 	Window* GetEditorWindow(EditorWindow type);
+
+	void SaveStyle();
 
 private:
 

@@ -3,7 +3,8 @@
 #include "M_Editor.h"
 #include "MaykMath.h"
 
-#include"MMGui.h"
+#include "MMGui.h"
+#include "parson/parson.h"
 
 //#include"MathGeoLib/include/Math/float3.h"
 
@@ -98,6 +99,11 @@ void M_Editor::Draw()
 	ImGui::PopStyleVar();
 
 	CreateDockSpace();
+
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) 
+	{
+		SaveStyle();
+	}
 
 
 	for (unsigned int i = 0; i < windows.size(); i++)
@@ -318,4 +324,43 @@ Window* M_Editor::GetEditorWindow(EditorWindow type)
 
 	//SDL_assert(vecPosition < windows.size());
 	return (vecPosition < windows.size()) ? windows[vecPosition] : nullptr;
+}
+
+void M_Editor::SaveStyle()
+{
+
+	//JSON_Value* root_value;
+	//JSON_Array* commits;
+	//JSON_Object* commit;
+	//size_t i;
+
+	//std::string curl_command;
+	//char cleanup_command[256];
+	//char output_filename[] = "commits.json";
+
+	///* it ain't pretty, but it's not a libcurl tutorial */
+	//curl_command = "{ \n'Default': \n{ \n'ID': 0; \n'value': 0, 0, 0, 0; \n } \n}";
+
+	///* parsing json and validating output */
+	//root_value = json_parse_file(output_filename);
+	//if (json_value_get_type(root_value) != JSONArray) {
+	//	system(cleanup_command);
+	//	return;
+	//}
+
+	/////* getting array from root value and printing commit info */
+	////commits = json_value_get_array(root_value);
+	////printf("%-10.10s %-10.10s %s\n", "Date", "SHA", "Author");
+	////for (i = 0; i < json_array_get_count(commits); i++) {
+	////	commit = json_array_get_object(commits, i);
+	////	printf("%.10s %.10s %s\n",
+	////		json_object_dotget_string(commit, "commit.author.date"),
+	////		json_object_get_string(commit, "sha"),
+	////		json_object_dotget_string(commit, "commit.author.name"));
+	////}
+
+	///* cleanup code */
+	//json_value_free(root_value);
+	//system(cleanup_command);
+
 }
