@@ -46,7 +46,8 @@ public:
 
 	Window* GetEditorWindow(EditorWindow type);
 
-	void SaveStyle();
+	void SaveStyle(const char* styleName);
+	void LoadStyle(const char* styleName);
 
 private:
 

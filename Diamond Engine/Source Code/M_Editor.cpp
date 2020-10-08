@@ -102,7 +102,8 @@ void M_Editor::Draw()
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) 
 	{
-		SaveStyle();
+		SaveStyle("Dark");
+		//LoadStyle("Dark");
 	}
 
 
@@ -189,7 +190,7 @@ void M_Editor::DrawMenuBar()
 		{
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Window"))
+		if (ImGui::BeginMenu("Windows"))
 		{
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
 			for (unsigned int i = 0; i < windows.size(); i++)
@@ -326,41 +327,101 @@ Window* M_Editor::GetEditorWindow(EditorWindow type)
 	return (vecPosition < windows.size()) ? windows[vecPosition] : nullptr;
 }
 
-void M_Editor::SaveStyle()
+void M_Editor::SaveStyle(const char* styleName)
+{
+	//Maybe learning json alone wasn't a good idea
+	LOG("Saving style");
+
+	//Init node
+	JSON_Value* root_value = json_value_init_object();
+	JSON_Object* root_object = json_value_get_object(root_value);
+
+	//Style id
+	//json_object_dotset_number(root_object, "Dark.id", 0);
+
+	//Init settings array
+	JSON_Value* settingsArray = json_value_init_array();
+	json_object_set_value(root_object, styleName, settingsArray);
+
+	//Populate settings array
+	JSON_Array* settings = json_value_get_array(settingsArray);
+
+	//------------------>>
+
+    //creating measurement Json
+
+	ImGuiStyle& style = ImGui::GetStyle();
+	for (int i = 0; i < ImGuiCol_COUNT; i++)
+	{
+		JSON_Value *leaf_value = json_value_init_object();
+		JSON_Object *leaf_object = json_value_get_object(leaf_value);
+
+		json_object_set_number(leaf_object,"ID", i);
+		json_object_set_number(leaf_object,"R", style.Colors[i].x);
+		json_object_set_number(leaf_object,"G", style.Colors[i].y);
+		json_object_set_number(leaf_object,"B", style.Colors[i].z);
+		json_object_set_number(leaf_object,"A", style.Colors[i].w);
+
+		json_array_append_value(settings, leaf_value);
+	}
+
+
+	//-------------------<<
+
+	//json_array_append_number(settings, 1);
+
+	//Add settings array to file
+	//json_object_dotset_value(root_object, "Dark.settings", settingsArray);
+
+
+	//JSON_Object* obj = json_value_get_object(json_array_get_value(settings, 0));
+	//json_object_dotset_string(root_object, "Dark.settings.id", "0, 0, 0, 0");
+	//json_object_set_string(root_object, "0", "0, 0, 0, 0");
+
+	//-------------------------------------//
+
+	//Second style type
+	//json_object_set_value(root_object, "Default", json_value_init_array());
+
+	//-------------------------------------//
+
+	//Save file 
+	json_serialize_to_file_pretty(root_value, STYLES_PATH);
+
+	//Free memory
+	json_value_free(root_value);
+	//json_value_free(colorArray);
+
+}
+
+void M_Editor::LoadStyle(const char* styleName)
 {
 
-	//JSON_Value* root_value;
-	//JSON_Array* commits;
-	//JSON_Object* commit;
-	//size_t i;
+	JSON_Value* file = json_parse_file(STYLES_PATH);
+	JSON_Object* root_object = json_value_get_object(file);
 
-	//std::string curl_command;
-	//char cleanup_command[256];
-	//char output_filename[] = "commits.json";
+	JSON_Value* stArray = json_object_get_value(root_object, styleName);
+	JSON_Array* settings = json_value_get_array(stArray);
 
-	///* it ain't pretty, but it's not a libcurl tutorial */
-	//curl_command = "{ \n'Default': \n{ \n'ID': 0; \n'value': 0, 0, 0, 0; \n } \n}";
+	ImGuiStyle& style = ImGui::GetStyle();
+	ImVec4* mod = nullptr;
+	for (int i = 0; i < ImGuiCol_COUNT; i++)
+	{
+		JSON_Object* a = json_array_get_object(settings, i);
+		mod = &style.Colors[i];
 
-	///* parsing json and validating output */
-	//root_value = json_parse_file(output_filename);
-	//if (json_value_get_type(root_value) != JSONArray) {
-	//	system(cleanup_command);
-	//	return;
-	//}
+		mod->x = json_object_get_number(a, "R");
+		mod->y = json_object_get_number(a, "G");
+		mod->z = json_object_get_number(a, "B");
+		mod->w = json_object_get_number(a, "A");
 
-	/////* getting array from root value and printing commit info */
-	////commits = json_value_get_array(root_value);
-	////printf("%-10.10s %-10.10s %s\n", "Date", "SHA", "Author");
-	////for (i = 0; i < json_array_get_count(commits); i++) {
-	////	commit = json_array_get_object(commits, i);
-	////	printf("%.10s %.10s %s\n",
-	////		json_object_dotget_string(commit, "commit.author.date"),
-	////		json_object_get_string(commit, "sha"),
-	////		json_object_dotget_string(commit, "commit.author.name"));
-	////}
+	}
 
-	///* cleanup code */
-	//json_value_free(root_value);
-	//system(cleanup_command);
+	json_value_free(file);
+	//json_value_free(stArray);
+
+	LOG("Style loaded");
+
+
 
 }
