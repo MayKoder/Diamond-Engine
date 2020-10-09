@@ -100,11 +100,11 @@ void M_Editor::Draw()
 
 	CreateDockSpace();
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) 
-	{
-		SaveStyle("Dark");
-		//LoadStyle("Dark");
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) 
+	//{
+	//	SaveStyle("Dark");
+	//	//LoadStyle("Dark");
+	//}
 
 
 	for (unsigned int i = 0; i < windows.size(); i++)

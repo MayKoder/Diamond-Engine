@@ -92,6 +92,8 @@ update_status ModuleCamera3D::Update(float dt)
 
 	//Rotate around 0,0,0
 	//ASK: Should i also include Right alt?
+	//WARNING: Yeah so orbital rotation only works on 0, 0, 0, but will go crazy on any other coord
+	//Maybe we could fix that?
 	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
 		OrbitalRotation(vec3(0, 0, 0), dt);
 

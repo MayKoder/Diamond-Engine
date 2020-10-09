@@ -54,14 +54,14 @@ static const float cubeVertices[] = {
 };
 
 static const float cubeVerticesForIndex[] = {
-	0, 0, 0,
-	0, 0, 1,
-	0, 1, 0,
-	0, 1, 1,
-	1, 0, 0,
-	1, 0, 1,
-	1, 1, 0, 
-	1, 1, 1,
+	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f, 0.5f,
+	-0.5f, 0.5f, -0.5f,
+	-0.5f, 0.5f, 0.5f,
+	0.5f, -0.5f, -0.5f,
+	0.5f, -0.5f, 0.5f,
+	0.5f, 0.5f, -0.5f, 
+	0.5f, 0.5f, 0.5f,
 };
 
 static const int cubeIndex[] = {
@@ -192,9 +192,6 @@ bool ModuleRenderer3D::Init()
 	//VERTEX MODE
 	//sizeof(float) * num_of_vertices * 3 = number of float inside the array
 
-	//ASK: Is this true?
-	//We send sizeof(cubeVerices) because we want the actual byte size of the array, not the number of float nor the number of vectors inside
-	
 	//glGenBuffers(1, (GLuint*)&(my_id));
 	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
 	/*glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_of_vertices * 3, cubeVertices, GL_STATIC_DRAW);*/
@@ -244,6 +241,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	p.axis = true;
 	p.Render();
 
+	//<------------ DIRECT MODE ----------------->
 	//glLineWidth(2.0f);
 	//glBegin(GL_TRIANGLES);
 
@@ -291,22 +289,40 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	//glEnd();
 	//glLineWidth(1.0f);
+	//<------------ VERTEX MODE END ----------------->
 
+	//<------------ VERTEX MODE ----------------->
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	////Bind other buffers
+	//glDrawArrays(GL_TRIANGLES, 0, sizeof(cubeVertices) / sizeof(float) / 3);
+
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glDisableClientState(GL_VERTEX_ARRAY);
+	//<------------ VERTEX MODE END ----------------->
+
+	//<------------ VERTEX AND INDEX MODE ----------------->
+	glRotatef(SDL_GetTicks(), 0.0f, 1.0f, 1.0f);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
+	//TODO: Make a buffer for the colors and try this
+	//glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+	//glVertexAttribPointer((GLint)1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_index);
 
 	//Bind other buffers
-	LOG("%d", sizeof(cubeVertices) / sizeof(float) / 3);
-	//glDrawArrays(GL_TRIANGLES, 0, sizeof(cubeVertices) / sizeof(float) / 3);
 	glDrawElements(GL_TRIANGLES, (sizeof(cubeIndex) / sizeof(int)), GL_UNSIGNED_INT, NULL);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	//<------------ VERTEX AND INDEX MODE END ----------------->
 
 
 
