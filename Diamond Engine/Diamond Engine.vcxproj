@@ -168,6 +168,7 @@
     <ClInclude Include="Source Code\Globals.h" />
     <ClInclude Include="Source Code\Light.h" />
     <ClInclude Include="Source Code\MaykMath.h" />
+    <ClInclude Include="Source Code\MeshArrays.h" />
     <ClInclude Include="Source Code\MMGui.h" />
     <ClInclude Include="Source Code\Module.h" />
     <ClInclude Include="Source Code\ModuleCamera3D.h" />

@@ -4,74 +4,13 @@
 #include "MaykMath.h"
 #include "MMGui.h"
 
-#include"OpenGL.h"
+#include "OpenGL.h"
+
+#include "MeshArrays.h"
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
 
-static const float cubeVertices[] = {
-1, 0, 1,
-1, 0, 0,
-1, 1, 0,
-1, 0, 1,
-1, 1, 0,
-1, 1, 1,
-	   
-0, 0, 1,
-1, 0, 1,
-1, 1, 1,
-0, 0, 1,
-1, 1, 1,
-0, 1, 1,
-	   
-0, 0, 0,
-0, 0, 1,
-0, 1, 1,
-0, 0, 0,
-0, 1, 1,
-0, 1, 0,
-	   
-1, 0, 0,
-0, 0, 0,
-0, 1, 0,
-1, 0, 0,
-0, 1, 0,
-1, 1, 0,
-	   
-0, 1, 0,
-0, 1, 1,
-1, 1, 1,
-0, 1, 0,
-1, 1, 1,
-1, 1, 0,
-	   
-0, 0, 0,
-1, 0, 0,
-1, 0, 1,
-0, 0, 0,
-1, 0, 1,
-0, 0, 1,
-};
-
-static const float cubeVerticesForIndex[] = {
-	-0.5f, -0.5f, -0.5f,
-	-0.5f, -0.5f, 0.5f,
-	-0.5f, 0.5f, -0.5f,
-	-0.5f, 0.5f, 0.5f,
-	0.5f, -0.5f, -0.5f,
-	0.5f, -0.5f, 0.5f,
-	0.5f, 0.5f, -0.5f, 
-	0.5f, 0.5f, 0.5f,
-};
-
-static const int cubeIndex[] = {
-5, 4, 6, 5, 6, 7, 
-1, 5, 7, 1, 7, 3, 
-0, 1, 3, 0, 3, 2, 
-4, 0, 2, 4, 2, 6, 
-2, 3, 7, 2, 7, 6, 
-0, 4, 5, 0, 5, 1,
-};
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), str_CAPS(""),
 vsync(false), wireframe(false)
@@ -194,18 +133,18 @@ bool ModuleRenderer3D::Init()
 
 	//glGenBuffers(1, (GLuint*)&(my_id));
 	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	/*glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_of_vertices * 3, cubeVertices, GL_STATIC_DRAW);*/
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), cubeVertices, GL_STATIC_DRAW);
+	///*glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_of_vertices * 3, cubeVertices, GL_STATIC_DRAW);*/
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(cubeSlowMesh), cubeSlowMesh, GL_STATIC_DRAW);
 	
 	//VERTEX X INDEX MODE
 	glGenBuffers(1, (GLuint*)&(my_vertices));
 	glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVerticesForIndex), cubeVerticesForIndex, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(MA_Pyramid_Vertices), MA_Pyramid_Vertices, GL_STATIC_DRAW);
 
 
 	glGenBuffers(1, (GLuint*)&(my_index));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cubeIndex), cubeIndex, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(MA_Pyramid_Indices), MA_Pyramid_Indices, GL_STATIC_DRAW);
 
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -241,70 +180,74 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	p.axis = true;
 	p.Render();
 
-	//<------------ DIRECT MODE ----------------->
+	////<------------ DIRECT MODE ----------------->
 	//glLineWidth(2.0f);
 	//glBegin(GL_TRIANGLES);
 
-	//glVertex3f(1, 0, 1);
-	//glVertex3f(1, 0, 0);
-	//glVertex3f(1, 1, 0);
-	//glVertex3f(1, 0, 1);
-	//glVertex3f(1, 1, 0);
-	//glVertex3f(1, 1, 1);
+	//glVertex3f(0.5f, -0.5f, 0.5f);
+	//glVertex3f(0.5f, -0.5f, -0.5f);
+	//glVertex3f(0.5f, 0.5f, -0.5f);
+	//glVertex3f(0.5f, -0.5f, 0.5f);
+	//glVertex3f(0.5f, 0.5f, -0.5f);
+	//glVertex3f(0.5f, 0.5f, 0.5f);
 
-	//glVertex3f(0, 0, 1);
-	//glVertex3f(1, 0, 1);
-	//glVertex3f(1, 1, 1);
-	//glVertex3f(0, 0, 1);
-	//glVertex3f(1, 1, 1);
-	//glVertex3f(0, 1, 1);
+	//glVertex3f(-0.5f, -0.5f, 0.5f);
+	//glVertex3f(0.5f, -0.5f, 0.5f);
+	//glVertex3f(0.5f, 0.5f, 0.5f);
+	//glVertex3f(-0.5f, -0.5f, 0.5f);
+	//glVertex3f(0.5f, 0.5f, 0.5f);
+	//glVertex3f(-0.5f, 0.5f, 0.5f);
 
-	//glVertex3f(0, 0, 0);
-	//glVertex3f(0, 0, 1);
-	//glVertex3f(0, 1, 1);
-	//glVertex3f(0, 0, 0);
-	//glVertex3f(0, 1, 1);
-	//glVertex3f(0, 1, 0);
+	//glVertex3f(-0.5f, -0.5f, -0.5f);
+	//glVertex3f(-0.5f, -0.5f, 0.5f);
+	//glVertex3f(-0.5f, 0.5f, 0.5f);
+	//glVertex3f(-0.5f, -0.5f, -0.5f);
+	//glVertex3f(-0.5f, 0.5f, 0.5f);
+	//glVertex3f(-0.5f, 0.5f, -0.5f);
 
-	//glVertex3f(1, 0, 0);
-	//glVertex3f(0, 0, 0);
-	//glVertex3f(0, 1, 0);
-	//glVertex3f(1, 0, 0);
-	//glVertex3f(0, 1, 0);
-	//glVertex3f(1, 1, 0);
+	//glVertex3f(0.5f, -0.5f, -0.5f);
+	//glVertex3f(-0.5f, -0.5f, -0.5f);
+	//glVertex3f(-0.5f, 0.5f, -0.5f);
+	//glVertex3f(0.5f, -0.5f, -0.5f);
+	//glVertex3f(-0.5f, 0.5f, -0.5f);
+	//glVertex3f(0.5f, 0.5f, -0.5f);
 
-	//glVertex3f(0, 1, 0);
-	//glVertex3f(0, 1, 1);
-	//glVertex3f(1, 1, 1);
-	//glVertex3f(0, 1, 0);
-	//glVertex3f(1, 1, 1);
-	//glVertex3f(1, 1, 0);
+	//glVertex3f(-0.5f, 0.5f, -0.5f);
+	//glVertex3f(-0.5f, 0.5f, 0.5f);
+	//glVertex3f(0.5f, 0.5f, 0.5f);
+	//glVertex3f(-0.5f, 0.5f, -0.5f);
+	//glVertex3f(0.5f, 0.5f, 0.5f);
+	//glVertex3f(0.5f, 0.5f, -0.5f);
 
-	//glVertex3f(0, 0, 0);
-	//glVertex3f(1, 0, 0);
-	//glVertex3f(1, 0, 1);
-	//glVertex3f(0, 0, 0);
-	//glVertex3f(1, 0, 1);
-	//glVertex3f(0, 0, 1);
+	//glVertex3f(-0.5f, -0.5f, -0.5f);
+	//glVertex3f(0.5f, -0.5f, -0.5f);
+	//glVertex3f(0.5f, -0.5f, 0.5f);
+	//glVertex3f(-0.5f, -0.5f, -0.5f);
+	//glVertex3f(0.5f, -0.5f, 0.5f);
+	//glVertex3f(-0.5f, -0.5f, 0.5f);
 
 	//glEnd();
 	//glLineWidth(1.0f);
-	//<------------ VERTEX MODE END ----------------->
+	////<------------ DIRECT MODE END ----------------->
 
-	//<------------ VERTEX MODE ----------------->
+	////<------------ VERTEX MODE ----------------->
+	//glPushMatrix();
+	//glTranslatef(0.f, 0.0f, 1.5f);
 	//glEnableClientState(GL_VERTEX_ARRAY);
-	//glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
 	//glVertexPointer(3, GL_FLOAT, 0, NULL);
 
 	////Bind other buffers
-	//glDrawArrays(GL_TRIANGLES, 0, sizeof(cubeVertices) / sizeof(float) / 3);
+	//glDrawArrays(GL_TRIANGLES, 0, sizeof(cubeSlowMesh) / sizeof(float) / 3);
 
 	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 	//glDisableClientState(GL_VERTEX_ARRAY);
-	//<------------ VERTEX MODE END ----------------->
+	//glPopMatrix();
+	////<------------ VERTEX MODE END ----------------->
 
 	//<------------ VERTEX AND INDEX MODE ----------------->
-	glRotatef(SDL_GetTicks(), 0.0f, 1.0f, 1.0f);
+	//glPushMatrix();
+	//glTranslatef(0.f, 0.0f, 3.f);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
@@ -317,11 +260,12 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_index);
 
 	//Bind other buffers
-	glDrawElements(GL_TRIANGLES, (sizeof(cubeIndex) / sizeof(int)), GL_UNSIGNED_INT, NULL);
+	glDrawElements(GL_TRIANGLES, (sizeof(MA_Pyramid_Indices) / sizeof(int)), GL_UNSIGNED_INT, NULL);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	//glPopMatrix();
 	//<------------ VERTEX AND INDEX MODE END ----------------->
 
 
@@ -354,6 +298,9 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
+
+	glDeleteBuffers(1, &my_vertices);
+	glDeleteBuffers(1, &my_index);
 
 	SDL_GL_DeleteContext(context);
 
