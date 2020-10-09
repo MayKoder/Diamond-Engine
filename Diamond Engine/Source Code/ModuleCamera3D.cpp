@@ -67,7 +67,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	if (App->input->GetMouseZ() != 0)
 	{
-		cameraMovement += Z * speed * -App->input->GetMouseZ();
+		cameraMovement += Z * speed * -App->input->GetMouseZ() * 20;
 	}
 
 	// Mouse motion ----------------
@@ -106,15 +106,6 @@ update_status ModuleCamera3D::Update(float dt)
 	Reference += cameraMovement;
 
 	CalculateViewMatrix();
-
-	Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();
-
-	Cube cb(1.f, 1.f, 1.f);
-	cb.SetPos(0.f, 0.5f, 0.f);
-	cb.Render();
-
 
 	return UPDATE_CONTINUE;
 }

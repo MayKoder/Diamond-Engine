@@ -1,4 +1,4 @@
-#include "Globals.h"
+﻿#include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "MaykMath.h"
@@ -8,6 +8,70 @@
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
+
+static const float cubeVertices[] = {
+1, 0, 1,
+1, 0, 0,
+1, 1, 0,
+1, 0, 1,
+1, 1, 0,
+1, 1, 1,
+	   
+0, 0, 1,
+1, 0, 1,
+1, 1, 1,
+0, 0, 1,
+1, 1, 1,
+0, 1, 1,
+	   
+0, 0, 0,
+0, 0, 1,
+0, 1, 1,
+0, 0, 0,
+0, 1, 1,
+0, 1, 0,
+	   
+1, 0, 0,
+0, 0, 0,
+0, 1, 0,
+1, 0, 0,
+0, 1, 0,
+1, 1, 0,
+	   
+0, 1, 0,
+0, 1, 1,
+1, 1, 1,
+0, 1, 0,
+1, 1, 1,
+1, 1, 0,
+	   
+0, 0, 0,
+1, 0, 0,
+1, 0, 1,
+0, 0, 0,
+1, 0, 1,
+0, 0, 1,
+};
+
+static const float cubeVerticesForIndex[] = {
+	0, 0, 0,
+	0, 0, 1,
+	0, 1, 0,
+	0, 1, 1,
+	1, 0, 0,
+	1, 0, 1,
+	1, 1, 0, 
+	1, 1, 1,
+};
+
+static const int cubeIndex[] = {
+5, 4, 6, 5, 6, 7, 
+1, 5, 7, 1, 7, 3, 
+0, 1, 3, 0, 3, 2, 
+4, 0, 2, 4, 2, 6, 
+2, 3, 7, 2, 7, 6, 
+0, 4, 5, 0, 5, 1,
+};
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), str_CAPS(""),
 vsync(false), wireframe(false)
@@ -124,6 +188,28 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_TEXTURE_2D);
 	}
 
+
+	//VERTEX MODE
+	//sizeof(float) * num_of_vertices * 3 = number of float inside the array
+
+	//ASK: Is this true?
+	//We send sizeof(cubeVerices) because we want the actual byte size of the array, not the number of float nor the number of vectors inside
+	
+	//glGenBuffers(1, (GLuint*)&(my_id));
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	/*glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_of_vertices * 3, cubeVertices, GL_STATIC_DRAW);*/
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), cubeVertices, GL_STATIC_DRAW);
+	
+	//VERTEX X INDEX MODE
+	glGenBuffers(1, (GLuint*)&(my_vertices));
+	glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVerticesForIndex), cubeVerticesForIndex, GL_STATIC_DRAW);
+
+
+	glGenBuffers(1, (GLuint*)&(my_index));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_index);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cubeIndex), cubeIndex, GL_STATIC_DRAW);
+
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -153,6 +239,81 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+
+	Plane p(0, 1, 0, 0);
+	p.axis = true;
+	p.Render();
+
+	//glLineWidth(2.0f);
+	//glBegin(GL_TRIANGLES);
+
+	//glVertex3f(1, 0, 1);
+	//glVertex3f(1, 0, 0);
+	//glVertex3f(1, 1, 0);
+	//glVertex3f(1, 0, 1);
+	//glVertex3f(1, 1, 0);
+	//glVertex3f(1, 1, 1);
+
+	//glVertex3f(0, 0, 1);
+	//glVertex3f(1, 0, 1);
+	//glVertex3f(1, 1, 1);
+	//glVertex3f(0, 0, 1);
+	//glVertex3f(1, 1, 1);
+	//glVertex3f(0, 1, 1);
+
+	//glVertex3f(0, 0, 0);
+	//glVertex3f(0, 0, 1);
+	//glVertex3f(0, 1, 1);
+	//glVertex3f(0, 0, 0);
+	//glVertex3f(0, 1, 1);
+	//glVertex3f(0, 1, 0);
+
+	//glVertex3f(1, 0, 0);
+	//glVertex3f(0, 0, 0);
+	//glVertex3f(0, 1, 0);
+	//glVertex3f(1, 0, 0);
+	//glVertex3f(0, 1, 0);
+	//glVertex3f(1, 1, 0);
+
+	//glVertex3f(0, 1, 0);
+	//glVertex3f(0, 1, 1);
+	//glVertex3f(1, 1, 1);
+	//glVertex3f(0, 1, 0);
+	//glVertex3f(1, 1, 1);
+	//glVertex3f(1, 1, 0);
+
+	//glVertex3f(0, 0, 0);
+	//glVertex3f(1, 0, 0);
+	//glVertex3f(1, 0, 1);
+	//glVertex3f(0, 0, 0);
+	//glVertex3f(1, 0, 1);
+	//glVertex3f(0, 0, 1);
+
+	//glEnd();
+	//glLineWidth(1.0f);
+
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_index);
+
+	//Bind other buffers
+	LOG("%d", sizeof(cubeVertices) / sizeof(float) / 3);
+	//glDrawArrays(GL_TRIANGLES, 0, sizeof(cubeVertices) / sizeof(float) / 3);
+	glDrawElements(GL_TRIANGLES, (sizeof(cubeIndex) / sizeof(int)), GL_UNSIGNED_INT, NULL);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glDisableClientState(GL_VERTEX_ARRAY);
+
+
+
+
+	//Cube cb(1.f, 1.f, 1.f);
+	//cb.SetPos(0.f, 0.5f, 0.f);
+	//cb.Render();
 
 	//App->level->Draw();
 	//if (debug_draw == true)

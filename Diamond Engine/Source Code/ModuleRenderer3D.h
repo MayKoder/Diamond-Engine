@@ -29,6 +29,11 @@ private:
 	bool vsync;
 	bool wireframe;
 
+	uint my_id;
+
+	uint my_vertices;
+	uint my_index;
+
 public:
 
 	Light lights[MAX_LIGHTS];
