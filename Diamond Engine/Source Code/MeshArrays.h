@@ -68,11 +68,11 @@ static const int MA_Cube_Indices[] = {
 
 static const float MA_Pyramid_Vertices[] = {
 
-	0, 0, 0,
-	1, 0, 0,
-	0, 0, 1,
-	1, 0, 1,
-	0.5f, 1, 0.5f,
+	-0.5, 0, -0.5,
+	0.5f, 0, -0.5,
+	-0.5, 0, 0.5f,
+	0.5f, 0, 0.5f,
+	0, 1, 0,
 };
 static const int MA_Pyramid_Indices[] = {
 	////0, 1, 2,

@@ -67,7 +67,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	if (App->input->GetMouseZ() != 0)
 	{
-		cameraMovement += Z * speed * -App->input->GetMouseZ() * 20;
+		cameraMovement += Z * speed * -App->input->GetMouseZ() * 250;
 	}
 
 	// Mouse motion ----------------

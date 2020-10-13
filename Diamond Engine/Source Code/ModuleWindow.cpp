@@ -74,6 +74,8 @@ bool ModuleWindow::Init()
 		SDL_SetWindowMinimumSize(window, MIN_WIDTH, MIN_HEIGHT);
 		SDL_MaximizeWindow(window);
 
+		SDL_GetWindowSize(window, &s_width, &s_height);
+
 		if(window == NULL)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());

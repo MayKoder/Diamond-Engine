@@ -21,6 +21,7 @@ viewportCorSize(0.f), dockspace_id(0)
 	windows[static_cast<unsigned int>(EditorWindow::ABOUT)] = new W_About();
 	windows[static_cast<unsigned int>(EditorWindow::INSPECTOR)] = new W_Inspector();
 	windows[static_cast<unsigned int>(EditorWindow::HIERARCHY)] = new W_Hierarchy();
+	windows[static_cast<unsigned int>(EditorWindow::SCENE)] = new W_Scene(App);
 
 	//float3 a = float3(2.f, 2.f, 2.f);
 

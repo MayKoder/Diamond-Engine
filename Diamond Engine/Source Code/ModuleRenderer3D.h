@@ -5,7 +5,34 @@
 #include"Primitive.h"
 #include "Light.h"
 
+#include "OpenGL.h"
+
 #define MAX_LIGHTS 8
+
+class Mesh 
+{
+
+public:
+	Mesh();
+	~Mesh();
+
+	void SetAsCube();
+	void SetAsPyramid();
+	void SetAsSphere();
+	void SetAsCylinder();
+
+	void RenderMesh();
+
+private:
+
+	//TODO: Vectors are really bad for this, maybe use float* or static array[]
+	uint vertices_id;
+	std::vector<float> vertices;
+
+	uint indices_id;
+	std::vector<float> indices;
+};
+
 
 class ModuleRenderer3D : public Module
 {
@@ -21,6 +48,8 @@ public:
 	void OnResize(int width, int height);
 	void OnGUI() override;
 
+	void GenerateFrameBuffer();
+
 private:
 
 	void GetCAPS(std::string& caps);
@@ -29,10 +58,16 @@ private:
 	bool vsync;
 	bool wireframe;
 
+	bool /*depth,*/ cull, lightng, color_material, texture_2d;
+
 	uint my_id;
 
-	uint my_vertices;
-	uint my_index;
+	Mesh testMesh;
+
+public:
+	unsigned int framebuffer;
+	unsigned int texColorBuffer;
+	unsigned int rbo;
 
 public:
 

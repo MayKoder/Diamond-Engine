@@ -15,6 +15,7 @@
 #include "W_About.h"
 #include "W_Inspector.h"
 #include "W_Hierarchy.h"
+#include "W_Scene.h"
 
 #define STYLES_PATH "styles.json"
 
@@ -24,6 +25,7 @@ enum class EditorWindow {
 	ABOUT,
 	INSPECTOR,
 	HIERARCHY,
+	SCENE,
 	MAX
 };
 

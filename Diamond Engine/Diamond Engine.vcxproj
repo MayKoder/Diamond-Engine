@@ -185,6 +185,7 @@
     <ClInclude Include="Source Code\W_Console.h" />
     <ClInclude Include="Source Code\W_Hierarchy.h" />
     <ClInclude Include="Source Code\W_Inspector.h" />
+    <ClInclude Include="Source Code\W_Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp" />
@@ -248,6 +249,7 @@
     <ClCompile Include="Source Code\W_Configuration.cpp" />
     <ClCompile Include="Source Code\W_Console.cpp" />
     <ClCompile Include="Source Code\W_Inspector.cpp" />
+    <ClCompile Include="Source Code\W_Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\KDTree.inl" />

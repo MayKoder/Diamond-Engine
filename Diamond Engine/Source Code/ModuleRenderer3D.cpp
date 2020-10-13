@@ -4,8 +4,6 @@
 #include "MaykMath.h"
 #include "MMGui.h"
 
-#include "OpenGL.h"
-
 #include "MeshArrays.h"
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -16,11 +14,13 @@ ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Modul
 vsync(false), wireframe(false)
 {
 	GetCAPS(str_CAPS);
+	/*depth =*/ cull = lightng = color_material = texture_2d = true;
 }
 
 // Destructor
 ModuleRenderer3D::~ModuleRenderer3D()
-{}
+{
+}
 
 // Called before render is available
 bool ModuleRenderer3D::Init()
@@ -137,17 +137,21 @@ bool ModuleRenderer3D::Init()
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(cubeSlowMesh), cubeSlowMesh, GL_STATIC_DRAW);
 	
 	//VERTEX X INDEX MODE
-	glGenBuffers(1, (GLuint*)&(my_vertices));
-	glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(MA_Pyramid_Vertices), MA_Pyramid_Vertices, GL_STATIC_DRAW);
+	//glGenBuffers(1, (GLuint*)&(my_vertices));
+	//glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(MA_Pyramid_Vertices), MA_Pyramid_Vertices, GL_STATIC_DRAW);
 
 
-	glGenBuffers(1, (GLuint*)&(my_index));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(MA_Pyramid_Indices), MA_Pyramid_Indices, GL_STATIC_DRAW);
+	//glGenBuffers(1, (GLuint*)&(my_index));
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_index);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(MA_Pyramid_Indices), MA_Pyramid_Indices, GL_STATIC_DRAW);
+
+	testMesh.SetAsCube();
+
+	GenerateFrameBuffer();
 
 	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	OnResize(App->window->s_width, App->window->s_height);
 
 	return ret;
 }
@@ -155,9 +159,13 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glEnable(GL_DEPTH_TEST);
+
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
@@ -249,27 +257,50 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//glPushMatrix();
 	//glTranslatef(0.f, 0.0f, 3.f);
 
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-	//TODO: Make a buffer for the colors and try this
-	//glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
-	//glVertexAttribPointer((GLint)1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	////TODO: Make a buffer for the colors and try this
+	////glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+	////glVertexAttribPointer((GLint)1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_index);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_index);
 
-	//Bind other buffers
-	glDrawElements(GL_TRIANGLES, (sizeof(MA_Pyramid_Indices) / sizeof(int)), GL_UNSIGNED_INT, NULL);
+	////Bind other buffers
+	//glDrawElements(GL_TRIANGLES, (sizeof(MA_Pyramid_Indices) / sizeof(int)), GL_UNSIGNED_INT, NULL);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glDisableClientState(GL_VERTEX_ARRAY);
 	//glPopMatrix();
 	//<------------ VERTEX AND INDEX MODE END ----------------->
 
+	int rings = 10;
+	int sectors = 10;
 
+	float const R = 1. / (float)(rings - 1);
+	float const S = 1. / (float)(sectors - 1);
+	int r, s;
 
+	glBegin(GL_POINTS);
+	for (r = 0; r < rings; r++) for (s = 0; s < sectors; s++) {
+		float const y = sin(-M_PI_2 + M_PI * r * R);
+		float const x = cos(2 * M_PI * s * S) * sin(M_PI * r * R);
+		float const z = sin(2 * M_PI * s * S) * sin(M_PI * r * R);
+
+		glVertex3f(x * 1, y * 1, z * 1);
+
+	}
+	glEnd();
+
+	testMesh.RenderMesh();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glDisable(GL_DEPTH_TEST);
+
+	glClearColor(1.f, 1.f, 1.f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//Cube cb(1.f, 1.f, 1.f);
 	//cb.SetPos(0.f, 0.5f, 0.f);
@@ -299,8 +330,9 @@ bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
 
-	glDeleteBuffers(1, &my_vertices);
-	glDeleteBuffers(1, &my_index);
+	glDeleteFramebuffers(1, &framebuffer);
+	glDeleteTextures(1, &texColorBuffer);
+	glDeleteRenderbuffers(1, &rbo);
 
 	SDL_GL_DeleteContext(context);
 
@@ -326,7 +358,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 void ModuleRenderer3D::OnGUI()
 {
-	if (ImGui::CollapsingHeader("Hardware"))
+	if (ImGui::CollapsingHeader("Rendering"))
 	{
 
 		//TODO: Store all this info as const char* and dont call the functions every frame
@@ -372,13 +404,52 @@ void ModuleRenderer3D::OnGUI()
 			if (SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
 				LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 		}
-
+		ImGui::SameLine();
 		if (ImGui::Checkbox("Wireframe Mode", &wireframe))
-		{
 			(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		}
 
+		//if (ImGui::Checkbox("Depth Test", &depth))
+		//	(depth) ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+		ImGui::SameLine();
+		if (ImGui::Checkbox("Cull face", &cull))
+			(cull) ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+
+		if (ImGui::Checkbox("Lighting", &lightng))
+			(lightng) ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);
+		ImGui::SameLine();
+		if (ImGui::Checkbox("Color material", &color_material))
+			(color_material) ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
+
+		if (ImGui::Checkbox("Texture 2D", &texture_2d))
+			(texture_2d) ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
 	}
+}
+
+void ModuleRenderer3D::GenerateFrameBuffer()
+{
+	glGenFramebuffers(1, &framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
+	glGenTextures(1, &texColorBuffer);
+	glBindTexture(GL_TEXTURE_2D, texColorBuffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, App->window->s_width, App->window->s_height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// attach it to currently bound framebuffer object
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColorBuffer, 0);
+
+	glGenRenderbuffers(1, &rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, App->window->s_width, App->window->s_height);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		LOG("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void ModuleRenderer3D::GetCAPS(std::string& caps)
@@ -394,4 +465,68 @@ void ModuleRenderer3D::GetCAPS(std::string& caps)
 	caps += (SDL_HasAVX()) ? "AVX, " : "";
 	caps += (SDL_HasAltiVec()) ? "AltiVec, " : "";
 	caps += (SDL_Has3DNow()) ? "3DNow, " : "";
+}
+
+// <---------------- MESH CLASS ----------------> //
+
+Mesh::Mesh(): indices_id(-1), vertices_id(-1)
+{
+
+}
+
+Mesh::~Mesh()
+{
+	if(indices_id != -1)
+		glDeleteBuffers(1, &vertices_id);
+
+	if (vertices_id != -1)
+		glDeleteBuffers(1, &indices_id);
+}
+
+void Mesh::SetAsCube()
+{
+	glGenBuffers(1, (GLuint*)&(vertices_id));
+	glBindBuffer(GL_ARRAY_BUFFER, vertices_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(MA_Cube_Vertices), MA_Cube_Vertices, GL_STATIC_DRAW);
+
+
+	glGenBuffers(1, (GLuint*)&(indices_id));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(MA_Cube_Indices), MA_Cube_Indices, GL_STATIC_DRAW);
+}
+
+void Mesh::SetAsPyramid()
+{
+
+
+}
+
+void Mesh::SetAsSphere()
+{
+}
+
+void Mesh::SetAsCylinder()
+{
+}
+
+void Mesh::RenderMesh()
+{
+	//ASK: glDrawElementsInstanced()?
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, vertices_id);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	//TODO: Make a buffer for the colors and try this
+	//glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+	//glVertexAttribPointer((GLint)1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
+
+	//Bind other buffers
+	glDrawElements(GL_TRIANGLES, (sizeof(MA_Cube_Indices) / sizeof(int)), GL_UNSIGNED_INT, NULL);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glDisableClientState(GL_VERTEX_ARRAY);
 }
