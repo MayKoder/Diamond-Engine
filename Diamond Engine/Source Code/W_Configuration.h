@@ -4,8 +4,6 @@
 
 #include "Window.h"
 #include <vector>
-#include "Application.h"
-#include "MaykMath.h"
 
 #define FPS_MS_LOG_MAXLENGHT 50
 

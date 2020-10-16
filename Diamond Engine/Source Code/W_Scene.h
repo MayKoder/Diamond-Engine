@@ -2,8 +2,8 @@
 #define __W_SCENE_H__
 
 #include "Window.h"
-#include "OpenGL.h"
-#include"Application.h"
+
+class Application;
 
 class W_Scene : public Window
 {

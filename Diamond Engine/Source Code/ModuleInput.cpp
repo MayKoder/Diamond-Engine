@@ -1,6 +1,10 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "ImGui/imgui_impl_sdl.h"
+
+#include "ModuleRenderer3D.h"
+#include "ModuleWindow.h"
 
 #define MAX_KEYS 300
 
@@ -112,6 +116,7 @@ update_status ModuleInput::PreUpdate(float dt)
 				if (e.window.event == SDL_WINDOWEVENT_RESIZED)
 				{
 					App->renderer3D->OnResize(e.window.data1, e.window.data2);
+					App->renderer3D->ReGenerateFrameBuffer(e.window.data1, e.window.data2);
 				}
 
 				if (e.window.event == SDL_WINDOWEVENT_CLOSE && e.window.windowID == SDL_GetWindowID(App->window->window)) 

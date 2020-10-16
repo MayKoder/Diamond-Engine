@@ -1,6 +1,10 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleCamera3D.h"
+#include "ImGui/imconfig.h"
+#include "ImGui/imgui.h"
+#include "ModuleInput.h"
+#include "ModuleWindow.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled), mouseSensitivity(0.50f), cameraSpeed(1.f), cameraMovement(0.f, 0.f, 0.f)
 {

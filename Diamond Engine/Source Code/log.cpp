@@ -3,6 +3,8 @@
 
 //TODO: Move the GetEditorWindow() to Application.cpp?
 #include "Application.h"
+#include "W_Console.h"
+#include "M_Editor.h"
 
 void log(const char file[], int line, const char* format, ...)
 {

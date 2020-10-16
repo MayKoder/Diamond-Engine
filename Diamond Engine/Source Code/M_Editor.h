@@ -3,22 +3,9 @@
 #include "Module.h"
 #include "Window.h"
 
-//ImGui Includes
-#include "ImGui/imgui.h"
-#include "ImGui/imgui_internal.h"
-#include "ImGui/imgui_impl_sdl.h"
-#include "ImGui/imgui_impl_opengl3.h"
-
-//Window types
-#include "W_Configuration.h"
-#include "W_Console.h"
-#include "W_About.h"
-#include "W_Inspector.h"
-#include "W_Hierarchy.h"
-#include "W_Scene.h"
-
 #define STYLES_PATH "styles.json"
 
+typedef unsigned int ImGuiID;
 enum class EditorWindow {
 	CONFIGURATION,
 	CONSOLE,
@@ -50,6 +37,7 @@ public:
 
 	void SaveStyle(const char* styleName);
 	void LoadStyle(const char* styleName);
+	void DeleteStyle(const char* styleName);
 
 private:
 
@@ -58,6 +46,4 @@ private:
 
 	float viewportCorSize;
 	ImGuiID dockspace_id;
-
-
 };

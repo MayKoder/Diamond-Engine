@@ -6,6 +6,23 @@
 #include "MMGui.h"
 #include "parson/parson.h"
 
+//ImGui Includes
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_internal.h"
+#include "ImGui/imgui_impl_sdl.h"
+#include "ImGui/imgui_impl_opengl3.h"
+
+#include "ModuleWindow.h"
+#include "ModuleRenderer3D.h"
+
+//Window types
+#include "W_Configuration.h"
+#include "W_Console.h"
+#include "W_About.h"
+#include "W_Inspector.h"
+#include "W_Hierarchy.h"
+#include "W_Scene.h"
+
 //#include"MathGeoLib/include/Math/float3.h"
 
 
@@ -265,6 +282,55 @@ void M_Editor::DrawTopBar()
 	ImGui::Begin("ButtonsNavBar", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoDocking);
 	viewportCorSize = ImGui::GetWindowSize().y;
 	
+
+
+
+	const char* items[] = {"Dark"};
+	static const char* current_item = items[0];
+
+	//ImGuiStyle& style = ImGui::GetStyle();
+	//float w = ImGui::CalcItemWidth();
+	//float spacing = style.ItemInnerSpacing.x;
+	//float button_sz = ImGui::GetFrameHeight();
+	//ImGui::PushItemWidth((w - spacing * 2.0f - button_sz * 2.0f) * 0.1f);
+	if (ImGui::BeginCombo("##styleDropdown", "Style"))
+	{
+		for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+		{
+			bool is_selected = (current_item == items[n]);
+			if (ImGui::Button(items[n])) 
+			{
+				current_item = items[n];
+				LoadStyle(current_item);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("X")) 
+			{
+				//Delete style
+				DeleteStyle(current_item);
+			}
+
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+		}
+
+		ImGui::Separator();
+
+		char* input = "";
+		ImGui::InputText("##sName: ", input, 10);
+
+		if (ImGui::Button("Save current style")) {
+			SaveStyle("Dark");
+		}
+	
+
+
+
+
+		ImGui::EndCombo();
+	}
+	//ImGui::PopItemWidth();
+
 	//float halfWindowSize = ImGui::GetWindowSize().y - 15;
 
 	//ImGui::SetCursorPosY((ImGui::GetWindowSize().y / 2) - (halfWindowSize / 2));
@@ -290,7 +356,6 @@ void M_Editor::DrawTopBar()
 
 void M_Editor::CreateDockSpace()
 {
-
 	ImGuiViewport* viewport = ImGui::GetMainViewport();
 
 	ImVec2 dockPos(viewport->GetWorkPos());
@@ -301,19 +366,7 @@ void M_Editor::CreateDockSpace()
 	dockSize.y -= viewportCorSize;
 	ImGui::SetNextWindowSize(dockSize);
 
-	//ImGui::SetNextWindowViewport(viewport->ID);
-	//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-	////ImGui::PushStyleColor(ImGuiCol_::bg);
-
-	//ImGui::Begin("Main Dockspace", NULL, ImGuiWindowFlags_::ImGuiWindowFlags_NoTitleBar);
-
-	//dockspace_id = ImGui::GetID("Main Dockspace");
-	////ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
 	dockspace_id = ImGui::DockSpaceOverViewportCustom(viewport, ImGuiDockNodeFlags_PassthruCentralNode, dockPos, dockSize, nullptr);
-
-	//ImGui::End();
-	//ImGui::PopStyleVar();
-
 }
 
 
@@ -382,7 +435,7 @@ void M_Editor::SaveStyle(const char* styleName)
 	//-------------------------------------//
 
 	//Second style type
-	//json_object_set_value(root_object, "Default", json_value_init_array());
+	json_object_set_value(root_object, "Default", json_value_init_array());
 
 	//-------------------------------------//
 
@@ -395,9 +448,9 @@ void M_Editor::SaveStyle(const char* styleName)
 
 }
 
+//TODO: Delete style?
 void M_Editor::LoadStyle(const char* styleName)
 {
-
 	JSON_Value* file = json_parse_file(STYLES_PATH);
 	JSON_Object* root_object = json_value_get_object(file);
 
@@ -422,7 +475,27 @@ void M_Editor::LoadStyle(const char* styleName)
 	//json_value_free(stArray);
 
 	LOG("Style loaded");
+}
 
+void M_Editor::DeleteStyle(const char* styleName)
+{
+	//Maybe learning json alone wasn't a good idea
+	LOG("Saving style");
 
+	//Init node
+	JSON_Value* root_value = json_value_init_object();
+	JSON_Object* root_object = json_value_get_object(root_value);
 
+	//Style id
+	//json_object_dotset_number(root_object, "Dark.id", 0);
+
+	//Init settings array
+	JSON_Value* settingsArray = json_value_init_array();
+	json_object_set_value(root_object, styleName, NULL);
+
+	//Save file 
+	json_serialize_to_file_pretty(root_value, STYLES_PATH);
+
+	//Free memory
+	json_value_free(root_value);
 }

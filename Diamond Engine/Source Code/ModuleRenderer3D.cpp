@@ -1,10 +1,14 @@
-﻿#include "Globals.h"
-#include "Application.h"
-#include "ModuleRenderer3D.h"
+﻿#include "ModuleRenderer3D.h"
 #include "MaykMath.h"
 #include "MMGui.h"
 
 #include "MeshArrays.h"
+#include "ModuleWindow.h"
+#include "ModuleCamera3D.h"
+#include "M_Editor.h"
+
+#include "MeshLoader.h"
+
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
@@ -15,6 +19,8 @@ vsync(false), wireframe(false)
 {
 	GetCAPS(str_CAPS);
 	/*depth =*/ cull = lightng = color_material = texture_2d = true;
+
+	framebuffer = texColorBuffer = rbo = 0;
 }
 
 // Destructor
@@ -146,13 +152,21 @@ bool ModuleRenderer3D::Init()
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_index);
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(MA_Pyramid_Indices), MA_Pyramid_Indices, GL_STATIC_DRAW);
 
-	testMesh.SetAsCube();
+	//Generate scene buffers
+	ReGenerateFrameBuffer(App->window->s_width, App->window->s_height);
 
-	GenerateFrameBuffer();
+
+	MeshLoader::ImportFBX("Assets/Warrior/warrior.FBX", test);
+	for (unsigned int i = 0; i < test.size(); i++)
+	{
+		test[i]->GenBuffers();
+	}
+
 
 	// Projection matrix for
 	OnResize(App->window->s_width, App->window->s_height);
 
+	
 	return ret;
 }
 
@@ -172,7 +186,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
 	//Light 0 on cam pos
-	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+	lights[0].SetPos(5, 5, 5);
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -276,25 +290,13 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//glPopMatrix();
 	//<------------ VERTEX AND INDEX MODE END ----------------->
 
-	int rings = 10;
-	int sectors = 10;
-
-	float const R = 1. / (float)(rings - 1);
-	float const S = 1. / (float)(sectors - 1);
-	int r, s;
-
-	glBegin(GL_POINTS);
-	for (r = 0; r < rings; r++) for (s = 0; s < sectors; s++) {
-		float const y = sin(-M_PI_2 + M_PI * r * R);
-		float const x = cos(2 * M_PI * s * S) * sin(M_PI * r * R);
-		float const z = sin(2 * M_PI * s * S) * sin(M_PI * r * R);
-
-		glVertex3f(x * 1, y * 1, z * 1);
-
+	//testMesh.RenderMesh();
+	for (unsigned int i = 0; i < test.size(); i++)
+	{
+		glRotated(-90, 1, 0, 0);
+		glScaled(.01f, .01f, .01f);
+		test[i]->RenderMesh();
 	}
-	glEnd();
-
-	testMesh.RenderMesh();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDisable(GL_DEPTH_TEST);
@@ -333,6 +335,13 @@ bool ModuleRenderer3D::CleanUp()
 	glDeleteFramebuffers(1, &framebuffer);
 	glDeleteTextures(1, &texColorBuffer);
 	glDeleteRenderbuffers(1, &rbo);
+
+	for (unsigned int i = 0; i < test.size(); i++)
+	{
+		delete test[i];
+		test[i] = nullptr;
+	}
+	test.clear();
 
 	SDL_GL_DeleteContext(context);
 
@@ -425,14 +434,24 @@ void ModuleRenderer3D::OnGUI()
 	}
 }
 
-void ModuleRenderer3D::GenerateFrameBuffer()
+void ModuleRenderer3D::ReGenerateFrameBuffer(int w, int h)
 {
+	if(framebuffer > 0)
+		glDeleteFramebuffers(1, &framebuffer);
+
+	if (texColorBuffer > 0)
+		glDeleteTextures(1, &texColorBuffer);
+
+	if (rbo > 0)
+		glDeleteRenderbuffers(1, &rbo);
+
+
 	glGenFramebuffers(1, &framebuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
 	glGenTextures(1, &texColorBuffer);
 	glBindTexture(GL_TEXTURE_2D, texColorBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, App->window->s_width, App->window->s_height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -442,7 +461,7 @@ void ModuleRenderer3D::GenerateFrameBuffer()
 
 	glGenRenderbuffers(1, &rbo);
 	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, App->window->s_width, App->window->s_height);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, w, h);
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
@@ -477,22 +496,37 @@ Mesh::Mesh(): indices_id(-1), vertices_id(-1)
 Mesh::~Mesh()
 {
 	if(indices_id != -1)
-		glDeleteBuffers(1, &vertices_id);
+		glDeleteBuffers(1, &indices_id);
 
 	if (vertices_id != -1)
-		glDeleteBuffers(1, &indices_id);
+		glDeleteBuffers(1, &vertices_id);
+
+	delete[] indices;
+	delete[] vertices;
+
+	indices = nullptr;
+	vertices = nullptr;
+
 }
 
 void Mesh::SetAsCube()
 {
-	glGenBuffers(1, (GLuint*)&(vertices_id));
-	glBindBuffer(GL_ARRAY_BUFFER, vertices_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(MA_Cube_Vertices), MA_Cube_Vertices, GL_STATIC_DRAW);
+
+	//vertices_count = (sizeof(MA_Cube_Vertices) / sizeof(float)) * 3;
+	//indices_count = (sizeof(MA_Cube_Indices) / sizeof(int));
+
+	//glGenBuffers(1, (GLuint*)&(vertices_id));
+	//glBindBuffer(GL_ARRAY_BUFFER, vertices_id);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(MA_Cube_Vertices), MA_Cube_Vertices, GL_STATIC_DRAW);
 
 
-	glGenBuffers(1, (GLuint*)&(indices_id));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(MA_Cube_Indices), MA_Cube_Indices, GL_STATIC_DRAW);
+	//glGenBuffers(1, (GLuint*)&(indices_id));
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(MA_Cube_Indices), MA_Cube_Indices, GL_STATIC_DRAW);
+
+
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void Mesh::SetAsPyramid()
@@ -503,10 +537,33 @@ void Mesh::SetAsPyramid()
 
 void Mesh::SetAsSphere()
 {
+	//createSphere(vertex, index, 1, 20, 20);
 }
 
 void Mesh::SetAsCylinder()
 {
+}
+
+void Mesh::GenBuffers()
+{
+	
+
+	// vertices_count = vector3's // size of the array (elements) = vertices_count * 3 // size of the array in bytes = sizeof(float) * vertices_count * 3
+	glGenBuffers(1, (GLuint*)&(vertices_id));
+	glBindBuffer(GL_ARRAY_BUFFER, vertices_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices_count * 3, vertices, GL_STATIC_DRAW);
+
+	// indices_count = elements // size of the array (elements) = indices_count // size of the array in bytes = sizeof(uint) * indices_count
+	glGenBuffers(1, (GLuint*)&(indices_id));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indices_count, indices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	//WARNING: Maybe delete buffers here?
+	//delete[] indices;
+	//delete[] vertices;
 }
 
 void Mesh::RenderMesh()
@@ -524,7 +581,7 @@ void Mesh::RenderMesh()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
 
 	//Bind other buffers
-	glDrawElements(GL_TRIANGLES, (sizeof(MA_Cube_Indices) / sizeof(int)), GL_UNSIGNED_INT, NULL);
+	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

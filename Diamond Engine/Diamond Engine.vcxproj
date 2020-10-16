@@ -169,6 +169,7 @@
     <ClInclude Include="Source Code\Light.h" />
     <ClInclude Include="Source Code\MaykMath.h" />
     <ClInclude Include="Source Code\MeshArrays.h" />
+    <ClInclude Include="Source Code\MeshLoader.h" />
     <ClInclude Include="Source Code\MMGui.h" />
     <ClInclude Include="Source Code\Module.h" />
     <ClInclude Include="Source Code\ModuleCamera3D.h" />
@@ -232,6 +233,7 @@
     <ClCompile Include="Source Code\External Libraries\mmgr\mmgr.cpp" />
     <ClCompile Include="Source Code\External Libraries\parson\parson.c" />
     <ClCompile Include="Source Code\glmath.cpp" />
+    <ClCompile Include="Source Code\MeshLoader.cpp" />
     <ClCompile Include="Source Code\W_Hierarchy.cpp" />
     <ClCompile Include="Source Code\Light.cpp" />
     <ClCompile Include="Source Code\log.cpp" />

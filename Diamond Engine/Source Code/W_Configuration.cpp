@@ -1,6 +1,9 @@
 #include "W_Configuration.h"
 #include "MMGui.h"
 
+#include "Application.h"
+#include "MaykMath.h"
+
 
 W_Configuration::W_Configuration()
 {

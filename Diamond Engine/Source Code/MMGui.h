@@ -3,8 +3,6 @@
 //ImGui Includes
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_internal.h"
-#include "ImGui/imgui_impl_sdl.h"
-#include "ImGui/imgui_impl_opengl3.h"
 
 #include <Windows.h>
 

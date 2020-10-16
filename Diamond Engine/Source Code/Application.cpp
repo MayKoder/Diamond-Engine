@@ -1,5 +1,13 @@
 #include "Application.h"
 #include<string>
+#include "Globals.h"
+
+#include"ModuleWindow.h"
+#include"ModuleInput.h"
+#include"ModuleRenderer3D.h"
+#include"ModuleCamera3D.h"
+#include"M_Editor.h"
+
 
 extern Application* Engine = nullptr;
 Application::Application() : quitApplicationState(false), fpsCap(60)

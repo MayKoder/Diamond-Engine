@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Globals.h"
 #include "Timer.h"
 #include <vector>
 #include<string>
 
+//TODO: Yoink this
 #include "Module.h"
-#include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleCamera3D.h"
-#include "M_Editor.h"
+class ModuleWindow;
+class ModuleInput;
+class ModuleRenderer3D;
+class ModuleCamera3D;
+class M_Editor;
 
 
 class Application
