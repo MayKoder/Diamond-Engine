@@ -16,6 +16,8 @@ namespace MaykMath
 	float Random(float minV, float maxV);
 	std::string VersionToString(int major, int minor, int patch);
 
+	void FindCentroid(float* A, float* B, float* C, float* r);
+
 	template <class T>
 	void FixedVectorPushBack(std::vector<T>& vec, T& value) {
 		if (vec.size() == vec.capacity())

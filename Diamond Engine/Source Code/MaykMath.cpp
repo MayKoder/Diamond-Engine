@@ -26,6 +26,14 @@ std::string MaykMath::VersionToString(int major, int minor, int patch)
 	return ret;
 }
 
+void MaykMath::FindCentroid(float* A, float* B, float* C, float* r)
+{
+	for (int i = 0; i < 3; ++i)
+	{
+		r[i] = (A[i] + B[i] + C[i]) / 3;
+	}
+}
+
 //template <class T>
 //void MaykMath::FixedVectorPushBack(std::vector<T>& vec, T& value)
 //{

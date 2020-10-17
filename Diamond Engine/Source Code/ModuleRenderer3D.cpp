@@ -155,12 +155,8 @@ bool ModuleRenderer3D::Init()
 	//Generate scene buffers
 	ReGenerateFrameBuffer(App->window->s_width, App->window->s_height);
 
-
-	MeshLoader::ImportFBX("Assets/Warrior/warrior.FBX", test);
-	for (unsigned int i = 0; i < test.size(); i++)
-	{
-		test[i]->GenBuffers();
-	}
+	MeshLoader::EnableDebugMode();
+	//MeshLoader::ImportFBX("Assets/Warrior/warrior.FBX", test);
 
 
 	// Projection matrix for
@@ -291,11 +287,14 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//<------------ VERTEX AND INDEX MODE END ----------------->
 
 	//testMesh.RenderMesh();
-	for (unsigned int i = 0; i < test.size(); i++)
+	for (unsigned int i = 0; i < testMeshes.size(); i++)
 	{
-		glRotated(-90, 1, 0, 0);
-		glScaled(.01f, .01f, .01f);
-		test[i]->RenderMesh();
+		if (testMeshes[i]->vertices_count != 0) 
+		{
+			glRotated(-90, 1, 0, 0);
+			//glScaled(.01f, .01f, .01f);
+			testMeshes[i]->RenderMesh();
+		}
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -332,16 +331,18 @@ bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
 
+	MeshLoader::DisableDebugMode();
+
 	glDeleteFramebuffers(1, &framebuffer);
 	glDeleteTextures(1, &texColorBuffer);
 	glDeleteRenderbuffers(1, &rbo);
 
-	for (unsigned int i = 0; i < test.size(); i++)
+	for (unsigned int i = 0; i < testMeshes.size(); i++)
 	{
-		delete test[i];
-		test[i] = nullptr;
+		delete testMeshes[i];
+		testMeshes[i] = nullptr;
 	}
-	test.clear();
+	testMeshes.clear();
 
 	SDL_GL_DeleteContext(context);
 
@@ -501,11 +502,16 @@ Mesh::~Mesh()
 	if (vertices_id != -1)
 		glDeleteBuffers(1, &vertices_id);
 
+	if (normalbuffer_id != -1)
+		glDeleteBuffers(1, &normalbuffer_id);
+
 	delete[] indices;
 	delete[] vertices;
+	delete[] normals;
 
 	indices = nullptr;
 	vertices = nullptr;
+	normals = nullptr;
 
 }
 
@@ -549,14 +555,28 @@ void Mesh::GenBuffers()
 	
 
 	// vertices_count = vector3's // size of the array (elements) = vertices_count * 3 // size of the array in bytes = sizeof(float) * vertices_count * 3
-	glGenBuffers(1, (GLuint*)&(vertices_id));
-	glBindBuffer(GL_ARRAY_BUFFER, vertices_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices_count * 3, vertices, GL_STATIC_DRAW);
+	if (vertices_count != 0) 
+	{
+		glGenBuffers(1, (GLuint*)&(vertices_id));
+		glBindBuffer(GL_ARRAY_BUFFER, vertices_id);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices_count * 3, &vertices[0], GL_STATIC_DRAW);
+	}
 
-	// indices_count = elements // size of the array (elements) = indices_count // size of the array in bytes = sizeof(uint) * indices_count
-	glGenBuffers(1, (GLuint*)&(indices_id));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indices_count, indices, GL_STATIC_DRAW);
+	if (indices_count != 0)
+	{
+		// indices_count = elements // size of the array (elements) = indices_count // size of the array in bytes = sizeof(uint) * indices_count
+		glGenBuffers(1, (GLuint*)&(indices_id));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indices_count, &indices[0], GL_STATIC_DRAW);
+	}
+
+	if (normals_count != 0)
+	{
+		//Normals buffer
+		glGenBuffers(1, (GLuint*)&(normalbuffer_id));
+		glBindBuffer(GL_ARRAY_BUFFER, normalbuffer_id);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normals_count * 3, &normals[0], GL_STATIC_DRAW);
+	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -574,14 +594,45 @@ void Mesh::RenderMesh()
 	glBindBuffer(GL_ARRAY_BUFFER, vertices_id);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
+	// 3er buffer de atributos : normales
+	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer_id);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_TRUE, 0, (void*)0);
+
 	//TODO: Make a buffer for the colors and try this
 	//glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
-	//glVertexAttribPointer((GLint)1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	//glVertexAttribPointer((GLint)1, 3, GL_FLOAT, GL_TRUE, 0, (void*)0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
 
 	//Bind other buffers
 	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
+	
+	//glDrawElements(GL_LINES, indices_count, GL_UNSIGNED_INT, NULL);
+
+	glPointSize(3.0f);
+	glBegin(GL_POINTS);
+	for (int i = 0; i < vertices_count * 3; i += 3)
+	{
+		glColor3f(1, 0, 0);
+		glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
+	}
+	glEnd();
+	glPointSize(1.0f);
+
+	//Vertex normals
+	glBegin(GL_LINES);
+	float normalLenght = 0.1f;
+	for (int i = 0; i < normals_count * 3; i += 3)
+	{
+		glColor3f(0, 1, 0);
+		glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
+		glVertex3f(vertices[i] + normals[i] * normalLenght, vertices[i + 1] + normals[i + 1] * normalLenght, vertices[i + 2] + normals[i + 2] * normalLenght);
+	}
+	glEnd();
+
+	//Face normals
+
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

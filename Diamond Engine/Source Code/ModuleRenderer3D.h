@@ -38,6 +38,10 @@ public:
 	uint vertices_count = 0;
 	float* vertices = nullptr;
 
+	uint normalbuffer_id = 0;
+	uint normals_count = 0;
+	float* normals = nullptr;
+
 	//static void push_indices(uint* indices, int sectors, int r, int s)
 	//{
 	//	int curRow = r * sectors;
@@ -104,13 +108,13 @@ private:
 
 	uint my_id;
 
-	//Mesh testMesh;
-	std::vector<Mesh*> test;
-
 public:
 	unsigned int framebuffer;
 	unsigned int texColorBuffer;
 	unsigned int rbo;
+
+	//Mesh testMesh;
+	std::vector<Mesh*> testMeshes;
 
 public:
 
