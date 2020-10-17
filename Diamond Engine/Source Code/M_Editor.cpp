@@ -208,6 +208,20 @@ void M_Editor::DrawMenuBar()
 		{
 			ImGui::EndMenu();
 		}
+		if (ImGui::BeginMenu("GameObject"))
+		{
+
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
+
+			ImGui::MenuItem("Cube", nullptr);
+			ImGui::MenuItem("Pyramid", nullptr);
+			ImGui::MenuItem("Sphere", nullptr);
+			ImGui::MenuItem("Cylinder", nullptr);
+			ImGui::MenuItem("Monkey", nullptr);
+
+			ImGui::PopStyleColor();
+			ImGui::EndMenu();
+		}
 		if (ImGui::BeginMenu("Windows"))
 		{
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));

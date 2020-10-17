@@ -2,6 +2,10 @@
 
 #include "Globals.h"
 
+#include "Application.h"
+#include "M_Editor.h"
+#include "W_Console.h"
+
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
@@ -9,11 +13,24 @@
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
+void MeshLoader::myCallback(const char* msg, char* userData) 
+{
+	if (Engine != nullptr && Engine->moduleEditor != nullptr)
+	{
+		W_Console* consoleWindow = dynamic_cast<W_Console*>(Engine->moduleEditor->GetEditorWindow(EditorWindow::CONSOLE));
+
+		if (consoleWindow != nullptr)
+			consoleWindow->AddLog(msg);
+	}
+}
+
 void MeshLoader::EnableDebugMode()
 {
 	// Stream log messages to Debug window
 	struct aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
+	stream.callback = myCallback;
+
 	aiAttachLogStream(&stream);
 }
 
@@ -53,10 +70,10 @@ void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes)
 				_mesh->normals = new float[_mesh->normals_count * 3];
 				memcpy(_mesh->normals, importedMesh->mNormals, sizeof(float) * _mesh->normals_count * 3);
 
-				for (int i = 0; i < _mesh->normals_count * 3; i += 3)
-				{
-					LOG("Normal = %f, %f, %f", _mesh->normals[i], _mesh->normals[i + 1], _mesh->normals[i + 2]);
-				}
+				//for (int i = 0; i < _mesh->normals_count * 3; i += 3)
+				//{
+				//	LOG("Normal = %f, %f, %f", _mesh->normals[i], _mesh->normals[i + 1], _mesh->normals[i + 2]);
+				//}
 
 				LOG("New mesh with %d normals", _mesh->normals_count);
 			}

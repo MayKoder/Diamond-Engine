@@ -292,7 +292,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		if (testMeshes[i]->vertices_count != 0) 
 		{
 			glRotated(-90, 1, 0, 0);
-			//glScaled(.01f, .01f, .01f);
+			glScaled(.01f, .01f, .01f);
 			testMeshes[i]->RenderMesh();
 		}
 	}
@@ -604,23 +604,27 @@ void Mesh::RenderMesh()
 	//glVertexAttribPointer((GLint)1, 3, GL_FLOAT, GL_TRUE, 0, (void*)0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
-
-	//Bind other buffers
 	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
 	
 	//glDrawElements(GL_LINES, indices_count, GL_UNSIGNED_INT, NULL);
 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glDisableClientState(GL_VERTEX_ARRAY);
+
 	glPointSize(3.0f);
+	glColor3f(1, 0, 0);
 	glBegin(GL_POINTS);
 	for (int i = 0; i < vertices_count * 3; i += 3)
 	{
-		glColor3f(1, 0, 0);
 		glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
 	}
 	glEnd();
+	glColor3f(0, 1, 0);
 	glPointSize(1.0f);
 
 	//Vertex normals
+	glColor3f(0, 1, 0);
 	glBegin(GL_LINES);
 	float normalLenght = 0.1f;
 	for (int i = 0; i < normals_count * 3; i += 3)
@@ -630,11 +634,7 @@ void Mesh::RenderMesh()
 		glVertex3f(vertices[i] + normals[i] * normalLenght, vertices[i + 1] + normals[i + 1] * normalLenght, vertices[i + 2] + normals[i + 2] * normalLenght);
 	}
 	glEnd();
+	glColor3f(1, 1, 1);
 
 	//Face normals
-
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glDisableClientState(GL_VERTEX_ARRAY);
 }
