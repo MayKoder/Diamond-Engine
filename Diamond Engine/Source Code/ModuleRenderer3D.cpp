@@ -292,7 +292,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		if (testMeshes[i]->vertices_count != 0) 
 		{
 			glRotated(-90, 1, 0, 0);
-			glScaled(.01f, .01f, .01f);
+			//glScaled(.01f, .01f, .01f);
 			testMeshes[i]->RenderMesh();
 		}
 	}
@@ -595,9 +595,9 @@ void Mesh::RenderMesh()
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
 	// 3er buffer de atributos : normales
-	glEnableVertexAttribArray(2);
 	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer_id);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_TRUE, 0, (void*)0);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glEnableVertexAttribArray(2);
 
 	//TODO: Make a buffer for the colors and try this
 	//glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);

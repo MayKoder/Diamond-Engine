@@ -31,6 +31,9 @@ public:
 	std::vector<LogMessage> logs;
 	bool collapseMode;
 
+private:
+	bool scrollToBottom;
+
 
 };
 

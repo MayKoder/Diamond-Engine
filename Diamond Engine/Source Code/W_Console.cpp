@@ -1,7 +1,8 @@
 #include "W_Console.h"
 #include "MMGui.h"
+#include"Globals.h"
 
-W_Console::W_Console() : collapseMode(true)
+W_Console::W_Console() : collapseMode(true), scrollToBottom(false)
 {
 	name = "Console";
 	AddLog("I want to die");
@@ -14,7 +15,6 @@ W_Console::~W_Console()
 
 void W_Console::Draw()
 {
-
 	ImGui::Begin(name.c_str(), NULL, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse /*| ImGuiWindowFlags_NoResize*/ | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar);
 
 	float offset = ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Clear").x - 7;
@@ -54,6 +54,12 @@ void W_Console::Draw()
 				ImGui::Text("%i", logs[i].prints);
 			}
 		}
+
+		if (scrollToBottom && !ImGui::IsWindowFocused())
+		{
+			ImGui::SetScrollHereY(1.0f);
+			scrollToBottom = false;
+		}
 	}
 	ImGui::EndChild();
 
@@ -88,6 +94,7 @@ void W_Console::AddLog(std::string s_msg)
 	}
 
 	logs.push_back(LogMessage(s_msg));
+	scrollToBottom = true;
 
 }
 
