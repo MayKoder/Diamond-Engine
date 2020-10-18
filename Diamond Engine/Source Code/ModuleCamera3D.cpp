@@ -99,7 +99,7 @@ update_status ModuleCamera3D::Update(float dt)
 	//WARNING: Yeah so orbital rotation only works on 0, 0, 0, but will go crazy on any other coord
 	//Maybe we could fix that?
 	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
-		OrbitalRotation(vec3(0, 0, 0), dt);
+		OrbitalRotation(vec3(0, 1, 0), dt);
 
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
@@ -175,21 +175,22 @@ void ModuleCamera3D::OrbitalRotation(vec3 center, float dt)
 	int dx = -App->input->GetMouseXMotion();
 	int dy = -App->input->GetMouseYMotion();
 
-	if (dx != 0)
-	{
-		float DeltaX = (float)dx * mouseSensitivity;
+	//if (dx != 0)
+	//{
+	//	float DeltaX = (float)dx * mouseSensitivity;
 
-		//Get vector diference
-		vec3 ref = Position - center;
+	//	//Get vector diference
+	//	vec3 ref = Position - center;
 
-		//Rotate diference
-		ref = rotate(ref, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+	//	//Rotate diference
+	//	ref = rotate(ref, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+	//	ref.y = Position.y;
 
-		//Move camera position to new diference
-		Position = ref;
+	//	//Move camera position to new diference
+	//	Position = ref;
 
-		//Look at object
-	}
+	//	//Look at object
+	//}
 	if (dy != 0)
 	{
 
@@ -197,11 +198,13 @@ void ModuleCamera3D::OrbitalRotation(vec3 center, float dt)
 		float DeltaY = (float)dy * mouseSensitivity;
 
 		vec3 ref = Position - center;
-		ref = rotate(ref, DeltaY, X);
+		ref = rotate(ref, DeltaY, cross(ref, vec3(0.0f, 1.0f, 0.0f)));
+
 		Position = ref;
 	}
 
-	LookAt(center);
+	Reference = center;
+	//LookAt(center);
 }
 
 void ModuleCamera3D::FreeRotation(float dt)
