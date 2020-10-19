@@ -11,6 +11,6 @@ namespace MeshLoader
 
 	void myCallback(const char* msg, char* userData);
 
-	void ImportFBX(const char* full_path, std::vector<Mesh*>& _mesh);
+	void ImportFBX(const char* full_path, std::vector<Mesh*>& _mesh, int temporalTexID);
 
 }

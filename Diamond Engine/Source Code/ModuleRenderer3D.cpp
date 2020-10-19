@@ -31,11 +31,12 @@ ModuleRenderer3D::~ModuleRenderer3D()
 // Called before render is available
 bool ModuleRenderer3D::Init()
 {
-	LOG("Creating 3D Renderer context");
+	LOG("Init: 3D Renderer context");
 	bool ret = true;
 	
 	//ASK: Can i do this inside the MM namespace?
 	MaykMath::Init();
+	LOG("Init: MaykMath");
 
 	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
@@ -53,7 +54,7 @@ bool ModuleRenderer3D::Init()
 	}
 	else
 	{
-		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+		LOG("Init: Glew %s", glewGetString(GLEW_VERSION));
 	}
 	
 	if(ret == true)
@@ -133,6 +134,29 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_TEXTURE_2D);
 	}
 
+	//Generate texture
+	for (int i = 0; i < SQUARE_TEXTURE_W; i++) {
+		for (int j = 0; j < SQUARE_TEXTURE_H; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkerImage[i][j][0] = (GLubyte)c;
+			checkerImage[i][j][1] = (GLubyte)c;
+			checkerImage[i][j][2] = (GLubyte)c;
+			checkerImage[i][j][3] = (GLubyte)255;
+		}
+	}
+
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &imgID);
+	glBindTexture(GL_TEXTURE_2D, imgID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SQUARE_TEXTURE_W, SQUARE_TEXTURE_H, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+	
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 
 	//VERTEX MODE
 	//sizeof(float) * num_of_vertices * 3 = number of float inside the array
@@ -156,7 +180,9 @@ bool ModuleRenderer3D::Init()
 	ReGenerateFrameBuffer(App->window->s_width, App->window->s_height);
 
 	MeshLoader::EnableDebugMode();
-	//MeshLoader::ImportFBX("Assets/Warrior/warrior.FBX", test);
+
+	LOG("ModuleRender3D.cpp. line 185: Hardcoding a FBX load, remove ASAP");
+	MeshLoader::ImportFBX("Assets/BakerHouse/BakerHouse.fbx", testMeshes, imgID);
 
 
 	// Projection matrix for
@@ -171,7 +197,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
-	glClearColor(0.f, 0.f, 0.f, 1.f);
+	glClearColor(0.08f, 0.08f, 0.08f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glEnable(GL_DEPTH_TEST);
@@ -291,7 +317,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	{
 		if (testMeshes[i]->vertices_count != 0) 
 		{
-			glRotated(-90, 1, 0, 0);
+			//glRotated(-90, 1, 0, 0);
 			//glScaled(.01f, .01f, .01f);
 			testMeshes[i]->RenderMesh();
 		}
@@ -300,7 +326,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDisable(GL_DEPTH_TEST);
 
-	glClearColor(1.f, 1.f, 1.f, 1.f);
+	glClearColor(0.05f, 0.05f, 0.05f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//Cube cb(1.f, 1.f, 1.f);
@@ -505,13 +531,18 @@ Mesh::~Mesh()
 	if (normalbuffer_id != -1)
 		glDeleteBuffers(1, &normalbuffer_id);
 
+	if (texCoords_id != -1)
+		glDeleteBuffers(1, &texCoords_id);
+
 	delete[] indices;
 	delete[] vertices;
 	delete[] normals;
+	delete[] texCoords;
 
 	indices = nullptr;
 	vertices = nullptr;
 	normals = nullptr;
+	texCoords = nullptr;
 
 }
 
@@ -560,6 +591,7 @@ void Mesh::GenBuffers()
 		glGenBuffers(1, (GLuint*)&(vertices_id));
 		glBindBuffer(GL_ARRAY_BUFFER, vertices_id);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices_count * 3, &vertices[0], GL_STATIC_DRAW);
+		//glVertexPointer(3, GL_FLOAT, 0, NULL);
 	}
 
 	if (indices_count != 0)
@@ -576,6 +608,20 @@ void Mesh::GenBuffers()
 		glGenBuffers(1, (GLuint*)&(normalbuffer_id));
 		glBindBuffer(GL_ARRAY_BUFFER, normalbuffer_id);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normals_count * 3, &normals[0], GL_STATIC_DRAW);
+
+		//glEnableVertexAttribArray(2);
+		//glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	}
+
+	if (texCoords_count != 0)
+	{
+		//Normals buffer
+		glGenBuffers(1, (GLuint*)&(texCoords_id));
+		glBindBuffer(GL_ARRAY_BUFFER, texCoords_id);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * texCoords_count * 2, &texCoords[0], GL_STATIC_DRAW);
+
+		//glEnableVertexAttribArray(2);
+		//glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -584,33 +630,81 @@ void Mesh::GenBuffers()
 	//WARNING: Maybe delete buffers here?
 	//delete[] indices;
 	//delete[] vertices;
+	//delete[] normals;
+
+	//indices = nullptr;
+	//vertices = nullptr;
+	//normals = nullptr;
 }
 
 void Mesh::RenderMesh()
 {
 	//ASK: glDrawElementsInstanced()?
+	glBindTexture(GL_TEXTURE_2D, textureID);
 
+	//Vertices --------------------------------------------
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, vertices_id);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//--------------------------------------------
 
-	// 3er buffer de atributos : normales
-	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer_id);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	glEnableVertexAttribArray(2);
+
+	//TexCoords --------------------------------------------
+	if (texCoords_count != 0)
+	{
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, texCoords_id);
+		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+		//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		//glEnableVertexAttribArray(1);
+	}
+	//--------------------------------------------
+
+
+	//Normals --------------------------------------------
+	if (normals_count != 0)
+	{
+		glEnableClientState(GL_NORMAL_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, normalbuffer_id);
+		glNormalPointer(GL_FLOAT, 0, NULL);
+		//glEnableVertexAttribArray(2);
+		//glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	}
+	//--------------------------------------------
 
 	//TODO: Make a buffer for the colors and try this
 	//glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
 	//glVertexAttribPointer((GLint)1, 3, GL_FLOAT, GL_TRUE, 0, (void*)0);
 
+	//Indices --------------------------------------------
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_id);
-	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
-	
-	//glDrawElements(GL_LINES, indices_count, GL_UNSIGNED_INT, NULL);
+	//--------------------------------------------
 
+	//Drawing --------------------------------------------
+	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
+	//--------------------------------------------
+	
+	////Wireframe temporal --------------------------------------------
+	//glColor3f(0, 0, 0);
+	//glScalef(1.0001f, 1.0001f, 1.0001f);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//glScalef(1.f, 1.f, 1.f);
+	//glColor3f(1, 1, 1);
+	////--------------------------------------------
+
+	//Drawing cleanup --------------------------------------------
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	
+	if (normals_count != 0)
+		glDisableClientState(GL_NORMAL_ARRAY);
+	if (texCoords_count != 0)
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	//--------------------------------------------
 
 	glPointSize(3.0f);
 	glColor3f(1, 0, 0);
@@ -626,10 +720,9 @@ void Mesh::RenderMesh()
 	//Vertex normals
 	glColor3f(0, 1, 0);
 	glBegin(GL_LINES);
-	float normalLenght = 0.1f;
+	float normalLenght = 0.05f;
 	for (int i = 0; i < normals_count * 3; i += 3)
 	{
-		glColor3f(0, 1, 0);
 		glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
 		glVertex3f(vertices[i] + normals[i] * normalLenght, vertices[i + 1] + normals[i + 1] * normalLenght, vertices[i + 2] + normals[i + 2] * normalLenght);
 	}
@@ -637,4 +730,40 @@ void Mesh::RenderMesh()
 	glColor3f(1, 1, 1);
 
 	//Face normals
+	glColor3f(1, 0, 0);
+	glBegin(GL_LINES);
+	for (int i = 0; i < indices_count; i += 3)
+	{
+		//MaykMath::FindCentroid(&vertices[indices[i]], &vertices[indices[i + 1]], &vertices[indices[i + 2]], &middle.x);
+		vec3 A = GetVectorFromIndex(&vertices[indices[i] * 3]);
+
+		vec3 B = GetVectorFromIndex(&vertices[indices[i + 1] * 3]);
+
+		vec3 C = GetVectorFromIndex(&vertices[indices[i + 2] * 3]);
+
+		vec3 middle((A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z) / 3.f);
+
+		vec3 crossVec = cross((B - A), (C - A));
+		vec3 normalDirection = normalize(crossVec);
+
+		//LOG("%f, %f, %f", middle.x, middle.y, middle.z);
+		glVertex3f(middle.x, middle.y, middle.z);
+		glVertex3f(middle.x + normalDirection.x * normalLenght, middle.y + normalDirection.y * normalLenght, middle.z + normalDirection.z * normalLenght);
+	}
+	glEnd();
+	//glPointSize(1.f);
+	glColor3f(1, 1, 1);
+
+
+}
+
+vec3 Mesh::GetVectorFromIndex(float* startValue)
+{
+	float x = *startValue;
+	++startValue;
+	float y = *startValue;
+	++startValue;
+	float z = *startValue;
+
+	return vec3(x, y, z);
 }

@@ -10,6 +10,9 @@
 
 #define MAX_LIGHTS 1
 
+#define SQUARE_TEXTURE_W 128
+#define SQUARE_TEXTURE_H 128
+
 class Mesh 
 {
 
@@ -26,6 +29,8 @@ public:
 
 	void RenderMesh();
 
+	vec3 GetVectorFromIndex(float* startValue);
+
 public:
 
 	uint indices_id = 0; // index in VRAM
@@ -41,6 +46,12 @@ public:
 	uint normalbuffer_id = 0;
 	uint normals_count = 0;
 	float* normals = nullptr;
+
+	uint texCoords_id = 0;
+	uint texCoords_count = 0;
+	float* texCoords = nullptr;
+
+	GLuint textureID = 0;
 
 	//static void push_indices(uint* indices, int sectors, int r, int s)
 	//{
@@ -115,6 +126,8 @@ public:
 
 	//Mesh testMesh;
 	std::vector<Mesh*> testMeshes;
+	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
+	uint imgID;
 
 public:
 

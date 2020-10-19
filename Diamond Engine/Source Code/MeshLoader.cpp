@@ -40,7 +40,7 @@ void MeshLoader::DisableDebugMode()
 	aiDetachAllLogStreams();
 }
 
-void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes)
+void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes, int temporalTexID)
 {
 	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
 
@@ -78,21 +78,36 @@ void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes)
 				LOG("New mesh with %d normals", _mesh->normals_count);
 			}
 
+			if (importedMesh->HasTextureCoords(0)) 
+			{
+				_mesh->texCoords_count = importedMesh->mNumVertices;
+				_mesh->texCoords = new float[importedMesh->mNumVertices * 2];
+
+				for (unsigned int i = 0; i < _mesh->texCoords_count; i++)
+				{
+					_mesh->texCoords[i * 2] = importedMesh->mTextureCoords[0][i].x;
+					_mesh->texCoords[i * 2 + 1] = importedMesh->mTextureCoords[0][i].y;
+				}
+				_mesh->textureID = temporalTexID;
+
+				LOG("New mesh with %d texture coords", _mesh->texCoords_count);
+			}
+
 
 			// copy faces
 			if (importedMesh->HasFaces())
 			{
 				_mesh->indices_count = importedMesh->mNumFaces * 3;
 				_mesh->indices = new uint[_mesh->indices_count]; // assume each face is a triangle
-				for (uint i = 0; i < importedMesh->mNumFaces; ++i)
+				for (uint j = 0; j < importedMesh->mNumFaces; ++j)
 				{
-					if (importedMesh->mFaces[i].mNumIndices != 3) 
+					if (importedMesh->mFaces[j].mNumIndices != 3) 
 					{
 						LOG("WARNING, geometry face with != 3 indices!");
 					}
 					else 
 					{
-						memcpy(&_mesh->indices[i * 3], importedMesh->mFaces[i].mIndices, 3 * sizeof(uint));
+						memcpy(&_mesh->indices[j * 3], importedMesh->mFaces[j].mIndices, 3 * sizeof(uint));
 					}
 				}
 			}
@@ -107,3 +122,20 @@ void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes)
 	else
 		LOG("Error loading scene % s", full_path);
 }
+
+//void MeshLoader::GenerateCheckerTexture()
+//{
+//	GLubyte checkerImage[64][64][4];
+//	for (int i = 0; i < 64; i++) {
+//		for (int j = 0; j < 64; j++) {
+//			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+//			checkerImage[i][j][0] = (GLubyte)c;
+//			checkerImage[i][j][1] = (GLubyte)c;
+//			checkerImage[i][j][2] = (GLubyte)c;
+//			checkerImage[i][j][3] = (GLubyte)255;
+//		}
+//	}
+//}
+
+
+

@@ -14,6 +14,7 @@
 
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include "MeshLoader.h"
 
 //Window types
 #include "W_Configuration.h"
@@ -22,6 +23,7 @@
 #include "W_Inspector.h"
 #include "W_Hierarchy.h"
 #include "W_Scene.h"
+#include "w_ASSETS.h"
 
 //#include"MathGeoLib/include/Math/float3.h"
 
@@ -39,6 +41,7 @@ viewportCorSize(0.f), dockspace_id(0)
 	windows[static_cast<unsigned int>(EditorWindow::INSPECTOR)] = new W_Inspector();
 	windows[static_cast<unsigned int>(EditorWindow::HIERARCHY)] = new W_Hierarchy();
 	windows[static_cast<unsigned int>(EditorWindow::SCENE)] = new W_Scene(App);
+	windows[static_cast<unsigned int>(EditorWindow::ASSETS)] = new W_Assets();
 
 	//float3 a = float3(2.f, 2.f, 2.f);
 
@@ -51,7 +54,7 @@ M_Editor::~M_Editor()
 bool M_Editor::Init()
 {
 
-	LOG("ImGui Editor Setup");
+	LOG("Init: ImGui");
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -213,11 +216,16 @@ void M_Editor::DrawMenuBar()
 
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
 
-			ImGui::MenuItem("Cube", nullptr);
+			//TODO: This is temporal, meshes should not laod every time and 
+			//should be stored only once, then only copy id's.
+			if (ImGui::MenuItem("Cube", nullptr))
+				MeshLoader::ImportFBX("Assets/cube.fbx", App->renderer3D->testMeshes, App->renderer3D->imgID);
+
 			ImGui::MenuItem("Pyramid", nullptr);
 			ImGui::MenuItem("Sphere", nullptr);
 			ImGui::MenuItem("Cylinder", nullptr);
-			ImGui::MenuItem("Monkey", nullptr);
+			if (ImGui::MenuItem("Monkey", nullptr))
+				MeshLoader::ImportFBX("Assets/monkey.fbx", App->renderer3D->testMeshes, App->renderer3D->imgID);
 
 			ImGui::PopStyleColor();
 			ImGui::EndMenu();

@@ -357,6 +357,9 @@
     <ClInclude Include="Source Code\MeshLoader.h">
       <Filter>Sources\Tools\MMath</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\W_Assets.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -547,6 +550,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\MeshLoader.cpp">
       <Filter>Sources\Tools\MMath</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\W_Assets.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

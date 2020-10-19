@@ -13,6 +13,7 @@ enum class EditorWindow {
 	INSPECTOR,
 	HIERARCHY,
 	SCENE,
+	ASSETS,
 	MAX
 };
 

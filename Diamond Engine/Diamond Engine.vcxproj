@@ -182,6 +182,7 @@
     <ClInclude Include="Source Code\Timer.h" />
     <ClInclude Include="Source Code\Window.h" />
     <ClInclude Include="Source Code\W_About.h" />
+    <ClInclude Include="Source Code\W_Assets.h" />
     <ClInclude Include="Source Code\W_Configuration.h" />
     <ClInclude Include="Source Code\W_Console.h" />
     <ClInclude Include="Source Code\W_Hierarchy.h" />
@@ -234,6 +235,7 @@
     <ClCompile Include="Source Code\External Libraries\parson\parson.c" />
     <ClCompile Include="Source Code\glmath.cpp" />
     <ClCompile Include="Source Code\MeshLoader.cpp" />
+    <ClCompile Include="Source Code\W_Assets.cpp" />
     <ClCompile Include="Source Code\W_Hierarchy.cpp" />
     <ClCompile Include="Source Code\Light.cpp" />
     <ClCompile Include="Source Code\log.cpp" />

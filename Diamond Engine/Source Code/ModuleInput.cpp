@@ -25,7 +25,7 @@ ModuleInput::~ModuleInput()
 // Called before render is available
 bool ModuleInput::Init()
 {
-	LOG("Init SDL input event system");
+	LOG("Init: SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
 
@@ -117,7 +117,7 @@ update_status ModuleInput::PreUpdate(float dt)
 				
 				if (dropped_filedir.substr(dropped_filedir.find(".") + 1) == "fbx" || dropped_filedir.substr(dropped_filedir.find(".") + 1) == "FBX")
 				{
-					MeshLoader::ImportFBX(e.drop.file, App->renderer3D->testMeshes);
+					MeshLoader::ImportFBX(e.drop.file, App->renderer3D->testMeshes, App->renderer3D->imgID);
 				}
 
 				SDL_free(e.drop.file);    // Free dropped_filedir memory

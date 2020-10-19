@@ -1,6 +1,7 @@
 #include "W_Scene.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
+#include "ModuleCamera3D.h"
 
 #include "OpenGL.h"
 #include"Application.h"
@@ -41,6 +42,11 @@ void W_Scene::Draw()
 
 	//ImGui::SetCursorPos(screenOffset);
 	//ImGui::Image((ImTextureID)App->renderer3D->texColorBuffer, ImVec2(App->window->s_width, App->window->s_height), ImVec2(0, 1), ImVec2(1, 0));
+
+	if (/*ImGui::IsWindowFocused() &&*/ ImGui::IsWindowHovered()) 
+	{
+		App->camera->ProcessSceneKeyboard();
+	}
 
 
 	ImVec2 texOriginalSize = ImVec2(App->window->s_width, App->window->s_height);
