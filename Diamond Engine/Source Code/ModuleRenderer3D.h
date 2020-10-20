@@ -8,88 +8,12 @@
 
 #include "OpenGL.h"
 
+class Mesh;
+
 #define MAX_LIGHTS 1
 
-#define SQUARE_TEXTURE_W 128
-#define SQUARE_TEXTURE_H 128
-
-class Mesh 
-{
-
-public:
-	Mesh();
-	~Mesh();
-
-	void SetAsCube();
-	void SetAsPyramid();
-	void SetAsSphere();
-	void SetAsCylinder();
-
-	void GenBuffers();
-
-	void RenderMesh();
-
-	vec3 GetVectorFromIndex(float* startValue);
-
-public:
-
-	uint indices_id = 0; // index in VRAM
-	uint indices_count = 0;
-	uint* indices = nullptr;
-
-	//Vertices is a 1 dimension array that contains floats representing a vertex every 3 elements, vertices_count is the number of 3 pairs (0, 0, 1) would be
-	//a 3 element array but vertices_count would be 1.
-	uint vertices_id = 0; // unique vertex in VRAM
-	uint vertices_count = 0;
-	float* vertices = nullptr;
-
-	uint normalbuffer_id = 0;
-	uint normals_count = 0;
-	float* normals = nullptr;
-
-	uint texCoords_id = 0;
-	uint texCoords_count = 0;
-	float* texCoords = nullptr;
-
-	GLuint textureID = 0;
-
-	//static void push_indices(uint* indices, int sectors, int r, int s)
-	//{
-	//	int curRow = r * sectors;
-	//	int nextRow = (r + 1) * sectors;
-
-	//	indices.push_back(curRow + s);
-	//	indices.push_back(nextRow + s);
-	//	indices.push_back(nextRow + (s + 1));
-
-	//	indices.push_back(curRow + s);
-	//	indices.push_back(nextRow + (s + 1));
-	//	indices.push_back(curRow + (s + 1));
-	//}
-
-	//static void createSphere(float* vertices, uint* indices, /*std::vector<vec2>& texcoords,*/ float radius, unsigned int rings, unsigned int sectors)
-	//{
-	//	float const R = 1. / (float)(rings - 1);
-	//	float const S = 1. / (float)(sectors - 1);
-
-	//	for (int r = 0; r < rings; ++r) {
-	//		for (int s = 0; s <= sectors; ++s) {
-	//			float const y = sin(-M_PI_2 + M_PI * r * R);
-	//			float const x = cos(2 * M_PI * s * S) * sin(M_PI * r * R);
-	//			float const z = sin(2 * M_PI * s * S) * sin(M_PI * r * R);
-
-	//			//texcoords.push_back(vec2(s * S, r * R));
-	//			vertices.push_back(x * radius);
-	//			vertices.push_back(y * radius);
-	//			vertices.push_back(z * radius);
-	//			
-	//			push_indices(indices, sectors, r, s);
-	//		}
-	//	}
-	//}
-
-};
-
+#define SQUARE_TEXTURE_W 1024
+#define SQUARE_TEXTURE_H 1024
 
 class ModuleRenderer3D : public Module
 {
@@ -107,26 +31,24 @@ public:
 
 	void ReGenerateFrameBuffer(int w, int h);
 
+	void CustomLoadImage(const char* fileName);
+
 private:
 
 	void GetCAPS(std::string& caps);
 	std::string str_CAPS;
 
-	bool vsync;
-	bool wireframe;
-
-	bool /*depth,*/ cull, lightng, color_material, texture_2d;
-
-	uint my_id;
-
 public:
+	bool vsync, wireframe, cull, lightng, color_material, texture_2d;
+
 	unsigned int framebuffer;
 	unsigned int texColorBuffer;
 	unsigned int rbo;
 
 	//Mesh testMesh;
 	std::vector<Mesh*> testMeshes;
-	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
+	//GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
+	const char* buffer = nullptr;
 	uint imgID;
 
 public:

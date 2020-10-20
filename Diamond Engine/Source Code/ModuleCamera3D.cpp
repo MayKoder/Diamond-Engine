@@ -152,7 +152,7 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 	//ASK: Should i also include Right alt?
 	//Maybe we could use quaternions?
 	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
-		OrbitalRotation(vec3(0, 0, 0), dt);
+		OrbitalRotation(vec3(0, 1, 0), dt);
 
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)

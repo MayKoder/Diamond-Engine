@@ -61,6 +61,12 @@
     <Filter Include="Externals\mmgr">
       <UniqueIdentifier>{ef59a8dd-bb30-4bee-9d9d-f62fb227a945}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Externals\DevIL">
+      <UniqueIdentifier>{cb133ab9-b09f-4895-aac5-d948b36bd6cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Components">
+      <UniqueIdentifier>{1263112b-eb02-40d3-afae-a7d961c5d761}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -360,6 +366,33 @@
     <ClInclude Include="Source Code\W_Assets.h">
       <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\il.h">
+      <Filter>Externals\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\il_wrap.h">
+      <Filter>Externals\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\ilu.h">
+      <Filter>Externals\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\ilu_region.h">
+      <Filter>Externals\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\ilut.h">
+      <Filter>Externals\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\ilut_config.h">
+      <Filter>Externals\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\devil_cpp_wrapper.hpp">
+      <Filter>Externals\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\devil_internal_exports.h">
+      <Filter>Externals\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Mesh.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -554,6 +587,9 @@
     <ClCompile Include="Source Code\W_Assets.cpp">
       <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClCompile>
+    <ClCompile Include="Source Code\Mesh.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source Code\External Libraries\MathGeoLib\include\Math\Matrix.inl">
@@ -573,6 +609,9 @@
     </None>
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\KDTree.inl">
       <Filter>Externals\MathGeoLib\Geometry</Filter>
+    </None>
+    <None Include="Source Code\External Libraries\DevIL\include\config.h.win">
+      <Filter>Externals\DevIL</Filter>
     </None>
   </ItemGroup>
 </Project>

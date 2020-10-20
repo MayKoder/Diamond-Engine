@@ -35,13 +35,17 @@ viewportCorSize(0.f), dockspace_id(0)
 	//reserve() does not work with [] operator
 	windows = std::vector<Window*>(static_cast<unsigned int>(EditorWindow::MAX), nullptr);
 
-	windows[static_cast<unsigned int>(EditorWindow::CONFIGURATION)] = new W_Configuration();
-	windows[static_cast<unsigned int>(EditorWindow::CONSOLE)] = new W_Console();
-	windows[static_cast<unsigned int>(EditorWindow::ABOUT)] = new W_About();
-	windows[static_cast<unsigned int>(EditorWindow::INSPECTOR)] = new W_Inspector();
-	windows[static_cast<unsigned int>(EditorWindow::HIERARCHY)] = new W_Hierarchy();
-	windows[static_cast<unsigned int>(EditorWindow::SCENE)] = new W_Scene(App);
 	windows[static_cast<unsigned int>(EditorWindow::ASSETS)] = new W_Assets();
+	windows[static_cast<unsigned int>(EditorWindow::CONSOLE)] = new W_Console();
+	windows[static_cast<unsigned int>(EditorWindow::HIERARCHY)] = new W_Hierarchy();
+	windows[static_cast<unsigned int>(EditorWindow::INSPECTOR)] = new W_Inspector();
+	windows[static_cast<unsigned int>(EditorWindow::SCENE)] = new W_Scene(App);
+
+	//TODO: This 2 windows are last on the enum to keep them from drawing on the window
+	//tab on the main menu bar, and are drawed by hand on other tabs, there
+	//must be a better way to do that
+	windows[static_cast<unsigned int>(EditorWindow::ABOUT)] = new W_About();
+	windows[static_cast<unsigned int>(EditorWindow::CONFIGURATION)] = new W_Configuration();
 
 	//float3 a = float3(2.f, 2.f, 2.f);
 
@@ -187,7 +191,7 @@ bool M_Editor::CleanUp()
 void M_Editor::DrawMenuBar()
 {
 	//UNITY: File edit assets gameobject component window help
-	//Unreal Engine: File edit window help Aquest te una window amb tots els assets
+	//Unreal Engine: File edit window help
 	//Cry Engine: File edit modify display configspec group Prefabs Terrain Sound Game AI Clouds Tools View Help 
 	//FrostByte: File edit scene Terrain Window
 	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.f, 0.f, 0.f, 1.f));
@@ -209,6 +213,9 @@ void M_Editor::DrawMenuBar()
 		}
 		if (ImGui::BeginMenu("Edit"))
 		{
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
+			ImGui::MenuItem(windows[static_cast<int>(EditorWindow::CONFIGURATION)]->name.c_str(), nullptr, &windows[static_cast<int>(EditorWindow::CONFIGURATION)]->active);
+			ImGui::PopStyleColor(1);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("GameObject"))
@@ -233,7 +240,7 @@ void M_Editor::DrawMenuBar()
 		if (ImGui::BeginMenu("Windows"))
 		{
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
-			for (unsigned int i = 0; i < windows.size(); i++)
+			for (unsigned int i = 0; i < windows.size() - 2; i++)
 			{
 				ImGui::MenuItem(windows[i]->name.c_str(), nullptr, &windows[i]->active);
 			}
@@ -265,9 +272,9 @@ void M_Editor::DrawMenuBar()
 			{
 				ShellExecute(0, 0, "https://github.com/MayKoder", 0, 0, SW_SHOW);
 			}
-			if (ImGui::MenuItem("About"))
+			if (ImGui::MenuItem(windows[static_cast<int>(EditorWindow::ABOUT)]->name.c_str(), nullptr, &windows[static_cast<int>(EditorWindow::ABOUT)]->active))
 			{
-				//windows[EditorWindow::ABOUT]->active = !windows[EditorWindow::ABOUT]->active;
+				
 			}
 			ImGui::PopStyleColor(1);
 			ImGui::EndMenu();
@@ -520,4 +527,12 @@ void M_Editor::DeleteStyle(const char* styleName)
 
 	//Free memory
 	json_value_free(root_value);
+}
+
+void M_Editor::LogToConsole(const char* msg)
+{
+		W_Console* consoleWindow = dynamic_cast<W_Console*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::CONSOLE));
+
+		if (consoleWindow != nullptr)
+			consoleWindow->AddLog(msg);
 }

@@ -30,13 +30,13 @@ void W_Configuration::Draw()
 	{
 		ImGui::PlotHistogram("##frameRate", &fps_log[0], fps_log.size(), 0, "Framerate", 0.0f, 100.0f, ImVec2(310, 100));
 		ImGui::PlotHistogram("##miliseconds", &ms_log[0], ms_log.size(), 0, "Miliseconds", 0.0f, 100.0f, ImVec2(310, 100));
-		ImGui::SliderInt("FPS CAP", &Engine->fpsCap, 1, 360);
+		ImGui::SliderInt("FPS CAP", &EngineExternal->fpsCap, 1, 360);
 		ImGui::NewLine();
 	}
 
-	for (unsigned int i = 0; i < Engine->list_modules.size(); ++i)
+	for (unsigned int i = 0; i < EngineExternal->list_modules.size(); ++i)
 	{
-		Engine->list_modules[i]->OnGUI();
+		EngineExternal->list_modules[i]->OnGUI();
 	}
 
 	ImGui::End();
@@ -46,8 +46,8 @@ void W_Configuration::UpdateInfoLogs()
 {
 
 	//Do not use ImGui::GetFrameRate()
-	float currentFPS = (1.f / Engine->GetDT())/*ImGui::GetIO().Framerate*/;
-	float currentMS = (1000.f * Engine->GetDT());
+	float currentFPS = (1.f / EngineExternal->GetDT())/*ImGui::GetIO().Framerate*/;
+	float currentMS = (1000.f * EngineExternal->GetDT());
 
 	//FPS Vector Update
 	MaykMath::FixedVectorPushBack(fps_log, currentFPS);

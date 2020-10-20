@@ -3,7 +3,6 @@
 
 //TODO: Move the GetEditorWindow() to Application.cpp?
 #include "Application.h"
-#include "W_Console.h"
 #include "M_Editor.h"
 
 void log(const char file[], int line, const char* format, ...)
@@ -19,11 +18,8 @@ void log(const char file[], int line, const char* format, ...)
 	sprintf_s(tmp_string2, 4096, "\n%s(%d) : %s", file, line, tmp_string);
 	OutputDebugString(tmp_string2);
 
-	if (Engine != nullptr && Engine->moduleEditor != nullptr)
+	if (EngineExternal != nullptr && EngineExternal->moduleEditor != nullptr)
 	{
-		W_Console* consoleWindow = dynamic_cast<W_Console*>(Engine->moduleEditor->GetEditorWindow(EditorWindow::CONSOLE));
-
-		if (consoleWindow != nullptr)
-			consoleWindow->AddLog(tmp_string);
+		EngineExternal->moduleEditor->LogToConsole(tmp_string);
 	}
 }

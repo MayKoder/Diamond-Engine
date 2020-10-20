@@ -7,13 +7,20 @@
 
 typedef unsigned int ImGuiID;
 enum class EditorWindow {
-	CONFIGURATION,
-	CONSOLE,
-	ABOUT,
-	INSPECTOR,
-	HIERARCHY,
-	SCENE,
+
+	//Windows tab
 	ASSETS,
+	CONSOLE,
+	HIERARCHY,
+	INSPECTOR,
+	SCENE,
+
+	//Help tab
+	ABOUT,
+
+	//Edit tab
+	CONFIGURATION,
+	
 	MAX
 };
 
@@ -39,6 +46,8 @@ public:
 	void SaveStyle(const char* styleName);
 	void LoadStyle(const char* styleName);
 	void DeleteStyle(const char* styleName);
+
+	void LogToConsole(const char* msg);
 
 private:
 

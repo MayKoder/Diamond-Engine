@@ -92,6 +92,14 @@
     <ClInclude Include="Source Code\Application.h" />
     <ClInclude Include="Source Code\Color.h" />
     <ClInclude Include="Source Code\EngineVersion.h" />
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\devil_cpp_wrapper.hpp" />
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\devil_internal_exports.h" />
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\il.h" />
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\ilu.h" />
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\ilut.h" />
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\ilut_config.h" />
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\ilu_region.h" />
+    <ClInclude Include="Source Code\External Libraries\DevIL\include\il_wrap.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imconfig.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\ImGuiUtils.h" />
@@ -168,6 +176,7 @@
     <ClInclude Include="Source Code\Globals.h" />
     <ClInclude Include="Source Code\Light.h" />
     <ClInclude Include="Source Code\MaykMath.h" />
+    <ClInclude Include="Source Code\Mesh.h" />
     <ClInclude Include="Source Code\MeshArrays.h" />
     <ClInclude Include="Source Code\MeshLoader.h" />
     <ClInclude Include="Source Code\MMGui.h" />
@@ -234,6 +243,7 @@
     <ClCompile Include="Source Code\External Libraries\mmgr\mmgr.cpp" />
     <ClCompile Include="Source Code\External Libraries\parson\parson.c" />
     <ClCompile Include="Source Code\glmath.cpp" />
+    <ClCompile Include="Source Code\Mesh.cpp" />
     <ClCompile Include="Source Code\MeshLoader.cpp" />
     <ClCompile Include="Source Code\W_Assets.cpp" />
     <ClCompile Include="Source Code\W_Hierarchy.cpp" />
@@ -256,6 +266,7 @@
     <ClCompile Include="Source Code\W_Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Source Code\External Libraries\DevIL\include\config.h.win" />
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\KDTree.inl" />
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\QuadTree.inl" />
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl" />

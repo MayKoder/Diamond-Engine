@@ -89,7 +89,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	Engine = nullptr;
+	EngineExternal = nullptr;
 	RELEASE(App);
 
 #ifdef _DEBUG

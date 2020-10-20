@@ -124,12 +124,12 @@ void ModuleWindow::OnGUI()
 		if (ImGui::SliderInt("Width", &s_width, 1, 7680))
 		{
 			SDL_SetWindowSize(window, s_width, s_height);
-			Engine->renderer3D->OnResize(s_width, s_height);
+			EngineExternal->renderer3D->OnResize(s_width, s_height);
 		}
 		if (ImGui::SliderInt("Height", &s_height, 1, 4320))
 		{
 			SDL_SetWindowSize(window, s_width, s_height);
-			Engine->renderer3D->OnResize(s_width, s_height);
+			EngineExternal->renderer3D->OnResize(s_width, s_height);
 		}
 
 		SDL_DisplayMode current;

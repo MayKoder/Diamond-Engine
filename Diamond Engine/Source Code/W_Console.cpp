@@ -40,18 +40,26 @@ void W_Console::Draw()
 
 	if (ImGui::BeginChild("##consolePrintArea", windowSize)) 
 	{
+		LogMessage* cLog = nullptr;
+		ImVec4 labelColor(0.f, 0.f, 0.f, 0.f);
+
 		for (unsigned int i = 0; i < logs.size(); ++i)
 		{
+			cLog = &logs[i];
 
-			ImGui::TextWrapped("[I]");
+			//ImGui::TextWrapped("[%c]", GetMsgType(cLog->lType));
+			char labelLevel = GetMsgType(cLog->lType, labelColor);
+
+			ImGui::TextColored(labelColor, "[%c]", labelLevel);
+
 			ImGui::SameLine();
-			ImGui::TextWrapped(logs[i].msg.c_str());
+			ImGui::TextWrapped(cLog->msg.c_str());
 
 			if (logs[i].prints > 1)
 			{
 				ImGui::SameLine();
-				ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize(std::to_string(logs[i].prints).c_str()).x);
-				ImGui::Text("%i", logs[i].prints);
+				ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize(std::to_string(cLog->prints).c_str()).x);
+				ImGui::Text("%i", cLog->prints);
 			}
 		}
 
@@ -82,7 +90,7 @@ void W_Console::Draw()
 	ImGui::End();
 }
 
-void W_Console::AddLog(std::string s_msg)
+void W_Console::AddLog(const char* s_msg)
 {
 	if (collapseMode && logs.size() >= 1)
 	{
@@ -98,8 +106,35 @@ void W_Console::AddLog(std::string s_msg)
 
 }
 
-LogMessage::LogMessage(std::string s_msg) : msg(s_msg), prints(1)
+char W_Console::GetMsgType(LogType type, ImVec4 &lColor)
+{	
+	char ret = 'I';
+
+	switch (type)
+	{
+		case LogType::L_NORMAL:
+			ret = 'I';
+			lColor = ImVec4(1.f, 1.f, 1.f, 1.f);
+			break;
+
+		case LogType::L_WARNING:
+			ret = 'W';
+			lColor = ImVec4(1.f, 1.f, 0.f, 1.f);
+			break;
+
+		case LogType::L_ERROR:
+			ret = 'E';
+			lColor = ImVec4(1.f, 0.f, 0.f, 1.f);
+			break;
+	}
+
+	return ret;
+}
+
+LogMessage::LogMessage(std::string s_msg) : prints(1)
 {
+	msg = s_msg;
+	lType = LogType::L_WARNING;
 }
 
 bool LogMessage::EqualsStr(const char* cmp)

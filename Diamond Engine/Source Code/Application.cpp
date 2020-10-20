@@ -9,10 +9,12 @@
 #include"M_Editor.h"
 
 
-extern Application* Engine = nullptr;
+extern Application* EngineExternal = nullptr;
 Application::Application() : quitApplicationState(false), fpsCap(60)
 {
-	Engine = this;
+	EngineExternal = this;
+
+	LOG("Hola");
 
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);

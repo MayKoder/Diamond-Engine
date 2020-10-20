@@ -119,6 +119,10 @@ update_status ModuleInput::PreUpdate(float dt)
 				{
 					MeshLoader::ImportFBX(e.drop.file, App->renderer3D->testMeshes, App->renderer3D->imgID);
 				}
+				if (dropped_filedir.substr(dropped_filedir.find(".") + 1) == "png")
+				{
+					App->renderer3D->CustomLoadImage(e.drop.file);
+				}
 
 				SDL_free(e.drop.file);    // Free dropped_filedir memory
 				break;

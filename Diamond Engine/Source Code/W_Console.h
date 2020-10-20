@@ -15,6 +15,7 @@ struct LogMessage
 	bool EqualsStr(const char* cmp);
 
 	std::string msg;
+	LogType lType;
 	unsigned int prints;
 };
 
@@ -26,14 +27,18 @@ public:
 	virtual ~W_Console();
 
 	void Draw() override;
-	void AddLog(std::string s_msg);
+	void AddLog(const char* s_msg);
+
+	char GetMsgType(LogType type, ImVec4 &lColor);
 
 	std::vector<LogMessage> logs;
 	bool collapseMode;
 
 private:
 	bool scrollToBottom;
-
+	
+	//TODO: This should be a texture
+	char logTypeChar;
 
 };
 

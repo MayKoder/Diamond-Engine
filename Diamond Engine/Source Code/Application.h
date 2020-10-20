@@ -16,11 +16,11 @@ class M_Editor;
 class Application
 {
 public:
-	ModuleWindow* window;
-	ModuleInput* input;
-	ModuleRenderer3D* renderer3D;
-	ModuleCamera3D* camera;
-	M_Editor* moduleEditor;
+	ModuleWindow* window = nullptr;
+	ModuleInput* input = nullptr;
+	ModuleRenderer3D* renderer3D = nullptr;
+	ModuleCamera3D* camera = nullptr;
+	M_Editor* moduleEditor = nullptr;
 
 	std::vector<Module*> list_modules;
 
@@ -53,4 +53,4 @@ private:
 	void FinishUpdate();
 };
 
-extern Application* Engine;
+extern Application* EngineExternal;
