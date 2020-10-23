@@ -24,7 +24,7 @@ ModuleCamera3D::~ModuleCamera3D()
 // -----------------------------------------------------------------
 bool ModuleCamera3D::Start()
 {
-	LOG("Setting up the camera");
+	LOG(LogType::L_NORMAL, "Setting up the camera");
 	bool ret = true;
 
 	LookAt(vec3(0.f, 0.f, 0.f));
@@ -35,7 +35,7 @@ bool ModuleCamera3D::Start()
 // -----------------------------------------------------------------
 bool ModuleCamera3D::CleanUp()
 {
-	LOG("Cleaning camera");
+	LOG(LogType::L_NORMAL, "Cleaning camera");
 
 	return true;
 }

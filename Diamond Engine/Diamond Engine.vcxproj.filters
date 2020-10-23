@@ -34,9 +34,6 @@
     <Filter Include="Sources\Editor\Windows\Base">
       <UniqueIdentifier>{b095445e-5215-4de2-a6ef-15a348ff7cae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Editor\Windows\Derived">
-      <UniqueIdentifier>{3ddf461c-663f-41e9-afb5-dba7922c1012}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Externals\MathGeoLib">
       <UniqueIdentifier>{ea1362cf-f0e8-4042-b766-f00c500c6979}</UniqueIdentifier>
     </Filter>
@@ -66,6 +63,12 @@
     </Filter>
     <Filter Include="Sources\Components">
       <UniqueIdentifier>{1263112b-eb02-40d3-afae-a7d961c5d761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Components\Base">
+      <UniqueIdentifier>{9d72356e-e550-43e2-a87c-2575d9fac8fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Editor\Windows\Derived">
+      <UniqueIdentifier>{3ddf461c-663f-41e9-afb5-dba7922c1012}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -393,6 +396,15 @@
     <ClInclude Include="Source Code\Mesh.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\GameObject.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Component.h">
+      <Filter>Sources\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\M_Scene.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -589,6 +601,15 @@
     </ClCompile>
     <ClCompile Include="Source Code\Mesh.cpp">
       <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\GameObject.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Component.cpp">
+      <Filter>Sources\Components\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\M_Scene.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

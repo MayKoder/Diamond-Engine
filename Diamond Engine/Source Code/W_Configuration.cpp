@@ -39,6 +39,54 @@ void W_Configuration::Draw()
 		EngineExternal->list_modules[i]->OnGUI();
 	}
 
+
+    //ImGuiStyle* ref = NULL;
+    ImGuiStyle& style = ImGui::GetStyle();
+    //static ImGuiStyle ref_saved_style;
+
+    //static bool init = true;
+    //if (init && ref == NULL)
+    //    ref_saved_style = style;
+    //init = false;
+    //if (ref == NULL)
+    //    ref = &ref_saved_style;
+
+    //// Save/Revert button
+    //if (ImGui::Button("Save Ref"))
+    //    *ref = ref_saved_style = style;
+    //ImGui::SameLine();
+    //if (ImGui::Button("Revert Ref"))
+    //    style = *ref;
+    //ImGui::SameLine();
+
+	if (ImGui::CollapsingHeader("Style Settings"))
+	{
+        static int output_dest = 0;
+        static bool output_only_modified = true;
+
+        static ImGuiTextFilter filter;
+        filter.Draw("Filter colors", ImGui::GetFontSize() * 16);
+
+        static ImGuiColorEditFlags alpha_flags = 0;
+
+
+        ImGui::BeginChild("##colors", ImVec2(0, 0), true, ImGuiWindowFlags_AlwaysVerticalScrollbar | ImGuiWindowFlags_AlwaysHorizontalScrollbar | ImGuiWindowFlags_NavFlattened);
+        ImGui::PushItemWidth(-160);
+        for (int i = 0; i < ImGuiCol_COUNT; i++)
+        {
+            const char* name = ImGui::GetStyleColorName(i);
+            if (!filter.PassFilter(name))
+                continue;
+            ImGui::PushID(i);
+            ImGui::ColorEdit4("##color", (float*)&style.Colors[i], ImGuiColorEditFlags_AlphaBar | alpha_flags);
+            ImGui::SameLine(0.0f, style.ItemInnerSpacing.x);
+            ImGui::TextUnformatted(name);
+            ImGui::PopID();
+        }
+        ImGui::PopItemWidth();
+        ImGui::EndChild();
+	}
+
 	ImGui::End();
 }
 

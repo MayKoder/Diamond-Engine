@@ -13,7 +13,7 @@ public:
 	ModuleWindow(Application* app, bool start_enabled = true);
 
 	// Destructor
-	virtual ~ModuleWindow();
+	~ModuleWindow();
 
 	bool Init() override;
 	bool CleanUp() override;

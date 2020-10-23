@@ -1,7 +1,7 @@
 #pragma once
 #include "Application.h"
 #include "Module.h"
-#include "Globals.h"
+//#include "Globals.h"
 #include "glmath.h"
 #include"Primitive.h"
 #include "Light.h"

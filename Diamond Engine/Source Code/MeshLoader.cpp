@@ -43,10 +43,10 @@ void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes, i
 	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 		aiMesh* importedMesh = nullptr;
-		for (int i = 0; i < scene->mNumMeshes; i++)
+		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 		{
 			importedMesh = scene->mMeshes[i];
-			LOG("%s", scene->mMeshes[i]->mName.C_Str());
+			LOG(LogType::L_NORMAL, "%s", scene->mMeshes[i]->mName.C_Str());
 
 			Mesh* _mesh = new Mesh();
 
@@ -56,7 +56,7 @@ void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes, i
 
 			memcpy(_mesh->vertices, importedMesh->mVertices, sizeof(float) * _mesh->vertices_count * 3);
 
-			LOG("New mesh with %d vertices", _mesh->vertices_count);
+			LOG(LogType::L_NORMAL, "New mesh with %d vertices", _mesh->vertices_count);
 
 			if (importedMesh->HasNormals())
 			{
@@ -65,7 +65,7 @@ void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes, i
 				_mesh->normals = new float[_mesh->normals_count * 3];
 				memcpy(_mesh->normals, importedMesh->mNormals, sizeof(float) * _mesh->normals_count * 3);
 
-				LOG("New mesh with %d normals", _mesh->normals_count);
+				LOG(LogType::L_NORMAL, "New mesh with %d normals", _mesh->normals_count);
 			}
 
 			//So are we really only supporting 1 channel uv and colors?
@@ -81,7 +81,7 @@ void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes, i
 				}
 				_mesh->textureID = temporalTexID;
 
-				LOG("New mesh with %d texture coords", _mesh->texCoords_count);
+				LOG(LogType::L_NORMAL, "New mesh with %d texture coords", _mesh->texCoords_count);
 			}
 			//if (importedMesh->HasVertexColors(0)) 
 			//{
@@ -98,7 +98,7 @@ void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes, i
 				{
 					if (importedMesh->mFaces[j].mNumIndices != 3) 
 					{
-						LOG("WARNING, geometry face with != 3 indices!");
+						LOG(LogType::L_WARNING, "WARNING, geometry face with != 3 indices!");
 					}
 					else 
 					{
@@ -118,7 +118,7 @@ void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes, i
 		aiReleaseImport(scene);
 	}
 	else
-		LOG("Error loading scene % s", full_path);
+		LOG(LogType::L_ERROR, "Error loading scene % s", full_path);
 }
 
 //void MeshLoader::GenerateCheckerTexture()

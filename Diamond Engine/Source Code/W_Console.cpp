@@ -5,7 +5,7 @@
 W_Console::W_Console() : collapseMode(true), scrollToBottom(false)
 {
 	name = "Console";
-	AddLog("I want to die");
+	AddLog("I want to die", LogType::L_ERROR);
 }
 
 W_Console::~W_Console()
@@ -90,7 +90,7 @@ void W_Console::Draw()
 	ImGui::End();
 }
 
-void W_Console::AddLog(const char* s_msg)
+void W_Console::AddLog(const char* s_msg, LogType _type)
 {
 	if (collapseMode && logs.size() >= 1)
 	{
@@ -101,7 +101,7 @@ void W_Console::AddLog(const char* s_msg)
 		}
 	}
 
-	logs.push_back(LogMessage(s_msg));
+	logs.push_back(LogMessage(s_msg, _type));
 	scrollToBottom = true;
 
 }
@@ -131,10 +131,9 @@ char W_Console::GetMsgType(LogType type, ImVec4 &lColor)
 	return ret;
 }
 
-LogMessage::LogMessage(std::string s_msg) : prints(1)
+LogMessage::LogMessage(std::string s_msg, LogType _type) : prints(1), lType(_type)
 {
 	msg = s_msg;
-	lType = LogType::L_WARNING;
 }
 
 bool LogMessage::EqualsStr(const char* cmp)

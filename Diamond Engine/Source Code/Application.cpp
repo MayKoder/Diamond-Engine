@@ -14,8 +14,6 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 {
 	EngineExternal = this;
 
-	LOG("Hola");
-
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	renderer3D = new ModuleRenderer3D(this);
@@ -59,7 +57,7 @@ bool Application::Init()
 	}
 
 	// After all Init calls we call Start() in all modules
-	LOG("-------------- Application Start --------------");
+	LOG(LogType::L_NORMAL, "-------------- Application Start --------------");
 
 	// Call Init() in all modules
 	for (unsigned int i = 0; i < list_modules.size() && ret == true; i++)

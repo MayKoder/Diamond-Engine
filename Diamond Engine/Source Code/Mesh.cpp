@@ -47,22 +47,22 @@ Mesh::~Mesh()
 
 void Mesh::SetAsCube()
 {
-	indices_count = sizeof(MA_Cube_Indices) / sizeof(int);
-	indices = new uint[indices_count];
-	memcpy(indices, MA_Cube_Indices, sizeof(int) * indices_count);
+	//ERROR: This will crash on cleanup, you cant delete a static array element pointer
+	//indices_count = sizeof(MA_Cube_Indices) / sizeof(int);
+	//indices = (uint*)&MA_Cube_Indices[0];
 
-	vertices_count = (sizeof(MA_Cube_Vertices) / sizeof(float)) / 3;
-	vertices = new float[vertices_count * 3];
-	memcpy(vertices, MA_Cube_Vertices, sizeof(float) * vertices_count * 3);
+	//vertices_count = (sizeof(MA_Cube_Vertices) / sizeof(float)) / 3;
+	//vertices = (float*)&MA_Cube_Vertices[0];
 
-	normals_count = (sizeof(MA_Cube_Normals) / sizeof(float)) / 3;
-	normals = new float[normals_count * 3];
-	memcpy(normals, MA_Cube_Normals, sizeof(float) * normals_count * 3);
+	//normals_count = (sizeof(MA_Cube_Normals) / sizeof(float)) / 3;
+	//normals = (float*)&MA_Cube_Normals[0];
 
-	texCoords_count = (sizeof(MA_Cube_TexCoords) / sizeof(float)) / 2;
-	texCoords = new float[texCoords_count * 2];
-	memcpy(texCoords, MA_Cube_TexCoords, sizeof(float) * texCoords_count * 2);
+	//texCoords_count = (sizeof(MA_Cube_TexCoords) / sizeof(float)) / 2;
+	//texCoords = (float*)&MA_Cube_TexCoords[0];
 
+	//GenBuffers();
+
+	GenerateSphere(1, 30, 30);
 	GenBuffers();
 
 }
@@ -218,7 +218,7 @@ void Mesh::RenderMesh()
 	glPointSize(3.0f);
 	glColor3f(1, 0, 0);
 	glBegin(GL_POINTS);
-	for (int i = 0; i < vertices_count * 3; i += 3)
+	for (unsigned int i = 0; i < vertices_count * 3; i += 3)
 	{
 		glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
 	}
@@ -230,7 +230,7 @@ void Mesh::RenderMesh()
 	glColor3f(0, 1, 0);
 	glBegin(GL_LINES);
 	float normalLenght = 0.05f;
-	for (int i = 0; i < normals_count * 3; i += 3)
+	for (unsigned int i = 0; i < normals_count * 3; i += 3)
 	{
 		glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
 		glVertex3f(vertices[i] + normals[i] * normalLenght, vertices[i + 1] + normals[i + 1] * normalLenght, vertices[i + 2] + normals[i + 2] * normalLenght);
@@ -275,4 +275,123 @@ vec3 Mesh::GetVectorFromIndex(float* startValue)
 	float z = *startValue;
 
 	return vec3(x, y, z);
+}
+
+void Mesh::GenerateSphere(float radius, float sectorCount, float stackCount)
+{
+	// clear memory of prev arrays
+	std::vector<float> _vertices;
+	std::vector<float> _normals;
+	std::vector<float> _texCoords;
+
+	int selectorTracker = 0;
+
+	vertices_count = normals_count = ((sectorCount + 1) * (stackCount + 1)); //Numero de elements, cal treure el *3?
+	texCoords_count = ((sectorCount + 1) * (stackCount + 1)); //Numero de elements, cal treure el *2?
+	indices_count = (((stackCount - 2) * (sectorCount * 2)) * 3) + ((2 * sectorCount) * 3);
+
+
+	indices = new uint[indices_count];
+	vertices = new float[vertices_count * 3];
+	normals = new float[normals_count * 3];
+	texCoords = new float[texCoords_count * 2];
+
+
+	float x, y, z, xy;                              // vertex position
+	float nx, ny, nz, lengthInv = 1.0f / radius;    // vertex normal
+	float s, t;                                     // vertex texCoord
+
+	float sectorStep = 2 * M_PI / sectorCount;
+	float stackStep = M_PI / stackCount;
+	float sectorAngle, stackAngle;
+
+	for (int i = 0; i <= stackCount; ++i)
+	{
+		stackAngle = M_PI / 2.f - i * stackStep;        // starting from pi/2 to -pi/2
+		xy = radius * cosf(stackAngle);             // r * cos(u)
+		z = radius * sinf(stackAngle);              // r * sin(u)
+
+		// add (sectorCount+1) vertices per stack
+		// the first and last vertices have same position and normal, but different tex coords
+		for (int j = 0; j <= sectorCount; ++j)
+		{
+			sectorAngle = j * sectorStep;           // starting from 0 to 2pi
+
+			// vertex position (x, y, z)
+			x = xy * cosf(sectorAngle);             // r * cos(u) * cos(v)
+			y = xy * sinf(sectorAngle);             // r * cos(u) * sin(v)
+			_vertices.push_back(x);
+			_vertices.push_back(y);
+			_vertices.push_back(z);
+
+			//vertices[selectorTracker] = x;
+			//selectorTracker++;
+			//vertices[selectorTracker] = y;
+			//selectorTracker++;
+			//vertices[selectorTracker] = z;
+			//selectorTracker++;
+
+
+			// normalized vertex normal (nx, ny, nz)
+			nx = x * lengthInv;
+			ny = y * lengthInv;
+			nz = z * lengthInv;
+			_normals.push_back(nx);
+			_normals.push_back(ny);
+			_normals.push_back(nz);
+
+			// vertex tex coord (s, t) range between [0, 1]
+			s = (float)j / sectorCount;
+			t = (float)i / stackCount;
+			_texCoords.push_back(s);
+			_texCoords.push_back(t);
+		}
+	}
+
+	// generate CCW index list of sphere triangles
+	std::vector<uint> _indices;
+	int k1, k2;
+	for (int i = 0; i < stackCount; ++i)
+	{
+		k1 = i * (sectorCount + 1);     // beginning of current stack
+		k2 = k1 + sectorCount + 1;      // beginning of next stack
+
+		for (int j = 0; j < sectorCount; ++j, ++k1, ++k2)
+		{
+			// 2 triangles per sector excluding first and last stacks
+			// k1 => k2 => k1+1
+			if (i != 0)
+			{
+				_indices.push_back(k1);
+				_indices.push_back(k2);
+				_indices.push_back(k1 + 1);
+			}
+
+			// k1+1 => k2 => k2+1
+			if (i != (stackCount - 1))
+			{
+				_indices.push_back(k1 + 1);
+				_indices.push_back(k2);
+				_indices.push_back(k2 + 1);
+			}
+		}
+	}
+
+	//for (int i = 0; i < vertices_count * 3; i++)
+	//{
+	//	vertices[i] = _vertices[i];
+	//	normals[i] = _normals[i];
+	//}
+	//for (int i = 0; i < texCoords_count * 2; i++)
+	//{
+	//	texCoords[i] = _texCoords[i];
+	//}
+
+
+	memcpy(vertices, &_vertices[0], sizeof(float) * vertices_count * 3);
+	memcpy(normals, &_normals[0], sizeof(float) * normals_count * 3);
+	memcpy(texCoords, &_texCoords[0], sizeof(float) * texCoords_count * 2);
+	memcpy(indices, &_indices[0], sizeof(uint) * indices_count);
+
+
 }

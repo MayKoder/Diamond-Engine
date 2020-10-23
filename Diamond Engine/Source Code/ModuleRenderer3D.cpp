@@ -10,6 +10,7 @@
 #include "MeshLoader.h"
 #include "Mesh.h"
 
+#include "mmgr/mmgr.h"
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
@@ -38,37 +39,37 @@ ModuleRenderer3D::~ModuleRenderer3D()
 // Called before render is available
 bool ModuleRenderer3D::Init()
 {
-	LOG("Init: 3D Renderer context");
+	LOG(LogType::L_NORMAL, "Init: 3D Renderer context");
 	bool ret = true;
 	
 	//ASK: Can i do this inside the MM namespace?
 	MaykMath::Init();
-	LOG("Init: MaykMath");
+	LOG(LogType::L_NORMAL, "Init: MaykMath");
 
 	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
 	if(context == NULL)
 	{
-		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		LOG(LogType::L_ERROR, "OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 
 	GLenum error = glewInit();
 	if (error != GL_NO_ERROR)
 	{
-		LOG("Error initializing glew library! %s", SDL_GetError());
+		LOG(LogType::L_ERROR, "Error initializing glew library! %s", SDL_GetError());
 		ret = false;
 	}
 	else
 	{
-		LOG("Init: Glew %s", glewGetString(GLEW_VERSION));
+		LOG(LogType::L_NORMAL, "Init: Glew %s", glewGetString(GLEW_VERSION));
 	}
 	
 	if(ret == true)
 	{
 		//Use Vsync
 		if(SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
-			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+			LOG(LogType::L_WARNING, "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
@@ -79,7 +80,7 @@ bool ModuleRenderer3D::Init()
 		if(error != GL_NO_ERROR)
 		{
 			//gluErrorString
-			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
+			LOG(LogType::L_ERROR, "Error initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
 
@@ -92,7 +93,7 @@ bool ModuleRenderer3D::Init()
 		if(error != GL_NO_ERROR)
 		{
 			//ASK: Maybe glewGetErrorString is not the same as glutGerErrorString, so errors could be wrong
-			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
+			LOG(LogType::L_ERROR, "Error initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
 		
@@ -108,7 +109,7 @@ bool ModuleRenderer3D::Init()
 		if(error != GL_NO_ERROR)
 		{
 			//ASK: Maybe glewGetErrorString is not the same as glutGerErrorString, so errors could be wrong
-			LOG("Error initializing OpenGL! %s\n", glewGetErrorString(error));
+			LOG(LogType::L_ERROR, "Error initializing OpenGL! %s\n", glewGetErrorString(error));
 			ret = false;
 		}
 
@@ -194,7 +195,7 @@ bool ModuleRenderer3D::Init()
 
 	MeshLoader::EnableDebugMode();
 
-	//LOG("ModuleRender3D.cpp. line 185: Hardcoding a FBX load, remove ASAP");
+	//LOG(LogType::L_ERROR, "ModuleRender3D.cpp. line 185: Hardcoding a FBX load, remove ASAP");
 	//MeshLoader::ImportFBX("Assets/BakerHouse/BakerHouse.fbx", testMeshes, imgID);
 	Mesh* cube = new Mesh();
 	cube->SetAsCube();
@@ -240,56 +241,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
-
-	////<------------ DIRECT MODE ----------------->
-	//glLineWidth(2.0f);
-	//glBegin(GL_TRIANGLES);
-
-	//glVertex3f(0.5f, -0.5f, 0.5f);
-	//glVertex3f(0.5f, -0.5f, -0.5f);
-	//glVertex3f(0.5f, 0.5f, -0.5f);
-	//glVertex3f(0.5f, -0.5f, 0.5f);
-	//glVertex3f(0.5f, 0.5f, -0.5f);
-	//glVertex3f(0.5f, 0.5f, 0.5f);
-
-	//glVertex3f(-0.5f, -0.5f, 0.5f);
-	//glVertex3f(0.5f, -0.5f, 0.5f);
-	//glVertex3f(0.5f, 0.5f, 0.5f);
-	//glVertex3f(-0.5f, -0.5f, 0.5f);
-	//glVertex3f(0.5f, 0.5f, 0.5f);
-	//glVertex3f(-0.5f, 0.5f, 0.5f);
-
-	//glVertex3f(-0.5f, -0.5f, -0.5f);
-	//glVertex3f(-0.5f, -0.5f, 0.5f);
-	//glVertex3f(-0.5f, 0.5f, 0.5f);
-	//glVertex3f(-0.5f, -0.5f, -0.5f);
-	//glVertex3f(-0.5f, 0.5f, 0.5f);
-	//glVertex3f(-0.5f, 0.5f, -0.5f);
-
-	//glVertex3f(0.5f, -0.5f, -0.5f);
-	//glVertex3f(-0.5f, -0.5f, -0.5f);
-	//glVertex3f(-0.5f, 0.5f, -0.5f);
-	//glVertex3f(0.5f, -0.5f, -0.5f);
-	//glVertex3f(-0.5f, 0.5f, -0.5f);
-	//glVertex3f(0.5f, 0.5f, -0.5f);
-
-	//glVertex3f(-0.5f, 0.5f, -0.5f);
-	//glVertex3f(-0.5f, 0.5f, 0.5f);
-	//glVertex3f(0.5f, 0.5f, 0.5f);
-	//glVertex3f(-0.5f, 0.5f, -0.5f);
-	//glVertex3f(0.5f, 0.5f, 0.5f);
-	//glVertex3f(0.5f, 0.5f, -0.5f);
-
-	//glVertex3f(-0.5f, -0.5f, -0.5f);
-	//glVertex3f(0.5f, -0.5f, -0.5f);
-	//glVertex3f(0.5f, -0.5f, 0.5f);
-	//glVertex3f(-0.5f, -0.5f, -0.5f);
-	//glVertex3f(0.5f, -0.5f, 0.5f);
-	//glVertex3f(-0.5f, -0.5f, 0.5f);
-
-	//glEnd();
-	//glLineWidth(1.0f);
-	////<------------ DIRECT MODE END ----------------->
 
 	////<------------ VERTEX MODE ----------------->
 	//glPushMatrix();
@@ -346,10 +297,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glClearColor(0.05f, 0.05f, 0.05f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//Cube cb(1.f, 1.f, 1.f);
-	//cb.SetPos(0.f, 0.5f, 0.f);
-	//cb.Render();
-
 	//App->level->Draw();
 	//if (debug_draw == true)
 	//{
@@ -372,7 +319,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 // Called before quitting
 bool ModuleRenderer3D::CleanUp()
 {
-	LOG("Destroying 3D Renderer");
+	LOG(LogType::L_NORMAL, "Destroying 3D Renderer");
 
 	MeshLoader::DisableDebugMode();
 
@@ -441,21 +388,45 @@ void ModuleRenderer3D::OnGUI()
 		//GLint total_mem_kb = 0;
 		//glGetIntegerv(GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX, &total_mem_kb);
 		//total_mem_kb /= 1000;
-
 		//GLint cur_avail_mem_kb = 0;
 		//glGetIntegerv(GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX, &cur_avail_mem_kb);
 		//cur_avail_mem_kb /= 1000;
 
-		ImGui::Text("VRAM Budget:");
-		ImGui::Text("VRAM Usage:");
-		ImGui::Text("VRAM Avaliable:");
-		ImGui::Text("VRAM Reserved:");
+		// Memory --------------------
+		sMStats stats = m_getMemoryStatistics();
+		/*static int speed = 0;
+		static std::vector<float> memory(100);
+		if (++speed > 20)
+		{
+			speed = 0;
+			if (memory.size() == 100)
+			{
+				for (uint i = 0; i < 100 - 1; ++i)
+					memory[i] = memory[i + 1];
+
+				memory[100 - 1] = (float)stats.totalReportedMemory;
+			}
+			else
+				memory.push_back((float)stats.totalReportedMemory);
+		}
+
+		ImGui::PlotHistogram("##memory", &memory[0], memory.size(), 0, "Memory Consumption", 0.0f, (float)stats.peakReportedMemory * 1.2f, ImVec2(310, 100));*/
+
+		ImGui::Text("Total Reported Mem: %u", stats.totalReportedMemory);
+		ImGui::Text("Total Actual Mem: %u", stats.totalActualMemory);
+		ImGui::Text("Peak Reported Mem: %u", stats.peakReportedMemory);
+		ImGui::Text("Peak Actual Mem: %u", stats.peakActualMemory);
+		//ImGui::Text("Accumulated Reported Mem: %u", stats.accumulatedReportedMemory);
+		//ImGui::Text("Accumulated Actual Mem: %u", stats.accumulatedActualMemory);
+		//ImGui::Text("Accumulated Alloc Unit Count: %u", stats.accumulatedAllocUnitCount);
+		//ImGui::Text("Total Alloc Unit Count: %u", stats.totalAllocUnitCount);
+		//ImGui::Text("Peak Alloc Unit Count: %u", stats.peakAllocUnitCount);
 
 		if(ImGui::Checkbox("Enable V-Sync", &vsync))
 		{
 			//Use Vsync
 			if (SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
-				LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+				LOG(LogType::L_WARNING, "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 		}
 		ImGui::SameLine();
 		if (ImGui::Checkbox("Wireframe Mode", &wireframe))
@@ -511,7 +482,7 @@ void ModuleRenderer3D::ReGenerateFrameBuffer(int w, int h)
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		LOG("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
+		LOG(LogType::L_ERROR, "ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
@@ -524,7 +495,7 @@ void ModuleRenderer3D::CustomLoadImage(const char* fileName)
 
 	if (!ilLoadImage(fileName))
 	{
-		LOG("Noup");
+		LOG(LogType::L_ERROR, "Image not loaded");
 	}
 	for (unsigned int i = 0; i < testMeshes.size(); i++)
 	{
@@ -532,50 +503,6 @@ void ModuleRenderer3D::CustomLoadImage(const char* fileName)
 	}
 
 	ilDeleteImages(1, &ImageName);
-
-
-
-
-
-	//ilutEnable(ILUT_OPENGL_CONV);
-
-	//ilGenImages(1, &imgID);
-	//ilBindImage(imgID);
-
-	//if (!ilLoadImage(fileName))
-	//{
-	//	LOG("BUGAZOOOOOOOOOOOOO");
-	//}
-
-	//ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
-	//GLuint width = ilGetInteger(IL_IMAGE_WIDTH);
-	//GLuint height = ilGetInteger(IL_IMAGE_HEIGHT);
-
-	//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	//glGenTextures(1, &imgID);
-	//glBindTexture(GL_TEXTURE_2D, imgID);
-
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
-	//glGenerateMipmap(GL_TEXTURE_2D);
-	//
-	//glBindTexture(GL_TEXTURE_2D, 0);
-
-	//for (unsigned int i = 0; i < testMeshes.size(); i++)
-	//{
-	//	testMeshes[i]->textureID = imgID;
-	//}
-
-	//ilBindImage(0);
-	//ilDeleteImage(imgID);
-	//ilutDisable(ILUT_OPENGL_CONV);
 }
 
 void ModuleRenderer3D::GetCAPS(std::string& caps)
@@ -592,6 +519,3 @@ void ModuleRenderer3D::GetCAPS(std::string& caps)
 	caps += (SDL_HasAltiVec()) ? "AltiVec, " : "";
 	caps += (SDL_Has3DNow()) ? "3DNow, " : "";
 }
-
-// <---------------- MESH CLASS ----------------> //
-

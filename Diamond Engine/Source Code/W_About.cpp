@@ -4,6 +4,8 @@
 #include "EngineVersion.h"
 #include "MMGui.h"
 
+//TODO: DevIL version is missing
+
 W_About::W_About()
 {
 	name = "About";
@@ -26,6 +28,7 @@ void W_About::Draw()
 	ImGui::NewLine();
 	ImGui::TextWrapped("3rd Party Libraries used:");
 
+	//TODO: Versions should be stored on app start and not called every framne
 	std::string printVersion;
 
 	SDL_version ver;
@@ -37,7 +40,6 @@ void W_About::Draw()
 	ImGui::BulletText(""); ImGui::TextURL(printVersion.c_str(), "https://github.com/ocornut/imgui", 1, 0);
 
 	//TODO: Versions wont change, store versions in some sort of vector or array of strings
-	printVersion = (const char*)glGetString(GL_VERSION);
 	ImGui::BulletText("OpenGL version supported: v%s", glGetString(GL_VERSION));
 	ImGui::BulletText("Glew version: v%s", glewGetString(GLEW_VERSION));
 	ImGui::BulletText("GLSL: v%s", glGetString(GL_SHADING_LANGUAGE_VERSION));

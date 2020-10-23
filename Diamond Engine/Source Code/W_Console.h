@@ -4,15 +4,12 @@
 #include "Window.h"
 #include <vector>
 
-enum class LogType
-{
-	L_NORMAL, L_WARNING, L_ERROR
-};
+enum class LogType;
 
 struct LogMessage
 {
-	LogMessage(std::string s_msg);
-	bool EqualsStr(const char* cmp);
+	LogMessage(std::string, LogType);
+	bool EqualsStr(const char*);
 
 	std::string msg;
 	LogType lType;
@@ -27,9 +24,9 @@ public:
 	virtual ~W_Console();
 
 	void Draw() override;
-	void AddLog(const char* s_msg);
+	void AddLog(const char*, LogType);
 
-	char GetMsgType(LogType type, ImVec4 &lColor);
+	char GetMsgType(LogType, ImVec4&);
 
 	std::vector<LogMessage> logs;
 	bool collapseMode;

@@ -23,7 +23,7 @@
 #include "W_Inspector.h"
 #include "W_Hierarchy.h"
 #include "W_Scene.h"
-#include "w_ASSETS.h"
+#include "W_Assets.h"
 
 //#include"MathGeoLib/include/Math/float3.h"
 
@@ -31,7 +31,6 @@
 M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_enabled), displayWindow(false),
 viewportCorSize(0.f), dockspace_id(0)
 {
-
 	//reserve() does not work with [] operator
 	windows = std::vector<Window*>(static_cast<unsigned int>(EditorWindow::MAX), nullptr);
 
@@ -47,7 +46,8 @@ viewportCorSize(0.f), dockspace_id(0)
 	windows[static_cast<unsigned int>(EditorWindow::ABOUT)] = new W_About();
 	windows[static_cast<unsigned int>(EditorWindow::CONFIGURATION)] = new W_Configuration();
 
-	//float3 a = float3(2.f, 2.f, 2.f);
+	//Sould load the last used style on start?
+	UpdateLoadedStylesVector(&styles);
 
 }
 
@@ -58,7 +58,7 @@ M_Editor::~M_Editor()
 bool M_Editor::Init()
 {
 
-	LOG("Init: ImGui");
+	LOG(LogType::L_NORMAL, "Init: ImGui");
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -74,7 +74,6 @@ bool M_Editor::Init()
 	ImGuiStyle* style = &ImGui::GetStyle();
 	style->WindowMenuButtonPosition = ImGuiDir_None;
 	style->Colors[ImGuiCol_TitleBgActive] = ImVec4(0.219f, 0.219f, 0.219f, 1.f);
-	style->Colors[ImGuiCol_TitleBg] = ImVec4(0.219f, 0.219f, 0.219f, 1.f);
 	style->Colors[ImGuiCol_MenuBarBg] = ImVec4(1.f, 1.f, 1.f, 1.f);
 
 	style->Colors[ImGuiCol_TitleBg] = ImVec4(0.152f, 0.152f, 0.152f, 1.f);
@@ -169,7 +168,7 @@ void M_Editor::Draw()
 
 bool M_Editor::CleanUp()
 {
-	LOG("Editor CleanUp");
+	LOG(LogType::L_NORMAL, "Editor CleanUp");
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
@@ -182,7 +181,7 @@ bool M_Editor::CleanUp()
 	}
 	windows.clear();
 
-	LOG("ImGui Shutdown");
+	LOG(LogType::L_NORMAL, "ImGui Shutdown");
 	return true;
 }
 
@@ -272,10 +271,8 @@ void M_Editor::DrawMenuBar()
 			{
 				ShellExecute(0, 0, "https://github.com/MayKoder", 0, 0, SW_SHOW);
 			}
-			if (ImGui::MenuItem(windows[static_cast<int>(EditorWindow::ABOUT)]->name.c_str(), nullptr, &windows[static_cast<int>(EditorWindow::ABOUT)]->active))
-			{
-				
-			}
+			ImGui::MenuItem(windows[static_cast<int>(EditorWindow::ABOUT)]->name.c_str(), nullptr, &windows[static_cast<int>(EditorWindow::ABOUT)]->active);
+
 			ImGui::PopStyleColor(1);
 			ImGui::EndMenu();
 		}
@@ -299,88 +296,85 @@ void M_Editor::DrawTopBar()
 
 	g.NextWindowData.MenuBarOffsetMinVal = ImVec2(g.Style.DisplaySafeAreaPadding.x, ImMax(g.Style.DisplaySafeAreaPadding.y - g.Style.FramePadding.y, 0.0f));
 
-	ImGui::SetNextWindowSize(ImVec2(g.IO.DisplaySize.x, (g.NextWindowData.MenuBarOffsetMinVal.y + g.FontBaseSize + g.Style.FramePadding.y) * 1.5f));
+	ImGui::SetNextWindowSize(ImVec2(g.IO.DisplaySize.x, (g.NextWindowData.MenuBarOffsetMinVal.y + g.FontBaseSize + g.Style.FramePadding.y) * 2.5f));
 
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 	g.NextWindowData.MenuBarOffsetMinVal = ImVec2(0.f, 0.f);
-	ImGui::PopStyleVar();
 
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.152f, 0.152f, 0.152f, 1.f));
-
-	ImGui::Begin("ButtonsNavBar", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoDocking);
-	viewportCorSize = ImGui::GetWindowSize().y;
-	
-
-
-
-	const char* items[] = {"Dark"};
-	static const char* current_item = items[0];
-
-	//ImGuiStyle& style = ImGui::GetStyle();
-	//float w = ImGui::CalcItemWidth();
-	//float spacing = style.ItemInnerSpacing.x;
-	//float button_sz = ImGui::GetFrameHeight();
-	//ImGui::PushItemWidth((w - spacing * 2.0f - button_sz * 2.0f) * 0.1f);
-	if (ImGui::BeginCombo("##styleDropdown", "Style"))
+	//TODO: This breaks JSON style loaging because it's forcing this color to be saved 
+	//as the default background color :/
+	//ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.152f, 0.152f, 0.152f, 1.f));
+	if (ImGui::Begin("ButtonsNavBar", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoDocking)) 
 	{
-		for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+
+		viewportCorSize = ImGui::GetWindowSize().y;
+
+		ImGuiStyle& style = ImGui::GetStyle();
+		float w = ImGui::CalcItemWidth();
+		float spacing = style.ItemInnerSpacing.x;
+		float button_sz = ImGui::GetFrameHeight();
+		ImGui::PushItemWidth((w - spacing * 2.0f - button_sz * 2.0f) * 0.13f);
+		if (ImGui::BeginCombo("##styleDropdown", "Style"))
 		{
-			bool is_selected = (current_item == items[n]);
-			if (ImGui::Button(items[n])) 
+			//It's never a good idea to change a vector content
+			//while iterating over it
+			bool fileChanged = false;
+			for (int n = 0; n < styles.size(); n++)
 			{
-				current_item = items[n];
-				LoadStyle(current_item);
+				if (ImGui::Button(styles[n].c_str()))
+					ChangeStyleTo(styles[n].c_str());
+
+				ImGui::SameLine();
+				std::string label("X" + std::to_string(n));
+				if (ImGui::Button(label.c_str()))
+				{
+					//Delete style
+					DeleteStyle(styles[n].c_str());
+					fileChanged = true;
+				}
 			}
-			ImGui::SameLine();
-			if (ImGui::Button("X")) 
+
+			ImGui::Separator();
+
+			//ERROR, WARNING, TODO: Temporal fix, this is bad, fix it
+			ImGui::PushItemWidth(10 * MAX_STY_INPUT);
+			ImGui::InputText("##sName: ", styleInput, MAX_STY_INPUT);
+			ImGui::PopItemWidth();
+
+			if (ImGui::Button("Save current style") && styleInput[0] != '\0')
 			{
-				//Delete style
-				DeleteStyle(current_item);
+				SaveStyle(styleInput);
+				styleInput[0] = '\0';
+				fileChanged = true;
 			}
 
-			if (is_selected)
-				ImGui::SetItemDefaultFocus();
+			if (fileChanged)
+				UpdateLoadedStylesVector(&styles);
+
+			ImGui::EndCombo();
 		}
+		ImGui::PopItemWidth();
 
-		ImGui::Separator();
+		//float halfWindowSize = ImGui::GetWindowSize().y - 15;
 
-		char* input = "";
-		ImGui::InputText("##sName: ", input, 10);
+		//ImGui::SetCursorPosY((ImGui::GetWindowSize().y / 2) - (halfWindowSize / 2));
 
-		if (ImGui::Button("Save current style")) {
-			SaveStyle("Dark");
-		}
-	
+		//viewportCorSize = ImGui::GetWindowSize().y;
 
+		//float initPoint = (ImGui::GetWindowSize().x * 0.5f) - ((halfWindowSize * 3.f) / 2.f);
+		//ImGui::SetCursorPosX(initPoint + ((halfWindowSize + 10) * 0));
+		//ImGui::Button("Pl", ImVec2(halfWindowSize, halfWindowSize));
+		//ImGui::SameLine();
 
+		//ImGui::SetCursorPosX(initPoint + ((halfWindowSize + 10) * 1));
+		//ImGui::Button("Pa", ImVec2(halfWindowSize, halfWindowSize));
+		//ImGui::SameLine();
 
-
-		ImGui::EndCombo();
+		//ImGui::SetCursorPosX(initPoint + ((halfWindowSize + 10) * 2));
+		//ImGui::Button("St", ImVec2(halfWindowSize, halfWindowSize));
 	}
-	//ImGui::PopItemWidth();
-
-	//float halfWindowSize = ImGui::GetWindowSize().y - 15;
-
-	//ImGui::SetCursorPosY((ImGui::GetWindowSize().y / 2) - (halfWindowSize / 2));
-
-	//viewportCorSize = ImGui::GetWindowSize().y;
-
-	//float initPoint = (ImGui::GetWindowSize().x * 0.5f) - ((halfWindowSize * 3.f) / 2.f);
-	//ImGui::SetCursorPosX(initPoint + ((halfWindowSize + 10) * 0));
-	//ImGui::Button("Pl", ImVec2(halfWindowSize, halfWindowSize));
-	//ImGui::SameLine();
-
-	//ImGui::SetCursorPosX(initPoint + ((halfWindowSize + 10) * 1));
-	//ImGui::Button("Pa", ImVec2(halfWindowSize, halfWindowSize));
-	//ImGui::SameLine();
-
-	//ImGui::SetCursorPosX(initPoint + ((halfWindowSize + 10) * 2));
-	//ImGui::Button("St", ImVec2(halfWindowSize, halfWindowSize));
 	ImGui::End();
 
-	ImGui::PopStyleVar();
-	ImGui::PopStyleColor();
+	//ImGui::PopStyleColor();
 }
 
 void M_Editor::CreateDockSpace()
@@ -413,14 +407,10 @@ Window* M_Editor::GetEditorWindow(EditorWindow type)
 void M_Editor::SaveStyle(const char* styleName)
 {
 	//Maybe learning json alone wasn't a good idea
-	LOG("Saving style");
+	LOG(LogType::L_NORMAL, "Saving %s", styleName);
 
-	//Init node
-	JSON_Value* root_value = json_value_init_object();
-	JSON_Object* root_object = json_value_get_object(root_value);
-
-	//Style id
-	//json_object_dotset_number(root_object, "Dark.id", 0);
+	JSON_Value* file = json_parse_file(STYLES_PATH);
+	JSON_Object* root_object = json_value_get_object(file);
 
 	//Init settings array
 	JSON_Value* settingsArray = json_value_init_array();
@@ -428,12 +418,8 @@ void M_Editor::SaveStyle(const char* styleName)
 
 	//Populate settings array
 	JSON_Array* settings = json_value_get_array(settingsArray);
-
-	//------------------>>
-
-    //creating measurement Json
-
 	ImGuiStyle& style = ImGui::GetStyle();
+
 	for (int i = 0; i < ImGuiCol_COUNT; i++)
 	{
 		JSON_Value *leaf_value = json_value_init_object();
@@ -448,37 +434,14 @@ void M_Editor::SaveStyle(const char* styleName)
 		json_array_append_value(settings, leaf_value);
 	}
 
-
-	//-------------------<<
-
-	//json_array_append_number(settings, 1);
-
-	//Add settings array to file
-	//json_object_dotset_value(root_object, "Dark.settings", settingsArray);
-
-
-	//JSON_Object* obj = json_value_get_object(json_array_get_value(settings, 0));
-	//json_object_dotset_string(root_object, "Dark.settings.id", "0, 0, 0, 0");
-	//json_object_set_string(root_object, "0", "0, 0, 0, 0");
-
-	//-------------------------------------//
-
-	//Second style type
-	json_object_set_value(root_object, "Default", json_value_init_array());
-
-	//-------------------------------------//
-
 	//Save file 
-	json_serialize_to_file_pretty(root_value, STYLES_PATH);
+	json_serialize_to_file_pretty(file, STYLES_PATH);
 
 	//Free memory
-	json_value_free(root_value);
-	//json_value_free(colorArray);
-
+	json_value_free(file);
 }
 
-//TODO: Delete style?
-void M_Editor::LoadStyle(const char* styleName)
+void M_Editor::ChangeStyleTo(const char* styleName)
 {
 	JSON_Value* file = json_parse_file(STYLES_PATH);
 	JSON_Object* root_object = json_value_get_object(file);
@@ -503,36 +466,57 @@ void M_Editor::LoadStyle(const char* styleName)
 	json_value_free(file);
 	//json_value_free(stArray);
 
-	LOG("Style loaded");
+	LOG(LogType::L_NORMAL, "Style %s loaded", styleName);
 }
 
 void M_Editor::DeleteStyle(const char* styleName)
 {
 	//Maybe learning json alone wasn't a good idea
-	LOG("Saving style");
+	LOG(LogType::L_NORMAL, "Deleting style %s", styleName);
 
 	//Init node
-	JSON_Value* root_value = json_value_init_object();
-	JSON_Object* root_object = json_value_get_object(root_value);
+	JSON_Value* file = json_parse_file(STYLES_PATH);
+	JSON_Object* root_object = json_value_get_object(file);
 
-	//Style id
-	//json_object_dotset_number(root_object, "Dark.id", 0);
+	json_object_remove(root_object, styleName);
 
-	//Init settings array
-	JSON_Value* settingsArray = json_value_init_array();
-	json_object_set_value(root_object, styleName, NULL);
+	//json_object_set_value(root_object, styleName, NULL);
 
 	//Save file 
-	json_serialize_to_file_pretty(root_value, STYLES_PATH);
+	json_serialize_to_file_pretty(file, STYLES_PATH);
 
 	//Free memory
-	json_value_free(root_value);
+	json_value_free(file);
 }
 
-void M_Editor::LogToConsole(const char* msg)
+void M_Editor::UpdateLoadedStylesVector(std::vector<std::string>* _styles)
+{
+	LOG(LogType::L_NORMAL, "Loading saved styles at default file");
+
+	styles.clear();
+	JSON_Value* file = json_parse_file(STYLES_PATH);
+
+	if (file != NULL)
+	{
+		JSON_Object* root_object = json_value_get_object(file);
+		size_t size = json_object_get_count(root_object);
+
+		for (size_t i = 0; i < size; ++i)
+		{
+			_styles->push_back(json_object_get_name(root_object, i));
+		}
+	}
+	else
+	{
+		LOG(LogType::L_WARNING, "Styles file could not be loaded, loading default style");
+	}
+	json_value_free(file);
+}
+
+void M_Editor::LogToConsole(const char* msg, LogType _type)
 {
 		W_Console* consoleWindow = dynamic_cast<W_Console*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::CONSOLE));
 
 		if (consoleWindow != nullptr)
-			consoleWindow->AddLog(msg);
+			consoleWindow->AddLog(msg, _type);
 }
