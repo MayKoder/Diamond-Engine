@@ -19,7 +19,7 @@ class ModuleRenderer3D : public Module
 {
 public:
 	ModuleRenderer3D(Application* app, bool start_enabled = true);
-	~ModuleRenderer3D();
+	virtual ~ModuleRenderer3D();
 
 	bool Init() override;
 	update_status PreUpdate(float dt) override;
@@ -49,7 +49,6 @@ public:
 	std::vector<Mesh*> testMeshes;
 	//GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
 	const char* buffer = nullptr;
-	uint imgID;
 
 public:
 

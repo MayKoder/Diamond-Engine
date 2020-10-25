@@ -36,7 +36,7 @@ viewportCorSize(0.f), dockspace_id(0)
 
 	windows[static_cast<unsigned int>(EditorWindow::ASSETS)] = new W_Assets();
 	windows[static_cast<unsigned int>(EditorWindow::CONSOLE)] = new W_Console();
-	windows[static_cast<unsigned int>(EditorWindow::HIERARCHY)] = new W_Hierarchy();
+	windows[static_cast<unsigned int>(EditorWindow::HIERARCHY)] = new W_Hierarchy(App->moduleScene);
 	windows[static_cast<unsigned int>(EditorWindow::INSPECTOR)] = new W_Inspector();
 	windows[static_cast<unsigned int>(EditorWindow::SCENE)] = new W_Scene(App);
 
@@ -225,13 +225,13 @@ void M_Editor::DrawMenuBar()
 			//TODO: This is temporal, meshes should not laod every time and 
 			//should be stored only once, then only copy id's.
 			if (ImGui::MenuItem("Cube", nullptr))
-				MeshLoader::ImportFBX("Assets/cube.fbx", App->renderer3D->testMeshes, App->renderer3D->imgID);
+				//MeshLoader::ImportFBX("Assets/cube.fbx", App->renderer3D->testMeshes, App->renderer3D->imgID);
 
 			ImGui::MenuItem("Pyramid", nullptr);
 			ImGui::MenuItem("Sphere", nullptr);
 			ImGui::MenuItem("Cylinder", nullptr);
 			if (ImGui::MenuItem("Monkey", nullptr))
-				MeshLoader::ImportFBX("Assets/monkey.fbx", App->renderer3D->testMeshes, App->renderer3D->imgID);
+				//MeshLoader::ImportFBX("Assets/monkey.fbx", App->renderer3D->testMeshes, App->renderer3D->imgID);
 
 			ImGui::PopStyleColor();
 			ImGui::EndMenu();

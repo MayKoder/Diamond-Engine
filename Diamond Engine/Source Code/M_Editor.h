@@ -32,7 +32,7 @@ class M_Editor : public Module
 
 public:
 	M_Editor(Application* app, bool start_enabled = true);
-	~M_Editor();
+	virtual ~M_Editor();
 
 	bool Init() override;
 	bool Start() override;

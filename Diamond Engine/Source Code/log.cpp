@@ -20,6 +20,6 @@ void log(const char file[], int line, LogType _type, const char* format, ...)
 
 	if (EngineExternal != nullptr && EngineExternal->moduleEditor != nullptr)
 	{
-		EngineExternal->moduleEditor->LogToConsole(tmp_string);
+		EngineExternal->moduleEditor->LogToConsole(tmp_string, _type);
 	}
 }

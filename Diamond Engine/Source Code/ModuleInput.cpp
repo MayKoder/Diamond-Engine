@@ -6,6 +6,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
 #include "MeshLoader.h"
+#include "M_Scene.h"
 
 #define MAX_KEYS 300
 
@@ -117,7 +118,7 @@ update_status ModuleInput::PreUpdate(float dt)
 				
 				if (dropped_filedir.substr(dropped_filedir.find(".") + 1) == "fbx" || dropped_filedir.substr(dropped_filedir.find(".") + 1) == "FBX")
 				{
-					MeshLoader::ImportFBX(e.drop.file, App->renderer3D->testMeshes, App->renderer3D->imgID);
+					MeshLoader::ImportFBX(e.drop.file, App->renderer3D->testMeshes, App->moduleScene->root/*App->renderer3D->imgID*/);
 				}
 				if (dropped_filedir.substr(dropped_filedir.find(".") + 1) == "png")
 				{

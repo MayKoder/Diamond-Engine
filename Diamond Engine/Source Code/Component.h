@@ -1,10 +1,20 @@
 #pragma once
 
+class GameObject;
+
 class Component
 {
 public:
 
-	Component();
+	enum class Type
+	{
+		None,
+		Transform,
+		MeshRenderer,
+		Material
+	};
+
+	Component(GameObject* _gm);
 	virtual ~Component();
 
 	virtual void Enable();
@@ -12,6 +22,13 @@ public:
 
 	virtual void Update();
 
-private:
+	virtual void OnEditor();
+
+	Type type;
+
+protected:
+	//const char* name;
+	bool active;
+	GameObject* gameObject;
 
 };

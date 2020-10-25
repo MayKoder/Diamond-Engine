@@ -3,6 +3,8 @@
 
 #include "Window.h"
 
+class GameObject;
+
 class W_Inspector : public Window
 {
 
@@ -11,6 +13,8 @@ public:
 	virtual ~W_Inspector();
 
 	void Draw() override;
+
+	GameObject* selectedGO;
 
 
 };

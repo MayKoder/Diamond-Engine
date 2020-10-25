@@ -1,6 +1,6 @@
 #include "Component.h"
 
-Component::Component()
+Component::Component(GameObject* _gm) : active(true), /*name(""),*/ gameObject(_gm), type(Type::None)
 {
 }
 
@@ -18,4 +18,9 @@ void Component::Disable()
 
 void Component::Update()
 {
+}
+
+void Component::OnEditor()
+{
+
 }

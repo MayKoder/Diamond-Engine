@@ -16,7 +16,7 @@ class ModuleInput : public Module
 public:
 	
 	ModuleInput(Application* app, bool start_enabled = true);
-	~ModuleInput();
+	virtual ~ModuleInput();
 
 	bool Init() override;
 	update_status PreUpdate(float dt) override;

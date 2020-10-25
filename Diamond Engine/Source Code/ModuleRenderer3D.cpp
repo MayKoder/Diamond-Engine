@@ -6,6 +6,7 @@
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
 #include "M_Editor.h"
+#include "M_Scene.h"
 
 #include "MeshLoader.h"
 #include "Mesh.h"
@@ -141,11 +142,11 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_COLOR_MATERIAL);
 		glEnable(GL_TEXTURE_2D);
 
+		//Devil init
 		ilInit();
 		iluInit();
 		ilutInit();
 		ilutRenderer(ILUT_OPENGL);
-
 	}
 
 	//Generate texture
@@ -195,12 +196,8 @@ bool ModuleRenderer3D::Init()
 
 	MeshLoader::EnableDebugMode();
 
-	//LOG(LogType::L_ERROR, "ModuleRender3D.cpp. line 185: Hardcoding a FBX load, remove ASAP");
-	//MeshLoader::ImportFBX("Assets/BakerHouse/BakerHouse.fbx", testMeshes, imgID);
-	Mesh* cube = new Mesh();
-	cube->SetAsCube();
-
-	testMeshes.push_back(cube);
+	LOG(LogType::L_WARNING, "ModuleRender3D.cpp. line 185: Hardcoding a FBX load, remove ASAP");
+	MeshLoader::ImportFBX("Assets/BakerHouse/BakerHouse.fbx", testMeshes, App->moduleScene->root);
 
 
 	// Projection matrix for
@@ -281,21 +278,17 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//<------------ VERTEX AND INDEX MODE END ----------------->
 
 	//testMesh.RenderMesh();
-	for (unsigned int i = 0; i < testMeshes.size(); i++)
-	{
-		if (testMeshes[i]->vertices_count != 0) 
-		{
-			//glRotated(-90, 1, 0, 0);
-			//glScaled(.01f, .01f, .01f);
-			testMeshes[i]->RenderMesh();
-		}
-	}
+	//for (unsigned int i = 0; i < testMeshes.size(); i++)
+	//{
+	//	if (testMeshes[i]->vertices_count != 0) 
+	//	{
+	//		//glRotated(-90, 1, 0, 0);
+	//		//glScaled(.01f, .01f, .01f);
+	//		testMeshes[i]->RenderMesh();
+	//	}
+	//}
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glDisable(GL_DEPTH_TEST);
-
-	glClearColor(0.05f, 0.05f, 0.05f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	App->moduleScene->UpdateGameObjects();
 
 	//App->level->Draw();
 	//if (debug_draw == true)
@@ -306,9 +299,14 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//}
 	//App->editor->Draw();		[DONE]
 
+	//Change frame buffer to default window
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glDisable(GL_DEPTH_TEST);
 
-	//Render debug geometry
-	//Draw editor
+	glClearColor(0.05f, 0.05f, 0.05f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
 	App->moduleEditor->Draw();
 
 	SDL_GL_SwapWindow(App->window->window);
@@ -326,6 +324,10 @@ bool ModuleRenderer3D::CleanUp()
 	glDeleteFramebuffers(1, &framebuffer);
 	glDeleteTextures(1, &texColorBuffer);
 	glDeleteRenderbuffers(1, &rbo);
+
+	//BUG: This is a bug, texture buffers are shared, should only delete each
+	//Buffer once, keep a vector of texture buffers
+	glDeleteTextures(1, &testMeshes[0]->textureID);
 
 	for (unsigned int i = 0; i < testMeshes.size(); i++)
 	{
@@ -488,21 +490,27 @@ void ModuleRenderer3D::ReGenerateFrameBuffer(int w, int h)
 
 void ModuleRenderer3D::CustomLoadImage(const char* fileName)
 {
-
-	ILuint ImageName;
-	ilGenImages(1, &ImageName);
-	ilBindImage(ImageName);
+	//std::string test("Assets/BakerHouse/");
+	//test += fileName;
+	//SUPER ERROR TODO: ilutGLBindTexImage() SHOULD NOT 
+	//BE CALLED EVERY MESH, SHOULD IT?
+	ILuint imageID;
+	ilGenImages(1, &imageID);
+	ilBindImage(imageID);
 
 	if (!ilLoadImage(fileName))
 	{
 		LOG(LogType::L_ERROR, "Image not loaded");
 	}
+
+	GLuint glID = ilutGLBindTexImage();
 	for (unsigned int i = 0; i < testMeshes.size(); i++)
 	{
-		testMeshes[i]->textureID = ilutGLBindTexImage();
+		//This should not be called every mesh like wtf
+		testMeshes[i]->textureID = glID;
 	}
 
-	ilDeleteImages(1, &ImageName);
+	ilDeleteImages(1, &imageID);
 }
 
 void ModuleRenderer3D::GetCAPS(std::string& caps)

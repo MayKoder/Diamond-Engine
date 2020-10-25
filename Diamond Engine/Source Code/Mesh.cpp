@@ -4,7 +4,7 @@
 
 //TODO: A mesh should be loaded only once, if the mesh is loaded, just send the 
 //id's to the new mesh
-Mesh::Mesh() : indices_id(-1), vertices_id(-1), generalWireframe(nullptr)
+Mesh::Mesh() : indices_id(-1), vertices_id(-1), generalWireframe(nullptr), textureID(-1)
 {
 
 }
@@ -43,6 +43,8 @@ Mesh::~Mesh()
 	normals = nullptr;
 	texCoords = nullptr;
 
+
+
 }
 
 void Mesh::SetAsCube()
@@ -61,10 +63,6 @@ void Mesh::SetAsCube()
 	//texCoords = (float*)&MA_Cube_TexCoords[0];
 
 	//GenBuffers();
-
-	GenerateSphere(1, 30, 30);
-	GenBuffers();
-
 }
 
 void Mesh::SetAsPyramid()
@@ -75,7 +73,8 @@ void Mesh::SetAsPyramid()
 
 void Mesh::SetAsSphere()
 {
-	//createSphere(vertex, index, 1, 20, 20);
+	GenerateSphere(1, 30, 30);
+	GenBuffers();
 }
 
 void Mesh::SetAsCylinder()

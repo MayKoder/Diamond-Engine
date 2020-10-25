@@ -6,6 +6,7 @@
 #include"ModuleInput.h"
 #include"ModuleRenderer3D.h"
 #include"ModuleCamera3D.h"
+#include "M_Scene.h"
 #include"M_Editor.h"
 
 
@@ -15,9 +16,10 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	EngineExternal = this;
 
 	window = new ModuleWindow(this);
-	input = new ModuleInput(this);
-	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
+	input = new ModuleInput(this);
+	moduleScene = new M_Scene(this);
+	renderer3D = new ModuleRenderer3D(this);
 	moduleEditor = new M_Editor(this);
 
 	// The order of calls is very important!
@@ -28,6 +30,9 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+
+	//Should scene be here?
+	AddModule(moduleScene);
 
 	// Renderer last!
 	AddModule(renderer3D);
