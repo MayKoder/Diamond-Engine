@@ -11,6 +11,9 @@
 #include "Mesh.h"
 #include "GameObject.h"
 #include "C_MeshRenderer.h"
+#include "C_Transform.h"
+
+#include"MathGeoLib/include/Math/Quat.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -88,8 +91,23 @@ void MeshLoader::NodeToGameObject(std::vector<Mesh*>& _sceneMeshes, aiNode* node
 		GameObject* gmNode = new GameObject(node->mName.C_Str());
 		//Load mesh to GameObject
 		C_MeshRenderer* gmMeshRenderer = dynamic_cast<C_MeshRenderer*>(gmNode->AddComponent(Component::Type::MeshRenderer));
-
 		gmMeshRenderer->_mesh = meshPointer;
+
+		C_Transform* transform = dynamic_cast<C_Transform*>(gmNode->GetComponent(Component::Type::Transform));
+		
+		aiVector3D T, S;
+		aiQuaternion R;
+		node->mTransformation.Decompose(S, R, T);
+
+		float3 position(T.x, T.y, T.z);
+		float3 size(S.x, S.y, S.z);
+		Quat rotationQuat(R.x, R.y, R.z, R.w);
+		//LOG(LogType::L_WARNING, "%f, %f, %f", position.x, position.y, position.z);
+		//LOG(LogType::L_WARNING, "%f, %f, %f", size.x, size.y, size.z);
+		//LOG(LogType::L_WARNING, "%f, %f, %f, %f", rotationQuat.x, rotationQuat.y, rotationQuat.z, rotationQuat.w);
+		transform->localTransform = float4x4::FromTRS(position, rotationQuat, size);
+		transform->globalTransform = dynamic_cast<C_Transform*>(gmParent->GetComponent(Component::Type::Transform))->globalTransform * transform->localTransform;
+
 		gmParent->children.push_back(gmNode);
 	}
 
@@ -174,6 +192,11 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 	_mesh->generalWireframe = &EngineExternal->renderer3D->wireframe;
 
 	return _mesh;
+}
+
+ImportType MeshLoader::GetTypeFromPath(const char* path)
+{
+	return ImportType::MESH;
 }
 
 //void MeshLoader::GenerateCheckerTexture()

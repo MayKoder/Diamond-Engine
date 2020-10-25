@@ -9,6 +9,7 @@ public:
 	virtual ~C_Material();
 
 	/*void Update() override;*/
+	void OnEditor() override;
 
 	int textureID;
 };

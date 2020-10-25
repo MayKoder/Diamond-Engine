@@ -15,14 +15,15 @@ C_MeshRenderer::~C_MeshRenderer()
 void C_MeshRenderer::Update()
 {
 	//Position matrix?
-	//if (gameObject->transform != nullptr) 
-	//{
-	//	glPushMatrix();
-	//	glMultMatrixf(gameObject->transform->transform.v[0]);
-	//}
+	C_Transform* transform = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::Type::Transform));
+	if (transform != nullptr) 
+	{
+		glPushMatrix();
+		glMultMatrixf(transform->globalTransform.ptr());
+	}
 
 	_mesh->RenderMesh();
 
-	//if(gameObject->transform != nullptr)
-	//	glPopMatrix();
+	if(transform != nullptr)
+		glPopMatrix();
 }

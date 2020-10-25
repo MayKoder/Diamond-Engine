@@ -131,6 +131,7 @@ void M_Editor::Draw()
 	//}
 
 
+	//ImGui::PushStyleVar(ImGuiStyleVar_::ImGuiStyleVar_WindowMinSize, ImVec2(250, 250));
 	for (unsigned int i = 0; i < windows.size(); i++)
 	{
 		if (windows[i]->active) 
@@ -141,6 +142,7 @@ void M_Editor::Draw()
 			windows[i]->Draw();
 		}
 	}
+	//ImGui::PopStyleVar();
 
 	if (displayWindow)
 	{

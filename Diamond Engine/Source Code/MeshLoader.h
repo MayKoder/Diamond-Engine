@@ -9,8 +9,14 @@ class aiNode;
 class aiMesh;
 class GameObject;
 
+	enum ImportType {
+		MESH,
+		TEXTURE,
+	};
+//Change this to file system
 namespace MeshLoader
 {
+
 
 	void EnableDebugMode();
 	void DisableDebugMode();
@@ -21,6 +27,9 @@ namespace MeshLoader
 
 	void NodeToGameObject(std::vector<Mesh*>& _sceneMeshes, aiNode* node, GameObject* gmParent, const char* holderName);
 	Mesh* LoadMesh(aiMesh* importedMesh);
+
+	//TODO: Not finished
+	ImportType GetTypeFromPath(const char* path);
 
 }
 

@@ -13,6 +13,7 @@ public:
 
 	void OnEditor() override;
 
-	float4x4 transform;
+	float4x4 globalTransform;
+	float4x4 localTransform;
 
 };

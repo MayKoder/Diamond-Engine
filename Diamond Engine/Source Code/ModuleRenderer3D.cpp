@@ -327,7 +327,7 @@ bool ModuleRenderer3D::CleanUp()
 
 	//BUG: This is a bug, texture buffers are shared, should only delete each
 	//Buffer once, keep a vector of texture buffers
-	glDeleteTextures(1, &testMeshes[0]->textureID);
+	//glDeleteTextures(1, &testMeshes[0]->textureID);
 
 	for (unsigned int i = 0; i < testMeshes.size(); i++)
 	{
