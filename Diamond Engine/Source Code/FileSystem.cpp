@@ -106,11 +106,17 @@ void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes, G
 
 void MeshLoader::NodeToGameObject(std::vector<Mesh*>& _sceneMeshes, aiNode* node, GameObject* gmParent, const char* holderName)
 {
+	GameObject* rootGO = new GameObject(node->mName.C_Str());
+	rootGO->parent = gmParent;
+	gmParent->children.push_back(rootGO);
+
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		Mesh* meshPointer = _sceneMeshes[node->mMeshes[i]];
 
-		GameObject* gmNode = new GameObject(node->mName.C_Str());
+		GameObject* gmNode = new GameObject(node->mName.C_Str()); //Name should be scene->mMeshes[node->mMeshes[i]]
+		gmNode->parent = rootGO;
+
 		//Load mesh to GameObject
 		C_MeshRenderer* gmMeshRenderer = dynamic_cast<C_MeshRenderer*>(gmNode->AddComponent(Component::Type::MeshRenderer));
 		gmMeshRenderer->_mesh = meshPointer;
@@ -128,23 +134,20 @@ void MeshLoader::NodeToGameObject(std::vector<Mesh*>& _sceneMeshes, aiNode* node
 		//LOG(LogType::L_WARNING, "%f, %f, %f", size.x, size.y, size.z);
 		//LOG(LogType::L_WARNING, "%f, %f, %f, %f", rotationQuat.x, rotationQuat.y, rotationQuat.z, rotationQuat.w);
 		transform->localTransform = float4x4::FromTRS(position, rotationQuat, size);
-		transform->globalTransform = dynamic_cast<C_Transform*>(gmParent->GetComponent(Component::Type::Transform))->globalTransform * transform->localTransform;
+		transform->globalTransform = dynamic_cast<C_Transform*>(rootGO->GetComponent(Component::Type::Transform))->globalTransform * transform->localTransform;
 
 		//if (transform->localTransform == transform->localTransform.nan || transform->globalTransform == float4x4::nan) {
 		//	LOG(LogType::L_ERROR, "Some matrix loading is NAN");
 		//}
 
-		gmParent->children.push_back(gmNode);
+		rootGO->children.push_back(gmNode);
 	}
 
 	if (node->mNumChildren > 0) 
 	{
-		GameObject* childrenHolder = new GameObject(holderName);
-		gmParent->children.push_back(childrenHolder);
-
 		for (unsigned int i = 0; i < node->mNumChildren; i++)
 		{
-			NodeToGameObject(_sceneMeshes, node->mChildren[i], childrenHolder, node->mName.C_Str());
+			NodeToGameObject(_sceneMeshes, node->mChildren[i], rootGO, node->mName.C_Str());
 		}
 	}
 
