@@ -11,6 +11,8 @@ public:
 
 	void Update() override;
 
+	void OnEditor() override;
+
 //private:
 
 	//Pointer to a mesh stored at ModuleRenderer3D

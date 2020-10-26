@@ -26,17 +26,6 @@ bool M_Scene::Start()
 	return true;
 }
 
-update_status M_Scene::Update(float dt)
-{
-
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) 
-	{
-		CreateGameObject("Child", root);
-	}
-
-	return update_status::UPDATE_CONTINUE;
-}
-
 bool M_Scene::CleanUp()
 {
 	//This will delete all the gameObjects

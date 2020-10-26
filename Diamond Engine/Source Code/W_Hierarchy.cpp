@@ -38,7 +38,7 @@ void W_Hierarchy::SetCurrentScene(M_Scene* _scene)
 
 void W_Hierarchy::DrawGameObjectsTree(GameObject* node)
 {
-	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
+	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen;
 	if (node->children.size() == 0)
 	{
 		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;

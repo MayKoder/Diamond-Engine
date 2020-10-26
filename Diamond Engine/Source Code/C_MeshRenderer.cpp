@@ -4,6 +4,8 @@
 #include "C_Transform.h"
 #include "GameObject.h"
 
+#include"ImGui/imgui.h"
+
 C_MeshRenderer::C_MeshRenderer(GameObject* _gm) : Component(_gm), _mesh(nullptr)
 {
 }
@@ -19,11 +21,20 @@ void C_MeshRenderer::Update()
 	if (transform != nullptr) 
 	{
 		glPushMatrix();
-		glMultMatrixf(transform->globalTransform.ptr());
+		//TODO: Save transposed floa4x4
+		glMultMatrixf(transform->globalTransform.Transposed().ptr());
 	}
 
 	_mesh->RenderMesh();
 
 	if(transform != nullptr)
 		glPopMatrix();
+}
+
+void C_MeshRenderer::OnEditor()
+{
+	if (ImGui::CollapsingHeader("Mesh Renderer", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Image((ImTextureID)_mesh->textureID, ImVec2(128, 128));
+	}
 }

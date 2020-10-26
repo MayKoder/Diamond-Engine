@@ -5,7 +5,7 @@
 
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
-#include "MeshLoader.h"
+#include "FileSystem.h"
 #include "M_Scene.h"
 
 #define MAX_KEYS 300
@@ -114,17 +114,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			case (SDL_DROPFILE):
 			{   
 				// In case if dropped file
-				std::string dropped_filedir(e.drop.file);
-				
-				if (dropped_filedir.substr(dropped_filedir.find(".") + 1) == "fbx" || dropped_filedir.substr(dropped_filedir.find(".") + 1) == "FBX")
-				{
-					MeshLoader::ImportFBX(e.drop.file, App->renderer3D->testMeshes, App->moduleScene->root/*App->renderer3D->imgID*/);
-				}
-				if (dropped_filedir.substr(dropped_filedir.find(".") + 1) == "png")
-				{
-					App->renderer3D->CustomLoadImage(e.drop.file);
-				}
-
+				FileSystem::LoadFile(e.drop.file);
 				SDL_free(e.drop.file);    // Free dropped_filedir memory
 				break;
 			}

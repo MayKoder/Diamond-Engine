@@ -4,11 +4,22 @@
 #include "EngineVersion.h"
 #include "MMGui.h"
 
+#include"DevIL/include/il.h"
+#include"PhysFS/include/physfs.h"
+#include"Assimp/include/version.h"
+
 //TODO: DevIL version is missing
+//TODO: Assimp version is missing
 
 W_About::W_About() : Window()
 {
 	name = "About";
+	
+	PHYSFS_Version physVersionStc;
+	PHYSFS_getLinkedVersion(&physVersionStc);
+
+	physVersion = std::to_string(physVersionStc.major) + '.' + std::to_string(physVersionStc.minor) + '.' + std::to_string(physVersionStc.patch);
+
 }
 
 W_About::~W_About()
@@ -39,6 +50,9 @@ void W_About::Draw()
 
 		printVersion = "ImGui  v" + std::string(ImGui::GetVersion());
 		ImGui::BulletText(""); ImGui::TextURL(printVersion.c_str(), "https://github.com/ocornut/imgui", 1, 0);
+
+		printVersion = "PhysFS  v" + physVersion;
+		ImGui::BulletText(""); ImGui::TextURL(printVersion.c_str(), "https://icculus.org/physfs/", 1, 0);
 
 		//TODO: Versions wont change, store versions in some sort of vector or array of strings
 		ImGui::BulletText("OpenGL version supported: v%s", glGetString(GL_VERSION));

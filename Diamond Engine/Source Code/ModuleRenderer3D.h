@@ -46,7 +46,8 @@ public:
 	unsigned int rbo;
 
 	//Mesh testMesh;
-	std::vector<Mesh*> testMeshes;
+	std::vector<Mesh*> globalMeshes;
+	std::vector<GLuint> globalTextures;
 	//GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
 	const char* buffer = nullptr;
 

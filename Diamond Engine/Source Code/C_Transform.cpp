@@ -30,8 +30,6 @@ void C_Transform::OnEditor()
 		ImGui::DragFloat("Z", &localTransform.ptr()[11]);
 		ImGui::PopItemWidth();
 
-		ImGui::Text("%f, %f, %f", localTransform.Col3(3).x, localTransform.Col3(3).y, localTransform.Col3(3).z);
-
 		ImGui::Text("Rotation: ");
 		ImGui::SameLine();
 		ImGui::Text("%f, %f, %f", localTransform.ToEulerXYZ().x * RADTODEG, localTransform.ToEulerXYZ().y * RADTODEG, localTransform.ToEulerXYZ().z * RADTODEG);

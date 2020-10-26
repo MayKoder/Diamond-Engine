@@ -14,7 +14,7 @@ public:
 	bool Init() override;
 	bool Start() override;
 
-	update_status Update(float dt) override;
+	//update_status Update(float dt) override;
 
 	bool CleanUp() override;
 

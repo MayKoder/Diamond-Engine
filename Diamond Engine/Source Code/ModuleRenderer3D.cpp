@@ -8,7 +8,7 @@
 #include "M_Editor.h"
 #include "M_Scene.h"
 
-#include "MeshLoader.h"
+#include "FileSystem.h"
 #include "Mesh.h"
 
 #include "mmgr/mmgr.h"
@@ -194,10 +194,11 @@ bool ModuleRenderer3D::Init()
 	//Generate scene buffers
 	ReGenerateFrameBuffer(App->window->s_width, App->window->s_height);
 
+	MeshLoader::FSInit();
 	MeshLoader::EnableDebugMode();
 
 	LOG(LogType::L_WARNING, "ModuleRender3D.cpp. line 185: Hardcoding a FBX load, remove ASAP");
-	MeshLoader::ImportFBX("Assets/BakerHouse/BakerHouse.fbx", testMeshes, App->moduleScene->root);
+	MeshLoader::ImportFBX("Assets/BakerHouse/BakerHouse.fbx", globalMeshes, App->moduleScene->root);
 
 
 	// Projection matrix for
@@ -277,17 +278,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//glPopMatrix();
 	//<------------ VERTEX AND INDEX MODE END ----------------->
 
-	//testMesh.RenderMesh();
-	//for (unsigned int i = 0; i < testMeshes.size(); i++)
-	//{
-	//	if (testMeshes[i]->vertices_count != 0) 
-	//	{
-	//		//glRotated(-90, 1, 0, 0);
-	//		//glScaled(.01f, .01f, .01f);
-	//		testMeshes[i]->RenderMesh();
-	//	}
-	//}
-
 	App->moduleScene->UpdateGameObjects();
 
 	//App->level->Draw();
@@ -319,6 +309,7 @@ bool ModuleRenderer3D::CleanUp()
 {
 	LOG(LogType::L_NORMAL, "Destroying 3D Renderer");
 
+	MeshLoader::FSDeInit();
 	MeshLoader::DisableDebugMode();
 
 	glDeleteFramebuffers(1, &framebuffer);
@@ -329,12 +320,18 @@ bool ModuleRenderer3D::CleanUp()
 	//Buffer once, keep a vector of texture buffers
 	//glDeleteTextures(1, &testMeshes[0]->textureID);
 
-	for (unsigned int i = 0; i < testMeshes.size(); i++)
+	for (unsigned int j = 0; j < globalTextures.size(); ++j)
 	{
-		delete testMeshes[i];
-		testMeshes[i] = nullptr;
+		glDeleteTextures(1, &globalTextures[j]);
 	}
-	testMeshes.clear();
+	globalTextures.clear();
+
+	for (unsigned int i = 0; i < globalMeshes.size(); i++)
+	{
+		delete globalMeshes[i];
+		globalMeshes[i] = nullptr;
+	}
+	globalMeshes.clear();
 
 	SDL_GL_DeleteContext(context);
 
@@ -504,10 +501,10 @@ void ModuleRenderer3D::CustomLoadImage(const char* fileName)
 	}
 
 	GLuint glID = ilutGLBindTexImage();
-	for (unsigned int i = 0; i < testMeshes.size(); i++)
+	for (unsigned int i = 0; i < globalMeshes.size(); i++)
 	{
 		//This should not be called every mesh like wtf
-		testMeshes[i]->textureID = glID;
+		globalMeshes[i]->textureID = glID;
 	}
 
 	ilDeleteImages(1, &imageID);

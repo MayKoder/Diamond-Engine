@@ -12,6 +12,7 @@ public:
 
 	void Draw() override;
 
+	std::string physVersion;
 
 };
 
