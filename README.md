@@ -13,10 +13,22 @@ All the documentation and a lot more can be found in the engine web page here:
 Diamond Engine is currently under indie development by one person, feel free to check it's github profile here:
 [Donation link? ] 
 
+# Creators
+
+This engine was made by Miquel Suau Gonzàlez [GitHub: @MayKoder]
+
+# Features
+
+ - Optimized scene window rendering, displaying only the needed section of the frame buffer, reducing wasted pixels and improving performance.
+ - Style customization, saving and loading. The last style used will load on start.
+ - Take screenshoots of the scene view at full resolution with one click.
+ - Move, rotate and scale models with correct parent-to-child transformations.
+ - Default skybox, for the ones tired of looking at empty black backgrounds.
+
 
 <br></br>
 ## MIT License
-------
+
 Copyright (c) 2020 MayKoder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
