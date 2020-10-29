@@ -32,11 +32,11 @@ void W_Scene::Draw()
 	{
 		if (/*ImGui::IsWindowFocused() &&*/ ImGui::IsWindowHovered()) 
 		{
-			App->camera->ProcessSceneKeyboard();
+			App->moduleCamera->ProcessSceneKeyboard();
 		}
 
 
-		ImVec2 texOriginalSize = ImVec2(App->window->s_width, App->window->s_height);
+		ImVec2 texOriginalSize = ImVec2(App->moduleWindow->s_width, App->moduleWindow->s_height);
 		ImVec2 e = ImGui::GetWindowSize();
 
 		ImVec2 startPoint = ImVec2((texOriginalSize.x / 2) - (e.x / 2), (texOriginalSize.y / 2) + (e.y / 2));
@@ -50,7 +50,7 @@ void W_Scene::Draw()
 		ImVec2 uv1 = ImVec2(endPoint.x / texOriginalSize.x, endPoint.y / texOriginalSize.y);
 
 		// Display the 100x200 section starting at (10,10)
-		ImGui::Image((ImTextureID)App->renderer3D->texColorBuffer, e, uv0, uv1);
+		ImGui::Image((ImTextureID)App->moduleRenderer3D->texColorBuffer, e, uv0, uv1);
 	}
 	ImGui::End();
 	ImGui::PopStyleVar();

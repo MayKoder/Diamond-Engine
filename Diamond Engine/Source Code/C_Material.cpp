@@ -35,5 +35,5 @@ void C_Material::OnEditor()
 
 int C_Material::GetTextureID()
 {
-	return (viewWithCheckers == false) ? textureID : EngineExternal->renderer3D->checkersTexture;
+	return (viewWithCheckers == false) ? textureID : EngineExternal->moduleRenderer3D->checkersTexture;
 }

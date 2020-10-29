@@ -2,6 +2,14 @@
 
 class Application;
 
+//Moved this here to avoid problems with Globals.h
+enum update_status
+{
+	UPDATE_CONTINUE = 1,
+	UPDATE_STOP,
+	UPDATE_ERROR
+};
+
 class Module
 {
 private :

@@ -8,11 +8,10 @@
 #include "M_Editor.h"
 #include "M_Scene.h"
 
-#include "MeshLoader.h"
-#include "FileSystem.h"
 #include "Mesh.h"
-
 #include "mmgr/mmgr.h"
+#include "DevIL\include\ilu.h"
+#include "DevIL\include\ilut.h"
 
 #include"ModuleInput.h"
 
@@ -24,12 +23,6 @@
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
-
-#pragma comment( lib, "DevIL/libx86/DevIL.lib" )
-#include "DevIL\include\ilu.h"
-#pragma comment( lib, "DevIL/libx86/ILU.lib" )
-#include "DevIL\include\ilut.h"
-#pragma comment( lib, "DevIL/libx86/ILUT.lib" )
 
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), str_CAPS(""),
@@ -57,7 +50,7 @@ bool ModuleRenderer3D::Init()
 	LOG(LogType::L_NORMAL, "Init: MaykMath");
 
 	//Create context
-	context = SDL_GL_CreateContext(App->window->window);
+	context = SDL_GL_CreateContext(App->moduleWindow->window);
 	if(context == NULL)
 	{
 		LOG(LogType::L_ERROR, "OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -151,12 +144,6 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
 		glEnable(GL_TEXTURE_2D);
-
-		//Devil init
-		ilInit();
-		iluInit();
-		ilutInit();
-		ilutRenderer(ILUT_OPENGL);
 	}
 
 	//Generate texture
@@ -201,17 +188,14 @@ bool ModuleRenderer3D::Init()
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(MA_Pyramid_Indices), MA_Pyramid_Indices, GL_STATIC_DRAW);
 
 	//Generate scene buffers
-	ReGenerateFrameBuffer(App->window->s_width, App->window->s_height);
-
-	FileSystem::FSInit();
-	MeshLoader::EnableDebugMode();
+	ReGenerateFrameBuffer(App->moduleWindow->s_width, App->moduleWindow->s_height);
 
 	//LOG(LogType::L_WARNING, "ModuleRender3D.cpp. line 185: Hardcoding a FBX load, remove ASAP");
 	//MeshLoader::ImportFBX("Assets/BakerHouse/BakerHouse.fbx", globalMeshes, App->moduleScene->root);
 
 
 	// Projection matrix for
-	OnResize(App->window->s_width, App->window->s_height);
+	OnResize(App->moduleWindow->s_width, App->moduleWindow->s_height);
 	
 	return ret;
 }
@@ -229,7 +213,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
+	glLoadMatrixf(App->moduleCamera->GetViewMatrix());
 
 	//Light 0 on cam pos
 	lights[0].SetPos(5, 5, 5);
@@ -293,7 +277,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//TODO: This should not be here
 	App->moduleScene->UpdateGameObjects();
 
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
+	if (App->moduleInput->GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
 
 		ILuint imageID = ilGenImage();
 		ilBindImage(imageID);
@@ -321,7 +305,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	App->moduleEditor->Draw();
 
-	SDL_GL_SwapWindow(App->window->window);
+	SDL_GL_SwapWindow(App->moduleWindow->window);
 
 	return UPDATE_CONTINUE;
 }
@@ -331,8 +315,6 @@ bool ModuleRenderer3D::CleanUp()
 {
 	LOG(LogType::L_NORMAL, "Destroying 3D Renderer");
 
-	FileSystem::FSDeInit();
-	MeshLoader::DisableDebugMode();
 
 	glDeleteFramebuffers(1, &framebuffer);
 	glDeleteTextures(1, &texColorBuffer);
@@ -373,8 +355,8 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	App->window->s_width = width;
-	App->window->s_height = height;
+	App->moduleWindow->s_width = width;
+	App->moduleWindow->s_height = height;
 }
 
 void ModuleRenderer3D::OnGUI()

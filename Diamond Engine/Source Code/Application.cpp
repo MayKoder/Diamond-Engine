@@ -2,6 +2,7 @@
 #include<string>
 #include "Globals.h"
 
+#include"M_FileSystem.h"
 #include"ModuleWindow.h"
 #include"ModuleInput.h"
 #include"ModuleRenderer3D.h"
@@ -15,11 +16,12 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 {
 	EngineExternal = this;
 
-	window = new ModuleWindow(this);
-	camera = new ModuleCamera3D(this);
-	input = new ModuleInput(this);
+	moduleFileSystem = new M_FileSystem(this);
+	moduleWindow = new ModuleWindow(this);
+	moduleCamera = new ModuleCamera3D(this);
+	moduleInput = new ModuleInput(this);
 	moduleScene = new M_Scene(this);
-	renderer3D = new ModuleRenderer3D(this);
+	moduleRenderer3D = new ModuleRenderer3D(this);
 	moduleEditor = new M_Editor(this);
 
 	// The order of calls is very important!
@@ -27,15 +29,16 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	// They will CleanUp() in reverse order
 
 	// Main Modules
-	AddModule(window);
-	AddModule(camera);
-	AddModule(input);
+	AddModule(moduleFileSystem);
+	AddModule(moduleWindow);
+	AddModule(moduleCamera);
+	AddModule(moduleInput);
 
 	//Should scene be here?
 	AddModule(moduleScene);
 
 	// Renderer last!
-	AddModule(renderer3D);
+	AddModule(moduleRenderer3D);
 	AddModule(moduleEditor);
 }
 

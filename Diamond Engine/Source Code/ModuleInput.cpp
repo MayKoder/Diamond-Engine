@@ -127,11 +127,11 @@ update_status ModuleInput::PreUpdate(float dt)
 			{
 				if (e.window.event == SDL_WINDOWEVENT_RESIZED)
 				{
-					App->renderer3D->OnResize(e.window.data1, e.window.data2);
-					App->renderer3D->ReGenerateFrameBuffer(e.window.data1, e.window.data2);
+					App->moduleRenderer3D->OnResize(e.window.data1, e.window.data2);
+					App->moduleRenderer3D->ReGenerateFrameBuffer(e.window.data1, e.window.data2);
 				}
 
-				if (e.window.event == SDL_WINDOWEVENT_CLOSE && e.window.windowID == SDL_GetWindowID(App->window->window)) 
+				if (e.window.event == SDL_WINDOWEVENT_CLOSE && e.window.windowID == SDL_GetWindowID(App->moduleWindow->window))
 				{
 					quit = true;
 				}

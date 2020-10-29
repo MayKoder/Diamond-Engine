@@ -172,11 +172,11 @@ void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int si
 		//Only for memory cleanup, needs an update ASAP
 		for (unsigned int i = 0; i < sceneMeshes.size(); i++)
 		{
-			EngineExternal->renderer3D->globalMeshes.push_back(sceneMeshes[i]);
+			EngineExternal->moduleRenderer3D->globalMeshes.push_back(sceneMeshes[i]);
 		}
 		for (unsigned int i = 0; i < sceneTextures.size(); i++)
 		{
-			EngineExternal->renderer3D->globalTextures.push_back(sceneTextures[i]);
+			EngineExternal->moduleRenderer3D->globalTextures.push_back(sceneTextures[i]);
 		}
 
 
@@ -306,7 +306,7 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh, std::vector<GLuint>& materialsV
 
 
 	_mesh->GenBuffers();
-	_mesh->generalWireframe = &EngineExternal->renderer3D->wireframe;
+	_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
 
 	return _mesh;
 }

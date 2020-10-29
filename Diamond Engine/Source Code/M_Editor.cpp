@@ -93,7 +93,7 @@ bool M_Editor::Init()
 	}
 
 
-	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
+	ImGui_ImplSDL2_InitForOpenGL(App->moduleWindow->window, App->moduleRenderer3D->context);
 	ImGui_ImplOpenGL3_Init();
 
 	io.MouseDrawCursor = false;
@@ -113,7 +113,7 @@ void M_Editor::Draw()
 
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame(App->window->window);
+	ImGui_ImplSDL2_NewFrame(App->moduleWindow->window);
 	ImGui::NewFrame();
 
 	DrawMenuBar();

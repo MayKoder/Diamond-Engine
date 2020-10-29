@@ -53,12 +53,12 @@ void log(const char file[], int line, LogType _type, const char* format, ...);
 typedef unsigned int uint;
 typedef unsigned __int64 uint64;
 
-enum update_status
-{
-	UPDATE_CONTINUE = 1,
-	UPDATE_STOP,
-	UPDATE_ERROR
-};
+//enum update_status
+//{
+//	UPDATE_CONTINUE = 1,
+//	UPDATE_STOP,
+//	UPDATE_ERROR
+//};
 
 // Configuration ----------- ASK: Should we load this from an XML?
 #define SCREEN_WIDTH 1920

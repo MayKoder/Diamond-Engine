@@ -6,6 +6,7 @@
 
 //TODO: Yoink this
 #include "Module.h"
+class M_FileSystem;
 class ModuleWindow;
 class ModuleInput;
 class ModuleRenderer3D;
@@ -17,12 +18,14 @@ class M_Editor;
 class Application
 {
 public:
-	ModuleWindow* window = nullptr;
-	ModuleInput* input = nullptr;
-	ModuleRenderer3D* renderer3D = nullptr;
-	ModuleCamera3D* camera = nullptr;
+	M_FileSystem* moduleFileSystem = nullptr;
+	ModuleWindow* moduleWindow = nullptr;
+	ModuleInput* moduleInput = nullptr;
+	ModuleRenderer3D* moduleRenderer3D = nullptr;
+	ModuleCamera3D* moduleCamera = nullptr;
 	M_Scene* moduleScene = nullptr;
 	M_Editor* moduleEditor = nullptr;
+
 
 	std::vector<Module*> list_modules;
 

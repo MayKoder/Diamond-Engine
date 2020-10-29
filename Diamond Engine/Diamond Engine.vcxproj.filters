@@ -423,6 +423,9 @@
     <ClInclude Include="Source Code\FileSystem.h">
       <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\M_FileSystem.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -640,6 +643,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\FileSystem.cpp">
       <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\M_FileSystem.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,11 @@
 
 #include "PhysFS/include/physfs.h"
 #include "MeshLoader.h"
+#include"GameObject.h"
+#include"C_Material.h"
+
+#include"M_Editor.h"
+#include"W_Inspector.h"
 
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
@@ -88,54 +93,63 @@ void FileSystem::LoadFile(const char* globalPath)
 	std::string normalizedPath = NormalizePath(globalPath);
 	std::string relativePath = StringLogic::GlobalToLocalPath(globalPath);
 
-	switch (GetTypeFromPath(globalPath))
+	//Duplicate file
+	//BUG: This will only allow to work with files inside PhysFS dir
+	std::string output = "";
+
+	std::string fileName = StringLogic::GlobalToLocalPath(normalizedPath.c_str());
+	if (fileName.length() == 0) {
+		fileName = normalizedPath;
+	}
+
+	if (PHYSFS_exists(fileName.c_str()) == 0)
 	{
+		//TODO: Hardcoded directory
+		Copy(globalPath, ASSETS_PATH, output);
+		fileName = output;
+	}
 
-		case ImportType::NOTYPE:
-			LOG(LogType::L_ERROR,  "File extension not supported yet");
-			break;
+	//output = PHYSFS_getBaseDir();
 
-		case ImportType::MESH: 
+	//Local dir?
+	//std::string realDir = PHYSFS_getRealDir(fileName.c_str());
+	//realDir += fileName;
+
+	char* buffer = nullptr;
+	uint size = FileSystem::Load(fileName.c_str(), &buffer);
+
+	if (buffer != nullptr && size != 0) 
+	{
+		switch (GetTypeFromPath(globalPath))
 		{
-			//Duplicate file
-			//BUG: This will only allow to work with files inside PhysFS dir
 
-			std::string output = "";
+			case ImportType::NOTYPE:
+				LOG(LogType::L_ERROR,  "File extension not supported yet");
+				break;
 
-			std::string fileName = StringLogic::GlobalToLocalPath(normalizedPath.c_str());
-			if (fileName.length() == 0) {
-				fileName = normalizedPath;
-			}
-
-			if (PHYSFS_exists(fileName.c_str()) == 0)
+			case ImportType::MESH: 
 			{
-				//TODO: Hardcoded directory
-				Copy(globalPath, ASSETS_PATH, output);
-				fileName = output;
+				MeshLoader::ImportFBXFromBuffer(normalizedPath.c_str(), buffer, size, EngineExternal->moduleRenderer3D->globalMeshes, EngineExternal->moduleScene->root);
+
+				break;
 			}
 
-			//output = PHYSFS_getBaseDir();
+			case ImportType::TEXTURE: 
+			{
+				GLuint textureID =MeshLoader::CustomLoadImage(buffer, size);
+				EngineExternal->moduleRenderer3D->globalTextures.push_back(textureID);
 
-			//Local dir?
-			//std::string realDir = PHYSFS_getRealDir(fileName.c_str());
-			//realDir += fileName;
+				W_Inspector* inspector = dynamic_cast<W_Inspector*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR));
+				if (inspector && inspector->selectedGO) {
+					C_Material* mat = dynamic_cast<C_Material*>(inspector->selectedGO->GetComponent(Component::Type::Material));
+					if (mat) {
+						mat->textureID = textureID;
+					}
+				}
+				break;
+			}
 
-			char* buffer = nullptr;
-
-			uint size = FileSystem::Load(fileName.c_str(), &buffer);
-			MeshLoader::ImportFBXFromBuffer(normalizedPath.c_str(), buffer, size, EngineExternal->renderer3D->globalMeshes, EngineExternal->moduleScene->root);
-
-			break;
 		}
-
-		case ImportType::TEXTURE:
-			//Duplicate file
-			//DuplicateFile(normalizedPath.c_str(), "Assets", finalPath);
-			//Load file data
-			std::string output = "";
-			Copy(globalPath, "Assets/", output);
-			break;
-
 	}
 
 }

@@ -110,40 +110,40 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 	const float dt = App->GetDT();
 
 	float speed = cameraSpeed * dt;
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+	if (App->moduleInput->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed *= 2.f;
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) cameraMovement.y += speed;
+	if (App->moduleInput->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) cameraMovement.y += speed;
 	//if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) cameraMovement -= Z * speed;
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) cameraMovement += Z * speed;
+	if (App->moduleInput->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) cameraMovement -= Z * speed;
+	if (App->moduleInput->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) cameraMovement += Z * speed;
 
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) cameraMovement -= X * speed;
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) cameraMovement += X * speed;
+	if (App->moduleInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) cameraMovement -= X * speed;
+	if (App->moduleInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) cameraMovement += X * speed;
 
-	if (App->input->GetMouseZ() != 0)
+	if (App->moduleInput->GetMouseZ() != 0)
 	{
-		cameraMovement += Z * speed * -App->input->GetMouseZ() * 250;
+		cameraMovement += Z * speed * -App->moduleInput->GetMouseZ() * 250;
 	}
 
 	// Mouse motion ----------------
 
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN /*|| App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN*/)
+	if (App->moduleInput->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN /*|| App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN*/)
 	{
 		SDL_SetRelativeMouseMode(SDL_TRUE);
-		SDL_WarpMouseInWindow(App->window->window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		SDL_WarpMouseInWindow(App->moduleWindow->window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	}
-	else if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_UP /*|| App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP*/)
+	else if (App->moduleInput->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_UP /*|| App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP*/)
 	{
 		SDL_SetRelativeMouseMode(SDL_FALSE);
-		SDL_WarpMouseInWindow(App->window->window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		SDL_WarpMouseInWindow(App->moduleWindow->window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	}
 
 	//ASK: Is this really the best way to rotate the camera? Maybe i should use a matrix
 	//TODO: Camera rotation should not be affected by the program framerate
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if (App->moduleInput->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
 		FreeRotation(dt);
 	}
@@ -151,14 +151,14 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 	//Rotate around 0,0,0
 	//ASK: Should i also include Right alt?
 	//Maybe we could use quaternions?
-	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+	if (App->moduleInput->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->moduleInput->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
 		OrbitalRotation(vec3(0, 1, 0), dt);
 
 
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	if (App->moduleInput->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 		FocusCamera(vec3(0.f, 0.f, 0.f), 10.f);
 
-	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
+	if (App->moduleInput->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
 		PanCamera(dt);
 
 	Move(cameraMovement);
@@ -177,8 +177,8 @@ void ModuleCamera3D::CalculateViewMatrix()
 //equal as the target X and Z coords
 void ModuleCamera3D::OrbitalRotation(vec3 center, float dt)
 {
-	int dx = -App->input->GetMouseXMotion();
-	int dy = -App->input->GetMouseYMotion();
+	int dx = -App->moduleInput->GetMouseXMotion();
+	int dy = -App->moduleInput->GetMouseYMotion();
 
 	if (dx != 0)
 	{
@@ -217,8 +217,8 @@ void ModuleCamera3D::OrbitalRotation(vec3 center, float dt)
 
 void ModuleCamera3D::FreeRotation(float dt)
 {
-	int dx = -App->input->GetMouseXMotion();
-	int dy = -App->input->GetMouseYMotion();
+	int dx = -App->moduleInput->GetMouseXMotion();
+	int dy = -App->moduleInput->GetMouseYMotion();
 
 	//Position -= Reference;
 
@@ -265,8 +265,8 @@ void ModuleCamera3D::PanCamera(float dt)
 {
 
 	//WARNING: Need to normalize movement
-	int dx = -App->input->GetMouseXMotion();
-	int dy = -App->input->GetMouseYMotion();
+	int dx = -App->moduleInput->GetMouseXMotion();
+	int dy = -App->moduleInput->GetMouseYMotion();
 
 	if (dx != 0 || dy != 0) 
 	{
