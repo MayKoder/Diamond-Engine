@@ -1,6 +1,8 @@
 #include "W_Inspector.h"
 #include "MMGui.h"
 #include "GameObject.h"
+#include "Application.h"
+#include "M_Scene.h"
 
 W_Inspector::W_Inspector() : Window(), selectedGO(nullptr)
 {
@@ -19,9 +21,15 @@ void W_Inspector::Draw()
 
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*/)) 
 	{
-		if (selectedGO) 
+		if (selectedGO != nullptr && selectedGO != EngineExternal->moduleScene->root) 
 		{
-			ImGui::Checkbox("##Active", &selectedGO->active); ImGui::SameLine();
+			if (ImGui::Checkbox("##Active", &selectedGO->active)) 
+			{
+				//The bool has changed on the checkbox call at this point
+				(selectedGO->active == true) ? selectedGO->Enable() : selectedGO->Disable();
+			}
+
+			ImGui::SameLine();
 			ImGui::InputText("##Name", inputName, sizeof(inputName) / sizeof(char)); ImGui::SameLine();
 			ImGui::Checkbox("Static", &selectedGO->isStatic);
 
@@ -69,6 +77,10 @@ void W_Inspector::Draw()
 				ImGui::EndCombo();
 			}
 			ImGui::PopItemWidth();
+
+			if (ImGui::Button("Delete")) {
+				EngineExternal->moduleScene->destroyList.push_back(selectedGO);
+			}
 
 			ImGui::GreySeparator();
 

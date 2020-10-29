@@ -14,7 +14,7 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	Y = vec3(0.0f, 1.0f, 0.0f);
 	Z = vec3(0.0f, 0.0f, 1.0f);
 
-	Position = vec3(5.0f, 3.0f, 5.0f);
+	Position = vec3(8.0f, 3.0f, 8.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
 }
 
@@ -27,7 +27,7 @@ bool ModuleCamera3D::Start()
 	LOG(LogType::L_NORMAL, "Setting up the camera");
 	bool ret = true;
 
-	LookAt(vec3(0.f, 0.f, 0.f));
+	LookAt(vec3(0.f, 1.f, 0.f));
 
 	return ret;
 }
@@ -42,7 +42,7 @@ bool ModuleCamera3D::CleanUp()
 
 void ModuleCamera3D::OnGUI()
 {
-	if (ImGui::CollapsingHeader("3D Input Settings"))
+	if (ImGui::CollapsingHeader("3D Input Settings", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::TextWrapped("Camera Rotation Speed"); ImGui::SameLine(); ImGui::PushItemWidth(100.f); ImGui::DragFloat("##crs", &mouseSensitivity, 0.01f, 0.f, 999.f);
 		ImGui::TextWrapped("Camera Movement Speed"); ImGui::SameLine(); ImGui::PushItemWidth(100.f); ImGui::DragFloat("##cms", &cameraSpeed, 0.01f, 0.f, 999.f);

@@ -6,14 +6,16 @@
 #include"Primitive.h"
 #include "Light.h"
 
+#include <queue>
+
 #include "OpenGL.h"
 
 class Mesh;
 
 #define MAX_LIGHTS 1
 
-#define SQUARE_TEXTURE_W 1024
-#define SQUARE_TEXTURE_H 1024
+#define SQUARE_TEXTURE_W 128
+#define SQUARE_TEXTURE_H 128
 
 class ModuleRenderer3D : public Module
 {
@@ -31,8 +33,6 @@ public:
 
 	void ReGenerateFrameBuffer(int w, int h);
 
-	void CustomLoadImage(const char* fileName);
-
 private:
 
 	void GetCAPS(std::string& caps);
@@ -48,8 +48,10 @@ public:
 	//Mesh testMesh;
 	std::vector<Mesh*> globalMeshes;
 	std::vector<GLuint> globalTextures;
+	GLuint checkersTexture;
 	//GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
-	const char* buffer = nullptr;
+
+	std::vector<Mesh*> renderQueue;
 
 public:
 

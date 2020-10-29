@@ -26,7 +26,7 @@ void W_Configuration::Draw()
     if (ImGui::Begin(name.c_str(), NULL, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize)) 
     {
 	    //ImGui::SetNextTreeNodeOpen(true);
-	    if (ImGui::CollapsingHeader("Application"))
+	    if (ImGui::CollapsingHeader("Application", ImGuiTreeNodeFlags_DefaultOpen))
 	    {
 		    ImGui::PlotHistogram("##frameRate", &fps_log[0], fps_log.size(), 0, "Framerate", 0.0f, 100.0f, ImVec2(310, 100));
 		    ImGui::PlotHistogram("##miliseconds", &ms_log[0], ms_log.size(), 0, "Miliseconds", 0.0f, 100.0f, ImVec2(310, 100));

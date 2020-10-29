@@ -6,6 +6,8 @@
 #include "Globals.h"
 #include <vector>
 
+typedef unsigned int GLuint;
+
 struct Mesh
 {
 
@@ -20,7 +22,9 @@ public:
 
 	void GenBuffers();
 
-	void RenderMesh();
+	void RenderMesh(GLuint textureID);
+
+	void RenderMeshDebug(bool* vertexNormals, bool* faceNormals);
 
 	vec3 GetVectorFromIndex(float* startValue);
 
@@ -43,8 +47,6 @@ public:
 	uint texCoords_id = 0;
 	uint texCoords_count = 0;
 	float* texCoords = nullptr;
-
-	uint textureID = 0;
 
 	//TODO: Delete this, wireframe mode should be different
 	// ----------- TEMPORAL LOGIC, MUST BE DELETED ---------------//

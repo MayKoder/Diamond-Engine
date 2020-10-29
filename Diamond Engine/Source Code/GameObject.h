@@ -4,7 +4,8 @@
 #include<string>
 
 #include "Component.h"
-//#include "C_Transform.h"
+
+class C_Transform;
 
 class GameObject
 {
@@ -16,8 +17,15 @@ public:
 	Component* AddComponent(Component::Type _type);
 	Component* GetComponent(Component::Type _type);
 
+	bool isActive() const;
+
+	//void ChangeActiveState();
+
+	void Enable();
+	void Disable();
+
 	GameObject* parent;
-	//C_Transform* transform;
+	C_Transform* transform;
 
 	std::vector<GameObject*> children;
 

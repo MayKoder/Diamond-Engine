@@ -4,7 +4,7 @@
 
 //TODO: A mesh should be loaded only once, if the mesh is loaded, just send the 
 //id's to the new mesh
-Mesh::Mesh() : indices_id(-1), vertices_id(-1), generalWireframe(nullptr), textureID(-1)
+Mesh::Mesh() : indices_id(-1), vertices_id(-1), generalWireframe(nullptr)
 {
 
 }
@@ -140,10 +140,11 @@ void Mesh::GenBuffers()
 	//texCoords = nullptr;
 }
 
-void Mesh::RenderMesh()
+void Mesh::RenderMesh(GLuint textureID)
 {
 	//ASK: glDrawElementsInstanced()?
-	glBindTexture(GL_TEXTURE_2D, textureID);
+	if(textureID != -1)
+		glBindTexture(GL_TEXTURE_2D, textureID);
 
 	//Vertices --------------------------------------------
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -188,22 +189,24 @@ void Mesh::RenderMesh()
 	//--------------------------------------------
 
 	////Wireframe temporal --------------------------------------------
-	if(generalWireframe != nullptr && *generalWireframe == false)
-	{
-		glColor3f(0, 1, 0);
-		glScalef(1.0001f, 1.0001f, 1.0001f);
-		glLineWidth(2.5f);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glScalef(1.f, 1.f, 1.f);
-		glLineWidth(1.f);
-		glColor3f(1, 1, 1);
-	}
+	//if(generalWireframe != nullptr && *generalWireframe == false)
+	//{
+	//	glColor3f(0, 1, 0);
+	//	glScalef(1.0001f, 1.0001f, 1.0001f);
+	//	glLineWidth(2.5f);
+	//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
+	//	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//	glScalef(1.f, 1.f, 1.f);
+	//	glLineWidth(1.f);
+	//	glColor3f(1, 1, 1);
+	//}
 	////--------------------------------------------
 
 	//Drawing cleanup --------------------------------------------
-	glBindTexture(GL_TEXTURE_2D, 0);
+	if (textureID != -1)
+		glBindTexture(GL_TEXTURE_2D, 0);
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDisableClientState(GL_VERTEX_ARRAY);
@@ -213,56 +216,64 @@ void Mesh::RenderMesh()
 	if (texCoords_count != 0)
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	//--------------------------------------------
+}
 
-	glPointSize(3.0f);
-	glColor3f(1, 0, 0);
-	glBegin(GL_POINTS);
-	for (unsigned int i = 0; i < vertices_count * 3; i += 3)
+void Mesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)
+{
+	if (*vertexNormals == true)
 	{
-		glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
-	}
-	glEnd();
-	glColor3f(0, 1, 0);
-	glPointSize(1.0f);
+		float normalLenght = 0.05f;
+		glPointSize(3.0f);
+		glColor3f(1, 0, 0);
+		glBegin(GL_POINTS);
+		for (unsigned int i = 0; i < vertices_count * 3; i += 3)
+		{
+			glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
+		}
+		glEnd();
+		glColor3f(0, 1, 0);
+		glPointSize(1.0f);
 
-	//Vertex normals
-	glColor3f(0, 1, 0);
-	glBegin(GL_LINES);
-	float normalLenght = 0.05f;
-	for (unsigned int i = 0; i < normals_count * 3; i += 3)
+		//Vertex normals
+		glColor3f(0, 1, 0);
+		glBegin(GL_LINES);
+		for (unsigned int i = 0; i < normals_count * 3; i += 3)
+		{
+			glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
+			glVertex3f(vertices[i] + normals[i] * normalLenght, vertices[i + 1] + normals[i + 1] * normalLenght, vertices[i + 2] + normals[i + 2] * normalLenght);
+		}
+		glEnd();
+		glColor3f(1, 1, 1);
+	}
+
+	if (*faceNormals == true)
 	{
-		glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
-		glVertex3f(vertices[i] + normals[i] * normalLenght, vertices[i + 1] + normals[i + 1] * normalLenght, vertices[i + 2] + normals[i + 2] * normalLenght);
+		float normalLenght = 0.05f;
+		//Face normals
+		glColor3f(1, 0, 0);
+		glBegin(GL_LINES);
+		for (int i = 0; i < indices_count; i += 3)
+		{
+			//MaykMath::FindCentroid(&vertices[indices[i]], &vertices[indices[i + 1]], &vertices[indices[i + 2]], &middle.x);
+			vec3 A = GetVectorFromIndex(&vertices[indices[i] * 3]);
+
+			vec3 B = GetVectorFromIndex(&vertices[indices[i + 1] * 3]);
+
+			vec3 C = GetVectorFromIndex(&vertices[indices[i + 2] * 3]);
+
+			vec3 middle((A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z) / 3.f);
+
+			vec3 crossVec = cross((B - A), (C - A));
+			vec3 normalDirection = normalize(crossVec);
+
+			//LOG("%f, %f, %f", middle.x, middle.y, middle.z);
+			glVertex3f(middle.x, middle.y, middle.z);
+			glVertex3f(middle.x + normalDirection.x * normalLenght, middle.y + normalDirection.y * normalLenght, middle.z + normalDirection.z * normalLenght);
+		}
+		glEnd();
+		glPointSize(1.f);
+		glColor3f(1, 1, 1);
 	}
-	glEnd();
-	glColor3f(1, 1, 1);
-
-	//Face normals
-	glColor3f(1, 0, 0);
-	//glBegin(GL_LINES);
-	//for (int i = 0; i < indices_count; i += 3)
-	//{
-	//	//MaykMath::FindCentroid(&vertices[indices[i]], &vertices[indices[i + 1]], &vertices[indices[i + 2]], &middle.x);
-	//	vec3 A = GetVectorFromIndex(&vertices[indices[i] * 3]);
-
-	//	vec3 B = GetVectorFromIndex(&vertices[indices[i + 1] * 3]);
-
-	//	vec3 C = GetVectorFromIndex(&vertices[indices[i + 2] * 3]);
-
-	//	vec3 middle((A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z) / 3.f);
-
-	//	vec3 crossVec = cross((B - A), (C - A));
-	//	vec3 normalDirection = normalize(crossVec);
-
-	//	//LOG("%f, %f, %f", middle.x, middle.y, middle.z);
-	//	glVertex3f(middle.x, middle.y, middle.z);
-	//	glVertex3f(middle.x + normalDirection.x * normalLenght, middle.y + normalDirection.y * normalLenght, middle.z + normalDirection.z * normalLenght);
-	//}
-	//glEnd();
-	//glPointSize(1.f);
-	glColor3f(1, 1, 1);
-
-
 }
 
 vec3 Mesh::GetVectorFromIndex(float* startValue)

@@ -19,7 +19,7 @@ public:
 
 private:
 	//Maybe use stack iteration and not recursive iteration
-	void DrawGameObjectsTree(GameObject* node);
+	void DrawGameObjectsTree(GameObject* node, bool drawAsDisabled);
 
 	M_Scene* cSceneReference;
 };

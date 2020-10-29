@@ -115,7 +115,7 @@ bool ModuleWindow::CleanUp()
 
 void ModuleWindow::OnGUI()
 {
-	if (ImGui::CollapsingHeader("Window"))
+	if (ImGui::CollapsingHeader("Window", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.f, 1.f))
 		{

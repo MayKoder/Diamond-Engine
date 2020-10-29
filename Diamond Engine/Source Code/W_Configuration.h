@@ -5,7 +5,7 @@
 #include "Window.h"
 #include <vector>
 
-#define FPS_MS_LOG_MAXLENGHT 50
+#define FPS_MS_LOG_MAXLENGHT 100
 
 class W_Configuration : public Window
 {

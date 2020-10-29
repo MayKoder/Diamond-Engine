@@ -73,6 +73,9 @@
     <Filter Include="Sources\Components\Derived">
       <UniqueIdentifier>{76379e01-ba21-4f85-a2ac-ca1926df69f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\Importers">
+      <UniqueIdentifier>{219884b0-c806-4d25-acf8-24c82ca49677}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -414,8 +417,11 @@
     <ClInclude Include="Source Code\C_Material.h">
       <Filter>Sources\Components\Derived</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\MeshLoader.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
     <ClInclude Include="Source Code\FileSystem.h">
-      <Filter>Sources\Tools\MMath</Filter>
+      <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -629,8 +635,11 @@
     <ClCompile Include="Source Code\C_Material.cpp">
       <Filter>Sources\Components\Derived</Filter>
     </ClCompile>
+    <ClCompile Include="Source Code\MeshLoader.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
     <ClCompile Include="Source Code\FileSystem.cpp">
-      <Filter>Sources\Tools\MMath</Filter>
+      <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

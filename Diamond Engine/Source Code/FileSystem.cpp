@@ -4,256 +4,17 @@
 
 #include "Application.h"
 
-#include "M_Editor.h"
 #include "ModuleRenderer3D.h"
 #include "M_Scene.h"
 
-#include "Mesh.h"
-#include "GameObject.h"
-#include "C_MeshRenderer.h"
-#include "C_Transform.h"
+#include <fstream>
+#include <iostream>
+#include <filesystem>
 
-#include"MathGeoLib/include/Math/Quat.h"
+#include "PhysFS/include/physfs.h"
+#include "MeshLoader.h"
 
-#ifdef _DEBUG
-#pragma comment (lib, "MathGeoLib/libx86/Debug/MathGeoLib.lib")
-#else
-#pragma comment (lib, "MathGeoLib/libx86/Release/MathGeoLib.lib")
-#endif
-
-#include "Assimp/include/cimport.h"
-#include "Assimp/include/scene.h"
-#include "Assimp/include/postprocess.h"
-#include "Assimp/include/cfileio.h"
-
-#pragma comment (lib, "Assimp/libx86/assimp.lib")
-
-
-void  MeshLoader::logCallback(const char* message, char* user)
-{
-	EngineExternal->moduleEditor->LogToConsole(message);
-}
-
-void MeshLoader::EnableDebugMode()
-{
-	struct aiLogStream stream;
-	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	stream.callback = logCallback;
-	aiAttachLogStream(&stream);
-}
-
-void MeshLoader::DisableDebugMode()
-{
-	// detach log stream
-	aiDetachAllLogStreams();
-}
-
-void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes, GameObject* gmRoot)
-{
-	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
-
-	std::string fileName = StringLogic::FileNameFromPath(full_path);
-	
-	if (scene != nullptr && scene->HasMeshes())
-	{
-
-		//BUG: This is a problem, meshes are shared, but should also be deleted, we are fucked
-		std::vector<Mesh*> sceneMeshes;
-		std::vector<GLuint*> sceneTextures;
-		
-		//Load all meshes into mesh vector
-		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
-		{
-			sceneMeshes.push_back(LoadMesh(scene->mMeshes[i]));
-		}
-
-
-		LOG(LogType::L_NORMAL, "-- Loading FBX as GameObject --");
-		NodeToGameObject(sceneMeshes, scene->mRootNode, gmRoot, fileName.c_str());
-
-
-		//Only for memory cleanup, needs an update ASAP
-		for (unsigned int i = 0; i < sceneMeshes.size(); i++)
-		{
-			EngineExternal->renderer3D->globalMeshes.push_back(sceneMeshes[i]);
-		}
-
-		//This should not be here
-		if (scene->HasMaterials()) 
-		{
-			//Needs to be moved to another place
-			std::string generalPath(full_path);
-			generalPath = generalPath.substr(0, generalPath.find_last_of("/\\") + 1);
-			for (size_t k = 0; k < scene->mNumMaterials; k++)
-			{
-				aiMaterial* material = scene->mMaterials[k];
-				uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
-
-				aiString path;
-				material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
-				generalPath += path.C_Str();
-
-				EngineExternal->renderer3D->CustomLoadImage(generalPath.c_str());
-				path.Clear();
-			}
-		}
-
-		aiReleaseImport(scene);
-	}
-	else
-		LOG(LogType::L_ERROR, "Error loading scene % s", full_path);
-}
-
-void MeshLoader::NodeToGameObject(std::vector<Mesh*>& _sceneMeshes, aiNode* node, GameObject* gmParent, const char* holderName)
-{
-	GameObject* rootGO = new GameObject(node->mName.C_Str());
-	rootGO->parent = gmParent;
-	gmParent->children.push_back(rootGO);
-
-	for (unsigned int i = 0; i < node->mNumMeshes; i++)
-	{
-		Mesh* meshPointer = _sceneMeshes[node->mMeshes[i]];
-
-		GameObject* gmNode = new GameObject(node->mName.C_Str()); //Name should be scene->mMeshes[node->mMeshes[i]]
-		gmNode->parent = rootGO;
-
-		//Load mesh to GameObject
-		C_MeshRenderer* gmMeshRenderer = dynamic_cast<C_MeshRenderer*>(gmNode->AddComponent(Component::Type::MeshRenderer));
-		gmMeshRenderer->_mesh = meshPointer;
-
-		C_Transform* transform = dynamic_cast<C_Transform*>(gmNode->GetComponent(Component::Type::Transform));
-		
-		aiVector3D T, S;
-		aiQuaternion R;
-		node->mTransformation.Decompose(S, R, T);
-
-		float3 position(T.x, T.y, T.z);
-		float3 size(S.x, S.y, S.z);
-		Quat rotationQuat(R.x, R.y, R.z, R.w);
-		//LOG(LogType::L_WARNING, "%f, %f, %f", position.x, position.y, position.z);
-		//LOG(LogType::L_WARNING, "%f, %f, %f", size.x, size.y, size.z);
-		//LOG(LogType::L_WARNING, "%f, %f, %f, %f", rotationQuat.x, rotationQuat.y, rotationQuat.z, rotationQuat.w);
-		transform->localTransform = float4x4::FromTRS(position, rotationQuat, size);
-		transform->globalTransform = dynamic_cast<C_Transform*>(rootGO->GetComponent(Component::Type::Transform))->globalTransform * transform->localTransform;
-
-		//if (transform->localTransform == transform->localTransform.nan || transform->globalTransform == float4x4::nan) {
-		//	LOG(LogType::L_ERROR, "Some matrix loading is NAN");
-		//}
-
-		rootGO->children.push_back(gmNode);
-	}
-
-	if (node->mNumChildren > 0) 
-	{
-		for (unsigned int i = 0; i < node->mNumChildren; i++)
-		{
-			NodeToGameObject(_sceneMeshes, node->mChildren[i], rootGO, node->mName.C_Str());
-		}
-	}
-
-}
-
-Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
-{
-
-	LOG(LogType::L_NORMAL, "%s", importedMesh->mName.C_Str());
-	Mesh* _mesh = new Mesh();
-
-	// copy vertices
-	_mesh->vertices_count = importedMesh->mNumVertices;
-	_mesh->vertices = new float[_mesh->vertices_count * 3];
-
-	memcpy(_mesh->vertices, importedMesh->mVertices, sizeof(float) * _mesh->vertices_count * 3);
-
-	LOG(LogType::L_NORMAL, "New mesh with %d vertices", _mesh->vertices_count);
-
-	if (importedMesh->HasNormals())
-	{
-		_mesh->normals_count = _mesh->vertices_count;
-
-		_mesh->normals = new float[_mesh->normals_count * 3];
-		memcpy(_mesh->normals, importedMesh->mNormals, sizeof(float) * _mesh->normals_count * 3);
-
-		LOG(LogType::L_NORMAL, "New mesh with %d normals", _mesh->normals_count);
-	}
-
-	//So are we really only supporting 1 channel uv and colors?
-	if (importedMesh->HasTextureCoords(0))
-	{
-		_mesh->texCoords_count = importedMesh->mNumVertices;
-		_mesh->texCoords = new float[importedMesh->mNumVertices * 2];
-
-		for (unsigned int k = 0; k < _mesh->texCoords_count; k++)
-		{
-			_mesh->texCoords[k * 2] = importedMesh->mTextureCoords[0][k].x;
-			_mesh->texCoords[k * 2 + 1] = importedMesh->mTextureCoords[0][k].y;
-		}
-		//_mesh->textureID = temporalTexID;
-
-		LOG(LogType::L_NORMAL, "New mesh with %d texture coords", _mesh->texCoords_count);
-	}
-	//if (importedMesh->HasVertexColors(0)) 
-	//{
-
-	//}
-
-
-	// Generate indices
-	if (importedMesh->HasFaces())
-	{
-		_mesh->indices_count = importedMesh->mNumFaces * 3;
-		_mesh->indices = new uint[_mesh->indices_count]; // assume each face is a triangle
-		for (uint j = 0; j < importedMesh->mNumFaces; ++j)
-		{
-			if (importedMesh->mFaces[j].mNumIndices != 3)
-			{
-				LOG(LogType::L_WARNING, "WARNING, geometry face with != 3 indices!");
-			}
-			else
-			{
-				memcpy(&_mesh->indices[j * 3], importedMesh->mFaces[j].mIndices, 3 * sizeof(uint));
-			}
-		}
-	}
-
-
-	_mesh->GenBuffers();
-	_mesh->generalWireframe = &EngineExternal->renderer3D->wireframe;
-
-	return _mesh;
-}
-
-ImportType MeshLoader::GetTypeFromPath(const char* path)
-{
-	std::string ext(path);
-	ext = ext.substr(ext.find_last_of('.') + 1);
-
-	for (int i = 0; i < ext.length(); i++)
-	{
-		ext[i] = std::tolower(ext[i]);
-	}
-
-	if (ext == "fbx")
-		return ImportType::MESH;
-	if (ext == "tga" || ext == "png" || ext == "jpg")
-		return ImportType::TEXTURE;
-
-	return ImportType::NOTYPE;
-}
-
-//void MeshLoader::GenerateCheckerTexture()
-//{
-//	GLubyte checkerImage[64][64][4];
-//	for (int i = 0; i < 64; i++) {
-//		for (int j = 0; j < 64; j++) {
-//			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
-//			checkerImage[i][j][0] = (GLubyte)c;
-//			checkerImage[i][j][1] = (GLubyte)c;
-//			checkerImage[i][j][2] = (GLubyte)c;
-//			checkerImage[i][j][3] = (GLubyte)255;
-//		}
-//	}
-//}
+#pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
 std::string StringLogic::FileNameFromPath(const char* _path)
 {
@@ -265,16 +26,42 @@ std::string StringLogic::FileNameFromPath(const char* _path)
 	return fileName;
 }
 
-//--------------------- TODO: PHYSFS MARC VERSION, MAKE YOUR OWN -----------------------//
-//--------------------- TODO: PHYSFS MARC VERSION, MAKE YOUR OWN -----------------------//
-//--------------------- TODO: PHYSFS MARC VERSION, MAKE YOUR OWN -----------------------//
-#include <fstream>
-#include <filesystem>
-#include "PhysFS/include/physfs.h"
+std::string StringLogic::GlobalToLocalPath(const char* _globalPath)
+{
+	std::string test = FileSystem::NormalizePath(_globalPath);
 
-#pragma comment( lib, "PhysFS/libx86/physfs.lib" )
+	size_t pos = 0;
+	pos = test.find(ASSETS_PATH);
+	if (pos != std::string::npos)
+	{
+		test = test.substr(pos);
+		if (test.c_str() != "")
+			return test;
+	}
 
-void MeshLoader::FSInit()
+	test.clear();
+	return test;
+}
+
+ImportType FileSystem::GetTypeFromPath(const char* path)
+{
+	std::string ext(path);
+	ext = ext.substr(ext.find_last_of('.') + 1);
+
+	for (int i = 0; i < ext.length(); i++)
+	{
+		ext[i] = std::tolower(ext[i]);
+	}
+
+	if (ext == "fbx" || ext == "dae")
+		return ImportType::MESH;
+	if (ext == "tga" || ext == "png" || ext == "jpg" || ext == "dds")
+		return ImportType::TEXTURE;
+
+	return ImportType::NOTYPE;
+}
+
+void FileSystem::FSInit()
 {
 	// needs to be created before Init so other modules can use it
 	char* base_path = SDL_GetBasePath();
@@ -287,10 +74,11 @@ void MeshLoader::FSInit()
 
 	FileSystem::AddPath("."); //Adding ProjectFolder (working directory)
 	FileSystem::AddPath("Assets");
+	//FileSystem::AddPath("Assets/Primitives");
 	FileSystem::CreateLibraryDirectories();
 }
 
-void MeshLoader::FSDeInit()
+void FileSystem::FSDeInit()
 {
 	PHYSFS_deinit();
 }
@@ -298,25 +86,54 @@ void MeshLoader::FSDeInit()
 void FileSystem::LoadFile(const char* globalPath)
 {
 	std::string normalizedPath = NormalizePath(globalPath);
-	std::string finalPath;
+	std::string relativePath = StringLogic::GlobalToLocalPath(globalPath);
 
-	switch (MeshLoader::GetTypeFromPath(globalPath))
+	switch (GetTypeFromPath(globalPath))
 	{
 
 		case ImportType::NOTYPE:
 			LOG(LogType::L_ERROR,  "File extension not supported yet");
 			break;
 
-		case ImportType::MESH:
+		case ImportType::MESH: 
+		{
 			//Duplicate file
-			DuplicateFile(normalizedPath.c_str(), "Assets", finalPath);
-			//Load file data
+			//BUG: This will only allow to work with files inside PhysFS dir
+
+			std::string output = "";
+
+			std::string fileName = StringLogic::GlobalToLocalPath(normalizedPath.c_str());
+			if (fileName.length() == 0) {
+				fileName = normalizedPath;
+			}
+
+			if (PHYSFS_exists(fileName.c_str()) == 0)
+			{
+				//TODO: Hardcoded directory
+				Copy(globalPath, ASSETS_PATH, output);
+				fileName = output;
+			}
+
+			//output = PHYSFS_getBaseDir();
+
+			//Local dir?
+			//std::string realDir = PHYSFS_getRealDir(fileName.c_str());
+			//realDir += fileName;
+
+			char* buffer = nullptr;
+
+			uint size = FileSystem::Load(fileName.c_str(), &buffer);
+			MeshLoader::ImportFBXFromBuffer(normalizedPath.c_str(), buffer, size, EngineExternal->renderer3D->globalMeshes, EngineExternal->moduleScene->root);
+
 			break;
+		}
 
 		case ImportType::TEXTURE:
 			//Duplicate file
-			DuplicateFile(normalizedPath.c_str(), "Assets", finalPath);
+			//DuplicateFile(normalizedPath.c_str(), "Assets", finalPath);
 			//Load file data
+			std::string output = "";
+			Copy(globalPath, "Assets/", output);
 			break;
 
 	}
@@ -427,34 +244,6 @@ std::string FileSystem::GetPathRelativeToAssets(const char* originalPath) /*cons
 	return ret;
 }
 
-bool FileSystem::HasExtension(const char* path) /*const*/
-{
-	std::string ext = "";
-	SplitFilePath(path, nullptr, nullptr, &ext);
-	return ext != "";
-}
-
-bool FileSystem::HasExtension(const char* path, std::string extension) /*const*/
-{
-	std::string ext = "";
-	SplitFilePath(path, nullptr, nullptr, &ext);
-	return ext == extension;
-}
-
-bool FileSystem::HasExtension(const char* path, std::vector<std::string> extensions) /*const*/
-{
-	std::string ext = "";
-	SplitFilePath(path, nullptr, nullptr, &ext);
-	if (ext == "")
-		return true;
-	for (uint i = 0; i < extensions.size(); i++)
-	{
-		if (extensions[i] == ext)
-			return true;
-	}
-	return false;
-}
-
 std::string FileSystem::NormalizePath(const char* full_path) /*const*/
 {
 	std::string newPath(full_path);
@@ -516,7 +305,8 @@ uint FileSystem::Load(const char* file, char** buffer) /*const*/
 
 	if (fs_file != nullptr)
 	{
-		PHYSFS_sint32 size = (PHYSFS_sint32)PHYSFS_fileLength(fs_file);
+		PHYSFS_sint64 size = PHYSFS_fileLength(fs_file);
+		//LOG(LogType::L_ERROR, "[%s]", PHYSFS_getLastError())
 
 		if (size > 0)
 		{
@@ -544,85 +334,11 @@ uint FileSystem::Load(const char* file, char** buffer) /*const*/
 	return ret;
 }
 
-bool FileSystem::DuplicateFile(const char* file, const char* dstFolder, std::string& relativePath)
-{
-	std::string fileStr, extensionStr;
-	SplitFilePath(file, nullptr, &fileStr, &extensionStr);
-
-	relativePath = relativePath.append(dstFolder).append("/") + fileStr.append(".") + extensionStr;
-	std::string finalPath = std::string(*PHYSFS_getSearchPath()).append("/") + relativePath;
-
-	return DuplicateFile(file, finalPath.c_str());
-
-}
-
-bool FileSystem::DuplicateFile(const char* srcFile, const char* dstFile)
-{
-	//TODO: Compare performance to calling Load(srcFile) and then Save(dstFile)
-	std::ifstream src;
-	src.open(srcFile, std::ios::binary);
-	bool srcOpen = src.is_open();
-	std::ofstream  dst(dstFile, std::ios::binary);
-	bool dstOpen = dst.is_open();
-
-	dst << src.rdbuf();
-
-	src.close();
-	dst.close();
-
-	if (srcOpen && dstOpen)
-	{
-		LOG(LogType::L_NORMAL, "File Duplicated Correctly");
-		return true;
-	}
-	else
-	{
-		LOG(LogType::L_ERROR, "File could not be duplicated");
-		return false;
-	}
-}
-
 int close_sdl_rwops(SDL_RWops* rw)
 {
 	RELEASE_ARRAY(rw->hidden.mem.base);
 	SDL_FreeRW(rw);
 	return 0;
-}
-
-// Save a whole buffer to disk
-uint FileSystem::Save(const char* file, const void* buffer, unsigned int size, bool append) /*const*/
-{
-	unsigned int ret = 0;
-
-	bool overwrite = PHYSFS_exists(file) != 0;
-	PHYSFS_file* fs_file = (append) ? PHYSFS_openAppend(file) : PHYSFS_openWrite(file);
-
-	if (fs_file != nullptr)
-	{
-		uint written = (uint)PHYSFS_write(fs_file, (const void*)buffer, 1, size);
-		if (written != size)
-		{
-			LOG(LogType::L_ERROR, "[error] File System error while writing to file %s: %s", file, PHYSFS_getLastError());
-		}
-		else
-		{
-			//if (append == true)
-			//	LOG(LogType::L_NORMAL, "Added %u data to [%s%s]", size, GetWriteDir(), file);
-			//else if (overwrite == true)
-			//	LOG(LogType::L_NORMAL, "File [%s%s] overwritten with %u bytes", GetWriteDir(), file, size);
-			//else
-			//	LOG(LogType::L_NORMAL, "New file created [%s%s] of %u bytes", GetWriteDir(), file, size);
-
-			//ret = written;
-		}
-
-		if (PHYSFS_close(fs_file) == 0)
-			LOG(LogType::L_ERROR, "[error] File System error while closing file %s: %s", file, PHYSFS_getLastError());
-	}
-	else
-		LOG(LogType::L_ERROR, "[error] File System error while opening file %s: %s", file, PHYSFS_getLastError());
-
-	return ret;
 }
 
 bool FileSystem::Remove(const char* file)
@@ -691,4 +407,119 @@ std::string FileSystem::GetUniqueName(const char* path, const char* name) /*cons
 		}
 	}
 	return finalName;
+}
+
+// ------------ NEW STUFF ---------------- //
+
+uint FileSystem::Copy(const char* file, const char* dir, std::string& outputFile)
+{
+	uint size = 0;
+
+	if (file == nullptr || dir == nullptr)
+	{
+		/*assert(file != nullptr && dir != nullptr);*/
+		return size;
+	}
+
+	std::FILE* filehandle;
+	fopen_s(&filehandle, file, "rb");
+
+	if (filehandle != nullptr)
+	{
+		fseek(filehandle, 0, SEEK_END);
+		size = ftell(filehandle);
+		rewind(filehandle);
+
+		char* buffer = new char[size];
+		size = fread(buffer, 1, size, filehandle);
+		if (size > 0)
+		{
+			GetFileName(file, outputFile, true);
+			outputFile.insert(0, "/");
+			outputFile.insert(0, dir);
+
+			size = Save(outputFile.data(), buffer, size, false);
+			if (size > 0)
+			{
+				LOG(LogType::L_NORMAL, "FILE SYSTEM: Successfully copied file '%s' in dir '%s'", file, dir);
+			}
+			else
+				LOG(LogType::L_ERROR, "FILE SYSTEM: Could not copy file '%s' in dir '%s'", file, dir);
+		}
+		else
+			LOG(LogType::L_ERROR, "FILE SYSTEM: Could not read from file '%s'", file);
+
+		RELEASE_ARRAY(buffer);
+		fclose(filehandle);
+	}
+	else
+		LOG(LogType::L_ERROR, "FILE SYSTEM: Could not open file '%s' to read", file);
+
+	return size;
+}
+
+void FileSystem::GetFileName(const char* file, std::string& fileName, bool extension)
+{
+	fileName = file;
+
+	uint found = fileName.find_last_of("\\");
+	if (found != std::string::npos)
+		fileName = fileName.substr(found + 1, fileName.size());
+
+	found = fileName.find_last_of("//");
+	if (found != std::string::npos)
+		fileName = fileName.substr(found + 1, fileName.size());
+
+	if (!extension)
+	{
+		found = fileName.find_last_of(".");
+		if (found != std::string::npos)
+			fileName = fileName.substr(0, found);
+	}
+}
+
+uint FileSystem::Save(const char* file, char* buffer, uint size, bool append)
+{
+	uint objCount = 0;
+
+	std::string fileName;
+	GetFileName(file, fileName, true);
+
+
+	bool exists = Exists(file);
+
+	PHYSFS_file* filehandle = nullptr;
+	if (append)
+		filehandle = PHYSFS_openAppend(file);
+	else
+		filehandle = PHYSFS_openWrite(file);
+
+	if (filehandle != nullptr)
+	{
+		objCount = PHYSFS_writeBytes(filehandle, (const void*)buffer, size);
+
+		if (objCount == size)
+		{
+			if (exists)
+			{
+				if (append)
+				{
+					LOG(LogType::L_NORMAL, "FILE SYSTEM: Append %u bytes to file '%s'", objCount, fileName.data());
+				}
+				else
+					LOG(LogType::L_NORMAL, "FILE SYSTEM: File '%s' overwritten with %u bytes", fileName.data(), objCount);
+			}
+			else
+				LOG(LogType::L_NORMAL, "FILE SYSTEM: New file '%s' created with %u bytes", fileName.data(), objCount);
+		}
+		else
+			LOG(LogType::L_ERROR, "FILE SYSTEM: Could not write to file '%s'. ERROR: %s", fileName.data(), PHYSFS_getLastError());
+
+		if (PHYSFS_close(filehandle) == 0)
+			LOG(LogType::L_ERROR, "FILE SYSTEM: Could not close file '%s'. ERROR: %s", fileName.data(), PHYSFS_getLastError());
+	}
+	else
+		LOG(LogType::L_ERROR, "FILE SYSTEM: Could not open file '%s' to write. ERROR: %s", fileName.data(), PHYSFS_getLastError());
+
+	return objCount;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Module.h"
+#include<vector>
 
 class GameObject;
 
@@ -14,16 +15,18 @@ public:
 	bool Init() override;
 	bool Start() override;
 
-	//update_status Update(float dt) override;
+	update_status Update(float dt) override;
 
 	bool CleanUp() override;
 
 	GameObject* CreateGameObject(const char* name, GameObject* parent);
+	void Destroy(GameObject* gm);
 
 	void UpdateGameObjects();
 	void RecursiveUpdate(GameObject* parent);
 
 	GameObject* root;
 
+	std::vector<GameObject*> destroyList;
 
 };

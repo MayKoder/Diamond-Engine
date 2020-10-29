@@ -13,6 +13,7 @@ public:
 	void Draw() override;
 
 	std::string physVersion;
+	std::string assimpVersion;
 
 };
 

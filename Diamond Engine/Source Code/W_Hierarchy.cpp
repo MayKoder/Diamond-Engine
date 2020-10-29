@@ -24,7 +24,7 @@ void W_Hierarchy::Draw()
 	{
 		if (cSceneReference != nullptr && cSceneReference->root != nullptr)
 		{
-			DrawGameObjectsTree(cSceneReference->root);
+			DrawGameObjectsTree(cSceneReference->root, false);
 		}
 	}
 	ImGui::End();
@@ -36,17 +36,29 @@ void W_Hierarchy::SetCurrentScene(M_Scene* _scene)
 	cSceneReference = _scene;
 }
 
-void W_Hierarchy::DrawGameObjectsTree(GameObject* node)
+void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 {
+
+	if (drawAsDisabled == false)
+		drawAsDisabled = !node->isActive();
+
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen;
 	if (node->children.size() == 0)
 	{
 		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 	}
+
+	if (drawAsDisabled)
+		ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyle().Colors[ImGuiCol_TextDisabled]);
+
 	//if (IsHighlighted(node)) //TODO
 	//	flags |= ImGuiTreeNodeFlags_Selected;
 
 	bool nodeOpen = ImGui::TreeNodeEx(node, flags, node->name.c_str());
+
+	if (drawAsDisabled)
+		ImGui::PopStyleColor();
+
 	if (ImGui::IsItemClicked()) {
 		dynamic_cast<W_Inspector*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR))->selectedGO = node;
 	}
@@ -55,9 +67,10 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node)
 
 	if (node->showChildren == true)
 	{
+
 		for (unsigned int i = 0; i < node->children.size(); i++)
 		{
-			DrawGameObjectsTree(node->children[i]);
+			DrawGameObjectsTree(node->children[i], drawAsDisabled);
 		}
 		ImGui::TreePop();
 	}

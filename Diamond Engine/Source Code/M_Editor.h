@@ -55,14 +55,15 @@ public:
 
 private:
 
-	//ASK:
-	//Could use array pointers?
-	//Would it be faster?
+
 	std::vector<Window*> windows;
 	std::vector<std::string> styles;
 
 	//WARNING TODO: This is bad fins a better way
 	char styleInput[MAX_STY_INPUT] = "";
+	
+	//TODO: Save current style and load it at init to keep styles between uses
+	//std::string currentStyle;
 
 	bool displayWindow;
 

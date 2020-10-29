@@ -10,6 +10,12 @@ public:
 
 	/*void Update() override;*/
 	void OnEditor() override;
+	int GetTextureID();
 
 	int textureID;
+
+	int tWidth, tHeight;
+
+	bool viewWithCheckers;
+
 };

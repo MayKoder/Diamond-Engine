@@ -8,7 +8,7 @@
 GameObject::GameObject(const char* _name) : parent(nullptr), name(_name), showChildren(false),
 active(true), isStatic(false)
 {
-	AddComponent(Component::Type::Transform);
+	transform = dynamic_cast<C_Transform*>(AddComponent(Component::Type::Transform));
 }
 
 GameObject::~GameObject()
@@ -74,4 +74,31 @@ Component* GameObject::GetComponent(Component::Type _type)
 	}
 
 	return nullptr;
+}
+
+bool GameObject::isActive() const
+{
+	return active;
+}
+
+//void GameObject::ChangeActiveState()
+//{
+//	(active == true) ? Disable() : Enable();
+//}
+
+void GameObject::Enable()
+{
+	active = true;
+
+	if (parent != nullptr)
+		parent->Enable();
+}
+
+void GameObject::Disable()
+{
+	active = false;
+	//for (size_t i = 0; i < children.size(); i++)
+	//{
+	//	children[i]->Disable();
+	//}
 }

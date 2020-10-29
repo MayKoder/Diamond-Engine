@@ -10,6 +10,7 @@
 
 //TODO: DevIL version is missing
 //TODO: Assimp version is missing
+#include "Assimp/include/version.h"
 
 W_About::W_About() : Window()
 {
@@ -19,6 +20,7 @@ W_About::W_About() : Window()
 	PHYSFS_getLinkedVersion(&physVersionStc);
 
 	physVersion = std::to_string(physVersionStc.major) + '.' + std::to_string(physVersionStc.minor) + '.' + std::to_string(physVersionStc.patch);
+	assimpVersion = std::to_string(aiGetVersionMajor()) + '.' + std::to_string(aiGetVersionMinor()) + '.' + std::to_string(aiGetVersionRevision());
 
 }
 
@@ -53,6 +55,9 @@ void W_About::Draw()
 
 		printVersion = "PhysFS  v" + physVersion;
 		ImGui::BulletText(""); ImGui::TextURL(printVersion.c_str(), "https://icculus.org/physfs/", 1, 0);
+
+		printVersion = "Assimp  v" + assimpVersion;
+		ImGui::BulletText(""); ImGui::TextURL(printVersion.c_str(), "https://www.assimp.org/", 1, 0);
 
 		//TODO: Versions wont change, store versions in some sort of vector or array of strings
 		ImGui::BulletText("OpenGL version supported: v%s", glGetString(GL_VERSION));

@@ -3,43 +3,19 @@
 #include "ModuleRenderer3D.h"
 #include <vector>
 
-class Mesh;
-class aiScene;
-class aiNode;
-class aiMesh;
-class GameObject;
-
 enum class ImportType {
 	NOTYPE = -1,
 	MESH,
 	TEXTURE,
 };
-//Change this to file system
-namespace MeshLoader
-{
-	void FSInit();
-	void FSDeInit();
-
-	void EnableDebugMode();
-	void DisableDebugMode();
-
-	void logCallback(const char* message, char* user);
-
-	void ImportFBX(const char* full_path, std::vector<Mesh*>& _mesh, GameObject* gmRoot);
-
-	void NodeToGameObject(std::vector<Mesh*>& _sceneMeshes, aiNode* node, GameObject* gmParent, const char* holderName);
-	Mesh* LoadMesh(aiMesh* importedMesh);
-
-	//TODO: Not finished
-	ImportType GetTypeFromPath(const char* path);
-
-}
 
 namespace StringLogic {
 
 	std::string FileNameFromPath(const char* _path);
-
+	std::string GlobalToLocalPath(const char* _globalPath);
 }
+
+#define ASSETS_PATH "Assets/"
 
 #define LIBRARY_PATH "Library/"
 #define MESHES_PATH "Library/Meshes/"
@@ -50,7 +26,10 @@ namespace StringLogic {
 namespace FileSystem
 {
 	void LoadFile(const char* globalPath);
+	ImportType GetTypeFromPath(const char* path);
 
+	void FSInit();
+	void FSDeInit();
 
 	void CreateLibraryDirectories();
 
@@ -65,10 +44,6 @@ namespace FileSystem
 	void GetRealDir(const char* path, std::string& output) /*const*/;
 	std::string GetPathRelativeToAssets(const char* originalPath) /*const*/;
 
-	bool HasExtension(const char* path) /*const*/;
-	bool HasExtension(const char* path, std::string extension) /*const*/;
-	bool HasExtension(const char* path, std::vector<std::string> extensions) /*const*/;
-
 	std::string NormalizePath(const char* path) /*const*/;
 	void SplitFilePath(const char* full_path, std::string* path, std::string* file = nullptr, std::string* extension = nullptr) /*const*/;
 
@@ -76,10 +51,10 @@ namespace FileSystem
 	unsigned int Load(const char* path, const char* file, char** buffer) /*const*/;
 	unsigned int Load(const char* file, char** buffer) /*const*/;
 
-	bool DuplicateFile(const char* file, const char* dstFolder, std::string& relativePath);
-	bool DuplicateFile(const char* srcFile, const char* dstFile);
+	uint Save(const char* file, char* buffer, uint size, bool append);
+	void GetFileName(const char* file, std::string& fileName, bool extension);
+	uint Copy(const char* file, const char* dir, std::string& outputFile);
 
-	unsigned int Save(const char* file, const void* buffer, unsigned int size, bool append = false) /*const*/;
 	bool Remove(const char* file);
 
 	uint64 GetLastModTime(const char* filename);

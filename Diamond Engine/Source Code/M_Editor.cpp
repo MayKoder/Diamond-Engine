@@ -227,15 +227,15 @@ void M_Editor::DrawMenuBar()
 			//TODO: This is temporal, meshes should not laod every time and 
 			//should be stored only once, then only copy id's.
 			if (ImGui::MenuItem("Cube", nullptr))
-				//MeshLoader::ImportFBX("Assets/cube.fbx", App->renderer3D->testMeshes, App->renderer3D->imgID);
+				FileSystem::LoadFile("Assets/Primitives/Cube.fbx");
 
 			ImGui::MenuItem("Pyramid", nullptr);
 			ImGui::MenuItem("Sphere", nullptr);
 			ImGui::MenuItem("Cylinder", nullptr);
-			if (ImGui::MenuItem("Monkey", nullptr))
-				//MeshLoader::ImportFBX("Assets/monkey.fbx", App->renderer3D->testMeshes, App->renderer3D->imgID);
+			//if (ImGui::MenuItem("Monkey", nullptr))
+			//	FileSystem::ImportFBX("Assets/monkey.fbx", App->renderer3D->testMeshes, App->renderer3D->imgID);
 
-			ImGui::PopStyleColor();
+			ImGui::PopStyleColor(1);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Windows"))

@@ -8,10 +8,19 @@
 #include "M_Editor.h"
 #include "M_Scene.h"
 
+#include "MeshLoader.h"
 #include "FileSystem.h"
 #include "Mesh.h"
 
 #include "mmgr/mmgr.h"
+
+#include"ModuleInput.h"
+
+#ifdef _DEBUG
+#pragma comment (lib, "MathGeoLib/libx86/MGDebug/MathGeoLib.lib")
+#else
+#pragma comment (lib, "MathGeoLib/libx86/MGRelease/MathGeoLib.lib")
+#endif
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
@@ -123,7 +132,8 @@ bool ModuleRenderer3D::Init()
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
 
 		lights[0].ref = GL_LIGHT0;
-		lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
+		lights[0].ambient.Set(0.75f, 0.75f, 0.75f, 1.0f);
+		//lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
 		lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
 		lights[0].SetPos(0.0f, 0.0f, 2.5f);
 		lights[0].Init();
@@ -150,27 +160,26 @@ bool ModuleRenderer3D::Init()
 	}
 
 	//Generate texture
-	//for (int i = 0; i < SQUARE_TEXTURE_W; i++) {
-	//	for (int j = 0; j < SQUARE_TEXTURE_H; j++) {
-	//		int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
-	//		checkerImage[i][j][0] = (GLubyte)c;
-	//		checkerImage[i][j][1] = (GLubyte)c;
-	//		checkerImage[i][j][2] = (GLubyte)c;
-	//		checkerImage[i][j][3] = (GLubyte)255;
-	//	}
-	//}
+	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
+	for (int i = 0; i < SQUARE_TEXTURE_W; i++) {
+		for (int j = 0; j < SQUARE_TEXTURE_H; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkerImage[i][j][0] = (GLubyte)c;
+			checkerImage[i][j][1] = (GLubyte)c;
+			checkerImage[i][j][2] = (GLubyte)c;
+			checkerImage[i][j][3] = (GLubyte)255;
+		}
+	}
 
-
-	//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	//glGenTextures(1, &imgID);
-	//glBindTexture(GL_TEXTURE_2D, imgID);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SQUARE_TEXTURE_W, SQUARE_TEXTURE_H, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
-	//
-	//glBindTexture(GL_TEXTURE_2D, 0);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &checkersTexture);
+	glBindTexture(GL_TEXTURE_2D, checkersTexture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SQUARE_TEXTURE_W, SQUARE_TEXTURE_H, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);	
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 
 	//VERTEX MODE
@@ -194,16 +203,15 @@ bool ModuleRenderer3D::Init()
 	//Generate scene buffers
 	ReGenerateFrameBuffer(App->window->s_width, App->window->s_height);
 
-	MeshLoader::FSInit();
+	FileSystem::FSInit();
 	MeshLoader::EnableDebugMode();
 
-	LOG(LogType::L_WARNING, "ModuleRender3D.cpp. line 185: Hardcoding a FBX load, remove ASAP");
-	MeshLoader::ImportFBX("Assets/BakerHouse/BakerHouse.fbx", globalMeshes, App->moduleScene->root);
+	//LOG(LogType::L_WARNING, "ModuleRender3D.cpp. line 185: Hardcoding a FBX load, remove ASAP");
+	//MeshLoader::ImportFBX("Assets/BakerHouse/BakerHouse.fbx", globalMeshes, App->moduleScene->root);
 
 
 	// Projection matrix for
 	OnResize(App->window->s_width, App->window->s_height);
-
 	
 	return ret;
 }
@@ -237,6 +245,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 
 	Plane p(0, 1, 0, 0);
+	//p.Scale();
 	p.axis = true;
 	p.Render();
 
@@ -278,9 +287,23 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//glPopMatrix();
 	//<------------ VERTEX AND INDEX MODE END ----------------->
 
-	App->moduleScene->UpdateGameObjects();
+
 
 	//App->level->Draw();
+	//TODO: This should not be here
+	App->moduleScene->UpdateGameObjects();
+
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
+
+		ILuint imageID = ilGenImage();
+		ilBindImage(imageID);
+		ilutGLScreen();
+		ilEnable(IL_FILE_OVERWRITE);
+		ilSaveImage("Screenshot.png");
+		ilDeleteImage(imageID);
+
+	}
+
 	//if (debug_draw == true)
 	//{
 	//	BeginDebugDraw();
@@ -296,7 +319,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glClearColor(0.05f, 0.05f, 0.05f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
 	App->moduleEditor->Draw();
 
 	SDL_GL_SwapWindow(App->window->window);
@@ -309,7 +331,7 @@ bool ModuleRenderer3D::CleanUp()
 {
 	LOG(LogType::L_NORMAL, "Destroying 3D Renderer");
 
-	MeshLoader::FSDeInit();
+	FileSystem::FSDeInit();
 	MeshLoader::DisableDebugMode();
 
 	glDeleteFramebuffers(1, &framebuffer);
@@ -357,7 +379,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 void ModuleRenderer3D::OnGUI()
 {
-	if (ImGui::CollapsingHeader("Rendering"))
+	if (ImGui::CollapsingHeader("Rendering", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 
 		//TODO: Store all this info as const char* and dont call the functions every frame
@@ -411,10 +433,10 @@ void ModuleRenderer3D::OnGUI()
 
 		ImGui::PlotHistogram("##memory", &memory[0], memory.size(), 0, "Memory Consumption", 0.0f, (float)stats.peakReportedMemory * 1.2f, ImVec2(310, 100));*/
 
-		ImGui::Text("Total Reported Mem: %u", stats.totalReportedMemory);
-		ImGui::Text("Total Actual Mem: %u", stats.totalActualMemory);
-		ImGui::Text("Peak Reported Mem: %u", stats.peakReportedMemory);
-		ImGui::Text("Peak Actual Mem: %u", stats.peakActualMemory);
+		ImGui::Text("Total Reported Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%u bytes", stats.totalReportedMemory);
+		ImGui::Text("Total Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%u bytes", stats.totalActualMemory);
+		ImGui::Text("Peak Reported Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%u bytes", stats.peakReportedMemory);
+		ImGui::Text("Peak Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%u bytes", stats.peakActualMemory);
 		//ImGui::Text("Accumulated Reported Mem: %u", stats.accumulatedReportedMemory);
 		//ImGui::Text("Accumulated Actual Mem: %u", stats.accumulatedActualMemory);
 		//ImGui::Text("Accumulated Alloc Unit Count: %u", stats.accumulatedAllocUnitCount);
@@ -445,6 +467,7 @@ void ModuleRenderer3D::OnGUI()
 
 		if (ImGui::Checkbox("Texture 2D", &texture_2d))
 			(texture_2d) ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
+
 	}
 }
 
@@ -483,31 +506,6 @@ void ModuleRenderer3D::ReGenerateFrameBuffer(int w, int h)
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		LOG(LogType::L_ERROR, "ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
-void ModuleRenderer3D::CustomLoadImage(const char* fileName)
-{
-	//std::string test("Assets/BakerHouse/");
-	//test += fileName;
-	//SUPER ERROR TODO: ilutGLBindTexImage() SHOULD NOT 
-	//BE CALLED EVERY MESH, SHOULD IT?
-	ILuint imageID;
-	ilGenImages(1, &imageID);
-	ilBindImage(imageID);
-
-	if (!ilLoadImage(fileName))
-	{
-		LOG(LogType::L_ERROR, "Image not loaded");
-	}
-
-	GLuint glID = ilutGLBindTexImage();
-	for (unsigned int i = 0; i < globalMeshes.size(); i++)
-	{
-		//This should not be called every mesh like wtf
-		globalMeshes[i]->textureID = glID;
-	}
-
-	ilDeleteImages(1, &imageID);
 }
 
 void ModuleRenderer3D::GetCAPS(std::string& caps)

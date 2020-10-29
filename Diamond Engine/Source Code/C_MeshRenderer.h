@@ -19,4 +19,6 @@ public:
 	//Does not need a delete call
 	Mesh* _mesh;
 
+	bool faceNormals, vertexNormals;
+
 };
