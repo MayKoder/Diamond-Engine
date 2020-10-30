@@ -31,11 +31,8 @@ bool M_Scene::Start()
 	return true;
 }
 
-update_status M_Scene::Update(float dt)
+update_status M_Scene::PreUpdate(float dt)
 {
-
-	//TODO: This should be here
-	//UpdateGameObjects();
 	if (destroyList.size() > 0) {
 		for (size_t i = 0; i < destroyList.size(); ++i)
 		{
@@ -43,6 +40,15 @@ update_status M_Scene::Update(float dt)
 		}
 		destroyList.clear();
 	}
+	return update_status::UPDATE_CONTINUE;
+}
+
+update_status M_Scene::Update(float dt)
+{
+
+	//TODO: This should be here
+	UpdateGameObjects();
+
 
 	return update_status::UPDATE_CONTINUE;
 }

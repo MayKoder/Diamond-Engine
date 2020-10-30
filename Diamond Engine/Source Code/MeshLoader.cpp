@@ -141,14 +141,16 @@ void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int si
 
 					std::string localPath = StringLogic::GlobalToLocalPath(full_path);
 					localPath = localPath.substr(0, localPath.find_last_of('/')+1);
-					localPath += path.C_Str();
+					localPath += FileSystem::NormalizePath(path.C_Str());
 
 					char* buffer = nullptr;
 					int size = FileSystem::Load(localPath.c_str(), &buffer);
 
 					if (buffer != nullptr) 
 					{
-						sceneTextures.push_back(CustomLoadImage(buffer, size));
+						int w, h;
+
+						sceneTextures.push_back(CustomLoadImage(buffer, size, &w, &h));
 						RELEASE_ARRAY(buffer)
 					}
 
@@ -331,7 +333,7 @@ void MeshLoader::PopulateTransform(GameObject* child, aiNode* node)
 	//transform->globalTransform = parentTransform->globalTransform * transform->localTransform;
 }
 
-GLuint MeshLoader::CustomLoadImage(char* buffer, int size)
+GLuint MeshLoader::CustomLoadImage(char* buffer, int size, int* w, int* h)
 {
 	ILuint imageID;
 	ilGenImages(1, &imageID);
@@ -341,6 +343,12 @@ GLuint MeshLoader::CustomLoadImage(char* buffer, int size)
 	{
 		LOG(LogType::L_ERROR, "Image not loaded");
 	}
+
+
+	if (w)
+		*w = ilGetInteger(IL_IMAGE_WIDTH);
+	if(h)
+		*h = ilGetInteger(IL_IMAGE_HEIGHT);
 
 	GLuint glID = ilutGLBindTexImage();
 

@@ -1,5 +1,6 @@
 #include "C_Transform.h"
 #include "ImGui/imgui.h"
+#include"ImGui/imgui_internal.h"
 #include "Globals.h"
 #include <vector>
 #include"GameObject.h"
@@ -31,57 +32,20 @@ void C_Transform::OnEditor()
 	{
 		ImGui::Text("Local Position: "); 
 		ImGui::SameLine(); 
-		ImGui::PushItemWidth(50);
-
-		if (ImGui::DragFloat("X", &position.x, 0.1f))
+		if (ImGui::DragFloat3("##lPos", &position[0]))
 			updateTransform = true;
 
-		ImGui::SameLine();
-		if(ImGui::DragFloat("Y", &position.y, 0.1f))
-			updateTransform = true;
-
-		ImGui::SameLine();
-		if (ImGui::DragFloat("Z", &position.z, 0.1f))
-			updateTransform = true;
-
-		ImGui::PopItemWidth();
 
 		ImGui::Text("Rotation: ");
 		ImGui::SameLine();
-		ImGui::SameLine();
-		ImGui::PushItemWidth(50);
-
-		if (ImGui::DragFloat("Xr", &eulerRotation.x, 0.1f))
+		if (ImGui::DragFloat3("##lRot", &eulerRotation[0]))
 			updateTransform = true;
-
-		ImGui::SameLine();
-		if (ImGui::DragFloat("Yr", &eulerRotation.y, 0.1f))
-			updateTransform = true;
-
-		ImGui::SameLine();
-		if (ImGui::DragFloat("Zr", &eulerRotation.z, 0.1f))
-			updateTransform = true;
-
-		ImGui::PopItemWidth();
 
 
 		ImGui::Text("Scale: ");
 		ImGui::SameLine();
-		ImGui::PushItemWidth(50);
-
-		if (ImGui::DragFloat("Xs", &localScale.x, 0.1f))
+		if (ImGui::DragFloat3("##lScale", &localScale[0]))
 			updateTransform = true;
-
-		ImGui::SameLine();
-		if (ImGui::DragFloat("Ys", &localScale.y, 0.1f))
-			updateTransform = true;
-
-		ImGui::SameLine();
-		if (ImGui::DragFloat("Zs", &localScale.z, 0.1f))
-			updateTransform = true;
-
-		ImGui::PopItemWidth();
-
 
 
 		// GLOBAL MATRIX //

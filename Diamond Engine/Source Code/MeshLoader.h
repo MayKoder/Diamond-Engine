@@ -24,6 +24,6 @@ namespace MeshLoader
 
 	void PopulateTransform(GameObject* child, aiNode* node);
 
-	GLuint CustomLoadImage(char* buffer, int size);
+	GLuint CustomLoadImage(char* buffer, int size, int* w = nullptr, int* h = nullptr);
 
 }

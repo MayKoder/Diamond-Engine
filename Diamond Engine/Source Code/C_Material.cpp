@@ -2,9 +2,10 @@
 #include "ImGui/imgui.h"
 #include "Application.h"
 #include"ModuleRenderer3D.h"
+#include"Texture.h"
 
 C_Material::C_Material(GameObject* _gm) : Component(_gm), textureID(-1), tWidth(0), tHeight(0),
-viewWithCheckers(false)
+viewWithCheckers(false), matTexture(nullptr)
 {
 
 }

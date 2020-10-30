@@ -196,6 +196,7 @@
     <ClInclude Include="Source Code\M_Scene.h" />
     <ClInclude Include="Source Code\OpenGL.h" />
     <ClInclude Include="Source Code\Primitive.h" />
+    <ClInclude Include="Source Code\Texture.h" />
     <ClInclude Include="Source Code\Timer.h" />
     <ClInclude Include="Source Code\Window.h" />
     <ClInclude Include="Source Code\W_About.h" />
@@ -261,6 +262,7 @@
     <ClCompile Include="Source Code\MeshLoader.cpp" />
     <ClCompile Include="Source Code\M_FileSystem.cpp" />
     <ClCompile Include="Source Code\M_Scene.cpp" />
+    <ClCompile Include="Source Code\Texture.cpp" />
     <ClCompile Include="Source Code\W_Assets.cpp" />
     <ClCompile Include="Source Code\W_Hierarchy.cpp" />
     <ClCompile Include="Source Code\Light.cpp" />

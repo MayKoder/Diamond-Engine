@@ -228,12 +228,17 @@ void M_Editor::DrawMenuBar()
 			//should be stored only once, then only copy id's.
 			if (ImGui::MenuItem("Cube", nullptr))
 				FileSystem::LoadFile("Assets/Primitives/Cube.fbx");
+			if (ImGui::MenuItem("Cylinder", nullptr))
+				FileSystem::LoadFile("Assets/Primitives/Cylinder.fbx");
+			if (ImGui::MenuItem("Icosphere", nullptr))
+				FileSystem::LoadFile("Assets/Primitives/Icosphere.fbx");
+			if (ImGui::MenuItem("Pyramid", nullptr))
+				FileSystem::LoadFile("Assets/Primitives/Pyramid.fbx");
+			if (ImGui::MenuItem("Sphere", nullptr))
+				FileSystem::LoadFile("Assets/Primitives/Sphere.fbx");
+			if (ImGui::MenuItem("Torus", nullptr))
+				FileSystem::LoadFile("Assets/Primitives/Torus.fbx");
 
-			ImGui::MenuItem("Pyramid", nullptr);
-			ImGui::MenuItem("Sphere", nullptr);
-			ImGui::MenuItem("Cylinder", nullptr);
-			//if (ImGui::MenuItem("Monkey", nullptr))
-			//	FileSystem::ImportFBX("Assets/monkey.fbx", App->renderer3D->testMeshes, App->renderer3D->imgID);
 
 			ImGui::PopStyleColor(1);
 			ImGui::EndMenu();

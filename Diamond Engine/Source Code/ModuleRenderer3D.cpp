@@ -2,7 +2,6 @@
 #include "MaykMath.h"
 #include "MMGui.h"
 
-#include "MeshArrays.h"
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
 #include "M_Editor.h"
@@ -14,6 +13,9 @@
 #include "DevIL\include\ilut.h"
 
 #include"ModuleInput.h"
+#include"GameObject.h"
+#include"C_MeshRenderer.h"
+#include"Texture.h"
 
 #ifdef _DEBUG
 #pragma comment (lib, "MathGeoLib/libx86/MGDebug/MathGeoLib.lib")
@@ -147,7 +149,6 @@ bool ModuleRenderer3D::Init()
 	}
 
 	//Generate texture
-	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
 	for (int i = 0; i < SQUARE_TEXTURE_W; i++) {
 		for (int j = 0; j < SQUARE_TEXTURE_H; j++) {
 			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
@@ -275,7 +276,14 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	//App->level->Draw();
 	//TODO: This should not be here
-	App->moduleScene->UpdateGameObjects();
+	if (!renderQueue.empty()) 
+	{
+		for (size_t i = 0; i < renderQueue.size(); i++)
+		{
+			renderQueue[i]->RenderMesh();
+		}
+		renderQueue.clear();
+	}
 
 	if (App->moduleInput->GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
 
@@ -323,6 +331,12 @@ bool ModuleRenderer3D::CleanUp()
 	//BUG: This is a bug, texture buffers are shared, should only delete each
 	//Buffer once, keep a vector of texture buffers
 	//glDeleteTextures(1, &testMeshes[0]->textureID);
+
+	for (unsigned int k = 0; k < Textures.size(); ++k)
+	{
+		glDeleteTextures(1, &Textures[k].textureID);
+	}
+	Textures.clear();
 
 	for (unsigned int j = 0; j < globalTextures.size(); ++j)
 	{

@@ -33,19 +33,19 @@ std::string StringLogic::FileNameFromPath(const char* _path)
 
 std::string StringLogic::GlobalToLocalPath(const char* _globalPath)
 {
-	std::string test = FileSystem::NormalizePath(_globalPath);
+	std::string localPath = FileSystem::NormalizePath(_globalPath);
 
 	size_t pos = 0;
-	pos = test.find(ASSETS_PATH);
+	pos = localPath.find(ASSETS_PATH);
 	if (pos != std::string::npos)
 	{
-		test = test.substr(pos);
-		if (test.c_str() != "")
-			return test;
+		localPath = localPath.substr(pos);
+		if (localPath.c_str() != "")
+			return localPath;
 	}
 
-	test.clear();
-	return test;
+	localPath.clear();
+	return localPath;
 }
 
 ImportType FileSystem::GetTypeFromPath(const char* path)
@@ -136,7 +136,8 @@ void FileSystem::LoadFile(const char* globalPath)
 
 			case ImportType::TEXTURE: 
 			{
-				GLuint textureID =MeshLoader::CustomLoadImage(buffer, size);
+				int w = 0; int h = 0;
+				GLuint textureID =MeshLoader::CustomLoadImage(buffer, size, &w, &h);
 				EngineExternal->moduleRenderer3D->globalTextures.push_back(textureID);
 
 				W_Inspector* inspector = dynamic_cast<W_Inspector*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR));
@@ -144,6 +145,8 @@ void FileSystem::LoadFile(const char* globalPath)
 					C_Material* mat = dynamic_cast<C_Material*>(inspector->selectedGO->GetComponent(Component::Type::Material));
 					if (mat) {
 						mat->textureID = textureID;
+						mat->tWidth = w;
+						mat->tHeight = h;
 					}
 				}
 				break;
@@ -199,64 +202,64 @@ bool FileSystem::IsDirectory(const char* file) /*const*/
 	return PHYSFS_isDirectory(file) != 0;
 }
 
-const char* FileSystem::GetWriteDir() /*const*/
-{
-	//TODO: erase first annoying dot (".")
-	return PHYSFS_getWriteDir();
-}
-
-void FileSystem::DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) /*const*/
-{
-	char** rc = PHYSFS_enumerateFiles(directory);
-	char** i;
-
-	for (i = rc; *i != nullptr; i++)
-	{
-		std::string str = std::string(directory) + std::string("/") + std::string(*i);
-		if (IsDirectory(str.c_str()))
-			dir_list.push_back(*i);
-		else
-			file_list.push_back(*i);
-	}
-
-	PHYSFS_freeList(rc);
-}
-
-void FileSystem::GetAllFilesWithExtension(const char* directory, const char* extension, std::vector<std::string>& file_list) /*const*/
-{
-	std::vector<std::string> files;
-	std::vector<std::string> dirs;
-	DiscoverFiles(directory, files, dirs);
-
-	for (uint i = 0; i < files.size(); i++)
-	{
-		std::string ext;
-		SplitFilePath(files[i].c_str(), nullptr, nullptr, &ext);
-
-		if (ext == extension)
-			file_list.push_back(files[i]);
-	}
-}
-
-void FileSystem::GetRealDir(const char* path, std::string& output) /*const*/
-{
-	output = PHYSFS_getBaseDir();
-
-	std::string baseDir = PHYSFS_getBaseDir();
-	std::string searchPath = *PHYSFS_getSearchPath();
-	std::string realDir = PHYSFS_getRealDir(path);
-
-	output.append(*PHYSFS_getSearchPath()).append("/");
-	output.append(PHYSFS_getRealDir(path)).append("/").append(path);
-}
-
-std::string FileSystem::GetPathRelativeToAssets(const char* originalPath) /*const*/
-{
-	std::string ret;
-	GetRealDir(originalPath, ret);
-
-	return ret;
-}
+//const char* FileSystem::GetWriteDir() /*const*/
+//{
+//	//TODO: erase first annoying dot (".")
+//	return PHYSFS_getWriteDir();
+//}
+//
+//void FileSystem::DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) /*const*/
+//{
+//	char** rc = PHYSFS_enumerateFiles(directory);
+//	char** i;
+//
+//	for (i = rc; *i != nullptr; i++)
+//	{
+//		std::string str = std::string(directory) + std::string("/") + std::string(*i);
+//		if (IsDirectory(str.c_str()))
+//			dir_list.push_back(*i);
+//		else
+//			file_list.push_back(*i);
+//	}
+//
+//	PHYSFS_freeList(rc);
+//}
+//
+//void FileSystem::GetAllFilesWithExtension(const char* directory, const char* extension, std::vector<std::string>& file_list) /*const*/
+//{
+//	std::vector<std::string> files;
+//	std::vector<std::string> dirs;
+//	DiscoverFiles(directory, files, dirs);
+//
+//	for (uint i = 0; i < files.size(); i++)
+//	{
+//		std::string ext;
+//		SplitFilePath(files[i].c_str(), nullptr, nullptr, &ext);
+//
+//		if (ext == extension)
+//			file_list.push_back(files[i]);
+//	}
+//}
+//
+//void FileSystem::GetRealDir(const char* path, std::string& output) /*const*/
+//{
+//	output = PHYSFS_getBaseDir();
+//
+//	std::string baseDir = PHYSFS_getBaseDir();
+//	std::string searchPath = *PHYSFS_getSearchPath();
+//	std::string realDir = PHYSFS_getRealDir(path);
+//
+//	output.append(*PHYSFS_getSearchPath()).append("/");
+//	output.append(PHYSFS_getRealDir(path)).append("/").append(path);
+//}
+//
+//std::string FileSystem::GetPathRelativeToAssets(const char* originalPath) /*const*/
+//{
+//	std::string ret;
+//	GetRealDir(originalPath, ret);
+//
+//	return ret;
+//}
 
 std::string FileSystem::NormalizePath(const char* full_path) /*const*/
 {
@@ -383,45 +386,45 @@ bool FileSystem::Remove(const char* file)
 	return ret;
 }
 
-uint64 FileSystem::GetLastModTime(const char* filename)
-{
-	return PHYSFS_getLastModTime(filename);
-}
-
-std::string FileSystem::GetUniqueName(const char* path, const char* name) /*const*/
-{
-	//TODO: modify to distinguix files and dirs?
-	std::vector<std::string> files, dirs;
-	DiscoverFiles(path, files, dirs);
-
-	std::string finalName(name);
-	bool unique = false;
-
-	for (uint i = 0; i < 50 && unique == false; ++i)
-	{
-		unique = true;
-
-		//Build the compare name (name_i)
-		if (i > 0)
-		{
-			finalName = std::string(name).append("_");
-			if (i < 10)
-				finalName.append("0");
-			finalName.append(std::to_string(i));
-		}
-
-		//Iterate through all the files to find a matching name
-		for (uint f = 0; f < files.size(); ++f)
-		{
-			if (finalName == files[f])
-			{
-				unique = false;
-				break;
-			}
-		}
-	}
-	return finalName;
-}
+//uint64 FileSystem::GetLastModTime(const char* filename)
+//{
+//	return PHYSFS_getLastModTime(filename);
+//}
+//
+//std::string FileSystem::GetUniqueName(const char* path, const char* name) /*const*/
+//{
+//	//TODO: modify to distinguix files and dirs?
+//	std::vector<std::string> files, dirs;
+//	DiscoverFiles(path, files, dirs);
+//
+//	std::string finalName(name);
+//	bool unique = false;
+//
+//	for (uint i = 0; i < 50 && unique == false; ++i)
+//	{
+//		unique = true;
+//
+//		//Build the compare name (name_i)
+//		if (i > 0)
+//		{
+//			finalName = std::string(name).append("_");
+//			if (i < 10)
+//				finalName.append("0");
+//			finalName.append(std::to_string(i));
+//		}
+//
+//		//Iterate through all the files to find a matching name
+//		for (uint f = 0; f < files.size(); ++f)
+//		{
+//			if (finalName == files[f])
+//			{
+//				unique = false;
+//				break;
+//			}
+//		}
+//	}
+//	return finalName;
+//}
 
 // ------------ NEW STUFF ---------------- //
 

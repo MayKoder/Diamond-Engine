@@ -11,11 +11,13 @@
 #include "OpenGL.h"
 
 class Mesh;
+class C_MeshRenderer;
+class Texture;
 
 #define MAX_LIGHTS 1
 
-#define SQUARE_TEXTURE_W 128
-#define SQUARE_TEXTURE_H 128
+#define SQUARE_TEXTURE_W 256
+#define SQUARE_TEXTURE_H 256
 
 class ModuleRenderer3D : public Module
 {
@@ -48,10 +50,12 @@ public:
 	//Mesh testMesh;
 	std::vector<Mesh*> globalMeshes;
 	std::vector<GLuint> globalTextures;
-	GLuint checkersTexture;
-	//GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
+	std::vector<Texture> Textures;
 
-	std::vector<Mesh*> renderQueue;
+	GLuint checkersTexture;
+	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
+
+	std::vector<C_MeshRenderer*> renderQueue;
 
 public:
 
