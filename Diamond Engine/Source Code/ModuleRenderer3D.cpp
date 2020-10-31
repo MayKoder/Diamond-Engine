@@ -428,9 +428,9 @@ void ModuleRenderer3D::OnGUI()
 
 		if(ImGui::Checkbox("Enable V-Sync", &vsync))
 		{
-			//Use Vsync
-			if (SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
-				LOG(LogType::L_WARNING, "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+			////Use Vsync
+			//if (SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
+			//	LOG(LogType::L_WARNING, "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 		}
 		ImGui::SameLine();
 		if (ImGui::Checkbox("Wireframe Mode", &wireframe))

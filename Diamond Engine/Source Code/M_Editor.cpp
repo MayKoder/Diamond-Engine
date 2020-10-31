@@ -364,7 +364,7 @@ void M_Editor::DrawTopBar()
 
 		ImGui::SameLine();
 
-		ImGui::SetCursorPosX(ImGui::GetWindowWidth() - ImGui::CalcTextSize("Take Screenshoot").x - 20);
+		ImGui::SetCursorPosX((ImGui::GetWindowWidth() / 2) - (ImGui::CalcTextSize("Take Screenshoot").x / 2));
 		if (ImGui::Button("Take Screenshoot")) 
 		{
 			App->moduleRenderer3D->TakeScreenshot();

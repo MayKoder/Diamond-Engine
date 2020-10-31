@@ -80,7 +80,7 @@ void W_Inspector::Draw()
 			ImGui::PopItemWidth();
 
 			if (ImGui::Button("Delete")) {
-				EngineExternal->moduleScene->destroyList.push_back(selectedGO);
+				selectedGO->Destroy();
 			}
 
 			ImGui::GreySeparator();

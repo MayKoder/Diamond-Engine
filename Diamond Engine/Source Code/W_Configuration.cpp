@@ -90,7 +90,7 @@ void W_Configuration::UpdateInfoLogs()
 {
 
 	//Do not use ImGui::GetFrameRate()
-	float currentFPS = (1.f / EngineExternal->GetDT())/*ImGui::GetIO().Framerate*/;
+	float currentFPS = floorf(1.f / EngineExternal->GetDT())/*ImGui::GetIO().Framerate*/;
 	float currentMS = (1000.f * EngineExternal->GetDT());
 
 	//FPS Vector Update
