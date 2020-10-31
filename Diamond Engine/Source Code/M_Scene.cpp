@@ -33,6 +33,7 @@ bool M_Scene::Start()
 
 update_status M_Scene::PreUpdate(float dt)
 {
+
 	if (destroyList.size() > 0) {
 		for (size_t i = 0; i < destroyList.size(); ++i)
 		{
@@ -45,6 +46,8 @@ update_status M_Scene::PreUpdate(float dt)
 
 update_status M_Scene::Update(float dt)
 {
+	if (App->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && App->moduleEditor->GetSelectedGO() != nullptr)
+		App->moduleEditor->GetSelectedGO()->Destroy();
 
 	//TODO: This should be here
 	UpdateGameObjects();
@@ -95,6 +98,12 @@ void M_Scene::UpdateGameObjects()
 
 void M_Scene::RecursiveUpdate(GameObject* parent)
 {
+	if (parent->toDelete)
+	{
+		destroyList.push_back(parent);
+		return;
+	}
+
 	if (parent->isActive()) 
 	{
 		parent->Update();

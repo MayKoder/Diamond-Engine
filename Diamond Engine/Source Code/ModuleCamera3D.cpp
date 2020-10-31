@@ -1,10 +1,12 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleCamera3D.h"
-#include "ImGui/imconfig.h"
 #include "ImGui/imgui.h"
 #include "ModuleInput.h"
 #include "ModuleWindow.h"
+#include "M_Editor.h"
+#include "GameObject.h"
+#include "C_Transform.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled), mouseSensitivity(0.50f), cameraSpeed(1.f), cameraMovement(0.f, 0.f, 0.f)
 {
@@ -113,7 +115,7 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 	if (App->moduleInput->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed *= 2.f;
 
-	if (App->moduleInput->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) cameraMovement.y += speed;
+	//if (App->moduleInput->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) cameraMovement.y += speed;
 	//if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
 
 	if (App->moduleInput->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) cameraMovement -= Z * speed;
@@ -151,12 +153,28 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 	//Rotate around 0,0,0
 	//ASK: Should i also include Right alt?
 	//Maybe we could use quaternions?
-	if (App->moduleInput->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->moduleInput->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
-		OrbitalRotation(vec3(0, 1, 0), dt);
+	if (App->moduleInput->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->moduleInput->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT) 
+	{
+		vec3 target(0.f, 0.f, 0.f);
+		if (App->moduleEditor->GetSelectedGO() != nullptr)
+		{
+			float3 maTogl = App->moduleEditor->GetSelectedGO()->transform->globalTransform.TranslatePart();
+			target.Set(maTogl.x, maTogl.y, maTogl.z);
+		}
+		OrbitalRotation(target, dt);
+	}
 
 
-	if (App->moduleInput->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-		FocusCamera(vec3(0.f, 0.f, 0.f), 10.f);
+	if (App->moduleInput->GetKey(SDL_SCANCODE_F) == KEY_DOWN) 
+	{
+		vec3 target(0.f, 0.f, 0.f);
+		if (App->moduleEditor->GetSelectedGO() != nullptr) 
+		{
+			float3 maTogl = App->moduleEditor->GetSelectedGO()->transform->globalTransform.TranslatePart();
+			target.Set(maTogl.x, maTogl.y, maTogl.z);
+		}
+		FocusCamera(target, 10.f);
+	}
 
 	if (App->moduleInput->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
 		PanCamera(dt);
@@ -256,9 +274,13 @@ void ModuleCamera3D::FreeRotation(float dt)
 
 void ModuleCamera3D::FocusCamera(vec3 center, float offset)
 {
-	Position = center;
+	//Position = center;
+	//Position += normalize(Z) * offset;
 
-	Position += normalize(Z) * offset;
+	LookAt(center);
+	Position = center + (normalize((Position - center)) * offset);
+
+
 }
 
 void ModuleCamera3D::PanCamera(float dt)
@@ -270,14 +292,7 @@ void ModuleCamera3D::PanCamera(float dt)
 
 	if (dx != 0 || dy != 0) 
 	{
-		//vec3 mouseDir = normalize(vec3(dx, dy, 0.f));
-
-		//Move(X * (mouseDir.x * cameraSpeed * dt));
-		//Move(-Y * (mouseDir.y * cameraSpeed * dt));
-
 		vec3 movVector((X * dx) + (-Y * dy));
-
 		Position += movVector * dt;
-
 	}
 }

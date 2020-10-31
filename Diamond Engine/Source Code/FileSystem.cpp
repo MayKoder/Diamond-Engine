@@ -18,6 +18,7 @@
 
 #include"M_Editor.h"
 #include"W_Inspector.h"
+#include"Texture.h"
 
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
@@ -129,7 +130,7 @@ void FileSystem::LoadFile(const char* globalPath)
 
 			case ImportType::MESH: 
 			{
-				MeshLoader::ImportFBXFromBuffer(normalizedPath.c_str(), buffer, size, EngineExternal->moduleRenderer3D->globalMeshes, EngineExternal->moduleScene->root);
+				MeshLoader::ImportFBXFromBuffer(normalizedPath.c_str(), buffer, size, EngineExternal->moduleScene->root);
 
 				break;
 			}
@@ -137,22 +138,28 @@ void FileSystem::LoadFile(const char* globalPath)
 			case ImportType::TEXTURE: 
 			{
 				int w = 0; int h = 0;
-				GLuint textureID =MeshLoader::CustomLoadImage(buffer, size, &w, &h);
-				EngineExternal->moduleRenderer3D->globalTextures.push_back(textureID);
+				GLuint id = MeshLoader::CustomLoadImage(buffer, size, &w, &h);
+				Texture* material = new Texture(id, w, h);
+				EngineExternal->moduleRenderer3D->globalTextures.push_back(material);
 
 				W_Inspector* inspector = dynamic_cast<W_Inspector*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR));
 				if (inspector && inspector->selectedGO) {
 					C_Material* mat = dynamic_cast<C_Material*>(inspector->selectedGO->GetComponent(Component::Type::Material));
-					if (mat) {
-						mat->textureID = textureID;
-						mat->tWidth = w;
-						mat->tHeight = h;
+					if (mat) 
+					{
+						mat->matTexture = material;
+					}
+					else {
+						C_Material* mat = dynamic_cast<C_Material*>(inspector->selectedGO->AddComponent(Component::Type::Material));
+						mat->matTexture = material;
+
 					}
 				}
 				break;
 			}
 
 		}
+		RELEASE_ARRAY(buffer);
 	}
 
 }

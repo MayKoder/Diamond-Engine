@@ -5,7 +5,6 @@
 W_Console::W_Console() : Window(), collapseMode(true), scrollToBottom(false)
 {
 	name = "Console";
-	AddLog("I want to die", LogType::L_ERROR);
 }
 
 W_Console::~W_Console()

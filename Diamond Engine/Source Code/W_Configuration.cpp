@@ -30,7 +30,7 @@ void W_Configuration::Draw()
 	    {
 		    ImGui::PlotHistogram("##frameRate", &fps_log[0], fps_log.size(), 0, "Framerate", 0.0f, 100.0f, ImVec2(310, 100));
 		    ImGui::PlotHistogram("##miliseconds", &ms_log[0], ms_log.size(), 0, "Miliseconds", 0.0f, 100.0f, ImVec2(310, 100));
-		    ImGui::SliderInt("FPS CAP", &EngineExternal->fpsCap, 1, 360);
+		    ImGui::SliderInt("FPS CAP", &EngineExternal->fpsCap, 10, 360);
 		    ImGui::NewLine();
 	    }
 

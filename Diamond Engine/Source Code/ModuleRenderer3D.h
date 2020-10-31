@@ -35,6 +35,8 @@ public:
 
 	void ReGenerateFrameBuffer(int w, int h);
 
+	void TakeScreenshot();
+
 private:
 
 	void GetCAPS(std::string& caps);
@@ -49,8 +51,7 @@ public:
 
 	//Mesh testMesh;
 	std::vector<Mesh*> globalMeshes;
-	std::vector<GLuint> globalTextures;
-	std::vector<Texture> Textures;
+	std::vector<Texture*> globalTextures;
 
 	GLuint checkersTexture;
 	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];

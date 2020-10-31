@@ -32,13 +32,16 @@ void C_MeshRenderer::RenderMesh()
 	if (transform != nullptr)
 	{
 		glPushMatrix();
-		//TODO: Save transposed floa4x4
 		glMultMatrixf(transform->GetGlobalTransposed());
 	}
 
 	C_Material* material = dynamic_cast<C_Material*>(gameObject->GetComponent(Component::Type::Material));
+	GLuint id = -1;
 
-	_mesh->RenderMesh(material->GetTextureID());
+	if (material != nullptr)
+		id = material->GetTextureID();
+
+	_mesh->RenderMesh(id);
 
 	if (vertexNormals || faceNormals)
 		_mesh->RenderMeshDebug(&vertexNormals, &faceNormals);

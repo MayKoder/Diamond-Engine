@@ -15,13 +15,12 @@ W_Inspector::~W_Inspector()
 
 void W_Inspector::Draw()
 {
-	char inputName[12] = "Object Name";
 
 	//ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(1000, 1000));
 
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*/)) 
 	{
-		if (selectedGO != nullptr && selectedGO != EngineExternal->moduleScene->root) 
+		if (selectedGO != nullptr && !selectedGO->IsRoot()) 
 		{
 			if (ImGui::Checkbox("##Active", &selectedGO->active)) 
 			{
@@ -30,7 +29,9 @@ void W_Inspector::Draw()
 			}
 
 			ImGui::SameLine();
-			ImGui::InputText("##Name", inputName, sizeof(inputName) / sizeof(char)); ImGui::SameLine();
+			
+			char* inputName = &selectedGO->name[0];
+			ImGui::InputText("##Name", inputName, selectedGO->name.size() + 1, ImGuiInputTextFlags_ReadOnly); ImGui::SameLine();
 			ImGui::Checkbox("Static", &selectedGO->isStatic);
 
 			ImGui::Text("Tag"); ImGui::SameLine();

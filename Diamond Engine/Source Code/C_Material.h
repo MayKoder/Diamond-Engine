@@ -14,10 +14,6 @@ public:
 
 	Texture* matTexture;
 
-	int textureID;
-
-	int tWidth, tHeight;
-
 	bool viewWithCheckers;
 
 };

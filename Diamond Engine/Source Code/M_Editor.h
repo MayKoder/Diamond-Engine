@@ -8,6 +8,7 @@
 
 typedef unsigned int ImGuiID;
 enum class LogType;
+class GameObject;
 
 enum class EditorWindow {
 
@@ -50,6 +51,8 @@ public:
 	void ChangeStyleTo(const char* styleName);
 	void DeleteStyle(const char* styleName);
 	void UpdateLoadedStylesVector(std::vector<std::string>* _styles);
+
+	GameObject* GetSelectedGO();
 
 	void LogToConsole(const char* msg, LogType _type = LogType::L_NORMAL);
 

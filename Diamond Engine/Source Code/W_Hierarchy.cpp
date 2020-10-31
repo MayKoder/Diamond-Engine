@@ -6,6 +6,7 @@
 #include "M_Editor.h"
 #include "Application.h"
 #include "W_Inspector.h"
+#include "ModuleInput.h"
 
 W_Hierarchy::W_Hierarchy(M_Scene* _scene) : Window(), cSceneReference(_scene)
 {
@@ -19,7 +20,6 @@ W_Hierarchy::~W_Hierarchy()
 
 void W_Hierarchy::Draw()
 {
-
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*/)) 
 	{
 		if (cSceneReference != nullptr && cSceneReference->root != nullptr)
@@ -43,10 +43,12 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 		drawAsDisabled = !node->isActive();
 
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen;
+
 	if (node->children.size() == 0)
-	{
 		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-	}
+
+	if (node == EngineExternal->moduleEditor->GetSelectedGO())
+		flags |= ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_Selected;
 
 	if (drawAsDisabled)
 		ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyle().Colors[ImGuiCol_TextDisabled]);
@@ -59,7 +61,8 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 	if (drawAsDisabled)
 		ImGui::PopStyleColor();
 
-	if (ImGui::IsItemClicked()) {
+	if (ImGui::IsItemClicked() && !node->IsRoot())
+	{
 		dynamic_cast<W_Inspector*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR))->selectedGO = node;
 	}
 

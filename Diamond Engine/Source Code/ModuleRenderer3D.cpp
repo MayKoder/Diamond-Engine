@@ -285,17 +285,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		renderQueue.clear();
 	}
 
-	if (App->moduleInput->GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
-
-		ILuint imageID = ilGenImage();
-		ilBindImage(imageID);
-		ilutGLScreen();
-		ilEnable(IL_FILE_OVERWRITE);
-		ilSaveImage("Screenshot.png");
-		ilDeleteImage(imageID);
-
-	}
-
 	//if (debug_draw == true)
 	//{
 	//	BeginDebugDraw();
@@ -332,15 +321,11 @@ bool ModuleRenderer3D::CleanUp()
 	//Buffer once, keep a vector of texture buffers
 	//glDeleteTextures(1, &testMeshes[0]->textureID);
 
-	for (unsigned int k = 0; k < Textures.size(); ++k)
+	for (unsigned int k = 0; k < globalTextures.size(); ++k)
 	{
-		glDeleteTextures(1, &Textures[k].textureID);
-	}
-	Textures.clear();
-
-	for (unsigned int j = 0; j < globalTextures.size(); ++j)
-	{
-		glDeleteTextures(1, &globalTextures[j]);
+		glDeleteTextures(1, &globalTextures[k]->textureID);
+		delete globalTextures[k];
+		globalTextures[k] = nullptr;
 	}
 	globalTextures.clear();
 
@@ -371,6 +356,8 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	App->moduleWindow->s_width = width;
 	App->moduleWindow->s_height = height;
+
+	ReGenerateFrameBuffer(width, height);
 }
 
 void ModuleRenderer3D::OnGUI()
@@ -501,6 +488,20 @@ void ModuleRenderer3D::ReGenerateFrameBuffer(int w, int h)
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		LOG(LogType::L_ERROR, "ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void ModuleRenderer3D::TakeScreenshot()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
+	ILuint imageID = ilGenImage();
+	ilBindImage(imageID);
+	ilutGLScreen();
+	ilEnable(IL_FILE_OVERWRITE);
+	ilSaveImage("Screenshot.png");
+	ilDeleteImage(imageID);
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 

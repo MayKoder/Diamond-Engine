@@ -26,7 +26,7 @@
 #include "W_Assets.h"
 
 //#include"MathGeoLib/include/Math/float3.h"
-
+#include"GameObject.h"
 
 M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_enabled), displayWindow(false),
 viewportCorSize(0.f), dockspace_id(0)
@@ -238,7 +238,8 @@ void M_Editor::DrawMenuBar()
 				FileSystem::LoadFile("Assets/Primitives/Sphere.fbx");
 			if (ImGui::MenuItem("Torus", nullptr))
 				FileSystem::LoadFile("Assets/Primitives/Torus.fbx");
-
+			if (ImGui::MenuItem("Monkey", nullptr))
+				FileSystem::LoadFile("Assets/Primitives/Monkey.fbx");
 
 			ImGui::PopStyleColor(1);
 			ImGui::EndMenu();
@@ -360,6 +361,14 @@ void M_Editor::DrawTopBar()
 			ImGui::EndCombo();
 		}
 		ImGui::PopItemWidth();
+
+		ImGui::SameLine();
+
+		ImGui::SetCursorPosX(ImGui::GetWindowWidth() - ImGui::CalcTextSize("Take Screenshoot").x - 20);
+		if (ImGui::Button("Take Screenshoot")) 
+		{
+			App->moduleRenderer3D->TakeScreenshot();
+		}
 
 		//float halfWindowSize = ImGui::GetWindowSize().y - 15;
 
@@ -518,6 +527,12 @@ void M_Editor::UpdateLoadedStylesVector(std::vector<std::string>* _styles)
 		LOG(LogType::L_WARNING, "Styles file could not be loaded, loading default style");
 	}
 	json_value_free(file);
+}
+
+GameObject* M_Editor::GetSelectedGO()
+{
+	W_Inspector* inspector =dynamic_cast<W_Inspector*>(GetEditorWindow(EditorWindow::INSPECTOR));
+	return inspector->selectedGO;
 }
 
 void M_Editor::LogToConsole(const char* msg, LogType _type)

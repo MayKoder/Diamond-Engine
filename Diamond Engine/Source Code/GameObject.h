@@ -23,6 +23,9 @@ public:
 
 	void Enable();
 	void Disable();
+	bool IsRoot();
+
+	void Destroy();
 
 	GameObject* parent;
 	C_Transform* transform;
@@ -37,5 +40,7 @@ public:
 
 	//TODO: Temporal tree display bool
 	bool showChildren;
+
+	bool toDelete;
 
 };

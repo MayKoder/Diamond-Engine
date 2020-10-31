@@ -117,28 +117,33 @@ void ModuleWindow::OnGUI()
 {
 	if (ImGui::CollapsingHeader("Window", ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		SDL_DisplayMode current;
+		int i = 0;
+		SDL_GetCurrentDisplayMode(i, &current);
+
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.f, 1.f))
 		{
 			SDL_SetWindowBrightness(window, brightness);
 		}
-		if (ImGui::SliderInt("Width", &s_width, 1, 7680))
+		if (ImGui::SliderInt("Width", &s_width, MIN_WIDTH, current.w))
 		{
 			SDL_SetWindowSize(window, s_width, s_height);
-			EngineExternal->moduleRenderer3D->OnResize(s_width, s_height);
+			App->moduleRenderer3D->OnResize(s_width, s_height);
 		}
-		if (ImGui::SliderInt("Height", &s_height, 1, 4320))
+		if (ImGui::SliderInt("Height", &s_height, MIN_HEIGHT, current.h))
 		{
 			SDL_SetWindowSize(window, s_width, s_height);
-			EngineExternal->moduleRenderer3D->OnResize(s_width, s_height);
+			App->moduleRenderer3D->OnResize(s_width, s_height);
 		}
 
-		SDL_DisplayMode current;
-		int i = 0;
-		SDL_GetCurrentDisplayMode(i, &current);
 		ImGui::Text("Refresh rate: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d", current.refresh_rate);
 
-		if (ImGui::Checkbox("Fullscreen", &fullScreen))
-			SDL_SetWindowFullscreen(App->moduleWindow->window, SDL_WINDOW_FULLSCREEN);
+		if (ImGui::Checkbox("Fullscreen", &fullScreen)) {
+			(fullScreen == true) ? SDL_SetWindowFullscreen(App->moduleWindow->window, SDL_WINDOW_FULLSCREEN): SDL_SetWindowFullscreen(App->moduleWindow->window, 0);
+			
+			SDL_GetWindowSize(window, &s_width, &s_height);
+			App->moduleRenderer3D->OnResize(s_width, s_height);
+		}
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change fullscreen mode");
 
@@ -149,15 +154,22 @@ void ModuleWindow::OnGUI()
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change resizable mode");
 
-		if (ImGui::Checkbox("Borderless", &borderless))
+		if (ImGui::Checkbox("Borderless", &borderless)) {
 			SDL_SetWindowBordered(App->moduleWindow->window, static_cast<SDL_bool>(!borderless));
+			SDL_GetWindowSize(window, &s_width, &s_height);
+			App->moduleRenderer3D->OnResize(s_width, s_height);
+		}
+
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change borderless mode");
 
 		ImGui::SameLine();
 
-		if (ImGui::Checkbox("Fullscreen Desktop", &fullScreenDesktop))
-			SDL_SetWindowFullscreen(App->moduleWindow->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		if (ImGui::Checkbox("Fullscreen Desktop", &fullScreenDesktop)) {
+			(fullScreenDesktop) ? SDL_SetWindowFullscreen(App->moduleWindow->window, SDL_WINDOW_FULLSCREEN_DESKTOP) : SDL_SetWindowFullscreen(App->moduleWindow->window, 0);
+			SDL_GetWindowSize(window, &s_width, &s_height);
+			App->moduleRenderer3D->OnResize(s_width, s_height);
+		}
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change fullscreen desktop mode");
 

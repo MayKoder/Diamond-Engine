@@ -32,19 +32,19 @@ void C_Transform::OnEditor()
 	{
 		ImGui::Text("Local Position: "); 
 		ImGui::SameLine(); 
-		if (ImGui::DragFloat3("##lPos", &position[0]))
+		if (ImGui::DragFloat3("##lPos", &position[0], 0.1f))
 			updateTransform = true;
 
 
 		ImGui::Text("Rotation: ");
 		ImGui::SameLine();
-		if (ImGui::DragFloat3("##lRot", &eulerRotation[0]))
+		if (ImGui::DragFloat3("##lRot", &eulerRotation[0], 0.1f))
 			updateTransform = true;
 
 
 		ImGui::Text("Scale: ");
 		ImGui::SameLine();
-		if (ImGui::DragFloat3("##lScale", &localScale[0]))
+		if (ImGui::DragFloat3("##lScale", &localScale[0], 0.1f))
 			updateTransform = true;
 
 
@@ -70,11 +70,8 @@ void C_Transform::OnEditor()
 		ImGui::Text("%f, %f, %f", globalTransform.GetScale().x, globalTransform.GetScale().y, globalTransform.GetScale().z);
 
 
-
 		if (updateTransform) 
-		{
 			UpdateTransform();
-		}
 
 
 	}
@@ -133,6 +130,8 @@ void C_Transform::SetTransformMatrix(float3 _position, Quat _rotation, float3 _l
 	position = _position;
 	rotation = _rotation;
 	localScale = _localScale;
+
+	eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
 
 	localTransform = float4x4::FromTRS(position, rotation, localScale);
 

@@ -11,6 +11,7 @@
 
 #include "FileSystem.h"
 #include "M_Scene.h"
+#include "Texture.h"
 
 #include"MathGeoLib/include/Math/Quat.h"
 
@@ -100,7 +101,7 @@ void MeshLoader::DisableDebugMode()
 //		LOG(LogType::L_ERROR, "Error loading scene % s", full_path);
 //}
 
-void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int size, std::vector<Mesh*>& _meshes, GameObject* gmRoot)
+void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int size, GameObject* gmRoot)
 {
 	const aiScene* scene = aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
 
@@ -121,7 +122,8 @@ void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int si
 
 		//BUG: This is a problem, meshes are shared, but should also be deleted, we are fucked
 		std::vector<Mesh*> sceneMeshes;
-		std::vector<GLuint> sceneTextures;
+		//std::vector<GLuint> sceneTextures;
+		std::vector<Texture*> testTextures;
 
 		//This should not be here
 		if (scene->HasMaterials())
@@ -148,9 +150,13 @@ void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int si
 
 					if (buffer != nullptr) 
 					{
-						int w, h;
+						int w = 0;
+						int h = 0;
 
-						sceneTextures.push_back(CustomLoadImage(buffer, size, &w, &h));
+						GLuint id = CustomLoadImage(buffer, size, &w, &h);
+						Texture* Test = new Texture(id, w, h);
+						testTextures.push_back(Test);
+
 						RELEASE_ARRAY(buffer)
 					}
 
@@ -162,13 +168,13 @@ void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int si
 		//Load all meshes into mesh vector
 		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 		{
-			sceneMeshes.push_back(LoadMesh(scene->mMeshes[i], sceneTextures));
+			sceneMeshes.push_back(LoadMesh(scene->mMeshes[i]));
 		}
 		
 
 
 		LOG(LogType::L_NORMAL, "-- Loading FBX as GameObject --");
-		NodeToGameObject(scene->mMeshes, sceneTextures, sceneMeshes, scene->mRootNode, gmRoot, fileName.c_str());
+		NodeToGameObject(scene->mMeshes, testTextures, sceneMeshes, scene->mRootNode, gmRoot, fileName.c_str());
 
 
 		//Only for memory cleanup, needs an update ASAP
@@ -176,11 +182,13 @@ void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int si
 		{
 			EngineExternal->moduleRenderer3D->globalMeshes.push_back(sceneMeshes[i]);
 		}
-		for (unsigned int i = 0; i < sceneTextures.size(); i++)
+		for (unsigned int i = 0; i < testTextures.size(); i++)
 		{
-			EngineExternal->moduleRenderer3D->globalTextures.push_back(sceneTextures[i]);
+			EngineExternal->moduleRenderer3D->globalTextures.push_back(testTextures[i]);
 		}
 
+		sceneMeshes.clear();
+		testTextures.clear();
 
 		aiReleaseImport(scene);
 	}
@@ -189,7 +197,7 @@ void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int si
 }
 
 //Following unity tree structure, comments represent blender tree structure
-void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<GLuint>& sceneTextures, std::vector<Mesh*>& _sceneMeshes, aiNode* node, GameObject* gmParent, const char* holderName)
+void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& sceneTextures, std::vector<Mesh*>& _sceneMeshes, aiNode* node, GameObject* gmParent, const char* holderName)
 {
 	//GameObject* rootGO = new GameObject(node->mName.C_Str());
 	//rootGO->parent = gmParent;
@@ -204,13 +212,15 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<GLuint>& scene
 
 		//Load mesh to GameObject
 		C_MeshRenderer* gmMeshRenderer = dynamic_cast<C_MeshRenderer*>(gmNode->AddComponent(Component::Type::MeshRenderer));
-		C_Material* material = dynamic_cast<C_Material*>(gmNode->AddComponent(Component::Type::Material));
 
 		gmMeshRenderer->_mesh = meshPointer;
 
 		aiMesh* importedMesh = meshArray[node->mMeshes[i]];
-		if (importedMesh->mMaterialIndex < sceneTextures.size())
-			material->textureID = sceneTextures[importedMesh->mMaterialIndex];
+		if (importedMesh->mMaterialIndex < sceneTextures.size()) 
+		{
+			C_Material* material = dynamic_cast<C_Material*>(gmNode->AddComponent(Component::Type::Material));
+			material->matTexture = sceneTextures[importedMesh->mMaterialIndex];
+		}
 
 		PopulateTransform(gmNode, node);
 
@@ -225,25 +235,29 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<GLuint>& scene
 	{
 		GameObject* rootGO = gmParent;
 
-		if (node->mNumChildren == 1 && node->mParent == nullptr)
-			LOG(LogType::L_NORMAL, "Aqui");
+		if (node->mNumChildren == 1 && node->mParent == nullptr && node->mChildren[0]->mNumChildren == 0) 
+		{
+			LOG(LogType::L_WARNING, "This is a 1 child gameObject, you could ignore the root node parent creation");
+			node->mChildren[0]->mName = holderName;
+		}
+		else
+		{
+			rootGO = new GameObject(holderName);
+			rootGO->parent = gmParent;
+			PopulateTransform(rootGO, node);
+			gmParent->children.push_back(rootGO);
+		}
 
-		rootGO = new GameObject(node->mName.C_Str());
-		rootGO->parent = gmParent;
 		
-		PopulateTransform(rootGO, node);
-
-		gmParent->children.push_back(rootGO);
-
 		for (unsigned int i = 0; i < node->mNumChildren; i++)
 		{
-			NodeToGameObject(meshArray, sceneTextures, _sceneMeshes, node->mChildren[i], rootGO, node->mName.C_Str());
+			NodeToGameObject(meshArray, sceneTextures, _sceneMeshes, node->mChildren[i], rootGO, node->mChildren[i]->mName.C_Str());
 		}
 	}
 
 }
 
-Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh, std::vector<GLuint>& materialsVector)
+Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 {
 
 	LOG(LogType::L_NORMAL, "%s", importedMesh->mName.C_Str());
@@ -350,7 +364,19 @@ GLuint MeshLoader::CustomLoadImage(char* buffer, int size, int* w, int* h)
 	if(h)
 		*h = ilGetInteger(IL_IMAGE_HEIGHT);
 
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	GLuint glID = ilutGLBindTexImage();
+
+	glBindTexture(GL_TEXTURE_2D, glID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+
+
 
 	ilDeleteImages(1, &imageID);
 	glBindTexture(GL_TEXTURE_2D, 0);

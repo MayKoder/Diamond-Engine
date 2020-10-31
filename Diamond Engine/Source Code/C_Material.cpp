@@ -4,8 +4,7 @@
 #include"ModuleRenderer3D.h"
 #include"Texture.h"
 
-C_Material::C_Material(GameObject* _gm) : Component(_gm), textureID(-1), tWidth(0), tHeight(0),
-viewWithCheckers(false), matTexture(nullptr)
+C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false), matTexture(nullptr)
 {
 
 }
@@ -19,11 +18,11 @@ void C_Material::OnEditor()
 	if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 
-		if (textureID != -1) {
+		if (matTexture->textureID != -1) {
 
-			ImGui::Text("Texture Width: %i", tWidth);
-			ImGui::Text("Texture Height: %i", tHeight);
-			ImGui::Image((ImTextureID)textureID, ImVec2(128, 128));
+			ImGui::Text("Texture Width: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", matTexture->tWidth);
+			ImGui::Text("Texture Height: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", matTexture->tHeight);
+			ImGui::Image((ImTextureID)matTexture->textureID, ImVec2(128, 128));
 
 			ImGui::Checkbox("View with checkers", &viewWithCheckers);
 
@@ -36,5 +35,6 @@ void C_Material::OnEditor()
 
 int C_Material::GetTextureID()
 {
-	return (viewWithCheckers == false) ? textureID : EngineExternal->moduleRenderer3D->checkersTexture;
+	return (viewWithCheckers == false) ? matTexture->textureID : EngineExternal->moduleRenderer3D->checkersTexture;
+	//return matTexture->textureID;
 }

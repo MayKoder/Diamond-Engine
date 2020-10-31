@@ -6,7 +6,7 @@
 #include "C_Material.h"
 
 GameObject::GameObject(const char* _name) : parent(nullptr), name(_name), showChildren(false),
-active(true), isStatic(false)
+active(true), isStatic(false), toDelete(false)
 {
 	transform = dynamic_cast<C_Transform*>(AddComponent(Component::Type::Transform));
 }
@@ -101,4 +101,14 @@ void GameObject::Disable()
 	//{
 	//	children[i]->Disable();
 	//}
+}
+
+bool GameObject::IsRoot()
+{
+	return (parent == nullptr) ? true : false;
+}
+
+void GameObject::Destroy()
+{
+	toDelete = true;
 }
