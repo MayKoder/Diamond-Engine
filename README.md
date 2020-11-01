@@ -39,7 +39,6 @@ Simple guide to execute and use the engine:
 
 <br></br>
 # Features
-- Additional comments for the teacher to understand some part of the engine
 
  - Take cool screenshots with the "Take Screenshot" button located on the top-middle bar. (Screenshots will ignore editor layer).
  - Optimized scene window rendering, displaying only the needed section of the frame buffer, reducing wasted pixels and improving performance.
