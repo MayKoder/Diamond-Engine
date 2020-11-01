@@ -12,10 +12,12 @@ Diamond Engine is a fast C++ 3D game engine, developed with SDL2 and OpenGL. The
 
 Diamond Engine is currently under indie development by one person, you can check the repository [HERE](https://github.com/MayKoder/Diamond-Engine)
 
+<br></br>
 # Creators
 
 This engine was made by Miquel Suau Gonzàlez: [GitHub: @MayKoder](https://github.com/MayKoder)
 
+<br></br>
 # Execution and controls
 
 Simple guide to execute and use the engine:
@@ -35,6 +37,7 @@ Simple guide to execute and use the engine:
 - Hold SHIFT to duplicate the movement speed.
 - Use the mouse wheel click to PAN the camera (Horizontal and Vertical movement)
 
+<br></br>
 # Features
 - Additional comments for the teacher to understand some part of the engine
 
@@ -53,7 +56,8 @@ Simple guide to execute and use the engine:
  - Console logs can stack up if the value is the same and are equal as the last log.
  - Console logs and console can also be cleaned.
  
-# Short term TODO list
+<br></br>
+# Short term TODO list:
 
  - Reduce the use of pointers in small size objects, like Texture class and others.
  - Add shader pipeline.
