@@ -170,29 +170,8 @@ bool ModuleRenderer3D::Init()
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 
-	//VERTEX MODE
-	//sizeof(float) * num_of_vertices * 3 = number of float inside the array
-
-	//glGenBuffers(1, (GLuint*)&(my_id));
-	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	///*glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_of_vertices * 3, cubeVertices, GL_STATIC_DRAW);*/
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(cubeSlowMesh), cubeSlowMesh, GL_STATIC_DRAW);
-	
-	//VERTEX X INDEX MODE
-	//glGenBuffers(1, (GLuint*)&(my_vertices));
-	//glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(MA_Pyramid_Vertices), MA_Pyramid_Vertices, GL_STATIC_DRAW);
-
-
-	//glGenBuffers(1, (GLuint*)&(my_index));
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_index);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(MA_Pyramid_Indices), MA_Pyramid_Indices, GL_STATIC_DRAW);
-
 	//Generate scene buffers
 	ReGenerateFrameBuffer(App->moduleWindow->s_width, App->moduleWindow->s_height);
-
-	//LOG(LogType::L_WARNING, "ModuleRender3D.cpp. line 185: Hardcoding a FBX load, remove ASAP");
-	//MeshLoader::ImportFBX("Assets/BakerHouse/BakerHouse.fbx", globalMeshes, App->moduleScene->root);
 
 
 	// Projection matrix for
@@ -233,46 +212,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//p.Scale();
 	p.axis = true;
 	p.Render();
-
-	////<------------ VERTEX MODE ----------------->
-	//glPushMatrix();
-	//glTranslatef(0.f, 0.0f, 1.5f);
-	//glEnableClientState(GL_VERTEX_ARRAY);
-	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	//glVertexPointer(3, GL_FLOAT, 0, NULL);
-
-	////Bind other buffers
-	//glDrawArrays(GL_TRIANGLES, 0, sizeof(cubeSlowMesh) / sizeof(float) / 3);
-
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//glDisableClientState(GL_VERTEX_ARRAY);
-	//glPopMatrix();
-	////<------------ VERTEX MODE END ----------------->
-
-	//<------------ VERTEX AND INDEX MODE ----------------->
-	//glPushMatrix();
-	//glTranslatef(0.f, 0.0f, 3.f);
-
-	//glEnableClientState(GL_VERTEX_ARRAY);
-	//glBindBuffer(GL_ARRAY_BUFFER, my_vertices);
-	//glVertexPointer(3, GL_FLOAT, 0, NULL);
-
-	////TODO: Make a buffer for the colors and try this
-	////glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
-	////glVertexAttribPointer((GLint)1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_index);
-
-	////Bind other buffers
-	//glDrawElements(GL_TRIANGLES, (sizeof(MA_Pyramid_Indices) / sizeof(int)), GL_UNSIGNED_INT, NULL);
-
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//glDisableClientState(GL_VERTEX_ARRAY);
-	//glPopMatrix();
-	//<------------ VERTEX AND INDEX MODE END ----------------->
-
-
 
 	//App->level->Draw();
 	//TODO: This should not be here
@@ -385,34 +324,8 @@ void ModuleRenderer3D::OnGUI()
 		ImGui::Text("GPU: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), (const char*)glGetString(GL_VENDOR));
 		ImGui::Text("Brand: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), (const char*)glGetString(GL_RENDERER));
 
-		//#define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
-		//#define GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX 0x9049
-		//GLint total_mem_kb = 0;
-		//glGetIntegerv(GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX, &total_mem_kb);
-		//total_mem_kb /= 1000;
-		//GLint cur_avail_mem_kb = 0;
-		//glGetIntegerv(GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX, &cur_avail_mem_kb);
-		//cur_avail_mem_kb /= 1000;
-
 		// Memory --------------------
 		sMStats stats = m_getMemoryStatistics();
-		/*static int speed = 0;
-		static std::vector<float> memory(100);
-		if (++speed > 20)
-		{
-			speed = 0;
-			if (memory.size() == 100)
-			{
-				for (uint i = 0; i < 100 - 1; ++i)
-					memory[i] = memory[i + 1];
-
-				memory[100 - 1] = (float)stats.totalReportedMemory;
-			}
-			else
-				memory.push_back((float)stats.totalReportedMemory);
-		}
-
-		ImGui::PlotHistogram("##memory", &memory[0], memory.size(), 0, "Memory Consumption", 0.0f, (float)stats.peakReportedMemory * 1.2f, ImVec2(310, 100));*/
 
 		ImGui::Text("Total Reported Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%u bytes", stats.totalReportedMemory);
 		ImGui::Text("Total Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%u bytes", stats.totalActualMemory);
@@ -446,6 +359,7 @@ void ModuleRenderer3D::OnGUI()
 	}
 }
 
+/*Regenerate framebuffers on size change*/
 void ModuleRenderer3D::ReGenerateFrameBuffer(int w, int h)
 {
 	if(framebuffer > 0)
@@ -483,6 +397,7 @@ void ModuleRenderer3D::ReGenerateFrameBuffer(int w, int h)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
+/*Take a screenshot*/
 void ModuleRenderer3D::TakeScreenshot()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
@@ -497,6 +412,7 @@ void ModuleRenderer3D::TakeScreenshot()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
+/*Get SDL caps*/
 void ModuleRenderer3D::GetCAPS(std::string& caps)
 {
 	caps += (SDL_HasRDTSC()) ? "RDTSC," : "";

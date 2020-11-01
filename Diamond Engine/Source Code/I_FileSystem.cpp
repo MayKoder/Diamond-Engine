@@ -20,6 +20,7 @@
 
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
+/*Get file name from any path*/
 std::string StringLogic::FileNameFromPath(const char* _path)
 {
 	std::string fileName(_path);
@@ -30,6 +31,7 @@ std::string StringLogic::FileNameFromPath(const char* _path)
 	return fileName;
 }
 
+/*Convert global path to local path*/
 std::string StringLogic::GlobalToLocalPath(const char* _globalPath)
 {
 	std::string localPath = FileSystem::NormalizePath(_globalPath);
@@ -47,6 +49,7 @@ std::string StringLogic::GlobalToLocalPath(const char* _globalPath)
 	return localPath;
 }
 
+/*Get the type of importer using any path with a file extension*/
 ImportType FileSystem::GetTypeFromPath(const char* path)
 {
 	std::string ext(path);
@@ -65,6 +68,7 @@ ImportType FileSystem::GetTypeFromPath(const char* path)
 	return ImportType::NOTYPE;
 }
 
+/*Init PhysFS*/
 void FileSystem::FSInit()
 {
 	// needs to be created before Init so other modules can use it
@@ -87,6 +91,7 @@ void FileSystem::FSDeInit()
 	PHYSFS_deinit();
 }
 
+/*Load any file with a global path*/
 void FileSystem::LoadFile(const char* globalPath)
 {
 	std::string normalizedPath = NormalizePath(globalPath);
@@ -322,7 +327,7 @@ bool FileSystem::Remove(const char* file)
 	return ret;
 }
 
-// ------------ NEW STUFF ---------------- //
+/*Duplicate a file to a local PhysFS valid path*/
 uint FileSystem::Copy(const char* file, const char* dir, std::string& outputFile)
 {
 	uint size = 0;

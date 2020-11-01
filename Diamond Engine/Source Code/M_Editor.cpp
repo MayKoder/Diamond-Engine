@@ -124,25 +124,14 @@ void M_Editor::Draw()
 
 	CreateDockSpace();
 
-	//if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) 
-	//{
-	//	SaveStyle("Dark");
-	//	//LoadStyle("Dark");
-	//}
 
-
-	//ImGui::PushStyleVar(ImGuiStyleVar_::ImGuiStyleVar_WindowMinSize, ImVec2(250, 250));
 	for (unsigned int i = 0; i < windows.size(); i++)
 	{
 		if (windows[i]->active) 
 		{
-			//ASK: Docked windows need a min size ASAP
-			//ImGui::SetNextWindowDockID(dockspace_id, ImGuiCond_FirstUseEver);
-			//ImGui::SetNextWindowSizeConstraints(ImVec2(300, 300), ImVec2(800, 800));
 			windows[i]->Draw();
 		}
 	}
-	//ImGui::PopStyleVar();
 
 	if (displayWindow)
 	{
@@ -187,14 +176,9 @@ bool M_Editor::CleanUp()
 	return true;
 }
 
-//Will draw the menu bar if the function call is placed 
-//between NewFrame() and Render()
+//Draw menu bar
 void M_Editor::DrawMenuBar()
 {
-	//UNITY: File edit assets gameobject component window help
-	//Unreal Engine: File edit window help
-	//Cry Engine: File edit modify display configspec group Prefabs Terrain Sound Game AI Clouds Tools View Help 
-	//FrostByte: File edit scene Terrain Window
 	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.f, 0.f, 0.f, 1.f));
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -284,9 +268,6 @@ void M_Editor::DrawMenuBar()
 			ImGui::EndMenu();
 		}
 
-		//Sets the play submenu in a dynamic dock position
-		//ImGui::SetNextWindowPos(ImVec2(0.0f, ImGui::GetWindowSize().y));
-
 		ImGui::EndMainMenuBar();
 	}
 	ImGui::PopStyleColor(1);
@@ -307,9 +288,7 @@ void M_Editor::DrawTopBar()
 
 	g.NextWindowData.MenuBarOffsetMinVal = ImVec2(0.f, 0.f);
 
-	//TODO: This breaks JSON style loaging because it's forcing this color to be saved 
-	//as the default background color :/
-	//ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.152f, 0.152f, 0.152f, 1.f));
+
 	if (ImGui::Begin("ButtonsNavBar", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoDocking)) 
 	{
 
@@ -419,6 +398,7 @@ Window* M_Editor::GetEditorWindow(EditorWindow type)
 	return (vecPosition < windows.size()) ? windows[vecPosition] : nullptr;
 }
 
+//Save a style to JSON
 void M_Editor::SaveStyle(const char* styleName)
 {
 	//Maybe learning json alone wasn't a good idea
@@ -456,6 +436,7 @@ void M_Editor::SaveStyle(const char* styleName)
 	json_value_free(file);
 }
 
+//Change current style
 void M_Editor::ChangeStyleTo(const char* styleName)
 {
 	JSON_Value* file = json_parse_file(STYLES_PATH);
@@ -484,6 +465,7 @@ void M_Editor::ChangeStyleTo(const char* styleName)
 	LOG(LogType::L_NORMAL, "Style %s loaded", styleName);
 }
 
+/*Delete a style*/
 void M_Editor::DeleteStyle(const char* styleName)
 {
 	//Maybe learning json alone wasn't a good idea
@@ -504,6 +486,7 @@ void M_Editor::DeleteStyle(const char* styleName)
 	json_value_free(file);
 }
 
+/*Update saved styles*/
 void M_Editor::UpdateLoadedStylesVector(std::vector<std::string>* _styles)
 {
 	LOG(LogType::L_NORMAL, "Loading saved styles at default file");

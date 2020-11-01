@@ -44,21 +44,6 @@ void W_Configuration::Draw()
         ImGuiStyle& style = ImGui::GetStyle();
         //static ImGuiStyle ref_saved_style;
 
-        //static bool init = true;
-        //if (init && ref == NULL)
-        //    ref_saved_style = style;
-        //init = false;
-        //if (ref == NULL)
-        //    ref = &ref_saved_style;
-
-        //// Save/Revert button
-        //if (ImGui::Button("Save Ref"))
-        //    *ref = ref_saved_style = style;
-        //ImGui::SameLine();
-        //if (ImGui::Button("Revert Ref"))
-        //    style = *ref;
-        //ImGui::SameLine();
-
 	    if (ImGui::CollapsingHeader("Style Settings"))
 	    {
             static ImGuiTextFilter filter;

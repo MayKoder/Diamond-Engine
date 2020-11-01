@@ -244,6 +244,8 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 
 		LOG(LogType::L_NORMAL, "New mesh with %d texture coords", _mesh->texCoords_count);
 	}
+
+	//TODO: Load vertex colors
 	//if (importedMesh->HasVertexColors(0)) 
 	//{
 

@@ -41,11 +41,6 @@ bool M_FileSystem::Start()
 	return true;
 }
 
-update_status M_FileSystem::Update(float dt)
-{
-	return update_status::UPDATE_CONTINUE;
-}
-
 bool M_FileSystem::CleanUp()
 {
 

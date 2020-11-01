@@ -25,7 +25,7 @@ void W_Scene::InitSceneView()
 void W_Scene::Draw()
 {
 
-	//ASK: Is rendering the whole image as 16:9 and hiding the overflow the worst idea ever?
+	//We are only rendering the part of the screen seen by scene window size
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*/, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse)) 
@@ -35,21 +35,16 @@ void W_Scene::Draw()
 			App->moduleCamera->ProcessSceneKeyboard();
 		}
 
-
 		ImVec2 texOriginalSize = ImVec2(App->moduleWindow->s_width, App->moduleWindow->s_height);
 		ImVec2 e = ImGui::GetWindowSize();
 
 		ImVec2 startPoint = ImVec2((texOriginalSize.x / 2) - (e.x / 2), (texOriginalSize.y / 2) + (e.y / 2));
 		ImVec2 endPoint = ImVec2((texOriginalSize.x / 2) + (e.x / 2), (texOriginalSize.y / 2) - (e.y / 2));
 
-
-		// Normalized coordinates of pixel (10,10) in a 256x256 texture.
 		ImVec2 uv0 = ImVec2(startPoint.x / texOriginalSize.x, startPoint.y / texOriginalSize.y);
-
-		// Normalized coordinates of pixel (110,210) in a 256x256 texture.
 		ImVec2 uv1 = ImVec2(endPoint.x / texOriginalSize.x, endPoint.y / texOriginalSize.y);
 
-		// Display the 100x200 section starting at (10,10)
+		//Display the scene
 		ImGui::Image((ImTextureID)App->moduleRenderer3D->texColorBuffer, e, uv0, uv1);
 	}
 	ImGui::End();

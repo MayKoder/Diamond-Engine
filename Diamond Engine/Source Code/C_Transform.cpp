@@ -89,7 +89,6 @@ void C_Transform::UpdateTransform()
 	rotation = Quat::FromEulerXYZ(eulerRotation.x * DEGTORAD, eulerRotation.y * DEGTORAD, eulerRotation.z * DEGTORAD);
 	localTransform = float4x4::FromTRS(position, rotation, localScale);
 
-	//Not working
 	if (!transformsToUpdate.empty()) 
 	{
 		for (size_t i = 0; i < transformsToUpdate.size(); i++)

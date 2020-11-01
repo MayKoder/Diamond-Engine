@@ -361,6 +361,4 @@ void Mesh::GenerateSphere(float radius, float sectorCount, float stackCount)
 	memcpy(normals, &_normals[0], sizeof(float) * normals_count * 3);
 	memcpy(texCoords, &_texCoords[0], sizeof(float) * texCoords_count * 2);
 	memcpy(indices, &_indices[0], sizeof(uint) * indices_count);
-
-
 }

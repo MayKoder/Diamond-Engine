@@ -33,7 +33,7 @@ bool M_Scene::Start()
 
 update_status M_Scene::PreUpdate(float dt)
 {
-
+	/*Destroy gameobjects inside the destroy queue*/
 	if (destroyList.size() > 0) {
 		for (size_t i = 0; i < destroyList.size(); ++i)
 		{
