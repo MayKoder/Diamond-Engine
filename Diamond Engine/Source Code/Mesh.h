@@ -1,12 +1,10 @@
-//Rename as C_Mesh?
 #pragma once
 
-//WARNING: Should i remove the opengl include in .h?
 #include "glmath.h"
-#include "Globals.h"
 #include <vector>
 
 typedef unsigned int GLuint;
+typedef unsigned int uint;
 
 struct Mesh
 {
@@ -14,11 +12,6 @@ struct Mesh
 public:
 	Mesh();
 	~Mesh();
-
-	void SetAsCube();
-	void SetAsPyramid();
-	void SetAsSphere();
-	void SetAsCylinder();
 
 	void GenBuffers();
 

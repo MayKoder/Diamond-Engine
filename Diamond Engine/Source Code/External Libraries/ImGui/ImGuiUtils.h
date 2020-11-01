@@ -10,7 +10,7 @@
 
 #include<string>
 
-//WARNING: Add this to use URL based ImGui elements
+
 namespace ImGui
 {
 

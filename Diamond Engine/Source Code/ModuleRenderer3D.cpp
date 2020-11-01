@@ -317,10 +317,6 @@ bool ModuleRenderer3D::CleanUp()
 	glDeleteTextures(1, &texColorBuffer);
 	glDeleteRenderbuffers(1, &rbo);
 
-	//BUG: This is a bug, texture buffers are shared, should only delete each
-	//Buffer once, keep a vector of texture buffers
-	//glDeleteTextures(1, &testMeshes[0]->textureID);
-
 	for (unsigned int k = 0; k < globalTextures.size(); ++k)
 	{
 		glDeleteTextures(1, &globalTextures[k]->textureID);
@@ -369,6 +365,8 @@ void ModuleRenderer3D::OnGUI()
 		SDL_version ver;
 		SDL_GetVersion(&ver);
 		ImGui::Text("SDL Version: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d.%d.%d", ver.major, ver.minor, ver.patch);
+		ImGui::Text("OpenGL Version: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", glGetString(GL_VERSION));
+		ImGui::TextWrapped("All external library versions can be found in the 'About' window with links to their pages.");
 
 		ImGui::GreySeparator();
 		ImGui::Text("CPUs: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d (Cache: %dkb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
@@ -420,18 +418,12 @@ void ModuleRenderer3D::OnGUI()
 		ImGui::Text("Total Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%u bytes", stats.totalActualMemory);
 		ImGui::Text("Peak Reported Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%u bytes", stats.peakReportedMemory);
 		ImGui::Text("Peak Actual Mem: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%u bytes", stats.peakActualMemory);
-		//ImGui::Text("Accumulated Reported Mem: %u", stats.accumulatedReportedMemory);
-		//ImGui::Text("Accumulated Actual Mem: %u", stats.accumulatedActualMemory);
-		//ImGui::Text("Accumulated Alloc Unit Count: %u", stats.accumulatedAllocUnitCount);
-		//ImGui::Text("Total Alloc Unit Count: %u", stats.totalAllocUnitCount);
-		//ImGui::Text("Peak Alloc Unit Count: %u", stats.peakAllocUnitCount);
 
-		if(ImGui::Checkbox("Enable V-Sync", &vsync))
-		{
+		ImGui::Checkbox("Enable V-Sync", &vsync);
 			////Use Vsync
 			//if (SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
 			//	LOG(LogType::L_WARNING, "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
-		}
+
 		ImGui::SameLine();
 		if (ImGui::Checkbox("Wireframe Mode", &wireframe))
 			(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -499,7 +491,7 @@ void ModuleRenderer3D::TakeScreenshot()
 	ilBindImage(imageID);
 	ilutGLScreen();
 	ilEnable(IL_FILE_OVERWRITE);
-	ilSaveImage("Screenshot.png");
+	ilSaveImage("Assets/Screenshots/Screenshot.png");
 	ilDeleteImage(imageID);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);

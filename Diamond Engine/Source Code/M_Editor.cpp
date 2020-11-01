@@ -14,7 +14,7 @@
 
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
-#include "FileSystem.h"
+#include "I_FileSystem.h"
 
 //Window types
 #include "W_Configuration.h"
@@ -97,7 +97,7 @@ bool M_Editor::Init()
 	ImGui_ImplOpenGL3_Init();
 
 	io.MouseDrawCursor = false;
-	io.IniFilename = "imgui.ini";
+	io.IniFilename = "Assets/Styles/imgui.ini";
 	//io.IniFilename = NULL;
 
 	return true;
@@ -205,7 +205,7 @@ void M_Editor::DrawMenuBar()
 			{
 				//Do something
 			}
-			if (ImGui::MenuItem("Quit"))
+			if (ImGui::MenuItem("Quit", "Esc"))
 			{
 				App->ExitApplication();
 			}
@@ -225,7 +225,7 @@ void M_Editor::DrawMenuBar()
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
 
 			//TODO: This is temporal, meshes should not laod every time and 
-			//should be stored only once, then only copy id's.
+			//should be stored only once, then only copy mesh pointers.
 			if (ImGui::MenuItem("Cube", nullptr))
 				FileSystem::LoadFile("Assets/Primitives/Cube.fbx");
 			if (ImGui::MenuItem("Cylinder", nullptr))
@@ -258,7 +258,6 @@ void M_Editor::DrawMenuBar()
 		{
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
 			
-			//TODO: Put correct links on MenuItems
 			if (ImGui::MenuItem("ImGui Demo", nullptr, displayWindow))
 			{
 				displayWindow = !displayWindow;
@@ -343,7 +342,7 @@ void M_Editor::DrawTopBar()
 
 			ImGui::Separator();
 
-			//ERROR, WARNING, TODO: Temporal fix, this is bad, fix it
+			//WARNING, TODO: Temporal fix, this is bad, fix it
 			ImGui::PushItemWidth(10 * MAX_STY_INPUT);
 			ImGui::InputText("##sName: ", styleInput, MAX_STY_INPUT);
 			ImGui::PopItemWidth();

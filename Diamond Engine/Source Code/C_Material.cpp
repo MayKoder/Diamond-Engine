@@ -18,11 +18,17 @@ void C_Material::OnEditor()
 	if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 
+		ImGui::Text("Active: "); ImGui::SameLine(); ImGui::Checkbox("##MatActive", &active);
+		ImGui::Separator();
+
 		if (matTexture->textureID != -1) {
 
+
+			ImGui::Text("Name: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", matTexture->name.c_str());
 			ImGui::Text("Texture Width: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", matTexture->tWidth);
 			ImGui::Text("Texture Height: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", matTexture->tHeight);
 			ImGui::Image((ImTextureID)matTexture->textureID, ImVec2(128, 128));
+			ImGui::Text("Texture Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", matTexture->path.c_str());
 
 			ImGui::Checkbox("View with checkers", &viewWithCheckers);
 

@@ -20,7 +20,7 @@ enum main_states
 	MAIN_EXIT
 };
 
-//ASK IMPORTANT: Should the .sln file be placed outside the engine folder? 
+
 //ASK IMPORTANT: Is vector iteration faster with iterators or via index?
 int main(int argc, char** argv)
 {

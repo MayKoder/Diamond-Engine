@@ -1,7 +1,6 @@
 #pragma once
 #include "Globals.h"
 
-//TODO: Move the GetEditorWindow() to Application.cpp?
 #include "Application.h"
 #include "M_Editor.h"
 

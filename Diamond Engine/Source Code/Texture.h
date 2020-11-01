@@ -1,21 +1,22 @@
 #pragma once
 
+#include<string>
 typedef unsigned int GLuint;
+
 
 class Texture
 {
 public:
-	Texture(GLuint _ID, int _w, int _h, const char* _name = nullptr, const char* _path = nullptr);
+	Texture(GLuint _ID, int _w, int _h, std::string _name, std::string _path);
 	~Texture();
 
 public:
 
-	const char* path;
-	const char* name;
+	std::string name;
+	std::string path;
 
 	int tWidth;
 	int tHeight;
 
 	GLuint textureID;
-
 };

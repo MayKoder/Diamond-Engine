@@ -38,11 +38,6 @@ namespace FileSystem
 	bool Exists(const char* file) /*const*/;
 	bool CreateDir(const char* dir);
 	bool IsDirectory(const char* file) /*const*/;
-	//const char* GetWriteDir() /*const*/;
-	//void DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) /*const*/;
-	//void GetAllFilesWithExtension(const char* directory, const char* extension, std::vector<std::string>& file_list) /*const*/;
-	//void GetRealDir(const char* path, std::string& output) /*const*/;
-	//std::string GetPathRelativeToAssets(const char* originalPath) /*const*/;
 
 	std::string NormalizePath(const char* path) /*const*/;
 	void SplitFilePath(const char* full_path, std::string* path, std::string* file = nullptr, std::string* extension = nullptr) /*const*/;
@@ -56,7 +51,4 @@ namespace FileSystem
 	uint Copy(const char* file, const char* dir, std::string& outputFile);
 
 	bool Remove(const char* file);
-
-	//uint64 GetLastModTime(const char* filename);
-	//std::string GetUniqueName(const char* path, const char* name) /*const*/;
 }

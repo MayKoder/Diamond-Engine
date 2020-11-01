@@ -420,14 +420,15 @@
     <ClInclude Include="Source Code\MeshLoader.h">
       <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\FileSystem.h">
-      <Filter>Sources\Tools\Importers</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\M_FileSystem.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\Texture.h">
       <Filter>Sources\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Source Code\I_FileSystem.h">
+      <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -644,14 +645,14 @@
     <ClCompile Include="Source Code\MeshLoader.cpp">
       <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\FileSystem.cpp">
-      <Filter>Sources\Tools\Importers</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\M_FileSystem.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\Texture.cpp">
       <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\I_FileSystem.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -676,5 +677,11 @@
     <None Include="Source Code\External Libraries\DevIL\include\config.h.win">
       <Filter>Externals\DevIL</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Diamond Engine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="DiamondIcon.ico" />
   </ItemGroup>
 </Project>

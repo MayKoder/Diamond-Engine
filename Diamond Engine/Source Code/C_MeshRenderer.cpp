@@ -38,7 +38,7 @@ void C_MeshRenderer::RenderMesh()
 	C_Material* material = dynamic_cast<C_Material*>(gameObject->GetComponent(Component::Type::Material));
 	GLuint id = -1;
 
-	if (material != nullptr)
+	if (material != nullptr && material->IsActive())
 		id = material->GetTextureID();
 
 	_mesh->RenderMesh(id);
@@ -54,6 +54,8 @@ void C_MeshRenderer::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Mesh Renderer", ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		ImGui::Text("Active: "); ImGui::SameLine(); ImGui::Checkbox("##MeshActive", &active);
+		ImGui::Separator();
 		//ImGui::Image((ImTextureID)_mesh->textureID, ImVec2(128, 128));
 		ImGui::Text("Vertices: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->vertices_count);
 		ImGui::Text("Normals: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->normals_count);
@@ -62,6 +64,7 @@ void C_MeshRenderer::OnEditor()
 
 
 		ImGui::Checkbox("Vertex Normals", &vertexNormals);
+		ImGui::SameLine();
 		ImGui::Checkbox("Face Normals", &faceNormals);
 
 	}

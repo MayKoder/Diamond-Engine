@@ -2,7 +2,7 @@
 #include "Globals.h"
 
 #include "MeshLoader.h"
-#include "FileSystem.h"
+#include "I_FileSystem.h"
 
 #include "Application.h"
 
@@ -45,8 +45,6 @@ update_status M_FileSystem::Update(float dt)
 {
 	return update_status::UPDATE_CONTINUE;
 }
-
-
 
 bool M_FileSystem::CleanUp()
 {

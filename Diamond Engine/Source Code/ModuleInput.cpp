@@ -5,7 +5,7 @@
 
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
-#include "FileSystem.h"
+#include "I_FileSystem.h"
 #include "M_Scene.h"
 
 #define MAX_KEYS 300
@@ -150,4 +150,13 @@ bool ModuleInput::CleanUp()
 	LOG(LogType::L_NORMAL, "Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+void ModuleInput::OnGUI()
+{
+	if (ImGui::CollapsingHeader("Input", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Text("Mouse: X = %d, Y = %d, Z = %d", mouse_x, mouse_y, mouse_z);
+		ImGui::Text("Mouse motion: %d, %d", mouse_x_motion, mouse_y_motion);
+	}
 }

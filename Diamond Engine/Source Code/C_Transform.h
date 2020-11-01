@@ -29,7 +29,7 @@ public:
 
 	bool updateTransform;
 	void SetTransformMatrix(float3 _position, Quat _rotation, float3 _localScale, C_Transform* parent);
-	float* GetGlobalTransposed();
+	const float* GetGlobalTransposed() const;
 
 private: 
 	void UpdateTransform();

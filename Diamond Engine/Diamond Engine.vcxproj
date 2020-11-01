@@ -89,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Source Code\Application.h" />
     <ClInclude Include="Source Code\Color.h" />
     <ClInclude Include="Source Code\Component.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Source Code\External Libraries\mmgr\mmgr.h" />
     <ClInclude Include="Source Code\External Libraries\mmgr\nommgr.h" />
     <ClInclude Include="Source Code\External Libraries\parson\parson.h" />
+    <ClInclude Include="Source Code\I_FileSystem.h" />
     <ClInclude Include="Source Code\GameObject.h" />
     <ClInclude Include="Source Code\glmath.h" />
     <ClInclude Include="Source Code\Globals.h" />
@@ -183,7 +185,6 @@
     <ClInclude Include="Source Code\MaykMath.h" />
     <ClInclude Include="Source Code\Mesh.h" />
     <ClInclude Include="Source Code\MeshArrays.h" />
-    <ClInclude Include="Source Code\FileSystem.h" />
     <ClInclude Include="Source Code\MeshLoader.h" />
     <ClInclude Include="Source Code\MMGui.h" />
     <ClInclude Include="Source Code\Module.h" />
@@ -255,10 +256,10 @@
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Time\Clock.cpp" />
     <ClCompile Include="Source Code\External Libraries\mmgr\mmgr.cpp" />
     <ClCompile Include="Source Code\External Libraries\parson\parson.c" />
+    <ClCompile Include="Source Code\I_FileSystem.cpp" />
     <ClCompile Include="Source Code\GameObject.cpp" />
     <ClCompile Include="Source Code\glmath.cpp" />
     <ClCompile Include="Source Code\Mesh.cpp" />
-    <ClCompile Include="Source Code\FileSystem.cpp" />
     <ClCompile Include="Source Code\MeshLoader.cpp" />
     <ClCompile Include="Source Code\M_FileSystem.cpp" />
     <ClCompile Include="Source Code\M_Scene.cpp" />
@@ -291,6 +292,12 @@
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_CPP.inl" />
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl" />
     <None Include="Source Code\External Libraries\MathGeoLib\include\Math\Matrix.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Diamond Engine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="DiamondIcon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

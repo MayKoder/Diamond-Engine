@@ -4,13 +4,10 @@
 #include "EngineVersion.h"
 #include "MMGui.h"
 
-#include"DevIL/include/il.h"
 #include"PhysFS/include/physfs.h"
 #include"Assimp/include/version.h"
 
 //TODO: DevIL version is missing
-//TODO: Assimp version is missing
-#include "Assimp/include/version.h"
 
 W_About::W_About() : Window()
 {
@@ -36,8 +33,10 @@ void W_About::Draw()
 
 		ImGui::TextWrapped("Diamond Engine v%s", EngineVersion::GetVersion().c_str());
 		ImGui::NewLine();
-		ImGui::TextWrapped("The new AAA engine for indie studios (or some shit like that)");
-		ImGui::TextURL("by Miquel Suau Gonzalez (MayKoder)", "https://github.com/maykoder", 0, 0);
+
+		//TODO: Could load this from json or txt
+		ImGui::TextWrapped("Diamond Engine is a fast C++ 3D game engine, developed with SDL2 and OpenGL. The engine targets optimal memory management, fast starting and loading speeds and simple use. This will provide a fast, simple and powerful tool to prototype good looking games the fastest way possible.");
+		ImGui::TextURL("Made by Miquel Suau Gonzalez (MayKoder)", "https://github.com/maykoder", 0, 0);
 
 		ImGui::NewLine();
 		ImGui::TextWrapped("3rd Party Libraries used:");
@@ -57,11 +56,19 @@ void W_About::Draw()
 		ImGui::BulletText(""); ImGui::TextURL(printVersion.c_str(), "https://icculus.org/physfs/", 1, 0);
 
 		printVersion = "Assimp  v" + assimpVersion;
-		ImGui::BulletText(""); ImGui::TextURL(printVersion.c_str(), "https://www.assimp.org/", 1, 0);
+		ImGui::BulletText(""); ImGui::TextURL(printVersion.c_str(), "https://www.assimp.org/", 1, 0);		
+		
+		ImGui::BulletText(""); ImGui::TextURL("DevIL  v1.8.0 [No real time version available]", "http://openil.sourceforge.net/", 1, 0);
 
 		//TODO: Versions wont change, store versions in some sort of vector or array of strings
-		ImGui::BulletText("OpenGL version supported: v%s", glGetString(GL_VERSION));
-		ImGui::BulletText("Glew version: v%s", glewGetString(GLEW_VERSION));
+		printVersion = "OpenGL version supported: v";
+		printVersion += (const char*)glGetString(GL_VERSION);
+		ImGui::BulletText(""); ImGui::TextURL(printVersion.c_str(), "https://www.opengl.org/", 1, 0);
+
+		printVersion = "Glew version: v";
+		printVersion += (const char*)glewGetString(GLEW_VERSION);
+		ImGui::BulletText(""); ImGui::TextURL(printVersion.c_str(), "http://glew.sourceforge.net/", 1, 0);
+
 		ImGui::BulletText("GLSL: v%s", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 		ImGui::BulletText(""); ImGui::TextURL("Parson: v1.1.0 [No real time version available]", "https://github.com/kgabis/parson", 1, 0);

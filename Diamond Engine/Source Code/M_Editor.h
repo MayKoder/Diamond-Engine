@@ -3,7 +3,7 @@
 #include "Module.h"
 #include "Window.h"
 
-#define STYLES_PATH "styles.json"
+#define STYLES_PATH "Assets/Styles/styles.json"
 #define MAX_STY_INPUT 15
 
 typedef unsigned int ImGuiID;
@@ -62,7 +62,7 @@ private:
 	std::vector<Window*> windows;
 	std::vector<std::string> styles;
 
-	//WARNING TODO: This is bad fins a better way
+	//WARNING TODO: This is bad find a better way
 	char styleInput[MAX_STY_INPUT] = "";
 	
 	//TODO: Save current style and load it at init to keep styles between uses

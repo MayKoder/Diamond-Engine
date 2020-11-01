@@ -9,7 +9,7 @@
 
 #include "Mesh.h"
 
-#include "FileSystem.h"
+#include "I_FileSystem.h"
 #include "M_Scene.h"
 #include "Texture.h"
 
@@ -45,62 +45,6 @@ void MeshLoader::DisableDebugMode()
 	aiDetachAllLogStreams();
 }
 
-//void MeshLoader::ImportFBX(const char* full_path, std::vector<Mesh*>& _meshes, GameObject* gmRoot)
-//{
-//	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
-//
-//	std::string fileName = StringLogic::FileNameFromPath(full_path);
-//
-//	if (scene != nullptr && scene->HasMeshes())
-//	{
-//
-//		//BUG: This is a problem, meshes are shared, but should also be deleted, we are fucked
-//		std::vector<Mesh*> sceneMeshes;
-//		std::vector<GLuint*> sceneTextures;
-//
-//		//Load all meshes into mesh vector
-//		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
-//		{
-//			sceneMeshes.push_back(LoadMesh(scene->mMeshes[i]));
-//		}
-//
-//
-//		LOG(LogType::L_NORMAL, "-- Loading FBX as GameObject --");
-//		NodeToGameObject(scene->mMeshes, sceneMeshes, scene->mRootNode, gmRoot, fileName.c_str());
-//
-//
-//		//Only for memory cleanup, needs an update ASAP
-//		for (unsigned int i = 0; i < sceneMeshes.size(); i++)
-//		{
-//			EngineExternal->renderer3D->globalMeshes.push_back(sceneMeshes[i]);
-//		}
-//
-//		//This should not be here
-//		if (scene->HasMaterials())
-//		{
-//			//Needs to be moved to another place
-//			std::string generalPath(full_path);
-//			generalPath = generalPath.substr(0, generalPath.find_last_of("/\\") + 1);
-//			for (size_t k = 0; k < scene->mNumMaterials; k++)
-//			{
-//				aiMaterial* material = scene->mMaterials[k];
-//				uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
-//
-//				aiString path;
-//				material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
-//				generalPath += path.C_Str();
-//
-//				EngineExternal->renderer3D->CustomLoadImage(generalPath.c_str());
-//				path.Clear();
-//			}
-//		}
-//
-//		aiReleaseImport(scene);
-//	}
-//	else
-//		LOG(LogType::L_ERROR, "Error loading scene % s", full_path);
-//}
-
 void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int size, GameObject* gmRoot)
 {
 	const aiScene* scene = aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
@@ -120,9 +64,7 @@ void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int si
 	if (scene != nullptr && scene->HasMeshes())
 	{
 
-		//BUG: This is a problem, meshes are shared, but should also be deleted, we are fucked
 		std::vector<Mesh*> sceneMeshes;
-		//std::vector<GLuint> sceneTextures;
 		std::vector<Texture*> testTextures;
 
 		//This should not be here
@@ -141,6 +83,11 @@ void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int si
 					aiString path;
 					material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
 
+					std::string textureFileName = FileSystem::NormalizePath(path.C_Str());
+					size_t isLong = textureFileName.find_last_of("/");
+					if(isLong != textureFileName.npos)
+						textureFileName = textureFileName.substr(isLong + 1);
+
 					std::string localPath = StringLogic::GlobalToLocalPath(full_path);
 					localPath = localPath.substr(0, localPath.find_last_of('/')+1);
 					localPath += FileSystem::NormalizePath(path.C_Str());
@@ -154,8 +101,9 @@ void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int si
 						int h = 0;
 
 						GLuint id = CustomLoadImage(buffer, size, &w, &h);
-						Texture* Test = new Texture(id, w, h);
-						testTextures.push_back(Test);
+						Texture* meshTexture = new Texture(id, w, h, textureFileName.c_str(), localPath.c_str());
+
+						testTextures.push_back(meshTexture);
 
 						RELEASE_ARRAY(buffer)
 					}
@@ -329,7 +277,6 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 
 void MeshLoader::PopulateTransform(GameObject* child, aiNode* node)
 {
-
 	C_Transform* transform = child->transform;
 	C_Transform* parentTransform = child->parent->transform;
 
@@ -342,9 +289,6 @@ void MeshLoader::PopulateTransform(GameObject* child, aiNode* node)
 	Quat rotationQuat(R.x, R.y, R.z, R.w);
 
 	transform->SetTransformMatrix(position, rotationQuat, size, parentTransform);
-
-	//transform->localTransform = float4x4::FromTRS(position, rotationQuat, size);
-	//transform->globalTransform = parentTransform->globalTransform * transform->localTransform;
 }
 
 GLuint MeshLoader::CustomLoadImage(char* buffer, int size, int* w, int* h)
@@ -367,6 +311,7 @@ GLuint MeshLoader::CustomLoadImage(char* buffer, int size, int* w, int* h)
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	GLuint glID = ilutGLBindTexImage();
 
+	//TODO: Generate mipmaps and use best settings
 	glBindTexture(GL_TEXTURE_2D, glID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -374,8 +319,6 @@ GLuint MeshLoader::CustomLoadImage(char* buffer, int size, int* w, int* h)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-
 
 
 	ilDeleteImages(1, &imageID);

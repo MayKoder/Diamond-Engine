@@ -30,6 +30,8 @@ void C_Transform::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
 	{
+
+		int offset = ImGui::CalcTextSize("Local Position: ").x + 16;
 		ImGui::Text("Local Position: "); 
 		ImGui::SameLine(); 
 		if (ImGui::DragFloat3("##lPos", &position[0], 0.1f))
@@ -38,12 +40,14 @@ void C_Transform::OnEditor()
 
 		ImGui::Text("Rotation: ");
 		ImGui::SameLine();
+		ImGui::SetCursorPosX(offset);
 		if (ImGui::DragFloat3("##lRot", &eulerRotation[0], 0.1f))
 			updateTransform = true;
 
 
 		ImGui::Text("Scale: ");
 		ImGui::SameLine();
+		ImGui::SetCursorPosX(offset);
 		if (ImGui::DragFloat3("##lScale", &localScale[0], 0.1f))
 			updateTransform = true;
 
@@ -141,7 +145,7 @@ void C_Transform::SetTransformMatrix(float3 _position, Quat _rotation, float3 _l
 	}
 }
 
-float* C_Transform::GetGlobalTransposed()
+const float* C_Transform::GetGlobalTransposed() const
 {
 	return globalTransformTRANS.ptr();
 }

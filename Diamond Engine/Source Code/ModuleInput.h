@@ -22,6 +22,8 @@ public:
 	update_status PreUpdate(float dt) override;
 	bool CleanUp() override;
 
+	void OnGUI() override;
+
 	KEY_STATE GetKey(int id) const
 	{
 		return keyboard[id];

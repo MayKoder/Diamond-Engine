@@ -24,6 +24,10 @@ public:
 
 	virtual void OnEditor();
 
+	inline bool IsActive() {
+		return active;
+	}
+
 	Type type;
 
 protected:

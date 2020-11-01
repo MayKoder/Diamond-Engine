@@ -53,9 +53,6 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 	if (drawAsDisabled)
 		ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyle().Colors[ImGuiCol_TextDisabled]);
 
-	//if (IsHighlighted(node)) //TODO
-	//	flags |= ImGuiTreeNodeFlags_Selected;
-
 	bool nodeOpen = ImGui::TreeNodeEx(node, flags, node->name.c_str());
 
 	if (drawAsDisabled)

@@ -125,16 +125,18 @@ void ModuleWindow::OnGUI()
 		{
 			SDL_SetWindowBrightness(window, brightness);
 		}
-		if (ImGui::SliderInt("Width", &s_width, MIN_WIDTH, current.w))
-		{
-			SDL_SetWindowSize(window, s_width, s_height);
-			App->moduleRenderer3D->OnResize(s_width, s_height);
-		}
-		if (ImGui::SliderInt("Height", &s_height, MIN_HEIGHT, current.h))
-		{
-			SDL_SetWindowSize(window, s_width, s_height);
-			App->moduleRenderer3D->OnResize(s_width, s_height);
-		}
+		//if (ImGui::InputInt("Width", &s_width, MIN_WIDTH, current.w))
+		//{
+		//	//SDL_SetWindowSize(window, s_width, s_height);
+		//	//App->moduleRenderer3D->OnResize(s_width, s_height);
+		//}
+		//if (ImGui::InputInt("Height", &s_height, MIN_HEIGHT, current.h))
+		//{
+		//	//SDL_SetWindowSize(window, s_width, s_height);
+		//	//App->moduleRenderer3D->OnResize(s_width, s_height);
+		//}
+		ImGui::Text("Window width: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d", s_width);
+		ImGui::Text("Window height: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d", s_height);
 
 		ImGui::Text("Refresh rate: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d", current.refresh_rate);
 

@@ -2,8 +2,6 @@
 #include "OpenGL.h"
 #include "MeshArrays.h"
 
-//TODO: A mesh should be loaded only once, if the mesh is loaded, just send the 
-//id's to the new mesh
 Mesh::Mesh() : indices_id(-1), vertices_id(-1), generalWireframe(nullptr)
 {
 
@@ -47,39 +45,11 @@ Mesh::~Mesh()
 
 }
 
-void Mesh::SetAsCube()
-{
-	//ERROR: This will crash on cleanup, you cant delete a static array element pointer
-	//indices_count = sizeof(MA_Cube_Indices) / sizeof(int);
-	//indices = (uint*)&MA_Cube_Indices[0];
-
-	//vertices_count = (sizeof(MA_Cube_Vertices) / sizeof(float)) / 3;
-	//vertices = (float*)&MA_Cube_Vertices[0];
-
-	//normals_count = (sizeof(MA_Cube_Normals) / sizeof(float)) / 3;
-	//normals = (float*)&MA_Cube_Normals[0];
-
-	//texCoords_count = (sizeof(MA_Cube_TexCoords) / sizeof(float)) / 2;
-	//texCoords = (float*)&MA_Cube_TexCoords[0];
-
-	//GenBuffers();
-}
-
-void Mesh::SetAsPyramid()
-{
-
-
-}
-
-void Mesh::SetAsSphere()
-{
-	GenerateSphere(1, 30, 30);
-	GenBuffers();
-}
-
-void Mesh::SetAsCylinder()
-{
-}
+//void Mesh::SetAsSphere()
+//{
+//	GenerateSphere(1, 30, 30);
+//	GenBuffers();
+//}
 
 void Mesh::GenBuffers()
 {
@@ -143,7 +113,7 @@ void Mesh::GenBuffers()
 void Mesh::RenderMesh(GLuint textureID)
 {
 	//ASK: glDrawElementsInstanced()?
-	if(textureID != -1)
+	if(textureID != -1 && *generalWireframe == false)
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
 	//Vertices --------------------------------------------
@@ -204,7 +174,7 @@ void Mesh::RenderMesh(GLuint textureID)
 	////--------------------------------------------
 
 	//Drawing cleanup --------------------------------------------
-	if (textureID != -1)
+	if (textureID != -1 && *generalWireframe == false)
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -386,17 +356,6 @@ void Mesh::GenerateSphere(float radius, float sectorCount, float stackCount)
 			}
 		}
 	}
-
-	//for (int i = 0; i < vertices_count * 3; i++)
-	//{
-	//	vertices[i] = _vertices[i];
-	//	normals[i] = _normals[i];
-	//}
-	//for (int i = 0; i < texCoords_count * 2; i++)
-	//{
-	//	texCoords[i] = _texCoords[i];
-	//}
-
 
 	memcpy(vertices, &_vertices[0], sizeof(float) * vertices_count * 3);
 	memcpy(normals, &_normals[0], sizeof(float) * normals_count * 3);

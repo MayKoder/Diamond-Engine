@@ -7,7 +7,7 @@
 #include "M_Editor.h"
 #include "W_Hierarchy.h"
 #include"W_Inspector.h"
-#include "FileSystem.h"
+#include "I_FileSystem.h"
 
 M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr)
 {
@@ -49,9 +49,7 @@ update_status M_Scene::Update(float dt)
 	if (App->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && App->moduleEditor->GetSelectedGO() != nullptr)
 		App->moduleEditor->GetSelectedGO()->Destroy();
 
-	//TODO: This should be here
 	UpdateGameObjects();
-
 
 	return update_status::UPDATE_CONTINUE;
 }
