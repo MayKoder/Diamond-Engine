@@ -57,7 +57,7 @@ Simple guide to execute and use the engine:
  - Console logs and console can also be cleaned.
  
 <br></br>
-# Short term TODO list:
+# Short-Term TODO list:
 
  - Reduce the use of pointers in small size objects, like Texture class and others.
  - Add shader pipeline.
