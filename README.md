@@ -54,6 +54,7 @@ Simple guide to execute and use the engine:
  - Console log have types (Normal, Warning and Error) indicated by colors. 
  - Console logs can stack up if the value is the same and are equal as the last log.
  - Console logs and console can also be cleaned.
+ - Meshes and textures are loaded only once per FBX.
  
 <br></br>
 # Short-Term TODO list:
