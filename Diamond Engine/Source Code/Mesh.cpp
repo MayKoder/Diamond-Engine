@@ -362,3 +362,43 @@ void Mesh::GenerateSphere(float radius, float sectorCount, float stackCount)
 	memcpy(texCoords, &_texCoords[0], sizeof(float) * texCoords_count * 2);
 	memcpy(indices, &_indices[0], sizeof(uint) * indices_count);
 }
+
+const char* Mesh::SaveCustomFormat(uint& retSize)
+{
+	// amount of indices / vertices / colors / normals / texture_coords / AABB
+	uint ranges[4] = { indices_count, vertices_count, normals_count, texCoords_count };
+	
+	uint size = sizeof(ranges) + (sizeof(uint) * indices_count) + (sizeof(float) * vertices_count * 3) + (sizeof(float) * normals_count * 3) + (sizeof(float) * texCoords_count * 2);
+	retSize = size;
+
+	char* fileBuffer = new char[size]; // Allocate
+	char* cursor = fileBuffer;
+	
+	
+	uint bytes = sizeof(ranges); // First store ranges
+	memcpy(cursor, ranges, bytes);
+	cursor += bytes;
+	
+	
+	// Store indices
+	bytes = sizeof(uint) * indices_count;
+	memcpy(cursor, indices, bytes);
+	cursor += bytes;
+
+	// Store vertices
+	bytes = sizeof(float) * vertices_count * 3;
+	memcpy(cursor, vertices, bytes);
+	cursor += bytes;
+
+	// Store vertices
+	bytes = sizeof(float) * normals_count * 3;
+	memcpy(cursor, normals, bytes);
+	cursor += bytes;
+
+	// Store vertices
+	bytes = sizeof(float) * texCoords_count * 2;
+	memcpy(cursor, texCoords, bytes);
+	cursor += bytes;
+
+	return fileBuffer;
+}

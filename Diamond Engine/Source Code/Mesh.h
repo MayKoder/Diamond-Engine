@@ -41,6 +41,7 @@ public:
 	uint texCoords_count = 0;
 	float* texCoords = nullptr;
 
+
 	//TODO: Delete this, wireframe mode should be different
 	// ----------- TEMPORAL LOGIC, MUST BE DELETED ---------------//
 	bool* generalWireframe;
@@ -48,4 +49,6 @@ public:
 
 	void GenerateSphere(float radius, float sectorCount, float stackCount);
 
+	//TODO: Move this to file system
+	const char* SaveCustomFormat(uint& retSize);
 };

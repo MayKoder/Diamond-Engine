@@ -274,6 +274,17 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 	_mesh->GenBuffers();
 	_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
 
+	//TODO: Save on own file format
+	uint size = 0;
+	char* buffer = (char*)_mesh->SaveCustomFormat(size);
+	
+	std::string file = MESHES_PATH;
+	file += importedMesh->mName.C_Str();
+	file += ".mmh";
+
+	FileSystem::Save(file.c_str(), buffer, size, false);
+	RELEASE_ARRAY(buffer);
+
 	return _mesh;
 }
 
@@ -304,6 +315,17 @@ GLuint MeshLoader::CustomLoadImage(char* buffer, int size, int* w, int* h)
 		LOG(LogType::L_ERROR, "Image not loaded");
 	}
 
+	//ILuint sizeS;
+	//ILubyte* data;
+	//ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
+	//sizeS = ilSaveL(IL_DDS, nullptr, 0); // Get the size of the data buffer
+	//if (sizeS > 0) 
+	//{
+	//	data = new ILubyte[sizeS]; // allocate data buffer
+	//	ilSaveL(IL_DDS, data, sizeS); // Save to buffer with the ilSaveIL function
+	//	FileSystem::Save("Library/Materials/Test.dds", (char*)data, sizeS, false);
+	//	RELEASE_ARRAY(data);
+	//}
 
 	if (w)
 		*w = ilGetInteger(IL_IMAGE_WIDTH);

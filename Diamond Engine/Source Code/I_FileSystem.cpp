@@ -171,7 +171,7 @@ void FileSystem::CreateLibraryDirectories()
 {
 	CreateDir(LIBRARY_PATH);
 	CreateDir(MESHES_PATH);
-	CreateDir(TEXTURES_PATH);
+	//CreateDir(TEXTURES_PATH);
 	CreateDir(MATERIALS_PATH);
 }
 
