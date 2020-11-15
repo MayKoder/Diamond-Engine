@@ -1,0 +1,143 @@
+{
+    "EditorCameraPosition": [
+        8,
+        3,
+        8
+    ],
+    "EditorCameraX": [
+        0.70710676908493042,
+        0,
+        -0.70710676908493042
+    ],
+    "EditorCameraY": [
+        -0.12309148907661438,
+        0.98473191261291504,
+        -0.12309148907661438
+    ],
+    "EditorCameraZ": [
+        0.69631063938140869,
+        0.17407765984535217,
+        0.69631063938140869
+    ],
+    "Game Objects": [
+        {
+            "name": "Scene root",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 41,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "BakerHouse",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 16072,
+            "ParentUID": 41,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Chimney",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 8505,
+            "ParentUID": 16072,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true
+                },
+                {
+                    "Type": 3,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Baker_house",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1139,
+            "ParentUID": 16072,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true
+                },
+                {
+                    "Type": 3,
+                    "Active": true
+                }
+            ]
+        }
+    ]
+}

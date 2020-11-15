@@ -24,3 +24,9 @@ void Component::OnEditor()
 {
 
 }
+
+void Component::SaveComponent(JSON_Object* nObj)
+{
+	json_object_set_number(nObj, "Type", (int)type);
+	json_object_set_boolean(nObj, "Active", active);
+}

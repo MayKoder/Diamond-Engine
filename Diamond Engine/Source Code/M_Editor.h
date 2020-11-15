@@ -3,7 +3,7 @@
 #include "Module.h"
 #include "Window.h"
 
-#define STYLES_PATH "Assets/Styles/styles.json"
+#define STYLES_PATH "Settings/Styles/styles.json"
 #define MAX_STY_INPUT 15
 
 typedef unsigned int ImGuiID;

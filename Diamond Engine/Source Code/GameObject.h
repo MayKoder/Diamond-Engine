@@ -14,12 +14,11 @@ public:
 	virtual ~GameObject();
 
 	void Update();
+
 	Component* AddComponent(Component::Type _type);
 	Component* GetComponent(Component::Type _type);
 
 	bool isActive() const;
-
-	//void ChangeActiveState();
 
 	void Enable();
 	void Disable();
@@ -40,7 +39,7 @@ public:
 
 	//TODO: Temporal tree display bool
 	bool showChildren;
-
 	bool toDelete;
 
+	int UID;
 };

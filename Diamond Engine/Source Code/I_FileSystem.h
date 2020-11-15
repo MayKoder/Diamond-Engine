@@ -22,7 +22,7 @@ namespace StringLogic {
 #define MATERIALS_PATH "Library/Materials/"
 //#define TEXTURES_PATH "Library/Textures/"
 //#define MODELS_PATH "Library/Models/"
-//#define SCENES_PATH "Library/Scenes/"
+#define SCENES_PATH "Library/Scenes/"
 namespace FileSystem
 {
 	void LoadFile(const char* globalPath);
@@ -44,7 +44,7 @@ namespace FileSystem
 
 	// Open for Read/Write
 	unsigned int Load(const char* path, const char* file, char** buffer) /*const*/;
-	unsigned int Load(const char* file, char** buffer) /*const*/;
+	unsigned int LoadToBuffer(const char* file, char** buffer) /*const*/;
 
 	uint Save(const char* file, char* buffer, uint size, bool append);
 	void GetFileName(const char* file, std::string& fileName, bool extension);

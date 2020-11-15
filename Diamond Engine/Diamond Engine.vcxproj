@@ -96,6 +96,7 @@
     <ClInclude Include="Source Code\C_MeshRenderer.h" />
     <ClInclude Include="Source Code\C_Material.h" />
     <ClInclude Include="Source Code\C_Transform.h" />
+    <ClInclude Include="Source Code\DEJsonSupport.h" />
     <ClInclude Include="Source Code\EngineVersion.h" />
     <ClInclude Include="Source Code\External Libraries\DevIL\include\devil_cpp_wrapper.hpp" />
     <ClInclude Include="Source Code\External Libraries\DevIL\include\devil_internal_exports.h" />
@@ -181,11 +182,12 @@
     <ClInclude Include="Source Code\GameObject.h" />
     <ClInclude Include="Source Code\glmath.h" />
     <ClInclude Include="Source Code\Globals.h" />
+    <ClInclude Include="Source Code\I_TextureImporter.h" />
     <ClInclude Include="Source Code\Light.h" />
     <ClInclude Include="Source Code\MaykMath.h" />
     <ClInclude Include="Source Code\Mesh.h" />
     <ClInclude Include="Source Code\MeshArrays.h" />
-    <ClInclude Include="Source Code\MeshLoader.h" />
+    <ClInclude Include="Source Code\I_MeshLoader.h" />
     <ClInclude Include="Source Code\MMGui.h" />
     <ClInclude Include="Source Code\Module.h" />
     <ClInclude Include="Source Code\ModuleCamera3D.h" />
@@ -259,8 +261,9 @@
     <ClCompile Include="Source Code\I_FileSystem.cpp" />
     <ClCompile Include="Source Code\GameObject.cpp" />
     <ClCompile Include="Source Code\glmath.cpp" />
+    <ClCompile Include="Source Code\I_TextureImporter.cpp" />
     <ClCompile Include="Source Code\Mesh.cpp" />
-    <ClCompile Include="Source Code\MeshLoader.cpp" />
+    <ClCompile Include="Source Code\I_MeshLoader.cpp" />
     <ClCompile Include="Source Code\M_FileSystem.cpp" />
     <ClCompile Include="Source Code\M_Scene.cpp" />
     <ClCompile Include="Source Code\Texture.cpp" />

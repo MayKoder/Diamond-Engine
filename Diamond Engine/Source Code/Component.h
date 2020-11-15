@@ -2,6 +2,9 @@
 
 class GameObject;
 
+//ERROR: Remove this include from here
+#include"parson/parson.h"
+
 class Component
 {
 public:
@@ -23,6 +26,9 @@ public:
 	virtual void Update();
 
 	virtual void OnEditor();
+
+	//Maybe return JSON_Value*?
+	virtual void SaveComponent(JSON_Object* nObj);
 
 	inline bool IsActive() {
 		return active;

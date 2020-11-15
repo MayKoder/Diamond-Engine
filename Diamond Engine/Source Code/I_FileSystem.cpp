@@ -1,4 +1,5 @@
 #include "I_FileSystem.h"
+#include"I_TextureImporter.h"
 
 #include "Globals.h"
 
@@ -10,7 +11,7 @@
 #include <filesystem>
 
 #include "PhysFS/include/physfs.h"
-#include "MeshLoader.h"
+#include "I_MeshLoader.h"
 #include"GameObject.h"
 #include"C_Material.h"
 
@@ -94,55 +95,53 @@ void FileSystem::FSDeInit()
 /*Load any file with a global path*/
 void FileSystem::LoadFile(const char* globalPath)
 {
+
+	ImportType iType = GetTypeFromPath(globalPath);
+
+	if (iType == ImportType::NOTYPE) {
+		LOG(LogType::L_ERROR, "File extension not supported yet");
+		return;
+	}
+
+
 	std::string normalizedPath = NormalizePath(globalPath);
 	std::string relativePath = StringLogic::GlobalToLocalPath(globalPath);
 
-	//Duplicate file
-	//BUG: This will only allow to work with files inside PhysFS dir
 	std::string output = "";
 
-	std::string fileName = StringLogic::GlobalToLocalPath(normalizedPath.c_str());
-	if (fileName.length() == 0) {
-		fileName = normalizedPath;
-	}
+	std::string fileNameAndExtension = StringLogic::GlobalToLocalPath(normalizedPath.c_str());
+	if (fileNameAndExtension.length() == 0)
+		fileNameAndExtension = normalizedPath;
 
-	if (PHYSFS_exists(fileName.c_str()) == 0)
+	if (PHYSFS_exists(fileNameAndExtension.c_str()) == 0)
 	{
-		//TODO: Hardcoded directory
 		Copy(globalPath, ASSETS_PATH, output);
-		fileName = output;
+		fileNameAndExtension = output;
 	}
 
-	//output = PHYSFS_getBaseDir();
-
-	//Local dir?
-	//std::string realDir = PHYSFS_getRealDir(fileName.c_str());
-	//realDir += fileName;
+	//TODO: Load new file to buffer
+	//Convert to custom file format
+	//Save custom file
 
 	char* buffer = nullptr;
-	uint size = FileSystem::Load(fileName.c_str(), &buffer);
+	uint size = FileSystem::LoadToBuffer(fileNameAndExtension.c_str(), &buffer);
 
 	if (buffer != nullptr && size != 0) 
 	{
-		switch (GetTypeFromPath(globalPath))
+		switch (iType)
 		{
-
-			case ImportType::NOTYPE:
-				LOG(LogType::L_ERROR,  "File extension not supported yet");
-				break;
 
 			case ImportType::MESH: 
 			{
 				MeshLoader::ImportFBXFromBuffer(normalizedPath.c_str(), buffer, size, EngineExternal->moduleScene->root);
-
 				break;
 			}
 
 			case ImportType::TEXTURE: 
 			{
 				int w = 0; int h = 0;
-				GLuint id = MeshLoader::CustomLoadImage(buffer, size, &w, &h);
-				Texture* material = new Texture(id, w, h, fileName.substr(fileName.find_last_of('/') + 1), fileName);
+				GLuint id = TextureImporter::CustomLoadImage(buffer, size, &w, &h);
+				Texture* material = new Texture(id, w, h, fileNameAndExtension.substr(fileNameAndExtension.find_last_of('/') + 1), fileNameAndExtension);
 				EngineExternal->moduleRenderer3D->globalTextures.push_back(material);
 
 				W_Inspector* inspector = dynamic_cast<W_Inspector*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR));
@@ -173,6 +172,7 @@ void FileSystem::CreateLibraryDirectories()
 	CreateDir(MESHES_PATH);
 	//CreateDir(TEXTURES_PATH);
 	CreateDir(MATERIALS_PATH);
+	CreateDir(SCENES_PATH);
 }
 
 // Add a new zip file or folder
@@ -261,11 +261,11 @@ unsigned int FileSystem::Load(const char* path, const char* file, char** buffer)
 {
 	std::string full_path(path);
 	full_path += file;
-	return Load(full_path.c_str(), buffer);
+	return LoadToBuffer(full_path.c_str(), buffer);
 }
 
 // Read a whole file and put it in a new buffer
-uint FileSystem::Load(const char* file, char** buffer) /*const*/
+uint FileSystem::LoadToBuffer(const char* file, char** buffer) /*const*/
 {
 	uint ret = 0;
 

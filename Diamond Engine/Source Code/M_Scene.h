@@ -3,6 +3,7 @@
 #include "Module.h"
 #include<vector>
 
+#include"parson/parson.h"
 class GameObject;
 
 class M_Scene : public Module
@@ -21,6 +22,7 @@ public:
 	bool CleanUp() override;
 
 	GameObject* CreateGameObject(const char* name, GameObject* parent);
+	void SaveScene();
 
 	GameObject* root;
 
@@ -31,4 +33,8 @@ private:
 
 	void UpdateGameObjects();
 	void RecursiveUpdate(GameObject* parent);
+
+
+	//ASK: Thinking about using _lowerCase() for some private methods as a "dont use this" warning
+	void GoToJSON(GameObject* go, JSON_Array* jsonObj);
 };

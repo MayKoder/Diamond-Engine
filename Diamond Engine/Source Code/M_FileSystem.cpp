@@ -1,7 +1,7 @@
 #include "M_FileSystem.h"
 #include "Globals.h"
 
-#include "MeshLoader.h"
+#include "I_MeshLoader.h"
 #include "I_FileSystem.h"
 
 #include "Application.h"

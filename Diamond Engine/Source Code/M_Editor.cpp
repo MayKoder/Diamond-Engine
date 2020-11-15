@@ -1,6 +1,5 @@
 #include "Globals.h"
 #include "Application.h"
-#include "M_Editor.h"
 #include "MaykMath.h"
 
 #include "MMGui.h"
@@ -14,6 +13,8 @@
 
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include "M_Editor.h"
+#include "M_Scene.h"
 #include "I_FileSystem.h"
 
 //Window types
@@ -97,7 +98,7 @@ bool M_Editor::Init()
 	ImGui_ImplOpenGL3_Init();
 
 	io.MouseDrawCursor = false;
-	io.IniFilename = "Assets/Styles/imgui.ini";
+	io.IniFilename = "Settings/Styles/imgui.ini";
 	//io.IniFilename = NULL;
 
 	return true;
@@ -188,6 +189,10 @@ void M_Editor::DrawMenuBar()
 			if (ImGui::MenuItem("New"))
 			{
 				//Do something
+			}
+			if (ImGui::MenuItem("Save scene", "Ctrl+S"))
+			{
+				App->moduleScene->SaveScene();
 			}
 			if (ImGui::MenuItem("Quit", "Esc"))
 			{

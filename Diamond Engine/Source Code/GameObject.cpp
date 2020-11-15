@@ -5,10 +5,15 @@
 #include "C_MeshRenderer.h"
 #include "C_Material.h"
 
+#include"MaykMath.h"
 GameObject::GameObject(const char* _name) : parent(nullptr), name(_name), showChildren(false),
 active(true), isStatic(false), toDelete(false)
 {
 	transform = dynamic_cast<C_Transform*>(AddComponent(Component::Type::Transform));
+
+	//TODO: This should not be here
+	//TODO: Should make sure there are not duplicated ID's
+	UID = MaykMath::Random(0, INT_MAX);
 }
 
 GameObject::~GameObject()

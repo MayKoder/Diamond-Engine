@@ -113,7 +113,7 @@ update_status ModuleInput::PreUpdate(float dt)
 
 			case (SDL_DROPFILE):
 			{   
-				// In case if dropped file
+				//TODO: Change method name to duplicate on drop or something
 				FileSystem::LoadFile(e.drop.file);
 				SDL_free(e.drop.file);    // Free dropped_filedir memory
 				break;

@@ -25,8 +25,6 @@ public:
 	float3 position, localScale, eulerRotation;
 	Quat rotation;
 
-	
-
 	bool updateTransform;
 	void SetTransformMatrix(float3 _position, Quat _rotation, float3 _localScale, C_Transform* parent);
 	const float* GetGlobalTransposed() const;

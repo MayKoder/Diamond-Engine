@@ -406,7 +406,7 @@ void ModuleRenderer3D::TakeScreenshot()
 	ilBindImage(imageID);
 	ilutGLScreen();
 	ilEnable(IL_FILE_OVERWRITE);
-	ilSaveImage("Assets/Screenshots/Screenshot.png");
+	ilSaveImage("Screenshots/Screenshot.png");
 	ilDeleteImage(imageID);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
