@@ -40,7 +40,9 @@ bool M_Scene::Start()
 update_status M_Scene::PreUpdate(float dt)
 {
 	/*Destroy gameobjects inside the destroy queue*/
-	if (destroyList.size() > 0) {
+	if (destroyList.size() > 0) 
+	{
+		dynamic_cast<W_Inspector*>(App->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR))->selectedGO = nullptr;
 		for (size_t i = 0; i < destroyList.size(); ++i)
 		{
 			Destroy(destroyList[i]);
@@ -64,15 +66,14 @@ bool M_Scene::CleanUp()
 {
 	//This will delete all the gameObjects
 	delete root;
-
 	return true;
 }
 
-GameObject* M_Scene::CreateGameObject(const char* name, GameObject* parent)
+GameObject* M_Scene::CreateGameObject(const char* name, GameObject* parent, int _uid)
 {
-	GameObject* gm = new GameObject(name);
+	GameObject* gm = new GameObject(name, parent, _uid);
 
-	if(parent != nullptr)
+	if (parent != nullptr)
 		parent->children.push_back(gm);
 
 	return gm;
@@ -80,8 +81,6 @@ GameObject* M_Scene::CreateGameObject(const char* name, GameObject* parent)
 
 void M_Scene::Destroy(GameObject* gm)
 {
-	dynamic_cast<W_Inspector*>(App->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR))->selectedGO = nullptr;
-
 	for (std::vector<GameObject*>::iterator i = gm->parent->children.begin(); i != gm->parent->children.end(); ++i)
 	{
 		if (*i._Ptr == gm) 
@@ -140,6 +139,43 @@ void M_Scene::SaveScene()
 	json_value_free(file);
 }
 
+void M_Scene::LoadScene(const char* name)
+{
+	//TODO: ASK IF USER WANTS TO SAVE CHANGES
+
+	JSON_Value* scene = json_parse_file(name);
+
+	if (scene == NULL)
+		return;
+
+	//Clear all current scene memory
+	delete root;
+	root = nullptr;
+
+	JSON_Object* sceneObj = json_value_get_object(scene);
+	JSON_Array* sceneGO = json_object_get_array(sceneObj, "Game Objects");
+
+	JSON_Object* goJsonObj = json_array_get_object(sceneGO, 0);
+	root = CreateGameObject(json_object_get_string(goJsonObj, "name"), nullptr, json_object_get_number(goJsonObj, "UID"));
+
+	GameObject* parent = root;
+	for (size_t i = 1; i < json_array_get_count(sceneGO); i++)
+	{
+		goJsonObj = json_array_get_object(sceneGO, i);
+
+		while (parent != nullptr && json_object_get_number(goJsonObj, "ParentUID") != parent->UID)
+			parent = parent->parent;
+
+		parent = CreateGameObject(json_object_get_string(goJsonObj, "name"), parent, json_object_get_number(goJsonObj, "UID"));
+		if(parent != nullptr)
+			parent->transform->SetTransformMatrix(DEJson::ReadVector3(goJsonObj, "Position"), DEJson::ReadQuat(goJsonObj, "Rotation"), DEJson::ReadVector3(goJsonObj, "Scale"));
+
+		parent->LoadComponents(json_object_get_array(goJsonObj, "Components"));
+
+	}
+
+}
+
 void M_Scene::GoToJSON(GameObject* go, JSON_Array* jsonObj)
 {
 	JSON_Value* goValue = json_value_init_object();
@@ -169,7 +205,7 @@ void M_Scene::GoToJSON(GameObject* go, JSON_Array* jsonObj)
 			JSON_Value* nVal = json_value_init_object();
 			JSON_Object* nObj = json_value_get_object(nVal);
 
-			go->components[i]->SaveComponent(nObj);
+			go->components[i]->SaveData(nObj);
 			json_array_append_value(jsArray, nVal);
 		}
 		json_object_set_value(goData, "Components", goArray);

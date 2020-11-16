@@ -194,6 +194,11 @@ void M_Editor::DrawMenuBar()
 			{
 				App->moduleScene->SaveScene();
 			}
+			if (ImGui::MenuItem("Load scene"))
+			{
+				//TODO: How can we do this? we can't hardcode it
+				App->moduleScene->LoadScene("Library/Scenes/scene.json");
+			}
 			if (ImGui::MenuItem("Quit", "Esc"))
 			{
 				App->ExitApplication();
@@ -216,19 +221,19 @@ void M_Editor::DrawMenuBar()
 			//TODO: This is temporal, meshes should not laod every time and 
 			//should be stored only once, then only copy mesh pointers.
 			if (ImGui::MenuItem("Cube", nullptr))
-				FileSystem::LoadFile("Assets/Primitives/Cube.fbx");
+				FileSystem::LoadDroppedFile("Assets/Primitives/Cube.fbx");
 			if (ImGui::MenuItem("Cylinder", nullptr))
-				FileSystem::LoadFile("Assets/Primitives/Cylinder.fbx");
+				FileSystem::LoadDroppedFile("Assets/Primitives/Cylinder.fbx");
 			if (ImGui::MenuItem("Icosphere", nullptr))
-				FileSystem::LoadFile("Assets/Primitives/Icosphere.fbx");
+				FileSystem::LoadDroppedFile("Assets/Primitives/Icosphere.fbx");
 			if (ImGui::MenuItem("Pyramid", nullptr))
-				FileSystem::LoadFile("Assets/Primitives/Pyramid.fbx");
+				FileSystem::LoadDroppedFile("Assets/Primitives/Pyramid.fbx");
 			if (ImGui::MenuItem("Sphere", nullptr))
-				FileSystem::LoadFile("Assets/Primitives/Sphere.fbx");
+				FileSystem::LoadDroppedFile("Assets/Primitives/Sphere.fbx");
 			if (ImGui::MenuItem("Torus", nullptr))
-				FileSystem::LoadFile("Assets/Primitives/Torus.fbx");
+				FileSystem::LoadDroppedFile("Assets/Primitives/Torus.fbx");
 			if (ImGui::MenuItem("Monkey", nullptr))
-				FileSystem::LoadFile("Assets/Primitives/Monkey.fbx");
+				FileSystem::LoadDroppedFile("Assets/Primitives/Monkey.fbx");
 
 			ImGui::PopStyleColor(1);
 			ImGui::EndMenu();

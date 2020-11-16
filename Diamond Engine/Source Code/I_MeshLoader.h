@@ -17,7 +17,7 @@ namespace MeshLoader
 
 	void logCallback(const char* message, char* user);
 
-	void ImportFBXFromBuffer(const char* full_path, char* buffer, int size, GameObject* gmRoot);
+	void BufferToMeshes(const char* full_path, char* buffer, int size, GameObject* gmRoot);
 
 	void NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& sceneTextures, std::vector<Mesh*>& _sceneMeshes, aiNode* node, GameObject* gmParent, const char* holderName);
 	Mesh* LoadMesh(aiMesh* importedMesh);

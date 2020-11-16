@@ -50,6 +50,7 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 	if (node == EngineExternal->moduleEditor->GetSelectedGO())
 		flags |= ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_Selected;
 
+
 	if (drawAsDisabled)
 		ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyle().Colors[ImGuiCol_TextDisabled]);
 
@@ -58,9 +59,29 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 	if (drawAsDisabled)
 		ImGui::PopStyleColor();
 
-	if (ImGui::IsItemClicked() && !node->IsRoot())
+	//Only can use if this is not the root node
+	if (!node->IsRoot()) 
 	{
-		dynamic_cast<W_Inspector*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR))->selectedGO = node;
+		//Start drag for reparent
+		if (ImGui::BeginDragDropSource(/*ImGuiDragDropFlags_SourceNoDisableHover*/))
+		{
+			ImGui::SetDragDropPayload("_TREENODE", node->name.c_str(), sizeof(node->name.data()) * node->name.length());
+			ImGui::Text("Change parent to...");
+			ImGui::EndDragDropSource();
+		}
+
+		if (ImGui::IsItemClicked())
+		{
+			dynamic_cast<W_Inspector*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR))->selectedGO = node;
+		}
+	}
+
+	//All nodes can be a drop target
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TREENODE"))
+			LOG(LogType::L_WARNING, "Parented %s to %s", payload->Data, node->name.c_str());
+		ImGui::EndDragDropTarget();
 	}
 
 	node->showChildren = (node->children.size() == 0) ? false : nodeOpen;

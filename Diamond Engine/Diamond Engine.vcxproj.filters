@@ -666,6 +666,9 @@
     <ClCompile Include="Source Code\I_TextureImporter.cpp">
       <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
+    <ClCompile Include="Source Code\DEJsonSupport.cpp">
+      <Filter>Sources\Tools\MMath\MMJsonSupport</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source Code\External Libraries\MathGeoLib\include\Math\Matrix.inl">

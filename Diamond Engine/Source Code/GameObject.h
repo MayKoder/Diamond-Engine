@@ -10,7 +10,7 @@ class C_Transform;
 class GameObject
 {
 public:
-	GameObject(const char*);
+	GameObject(const char*, GameObject* parent, int _uid = -1);
 	virtual ~GameObject();
 
 	void Update();
@@ -25,6 +25,8 @@ public:
 	bool IsRoot();
 
 	void Destroy();
+	void LoadComponents(JSON_Array* componentArray);
+	void RemoveComponent(Component* ptr);
 
 	GameObject* parent;
 	C_Transform* transform;
@@ -42,4 +44,7 @@ public:
 	bool toDelete;
 
 	int UID;
+
+private:
+	Component* dumpComponent;
 };

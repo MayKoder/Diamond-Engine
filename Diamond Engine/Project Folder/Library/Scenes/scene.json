@@ -62,7 +62,7 @@
                 1,
                 1
             ],
-            "UID": 16072,
+            "UID": 22925,
             "ParentUID": 41,
             "Components": [
                 {
@@ -88,8 +88,8 @@
                 1,
                 1
             ],
-            "UID": 8505,
-            "ParentUID": 16072,
+            "UID": 18371,
+            "ParentUID": 22925,
             "Components": [
                 {
                     "Type": 1,
@@ -97,11 +97,14 @@
                 },
                 {
                     "Type": 2,
-                    "Active": true
+                    "Active": true,
+                    "Path": "Library\/Meshes\/Untitled.001.mmh"
                 },
                 {
                     "Type": 3,
-                    "Active": true
+                    "Active": true,
+                    "Path": "Assets\/Baker_house.png",
+                    "Name": "Baker_house.png"
                 }
             ]
         },
@@ -122,8 +125,8 @@
                 1,
                 1
             ],
-            "UID": 1139,
-            "ParentUID": 16072,
+            "UID": 5822,
+            "ParentUID": 22925,
             "Components": [
                 {
                     "Type": 1,
@@ -131,11 +134,14 @@
                 },
                 {
                     "Type": 2,
-                    "Active": true
+                    "Active": true,
+                    "Path": "Library\/Meshes\/Untitled.mmh"
                 },
                 {
                     "Type": 3,
-                    "Active": true
+                    "Active": true,
+                    "Path": "Assets\/Baker_house.png",
+                    "Name": "Baker_house.png"
                 }
             ]
         }

@@ -9,10 +9,13 @@ public:
 	virtual ~C_Material();
 
 	/*void Update() override;*/
-	void OnEditor() override;
+	bool OnEditor() override;
 	int GetTextureID();
 
 	Texture* matTexture;
+
+	void SaveData(JSON_Object* nObj) override;
+	void LoadData(JSON_Object* nObj) override;
 
 	bool viewWithCheckers;
 

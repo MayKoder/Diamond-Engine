@@ -90,6 +90,18 @@ void W_Inspector::Draw()
 				selectedGO->components[i]->OnEditor();
 			}
 
+			ImGui::Separator();
+
+			ImGui::CenterNextElement(ImGui::GetWindowSize(), 0.5f);		
+			if (ImGui::BeginCombo("##addComponent", "Add Component"))
+			{
+				//TODO: Do this with all the components
+				ImGui::Selectable("Mesh Renderer");
+
+
+				ImGui::EndCombo();
+			}
+
 		}
 	}
 

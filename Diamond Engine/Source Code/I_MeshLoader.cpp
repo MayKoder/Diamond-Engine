@@ -41,19 +41,9 @@ void MeshLoader::DisableDebugMode()
 	aiDetachAllLogStreams();
 }
 
-void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int size, GameObject* gmRoot)
+void MeshLoader::BufferToMeshes(const char* full_path, char* buffer, int size, GameObject* gmRoot)
 {
 	const aiScene* scene = aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
-
-	//aiVector3t<float> factor;
-	//scene->mMetaData->Get("OriginalUpAxis", factor);
-	//
-	//for (size_t i = 0; i < scene->mMetaData->mNumProperties; i++)
-	//{
-	//	const char* name;
-	//	name = scene->mMetaData->mKeys[i].C_Str();
-	//	LOG(LogType::L_NORMAL, "%s", name);
-	//}
 
 	std::string fileName = StringLogic::FileNameFromPath(full_path);
 
@@ -110,9 +100,12 @@ void MeshLoader::ImportFBXFromBuffer(const char* full_path, char* buffer, int si
 		}
 
 		//Load all meshes into mesh vector
-		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
+		if (scene->HasMeshes()) 
 		{
-			sceneMeshes.push_back(LoadMesh(scene->mMeshes[i]));
+			for (unsigned int i = 0; i < scene->mNumMeshes; i++)
+			{
+				sceneMeshes.push_back(LoadMesh(scene->mMeshes[i]));
+			}
 		}
 		
 
@@ -184,8 +177,7 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& sce
 	{
 		Mesh* meshPointer = _sceneMeshes[node->mMeshes[i]];
 
-		GameObject* gmNode = new GameObject(node->mName.C_Str()); //Name should be scene->mMeshes[node->mMeshes[i]]
-		gmNode->parent = gmParent;
+		GameObject* gmNode = new GameObject(node->mName.C_Str(), gmParent); //Name should be scene->mMeshes[node->mMeshes[i]]
 
 		//Load mesh to GameObject
 		C_MeshRenderer* gmMeshRenderer = dynamic_cast<C_MeshRenderer*>(gmNode->AddComponent(Component::Type::MeshRenderer));
@@ -220,8 +212,7 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& sce
 		}
 		else
 		{
-			rootGO = new GameObject(holderName);
-			rootGO->parent = gmParent;
+			rootGO = new GameObject(holderName, gmParent);
 			PopulateTransform(rootGO, pos, rot, scale);
 			gmParent->children.push_back(rootGO);
 		}
@@ -239,7 +230,11 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 {
 
 	LOG(LogType::L_NORMAL, "%s", importedMesh->mName.C_Str());
-	Mesh* _mesh = new Mesh();
+	std::string file = MESHES_PATH;
+	file += importedMesh->mName.C_Str();
+	file += ".mmh";
+
+	Mesh* _mesh = new Mesh(file.c_str());
 
 	// copy vertices
 	_mesh->vertices_count = importedMesh->mNumVertices;
@@ -307,10 +302,6 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 	//TODO: Save on own file format
 	uint size = 0;
 	char* buffer = (char*)_mesh->SaveCustomFormat(size);
-	
-	std::string file = MESHES_PATH;
-	file += importedMesh->mName.C_Str();
-	file += ".mmh";
 
 	FileSystem::Save(file.c_str(), buffer, size, false);
 	RELEASE_ARRAY(buffer);
@@ -320,8 +311,5 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 
 void MeshLoader::PopulateTransform(GameObject* child, float3 position, Quat rotationQuat, float3 size)
 {
-	C_Transform* transform = child->transform;
-	C_Transform* parentTransform = child->parent->transform;
-
-	transform->SetTransformMatrix(position, rotationQuat, size, parentTransform);
+	child->transform->SetTransformMatrix(position, rotationQuat, size);
 }

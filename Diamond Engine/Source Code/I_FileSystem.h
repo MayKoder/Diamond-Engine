@@ -25,7 +25,7 @@ namespace StringLogic {
 #define SCENES_PATH "Library/Scenes/"
 namespace FileSystem
 {
-	void LoadFile(const char* globalPath);
+	void LoadDroppedFile(const char* globalPath);
 	ImportType GetTypeFromPath(const char* path);
 
 	void FSInit();

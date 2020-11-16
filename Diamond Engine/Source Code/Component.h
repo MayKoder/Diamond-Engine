@@ -25,10 +25,11 @@ public:
 
 	virtual void Update();
 
-	virtual void OnEditor();
+	virtual bool OnEditor();
 
 	//Maybe return JSON_Value*?
-	virtual void SaveComponent(JSON_Object* nObj);
+	virtual void SaveData(JSON_Object* nObj);
+	virtual void LoadData(JSON_Object* nObj);
 
 	inline bool IsActive() {
 		return active;
@@ -40,5 +41,6 @@ protected:
 	//const char* name;
 	bool active;
 	GameObject* gameObject;
+	const char* name;
 
 };

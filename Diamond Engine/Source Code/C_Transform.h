@@ -17,7 +17,7 @@ public:
 
 	void Update() override;
 
-	void OnEditor() override;
+	bool OnEditor() override;
 
 	float4x4 globalTransform;
 	float4x4 localTransform;
@@ -26,7 +26,7 @@ public:
 	Quat rotation;
 
 	bool updateTransform;
-	void SetTransformMatrix(float3 _position, Quat _rotation, float3 _localScale, C_Transform* parent);
+	void SetTransformMatrix(float3 _position, Quat _rotation, float3 _localScale);
 	const float* GetGlobalTransposed() const;
 
 private: 

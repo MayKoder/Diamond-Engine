@@ -16,6 +16,8 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 	eulerRotation = rotation.ToEulerXYZ();
 
 	globalTransformTRANS = globalTransform.Transposed();
+
+	name = "Transform";
 }
 
 C_Transform::~C_Transform()
@@ -26,9 +28,9 @@ void C_Transform::Update()
 {
 }
 
-void C_Transform::OnEditor()
+bool C_Transform::OnEditor()
 {
-	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+	if (Component::OnEditor() == true)
 	{
 
 		int offset = ImGui::CalcTextSize("Local Position: ").x + 16;
@@ -77,8 +79,9 @@ void C_Transform::OnEditor()
 		if (updateTransform) 
 			UpdateTransform();
 
-
+		return true;
 	}
+	return false;
 }
 
 void C_Transform::UpdateTransform()
@@ -128,7 +131,7 @@ C_Transform* C_Transform::GetRecursiveTransforms(C_Transform* node, std::vector<
 	return nullptr;
 }
 
-void C_Transform::SetTransformMatrix(float3 _position, Quat _rotation, float3 _localScale, C_Transform* parent)
+void C_Transform::SetTransformMatrix(float3 _position, Quat _rotation, float3 _localScale)
 {
 	position = _position;
 	rotation = _rotation;
@@ -138,8 +141,8 @@ void C_Transform::SetTransformMatrix(float3 _position, Quat _rotation, float3 _l
 
 	localTransform = float4x4::FromTRS(position, rotation, localScale);
 
-	if (parent != nullptr) {
-		globalTransform = parent->globalTransform * localTransform;
+	if (gameObject->parent->transform != nullptr) {
+		globalTransform = gameObject->parent->transform->globalTransform * localTransform;
 		globalTransformTRANS = globalTransform.Transposed();
 	}
 }

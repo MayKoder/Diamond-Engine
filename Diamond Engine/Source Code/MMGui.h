@@ -11,6 +11,19 @@
 //WARNING: Add this to use URL based ImGui elements
 namespace ImGui
 {
+    inline void CenterNextElement(ImVec2 windowSize, float widthRatio)
+    {
+        float bSize = windowSize.x * widthRatio;
+        ImGui::SetCursorPosX((windowSize.x / 2) - (bSize / 2));
+        ImGui::SetNextItemWidth(bSize);
+    }
+
+    inline bool MiddleButton(const char* title, ImVec2 windowSize, float widthRatio) 
+    {
+        float bSize = windowSize.x * widthRatio;
+        ImGui::SetCursorPosX((windowSize.x / 2) - (bSize / 2));
+        return ImGui::Button(title, ImVec2(bSize, ImGui::CalcTextSize(title).y * 2.f));
+    }
 
     inline void GreySeparator() 
     {

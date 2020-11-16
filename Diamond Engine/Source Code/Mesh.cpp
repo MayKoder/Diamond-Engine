@@ -1,8 +1,9 @@
 #include "Mesh.h"
 #include "OpenGL.h"
 #include "MeshArrays.h"
+#include"I_FileSystem.h"
 
-Mesh::Mesh() : indices_id(-1), vertices_id(-1), generalWireframe(nullptr)
+Mesh::Mesh(const char* _path) : indices_id(-1), vertices_id(-1), generalWireframe(nullptr), path(_path)
 {
 
 }
@@ -366,9 +367,9 @@ void Mesh::GenerateSphere(float radius, float sectorCount, float stackCount)
 const char* Mesh::SaveCustomFormat(uint& retSize)
 {
 	uint aCounts[4] = { indices_count, vertices_count, normals_count, texCoords_count };
-	uint size = sizeof(aCounts) + (sizeof(uint) * indices_count) + (sizeof(float) * vertices_count * 3) + (sizeof(float) * normals_count * 3) + (sizeof(float) * texCoords_count * 2);
+	retSize = sizeof(aCounts) + (sizeof(uint) * indices_count) + (sizeof(float) * vertices_count * 3) + (sizeof(float) * normals_count * 3) + (sizeof(float) * texCoords_count * 2);
 
-	char* fileBuffer = new char[size];
+	char* fileBuffer = new char[retSize];
 	char* cursor = fileBuffer;
 
 	uint bytes = sizeof(aCounts);
@@ -392,4 +393,47 @@ const char* Mesh::SaveCustomFormat(uint& retSize)
 	cursor += bytes;
 
 	return fileBuffer;
+}
+
+void Mesh::LoadCustomFormat(const char* path)
+{
+	char* fileBuffer = nullptr;
+
+	uint size = FileSystem::LoadToBuffer(path, &fileBuffer);
+
+	char* cursor = fileBuffer;
+	uint variables[4];
+
+	uint bytes = sizeof(variables);
+	memcpy(variables, cursor, bytes);
+	indices_count = variables[0];
+	vertices_count = variables[1];
+	normals_count = variables[2];
+	texCoords_count = variables[3];
+	cursor += bytes;
+
+
+	bytes = sizeof(uint) * indices_count;
+
+	indices = new uint[indices_count];
+	memcpy(indices, cursor, bytes);
+	cursor += bytes;
+
+	vertices = new float[vertices_count * 3];
+	bytes = sizeof(float) * vertices_count * 3;
+	memcpy(vertices, cursor, bytes);
+	cursor += bytes;
+
+	normals = new float[normals_count * 3];
+	bytes = sizeof(float) * normals_count * 3;
+	memcpy(normals, cursor, bytes);
+	cursor += bytes;
+
+	texCoords = new float[texCoords_count * 2];
+	bytes = sizeof(float) * texCoords_count * 2;
+	memcpy(texCoords, cursor, bytes);
+	cursor += bytes;
+
+	delete[] fileBuffer;
+	fileBuffer = nullptr;
 }

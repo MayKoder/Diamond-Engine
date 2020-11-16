@@ -2,6 +2,7 @@
 
 #include "glmath.h"
 #include <vector>
+#include<string>
 
 typedef unsigned int GLuint;
 typedef unsigned int uint;
@@ -10,7 +11,7 @@ struct Mesh
 {
 
 public:
-	Mesh();
+	Mesh(const char* _path);
 	~Mesh();
 
 	void GenBuffers();
@@ -45,10 +46,12 @@ public:
 	//TODO: Delete this, wireframe mode should be different
 	// ----------- TEMPORAL LOGIC, MUST BE DELETED ---------------//
 	bool* generalWireframe;
+	std::string path;
 	// ----------- ------------------------------- ---------------//
 
 	void GenerateSphere(float radius, float sectorCount, float stackCount);
 
 	//TODO: Move this to file system
 	const char* SaveCustomFormat(uint& retSize);
+	void LoadCustomFormat(const char*);
 };

@@ -217,6 +217,7 @@
     <ClCompile Include="Source Code\C_Material.cpp" />
     <ClCompile Include="Source Code\C_MeshRenderer.cpp" />
     <ClCompile Include="Source Code\C_Transform.cpp" />
+    <ClCompile Include="Source Code\DEJsonSupport.cpp" />
     <ClCompile Include="Source Code\EngineVersion.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_demo.cpp" />

@@ -6,14 +6,17 @@
 #include "C_Material.h"
 
 #include"MaykMath.h"
-GameObject::GameObject(const char* _name) : parent(nullptr), name(_name), showChildren(false),
-active(true), isStatic(false), toDelete(false)
+#include"parson/parson.h"
+#include <algorithm>
+
+GameObject::GameObject(const char* _name, GameObject* parent, int _uid) : parent(parent), name(_name), showChildren(false),
+active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr)
 {
 	transform = dynamic_cast<C_Transform*>(AddComponent(Component::Type::Transform));
 
-	//TODO: This should not be here
 	//TODO: Should make sure there are not duplicated ID's
-	UID = MaykMath::Random(0, INT_MAX);
+	if(UID == -1)
+		UID = MaykMath::Random(0, INT_MAX);
 }
 
 GameObject::~GameObject()
@@ -35,6 +38,13 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
+	if (dumpComponent != nullptr) 
+	{
+		components.erase(std::find(components.begin(), components.end(), dumpComponent));
+		delete dumpComponent;
+		dumpComponent = nullptr;
+	}
+
 	for (size_t i = 0; i < components.size(); i++)
 	{
 		if(components[i]->IsActive())
@@ -51,7 +61,7 @@ Component* GameObject::AddComponent(Component::Type _type)
 	switch (_type)
 	{
 	case Component::Type::Transform:
-		/*if(transform == nullptr)*/
+		if(transform == nullptr)
 			ret = new C_Transform(this);
 		break;
 	case Component::Type::MeshRenderer:
@@ -117,4 +127,24 @@ bool GameObject::IsRoot()
 void GameObject::Destroy()
 {
 	toDelete = true;
+}
+
+void GameObject::LoadComponents(JSON_Array* componentArray)
+{
+
+	JSON_Object* jsComponent = nullptr;
+	for (size_t i = 1; i < json_array_get_count(componentArray); i++)
+	{
+		jsComponent = json_array_get_object(componentArray, i);
+
+		Component* comp = AddComponent((Component::Type)json_object_get_number(jsComponent, "Type"));
+		comp->LoadData(jsComponent);
+
+	}
+
+}
+
+void GameObject::RemoveComponent(Component* ptr)
+{
+	dumpComponent = ptr;
 }

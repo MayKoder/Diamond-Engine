@@ -13,7 +13,10 @@ public:
 
 	void RenderMesh();
 
-	void OnEditor() override;
+	void SaveData(JSON_Object* nObj) override;
+	void LoadData(JSON_Object* nObj) override;
+
+	bool OnEditor() override;
 
 //private:
 
