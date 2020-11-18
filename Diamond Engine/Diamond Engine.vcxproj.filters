@@ -439,6 +439,12 @@
     <ClInclude Include="Source Code\DEJsonSupport.h">
       <Filter>Sources\Tools\MMath\MMJsonSupport</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\C_Camera.h">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\W_Game.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -668,6 +674,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\DEJsonSupport.cpp">
       <Filter>Sources\Tools\MMath\MMJsonSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\C_Camera.cpp">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\W_Game.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

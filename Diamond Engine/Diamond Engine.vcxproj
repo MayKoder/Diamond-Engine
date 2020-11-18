@@ -93,6 +93,7 @@
     <ClInclude Include="Source Code\Application.h" />
     <ClInclude Include="Source Code\Color.h" />
     <ClInclude Include="Source Code\Component.h" />
+    <ClInclude Include="Source Code\C_Camera.h" />
     <ClInclude Include="Source Code\C_MeshRenderer.h" />
     <ClInclude Include="Source Code\C_Material.h" />
     <ClInclude Include="Source Code\C_Transform.h" />
@@ -206,6 +207,7 @@
     <ClInclude Include="Source Code\W_Assets.h" />
     <ClInclude Include="Source Code\W_Configuration.h" />
     <ClInclude Include="Source Code\W_Console.h" />
+    <ClInclude Include="Source Code\W_Game.h" />
     <ClInclude Include="Source Code\W_Hierarchy.h" />
     <ClInclude Include="Source Code\W_Inspector.h" />
     <ClInclude Include="Source Code\W_Scene.h" />
@@ -214,6 +216,7 @@
     <ClCompile Include="Source Code\Application.cpp" />
     <ClCompile Include="Source Code\Color.cpp" />
     <ClCompile Include="Source Code\Component.cpp" />
+    <ClCompile Include="Source Code\C_Camera.cpp" />
     <ClCompile Include="Source Code\C_Material.cpp" />
     <ClCompile Include="Source Code\C_MeshRenderer.cpp" />
     <ClCompile Include="Source Code\C_Transform.cpp" />
@@ -269,6 +272,7 @@
     <ClCompile Include="Source Code\M_Scene.cpp" />
     <ClCompile Include="Source Code\Texture.cpp" />
     <ClCompile Include="Source Code\W_Assets.cpp" />
+    <ClCompile Include="Source Code\W_Game.cpp" />
     <ClCompile Include="Source Code\W_Hierarchy.cpp" />
     <ClCompile Include="Source Code\Light.cpp" />
     <ClCompile Include="Source Code\log.cpp" />

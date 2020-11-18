@@ -28,10 +28,17 @@ public:
 	bool updateTransform;
 	void SetTransformMatrix(float3 _position, Quat _rotation, float3 _localScale);
 	const float* GetGlobalTransposed() const;
+	void ResetTransform();
+
+	float3 GetForward();
+	float3 GetUp();
+	float3 GetRight();
 
 private: 
 	void UpdateTransform();
 	C_Transform* GetRecursiveTransforms(C_Transform* node, std::vector<C_Transform*>& transforms);
 
 	float4x4 globalTransformTRANS;
+
+	float3 GetNormalizeAxis(int i);
 };

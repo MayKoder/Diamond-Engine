@@ -4,6 +4,7 @@
 #include "C_Transform.h"
 #include "C_MeshRenderer.h"
 #include "C_Material.h"
+#include "C_Camera.h"
 
 #include"MaykMath.h"
 #include"parson/parson.h"
@@ -12,6 +13,10 @@
 GameObject::GameObject(const char* _name, GameObject* parent, int _uid) : parent(parent), name(_name), showChildren(false),
 active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr)
 {
+
+	if(parent != nullptr)
+		parent->children.push_back(this);
+
 	transform = dynamic_cast<C_Transform*>(AddComponent(Component::Type::Transform));
 
 	//TODO: Should make sure there are not duplicated ID's
@@ -45,6 +50,9 @@ void GameObject::Update()
 		dumpComponent = nullptr;
 	}
 
+	//transform->eulerRotation.y += 1.f;
+	//transform->updateTransform = true;
+
 	for (size_t i = 0; i < components.size(); i++)
 	{
 		if(components[i]->IsActive())
@@ -58,6 +66,7 @@ Component* GameObject::AddComponent(Component::Type _type)
 	assert(_type != Component::Type::None, "Can't create a NONE component");
 	Component* ret = nullptr;
 
+	//TODO: Make a way to add only 1 instance components like transform and camera
 	switch (_type)
 	{
 	case Component::Type::Transform:
@@ -69,6 +78,9 @@ Component* GameObject::AddComponent(Component::Type _type)
 		break;
 	case Component::Type::Material:
 		ret = new C_Material(this);
+		break;
+	case Component::Type::Camera:
+		ret = new C_Camera(this);
 		break;
 	}
 
@@ -147,4 +159,53 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 void GameObject::RemoveComponent(Component* ptr)
 {
 	dumpComponent = ptr;
+}
+
+//TODO: WTF IS GOING ON WITH THE ARNAU BUG FFS
+//Deparenting objects with deformations grows transforms
+void GameObject::ChangeParent(GameObject* newParent)
+{
+	//GameObject* ret = nullptr;
+	//ret = IsChild(newParent, ret);
+	if (IsChild(newParent))
+		return;
+
+	parent->RemoveChild(this);	
+	parent = newParent;
+	parent->children.push_back(this);
+
+	//TODO: This could be improved, you are setting up the local matrix 2 times
+	transform->localTransform = parent->transform->globalTransform.Inverted() * transform->globalTransform;
+
+	Quat _rot;
+	float3 scale, pos;
+	transform->localTransform.RotatePart().Decompose(_rot, scale);
+
+	transform->SetTransformMatrix(transform->localTransform.TranslatePart(), _rot, scale);
+	transform->updateTransform = true;
+
+}
+
+bool GameObject::IsChild(GameObject* _toFind)
+{
+	//_toFind is the node we are dropping to
+	//If the parent is
+	//this is the node we are reparenting
+	//_tofind ==  this == if the parents of the node we are dropping is equal to "this", bad, dont reparent
+	if (_toFind == nullptr)
+		return false;
+
+	if (_toFind == this)
+	{
+		return true;
+	}
+	else
+	{
+		IsChild(_toFind->parent);
+	}
+}
+
+void GameObject::RemoveChild(GameObject* child)
+{
+	children.erase(std::find(children.begin(), children.end(), child));
 }

@@ -8,7 +8,7 @@
 #include "W_Inspector.h"
 #include "ModuleInput.h"
 
-W_Hierarchy::W_Hierarchy(M_Scene* _scene) : Window(), cSceneReference(_scene)
+W_Hierarchy::W_Hierarchy(M_Scene* _scene) : Window(), cSceneReference(_scene), dropTarget(nullptr)
 {
 	name = "Hierarchy";
 }
@@ -60,12 +60,19 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 		ImGui::PopStyleColor();
 
 	//Only can use if this is not the root node
+	//ASK: Should the root node really be a gameobject? Problems with checks
 	if (!node->IsRoot()) 
 	{
 		//Start drag for reparent
 		if (ImGui::BeginDragDropSource(/*ImGuiDragDropFlags_SourceNoDisableHover*/))
 		{
-			ImGui::SetDragDropPayload("_TREENODE", node->name.c_str(), sizeof(node->name.data()) * node->name.length());
+			ImGui::SetDragDropPayload("_GAMEOBJECT", node, sizeof(GameObject*));
+
+			//void* data = nullptr;
+			//const void* testNode = node;
+			//memcpy(data, testNode, sizeof(GameObject*));
+			dropTarget = node;
+
 			ImGui::Text("Change parent to...");
 			ImGui::EndDragDropSource();
 		}
@@ -76,15 +83,26 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 		}
 	}
 
+	//If we call this after BeginDragDropTarget() next child will crash because we are trying
+	//To show childrens of a flags = leaf node
+	node->showChildren = (node->children.size() == 0) ? false : nodeOpen;
+	
 	//All nodes can be a drop target
 	if (ImGui::BeginDragDropTarget())
 	{
-		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TREENODE"))
-			LOG(LogType::L_WARNING, "Parented %s to %s", payload->Data, node->name.c_str());
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT")) 
+		{
+
+			GameObject* dropGO = static_cast<GameObject*>(payload->Data);
+			//memcpy(dropGO, payload->Data, payload->DataSize);
+
+			dropTarget->ChangeParent(node);
+			LOG(LogType::L_NORMAL, "%s", dropTarget->name.c_str());
+			dropTarget = nullptr;
+		}
 		ImGui::EndDragDropTarget();
 	}
 
-	node->showChildren = (node->children.size() == 0) ? false : nodeOpen;
 
 	if (node->showChildren == true)
 	{

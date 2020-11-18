@@ -26,6 +26,8 @@ C_Transform::~C_Transform()
 
 void C_Transform::Update()
 {
+	if (updateTransform)
+		UpdateTransform();
 }
 
 bool C_Transform::OnEditor()
@@ -53,6 +55,8 @@ bool C_Transform::OnEditor()
 		if (ImGui::DragFloat3("##lScale", &localScale[0], 0.1f))
 			updateTransform = true;
 
+		if (ImGui::Button("Reset Transform"))
+			ResetTransform();
 
 		// GLOBAL MATRIX //
 		ImGui::Separator();
@@ -75,15 +79,12 @@ bool C_Transform::OnEditor()
 		ImGui::SameLine();
 		ImGui::Text("%f, %f, %f", globalTransform.GetScale().x, globalTransform.GetScale().y, globalTransform.GetScale().z);
 
-
-		if (updateTransform) 
-			UpdateTransform();
-
 		return true;
 	}
 	return false;
 }
 
+//TODO: This should be recursive
 void C_Transform::UpdateTransform()
 {
 	std::vector<C_Transform*> transformsToUpdate;
@@ -131,6 +132,7 @@ C_Transform* C_Transform::GetRecursiveTransforms(C_Transform* node, std::vector<
 	return nullptr;
 }
 
+
 void C_Transform::SetTransformMatrix(float3 _position, Quat _rotation, float3 _localScale)
 {
 	position = _position;
@@ -150,4 +152,32 @@ void C_Transform::SetTransformMatrix(float3 _position, Quat _rotation, float3 _l
 const float* C_Transform::GetGlobalTransposed() const
 {
 	return globalTransformTRANS.ptr();
+}
+
+void C_Transform::ResetTransform()
+{
+	position = eulerRotation = float3::zero;
+	localScale = float3::one;
+
+	updateTransform = true;
+}
+
+float3 C_Transform::GetForward()
+{
+	return GetNormalizeAxis(2);
+}
+
+float3 C_Transform::GetUp()
+{
+	return GetNormalizeAxis(1);
+}
+
+float3 C_Transform::GetRight()
+{
+	return GetNormalizeAxis(0);
+}
+
+float3 C_Transform::GetNormalizeAxis(int i)
+{
+	return globalTransform.RotatePart().Col(i).Normalized();
 }

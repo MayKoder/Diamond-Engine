@@ -26,6 +26,7 @@ void W_Scene::Draw()
 {
 
 	//We are only rendering the part of the screen seen by scene window size
+	//WARNING/TODO: This is temporal, we should render the full texture but modufy the camera fov to avoid deformations
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*/, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse)) 

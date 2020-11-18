@@ -62,6 +62,7 @@ void MeshLoader::BufferToMeshes(const char* full_path, char* buffer, int size, G
 			for (size_t k = 0; k < scene->mNumMaterials; k++)
 			{
 				aiMaterial* material = scene->mMaterials[k];
+				aiString str = material->GetName();
 				uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
 
 				if (numTextures > 0) 
@@ -95,6 +96,12 @@ void MeshLoader::BufferToMeshes(const char* full_path, char* buffer, int size, G
 					}
 
 					path.Clear();
+				}
+				else 
+				{
+					//TODO: Temporal shit, think of a better way
+					Texture* meshTexture = new Texture(EngineExternal->moduleRenderer3D->checkersTexture, 256, 256, "", "");
+					testTextures.push_back(meshTexture);
 				}
 			}
 		}
@@ -197,7 +204,7 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& sce
 		//	LOG(LogType::L_ERROR, "Some matrix loading is NAN");
 		//}
 
-		gmParent->children.push_back(gmNode);
+		//gmParent->children.push_back(gmNode);
 	}
 
 	if (node->mNumChildren > 0)
@@ -214,7 +221,7 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& sce
 		{
 			rootGO = new GameObject(holderName, gmParent);
 			PopulateTransform(rootGO, pos, rot, scale);
-			gmParent->children.push_back(rootGO);
+			//gmParent->children.push_back(rootGO);
 		}
 
 		
@@ -271,10 +278,10 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 	}
 
 	//TODO: Load vertex colors
-	//if (importedMesh->HasVertexColors(0)) 
-	//{
-
-	//}
+	if (importedMesh->HasVertexColors(0)) 
+	{
+		LOG(LogType::L_ERROR, "ADD VERTEX COLORS");
+	}
 
 
 	// Generate indices

@@ -34,6 +34,15 @@ void MaykMath::FindCentroid(float* A, float* B, float* C, float* r)
 	}
 }
 
+void MaykMath::GeneralDataSet(float* dest, float* src, size_t vecSize)
+{
+	for (size_t i = 0; i < vecSize; i++)
+	{
+		dest[i] = src[i];
+	}
+
+}
+
 //template <class T>
 //void MaykMath::FixedVectorPushBack(std::vector<T>& vec, T& value)
 //{

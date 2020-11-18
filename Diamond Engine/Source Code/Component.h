@@ -14,7 +14,9 @@ public:
 		None,
 		Transform,
 		MeshRenderer,
-		Material
+		Material,
+		Camera,
+		Count,
 	};
 
 	Component(GameObject* _gm);

@@ -18,6 +18,8 @@ namespace MaykMath
 
 	void FindCentroid(float* A, float* B, float* C, float* r);
 
+	void GeneralDataSet(float* dest, float* src, size_t vecSize);
+
 	template <class T>
 	void FixedVectorPushBack(std::vector<T>& vec, T& value) {
 		if (vec.size() == vec.capacity())

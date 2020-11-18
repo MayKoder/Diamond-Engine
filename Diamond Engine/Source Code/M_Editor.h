@@ -18,6 +18,7 @@ enum class EditorWindow {
 	HIERARCHY,
 	INSPECTOR,
 	SCENE,
+	GAME,
 
 	//Help tab
 	ABOUT,

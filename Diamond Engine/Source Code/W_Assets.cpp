@@ -13,7 +13,6 @@ void W_Assets::Draw()
 {
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/)) 
 	{
-		//ImGui::Separator();
 	}
 	ImGui::End();
 }

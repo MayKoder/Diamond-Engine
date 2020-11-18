@@ -55,7 +55,8 @@ void ModuleCamera3D::OnGUI()
 update_status ModuleCamera3D::Update(float dt)
 {
 
-	
+	//ASK: This should be here to move camera with code but idk its expensive
+	Move(cameraMovement);
 	return UPDATE_CONTINUE;
 }
 
@@ -178,9 +179,6 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 
 	if (App->moduleInput->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
 		PanCamera(dt);
-
-	Move(cameraMovement);
-
 }
 
 // -----------------------------------------------------------------

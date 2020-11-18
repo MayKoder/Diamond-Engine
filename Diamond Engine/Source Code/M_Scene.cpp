@@ -14,6 +14,7 @@
 #include "I_FileSystem.h"
 
 #include"DEJsonSupport.h"
+#include"MaykMath.h"
 #include"C_Transform.h"
 
 M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr)
@@ -27,6 +28,9 @@ M_Scene::~M_Scene()
 bool M_Scene::Init()
 {
 	root = CreateGameObject("Scene root", nullptr);
+
+	GameObject* cam = CreateGameObject("Main Camera", root);
+	cam->AddComponent(Component::Type::Camera);
 
 	return true;
 }
@@ -73,8 +77,8 @@ GameObject* M_Scene::CreateGameObject(const char* name, GameObject* parent, int 
 {
 	GameObject* gm = new GameObject(name, parent, _uid);
 
-	if (parent != nullptr)
-		parent->children.push_back(gm);
+	//if (parent != nullptr)
+	//	parent->children.push_back(gm);
 
 	return gm;
 }
@@ -151,8 +155,17 @@ void M_Scene::LoadScene(const char* name)
 	//Clear all current scene memory
 	delete root;
 	root = nullptr;
+	dynamic_cast<W_Inspector*>(App->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR))->selectedGO = nullptr;
 
 	JSON_Object* sceneObj = json_value_get_object(scene);
+
+	MaykMath::GeneralDataSet(&App->moduleCamera->Position.x, &DEJson::ReadVector3(sceneObj, "EditorCameraPosition")[0], 3);
+	MaykMath::GeneralDataSet(&App->moduleCamera->X.x, &DEJson::ReadVector3(sceneObj, "EditorCameraX")[0], 3);
+	MaykMath::GeneralDataSet(&App->moduleCamera->Y.x, &DEJson::ReadVector3(sceneObj, "EditorCameraY")[0], 3);
+	MaykMath::GeneralDataSet(&App->moduleCamera->Z.x, &DEJson::ReadVector3(sceneObj, "EditorCameraZ")[0], 3);
+
+
+
 	JSON_Array* sceneGO = json_object_get_array(sceneObj, "Game Objects");
 
 	JSON_Object* goJsonObj = json_array_get_object(sceneGO, 0);
@@ -185,7 +198,7 @@ void M_Scene::GoToJSON(GameObject* go, JSON_Array* jsonObj)
 	json_object_set_string(goData, "name", go->name.c_str());
 
 	DEJson::WriteVector3(goData, "Position", &dynamic_cast<C_Transform*>(go->GetComponent(Component::Type::Transform))->position[0]);
-	DEJson::WriteVector3(goData, "Rotation", &dynamic_cast<C_Transform*>(go->GetComponent(Component::Type::Transform))->rotation.x);
+	DEJson::WriteQuat(goData, "Rotation", &dynamic_cast<C_Transform*>(go->GetComponent(Component::Type::Transform))->rotation.x);
 	DEJson::WriteVector3(goData, "Scale", &dynamic_cast<C_Transform*>(go->GetComponent(Component::Type::Transform))->localScale[0]);
 
 	DEJson::WriteInt(goData, "UID", go->UID);

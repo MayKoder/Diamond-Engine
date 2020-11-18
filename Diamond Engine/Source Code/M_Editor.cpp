@@ -25,6 +25,7 @@
 #include "W_Hierarchy.h"
 #include "W_Scene.h"
 #include "W_Assets.h"
+#include "W_Game.h"
 
 //#include"MathGeoLib/include/Math/float3.h"
 #include"GameObject.h"
@@ -40,6 +41,7 @@ viewportCorSize(0.f), dockspace_id(0)
 	windows[static_cast<unsigned int>(EditorWindow::HIERARCHY)] = new W_Hierarchy(App->moduleScene);
 	windows[static_cast<unsigned int>(EditorWindow::INSPECTOR)] = new W_Inspector();
 	windows[static_cast<unsigned int>(EditorWindow::SCENE)] = new W_Scene(App);
+	windows[static_cast<unsigned int>(EditorWindow::GAME)] = new W_Game();
 
 	//TODO: This 2 windows are last on the enum to keep them from drawing on the window
 	//tab on the main menu bar, and are drawed by hand on other tabs, there
@@ -190,7 +192,7 @@ void M_Editor::DrawMenuBar()
 			{
 				//Do something
 			}
-			if (ImGui::MenuItem("Save scene", "Ctrl+S"))
+			if (ImGui::MenuItem("Save scene", "CTRL+S"))
 			{
 				App->moduleScene->SaveScene();
 			}
@@ -218,22 +220,30 @@ void M_Editor::DrawMenuBar()
 
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
 
-			//TODO: This is temporal, meshes should not laod every time and 
-			//should be stored only once, then only copy mesh pointers.
-			if (ImGui::MenuItem("Cube", nullptr))
-				FileSystem::LoadDroppedFile("Assets/Primitives/Cube.fbx");
-			if (ImGui::MenuItem("Cylinder", nullptr))
-				FileSystem::LoadDroppedFile("Assets/Primitives/Cylinder.fbx");
-			if (ImGui::MenuItem("Icosphere", nullptr))
-				FileSystem::LoadDroppedFile("Assets/Primitives/Icosphere.fbx");
-			if (ImGui::MenuItem("Pyramid", nullptr))
-				FileSystem::LoadDroppedFile("Assets/Primitives/Pyramid.fbx");
-			if (ImGui::MenuItem("Sphere", nullptr))
-				FileSystem::LoadDroppedFile("Assets/Primitives/Sphere.fbx");
-			if (ImGui::MenuItem("Torus", nullptr))
-				FileSystem::LoadDroppedFile("Assets/Primitives/Torus.fbx");
-			if (ImGui::MenuItem("Monkey", nullptr))
-				FileSystem::LoadDroppedFile("Assets/Primitives/Monkey.fbx");
+			if (ImGui::MenuItem("Empty", nullptr))
+				App->moduleScene->CreateGameObject("Empty", App->moduleScene->root);
+
+			if (ImGui::BeginMenu("3D")) 
+			{
+				//TODO: This is temporal, meshes should not laod every time and 
+				//should be stored only once, then only copy mesh pointers.
+				if (ImGui::MenuItem("Cube", nullptr))
+					FileSystem::LoadDroppedFile("Assets/Primitives/Cube.fbx");
+				if (ImGui::MenuItem("Cylinder", nullptr))
+					FileSystem::LoadDroppedFile("Assets/Primitives/Cylinder.fbx");
+				if (ImGui::MenuItem("Icosphere", nullptr))
+					FileSystem::LoadDroppedFile("Assets/Primitives/Icosphere.fbx");
+				if (ImGui::MenuItem("Pyramid", nullptr))
+					FileSystem::LoadDroppedFile("Assets/Primitives/Pyramid.fbx");
+				if (ImGui::MenuItem("Sphere", nullptr))
+					FileSystem::LoadDroppedFile("Assets/Primitives/Sphere.fbx");
+				if (ImGui::MenuItem("Torus", nullptr))
+					FileSystem::LoadDroppedFile("Assets/Primitives/Torus.fbx");
+				if (ImGui::MenuItem("Monkey", nullptr))
+					FileSystem::LoadDroppedFile("Assets/Primitives/Monkey.fbx");
+				ImGui::EndMenu();
+			}
+
 
 			ImGui::PopStyleColor(1);
 			ImGui::EndMenu();
