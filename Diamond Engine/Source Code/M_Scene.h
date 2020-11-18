@@ -35,8 +35,4 @@ private:
 
 	void UpdateGameObjects();
 	void RecursiveUpdate(GameObject* parent);
-
-
-	//ASK: Thinking about using _lowerCase() for some private methods as a "dont use this" warning
-	void GoToJSON(GameObject* go, JSON_Array* jsonObj);
 };

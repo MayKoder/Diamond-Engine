@@ -4,6 +4,7 @@
 #include<string>
 
 #include "Component.h"
+#include"parson/parson.h"
 
 class C_Transform;
 
@@ -26,6 +27,9 @@ public:
 	bool IsRoot();
 
 	void Destroy();
+
+	void SaveToJson(JSON_Array*);
+
 	void LoadComponents(JSON_Array* componentArray);
 	void RemoveComponent(Component* ptr);
 

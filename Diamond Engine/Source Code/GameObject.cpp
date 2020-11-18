@@ -8,6 +8,7 @@
 
 #include"MaykMath.h"
 #include"parson/parson.h"
+#include"DEJsonSupport.h"
 #include <algorithm>
 
 GameObject::GameObject(const char* _name, GameObject* parent, int _uid) : parent(parent), name(_name), showChildren(false),
@@ -139,6 +140,47 @@ bool GameObject::IsRoot()
 void GameObject::Destroy()
 {
 	toDelete = true;
+}
+
+void GameObject::SaveToJson(JSON_Array* _goArray)
+{
+	JSON_Value* goValue = json_value_init_object();
+	JSON_Object* goData = json_value_get_object(goValue);
+
+	//Save all gameObject data
+	json_object_set_string(goData, "name", name.c_str());
+
+	DEJson::WriteVector3(goData, "Position", &transform->position[0]);
+	DEJson::WriteQuat(goData, "Rotation", &transform->rotation.x);
+	DEJson::WriteVector3(goData, "Scale", &transform->localScale[0]);
+
+	DEJson::WriteInt(goData, "UID", UID);
+
+	if (parent)
+		DEJson::WriteInt(goData, "ParentUID", parent->UID);
+
+	json_array_append_value(_goArray, goValue);
+
+	//TODO: Move inside component base
+	{
+		//Save components
+		JSON_Value* goArray = json_value_init_array();
+		JSON_Array* jsArray = json_value_get_array(goArray);
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			JSON_Value* nVal = json_value_init_object();
+			JSON_Object* nObj = json_value_get_object(nVal);
+
+			components[i]->SaveData(nObj);
+			json_array_append_value(jsArray, nVal);
+		}
+		json_object_set_value(goData, "Components", goArray);
+	}
+
+	for (size_t i = 0; i < children.size(); i++)
+	{
+		children[i]->SaveToJson(_goArray);
+	}
 }
 
 void GameObject::LoadComponents(JSON_Array* componentArray)

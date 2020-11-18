@@ -29,29 +29,31 @@ namespace DEJson
 	Quat ReadQuat(JSON_Object* obj, const char* name);
 }
 
-//struct DEConfig
-//{
-//	//Internal use only
-//	void PopulateArray(JSON_Value* _array, float* value, unsigned int size);
-//
-//
-//	void WriteFloat(const char* name, float value);
-//	float ReadFloat(const char* name);
-//
-//	void WriteString(const char* name, const char* value);
-//	const char* ReadString(const char* name);
-//
-//	void WriteBool(const char* name, bool value);
-//	bool ReadBool(const char* name);
-//
-//	void WriteInt(const char* name, int value);
-//	void ReadInt(const char* name);
-//
-//	void WriteVector3(const char* name, float* value);
-//	float3 ReadVector3(const char* name);
-//
-//	void WriteQuat(const char* name, float* value);
-//	Quat ReadQuat(const char* name);
-//
-//	JSON_Object* nObj;
-//};
+struct DEConfig
+{
+
+	DEConfig(JSON_Object* _nObj);
+	//Internal use only
+	void PopulateArray(JSON_Value* _array, float* value, unsigned int size);
+
+
+	void WriteFloat(const char* name, float value);
+	float ReadFloat(const char* name);
+
+	void WriteString(const char* name, const char* value);
+	const char* ReadString(const char* name);
+
+	void WriteBool(const char* name, bool value);
+	bool ReadBool(const char* name);
+
+	void WriteInt(const char* name, int value);
+	void ReadInt(const char* name);
+
+	void WriteVector3(const char* name, float* value);
+	float3 ReadVector3(const char* name);
+
+	void WriteQuat(const char* name, float* value);
+	Quat ReadQuat(const char* name);
+
+	JSON_Object* nObj;
+};
