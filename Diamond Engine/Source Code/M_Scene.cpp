@@ -10,12 +10,14 @@
 
 #include "W_Inspector.h"
 #include "W_Hierarchy.h"
+#include"W_Game.h"
 
 #include "I_FileSystem.h"
 
 #include"DEJsonSupport.h"
 #include"MaykMath.h"
 #include"C_Transform.h"
+#include"C_Camera.h"
 
 M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr)
 {
@@ -29,15 +31,18 @@ bool M_Scene::Init()
 {
 	root = CreateGameObject("Scene root", nullptr);
 
-	GameObject* cam = CreateGameObject("Main Camera", root);
-	cam->AddComponent(Component::Type::Camera);
-
 	return true;
 }
 
 bool M_Scene::Start()
 {
 	//FileSystem::LoadFile("Assets/skybox.fbx");
+	GameObject* cam = CreateGameObject("Main Camera", root);
+	C_Camera* c_comp = dynamic_cast<C_Camera*>(cam->AddComponent(Component::Type::Camera));
+
+	dynamic_cast<W_Game*>(App->moduleEditor->GetEditorWindow(EditorWindow::GAME))->SetTargetCamera(c_comp);
+	App->moduleRenderer3D->tmpCameraTest = c_comp;
+
 	return true;
 }
 

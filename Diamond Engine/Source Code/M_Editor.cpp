@@ -11,6 +11,8 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
+#include"ImGuizmo/ImGuizmo.h"
+
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 #include "M_Editor.h"
@@ -118,6 +120,8 @@ void M_Editor::Draw()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->moduleWindow->window);
 	ImGui::NewFrame();
+
+	ImGuizmo::BeginFrame();
 
 	DrawMenuBar();
 

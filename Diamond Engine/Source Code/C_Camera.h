@@ -17,7 +17,20 @@ public:
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(JSON_Object* nObj) override;
 
+	float4x4 GetOpenGLViewMatrix() const;
+	float4x4 GetOpenGLProjectionMatrix() const;
+	void SetAspectRatio(float aspectRatio);
+
+	void StartDraw();
+	void EndDraw();
+
+	void ReGenerateBuffer(int w, int h);
+
+	unsigned int framebuffer;
+	unsigned int texColorBuffer;
+	unsigned int rbo;
+
 	Frustum camFrustrum;
-	int imgBufferID;
+	float fov;
 
 };

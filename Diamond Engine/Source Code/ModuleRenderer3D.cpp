@@ -14,8 +14,13 @@
 
 #include"ModuleInput.h"
 #include"GameObject.h"
+
 #include"C_MeshRenderer.h"
+#include"C_Camera.h"
+
 #include"Texture.h"
+#include"Primitive.h"
+
 
 #ifdef _DEBUG
 #pragma comment (lib, "MathGeoLib/libx86/MGDebug/MathGeoLib.lib")
@@ -28,7 +33,7 @@
 
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), str_CAPS(""),
-vsync(false), wireframe(false)
+vsync(false), wireframe(false), tmpCameraTest(nullptr)
 {
 	GetCAPS(str_CAPS);
 	/*depth =*/ cull = lightng = color_material = texture_2d = true;
@@ -192,6 +197,10 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	glLoadIdentity();
 
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glLoadMatrixf(&ProjectionMatrix);
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->moduleCamera->GetViewMatrix());
 
@@ -208,12 +217,11 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 
-	Plane p(0, 1, 0, 0);
+	Grid p(0, 0, 0, 0);
 	//p.Scale();
 	p.axis = true;
 	p.Render();
 
-	//App->level->Draw();
 	//TODO: This should not be here
 	if (!renderQueue.empty()) 
 	{
@@ -221,16 +229,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		{
 			renderQueue[i]->RenderMesh();
 		}
-		renderQueue.clear();
+		//renderQueue.clear();
 	}
-
-	//if (debug_draw == true)
-	//{
-	//	BeginDebugDraw();
-	//	App->DebugDraw();
-	//	EndDebugDraw();
-	//}
-	//App->editor->Draw();		[DONE]
 
 	//Change frame buffer to default window
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -238,6 +238,21 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	glClearColor(0.05f, 0.05f, 0.05f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Test new camera render here?
+	//Start test draw
+	tmpCameraTest->StartDraw();
+	p.Render();
+	if (!renderQueue.empty())
+	{
+		for (size_t i = 0; i < renderQueue.size(); i++)
+		{
+			renderQueue[i]->RenderMesh();
+		}
+		renderQueue.clear();
+	}
+	tmpCameraTest->EndDraw();
+	//LOG(LogType::L_WARNING, "Frame buffer renderer id: %d", framebuffer);
 
 	App->moduleEditor->Draw();
 

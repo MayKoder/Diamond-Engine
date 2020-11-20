@@ -3,6 +3,8 @@
 
 #include "Window.h"
 
+class C_Camera;
+
 class W_Game : public Window
 {
 
@@ -11,6 +13,11 @@ public:
 	virtual ~W_Game();
 
 	void Draw() override;
+
+	void SetTargetCamera(C_Camera* _cam);
+
+private: 
+	C_Camera* targetCamera;
 
 };
 

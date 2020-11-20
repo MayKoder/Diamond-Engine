@@ -3,7 +3,6 @@
 #include "Module.h"
 //#include "Globals.h"
 #include "glmath.h"
-#include"Primitive.h"
 #include "Light.h"
 
 #include <queue>
@@ -13,6 +12,7 @@
 class Mesh;
 class C_MeshRenderer;
 class Texture;
+class C_Camera;
 
 #define MAX_LIGHTS 1
 
@@ -57,11 +57,12 @@ public:
 	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
 
 	std::vector<C_MeshRenderer*> renderQueue;
+	C_Camera* tmpCameraTest;
 
 public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
-	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+	mat4x4 ModelMatrix, ProjectionMatrix;
 };

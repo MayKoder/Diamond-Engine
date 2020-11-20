@@ -107,6 +107,11 @@
     <ClInclude Include="Source Code\External Libraries\DevIL\include\ilut_config.h" />
     <ClInclude Include="Source Code\External Libraries\DevIL\include\ilu_region.h" />
     <ClInclude Include="Source Code\External Libraries\DevIL\include\il_wrap.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGuizmo\ImCurveEdit.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGuizmo\ImGradient.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGuizmo\ImGuizmo.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGuizmo\ImSequencer.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGuizmo\ImZoomSlider.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imconfig.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\ImGuiUtils.h" />
@@ -222,6 +227,10 @@
     <ClCompile Include="Source Code\C_Transform.cpp" />
     <ClCompile Include="Source Code\DEJsonSupport.cpp" />
     <ClCompile Include="Source Code\EngineVersion.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGuizmo\ImCurveEdit.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGuizmo\ImGradient.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGuizmo\ImGuizmo.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGuizmo\ImSequencer.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_demo.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_draw.cpp" />
