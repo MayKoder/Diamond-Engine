@@ -12,6 +12,8 @@
 #include "DevIL\include\ilu.h"
 #include "DevIL\include\ilut.h"
 
+#include"W_Game.h"
+
 #include"ModuleInput.h"
 #include"GameObject.h"
 
@@ -38,7 +40,7 @@ vsync(false), wireframe(false), tmpCameraTest(nullptr)
 	GetCAPS(str_CAPS);
 	/*depth =*/ cull = lightng = color_material = texture_2d = true;
 
-	framebuffer = texColorBuffer = rbo = 0;
+	//framebuffer = texColorBuffer = rbo = 0;
 }
 
 // Destructor
@@ -175,10 +177,6 @@ bool ModuleRenderer3D::Init()
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 
-	//Generate scene buffers
-	ReGenerateFrameBuffer(App->moduleWindow->s_width, App->moduleWindow->s_height);
-
-
 	// Projection matrix for
 	OnResize(App->moduleWindow->s_width, App->moduleWindow->s_height);
 	
@@ -188,21 +186,7 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-
-	glClearColor(0.08f, 0.08f, 0.08f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glEnable(GL_DEPTH_TEST);
-
-	glLoadIdentity();
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glLoadMatrixf(&ProjectionMatrix);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->moduleCamera->GetViewMatrix());
+	App->moduleCamera->editorCamera.StartDraw();
 
 	//Light 0 on cam pos
 	lights[0].SetPos(5, 5, 5);
@@ -232,12 +216,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		//renderQueue.clear();
 	}
 
-	//Change frame buffer to default window
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glDisable(GL_DEPTH_TEST);
-
-	glClearColor(0.05f, 0.05f, 0.05f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	App->moduleCamera->editorCamera.EndDraw();
 
 	//Test new camera render here?
 	//Start test draw
@@ -267,9 +246,9 @@ bool ModuleRenderer3D::CleanUp()
 	LOG(LogType::L_NORMAL, "Destroying 3D Renderer");
 
 
-	glDeleteFramebuffers(1, &framebuffer);
-	glDeleteTextures(1, &texColorBuffer);
-	glDeleteRenderbuffers(1, &rbo);
+	//glDeleteFramebuffers(1, &framebuffer);
+	//glDeleteTextures(1, &texColorBuffer);
+	//glDeleteRenderbuffers(1, &rbo);
 
 	for (unsigned int k = 0; k < globalTextures.size(); ++k)
 	{
@@ -295,19 +274,16 @@ bool ModuleRenderer3D::CleanUp()
 void ModuleRenderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf(&ProjectionMatrix);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	//ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
 
 	App->moduleWindow->s_width = width;
 	App->moduleWindow->s_height = height;
 
-	ReGenerateFrameBuffer(width, height);
+	App->moduleCamera->editorCamera.ReGenerateBuffer(width, height);
+
+	W_Game* gameWindow = dynamic_cast<W_Game*>(App->moduleEditor->GetEditorWindow(EditorWindow::GAME));
+	if(gameWindow->GetTargetCamera())
+		gameWindow->GetTargetCamera()->ReGenerateBuffer(width, height);
 }
 
 void ModuleRenderer3D::OnGUI()
@@ -374,48 +350,10 @@ void ModuleRenderer3D::OnGUI()
 	}
 }
 
-/*Regenerate framebuffers on size change*/
-void ModuleRenderer3D::ReGenerateFrameBuffer(int w, int h)
-{
-	if(framebuffer > 0)
-		glDeleteFramebuffers(1, &framebuffer);
-
-	if (texColorBuffer > 0)
-		glDeleteTextures(1, &texColorBuffer);
-
-	if (rbo > 0)
-		glDeleteRenderbuffers(1, &rbo);
-
-
-	glGenFramebuffers(1, &framebuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-
-	glGenTextures(1, &texColorBuffer);
-	glBindTexture(GL_TEXTURE_2D, texColorBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	// attach it to currently bound framebuffer object
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColorBuffer, 0);
-
-	glGenRenderbuffers(1, &rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, w, h);
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		LOG(LogType::L_ERROR, "ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
 /*Take a screenshot*/
 void ModuleRenderer3D::TakeScreenshot()
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, App->moduleCamera->editorCamera.framebuffer);
 
 	ILuint imageID = ilGenImage();
 	ilBindImage(imageID);

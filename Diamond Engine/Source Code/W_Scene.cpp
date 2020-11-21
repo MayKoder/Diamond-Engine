@@ -7,16 +7,18 @@
 #include"Application.h"
 #include"M_Editor.h"
 
-#include"ImGuizmo/ImGuizmo.h"
+#include"ImGui/imgui_internal.h"
 
 #include"C_Transform.h"
+#include"ModuleInput.h"
 #include"GameObject.h"
-#include"ModuleCamera3D.h"
 
 W_Scene::W_Scene(Application* _app) : Window() /*: texColorBuffer(-1)*/
 {
 	name = "Scene";
 	App = _app;
+
+	operation = ImGuizmo::OPERATION::TRANSLATE;
 }
 
 W_Scene::~W_Scene()
@@ -40,6 +42,7 @@ void W_Scene::Draw()
 	{
 		if (/*ImGui::IsWindowFocused() &&*/ ImGui::IsWindowHovered()) 
 		{
+			//TODO: Uncomment this, it's the editor camera input handler
 			App->moduleCamera->ProcessSceneKeyboard();
 		}
 
@@ -55,21 +58,35 @@ void W_Scene::Draw()
 		//Display the scene
 		//ImGui::Image((ImTextureID)App->moduleRenderer3D->texColorBuffer, e, uv0, uv1);
 		ImVec2 size = ImGui::GetContentRegionAvail();
-		ImGui::Image((ImTextureID)App->moduleRenderer3D->texColorBuffer, size, ImVec2(0, 1), ImVec2(1, 0));
+
+		App->moduleCamera->editorCamera.SetAspectRatio(ImGui::GetContentRegionAvail().x / ImGui::GetContentRegionAvail().y);
+		ImGui::Image((ImTextureID)App->moduleCamera->editorCamera.texColorBuffer, size, ImVec2(0, 1), ImVec2(1, 0));
 
 		//Draw gizmo
 		if (EngineExternal->moduleEditor->GetSelectedGO())
 		{
+			if (App->moduleInput->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+				operation = ImGuizmo::OPERATION::TRANSLATE;
+			if (App->moduleInput->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+				operation = ImGuizmo::OPERATION::ROTATE;
+			if (App->moduleInput->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+				operation = ImGuizmo::OPERATION::SCALE;
+			if (App->moduleInput->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				operation = ImGuizmo::OPERATION::BOUNDS;
+
+
 			ImVec2 cornerPos = ImGui::GetWindowPos();
-			ImVec2 _size = ImGui::GetWindowSize();
+			ImVec2 _size = ImGui::GetContentRegionMax();
 			//The small offset is due to some error margin in the rect height
-			//ERROR: ImGuizmo drawing on top of editor
+			//ERROR: ImGuizmo small offset
 			//ERROR: WE BROKE THE FOV STUFF, YAAY
-			ImGuizmo::SetRect(cornerPos.x, cornerPos.y, _size.x, _size.y);
+			ImGuiContext& g = *ImGui::GetCurrentContext();
+			int offset = ImGui::GetFrameHeight() / 2;
+			ImGuizmo::SetRect(cornerPos.x, cornerPos.y + offset, _size.x, _size.y);
 
 			ImGuizmo::SetDrawlist();
 			//ImGui::PushClipRect(ImGui::GetWindowSize(), ImGui::GetWindowSize(), true);
-			ImGuizmo::Manipulate(EngineExternal->moduleCamera->GetViewMatrix(), &EngineExternal->moduleRenderer3D->ProjectionMatrix, ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::MODE::LOCAL, EngineExternal->moduleEditor->GetSelectedGO()->transform->globalTransform.Transposed().ptr());
+			ImGuizmo::Manipulate(EngineExternal->moduleCamera->editorCamera.GetOpenGLViewMatrix().v[0], EngineExternal->moduleCamera->editorCamera.GetOpenGLProjectionMatrix().v[0], operation, ImGuizmo::MODE::LOCAL, EngineExternal->moduleEditor->GetSelectedGO()->transform->globalTransform.Transposed().ptr());
 			//ImGui::PopClipRect();
 
 			//if (ImGuizmo::IsUsing())

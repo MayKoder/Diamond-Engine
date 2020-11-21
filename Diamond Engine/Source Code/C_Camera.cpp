@@ -9,6 +9,21 @@
 #include"C_Transform.h"
 #include"OpenGL.h"
 
+C_Camera::C_Camera() : Component(nullptr), framebuffer(-1), texColorBuffer(-1), rbo(-1), fov(60.0f)
+{
+	name = "Camera";
+	camFrustrum.type = FrustumType::PerspectiveFrustum;
+	camFrustrum.nearPlaneDistance = 0.1f;
+	camFrustrum.farPlaneDistance = 500.f;
+	camFrustrum.front = float3::unitZ;
+	camFrustrum.up = float3::unitY;
+
+	camFrustrum.verticalFov = 60.0f * DEGTORAD;
+	camFrustrum.horizontalFov = 2.0f * atanf(tanf(camFrustrum.verticalFov / 2.0f) * 1.3f);
+
+	camFrustrum.pos = float3::zero;
+}
+
 C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(-1), texColorBuffer(-1), rbo(-1), fov(60.0f)
 {
 	name = "Camera";
@@ -79,9 +94,7 @@ void C_Camera::Update()
 	camFrustrum.front = gameObject->transform->GetForward();
 	camFrustrum.up = gameObject->transform->GetUp();
 
-	//Temporal camera debug
-	float3 forward = gameObject->transform->GetForward() * 10;
-
+	//TEMP: Temporal frustrum debug
 	glColor3f(0.501f, 1.f, 0.988f);
 	glPointSize(10.f);
 	glBegin(GL_LINES);
@@ -168,6 +181,7 @@ void C_Camera::LoadData(JSON_Object* nObj)
 
 void C_Camera::StartDraw()
 {
+	glEnable(GL_DEPTH_TEST);
 	glLoadIdentity();
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf((GLfloat*)GetOpenGLProjectionMatrix().v);
@@ -199,6 +213,8 @@ void C_Camera::EndDraw()
 
 void C_Camera::ReGenerateBuffer(int w, int h)
 {
+	SetAspectRatio((float)w / (float)h);
+
 	if (framebuffer > 0)
 		glDeleteFramebuffers(1, &framebuffer);
 
@@ -232,6 +248,34 @@ void C_Camera::ReGenerateBuffer(int w, int h)
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		LOG(LogType::L_ERROR, "ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void C_Camera::LookAt(const float3& Spot)
+{
+	/*Reference = Spot;*/
+	camFrustrum.front = (Spot - camFrustrum.pos).Normalized();
+	camFrustrum.up = camFrustrum.WorldRight().Cross(camFrustrum.front);
+}
+
+//void C_Camera::Look(const float3& Position, const float3& Reference, bool RotateAroundReference)
+//{
+//	//	editorCamera.camFrustrum.pos = Position;
+////	editorCamera.camFrustrum.pos = Reference;
+////
+////	Z = normalize(Position - Reference);
+////	X = normalize(cross(float3(0.0f, 1.0f, 0.0f), Z));
+////	Y = cross(Z, X);
+////
+////	if(!RotateAroundReference)
+////	{
+////		this->Reference = editorCamera.camFrustrum.pos;
+////		editorCamera.camFrustrum.pos += Z * 0.05f;
+////	}
+//}
+
+void C_Camera::Move(const float3& Movement)
+{
+	camFrustrum.pos += Movement;
 }
 
 float4x4 C_Camera::GetOpenGLViewMatrix() const

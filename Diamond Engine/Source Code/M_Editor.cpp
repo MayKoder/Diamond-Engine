@@ -541,6 +541,11 @@ GameObject* M_Editor::GetSelectedGO()
 	return inspector->selectedGO;
 }
 
+void M_Editor::SetSelectedGO(GameObject* _obj)
+{
+	dynamic_cast<W_Inspector*>(GetEditorWindow(EditorWindow::INSPECTOR))->selectedGO = _obj;
+}
+
 void M_Editor::LogToConsole(const char* msg, LogType _type)
 {
 		W_Console* consoleWindow = dynamic_cast<W_Console*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::CONSOLE));

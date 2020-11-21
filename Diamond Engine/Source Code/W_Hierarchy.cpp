@@ -79,7 +79,7 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 
 		if (ImGui::IsItemClicked())
 		{
-			dynamic_cast<W_Inspector*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR))->selectedGO = node;
+			EngineExternal->moduleEditor->SetSelectedGO(node);
 		}
 	}
 

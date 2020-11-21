@@ -12,6 +12,8 @@ class GameObject;
 class C_Transform : public Component
 {
 public:
+
+	C_Transform();
 	C_Transform(GameObject* _gm/*, float3 _position, Quat _rotation, float3 _localScale*/);
 	virtual ~C_Transform();
 

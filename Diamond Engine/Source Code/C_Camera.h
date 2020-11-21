@@ -6,6 +6,7 @@
 class C_Camera : public Component
 {
 public:
+	C_Camera();
 	C_Camera(GameObject* _gm);
 	virtual ~C_Camera();
 
@@ -33,4 +34,10 @@ public:
 	Frustum camFrustrum;
 	float fov;
 
+//Movement logic
+public: 
+	void LookAt(const float3& Spot);
+
+	//void Look(const float3 &Position, const float3&Reference, bool RotateAroundReference = false);
+	void Move(const float3& Movement);
 };

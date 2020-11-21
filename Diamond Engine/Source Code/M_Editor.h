@@ -54,6 +54,7 @@ public:
 	void UpdateLoadedStylesVector(std::vector<std::string>* _styles);
 
 	GameObject* GetSelectedGO();
+	void SetSelectedGO(GameObject* _obj);
 
 	void LogToConsole(const char* msg, LogType _type = LogType::L_NORMAL);
 

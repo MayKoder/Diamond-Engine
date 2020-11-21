@@ -1,7 +1,6 @@
 #pragma once
 #include "Application.h"
 #include "Module.h"
-//#include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
 
@@ -33,7 +32,7 @@ public:
 	void OnResize(int width, int height);
 	void OnGUI() override;
 
-	void ReGenerateFrameBuffer(int w, int h);
+	//void ReGenerateFrameBuffer(int w, int h);
 
 	void TakeScreenshot();
 
@@ -45,10 +44,6 @@ private:
 public:
 	bool vsync, wireframe, cull, lightng, color_material, texture_2d;
 
-	unsigned int framebuffer;
-	unsigned int texColorBuffer;
-	unsigned int rbo;
-
 	//Mesh testMesh;
 	std::vector<Mesh*> globalMeshes;
 	std::vector<Texture*> globalTextures;
@@ -57,12 +52,13 @@ public:
 	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
 
 	std::vector<C_MeshRenderer*> renderQueue;
-	C_Camera* tmpCameraTest;
 
 public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
-	mat4x4 ModelMatrix, ProjectionMatrix;
+	mat4x4 ModelMatrix;
+
+	C_Camera* tmpCameraTest;
 };

@@ -15,6 +15,7 @@ public:
 	void Draw() override;
 
 	void SetTargetCamera(C_Camera* _cam);
+	C_Camera* GetTargetCamera();
 
 private: 
 	C_Camera* targetCamera;

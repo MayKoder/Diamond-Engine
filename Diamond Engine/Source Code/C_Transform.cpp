@@ -5,6 +5,20 @@
 #include <vector>
 #include"GameObject.h"
 
+C_Transform::C_Transform() : Component(nullptr), updateTransform(false)
+{
+	globalTransform.SetIdentity();
+	localTransform.SetIdentity();
+
+	localTransform.Decompose(position, rotation, localScale);
+
+	eulerRotation = rotation.ToEulerXYZ();
+
+	globalTransformTRANS = globalTransform.Transposed();
+
+	name = "Transform";
+}
+
 C_Transform::C_Transform(GameObject* _gm/*, float3 _position, Quat _rotation, float3 _localScale*/): Component(_gm), updateTransform(false)/*,
 position(_position), rotation(_rotation), localScale(_localScale)*/
 {

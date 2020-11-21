@@ -51,7 +51,7 @@ update_status M_Scene::PreUpdate(float dt)
 	/*Destroy gameobjects inside the destroy queue*/
 	if (destroyList.size() > 0) 
 	{
-		dynamic_cast<W_Inspector*>(App->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR))->selectedGO = nullptr;
+		App->moduleEditor->SetSelectedGO(nullptr);
 		for (size_t i = 0; i < destroyList.size(); ++i)
 		{
 			Destroy(destroyList[i]);
@@ -132,10 +132,10 @@ void M_Scene::SaveScene()
 	JSON_Value* file = json_value_init_object();
 	JSON_Object* root_object = json_value_get_object(file);
 
-	DEJson::WriteVector3(root_object, "EditorCameraPosition", &App->moduleCamera->Position);
-	DEJson::WriteVector3(root_object, "EditorCameraX", &App->moduleCamera->X);
-	DEJson::WriteVector3(root_object, "EditorCameraY", &App->moduleCamera->Y);
-	DEJson::WriteVector3(root_object, "EditorCameraZ", &App->moduleCamera->Z);
+	DEJson::WriteVector3(root_object, "EditorCameraPosition", &App->moduleCamera->editorCamera.camFrustrum.pos.x);
+	DEJson::WriteVector3(root_object, "EditorCameraZ", &App->moduleCamera->editorCamera.camFrustrum.front.x);
+	DEJson::WriteVector3(root_object, "EditorCameraY", &App->moduleCamera->editorCamera.camFrustrum.up.x);
+	//DEJson::WriteVector3(root_object, "EditorCameraZ", &App->moduleCamera->Z);
 
 	JSON_Value* goArray = json_value_init_array();
 	root->SaveToJson(json_value_get_array(goArray));
@@ -160,14 +160,14 @@ void M_Scene::LoadScene(const char* name)
 	//Clear all current scene memory
 	delete root;
 	root = nullptr;
-	dynamic_cast<W_Inspector*>(App->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR))->selectedGO = nullptr;
+	App->moduleEditor->SetSelectedGO(nullptr);
 
 	JSON_Object* sceneObj = json_value_get_object(scene);
 
-	MaykMath::GeneralDataSet(&App->moduleCamera->Position.x, &DEJson::ReadVector3(sceneObj, "EditorCameraPosition")[0], 3);
-	MaykMath::GeneralDataSet(&App->moduleCamera->X.x, &DEJson::ReadVector3(sceneObj, "EditorCameraX")[0], 3);
-	MaykMath::GeneralDataSet(&App->moduleCamera->Y.x, &DEJson::ReadVector3(sceneObj, "EditorCameraY")[0], 3);
-	MaykMath::GeneralDataSet(&App->moduleCamera->Z.x, &DEJson::ReadVector3(sceneObj, "EditorCameraZ")[0], 3);
+	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.pos.x, &DEJson::ReadVector3(sceneObj, "EditorCameraPosition")[0], 3);
+	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.front.x, &DEJson::ReadVector3(sceneObj, "EditorCameraZ")[0], 3);
+	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.up.x, &DEJson::ReadVector3(sceneObj, "EditorCameraY")[0], 3);
+	//MaykMath::GeneralDataSet(&App->moduleCamera->Z.x, &DEJson::ReadVector3(sceneObj, "EditorCameraZ")[0], 3);
 
 
 

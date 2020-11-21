@@ -1,6 +1,9 @@
 #pragma once
 #include "Module.h"
-#include "glmath.h"
+
+#include"C_Camera.h"
+#include"MathGeoLib/include/Math/float4x4.h"
+#include"MathGeoLib/include/Math/Quat.h"
 
 class ModuleCamera3D : public Module
 {
@@ -14,35 +17,25 @@ public:
 
 	void OnGUI() override;
 
-	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
-	void LookAt(const vec3 &Spot);
-	void Move(const vec3 &Movement);
-	float* GetViewMatrix();
-
 	void ProcessSceneKeyboard();
 
 private:
 
-	void CalculateViewMatrix();
-
-	void OrbitalRotation(vec3 center, float dt);
+	//void OrbitalRotation(float3 center, float dt);
 	void FreeRotation(float dt);
-	void FocusCamera(vec3 center, float offset);
+	void FocusCamera(float3 center, float offset);
 	void PanCamera(float);
 
 public:
 	
-	vec3 X, Y, Z, Position, Reference;
+	//float3 X, Y, Z, Reference;
 
 	float mouseSensitivity;
 	float cameraSpeed;
 
+	C_Camera editorCamera;
+	Quat Direction;
 
 private:
-
-	mat4x4 ViewMatrix, ViewMatrixInverse;
-	mat4x4 followPoint;
-
-	vec3 cameraMovement;
-
+	float3 cameraMovement;
 };
