@@ -180,9 +180,13 @@ void M_Scene::LoadScene(const char* name)
 	for (size_t i = 1; i < json_array_get_count(sceneGO); i++)
 	{
 		goJsonObj = json_array_get_object(sceneGO, i);
+		GameObject* originalParent = parent;
 
 		while (parent != nullptr && json_object_get_number(goJsonObj, "ParentUID") != parent->UID)
 			parent = parent->parent;
+
+		if (parent == nullptr)
+			parent = originalParent;
 
 		parent = CreateGameObject(json_object_get_string(goJsonObj, "name"), parent, json_object_get_number(goJsonObj, "UID"));
 		if(parent != nullptr)

@@ -11,6 +11,8 @@
 #include"DEJsonSupport.h"
 #include <algorithm>
 
+#include"MathGeoLib/include/Algorithm/Random/LCG.h"
+
 GameObject::GameObject(const char* _name, GameObject* parent, int _uid) : parent(parent), name(_name), showChildren(false),
 active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr)
 {
@@ -21,8 +23,11 @@ active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), d
 	transform = dynamic_cast<C_Transform*>(AddComponent(Component::Type::Transform));
 
 	//TODO: Should make sure there are not duplicated ID's
-	if(UID == -1)
-		UID = MaykMath::Random(0, INT_MAX);
+	if (UID == -1) {
+		LCG rand;
+		UID = rand.Int(0, INT_MAX);
+	}
+		//UID = MaykMath::Random(0, INT_MAX);
 }
 
 GameObject::~GameObject()

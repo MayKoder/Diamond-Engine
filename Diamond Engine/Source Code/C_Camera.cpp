@@ -96,7 +96,6 @@ void C_Camera::Update()
 
 	//TEMP: Temporal frustrum debug
 	glColor3f(0.501f, 1.f, 0.988f);
-	glPointSize(10.f);
 	glBegin(GL_LINES);
 
 	//glVertex3f(gameObject->transform->position.x, gameObject->transform->position.y, gameObject->transform->position.z);
@@ -106,44 +105,33 @@ void C_Camera::Update()
 
 	//Draw plane
 	glVertex3fv(&points[0].x);
-	glVertex3fv(&points[4].x);
-	glVertex3fv(&points[4].x);
-	glVertex3fv(&points[6].x);
-	glVertex3fv(&points[6].x);
 	glVertex3fv(&points[2].x);
 	glVertex3fv(&points[2].x);
+	glVertex3fv(&points[6].x);
+	glVertex3fv(&points[6].x);
+	glVertex3fv(&points[4].x);
+	glVertex3fv(&points[4].x);
 	glVertex3fv(&points[0].x);
 
-	glVertex3fv(&points[4].x);
-	glVertex3fv(&points[5].x);
-	glVertex3fv(&points[5].x);
-	glVertex3fv(&points[7].x);
-	glVertex3fv(&points[7].x);
-	glVertex3fv(&points[6].x);
-	glVertex3fv(&points[6].x);
-	glVertex3fv(&points[4].x);
-
-	glVertex3fv(&points[5].x);
+	glVertex3fv(&points[0].x);
 	glVertex3fv(&points[1].x);
-	glVertex3fv(&points[1].x);
-	glVertex3fv(&points[3].x);
-	glVertex3fv(&points[3].x);
-	glVertex3fv(&points[7].x);
-	glVertex3fv(&points[7].x);
-	glVertex3fv(&points[5].x);
-
 	glVertex3fv(&points[1].x);
 	glVertex3fv(&points[3].x);
 	glVertex3fv(&points[3].x);
 	glVertex3fv(&points[2].x);
-	glVertex3fv(&points[2].x);
-	glVertex3fv(&points[0].x);
-	glVertex3fv(&points[0].x);
-	glVertex3fv(&points[1].x);
+	glVertex3fv(&points[4].x);
+	glVertex3fv(&points[5].x);
 
+	glVertex3fv(&points[6].x);
+	glVertex3fv(&points[7].x);
+	glVertex3fv(&points[5].x);
+	glVertex3fv(&points[7].x);
+	glVertex3fv(&points[3].x);
+	glVertex3fv(&points[7].x);
+	glVertex3fv(&points[1].x);
+	glVertex3fv(&points[5].x);
 
 	glEnd();
-	glPointSize(1.f);
 	glColor3f(1.f, 1.f, 1.f);
 }
 
