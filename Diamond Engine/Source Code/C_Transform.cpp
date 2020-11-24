@@ -159,8 +159,24 @@ void C_Transform::SetTransformMatrix(float3 _position, Quat _rotation, float3 _l
 
 	if (gameObject->parent->transform != nullptr) {
 		globalTransform = gameObject->parent->transform->globalTransform * localTransform;
-		globalTransformTRANS = globalTransform.Transposed();
 	}
+	globalTransformTRANS = globalTransform.Transposed();
+}
+
+void C_Transform::SetTransformWithGlobal(float4x4& globalMat)
+{
+	//Same as we do with the reparenting
+	globalTransform = globalMat;
+	localTransform = gameObject->parent->transform->globalTransform.Inverted() * globalTransform;
+
+	Quat _rot;
+	float3 scale, pos;
+	localTransform.Decompose(position, rotation, localScale);
+
+	eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
+
+	globalTransformTRANS = globalTransform.Transposed();
+	updateTransform = true;
 }
 
 const float* C_Transform::GetGlobalTransposed() const

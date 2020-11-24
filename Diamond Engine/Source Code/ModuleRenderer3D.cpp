@@ -19,11 +19,13 @@
 
 #include"C_MeshRenderer.h"
 #include"C_Camera.h"
+#include"C_Transform.h"
 
 #include"Texture.h"
 #include"Primitive.h"
 
 #include"MathGeoLib/include/Geometry/LineSegment.h"
+#include"MathGeoLib/include/Geometry/Triangle.h"
 
 #ifdef _DEBUG
 #pragma comment (lib, "MathGeoLib/libx86/MGDebug/MathGeoLib.lib")
@@ -132,6 +134,7 @@ bool ModuleRenderer3D::Init()
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glBlendEquation(GL_FUNC_ADD);
 		
 		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
@@ -218,10 +221,9 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			if (gameCamera != nullptr){
 				if (renderQueue[i]->IsInsideFrustum(&gameCamera->camFrustrum)) 
 				{
-					float distance = App->moduleCamera->editorCamera.camFrustrum.pos.DistanceSq(renderQueue[i]->globalOBB.pos);
+					float distance = App->moduleCamera->editorCamera.camFrustrum.pos.Distance(renderQueue[i]->globalOBB.pos);
 					//BUG: What if something is in the same distance? like 0, 0, 0?
-					//TODO: Use multimap and iterate multimap
-					renderQueueMap[distance] = renderQueue[i];
+					renderQueueMap.emplace(distance, renderQueue[i]);
 
 					//renderQueue[i]->RenderMesh();
 				}
@@ -232,12 +234,16 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			}
 		}
 
-		for (auto it = renderQueueMap.rbegin(); it != renderQueueMap.rend(); ++it)
+
+		for (auto i = renderQueueMap.rbegin(); i != renderQueueMap.rend(); ++i)
 		{
-			(*it).second->RenderMesh();
+			// Get the range of the current key
+			auto range = renderQueueMap.equal_range(i->first);
+
+			// Now print out that whole range
+			for (auto d = range.first; d != range.second; ++d)
+				d->second->RenderMesh();
 		}
-		renderQueueMap.clear();
-		//renderQueue.clear();
 	}
 	App->moduleCamera->editorCamera.EndDraw();
 
@@ -265,6 +271,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	App->moduleEditor->Draw();
 	
 	//TEMPORAL: Delete here so you can call mouse picking from scene window, should not be here in the future
+	renderQueueMap.clear();
 	renderQueue.clear();
 
 	SDL_GL_SwapWindow(App->moduleWindow->window);
@@ -421,13 +428,52 @@ void ModuleRenderer3D::DrawBox(float3* points, float3 color)
 
 void ModuleRenderer3D::RayToMeshQueueIntersection(LineSegment& ray)
 {
+	std::map<float, C_MeshRenderer*> canSelect;
+	float nHit = 0;
+	float fHit = 0;
+
+	bool selected = false;
 	for (std::vector<C_MeshRenderer*>::iterator i = renderQueue.begin(); i != renderQueue.end(); ++i)
 	{
-		if (ray.Intersects((*i)->globalAABB))
-			App->moduleEditor->SetSelectedGO((*i)->GetGO());
+		if (ray.Intersects((*i)->globalAABB, nHit, fHit))
+			canSelect[nHit] = (*i);
 	}
 
-	//App->moduleEditor->SetSelectedGO(nullptr);
+	for(auto i = canSelect.begin(); i != canSelect.end(); ++i)
+	{
+		const Mesh* rMesh = (*i).second->_mesh;
+		if (rMesh)
+		{
+			LineSegment local = ray;
+			local.Transform((*i).second->GetGO()->transform->globalTransform.Inverted());
+
+			for (uint v = 0; v < rMesh->indices_count; v += 3)
+			{
+				uint indexA = rMesh->indices[v] * 3;
+				float3 a(&rMesh->vertices[indexA]);
+
+				uint indexB = rMesh->indices[v + 1] * 3;
+				float3 b(&rMesh->vertices[indexB]);
+
+				uint indexC = rMesh->indices[v + 2] * 3;
+				float3 c(&rMesh->vertices[indexC]);
+
+				Triangle triangle(a, b, c);
+
+				if (local.Intersects(triangle, nullptr, nullptr))
+				{
+					App->moduleEditor->SetSelectedGO((*i).second->GetGO());
+					selected = true;
+					break;
+				}
+			}
+		}
+	}
+	canSelect.clear();
+
+	//If nothing is selected, set selected GO to null
+	if(!selected)
+		App->moduleEditor->SetSelectedGO(nullptr);
 }
 
 /*Get SDL caps*/
@@ -444,6 +490,11 @@ void ModuleRenderer3D::GetCAPS(std::string& caps)
 	caps += (SDL_HasAVX()) ? "AVX, " : "";
 	caps += (SDL_HasAltiVec()) ? "AltiVec, " : "";
 	caps += (SDL_Has3DNow()) ? "3DNow, " : "";
+}
+
+C_Camera* ModuleRenderer3D::GetGameRenderTarget() const
+{
+	return gameCamera;
 }
 
 void ModuleRenderer3D::SetGameRenderTarget(C_Camera* cam)

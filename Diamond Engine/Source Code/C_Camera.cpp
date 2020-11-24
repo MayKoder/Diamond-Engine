@@ -53,6 +53,9 @@ C_Camera::~C_Camera()
 
 	if (rbo > 0)
 		glDeleteRenderbuffers(1, (GLuint*)&rbo);
+
+	if (EngineExternal && EngineExternal->moduleRenderer3D->GetGameRenderTarget() == this)
+		EngineExternal->moduleRenderer3D->SetGameRenderTarget(nullptr);
 }
 
 bool C_Camera::OnEditor()

@@ -85,14 +85,14 @@ void W_Scene::Draw()
 			ImGuizmo::SetDrawlist();
 			//ImGui::PushClipRect(ImGui::GetWindowSize(), ImGui::GetWindowSize(), true);
 			C_Transform* trans = App->moduleEditor->GetSelectedGO()->transform;
-			float4x4 mat = trans->localTransform.Transposed();
+			float4x4 mat = trans->globalTransform.Transposed();
 
 			//ERROR: World mode makes rotations go byebye
 			if (ImGuizmo::Manipulate(App->moduleCamera->editorCamera.GetOpenGLViewMatrix().v[0], App->moduleCamera->editorCamera.GetOpenGLProjectionMatrix().v[0], operation, mode, mat.ptr()))
 			{
 				mat.Transpose();
-				mat.Decompose(trans->position, trans->rotation, trans->localScale);
-				trans->SetTransformMatrix(trans->position, trans->rotation, trans->localScale);
+				//mat.Decompose(trans->position, trans->rotation, trans->localScale);
+				trans->SetTransformWithGlobal(mat);
 				trans->updateTransform = true;
 			}
 

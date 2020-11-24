@@ -316,7 +316,7 @@ void M_Editor::DrawTopBar()
 	g.NextWindowData.MenuBarOffsetMinVal = ImVec2(0.f, 0.f);
 
 
-	if (ImGui::Begin("ButtonsNavBar", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoDocking)) 
+	if (ImGui::Begin("ButtonsNavBar", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoDocking))
 	{
 
 		viewportCorSize = ImGui::GetWindowSize().y;
@@ -367,31 +367,28 @@ void M_Editor::DrawTopBar()
 		}
 		ImGui::PopItemWidth();
 
-		ImGui::SameLine();
+		ImGui::SameLine((ImGui::GetContentRegionMax().x / 2.f) - 50);
+		if (ImGui::BeginChild("##playBTS", ImVec2(100, ImGui::GetWindowContentRegionMax().y - style.FramePadding.y), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoDecoration)) {
+			
+			//Play game
+			ImGui::Button("Pl");
+			ImGui::SameLine();
 
-		ImGui::SetCursorPosX((ImGui::GetWindowWidth() / 2) - (ImGui::CalcTextSize("Take Screenshoot").x / 2));
+			//Stop game if playing
+			ImGui::Button("St");
+			ImGui::SameLine();
+
+			//Step one frame forward
+			ImGui::Button("Fw");
+		}
+		ImGui::EndChild();
+
+
+		ImGui::SameLine(ImGui::GetContentRegionMax().x - (ImGui::GetButtonSize("Take Screenshoot").x + style.FramePadding.x));
 		if (ImGui::Button("Take Screenshoot")) 
 		{
 			TextureImporter::TakeScreenshot(App->moduleCamera->editorCamera.framebuffer);
 		}
-
-		//float halfWindowSize = ImGui::GetWindowSize().y - 15;
-
-		//ImGui::SetCursorPosY((ImGui::GetWindowSize().y / 2) - (halfWindowSize / 2));
-
-		//viewportCorSize = ImGui::GetWindowSize().y;
-
-		//float initPoint = (ImGui::GetWindowSize().x * 0.5f) - ((halfWindowSize * 3.f) / 2.f);
-		//ImGui::SetCursorPosX(initPoint + ((halfWindowSize + 10) * 0));
-		//ImGui::Button("Pl", ImVec2(halfWindowSize, halfWindowSize));
-		//ImGui::SameLine();
-
-		//ImGui::SetCursorPosX(initPoint + ((halfWindowSize + 10) * 1));
-		//ImGui::Button("Pa", ImVec2(halfWindowSize, halfWindowSize));
-		//ImGui::SameLine();
-
-		//ImGui::SetCursorPosX(initPoint + ((halfWindowSize + 10) * 2));
-		//ImGui::Button("St", ImVec2(halfWindowSize, halfWindowSize));
 	}
 	ImGui::End();
 

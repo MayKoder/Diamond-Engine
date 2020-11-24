@@ -65,6 +65,7 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix;
 
+	C_Camera* GetGameRenderTarget()const;
 	void SetGameRenderTarget(C_Camera* cam);
 private:
 	C_Camera* gameCamera;

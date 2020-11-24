@@ -32,5 +32,5 @@ public:
 	AABB globalAABB;
 	OBB globalOBB;
 
-	bool faceNormals, vertexNormals;
+	bool faceNormals, vertexNormals, showAABB, showOBB;
 };

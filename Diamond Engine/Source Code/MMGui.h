@@ -95,4 +95,18 @@ namespace ImGui
         return dockspace_id;
     }
 
+    inline ImVec2 GetButtonSize(const char* text, const ImVec2 size_arg = ImVec2(0.f, 0.f))
+    {
+        ImGuiWindow* window = GetCurrentWindow();
+        if (window->SkipItems)
+            return ImVec2(0.f, 0.f);
+
+        ImGuiContext& g = *GImGui;
+        const ImGuiStyle& style = g.Style;
+        const ImGuiID id = window->GetID(text);
+        const ImVec2 label_size = CalcTextSize(text, NULL, true);
+
+        return CalcItemSize(size_arg, label_size.x + style.FramePadding.x * 2.0f, label_size.y + style.FramePadding.y * 2.0f);
+    }
+
 }

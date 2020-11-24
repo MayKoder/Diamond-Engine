@@ -17,7 +17,7 @@
 #include"MathGeoLib/include/Geometry/Plane.h"
 
 C_MeshRenderer::C_MeshRenderer(GameObject* _gm) : Component(_gm), _mesh(nullptr),
-faceNormals(false), vertexNormals(false)
+faceNormals(false), vertexNormals(false), showAABB(false), showOBB(false)
 {
 	name = "Mesh Renderer";
 }
@@ -43,13 +43,18 @@ void C_MeshRenderer::Update()
 			globalAABB.Enclose(globalOBB);
 		}
 
-		float3 points[8];
-		globalAABB.GetCornerPoints(points);
 
-		ModuleRenderer3D::DrawBox(points, float3(0.2f, 1.f, 0.101f));
+		if (showAABB ==true) {
+			float3 points[8];
+			globalAABB.GetCornerPoints(points);
+			ModuleRenderer3D::DrawBox(points, float3(0.2f, 1.f, 0.101f));
+		}
 
-		globalOBB.GetCornerPoints(points);
-		ModuleRenderer3D::DrawBox(points);
+		if (showOBB == true) {
+			float3 points[8];
+			globalOBB.GetCornerPoints(points);
+			ModuleRenderer3D::DrawBox(points);
+		}
 	}
 }
 
@@ -116,6 +121,10 @@ bool C_MeshRenderer::OnEditor()
 		ImGui::Checkbox("Vertex Normals", &vertexNormals);
 		ImGui::SameLine();
 		ImGui::Checkbox("Face Normals", &faceNormals);
+
+		ImGui::Checkbox("Show AABB", &showAABB);
+		ImGui::SameLine();
+		ImGui::Checkbox("Show OBB", &showOBB);
 
 		return true;
 	}

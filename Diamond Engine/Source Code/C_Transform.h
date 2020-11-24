@@ -29,6 +29,9 @@ public:
 
 	bool updateTransform;
 	void SetTransformMatrix(float3 _position, Quat _rotation, float3 _localScale);
+
+	void SetTransformWithGlobal(float4x4& globalMat);
+
 	const float* GetGlobalTransposed() const;
 	void ResetTransform();
 
