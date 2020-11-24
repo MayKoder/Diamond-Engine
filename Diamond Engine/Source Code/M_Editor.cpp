@@ -29,8 +29,9 @@
 #include "W_Assets.h"
 #include "W_Game.h"
 
-//#include"MathGeoLib/include/Math/float3.h"
 #include"GameObject.h"
+#include"I_TextureImporter.h"
+#include"ModuleCamera3D.h"
 
 M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_enabled), displayWindow(false),
 viewportCorSize(0.f), dockspace_id(0)
@@ -233,6 +234,8 @@ void M_Editor::DrawMenuBar()
 				//should be stored only once, then only copy mesh pointers.
 				if (ImGui::MenuItem("Cube", nullptr))
 					FileSystem::LoadDroppedFile("Assets/Primitives/Cube.fbx");
+				if (ImGui::MenuItem("Plane", nullptr))
+					FileSystem::LoadDroppedFile("Assets/Primitives/Plane.fbx");
 				if (ImGui::MenuItem("Cylinder", nullptr))
 					FileSystem::LoadDroppedFile("Assets/Primitives/Cylinder.fbx");
 				if (ImGui::MenuItem("Icosphere", nullptr))
@@ -369,7 +372,7 @@ void M_Editor::DrawTopBar()
 		ImGui::SetCursorPosX((ImGui::GetWindowWidth() / 2) - (ImGui::CalcTextSize("Take Screenshoot").x / 2));
 		if (ImGui::Button("Take Screenshoot")) 
 		{
-			App->moduleRenderer3D->TakeScreenshot();
+			TextureImporter::TakeScreenshot(App->moduleCamera->editorCamera.framebuffer);
 		}
 
 		//float halfWindowSize = ImGui::GetWindowSize().y - 15;

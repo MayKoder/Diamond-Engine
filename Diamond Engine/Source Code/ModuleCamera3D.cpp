@@ -60,7 +60,7 @@ update_status ModuleCamera3D::Update(float dt)
 	if (App->moduleInput->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT) {
 		float4x4 mat = editorCamera.camFrustrum.WorldMatrix();
 		mat.SetRotatePart(Direction.Normalized());
-		//editorCamera.camFrustrum.SetWorldMatrix(mat.Float3x4Part());
+		editorCamera.camFrustrum.SetWorldMatrix(mat.Float3x4Part());
 	}
 
 
@@ -138,6 +138,7 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 			target.Set(maTogl.x, maTogl.y, maTogl.z);
 		}
 		FocusCamera(target, 10.f);
+		editorCamera.camFrustrum.WorldMatrix().Decompose(float3(), Direction, float3());
 	}
 
 	if (App->moduleInput->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)

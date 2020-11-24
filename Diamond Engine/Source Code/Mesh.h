@@ -4,6 +4,8 @@
 #include <vector>
 #include<string>
 
+#include"MathGeoLib/include/Geometry/AABB.h"
+
 typedef unsigned int GLuint;
 typedef unsigned int uint;
 
@@ -42,6 +44,7 @@ public:
 	uint texCoords_count = 0;
 	float* texCoords = nullptr;
 
+	AABB localAABB;
 
 	//TODO: Delete this, wireframe mode should be different
 	// ----------- TEMPORAL LOGIC, MUST BE DELETED ---------------//

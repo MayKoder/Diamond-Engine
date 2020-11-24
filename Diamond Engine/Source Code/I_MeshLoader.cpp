@@ -88,6 +88,8 @@ void MeshLoader::BufferToMeshes(const char* full_path, char* buffer, int size, G
 						int h = 0;
 
 						GLuint id = TextureImporter::CustomLoadImage(buffer, size, &w, &h);
+						TextureImporter::SaveDDS(buffer, size, textureFileName.substr(0, textureFileName.find_last_of(".")).c_str());
+
 						Texture* meshTexture = new Texture(id, w, h, textureFileName.c_str(), localPath.c_str());
 
 						testTextures.push_back(meshTexture);
@@ -100,7 +102,7 @@ void MeshLoader::BufferToMeshes(const char* full_path, char* buffer, int size, G
 				else 
 				{
 					//TODO: Temporal shit, think of a better way
-					Texture* meshTexture = new Texture(EngineExternal->moduleRenderer3D->checkersTexture, 256, 256, "", "");
+					Texture* meshTexture = new Texture(White);
 					testTextures.push_back(meshTexture);
 				}
 			}

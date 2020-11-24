@@ -5,7 +5,6 @@
 
 Mesh::Mesh(const char* _path) : indices_id(-1), vertices_id(-1), generalWireframe(nullptr), path(_path)
 {
-
 }
 
 Mesh::~Mesh()
@@ -54,7 +53,9 @@ Mesh::~Mesh()
 
 void Mesh::GenBuffers()
 {
-
+	//TODO: Should this be here?
+	localAABB.SetNegativeInfinity();
+	localAABB.Enclose((float3*)vertices, vertices_count);
 
 	// vertices_count = vector3's // size of the array (elements) = vertices_count * 3 // size of the array in bytes = sizeof(float) * vertices_count * 3
 	if (vertices_count != 0)

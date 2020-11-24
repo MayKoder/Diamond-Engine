@@ -1,12 +1,14 @@
 #pragma once
 #include "Application.h"
 #include "Module.h"
-#include "glmath.h"
+//#include "glmath.h"
 #include "Light.h"
 
 #include <queue>
 
 #include "OpenGL.h"
+#include"MathGeoLib/include/Math/float3.h"
+#include<map>
 
 class Mesh;
 class C_MeshRenderer;
@@ -34,7 +36,9 @@ public:
 
 	//void ReGenerateFrameBuffer(int w, int h);
 
-	void TakeScreenshot();
+	static void DrawBox(float3* points, float3 color = float3::one);
+	
+	void RayToMeshQueueIntersection(LineSegment& ray);
 
 private:
 
@@ -52,6 +56,7 @@ public:
 	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
 
 	std::vector<C_MeshRenderer*> renderQueue;
+	std::multimap<float, C_MeshRenderer*> renderQueueMap;
 
 public:
 
@@ -60,5 +65,7 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix;
 
-	C_Camera* tmpCameraTest;
+	void SetGameRenderTarget(C_Camera* cam);
+private:
+	C_Camera* gameCamera;
 };

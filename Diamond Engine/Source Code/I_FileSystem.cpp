@@ -16,7 +16,6 @@
 #include"C_Material.h"
 
 #include"M_Editor.h"
-#include"W_Inspector.h"
 #include"Texture.h"
 
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
@@ -140,24 +139,29 @@ void FileSystem::LoadDroppedFile(const char* globalPath)
 
 			case ImportType::TEXTURE: 
 			{
-				//int w = 0; int h = 0;
-				//GLuint id = TextureImporter::CustomLoadImage(buffer, size, &w, &h);
-				//Texture* material = new Texture(id, w, h, fileNameAndExtension.substr(fileNameAndExtension.find_last_of('/') + 1), fileNameAndExtension);
-				//EngineExternal->moduleRenderer3D->globalTextures.push_back(material);
+				int w = 0; int h = 0;
+				GLuint id = TextureImporter::CustomLoadImage(buffer, size, &w, &h);
 
-				//W_Inspector* inspector = dynamic_cast<W_Inspector*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR));
-				//if (inspector && inspector->selectedGO) {
-				//	C_Material* mat = dynamic_cast<C_Material*>(inspector->selectedGO->GetComponent(Component::Type::Material));
-				//	if (mat) 
-				//	{
-				//		mat->matTexture = material;
-				//	}
-				//	else {
-				//		C_Material* mat = dynamic_cast<C_Material*>(inspector->selectedGO->AddComponent(Component::Type::Material));
-				//		mat->matTexture = material;
+				std::string fileName;
+				GetFileName(fileNameAndExtension.c_str(), fileName, false);
+				TextureImporter::SaveDDS(buffer, size, fileName.c_str());
 
-				//	}
-				//}
+				Texture* material = new Texture(id, w, h, fileNameAndExtension.substr(fileNameAndExtension.find_last_of('/') + 1), fileNameAndExtension);
+				EngineExternal->moduleRenderer3D->globalTextures.push_back(material);
+
+				if (EngineExternal->moduleEditor->GetSelectedGO()) 
+				{
+					C_Material* mat = dynamic_cast<C_Material*>(EngineExternal->moduleEditor->GetSelectedGO()->GetComponent(Component::Type::Material));
+					if (mat) 
+					{
+						mat->matTexture = material;
+					}
+					else {
+						C_Material* mat = dynamic_cast<C_Material*>(EngineExternal->moduleEditor->GetSelectedGO()->AddComponent(Component::Type::Material));
+						mat->matTexture = material;
+
+					}
+				}
 				break;
 			}
 

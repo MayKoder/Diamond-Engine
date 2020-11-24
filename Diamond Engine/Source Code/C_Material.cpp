@@ -66,6 +66,10 @@ void C_Material::LoadData(JSON_Object* nObj)
 	std::string texPath = json_object_get_string(nObj, "Path");
 	std::string texName = json_object_get_string(nObj, "Name");
 
+	if (texName == "" || texPath == "") {
+		LOG(LogType::L_WARNING, "Empty")
+	}
+
 	char* buffer = nullptr;
 	int size = FileSystem::LoadToBuffer(texPath.c_str(), &buffer);
 	GLuint id = TextureImporter::CustomLoadImage(buffer, size, &w, &h);

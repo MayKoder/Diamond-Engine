@@ -31,9 +31,6 @@ void W_Game::Draw()
 void W_Game::SetTargetCamera(C_Camera* _cam)
 {
 	targetCamera = _cam;
-
-	//TODO: This is trash, dont use hardcoded stuff
-	targetCamera->ReGenerateBuffer(1920, 1080);
 }
 
 C_Camera* W_Game::GetTargetCamera()

@@ -4,6 +4,10 @@
 #include"ImGui/imgui.h"
 
 #include"MathGeoLib/include/Math/float3.h"
+#include"MathGeoLib/include/Geometry/Plane.h"
+
+#include"ModuleRenderer3D.h"
+#include"M_Scene.h"
 
 #include"GameObject.h"
 #include"C_Transform.h"
@@ -42,13 +46,13 @@ C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(-1), texColorB
 C_Camera::~C_Camera()
 {
 	if (framebuffer > 0)
-		glDeleteFramebuffers(1, &framebuffer);
+		glDeleteFramebuffers(1, (GLuint*)&framebuffer);
 
 	if (texColorBuffer > 0)
-		glDeleteTextures(1, &texColorBuffer);
+		glDeleteTextures(1, (GLuint*)&texColorBuffer);
 
 	if (rbo > 0)
-		glDeleteRenderbuffers(1, &rbo);
+		glDeleteRenderbuffers(1, (GLuint*)&rbo);
 }
 
 bool C_Camera::OnEditor()
@@ -69,17 +73,16 @@ bool C_Camera::OnEditor()
 			//camFrustrum.horizontalFov = 2.0f * atanf(tanf(camFrustrum.verticalFov / 2.0f) * App->window->GetWindowWidth() / App->window->GetWindowHeight());
 		}
 		
-		//if (ImGui::BeginCombo("Frustrum Type", (camFrustrum.type == FrustumType::PerspectiveFrustum) ? "Prespective" : "Orthographic")) 
-		//{
-		//	for (size_t i = 1; i <= FrustumType::PerspectiveFrustum; i++)
-		//	{
-		//		if (ImGui::Selectable(((FrustumType)i == FrustumType::PerspectiveFrustum) ? "Prespective" : "Orthographic")) 
-		//		{
-		//			camFrustrum.type == (FrustumType)i;
-		//		}
-		//	}
-		//	ImGui::EndCombo();
-		//}
+		if (ImGui::BeginCombo("Frustrum Type", (camFrustrum.type == FrustumType::PerspectiveFrustum) ? "Prespective" : "Orthographic")) 
+		{
+			if (ImGui::Selectable("Perspective")) 
+				camFrustrum.type = FrustumType::PerspectiveFrustum;
+
+			if (ImGui::Selectable("Orthographic"))
+				camFrustrum.type = FrustumType::OrthographicFrustum;
+
+			ImGui::EndCombo();
+		}
 
 		return true;
 	}
@@ -94,45 +97,13 @@ void C_Camera::Update()
 	camFrustrum.front = gameObject->transform->GetForward();
 	camFrustrum.up = gameObject->transform->GetUp();
 
-	//TEMP: Temporal frustrum debug
-	glColor3f(0.501f, 1.f, 0.988f);
-	glBegin(GL_LINES);
-
+	
 	//glVertex3f(gameObject->transform->position.x, gameObject->transform->position.y, gameObject->transform->position.z);
 	//glVertex3f(gameObject->transform->position.x + forward.x, gameObject->transform->position.y + forward.y, gameObject->transform->position.z + forward.z);
 	float3 points[8];
 	camFrustrum.GetCornerPoints(points);
 
-	//Draw plane
-	glVertex3fv(&points[0].x);
-	glVertex3fv(&points[2].x);
-	glVertex3fv(&points[2].x);
-	glVertex3fv(&points[6].x);
-	glVertex3fv(&points[6].x);
-	glVertex3fv(&points[4].x);
-	glVertex3fv(&points[4].x);
-	glVertex3fv(&points[0].x);
-
-	glVertex3fv(&points[0].x);
-	glVertex3fv(&points[1].x);
-	glVertex3fv(&points[1].x);
-	glVertex3fv(&points[3].x);
-	glVertex3fv(&points[3].x);
-	glVertex3fv(&points[2].x);
-	glVertex3fv(&points[4].x);
-	glVertex3fv(&points[5].x);
-
-	glVertex3fv(&points[6].x);
-	glVertex3fv(&points[7].x);
-	glVertex3fv(&points[5].x);
-	glVertex3fv(&points[7].x);
-	glVertex3fv(&points[3].x);
-	glVertex3fv(&points[7].x);
-	glVertex3fv(&points[1].x);
-	glVertex3fv(&points[5].x);
-
-	glEnd();
-	glColor3f(1.f, 1.f, 1.f);
+	ModuleRenderer3D::DrawBox(points, float3(0.180f, 1.f, 0.937f));
 }
 
 
@@ -140,37 +111,35 @@ void C_Camera::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
 
-	//DEJson::WriteString(nObj, "Path", matTexture->path.c_str());
-	//DEJson::WriteString(nObj, "Name", matTexture->name.c_str());
-	//TODO: Call texture importer and load data
+	DEJson::WriteInt(nObj, "fType", (int)FrustumType::PerspectiveFrustum);
+
+	DEJson::WriteFloat(nObj, "nearPlaneDist", camFrustrum.nearPlaneDistance);
+	DEJson::WriteFloat(nObj, "farPlaneDist", camFrustrum.farPlaneDistance);
+
+	DEJson::WriteFloat(nObj, "vFOV", camFrustrum.verticalFov);
+	DEJson::WriteFloat(nObj, "hFOV", camFrustrum.horizontalFov);
 }
 
 void C_Camera::LoadData(JSON_Object* nObj)
 {
 	Component::LoadData(nObj);
-	//There is no _mesh yet lol
 
-	//int w, h;
-	//w = h = 0;
-	//std::string texPath = json_object_get_string(nObj, "Path");
-	//std::string texName = json_object_get_string(nObj, "Name");
+	camFrustrum.type = (FrustumType)DEJson::ReadInt(nObj, "fType");
 
-	//char* buffer = nullptr;
-	//int size = FileSystem::LoadToBuffer(texPath.c_str(), &buffer);
-	//GLuint id = TextureImporter::CustomLoadImage(buffer, size, &w, &h);
+	camFrustrum.nearPlaneDistance = DEJson::ReadFloat(nObj, "nearPlaneDist");
+	camFrustrum.farPlaneDistance = DEJson::ReadFloat(nObj, "farPlaneDist");
 
+	camFrustrum.verticalFov = DEJson::ReadFloat(nObj, "vFOV");
+	camFrustrum.horizontalFov = DEJson::ReadFloat(nObj, "hFOV");
 
-	//matTexture = new Texture(id, w, h, texName, texPath);
+	//Need to reset W_Game target canera
+	EngineExternal->moduleScene->SetGameCamera(this);
 
-
-	//EngineExternal->moduleRenderer3D->globalTextures.push_back(matTexture);
-	//RELEASE_ARRAY(buffer);
 }
 
 void C_Camera::StartDraw()
 {
 	glEnable(GL_DEPTH_TEST);
-	glLoadIdentity();
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf((GLfloat*)GetOpenGLProjectionMatrix().v);
 
@@ -195,8 +164,8 @@ void C_Camera::EndDraw()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDisable(GL_DEPTH_TEST);
 
-	glClearColor(0.05f, 0.05f, 0.05f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClearColor(0.05f, 0.05f, 0.05f, 1.f);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void C_Camera::ReGenerateBuffer(int w, int h)
@@ -204,19 +173,19 @@ void C_Camera::ReGenerateBuffer(int w, int h)
 	SetAspectRatio((float)w / (float)h);
 
 	if (framebuffer > 0)
-		glDeleteFramebuffers(1, &framebuffer);
+		glDeleteFramebuffers(1, (GLuint*)&framebuffer);
 
 	if (texColorBuffer > 0)
-		glDeleteTextures(1, &texColorBuffer);
+		glDeleteTextures(1, (GLuint*)&texColorBuffer);
 
 	if (rbo > 0)
-		glDeleteRenderbuffers(1, &rbo);
+		glDeleteRenderbuffers(1, (GLuint*)&rbo);
 
 
-	glGenFramebuffers(1, &framebuffer);
+	glGenFramebuffers(1, (GLuint*)&framebuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
-	glGenTextures(1, &texColorBuffer);
+	glGenTextures(1, (GLuint*)&texColorBuffer);
 	glBindTexture(GL_TEXTURE_2D, texColorBuffer);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -226,7 +195,7 @@ void C_Camera::ReGenerateBuffer(int w, int h)
 	// attach it to currently bound framebuffer object
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColorBuffer, 0);
 
-	glGenRenderbuffers(1, &rbo);
+	glGenRenderbuffers(1, (GLuint*)&rbo);
 	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, w, h);
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
@@ -242,7 +211,8 @@ void C_Camera::LookAt(const float3& Spot)
 {
 	/*Reference = Spot;*/
 	camFrustrum.front = (Spot - camFrustrum.pos).Normalized();
-	camFrustrum.up = camFrustrum.WorldRight().Cross(camFrustrum.front);
+	float3 X = float3(0, 1, 0).Cross(camFrustrum.front).Normalized();
+	camFrustrum.up = camFrustrum.front.Cross(X);
 }
 
 //void C_Camera::Look(const float3& Position, const float3& Reference, bool RotateAroundReference)

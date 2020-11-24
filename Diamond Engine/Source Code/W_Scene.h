@@ -17,6 +17,9 @@ public:
 	void Draw() override;
 
 	ImGuizmo::OPERATION operation;
+	ImGuizmo::MODE mode;
+
+	ImVec2 NormalizeOnWindow(float x, float y, float w, float h, ImVec2 point);
 
 	Application* App;
 

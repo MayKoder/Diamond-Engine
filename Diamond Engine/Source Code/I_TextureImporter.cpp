@@ -44,8 +44,17 @@ GLuint TextureImporter::CustomLoadImage(char* buffer, int size, int* w, int* h)
 	return glID;
 }
 
-void TextureImporter::SaveDDS(char* buffer, const char* fileName)
+void TextureImporter::SaveDDS(char* buffer, int size, const char* fileName)
 {
+	ILuint imageID;
+	ilGenImages(1, &imageID);
+	ilBindImage(imageID);
+
+	if (!ilLoadL(IL_TYPE_UNKNOWN, buffer, size))
+	{
+		LOG(LogType::L_ERROR, "Image not loaded");
+	}
+
 	//TODO: Move this to function
 	ILuint _size = 0;
 	ILubyte* data = nullptr;
@@ -65,9 +74,26 @@ void TextureImporter::SaveDDS(char* buffer, const char* fileName)
 		delete[] data;
 		data = nullptr;
 	}
+
+	ilDeleteImages(1, &imageID);
 }
 
 char* TextureImporter::LoadDDS(const char* fileName)
 {
 	return nullptr;
+}
+
+/*Take a screenshot*/
+void TextureImporter::TakeScreenshot(int frameBuffer)
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+
+	ILuint imageID = ilGenImage();
+	ilBindImage(imageID);
+	ilutGLScreen();
+	ilEnable(IL_FILE_OVERWRITE);
+	ilSaveImage("Screenshots/Screenshot.png");
+	ilDeleteImage(imageID);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

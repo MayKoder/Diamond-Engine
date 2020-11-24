@@ -21,6 +21,7 @@ namespace DEJson
 	bool ReadBool(JSON_Object* obj, const char* name);
 
 	void WriteInt(JSON_Object* obj, const char* name, int value);
+	int ReadInt(JSON_Object* obj, const char* name);
 
 	void WriteVector3(JSON_Object* obj, const char* name, float* value);
 	float3 ReadVector3(JSON_Object* obj, const char* name);
@@ -28,6 +29,13 @@ namespace DEJson
 	void WriteQuat(JSON_Object* obj, const char* name, float* value);
 	Quat ReadQuat(JSON_Object* obj, const char* name);
 }
+
+//union VALUE {
+//	int v;
+//	float f;
+//	bool b;
+//
+//};
 
 struct DEConfig
 {
@@ -47,13 +55,17 @@ struct DEConfig
 	bool ReadBool(const char* name);
 
 	void WriteInt(const char* name, int value);
-	void ReadInt(const char* name);
+	int ReadInt(const char* name);
 
 	void WriteVector3(const char* name, float* value);
 	float3 ReadVector3(const char* name);
 
 	void WriteQuat(const char* name, float* value);
 	Quat ReadQuat(const char* name);
+
+	JSON_Array* ReadArray(const char* name);
+	JSON_Object* ReadObject(const char* name);
+	JSON_Value* ReadValue(const char* name);
 
 	JSON_Object* nObj;
 };

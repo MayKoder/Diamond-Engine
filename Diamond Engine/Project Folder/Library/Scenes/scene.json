@@ -1,23 +1,18 @@
 {
     "EditorCameraPosition": [
-        14.798169136047363,
-        4.4496302604675293,
-        16.679901123046875
-    ],
-    "EditorCameraX": [
-        0.52946346998214722,
-        0,
-        -0.84833276271820068
-    ],
-    "EditorCameraY": [
-        -0.14605145156383514,
-        0.98506844043731689,
-        -0.091153979301452637
+        77.453086853027344,
+        55.077800750732422,
+        -14.282256126403809
     ],
     "EditorCameraZ": [
-        0.83566582202911377,
-        0.17216292023658752,
-        0.52155774831771851
+        -0.7690393328666687,
+        -0.63407045602798462,
+        0.080829143524169922
+    ],
+    "EditorCameraY": [
+        -0.63059693574905396,
+        0.77327531576156616,
+        0.066278398036956787
     ],
     "Game Objects": [
         {
@@ -38,11 +33,49 @@
                 1,
                 1
             ],
-            "UID": 41,
+            "UID": 1476910709,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
+                }
+            ]
+        },
+        {
+            "name": "skybox",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                99.999992370605469,
+                99.999992370605469,
+                99.999992370605469
+            ],
+            "UID": 294092284,
+            "ParentUID": 1476910709,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/Cube.002.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/Sky.png",
+                    "Name": "Sky.png"
                 }
             ]
         },
@@ -50,22 +83,22 @@
             "name": "Main Camera",
             "Position": [
                 0,
-                0,
-                0
+                14.649877548217773,
+                -25.668296813964844
             ],
             "Rotation": [
+                0.24759361147880554,
                 0,
                 0,
-                0,
-                1
+                0.96886396408081055
             ],
             "Scale": [
                 1,
-                1,
-                1
+                0.99999970197677612,
+                0.99999970197677612
             ],
-            "UID": 18467,
-            "ParentUID": 41,
+            "UID": 439112827,
+            "ParentUID": 1476910709,
             "Components": [
                 {
                     "Type": 1,
@@ -73,12 +106,17 @@
                 },
                 {
                     "Type": 4,
-                    "Active": true
+                    "Active": true,
+                    "fType": 2,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 500,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.6789194345474243
                 }
             ]
         },
         {
-            "name": "Cube",
+            "name": "scene",
             "Position": [
                 0,
                 0,
@@ -95,32 +133,48 @@
                 1,
                 1
             ],
-            "UID": 12811,
-            "ParentUID": 41,
+            "UID": 193791393,
+            "ParentUID": 1476910709,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/Cube.001.mmh"
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "Path": "",
-                    "Name": ""
                 }
             ]
         },
         {
-            "name": "Sphere",
+            "name": "Dummy001",
             "Position": [
-                -6.8000001907348633,
                 0,
-                3.2000000476837158
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.70710676908493042,
+                0,
+                0,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 223380318,
+            "ParentUID": 193791393,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "City_building_004",
+            "Position": [
+                -41.47589111328125,
+                21.01409912109375,
+                0
             ],
             "Rotation": [
                 0,
@@ -133,8 +187,8 @@
                 1,
                 1
             ],
-            "UID": 28328,
-            "ParentUID": 12811,
+            "UID": 248861604,
+            "ParentUID": 223380318,
             "Components": [
                 {
                     "Type": 1,
@@ -143,13 +197,1229 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/Sphere.001.mmh"
+                    "Path": "Library\/Meshes\/City_building_004Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building03_c.tga",
+                    "Name": "building03_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_001",
+            "Position": [
+                17.707164764404297,
+                20.053276062011719,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 288475953,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_001Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/Building_V02_C.png",
+                    "Name": "Building_V02_C.png"
+                }
+            ]
+        },
+        {
+            "name": "City_building_007",
+            "Position": [
+                16.010492324829102,
+                37.4932861328125,
+                -1.9999999949504854e-06
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 318691467,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_007Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building_016_c.tga",
+                    "Name": "building_016_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_008",
+            "Position": [
+                40.979995727539063,
+                18.270824432373047,
+                -1.9999999949504854e-06
+            ],
+            "Rotation": [
+                0,
+                0,
+                0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 342432228,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_008Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building_025_c.tga",
+                    "Name": "building_025_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "Line002",
+            "Position": [
+                -2.1597719192504883,
+                1.8538379669189453,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                -0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 366869199,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/Line002Mesh.mmh"
                 },
                 {
                     "Type": 3,
                     "Active": true,
                     "Path": "",
                     "Name": ""
+                }
+            ]
+        },
+        {
+            "name": "Plane001",
+            "Position": [
+                -0.028603000566363335,
+                0.026032000780105591,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                0.99663501977920532,
+                0.97061598300933838,
+                0.99663501977920532
+            ],
+            "UID": 386641563,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/Plane001Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "",
+                    "Name": ""
+                }
+            ]
+        },
+        {
+            "name": "City_building_010",
+            "Position": [
+                25.154010772705078,
+                -39.153720855712891,
+                9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 410869671,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_010Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building 01_c.tga",
+                    "Name": "building 01_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_010",
+            "Position": [
+                25.154010772705078,
+                -39.153720855712891,
+                9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 429876204,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_010Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building 01_c.tga",
+                    "Name": "building 01_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_011",
+            "Position": [
+                30.134540557861328,
+                37.4932861328125,
+                -1.9999999949504854e-06
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 458281572,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_007Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building_016_c.tga",
+                    "Name": "building_016_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_013",
+            "Position": [
+                -42.288055419921875,
+                33.201576232910156,
+                9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 481674228,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_013Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building 06_ c.tga",
+                    "Name": "building 06_ c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_014",
+            "Position": [
+                -19.439706802368164,
+                32.061729431152344,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                1,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 503256738,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_014Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building03_c.tga",
+                    "Name": "building03_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_016",
+            "Position": [
+                34.270423889160156,
+                -41.972747802734375,
+                9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                1,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 524978490,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_010Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building 01_c.tga",
+                    "Name": "building 01_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_016",
+            "Position": [
+                34.270423889160156,
+                -41.972747802734375,
+                9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                1,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 542244498,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_010Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building 01_c.tga",
+                    "Name": "building 01_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_017",
+            "Position": [
+                44.260082244873047,
+                -39.153720855712891,
+                9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 565985259,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_010Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building 01_c.tga",
+                    "Name": "building 01_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_017",
+            "Position": [
+                44.260082244873047,
+                -39.153720855712891,
+                9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 583668993,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_010Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building 01_c.tga",
+                    "Name": "building 01_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_022",
+            "Position": [
+                -20.831323623657227,
+                -27.426488876342773,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                1,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 605878092,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_022Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building05 _c.tga",
+                    "Name": "building05 _c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_023",
+            "Position": [
+                42.130641937255859,
+                37.4932861328125,
+                -1.9999999949504854e-06
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 627599844,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_007Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building_016_c.tga",
+                    "Name": "building_016_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_024",
+            "Position": [
+                -20.572771072387695,
+                43.060829162597656,
+                -0.069193996489048004
+            ],
+            "Rotation": [
+                0,
+                0,
+                1,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 652663404,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_008Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building_025_c.tga",
+                    "Name": "building_025_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_026",
+            "Position": [
+                31.51188850402832,
+                -16.446016311645508,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                1,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 675081366,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_026Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building05 _c.tga",
+                    "Name": "building05 _c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_028",
+            "Position": [
+                13.38798999786377,
+                -33.755039215087891,
+                -9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 698891748,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_028Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/Building_V01_C.png",
+                    "Name": "Building_V01_C.png"
+                }
+            ]
+        },
+        {
+            "name": "Object010",
+            "Position": [
+                -20.604873657226563,
+                4.066741943359375,
+                -0.47595998644828796
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 718942596,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/Object010Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "",
+                    "Name": ""
+                }
+            ]
+        },
+        {
+            "name": "City_building_030",
+            "Position": [
+                -42.807239532470703,
+                -41.835563659667969,
+                -9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                -0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 741778284,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_028Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/Building_V01_C.png",
+                    "Name": "Building_V01_C.png"
+                }
+            ]
+        },
+        {
+            "name": "City_building_031",
+            "Position": [
+                -34.679481506347656,
+                -41.835563659667969,
+                -9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                -0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 767955780,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_028Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/Building_V01_C.png",
+                    "Name": "Building_V01_C.png"
+                }
+            ]
+        },
+        {
+            "name": "City_building_032",
+            "Position": [
+                -29.478403091430664,
+                21.01409912109375,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 790164879,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_004Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building03_c.tga",
+                    "Name": "building03_c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_033",
+            "Position": [
+                -32.361495971679688,
+                42.37042236328125,
+                9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 811747389,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_033Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building 06_ c.tga",
+                    "Name": "building 06_ c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_034",
+            "Position": [
+                16.049516677856445,
+                -16.696884155273438,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                -0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 833190657,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_034Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building05 _c.tga",
+                    "Name": "building05 _c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_035",
+            "Position": [
+                13.38798999786377,
+                -40.802516937255859,
+                -9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 854773167,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_028Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/Building_V01_C.png",
+                    "Name": "Building_V01_C.png"
+                }
+            ]
+        },
+        {
+            "name": "City_building_036",
+            "Position": [
+                -31.216331481933594,
+                33.201576232910156,
+                9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                -0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 876216435,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_013Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building 06_ c.tga",
+                    "Name": "building 06_ c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_037",
+            "Position": [
+                -20.317693710327148,
+                -16.163608551025391,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                1,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 899678712,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_037Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building05 _c.tga",
+                    "Name": "building05 _c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_038",
+            "Position": [
+                -41.649002075195313,
+                -16.495393753051758,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                -0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 921052359,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_038Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/building05 _c.tga",
+                    "Name": "building05 _c.tga"
+                }
+            ]
+        },
+        {
+            "name": "City_building_039",
+            "Position": [
+                -42.807239532470703,
+                -30.643888473510742,
+                -9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                -0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 942774111,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_028Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/Building_V01_C.png",
+                    "Name": "Building_V01_C.png"
+                }
+            ]
+        },
+        {
+            "name": "City_building_040",
+            "Position": [
+                -34.679481506347656,
+                -30.643888473510742,
+                -9.9999999747524271e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                -0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 964217379,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_028Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/Building_V01_C.png",
+                    "Name": "Building_V01_C.png"
+                }
+            ]
+        },
+        {
+            "name": "City_building_041",
+            "Position": [
+                30.695278167724609,
+                21.612646102905273,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0.70710676908493042,
+                0.70710676908493042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 985591026,
+            "ParentUID": 223380318,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/City_building_001Mesh.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "Path": "Assets\/street\/Building_V02_C.png",
+                    "Name": "Building_V02_C.png"
                 }
             ]
         }

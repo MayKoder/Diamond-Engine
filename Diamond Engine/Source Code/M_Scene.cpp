@@ -36,12 +36,13 @@ bool M_Scene::Init()
 
 bool M_Scene::Start()
 {
+	FileSystem::LoadDroppedFile("Assets/skybox.fbx");
 	//FileSystem::LoadFile("Assets/skybox.fbx");
 	GameObject* cam = CreateGameObject("Main Camera", root);
 	C_Camera* c_comp = dynamic_cast<C_Camera*>(cam->AddComponent(Component::Type::Camera));
+	SetGameCamera(c_comp);
 
-	dynamic_cast<W_Game*>(App->moduleEditor->GetEditorWindow(EditorWindow::GAME))->SetTargetCamera(c_comp);
-	App->moduleRenderer3D->tmpCameraTest = c_comp;
+	//LoadScene("Library/Scenes/scene.json");
 
 	return true;
 }
@@ -86,6 +87,12 @@ GameObject* M_Scene::CreateGameObject(const char* name, GameObject* parent, int 
 	//	parent->children.push_back(gm);
 
 	return gm;
+}
+
+void M_Scene::SetGameCamera(C_Camera* cam)
+{
+	App->moduleRenderer3D->SetGameRenderTarget(cam);
+	dynamic_cast<W_Game*>(App->moduleEditor->GetEditorWindow(EditorWindow::GAME))->SetTargetCamera(cam);
 }
 
 void M_Scene::Destroy(GameObject* gm)
@@ -161,6 +168,9 @@ void M_Scene::LoadScene(const char* name)
 	delete root;
 	root = nullptr;
 	App->moduleEditor->SetSelectedGO(nullptr);
+
+	SetGameCamera(nullptr);
+
 
 	JSON_Object* sceneObj = json_value_get_object(scene);
 

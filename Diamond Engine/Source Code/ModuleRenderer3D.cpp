@@ -23,6 +23,7 @@
 #include"Texture.h"
 #include"Primitive.h"
 
+#include"MathGeoLib/include/Geometry/LineSegment.h"
 
 #ifdef _DEBUG
 #pragma comment (lib, "MathGeoLib/libx86/MGDebug/MathGeoLib.lib")
@@ -35,7 +36,7 @@
 
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), str_CAPS(""),
-vsync(false), wireframe(false), tmpCameraTest(nullptr)
+vsync(false), wireframe(false), gameCamera(nullptr)
 {
 	GetCAPS(str_CAPS);
 	/*depth =*/ cull = lightng = color_material = texture_2d = true;
@@ -126,8 +127,10 @@ bool ModuleRenderer3D::Init()
 		}
 
 		// Blend for transparency
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, 0.1f);
+
 		glEnable(GL_BLEND);
-		glBlendEquation(GL_FUNC_ADD);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
 		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
@@ -211,29 +214,58 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	{
 		for (size_t i = 0; i < renderQueue.size(); i++)
 		{
-			renderQueue[i]->RenderMesh();
+			//Maybe do culling check on the component update
+			if (gameCamera != nullptr){
+				if (renderQueue[i]->IsInsideFrustum(&gameCamera->camFrustrum)) 
+				{
+					float distance = App->moduleCamera->editorCamera.camFrustrum.pos.DistanceSq(renderQueue[i]->globalOBB.pos);
+					//BUG: What if something is in the same distance? like 0, 0, 0?
+					//TODO: Use multimap and iterate multimap
+					renderQueueMap[distance] = renderQueue[i];
+
+					//renderQueue[i]->RenderMesh();
+				}
+			}
+			else
+			{
+				renderQueue[i]->RenderMesh();
+			}
 		}
+
+		for (auto it = renderQueueMap.rbegin(); it != renderQueueMap.rend(); ++it)
+		{
+			(*it).second->RenderMesh();
+		}
+		renderQueueMap.clear();
 		//renderQueue.clear();
 	}
-
 	App->moduleCamera->editorCamera.EndDraw();
 
 	//Test new camera render here?
 	//Start test draw
-	tmpCameraTest->StartDraw();
-	p.Render();
-	if (!renderQueue.empty())
+	if (gameCamera != nullptr) 
 	{
-		for (size_t i = 0; i < renderQueue.size(); i++)
+		gameCamera->StartDraw();
+		p.Render();
+		if (!renderQueue.empty())
 		{
-			renderQueue[i]->RenderMesh();
+			for (size_t i = 0; i < renderQueue.size(); i++)
+			{
+				if (renderQueue[i]->IsInsideFrustum(&gameCamera->camFrustrum)) 
+					renderQueue[i]->RenderMesh();
+			}
+			//renderQueue.clear();
 		}
-		renderQueue.clear();
-	}
-	tmpCameraTest->EndDraw();
-	//LOG(LogType::L_WARNING, "Frame buffer renderer id: %d", framebuffer);
+		gameCamera->EndDraw();
 
+	}
+
+	glClearColor(0.08f, 0.08f, 0.08f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	App->moduleEditor->Draw();
+	
+	//TEMPORAL: Delete here so you can call mouse picking from scene window, should not be here in the future
+	renderQueue.clear();
 
 	SDL_GL_SwapWindow(App->moduleWindow->window);
 
@@ -350,19 +382,52 @@ void ModuleRenderer3D::OnGUI()
 	}
 }
 
-/*Take a screenshot*/
-void ModuleRenderer3D::TakeScreenshot()
+void ModuleRenderer3D::DrawBox(float3* points, float3 color)
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, App->moduleCamera->editorCamera.framebuffer);
+	glColor3fv(&color.x);
+	glBegin(GL_LINES);
 
-	ILuint imageID = ilGenImage();
-	ilBindImage(imageID);
-	ilutGLScreen();
-	ilEnable(IL_FILE_OVERWRITE);
-	ilSaveImage("Screenshots/Screenshot.png");
-	ilDeleteImage(imageID);
+	//Draw plane
+	glVertex3fv(&points[0].x);
+	glVertex3fv(&points[2].x);
+	glVertex3fv(&points[2].x);
+	glVertex3fv(&points[6].x);
+	glVertex3fv(&points[6].x);
+	glVertex3fv(&points[4].x);
+	glVertex3fv(&points[4].x);
+	glVertex3fv(&points[0].x);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glVertex3fv(&points[0].x);
+	glVertex3fv(&points[1].x);
+	glVertex3fv(&points[1].x);
+	glVertex3fv(&points[3].x);
+	glVertex3fv(&points[3].x);
+	glVertex3fv(&points[2].x);
+	glVertex3fv(&points[4].x);
+	glVertex3fv(&points[5].x);
+
+	glVertex3fv(&points[6].x);
+	glVertex3fv(&points[7].x);
+	glVertex3fv(&points[5].x);
+	glVertex3fv(&points[7].x);
+	glVertex3fv(&points[3].x);
+	glVertex3fv(&points[7].x);
+	glVertex3fv(&points[1].x);
+	glVertex3fv(&points[5].x);
+
+	glEnd();
+	glColor3f(1.f, 1.f, 1.f);
+}
+
+void ModuleRenderer3D::RayToMeshQueueIntersection(LineSegment& ray)
+{
+	for (std::vector<C_MeshRenderer*>::iterator i = renderQueue.begin(); i != renderQueue.end(); ++i)
+	{
+		if (ray.Intersects((*i)->globalAABB))
+			App->moduleEditor->SetSelectedGO((*i)->GetGO());
+	}
+
+	//App->moduleEditor->SetSelectedGO(nullptr);
 }
 
 /*Get SDL caps*/
@@ -379,4 +444,13 @@ void ModuleRenderer3D::GetCAPS(std::string& caps)
 	caps += (SDL_HasAVX()) ? "AVX, " : "";
 	caps += (SDL_HasAltiVec()) ? "AltiVec, " : "";
 	caps += (SDL_Has3DNow()) ? "3DNow, " : "";
+}
+
+void ModuleRenderer3D::SetGameRenderTarget(C_Camera* cam)
+{
+	gameCamera = cam;
+
+	//TODO: This is trash, dont use hardcoded stuff
+	if (gameCamera != nullptr)
+		gameCamera->ReGenerateBuffer(App->moduleWindow->s_width, App->moduleWindow->s_height);
 }

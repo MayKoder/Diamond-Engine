@@ -57,4 +57,5 @@ public:
 
 private:
 	Component* dumpComponent;
+
 };

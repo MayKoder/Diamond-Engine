@@ -1,6 +1,9 @@
 #pragma once
 #include "Component.h"
 
+#include"MathGeoLib/include/Geometry/AABB.h"
+#include"MathGeoLib/include/Geometry/OBB.h"
+
 class Mesh;
 
 class C_MeshRenderer : public Component
@@ -18,12 +21,16 @@ public:
 
 	bool OnEditor() override;
 
+	bool IsInsideFrustum(Frustum* camFrustum);
+
 //private:
 
 	//Pointer to a mesh stored at ModuleRenderer3D
 	//Does not need a delete call
 	Mesh* _mesh;
 
-	bool faceNormals, vertexNormals;
+	AABB globalAABB;
+	OBB globalOBB;
 
+	bool faceNormals, vertexNormals;
 };

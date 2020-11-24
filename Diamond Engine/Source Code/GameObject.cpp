@@ -23,9 +23,11 @@ active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), d
 	transform = dynamic_cast<C_Transform*>(AddComponent(Component::Type::Transform));
 
 	//TODO: Should make sure there are not duplicated ID's
-	if (UID == -1) {
+	if (UID == -1) 
+	{
+		//TODO: Use a general LCG
 		LCG rand;
-		UID = rand.Int(0, INT_MAX);
+		UID = rand.Int();	
 	}
 		//UID = MaykMath::Random(0, INT_MAX);
 }
@@ -55,9 +57,6 @@ void GameObject::Update()
 		delete dumpComponent;
 		dumpComponent = nullptr;
 	}
-
-	//transform->eulerRotation.y += 1.f;
-	//transform->updateTransform = true;
 
 	for (size_t i = 0; i < components.size(); i++)
 	{

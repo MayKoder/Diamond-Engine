@@ -37,6 +37,10 @@ public:
 		return active;
 	}
 
+	inline GameObject* GetGO() {
+		return gameObject;
+	}
+
 	Type type;
 
 protected:

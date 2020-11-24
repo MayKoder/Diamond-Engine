@@ -5,6 +5,7 @@
 
 #include"parson/parson.h"
 class GameObject;
+class C_Camera;
 
 class M_Scene : public Module
 {
@@ -29,6 +30,8 @@ public:
 	GameObject* root;
 
 	std::vector<GameObject*> destroyList;
+
+	void SetGameCamera(C_Camera* cam);
 
 private:
 	void Destroy(GameObject* gm);
