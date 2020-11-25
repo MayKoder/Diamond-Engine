@@ -122,52 +122,55 @@ void FileSystem::LoadDroppedFile(const char* globalPath)
 	//Convert to custom file format
 	//Save custom file
 
-	char* buffer = nullptr;
-	uint size = FileSystem::LoadToBuffer(fileNameAndExtension.c_str(), &buffer);
+		//UPDATE ASSETS WINDOW WITH NEW FILE, JUST RECALCULATE ALL FOR NOW
 
-	if (buffer != nullptr && size != 0) 
-	{
-		switch (iType)
-		{
+	//TODO: WE SHOULD MOVE THIS TO RESOURCE MANAGER
+	//char* buffer = nullptr;
+	//uint size = FileSystem::LoadToBuffer(fileNameAndExtension.c_str(), &buffer);
 
-			case ImportType::MESH: 
-			{
-				//MeshLoader::ImportFBXFromBuffer(normalizedPath.c_str(), buffer, size, EngineExternal->moduleScene->root);
-				MeshLoader::BufferToMeshes(normalizedPath.c_str(), buffer, size, EngineExternal->moduleScene->root);
-				break;
-			}
+	//if (buffer != nullptr && size != 0) 
+	//{
+	//	switch (iType)
+	//	{
 
-			case ImportType::TEXTURE: 
-			{
-				int w = 0; int h = 0;
-				GLuint id = TextureImporter::CustomLoadImage(buffer, size, &w, &h);
+	//		case ImportType::MESH: 
+	//		{
+	//			//MeshLoader::ImportFBXFromBuffer(normalizedPath.c_str(), buffer, size, EngineExternal->moduleScene->root);
+	//			MeshLoader::BufferToMeshes(normalizedPath.c_str(), buffer, size, EngineExternal->moduleScene->root);
+	//			break;
+	//		}
 
-				std::string fileName;
-				GetFileName(fileNameAndExtension.c_str(), fileName, false);
-				TextureImporter::SaveDDS(buffer, size, fileName.c_str());
+	//		case ImportType::TEXTURE: 
+	//		{
+	//			int w = 0; int h = 0;
+	//			GLuint id = TextureImporter::CustomLoadImage(buffer, size, &w, &h);
 
-				Texture* material = new Texture(id, w, h, fileNameAndExtension.substr(fileNameAndExtension.find_last_of('/') + 1), fileNameAndExtension);
-				EngineExternal->moduleRenderer3D->globalTextures.push_back(material);
+	//			std::string fileName;
+	//			GetFileName(fileNameAndExtension.c_str(), fileName, false);
+	//			TextureImporter::SaveDDS(buffer, size, fileName.c_str());
 
-				if (EngineExternal->moduleEditor->GetSelectedGO()) 
-				{
-					C_Material* mat = dynamic_cast<C_Material*>(EngineExternal->moduleEditor->GetSelectedGO()->GetComponent(Component::Type::Material));
-					if (mat) 
-					{
-						mat->matTexture = material;
-					}
-					else {
-						C_Material* mat = dynamic_cast<C_Material*>(EngineExternal->moduleEditor->GetSelectedGO()->AddComponent(Component::Type::Material));
-						mat->matTexture = material;
+	//			Texture* material = new Texture(id, w, h, fileNameAndExtension.substr(fileNameAndExtension.find_last_of('/') + 1), fileNameAndExtension);
+	//			EngineExternal->moduleRenderer3D->globalTextures.push_back(material);
 
-					}
-				}
-				break;
-			}
+	//			if (EngineExternal->moduleEditor->GetSelectedGO()) 
+	//			{
+	//				C_Material* mat = dynamic_cast<C_Material*>(EngineExternal->moduleEditor->GetSelectedGO()->GetComponent(Component::Type::Material));
+	//				if (mat) 
+	//				{
+	//					mat->matTexture = material;
+	//				}
+	//				else {
+	//					C_Material* mat = dynamic_cast<C_Material*>(EngineExternal->moduleEditor->GetSelectedGO()->AddComponent(Component::Type::Material));
+	//					mat->matTexture = material;
 
-		}
-		RELEASE_ARRAY(buffer);
-	}
+	//				}
+	//			}
+	//			break;
+	//		}
+
+	//	}
+	//	RELEASE_ARRAY(buffer);
+	//}
 
 }
 
@@ -236,46 +239,6 @@ bool FileSystem::IsDirectory(const char* file) /*const*/
 //
 //	return ret;
 //}
-
-void FileSystem::GetAllFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list)
-{
-	char** files = PHYSFS_enumerateFiles(directory);
-
-	for (char** i = files; *i != nullptr; i++)
-	{
-		std::string str = std::string(directory) + std::string("/") + std::string(*i);
-		if (IsDirectory(str.c_str()))
-			dir_list.push_back(*i);
-		else
-			file_list.push_back(*i);
-	}
-
-	PHYSFS_freeList(files);
-}
-
-void FileSystem::GetAllFilesRecursive(const char* directory, std::vector<std::string>& file_list)
-{
-	//if (!Exists(directory))
-	//	return;
-
-	std::vector<std::string> dir_list;
-	GetAllFiles(directory, file_list, dir_list);
-
-	if (dir_list.size() != 0) {
-		for (unsigned int i = 0; i < dir_list.size(); i++)
-		{
-			std::string test = directory;
-			dir_list[i].push_back('/');
-			test += dir_list[i];
-
-			GetAllFilesRecursive(test.c_str(), file_list);
-		}
-		dir_list.clear();
-	}
-
-
-
-}
 
 std::string FileSystem::NormalizePath(const char* full_path) /*const*/
 {

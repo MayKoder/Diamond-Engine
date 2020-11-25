@@ -4,6 +4,9 @@
 #include "Window.h"
 #include<vector>
 
+//TODO: Move AssetFile to a empty file to avoid adding all filesystem here
+#include"M_FileSystem.h"
+
 class W_Assets : public Window
 {
 
@@ -15,7 +18,10 @@ public:
 
 	void Draw() override;
 
-	std::vector<std::string> files;
+	void DrawFileTree(AssetDir& file);
+
+	AssetDir rootFile;
+
 
 };
 

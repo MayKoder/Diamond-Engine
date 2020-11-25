@@ -147,7 +147,7 @@ void ModuleCamera3D::OrbitalRotation(float3 center, float dt)
 
 	float distance = editorCamera.camFrustrum.pos.Distance(center);
 	//editorCamera.camFrustrum.pos = center;
-
+	//ERROR, BUG, WARNING: CAMERA DOES A WEIRD FLIP WHEN ORBITATING PAST Y -1, Y 1, SHOULD INVERT WORLD X
 	if (dy != 0)
 	{
 		float DeltaY = (float)dy * mouseSensitivity;
