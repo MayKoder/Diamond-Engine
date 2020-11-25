@@ -463,6 +463,9 @@
     <ClInclude Include="Source Code\External Libraries\ImGuizmo\ImCurveEdit.h">
       <Filter>Externals\ImGuizmo</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\DETime.h">
+      <Filter>Sources\Tools\MMath</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">

@@ -36,6 +36,11 @@ bool C_Material::OnEditor()
 
 
 		}
+		else
+		{
+			ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "No texture loaded, using default checkers");
+			ImGui::Image((ImTextureID)EngineExternal->moduleRenderer3D->checkersTexture, ImVec2(128, 128));
+		}
 		return true;
 	}
 	return false;
@@ -67,7 +72,8 @@ void C_Material::LoadData(JSON_Object* nObj)
 	std::string texName = json_object_get_string(nObj, "Name");
 
 	if (texName == "" || texPath == "") {
-		LOG(LogType::L_WARNING, "Empty")
+		LOG(LogType::L_WARNING, "Empty");
+		return;
 	}
 
 	char* buffer = nullptr;

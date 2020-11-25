@@ -13,6 +13,7 @@ class ModuleCamera3D;
 class M_Scene;
 class M_Editor;
 
+#include"MathGeoLib/include/Algorithm/Random/LCG.h"
 
 class Application
 {
@@ -34,6 +35,9 @@ private:
 	float	dt;
 	bool quitApplicationState;
 
+	//TODO: Maybe move inside a module?
+	LCG randomizer;
+
 public:
 	int fpsCap;
 
@@ -49,6 +53,8 @@ public:
 
 	float GetDT() const;
 	float GetFrameRate() const;
+	
+	int GetRandomInt();
 
 private:
 

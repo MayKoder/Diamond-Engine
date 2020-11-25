@@ -39,6 +39,10 @@ namespace FileSystem
 	bool CreateDir(const char* dir);
 	bool IsDirectory(const char* file) /*const*/;
 
+	//void GetRealDir(const char* path, std::string& output);
+	//std::string GetPathRelativeToAssets(const char* originalPath) /*const*/;
+	void GetAllFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list);
+
 	std::string NormalizePath(const char* path) /*const*/;
 	void SplitFilePath(const char* full_path, std::string* path, std::string* file = nullptr, std::string* extension = nullptr) /*const*/;
 

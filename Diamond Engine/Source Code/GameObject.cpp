@@ -11,7 +11,7 @@
 #include"DEJsonSupport.h"
 #include <algorithm>
 
-#include"MathGeoLib/include/Algorithm/Random/LCG.h"
+#include"Application.h"
 
 GameObject::GameObject(const char* _name, GameObject* parent, int _uid) : parent(parent), name(_name), showChildren(false),
 active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr)
@@ -25,9 +25,7 @@ active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), d
 	//TODO: Should make sure there are not duplicated ID's
 	if (UID == -1) 
 	{
-		//TODO: Use a general LCG
-		LCG rand;
-		UID = rand.Int();	
+		UID = EngineExternal->GetRandomInt();
 	}
 		//UID = MaykMath::Random(0, INT_MAX);
 }

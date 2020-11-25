@@ -98,6 +98,7 @@
     <ClInclude Include="Source Code\C_Material.h" />
     <ClInclude Include="Source Code\C_Transform.h" />
     <ClInclude Include="Source Code\DEJsonSupport.h" />
+    <ClInclude Include="Source Code\DETime.h" />
     <ClInclude Include="Source Code\EngineVersion.h" />
     <ClInclude Include="Source Code\External Libraries\DevIL\include\devil_cpp_wrapper.hpp" />
     <ClInclude Include="Source Code\External Libraries\DevIL\include\devil_internal_exports.h" />

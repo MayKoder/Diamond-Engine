@@ -11,6 +11,7 @@
 #include"M_Editor.h"
 
 
+//TODO: Change all std::string in methods to std::string&
 extern Application* EngineExternal = nullptr;
 Application::Application() : quitApplicationState(false), fpsCap(60)
 {
@@ -119,6 +120,11 @@ float Application::GetDT() const
 float Application::GetFrameRate() const
 {
 	return 1.f / GetDT();
+}
+
+int Application::GetRandomInt()
+{
+	return randomizer.Int();
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules

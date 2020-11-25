@@ -221,7 +221,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			if (gameCamera != nullptr){
 				if (renderQueue[i]->IsInsideFrustum(&gameCamera->camFrustrum)) 
 				{
-					float distance = App->moduleCamera->editorCamera.camFrustrum.pos.Distance(renderQueue[i]->globalOBB.pos);
+					float distance = App->moduleCamera->editorCamera.camFrustrum.pos.DistanceSq(renderQueue[i]->globalOBB.pos);
 					//BUG: What if something is in the same distance? like 0, 0, 0?
 					renderQueueMap.emplace(distance, renderQueue[i]);
 

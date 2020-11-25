@@ -217,6 +217,42 @@ bool FileSystem::IsDirectory(const char* file) /*const*/
 	return PHYSFS_isDirectory(file) != 0;
 }
 
+//*PHYSFS_getSearchPath() not working and causing a crash
+//void FileSystem::GetRealDir(const char* path, std::string& output)
+//{
+//	output = PHYSFS_getBaseDir();
+//
+//	std::string baseDir = PHYSFS_getBaseDir();
+//	std::string searchPath = *PHYSFS_getSearchPath();
+//	std::string realDir = PHYSFS_getRealDir(path);
+//
+//	output.append(*PHYSFS_getSearchPath()).append("/");
+//	output.append(PHYSFS_getRealDir(path)).append("/").append(path);
+//}
+//std::string FileSystem::GetPathRelativeToAssets(const char* originalPath) /*const*/
+//{
+//	std::string ret;
+//	GetRealDir(originalPath, ret);
+//
+//	return ret;
+//}
+
+void FileSystem::GetAllFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list)
+{
+	char** files = PHYSFS_enumerateFiles(directory);
+
+	for (char** i = files; *i != nullptr; i++)
+	{
+		std::string str = std::string(directory) + std::string("/") + std::string(*i);
+		if (IsDirectory(str.c_str()))
+			dir_list.push_back(*i);
+		else
+			file_list.push_back(*i);
+	}
+
+	PHYSFS_freeList(files);
+}
+
 std::string FileSystem::NormalizePath(const char* full_path) /*const*/
 {
 	std::string newPath(full_path);
