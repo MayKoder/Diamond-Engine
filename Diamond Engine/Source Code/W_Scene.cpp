@@ -13,6 +13,8 @@
 #include"ModuleInput.h"
 #include"GameObject.h"
 
+#include"I_FileSystem.h"
+
 #include"MathGeoLib/include/Math/float4x4.h"
 #include"MathGeoLib/include/Geometry/LineSegment.h"
 
@@ -52,6 +54,18 @@ void W_Scene::Draw()
 		App->moduleCamera->editorCamera.SetAspectRatio(ImGui::GetContentRegionAvail().x / ImGui::GetContentRegionAvail().y);
 		ImGui::Image((ImTextureID)App->moduleCamera->editorCamera.texColorBuffer, size, ImVec2(0, 1), ImVec2(1, 0));
 
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ASSET"))
+			{
+				//Drop asset from Asset window to scene window
+				const char* name = (const char*)payload->Data;
+				
+				FileSystem::LoadDroppedFile(name);
+				LOG(LogType::L_WARNING, "File %s loaded to scene", name);
+			}
+			ImGui::EndDragDropTarget();
+		}
 
 		ImGui::SetCursorPos(ImVec2(10, 30));
 		if (ImGui::Button((mode == ImGuizmo::MODE::LOCAL) ? "LOCAL" : "WORLD"))

@@ -26,9 +26,22 @@ void W_Hierarchy::Draw()
 		{
 			DrawGameObjectsTree(cSceneReference->root, false);
 		}
+
+		if (ImGui::BeginPopupContextWindow())
+		{
+			if (ImGui::Selectable("Create Empty"))
+			{
+				GameObject* parent = (EngineExternal->moduleEditor->GetSelectedGO() != nullptr) ? EngineExternal->moduleEditor->GetSelectedGO() : EngineExternal->moduleScene->root;
+
+
+				EngineExternal->moduleScene->CreateGameObject("Empty", parent);
+
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndPopup();
+		}
 	}
 	ImGui::End();
-
 }
 
 void W_Hierarchy::SetCurrentScene(M_Scene* _scene)

@@ -75,7 +75,7 @@ void MeshLoader::BufferToMeshes(const char* full_path, char* buffer, int size, G
 					if(isLong != textureFileName.npos)
 						textureFileName = textureFileName.substr(isLong + 1);
 
-					std::string localPath = StringLogic::GlobalToLocalPath(full_path);
+					std::string localPath = generalPath;
 					localPath = localPath.substr(0, localPath.find_last_of('/')+1);
 					localPath += FileSystem::NormalizePath(path.C_Str());
 
