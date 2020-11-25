@@ -370,16 +370,19 @@ void M_Editor::DrawTopBar()
 		ImGui::SameLine((ImGui::GetContentRegionMax().x / 2.f) - 50);
 		if (ImGui::BeginChild("##playBTS", ImVec2(100, ImGui::GetWindowContentRegionMax().y - style.FramePadding.y), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoDecoration)) {
 			
-			//Play game
-			ImGui::Button("Pl");
+			//Play game maybe if its clicked while game is playing, stop game?
+			if (ImGui::Button("Pl"))
+				LOG(LogType::L_WARNING, "Starting game");
 			ImGui::SameLine();
 
 			//Stop game if playing
-			ImGui::Button("St");
+			if(ImGui::Button("St"))
+				LOG(LogType::L_WARNING, "Stopping game");
 			ImGui::SameLine();
 
 			//Step one frame forward
-			ImGui::Button("Fw");
+			if(ImGui::Button("Fw"))
+				LOG(LogType::L_WARNING, "Stepping game");
 		}
 		ImGui::EndChild();
 

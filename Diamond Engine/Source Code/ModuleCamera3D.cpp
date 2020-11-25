@@ -56,14 +56,6 @@ update_status ModuleCamera3D::Update(float dt)
 {
 
 	//ASK: This should be here to move camera with code but idk its expensive
-	//TODO: Maybe dont do this every frame?
-	if (App->moduleInput->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT) {
-		float4x4 mat = editorCamera.camFrustrum.WorldMatrix();
-		mat.SetRotatePart(Direction.Normalized());
-		editorCamera.camFrustrum.SetWorldMatrix(mat.Float3x4Part());
-	}
-
-
 	editorCamera.Move(cameraMovement);
 	cameraMovement = float3::zero;
 
@@ -125,7 +117,7 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 			float3 maTogl = App->moduleEditor->GetSelectedGO()->transform->globalTransform.TranslatePart();
 			target.Set(maTogl.x, maTogl.y, maTogl.z);
 		}
-		//OrbitalRotation(target, dt);
+		OrbitalRotation(target, dt);
 	}
 
 
@@ -148,45 +140,41 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 ////Could be a good idea to use quaternions? Would it be faster?
 ////BUG: Camera will bug when the the horizontal rotation is almost 
 ////equal as the target X and Z coords
-//void ModuleCamera3D::OrbitalRotation(float3 center, float dt)
-//{
-//	int dx = -App->moduleInput->GetMouseXMotion();
-//	int dy = -App->moduleInput->GetMouseYMotion();
-//
-//	if (dx != 0)
-//	{
-//		float DeltaX = (float)dx * mouseSensitivity;
-//
-//		//Get vector diference
-//		float distance = length(editorCamera.camFrustrum.pos - center);
-//		float3 ref = normalize(Position - center);
-//
-//		//Rotate diference
-//		ref = rotate(ref, DeltaX, float3(0.0f, 1.0f, 0.0f));
-//
-//		//Move camera position to new diference
-//		Position = center + ref * distance;
-//
-//	}
-//	if (dy != 0)
-//	{
-//
-//		//BUG: Weird bug when looking at the same Y
-//		float DeltaY = (float)dy * mouseSensitivity;
-//
-//		float distance = length(editorCamera.camFrustrum.pos - center);
-//		float3 ref = normalize(Position - center);
-//		ref = rotate(ref, DeltaY, -cross(ref, float3(0.0f, 1.0f, 0.0f)));
-//
-//		//debug = center + ref * distance;
-//
-//		Position = center + ref * distance;
-//	}
-//
-//
-//	//Reference = center;
-//	LookAt(center);
-//}
+void ModuleCamera3D::OrbitalRotation(float3 center, float dt)
+{
+	int dx = -App->moduleInput->GetMouseXMotion();
+	int dy = -App->moduleInput->GetMouseYMotion();
+
+	float distance = editorCamera.camFrustrum.pos.Distance(center);
+	//editorCamera.camFrustrum.pos = center;
+
+	if (dy != 0)
+	{
+		float DeltaY = (float)dy * mouseSensitivity;
+
+		Quat Y = Quat::identity;
+		Y.SetFromAxisAngle(float3(1, 0, 0), DeltaY * DEGTORAD);
+
+		Direction = Direction * Y;
+	}
+
+	if (dx != 0)
+	{
+		float DeltaX = (float)dx * mouseSensitivity;
+
+		Quat X = Quat::identity;
+		X.SetFromAxisAngle(float3(0, 1, 0), DeltaX * DEGTORAD);
+
+		Direction = X * Direction;
+	}
+
+	float4x4 mat = editorCamera.camFrustrum.WorldMatrix();
+	mat.SetRotatePart(Direction.Normalized());
+	editorCamera.camFrustrum.SetWorldMatrix(mat.Float3x4Part());
+
+	editorCamera.camFrustrum.pos = center + (editorCamera.camFrustrum.front * -distance);
+	editorCamera.LookAt(center);
+}
 
 void ModuleCamera3D::FreeRotation(float dt)
 {
@@ -212,6 +200,10 @@ void ModuleCamera3D::FreeRotation(float dt)
 
 		Direction = X * Direction;
 	}
+
+	float4x4 mat = editorCamera.camFrustrum.WorldMatrix();
+	mat.SetRotatePart(Direction.Normalized());
+	editorCamera.camFrustrum.SetWorldMatrix(mat.Float3x4Part());
 }
 
 void ModuleCamera3D::FocusCamera(float3 center, float offset)

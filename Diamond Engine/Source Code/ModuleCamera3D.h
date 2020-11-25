@@ -21,7 +21,7 @@ public:
 
 private:
 
-	//void OrbitalRotation(float3 center, float dt);
+	void OrbitalRotation(float3 center, float dt);
 	void FreeRotation(float dt);
 	void FocusCamera(float3 center, float offset);
 	void PanCamera(float);
