@@ -1,6 +1,14 @@
 #pragma once
 
 #include "Module.h"
+#include<vector>
+
+struct AssetFile 
+{
+	bool isDir = false;
+	const char* name = nullptr;
+	std::vector<AssetFile> childNames;
+};
 
 class M_FileSystem : public Module
 {

@@ -6,6 +6,9 @@
 
 #include "Application.h"
 
+#include "M_Editor.h"
+#include "W_Assets.h"
+
 #pragma comment( lib, "DevIL/libx86/DevIL.lib" )
 #include "DevIL\include\ilu.h"
 #pragma comment( lib, "DevIL/libx86/ILU.lib" )
@@ -38,6 +41,7 @@ bool M_FileSystem::Init()
 
 bool M_FileSystem::Start()
 {
+	dynamic_cast<W_Assets*>(App->moduleEditor->GetEditorWindow(EditorWindow::ASSETS))->PopulateFileArray();
 	return true;
 }
 

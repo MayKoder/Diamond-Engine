@@ -9,26 +9,23 @@ W_Assets::W_Assets() : Window()
 
 W_Assets::~W_Assets()
 {
+	files.clear();
+}
+
+void W_Assets::PopulateFileArray()
+{
+	//Dirs returns directories inside the folder so we should use some kind of recursive get until dirs is empty
+	FileSystem::GetAllFilesRecursive("Assets/", files);
 }
 
 void W_Assets::Draw()
 {
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/)) 
 	{
-		std::vector<std::string> names;
-		std::vector<std::string> dirs;
-
-		//Dirs returns directories inside the folder so we should use some kind of recursive get until dirs is empty
-		FileSystem::GetAllFiles("Assets/", names, dirs);
-
-
-		for (auto i = names.begin(); i != names.end(); ++i)
+		for (auto i = files.begin(); i != files.end(); ++i)
 		{
 			ImGui::Text((*i).c_str());
 		}
-
-		names.clear();
-		dirs.clear();
 	}
 	ImGui::End();
 }

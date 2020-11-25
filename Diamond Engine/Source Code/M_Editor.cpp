@@ -419,6 +419,7 @@ void M_Editor::CreateDockSpace()
 //pointer you want to use
 Window* M_Editor::GetEditorWindow(EditorWindow type)
 {
+	//TODO: Maybe use templates as enter and return types, like unity GetComponent system?
 	unsigned int vecPosition = static_cast<unsigned int>(type);
 
 	//SDL_assert(vecPosition < windows.size());

@@ -253,6 +253,30 @@ void FileSystem::GetAllFiles(const char* directory, std::vector<std::string>& fi
 	PHYSFS_freeList(files);
 }
 
+void FileSystem::GetAllFilesRecursive(const char* directory, std::vector<std::string>& file_list)
+{
+	//if (!Exists(directory))
+	//	return;
+
+	std::vector<std::string> dir_list;
+	GetAllFiles(directory, file_list, dir_list);
+
+	if (dir_list.size() != 0) {
+		for (unsigned int i = 0; i < dir_list.size(); i++)
+		{
+			std::string test = directory;
+			dir_list[i].push_back('/');
+			test += dir_list[i];
+
+			GetAllFilesRecursive(test.c_str(), file_list);
+		}
+		dir_list.clear();
+	}
+
+
+
+}
+
 std::string FileSystem::NormalizePath(const char* full_path) /*const*/
 {
 	std::string newPath(full_path);
