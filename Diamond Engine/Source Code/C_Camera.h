@@ -27,9 +27,9 @@ public:
 
 	void ReGenerateBuffer(int w, int h);
 
-	int framebuffer;
-	int texColorBuffer;
-	int rbo;
+	unsigned int framebuffer;
+	unsigned int texColorBuffer;
+	unsigned int rbo;
 
 	Frustum camFrustrum;
 	float fov;

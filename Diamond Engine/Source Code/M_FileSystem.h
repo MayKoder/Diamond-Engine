@@ -12,8 +12,8 @@ struct AssetDir
 
 	void ClearData();
 
-	std::string dirName;
-	std::string importPath;
+	std::string dirName = "";
+	std::string importPath = "";
 
 	std::vector<AssetDir> childDirs;
 	bool isDir = false;

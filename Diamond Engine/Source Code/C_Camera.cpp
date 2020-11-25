@@ -13,7 +13,7 @@
 #include"C_Transform.h"
 #include"OpenGL.h"
 
-C_Camera::C_Camera() : Component(nullptr), framebuffer(-1), texColorBuffer(-1), rbo(-1), fov(60.0f)
+C_Camera::C_Camera() : Component(nullptr), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f)
 {
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
@@ -28,7 +28,7 @@ C_Camera::C_Camera() : Component(nullptr), framebuffer(-1), texColorBuffer(-1), 
 	camFrustrum.pos = float3::zero;
 }
 
-C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(-1), texColorBuffer(-1), rbo(-1), fov(60.0f)
+C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f)
 {
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
@@ -45,13 +45,13 @@ C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(-1), texColorB
 
 C_Camera::~C_Camera()
 {
-	if (framebuffer > 0)
+	if (framebuffer == 0)
 		glDeleteFramebuffers(1, (GLuint*)&framebuffer);
 
-	if (texColorBuffer > 0)
+	if (texColorBuffer == 0)
 		glDeleteTextures(1, (GLuint*)&texColorBuffer);
 
-	if (rbo > 0)
+	if (rbo == 0)
 		glDeleteRenderbuffers(1, (GLuint*)&rbo);
 
 	if (EngineExternal && EngineExternal->moduleRenderer3D->GetGameRenderTarget() == this)
@@ -64,13 +64,15 @@ bool C_Camera::OnEditor()
 	{
 		ImGui::Separator();
 
+		ImGui::Text("FB %i, TB %i, RBO %i", framebuffer, texColorBuffer, rbo);
+
 		ImGui::DragFloat("Near Distance: ", &camFrustrum.nearPlaneDistance, 0.1f, 0.01f, camFrustrum.farPlaneDistance);
 		ImGui::DragFloat("Far Distance: ", &camFrustrum.farPlaneDistance, 0.1f, camFrustrum.nearPlaneDistance, 10000.f);
 
 		ImGui::DragFloat("Vertical FOV: ", &camFrustrum.verticalFov, 0.1f, 0.0f, 300.f);
 		ImGui::DragFloat("Horizontal FOV: ", &camFrustrum.horizontalFov, 0.1f, 0.0f, 300.f);
 
-		if (ImGui::DragFloat("FOV: ", &fov, 0.1f, 0.0f, 180.f))
+		if (ImGui::DragFloat("FOV: ", &fov, 0.1f, 1.0f, 180.f))
 		{
 			camFrustrum.verticalFov = fov * DEGTORAD;
 			//camFrustrum.horizontalFov = 2.0f * atanf(tanf(camFrustrum.verticalFov / 2.0f) * App->window->GetWindowWidth() / App->window->GetWindowHeight());
@@ -143,6 +145,8 @@ void C_Camera::LoadData(JSON_Object* nObj)
 void C_Camera::StartDraw()
 {
 	glEnable(GL_DEPTH_TEST);
+
+	glLoadIdentity();
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf((GLfloat*)GetOpenGLProjectionMatrix().v);
 
@@ -175,13 +179,13 @@ void C_Camera::ReGenerateBuffer(int w, int h)
 {
 	SetAspectRatio((float)w / (float)h);
 
-	if (framebuffer > 0)
+	if (framebuffer == 0)
 		glDeleteFramebuffers(1, (GLuint*)&framebuffer);
 
-	if (texColorBuffer > 0)
+	if (texColorBuffer == 0)
 		glDeleteTextures(1, (GLuint*)&texColorBuffer);
 
-	if (rbo > 0)
+	if (rbo == 0)
 		glDeleteRenderbuffers(1, (GLuint*)&rbo);
 
 
