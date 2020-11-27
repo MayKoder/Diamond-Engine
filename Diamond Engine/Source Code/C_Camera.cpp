@@ -33,7 +33,7 @@ C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(0), texColorBu
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
 	camFrustrum.nearPlaneDistance = 1;
-	camFrustrum.farPlaneDistance = 10;
+	camFrustrum.farPlaneDistance = 100.f;
 	camFrustrum.front = gameObject->transform->GetForward();
 	camFrustrum.up = gameObject->transform->GetUp();
 

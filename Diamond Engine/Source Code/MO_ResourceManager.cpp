@@ -50,12 +50,12 @@ update_status M_ResourceManager::PreUpdate(float dt)
 
 bool M_ResourceManager::CleanUp()
 {
-	for (auto it = resources.begin(); it != resources.end(); ++it)
-	{
-		(*it).second->UnloadFromMemory();
-		delete (*it).second;
-	}
-	resources.clear();
+	//for (auto it = resources.begin(); it != resources.end(); ++it)
+	//{
+	//	(*it).second->UnloadFromMemory();
+	//	delete (*it).second;
+	//}
+	//resources.clear();
 
 	return true;
 }
@@ -67,7 +67,7 @@ void M_ResourceManager::OnGUI()
 	{
 		for (auto it = resources.begin(); it != resources.end(); ++it)
 		{
-			ImGui::Text("%i: %s and %s", (*it).second->GetReferenceCount(), (*it).second->GetAssetPath(), (*it).second->GetAssetPath());
+			ImGui::Text("%i: %i and %s", (*it).second->GetReferenceCount(), (*it).second->GetUID(), (*it).second->GetLibraryPath());
 		}
 	}
 }
@@ -138,12 +138,18 @@ void M_ResourceManager::NeedsDirsUpdate(AssetDir& dir)
 
 		}
 
-
 		//TODO: Then find modified files and create o recalulate .meta and library files
+		//SUPER IMPOIRTANT TODO DONT FFORGET, REGENERATE LIBRARY FILE BUT NEVER MODIFY META FILE
+		//Check if this works
+		if (!dir.isDir) {
+			LOG(LogType::L_WARNING, "File %s was modified, reimporting", dir.dirName.c_str());
+			this->ImportFile(dir.importPath.c_str(), this->GetMetaType(dir.metaFileDir.c_str()));
+		}
 	}
 }
 
-Resource* M_ResourceManager::RequestResource(int uid)
+//Returns a resource* if the resource is loaded or creates a new resource from the library file
+Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 {
 	//Find if the resource is already loaded
 	std::map<int, Resource*>::iterator it = resources.find(uid);
@@ -152,8 +158,49 @@ Resource* M_ResourceManager::RequestResource(int uid)
 		it->second->IncreaseReferenceCount();
 		return it->second;
 	}
-	////Find the library file (if exists) and load the custom file format
+
+	//Find the library file (if exists) and load the custom file format
+	if (libraryPath != nullptr) 
+	{
+		Resource* ret = nullptr;
+
+		static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 4, "Update all switches with new type");
+
+		
+		switch (GetTypeFromLibraryExtension(libraryPath))
+		{
+			case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
+			case Resource::Type::MODEL: ret = (Resource*) new ResourceMesh(uid); break;
+			case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
+			//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
+		}
+
+		if (ret != nullptr)
+		{
+			resources[uid] = ret;
+			ret->SetAssetsPath("");
+			ret->SetLibraryPath(libraryPath);
+			ret->IncreaseReferenceCount();
+
+			ret->LoadToMemory();
+		}
+		return ret;
+	}
+
+	return nullptr;
 	//return TryToLoadResource();
+}
+
+void M_ResourceManager::ReleaseResource(int uid)
+{
+	std::map<int, Resource*>::iterator it = resources.find(uid);
+	if (it == resources.end())
+		return;
+	
+	Resource* res = (*it).second;
+	(*it).second->UnloadFromMemory();
+	resources.erase((*it).second->GetUID());
+	delete res;
 }
 
 //You should enter here only if the UID of the file on asset does not exist on library
@@ -164,7 +211,11 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 	if (type == Resource::Type::UNKNOWN /*|| type == Resource::Type::MODEL*/)
 		return 0; 
 
-	Resource* resource = CreateNewResource(assetsFile, type); //Save ID, assetsFile path, libraryFile path
+	//Generate meta
+	std::string meta = M_ResourceManager::GetMetaPath(assetsFile);
+	uint resUID = GetMetaUID(meta.c_str());
+
+	Resource* resource = CreateNewResource(assetsFile, resUID, type); //Save ID, assetsFile path, libraryFile path
 
 	int ret = 0;
 	
@@ -184,12 +235,10 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 
 	RELEASE_ARRAY(fileBuffer);
 
-	//Generate meta
-	GenerateMeta(*resource);
-
+	//UnloadResource(resource->GetUID());
 	//TODO: Uncomment this in the future
 	//LoadResource(ret);
-	//UnloadResource(ret);
+	UnloadResource(ret);
 
 	return ret;
 }
@@ -201,17 +250,44 @@ int M_ResourceManager::CreateLibraryFromAssets(const char* assetsFile)
 	return resID;
 }
 
-Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, Resource::Type type)
+void M_ResourceManager::AssetsToScene(const char* assets_path)
+{
+
+	if (ExistsOnLibrary(assets_path) != 0)
+	{
+		std::string meta = GetMetaPath(assets_path);
+		JSON_Value* scene = json_parse_file(meta.c_str());
+
+		if (scene != NULL) 
+		{
+			DEConfig sceneObj(json_value_get_object(scene));
+
+			switch ((Resource::Type)sceneObj.ReadInt("Type"))
+			{
+				case Resource::Type::TEXTURE: RequestResource(sceneObj.ReadInt("UID"), sceneObj.ReadString("Library Path")); break;
+				case Resource::Type::MODEL: ModelImporter::LoadModelCustom(sceneObj.ReadString("Library Path")); break;
+			}
+
+			//Free memory
+			json_value_free(scene);
+		}
+	}
+	else
+	{
+		LOG(LogType::L_ERROR, "ASSET META OR LIBRARY NOT CREATED");
+	}
+}
+
+Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid, Resource::Type type)
 {
 	Resource* ret = nullptr;
 
-	int uid = GenerateNewUID();
-
-	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 3, "Update all switches with new type");
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 4, "Update all switches with new type");
 	switch (type) 
 	{
 		case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
 		case Resource::Type::MODEL: ret = (Resource*) new ResourceMesh(uid); break;
+		case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
 		//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
 	}
 
@@ -219,27 +295,102 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, Resource:
 	{
 		resources[uid] = ret;
 		ret->SetAssetsPath(assetsFile);
-		ret->SetLibraryPath(GenLibraryPath(*ret).c_str());
+		ret->SetLibraryPath(GenLibraryPath(ret->GetUID(), ret->GetType()).c_str());
+		ret->IncreaseReferenceCount();
 	}
 
 	return ret;
 }
 
-std::string M_ResourceManager::GenLibraryPath(Resource& res)
+Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::Type type, uint _uid)
+{
+	Resource* ret = nullptr;
+
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 4, "Update all switches with new type");
+
+	int uid = _uid;
+	switch (type)
+	{
+		case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
+		case Resource::Type::MODEL: ret = (Resource*) new ResourceMesh(uid); break;
+		case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
+		//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
+	}
+
+	if (ret != nullptr)
+	{
+		resources[uid] = ret;
+		ret->SetAssetsPath("");
+		ret->SetLibraryPath(libraryFile);
+		ret->IncreaseReferenceCount();
+	}
+
+	return ret;
+}
+
+int M_ResourceManager::GetMetaUID(const char* metaFile)
+{
+	JSON_Value* metaJSON = json_parse_file(metaFile);
+	DEConfig rObj(json_value_get_object(metaJSON));
+
+	uint mUID = rObj.ReadInt("UID");
+
+	//Free memory
+	json_value_free(metaJSON);
+
+	return mUID;
+}
+
+std::string M_ResourceManager::GenLibraryPath(uint _uid, Resource::Type _type)
 {
 	std::string ret = "";
-	std::string nameNoExt = "";
+	std::string nameNoExt = std::to_string(_uid);
 
-	FileSystem::GetFileName(res.GetAssetPath(), nameNoExt, false);
+	//FileSystem::GetFileName(res.GetAssetPath(), nameNoExt, false);
 
-	switch (res.GetType())
+	switch (_type)
 	{
 		case Resource::Type::TEXTURE: ret = MATERIALS_PATH; ret += nameNoExt; ret += ".dds"; break;
-		case Resource::Type::MODEL: ret = MESHES_PATH; ret += nameNoExt; ret += ".mmh"; break;
+		case Resource::Type::MODEL: ret = MODELS_PATH; ret += nameNoExt; ret += ".model"; break;
+		case Resource::Type::MESH: ret = MODELS_PATH; ret += nameNoExt; ret += ".mmh"; break;
 		case Resource::Type::SCENE : ret = SCENES_PATH; ret += nameNoExt; ret += ".des"; break;
 	}
 
 	return ret;
+}
+
+std::string M_ResourceManager::GetMetaPath(const char* assetsFile)
+{
+	std::string metaFile(assetsFile);
+	metaFile += ".meta";
+	return metaFile;
+}
+
+Resource::Type M_ResourceManager::GetMetaType(const char* metaFile)
+{
+	JSON_Value* metaJSON = json_parse_file(metaFile);
+	DEConfig rObj(json_value_get_object(metaJSON));
+
+	//TODO: Change this casts with xxx_cast<>
+	Resource::Type mUID = (Resource::Type)rObj.ReadInt("Type");
+
+	//Free memory
+	json_value_free(metaJSON);
+
+	return mUID;
+}
+
+std::string M_ResourceManager::LibraryFromMeta(const char* metaFile)
+{
+	JSON_Value* metaJSON = json_parse_file(metaFile);
+	DEConfig rObj(json_value_get_object(metaJSON));
+
+	std::string libPath = rObj.ReadString("Library Path");
+
+	//Free memory
+	json_value_free(metaJSON);
+
+	return libPath;
 }
 
 void M_ResourceManager::LoadResource(int uid)
@@ -270,10 +421,8 @@ void M_ResourceManager::UnloadResource(int uid)
 	res->DecreaseReferenceCount();
 
 	if (res->GetReferenceCount() <= 0) 
-	{
-		res->UnloadFromMemory();
-		resources.erase(it);
-	}
+		ReleaseResource(res->GetUID());
+
 }
 
 bool M_ResourceManager::IsResourceLoaded(int uid)
@@ -304,19 +453,41 @@ Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFil
 	return Resource::Type::UNKNOWN;
 }
 
-void M_ResourceManager::GenerateMeta(Resource& res)
+Resource::Type M_ResourceManager::GetTypeFromLibraryExtension(const char* libraryFile)
+{
+	std::string ext(libraryFile);
+	ext = ext.substr(ext.find_last_of('.') + 1);
+
+	for (int i = 0; i < ext.length(); i++)
+	{
+		ext[i] = std::tolower(ext[i]);
+	}
+
+	if (ext == "dds")
+		return Resource::Type::TEXTURE;
+	if (ext == "model")
+		return Resource::Type::MODEL;
+	if (ext == "mmh")
+		return Resource::Type::MESH;
+	if (ext == "des")
+		return Resource::Type::SCENE;
+
+	return Resource::Type::UNKNOWN;
+}
+
+void M_ResourceManager::GenerateMeta(const char* aPath, const char* lPath, unsigned int uid, Resource::Type type)
 {
 	//TODO: Move all json usage to own structure ASAP
 	JSON_Value* file = json_value_init_object();
 	DEConfig rObj(json_value_get_object(file));
 
-	rObj.WriteString("Library Path", res.GetLibraryPath());
-	rObj.WriteString("Assets Path", res.GetAssetPath());
+	rObj.WriteString("Assets Path", aPath);
+	rObj.WriteString("Library Path", lPath);
 
-	rObj.WriteInt("UID", res.GetUID());
-	rObj.WriteInt("Type", (int)res.GetType());
+	rObj.WriteInt("UID", uid);
+	rObj.WriteInt("Type", (int)type);
 
-	std::string path = res.GetAssetPath() + std::string(".meta");
+	std::string path = aPath + std::string(".meta");
 	json_serialize_to_file_pretty(file, path.c_str());
 
 	//Free memory

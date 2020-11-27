@@ -1,0 +1,109 @@
+{
+    "Model Objects": [
+        {
+            "name": "Assets\/BakerHouse.fbx",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 946687187,
+            "ParentUID": 404611966,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Chimney",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 888036050,
+            "ParentUID": 946687187,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/Untitled.001.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/1502303885.dds",
+                    "UID": 1502303885
+                }
+            ]
+        },
+        {
+            "name": "Baker_house",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 2051123567,
+            "ParentUID": 946687187,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/Untitled.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/1502303885.dds",
+                    "UID": 1502303885
+                }
+            ]
+        }
+    ]
+}

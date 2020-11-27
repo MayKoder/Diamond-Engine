@@ -24,4 +24,10 @@ public:
 	void GetAllFilesRecursive(AssetDir& _file);
 	uint64 GetLastModTime(const char* filename);
 
+	//Permanent delete, use with caution
+	int DeleteAssetFile(const char* fileDir);
+
+private:
+	void GenerateAllMetaFiles();
+	void ImportAssetsToLibrary();
 };

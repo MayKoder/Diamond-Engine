@@ -85,17 +85,18 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 	}
 
 	// Mouse motion ----------------
-
-	if (App->moduleInput->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN /*|| App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN*/)
-	{
-		SDL_SetRelativeMouseMode(SDL_TRUE);
-		SDL_WarpMouseInWindow(App->moduleWindow->window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-	}
-	else if (App->moduleInput->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_UP /*|| App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP*/)
-	{
-		SDL_SetRelativeMouseMode(SDL_FALSE);
-		SDL_WarpMouseInWindow(App->moduleWindow->window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-	}
+	
+	//BUG: Will lock the mouse forever if the user docks two camera windows together lol
+	//if (App->moduleInput->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN /*|| App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN*/)
+	//{
+	//	SDL_SetRelativeMouseMode(SDL_TRUE);
+	//	SDL_WarpMouseInWindow(App->moduleWindow->window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	//}
+	//else if (App->moduleInput->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_UP /*|| App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP*/)
+	//{
+	//	SDL_SetRelativeMouseMode(SDL_FALSE);
+	//	SDL_WarpMouseInWindow(App->moduleWindow->window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	//}
 
 	//ASK: Is this really the best way to rotate the camera? Maybe i should use a matrix
 	//TODO: Camera rotation should not be affected by the program framerate

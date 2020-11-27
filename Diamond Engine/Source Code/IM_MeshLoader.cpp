@@ -8,13 +8,14 @@
 #include "C_Material.h"
 
 #include "RE_Mesh.h"
+#include "RE_Texture.h"
 
 #include "IM_FileSystem.h"
 #include "IM_TextureImporter.h"
-#include"IM_ModelImporter.h"
+#include "IM_ModelImporter.h"
 
 #include "MO_Scene.h"
-#include "RE_Texture.h"
+#include "MO_ResourceManager.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -107,7 +108,7 @@ void MeshLoader::BufferToMeshes(const char* full_path, char* buffer, int size, G
 					//TODO: Temporal, think of a better way
 					//TODO: Request resource?
 					//ResourceTexture* meshTexture = new ResourceTexture(White);
-					//testTextures.push_back(meshTexture);
+					testTextures.push_back(nullptr);
 				}
 			}
 		}
@@ -200,7 +201,7 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTextur
 		gmMeshRenderer->SetRenderMesh(meshPointer);
 
 		aiMesh* importedMesh = meshArray[node->mMeshes[i]];
-		if (importedMesh->mMaterialIndex < sceneTextures.size()) 
+		if (importedMesh->mMaterialIndex < sceneTextures.size() && sceneTextures[importedMesh->mMaterialIndex] != nullptr)
 		{
 			C_Material* material = dynamic_cast<C_Material*>(gmNode->AddComponent(Component::Type::Material));
 			material->matTexture = sceneTextures[importedMesh->mMaterialIndex];
@@ -249,7 +250,8 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 	file += importedMesh->mName.C_Str();
 	file += ".mmh";
 
-	ResourceMesh* _mesh = new ResourceMesh(0);
+	uint UID = EngineExternal->moduleResources->GenerateNewUID();
+	ResourceMesh* _mesh = dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->LoadFromLibrary(file.c_str(), Resource::Type::MESH, UID));
 
 	// copy vertices
 	_mesh->vertices_count = importedMesh->mNumVertices;

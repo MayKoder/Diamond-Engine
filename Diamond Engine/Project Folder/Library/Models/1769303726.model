@@ -1,0 +1,43 @@
+{
+    "Model Objects": [
+        {
+            "name": "Assets\/skybox.fbx",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                99.999992370605469,
+                99.999992370605469,
+                99.999992370605469
+            ],
+            "UID": 1392451727,
+            "ParentUID": 1400398587,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/Cube.002.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/785361778.dds",
+                    "UID": 785361778
+                }
+            ]
+        }
+    ]
+}

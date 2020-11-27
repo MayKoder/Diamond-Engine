@@ -11,6 +11,7 @@ public:
 	enum class Type {
 		TEXTURE,
 		MODEL,
+		MESH,
 		//AUDIO,
 		SCENE,
 		//BONE,

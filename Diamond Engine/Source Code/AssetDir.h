@@ -16,7 +16,12 @@ struct AssetDir
 	void WriteMeta();
 	//void ReadMeta();
 
+	void GenerateMetaRecursive();
+	void CreateLibraryFileRecursive();
+
 	void GenerateMetaPath();
+
+	void DeletePermanent();
 
 	std::string dirName = "";
 	std::string importPath = "";
@@ -27,4 +32,5 @@ struct AssetDir
 
 	uint64 lastModTime = 0;
 	bool isDir = false;
+	uint metaUID;
 };

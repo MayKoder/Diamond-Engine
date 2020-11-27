@@ -29,28 +29,40 @@ public:
 	int ExistsOnLibrary(const char* file_in_assets) const;
 	
 	int ImportFile(const char* assetsFile, Resource::Type type);
+
 	int CreateLibraryFromAssets(const char* assetsFile);
+	void AssetsToScene(const char* assets_path);
 
 	int GenerateNewUID();
 
+	Resource* CreateNewResource(const char* assetsFile, uint uid, Resource::Type type);
+	Resource* LoadFromLibrary(const char* libraryFile, Resource::Type type, uint _uid);
+
+	Resource* RequestResource(int uid, const char* libraryPath = nullptr);
+	void UnloadResource(int uid);
+
+	Resource::Type GetTypeFromAssetExtension(const char* assetFile);
+	Resource::Type GetTypeFromLibraryExtension(const char* libraryFile);
+
+	void GenerateMeta(const char* aPath, const char* lPath, unsigned int uid, Resource::Type type);
+	std::string LibraryFromMeta(const char* metaFile);
+	std::string GenLibraryPath(uint _uid, Resource::Type _type);
+
+	int GetMetaUID(const char* metaFile);
+	std::string GetMetaPath(const char* assetsFile);
+	Resource::Type GetMetaType(const char* assetsFile);
 
 private:
 	void NeedsDirsUpdate(AssetDir& dir);
 
 	//const Resource* RequestResource(int uid) const;
-	Resource* RequestResource(int uid);
-	void ReleaseResource(int uid);
 
-	Resource* CreateNewResource(const char* assetsFile, Resource::Type type);
-	std::string GenLibraryPath(Resource& res);
 
 	void LoadResource(int uid);
-	void UnloadResource(int uid);
+	void ReleaseResource(int uid);
 
 	bool IsResourceLoaded(int uid);
-	Resource::Type GetTypeFromAssetExtension(const char* assetFile);
 
-	void GenerateMeta(Resource& res);
 
 private:
 	std::map<int, Resource*> resources;

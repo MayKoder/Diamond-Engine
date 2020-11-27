@@ -38,10 +38,12 @@ public:
 	float3 GetForward();
 	float3 GetUp();
 	float3 GetRight();
+	void UpdateBoxes();
 
 private: 
 	void UpdateTransform();
 	C_Transform* GetRecursiveTransforms(C_Transform* node, std::vector<C_Transform*>& transforms);
+
 
 	float4x4 globalTransformTRANS;
 

@@ -49,6 +49,9 @@ bool M_FileSystem::Init()
 bool M_FileSystem::Start()
 {
 	App->moduleResources->PopulateFileArray();
+	GenerateAllMetaFiles();
+	ImportAssetsToLibrary();
+
 	return true;
 }
 
@@ -107,4 +110,19 @@ uint64 M_FileSystem::GetLastModTime(const char* filename)
 	PHYSFS_Stat stat;
 	PHYSFS_stat(filename, &stat);
 	return stat.modtime;
+}
+
+int M_FileSystem::DeleteAssetFile(const char* fileDir)
+{
+	return PHYSFS_delete(fileDir);
+}
+
+void M_FileSystem::GenerateAllMetaFiles()
+{
+	App->moduleResources->rootFile.GenerateMetaRecursive();
+}
+
+void M_FileSystem::ImportAssetsToLibrary()
+{
+	App->moduleResources->rootFile.CreateLibraryFileRecursive();
 }

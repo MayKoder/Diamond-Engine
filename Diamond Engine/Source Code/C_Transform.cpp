@@ -113,8 +113,6 @@ void C_Transform::UpdateTransform()
 
 	if (!transformsToUpdate.empty()) 
 	{
-
-		C_MeshRenderer* mesh = nullptr;
 		for (size_t i = 0; i < transformsToUpdate.size(); i++)
 		{
 			if (transformsToUpdate[i]->gameObject->parent != nullptr) 
@@ -127,16 +125,7 @@ void C_Transform::UpdateTransform()
 					transformsToUpdate[i]->globalTransformTRANS = transformsToUpdate[i]->globalTransform.Transposed();
 
 					//Update AABB and OBB
-					mesh = dynamic_cast<C_MeshRenderer*>(gameObject->GetComponent(Component::Type::MeshRenderer));
-					if (mesh != nullptr)
-					{
-						mesh->globalOBB =	mesh->GetRenderMesh()->localAABB;
-						mesh->globalOBB.Transform(globalTransform);
-
-						// Generate global AABB
-						mesh->globalAABB.SetNegativeInfinity();
-						mesh->globalAABB.Enclose(mesh->globalOBB);
-					}
+					transformsToUpdate[i]->UpdateBoxes();
 				}
 			}
 		}
@@ -163,6 +152,21 @@ C_Transform* C_Transform::GetRecursiveTransforms(C_Transform* node, std::vector<
 	}
 
 	return nullptr;
+}
+
+void C_Transform::UpdateBoxes()
+{
+	C_MeshRenderer* mesh = nullptr;
+	mesh = dynamic_cast<C_MeshRenderer*>(gameObject->GetComponent(Component::Type::MeshRenderer));
+	if (mesh != nullptr)
+	{
+		mesh->globalOBB = mesh->GetRenderMesh()->localAABB;
+		mesh->globalOBB.Transform(globalTransform);
+
+		// Generate global AABB
+		mesh->globalAABB.SetNegativeInfinity();
+		mesh->globalAABB.Enclose(mesh->globalOBB);
+	}
 }
 
 

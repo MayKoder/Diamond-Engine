@@ -10,7 +10,7 @@
 typedef unsigned int GLuint;
 typedef unsigned int uint;
 
-struct ResourceMesh  : public Resource
+class ResourceMesh  : public Resource
 {
 
 public:

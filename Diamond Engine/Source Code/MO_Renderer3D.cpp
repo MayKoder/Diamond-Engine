@@ -217,14 +217,9 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		{
 			//Maybe do culling check on the component update
 			if (gameCamera != nullptr){
-				if (renderQueue[i]->IsInsideFrustum(&gameCamera->camFrustrum)) 
-				{
-					float distance = App->moduleCamera->editorCamera.camFrustrum.pos.DistanceSq(renderQueue[i]->globalOBB.pos);
-					//BUG: What if something is in the same distance? like 0, 0, 0?
-					renderQueueMap.emplace(distance, renderQueue[i]);
 
-					//renderQueue[i]->RenderMesh();
-				}
+					float distance = App->moduleCamera->editorCamera.camFrustrum.pos.DistanceSq(renderQueue[i]->globalOBB.pos);
+					renderQueueMap.emplace(distance, renderQueue[i]);
 			}
 			else
 			{
@@ -264,8 +259,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		{
 			for (size_t i = 0; i < renderQueue.size(); i++)
 			{
-				if (renderQueue[i]->IsInsideFrustum(&gameCamera->camFrustrum)) 
-					renderQueue[i]->RenderMesh();
+				renderQueue[i]->RenderMesh();
 			}
 			//renderQueue.clear();
 		}
@@ -399,6 +393,7 @@ void ModuleRenderer3D::OnGUI()
 void ModuleRenderer3D::DrawBox(float3* points, float3 color)
 {
 	glColor3fv(&color.x);
+	glLineWidth(2.f);
 	glBegin(GL_LINES);
 
 	//Draw plane
@@ -430,6 +425,7 @@ void ModuleRenderer3D::DrawBox(float3* points, float3 color)
 	glVertex3fv(&points[5].x);
 
 	glEnd();
+	glLineWidth(1.f);
 	glColor3f(1.f, 1.f, 1.f);
 }
 

@@ -2,6 +2,7 @@
 #include "OpenGL.h"
 #include "MeshArrays.h"
 #include "IM_FileSystem.h"
+#include"Globals.h"
 
 ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MODEL), indices_id(0), vertices_id(0), generalWireframe(nullptr)
 {
@@ -19,10 +20,7 @@ ResourceMesh::~ResourceMesh()
 
 bool ResourceMesh::LoadToMemory()
 {
-	//TODO: Should this be here?
-	localAABB.SetNegativeInfinity();
-	localAABB.Enclose((float3*)vertices, vertices_count);
-
+	LOG(LogType::L_WARNING, "Mesh loaded to memory");
 	// vertices_count = vector3's // size of the array (elements) = vertices_count * 3 // size of the array in bytes = sizeof(float) * vertices_count * 3
 	if (vertices_count != 0)
 	{
@@ -428,6 +426,10 @@ void ResourceMesh::LoadCustomFormat(const char* path)
 	bytes = sizeof(float) * texCoords_count * 2;
 	memcpy(texCoords, cursor, bytes);
 	cursor += bytes;
+
+	//TODO: Should this be here?
+	localAABB.SetNegativeInfinity();
+	localAABB.Enclose((float3*)vertices, vertices_count);
 
 	delete[] fileBuffer;
 	fileBuffer = nullptr;

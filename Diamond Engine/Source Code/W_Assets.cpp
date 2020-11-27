@@ -2,8 +2,9 @@
 
 #include"IM_FileSystem.h"
 #include"MO_ResourceManager.h"
+#include"MO_Input.h"
 
-W_Assets::W_Assets() : Window()
+W_Assets::W_Assets() : Window(), selectedFile(nullptr)
 {
 	name = "Assets";
 }
@@ -18,6 +19,12 @@ void W_Assets::Draw()
 	{
 		DrawFileTree(EngineExternal->moduleResources->rootFile);
 	}
+	if (selectedFile != nullptr && EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) {
+		selectedFile->DeletePermanent();
+		selectedFile = nullptr;
+	}
+
+
 	ImGui::End();
 }
 
@@ -28,17 +35,30 @@ void W_Assets::DrawFileTree(AssetDir& file)
 	if (!file.isDir || file.childDirs.size() == 0)
 		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 
+	if (selectedFile == &file) 
+	{
+		flags |= ImGuiTreeNodeFlags_Selected;
+	}
+
 	//if (node == EngineExternal->moduleEditor->GetSelectedGO())
 	//	flags |= ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_Selected;
 	bool nodeOpen = ImGui::TreeNodeEx(&file, flags, file.dirName.c_str());
+
+	if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(0)) {
+		selectedFile = &file;
+	}
 
 	if (!file.isDir) 
 	{
 		if (ImGui::BeginDragDropSource(/*ImGuiDragDropFlags_SourceNoDisableHover*/))
 		{
-			ImGui::SetDragDropPayload("_ASSET", file.importPath.c_str(), file.importPath.length());
+			if (EngineExternal->moduleResources->GetTypeFromAssetExtension(file.importPath.c_str()) == Resource::Type::MODEL)
+				ImGui::SetDragDropPayload("_MODEL", file.importPath.c_str(), file.importPath.length());
+			else
+				ImGui::SetDragDropPayload("_TEXTURE", &file.metaFileDir, file.metaFileDir.length());
 
-			ImGui::Text("Import asset: %s", file.importPath.c_str());
+
+			ImGui::Text("Import asset: %s", file.metaFileDir.c_str());
 			ImGui::EndDragDropSource();
 		}
 	}

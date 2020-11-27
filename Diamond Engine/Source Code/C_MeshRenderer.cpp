@@ -5,10 +5,12 @@
 #include "Application.h"
 #include "MO_Renderer3D.h"
 #include "IM_FileSystem.h"
+#include"MO_ResourceManager.h"
 
 #include "GameObject.h"
 #include "C_Material.h"
 #include "C_Transform.h"
+#include"C_Camera.h"
 
 #include "ImGui/imgui.h"
 #include"DEJsonSupport.h"
@@ -24,12 +26,17 @@ faceNormals(false), vertexNormals(false), showAABB(false), showOBB(false)
 
 C_MeshRenderer::~C_MeshRenderer()
 {
+	EngineExternal->moduleResources->UnloadResource(_mesh->GetUID());
+	_mesh = nullptr;
 }
 
 void C_MeshRenderer::Update()
 {
-	EngineExternal->moduleRenderer3D->renderQueue.push_back(this);
 
+	if (!IsInsideFrustum(&EngineExternal->moduleRenderer3D->GetGameRenderTarget()->camFrustrum))
+		return;
+	
+	EngineExternal->moduleRenderer3D->renderQueue.push_back(this);
 
 	if (showAABB ==true) {
 		float3 points[8];
@@ -48,6 +55,7 @@ void C_MeshRenderer::RenderMesh()
 {
 
 	//Position matrix?
+	//BUG: Mesh rendering will crash if you dont fix the resource manager for meshes
 	C_Transform* transform = gameObject->transform;
 	if (transform != nullptr)
 	{
@@ -73,16 +81,23 @@ void C_MeshRenderer::RenderMesh()
 void C_MeshRenderer::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
-	//DEJson::WriteString(nObj, "Path", _mesh->path.c_str());
+	DEJson::WriteString(nObj, "Path", _mesh->GetLibraryPath());
 }
 void C_MeshRenderer::LoadData(JSON_Object* nObj)
 {
 	Component::LoadData(nObj);
 	//There is no _mesh yet lol
-	//_mesh = new ResourceMesh(DEJson::ReadString(nObj, "Path"));
-	//_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
-	//_mesh->LoadCustomFormat(_mesh->path.c_str());
-	//_mesh->GenBuffers();
+	DEConfig jsObj(nObj);
+
+	SetRenderMesh(dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->LoadFromLibrary(jsObj.ReadString("Path"), Resource::Type::MESH, jsObj.ReadInt("UID"))));
+	_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
+	_mesh->LoadCustomFormat(_mesh->GetLibraryPath());
+
+	gameObject->transform->UpdateBoxes();
+
+	//EngineExternal->moduleResources->RequestResource(_mesh->GetUID());
+	_mesh->LoadToMemory();
+
 	//EngineExternal->moduleRenderer3D->globalMeshes.push_back(_mesh);
 }
 

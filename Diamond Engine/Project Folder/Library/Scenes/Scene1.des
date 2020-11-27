@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        40.807334899902344,
-        15.302751541137695,
-        40.807334899902344
+        48.194015502929688,
+        27.383373260498047,
+        46.641193389892578
     ],
     "EditorCameraZ": [
-        -0.68348616361618042,
-        -0.25630730390548706,
-        -0.68348616361618042
+        -0.55018967390060425,
+        -0.38032990694046021,
+        -0.74339795112609863
     ],
     "EditorCameraY": [
-        -0.1812366247177124,
-        0.96659541130065918,
-        -0.1812366247177124
+        -0.22623875737190247,
+        0.92485088109970093,
+        -0.30572348833084106
     ],
     "Game Objects": [
         {
@@ -33,72 +33,34 @@
                 1,
                 1
             ],
-            "UID": 1155481413,
+            "UID": 838888372,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
-                }
-            ]
-        },
-        {
-            "name": "skybox",
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                -0.7071068286895752,
-                0,
-                0,
-                0.70710670948028564
-            ],
-            "Scale": [
-                99.999992370605469,
-                99.999992370605469,
-                99.999992370605469
-            ],
-            "UID": 1034037853,
-            "ParentUID": 1155481413,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/Cube.002.mmh"
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "Path": "Assets\/Sky.png",
-                    "Name": "Sky.png"
                 }
             ]
         },
         {
             "name": "Main Camera",
             "Position": [
-                0,
-                0,
-                -82.541748046875
+                -14.503619194030762,
+                28.801292419433594,
+                53.112167358398438
             ],
             "Rotation": [
-                0,
-                0,
-                0,
-                1
+                0.019949143752455711,
+                0.97139853239059448,
+                -0.21953287720680237,
+                0.088273778557777405
             ],
             "Scale": [
-                1,
-                1,
-                1
+                1.0000754594802856,
+                0.99999964237213135,
+                1.0000194311141968
             ],
-            "UID": 655065332,
-            "ParentUID": 1155481413,
+            "UID": 421743257,
+            "ParentUID": 838888372,
             "Components": [
                 {
                     "Type": 1,
@@ -111,12 +73,12 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 500,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.5800715684890747
+                    "hFOV": 1.6009218692779541
                 }
             ]
         },
         {
-            "name": "scene",
+            "name": "Assets\/street\/scene.DAE",
             "Position": [
                 0,
                 0,
@@ -133,8 +95,8 @@
                 1,
                 1
             ],
-            "UID": 193267833,
-            "ParentUID": 1155481413,
+            "UID": 669596297,
+            "ParentUID": 838888372,
             "Components": [
                 {
                     "Type": 1,
@@ -160,8 +122,8 @@
                 1,
                 1
             ],
-            "UID": 1514752838,
-            "ParentUID": 193267833,
+            "UID": 388784361,
+            "ParentUID": 669596297,
             "Components": [
                 {
                     "Type": 1,
@@ -187,8 +149,8 @@
                 1,
                 1
             ],
-            "UID": 2127881169,
-            "ParentUID": 1514752838,
+            "UID": 672110393,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -202,8 +164,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building03_c.tga",
-                    "Name": "building03_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building03_c.dds"
                 }
             ]
         },
@@ -225,8 +187,8 @@
                 1,
                 1
             ],
-            "UID": 1055478654,
-            "ParentUID": 1514752838,
+            "UID": 1476486570,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -240,8 +202,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/Building_V02_C.png",
-                    "Name": "Building_V02_C.png"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/Building_V02_C.dds"
                 }
             ]
         },
@@ -263,8 +225,8 @@
                 1,
                 1
             ],
-            "UID": 883937088,
-            "ParentUID": 1514752838,
+            "UID": 871759021,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -278,8 +240,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building_016_c.tga",
-                    "Name": "building_016_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building_016_c.dds"
                 }
             ]
         },
@@ -301,8 +263,8 @@
                 1,
                 1
             ],
-            "UID": 145131569,
-            "ParentUID": 1514752838,
+            "UID": 551969527,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -316,8 +278,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building_025_c.tga",
-                    "Name": "building_025_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building_025_c.dds"
                 }
             ]
         },
@@ -339,8 +301,8 @@
                 1,
                 1
             ],
-            "UID": 294406214,
-            "ParentUID": 1514752838,
+            "UID": 1598059849,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -350,12 +312,6 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/Line002Mesh.mmh"
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "Path": "",
-                    "Name": ""
                 }
             ]
         },
@@ -377,8 +333,8 @@
                 0.97061598300933838,
                 0.99663501977920532
             ],
-            "UID": 1271097926,
-            "ParentUID": 1514752838,
+            "UID": 1691963453,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -388,12 +344,6 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/Plane001Mesh.mmh"
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "Path": "",
-                    "Name": ""
                 }
             ]
         },
@@ -415,8 +365,8 @@
                 1,
                 1
             ],
-            "UID": 1602580470,
-            "ParentUID": 1514752838,
+            "UID": 267072422,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -430,8 +380,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building 01_c.tga",
-                    "Name": "building 01_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building 01_c.dds"
                 }
             ]
         },
@@ -453,8 +403,8 @@
                 1,
                 1
             ],
-            "UID": 742021985,
-            "ParentUID": 1514752838,
+            "UID": 935676336,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -468,8 +418,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building 01_c.tga",
-                    "Name": "building 01_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building 01_c.dds"
                 }
             ]
         },
@@ -491,8 +441,8 @@
                 1,
                 1
             ],
-            "UID": 446005453,
-            "ParentUID": 1514752838,
+            "UID": 953240558,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -506,8 +456,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building_016_c.tga",
-                    "Name": "building_016_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building_016_c.dds"
                 }
             ]
         },
@@ -529,8 +479,8 @@
                 1,
                 1
             ],
-            "UID": 879591340,
-            "ParentUID": 1514752838,
+            "UID": 1873745277,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -544,8 +494,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building 06_ c.tga",
-                    "Name": "building 06_ c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building 06_ c.dds"
                 }
             ]
         },
@@ -567,8 +517,8 @@
                 1,
                 1
             ],
-            "UID": 385004288,
-            "ParentUID": 1514752838,
+            "UID": 978309355,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -582,8 +532,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building03_c.tga",
-                    "Name": "building03_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building03_c.dds"
                 }
             ]
         },
@@ -605,8 +555,8 @@
                 1,
                 1
             ],
-            "UID": 1640136641,
-            "ParentUID": 1514752838,
+            "UID": 1284256203,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -620,8 +570,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building 01_c.tga",
-                    "Name": "building 01_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building 01_c.dds"
                 }
             ]
         },
@@ -643,8 +593,8 @@
                 1,
                 1
             ],
-            "UID": 1952604777,
-            "ParentUID": 1514752838,
+            "UID": 719466218,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -658,8 +608,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building 01_c.tga",
-                    "Name": "building 01_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building 01_c.dds"
                 }
             ]
         },
@@ -681,8 +631,8 @@
                 1,
                 1
             ],
-            "UID": 139873476,
-            "ParentUID": 1514752838,
+            "UID": 2048980750,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -696,8 +646,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building 01_c.tga",
-                    "Name": "building 01_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building 01_c.dds"
                 }
             ]
         },
@@ -719,8 +669,8 @@
                 1,
                 1
             ],
-            "UID": 1440417098,
-            "ParentUID": 1514752838,
+            "UID": 1192576481,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -734,8 +684,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building 01_c.tga",
-                    "Name": "building 01_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building 01_c.dds"
                 }
             ]
         },
@@ -757,8 +707,8 @@
                 1,
                 1
             ],
-            "UID": 87432252,
-            "ParentUID": 1514752838,
+            "UID": 206939740,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -772,8 +722,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building05 _c.tga",
-                    "Name": "building05 _c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building05 _c.dds"
                 }
             ]
         },
@@ -795,8 +745,8 @@
                 1,
                 1
             ],
-            "UID": 1152160894,
-            "ParentUID": 1514752838,
+            "UID": 2031334464,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -810,8 +760,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building_016_c.tga",
-                    "Name": "building_016_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building_016_c.dds"
                 }
             ]
         },
@@ -833,8 +783,8 @@
                 1,
                 1
             ],
-            "UID": 1784418430,
-            "ParentUID": 1514752838,
+            "UID": 1001144959,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -848,8 +798,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building_025_c.tga",
-                    "Name": "building_025_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building_025_c.dds"
                 }
             ]
         },
@@ -871,8 +821,8 @@
                 1,
                 1
             ],
-            "UID": 1066536080,
-            "ParentUID": 1514752838,
+            "UID": 1983943507,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -886,8 +836,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building05 _c.tga",
-                    "Name": "building05 _c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building05 _c.dds"
                 }
             ]
         },
@@ -909,8 +859,8 @@
                 1,
                 1
             ],
-            "UID": 1913847008,
-            "ParentUID": 1514752838,
+            "UID": 130209454,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -924,8 +874,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/Building_V01_C.png",
-                    "Name": "Building_V01_C.png"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/Building_V01_C.dds"
                 }
             ]
         },
@@ -947,8 +897,8 @@
                 1,
                 1
             ],
-            "UID": 1172182206,
-            "ParentUID": 1514752838,
+            "UID": 783922947,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -958,12 +908,6 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/Object010Mesh.mmh"
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "Path": "",
-                    "Name": ""
                 }
             ]
         },
@@ -985,8 +929,8 @@
                 1,
                 1
             ],
-            "UID": 1971294279,
-            "ParentUID": 1514752838,
+            "UID": 1350088229,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -1000,8 +944,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/Building_V01_C.png",
-                    "Name": "Building_V01_C.png"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/Building_V01_C.dds"
                 }
             ]
         },
@@ -1023,8 +967,8 @@
                 1,
                 1
             ],
-            "UID": 2094085783,
-            "ParentUID": 1514752838,
+            "UID": 1280845666,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -1038,8 +982,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/Building_V01_C.png",
-                    "Name": "Building_V01_C.png"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/Building_V01_C.dds"
                 }
             ]
         },
@@ -1061,8 +1005,8 @@
                 1,
                 1
             ],
-            "UID": 1828987060,
-            "ParentUID": 1514752838,
+            "UID": 1645154558,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -1076,8 +1020,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building03_c.tga",
-                    "Name": "building03_c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building03_c.dds"
                 }
             ]
         },
@@ -1099,8 +1043,8 @@
                 1,
                 1
             ],
-            "UID": 865255395,
-            "ParentUID": 1514752838,
+            "UID": 1265169773,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -1114,8 +1058,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building 06_ c.tga",
-                    "Name": "building 06_ c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building 06_ c.dds"
                 }
             ]
         },
@@ -1137,8 +1081,8 @@
                 1,
                 1
             ],
-            "UID": 882073298,
-            "ParentUID": 1514752838,
+            "UID": 1195500681,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -1152,8 +1096,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building05 _c.tga",
-                    "Name": "building05 _c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building05 _c.dds"
                 }
             ]
         },
@@ -1175,8 +1119,8 @@
                 1,
                 1
             ],
-            "UID": 1382710446,
-            "ParentUID": 1514752838,
+            "UID": 1929205122,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -1190,8 +1134,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/Building_V01_C.png",
-                    "Name": "Building_V01_C.png"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/Building_V01_C.dds"
                 }
             ]
         },
@@ -1213,8 +1157,8 @@
                 1,
                 1
             ],
-            "UID": 434516897,
-            "ParentUID": 1514752838,
+            "UID": 972580794,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -1228,8 +1172,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building 06_ c.tga",
-                    "Name": "building 06_ c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building 06_ c.dds"
                 }
             ]
         },
@@ -1251,8 +1195,8 @@
                 1,
                 1
             ],
-            "UID": 2046234395,
-            "ParentUID": 1514752838,
+            "UID": 1888069164,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -1266,8 +1210,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building05 _c.tga",
-                    "Name": "building05 _c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building05 _c.dds"
                 }
             ]
         },
@@ -1289,8 +1233,8 @@
                 1,
                 1
             ],
-            "UID": 1114639609,
-            "ParentUID": 1514752838,
+            "UID": 1789233974,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -1304,8 +1248,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/building05 _c.tga",
-                    "Name": "building05 _c.tga"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/building05 _c.dds"
                 }
             ]
         },
@@ -1327,8 +1271,8 @@
                 1,
                 1
             ],
-            "UID": 855150197,
-            "ParentUID": 1514752838,
+            "UID": 1322075972,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -1342,8 +1286,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/Building_V01_C.png",
-                    "Name": "Building_V01_C.png"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/Building_V01_C.dds"
                 }
             ]
         },
@@ -1365,8 +1309,8 @@
                 1,
                 1
             ],
-            "UID": 1722719556,
-            "ParentUID": 1514752838,
+            "UID": 954652545,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -1380,8 +1324,8 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/Building_V01_C.png",
-                    "Name": "Building_V01_C.png"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/Building_V01_C.dds"
                 }
             ]
         },
@@ -1403,8 +1347,8 @@
                 1,
                 1
             ],
-            "UID": 496523326,
-            "ParentUID": 1514752838,
+            "UID": 1393444442,
+            "ParentUID": 388784361,
             "Components": [
                 {
                     "Type": 1,
@@ -1418,8 +1362,46 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "Path": "Assets\/street\/Building_V02_C.png",
-                    "Name": "Building_V02_C.png"
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/Building_V02_C.dds"
+                }
+            ]
+        },
+        {
+            "name": "Assets\/skybox.fbx",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                99.999992370605469,
+                99.999992370605469,
+                99.999992370605469
+            ],
+            "UID": 533530030,
+            "ParentUID": 838888372,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/Cube.002.mmh"
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "AssetPath": "",
+                    "LibraryPath": "Library\/Materials\/Sky.dds"
                 }
             ]
         }

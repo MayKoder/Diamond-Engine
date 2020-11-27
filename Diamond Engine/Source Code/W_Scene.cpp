@@ -56,14 +56,24 @@ void W_Scene::Draw()
 
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ASSET"))
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_MODEL"))
+			{
+				//Drop asset from Asset window to scene window
+				const char* name = (const char*)payload->Data;
+
+				//TODO: This is working only with textures now
+				EngineExternal->moduleResources->AssetsToScene(name);
+				LOG(LogType::L_WARNING, "Model %s loaded to resource manager", name);
+			}
+
+			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
 			{
 				//Drop asset from Asset window to scene window
 				const char* name = (const char*)payload->Data;
 				
-				//TODO: This is working only with textures now
-				EngineExternal->moduleResources->ImportFile(name, Resource::Type::TEXTURE);
-				LOG(LogType::L_WARNING, "File %s loaded to scene", name);
+				//TODO: Change selected mesh texture
+				EngineExternal->moduleResources->AssetsToScene(name);
+				LOG(LogType::L_WARNING, "Texture %s did nothing", name);
 			}
 			ImGui::EndDragDropTarget();
 		}
