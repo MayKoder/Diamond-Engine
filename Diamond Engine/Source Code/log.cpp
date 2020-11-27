@@ -2,7 +2,7 @@
 #include "Globals.h"
 
 #include "Application.h"
-#include "M_Editor.h"
+#include "MO_Editor.h"
 
 void log(const char file[], int line, LogType _type, const char* format, ...)
 {

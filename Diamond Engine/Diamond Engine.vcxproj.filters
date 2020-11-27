@@ -82,6 +82,9 @@
     <Filter Include="Externals\ImGuizmo">
       <UniqueIdentifier>{586ecdee-f747-46ab-b2d9-6813de66fb5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Resources">
+      <UniqueIdentifier>{23844b4e-cab4-4cba-aff6-3bb865bd7c1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -102,19 +105,7 @@
     <ClInclude Include="Source Code\Primitive.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\ModuleInput.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\ModuleRenderer3D.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\ModuleWindow.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\Module.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\ModuleCamera3D.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\EngineVersion.h">
@@ -143,9 +134,6 @@
     </ClInclude>
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h">
       <Filter>Externals\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\M_Editor.h">
-      <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\MaykMath.h">
       <Filter>Sources\Tools\MMath</Filter>
@@ -402,17 +390,11 @@
     <ClInclude Include="Source Code\External Libraries\DevIL\include\devil_internal_exports.h">
       <Filter>Externals\DevIL</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\Mesh.h">
-      <Filter>Sources\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\GameObject.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\Component.h">
       <Filter>Sources\Components\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\M_Scene.h">
-      <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\C_MeshRenderer.h">
       <Filter>Sources\Components\Derived</Filter>
@@ -423,22 +405,7 @@
     <ClInclude Include="Source Code\C_Material.h">
       <Filter>Sources\Components\Derived</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\M_FileSystem.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\Texture.h">
-      <Filter>Sources\Components</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Source Code\I_FileSystem.h">
-      <Filter>Sources\Tools\Importers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\I_MeshLoader.h">
-      <Filter>Sources\Tools\Importers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\I_TextureImporter.h">
-      <Filter>Sources\Tools\Importers</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\DEJsonSupport.h">
       <Filter>Sources\Tools\MMath\MMJsonSupport</Filter>
     </ClInclude>
@@ -466,6 +433,54 @@
     <ClInclude Include="Source Code\DETime.h">
       <Filter>Sources\Tools\MMath</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\DEResource.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\RE_Texture.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\IM_FileSystem.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\IM_MeshLoader.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\IM_ModelImporter.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\IM_TextureImporter.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\RE_Mesh.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MO_Editor.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MO_FileSystem.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MO_ResourceManager.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MO_Scene.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MO_Camera3D.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MO_Input.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MO_Renderer3D.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MO_Window.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\AssetDir.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -489,18 +504,6 @@
     <ClCompile Include="Source Code\Primitive.cpp">
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\ModuleInput.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\ModuleRenderer3D.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\ModuleWindow.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\ModuleCamera3D.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\EngineVersion.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
@@ -521,9 +524,6 @@
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_draw.cpp">
       <Filter>Externals\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\M_Editor.cpp">
-      <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\MaykMath.cpp">
       <Filter>Sources\Tools\MMath</Filter>
@@ -657,17 +657,11 @@
     <ClCompile Include="Source Code\W_Assets.cpp">
       <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\Mesh.cpp">
-      <Filter>Sources\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\GameObject.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\Component.cpp">
       <Filter>Sources\Components\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\M_Scene.cpp">
-      <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\C_MeshRenderer.cpp">
       <Filter>Sources\Components\Derived</Filter>
@@ -677,21 +671,6 @@
     </ClCompile>
     <ClCompile Include="Source Code\C_Material.cpp">
       <Filter>Sources\Components\Derived</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\M_FileSystem.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\Texture.cpp">
-      <Filter>Sources\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\I_FileSystem.cpp">
-      <Filter>Sources\Tools\Importers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\I_MeshLoader.cpp">
-      <Filter>Sources\Tools\Importers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\I_TextureImporter.cpp">
-      <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\DEJsonSupport.cpp">
       <Filter>Sources\Tools\MMath\MMJsonSupport</Filter>
@@ -713,6 +692,57 @@
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\ImGuizmo\ImGradient.cpp">
       <Filter>Externals\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DETime.cpp">
+      <Filter>Sources\Tools\MMath</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DEResource.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\RE_Texture.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\IM_FileSystem.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\IM_MeshLoader.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\IM_ModelImporter.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\IM_TextureImporter.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\RE_Mesh.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_Editor.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_FileSystem.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_ResourceManager.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_Scene.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_Camera3D.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_Input.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_Renderer3D.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_Window.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\AssetDir.cpp">
+      <Filter>Sources\Containers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

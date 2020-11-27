@@ -1,8 +1,9 @@
 #include"W_Assets.h"
 
-#include"I_FileSystem.h"
+#include"IM_FileSystem.h"
+#include"MO_ResourceManager.h"
 
-W_Assets::W_Assets() : Window(), rootFile("Assets", "Assets", true)
+W_Assets::W_Assets() : Window()
 {
 	name = "Assets";
 }
@@ -11,17 +12,11 @@ W_Assets::~W_Assets()
 {
 }
 
-void W_Assets::PopulateFileArray()
-{
-	//Dirs returns directories inside the folder so we should use some kind of recursive get until dirs is empty
-	EngineExternal->moduleFileSystem->GetAllFilesRecursive(rootFile);
-}
-
 void W_Assets::Draw()
 {
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/))
 	{
-		DrawFileTree(rootFile);
+		DrawFileTree(EngineExternal->moduleResources->rootFile);
 	}
 	ImGui::End();
 }

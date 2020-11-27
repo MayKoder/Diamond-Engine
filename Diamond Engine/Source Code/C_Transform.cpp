@@ -5,6 +5,9 @@
 #include <vector>
 #include"GameObject.h"
 
+#include"C_MeshRenderer.h"
+#include"RE_Mesh.h"
+
 C_Transform::C_Transform() : Component(nullptr), updateTransform(false)
 {
 	globalTransform.SetIdentity();
@@ -107,17 +110,33 @@ void C_Transform::UpdateTransform()
 	rotation = Quat::FromEulerXYZ(eulerRotation.x * DEGTORAD, eulerRotation.y * DEGTORAD, eulerRotation.z * DEGTORAD);
 	localTransform = float4x4::FromTRS(position, rotation, localScale);
 
+
 	if (!transformsToUpdate.empty()) 
 	{
+
+		C_MeshRenderer* mesh = nullptr;
 		for (size_t i = 0; i < transformsToUpdate.size(); i++)
 		{
 			if (transformsToUpdate[i]->gameObject->parent != nullptr) 
 			{
 				C_Transform* parentTra = transformsToUpdate[i]->gameObject->parent->transform;
 
-				if (parentTra != nullptr) {
+				if (parentTra != nullptr) 
+				{
 					transformsToUpdate[i]->globalTransform = parentTra->globalTransform * transformsToUpdate[i]->localTransform;// = global = global parent * local
 					transformsToUpdate[i]->globalTransformTRANS = transformsToUpdate[i]->globalTransform.Transposed();
+
+					//Update AABB and OBB
+					mesh = dynamic_cast<C_MeshRenderer*>(gameObject->GetComponent(Component::Type::MeshRenderer));
+					if (mesh != nullptr)
+					{
+						mesh->globalOBB =	mesh->GetRenderMesh()->localAABB;
+						mesh->globalOBB.Transform(globalTransform);
+
+						// Generate global AABB
+						mesh->globalAABB.SetNegativeInfinity();
+						mesh->globalAABB.Enclose(mesh->globalOBB);
+					}
 				}
 			}
 		}

@@ -1,10 +1,10 @@
 #include "C_MeshRenderer.h"
-#include "Mesh.h"
+#include "RE_Mesh.h"
 #include "OpenGL.h"
 
 #include "Application.h"
-#include "ModuleRenderer3D.h"
-#include"I_FileSystem.h"
+#include "MO_Renderer3D.h"
+#include "IM_FileSystem.h"
 
 #include "GameObject.h"
 #include "C_Material.h"
@@ -30,31 +30,17 @@ void C_MeshRenderer::Update()
 {
 	EngineExternal->moduleRenderer3D->renderQueue.push_back(this);
 
-	//TODO: TEMPORAL STUFF, REMOVE
-	{
-		//Set up bounding boxes
-		if (_mesh)
-		{
-			globalOBB = _mesh->localAABB;
-			globalOBB.Transform(gameObject->transform->globalTransform);
 
-			// Generate global AABB
-			globalAABB.SetNegativeInfinity();
-			globalAABB.Enclose(globalOBB);
-		}
+	if (showAABB ==true) {
+		float3 points[8];
+		globalAABB.GetCornerPoints(points);
+		ModuleRenderer3D::DrawBox(points, float3(0.2f, 1.f, 0.101f));
+	}
 
-
-		if (showAABB ==true) {
-			float3 points[8];
-			globalAABB.GetCornerPoints(points);
-			ModuleRenderer3D::DrawBox(points, float3(0.2f, 1.f, 0.101f));
-		}
-
-		if (showOBB == true) {
-			float3 points[8];
-			globalOBB.GetCornerPoints(points);
-			ModuleRenderer3D::DrawBox(points);
-		}
+	if (showOBB == true) {
+		float3 points[8];
+		globalOBB.GetCornerPoints(points);
+		ModuleRenderer3D::DrawBox(points);
 	}
 }
 
@@ -70,7 +56,7 @@ void C_MeshRenderer::RenderMesh()
 	}
 
 	C_Material* material = dynamic_cast<C_Material*>(gameObject->GetComponent(Component::Type::Material));
-	GLuint id = -1;
+	GLuint id = 0;
 
 	if (material != nullptr && material->IsActive())
 		id = material->GetTextureID();
@@ -87,17 +73,17 @@ void C_MeshRenderer::RenderMesh()
 void C_MeshRenderer::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
-	DEJson::WriteString(nObj, "Path", _mesh->path.c_str());
+	//DEJson::WriteString(nObj, "Path", _mesh->path.c_str());
 }
 void C_MeshRenderer::LoadData(JSON_Object* nObj)
 {
 	Component::LoadData(nObj);
 	//There is no _mesh yet lol
-	_mesh = new Mesh(DEJson::ReadString(nObj, "Path"));
-	_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
-	_mesh->LoadCustomFormat(_mesh->path.c_str());
-	_mesh->GenBuffers();
-	EngineExternal->moduleRenderer3D->globalMeshes.push_back(_mesh);
+	//_mesh = new ResourceMesh(DEJson::ReadString(nObj, "Path"));
+	//_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
+	//_mesh->LoadCustomFormat(_mesh->path.c_str());
+	//_mesh->GenBuffers();
+	//EngineExternal->moduleRenderer3D->globalMeshes.push_back(_mesh);
 }
 
 bool C_MeshRenderer::OnEditor()
@@ -112,7 +98,7 @@ bool C_MeshRenderer::OnEditor()
 		ImGui::Text("Texture coords: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->texCoords_count);
 
 		ImGui::Spacing();
-		ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _mesh->path.c_str());
+		ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _mesh->GetLibraryPath());
 
 		if (ImGui::Button("Select Mesh")) {
 
@@ -164,4 +150,21 @@ bool C_MeshRenderer::IsInsideFrustum(Frustum* camFrustum)
 		return true;
 
 	return true;
+}
+
+void C_MeshRenderer::SetRenderMesh(ResourceMesh* mesh)
+{ 
+	_mesh = mesh;
+
+	globalOBB = _mesh->localAABB;
+	globalOBB.Transform(gameObject->transform->globalTransform);
+
+	// Generate global AABB
+	globalAABB.SetNegativeInfinity();
+	globalAABB.Enclose(globalOBB);
+}
+
+ResourceMesh* C_MeshRenderer::GetRenderMesh()
+{
+	return _mesh;
 }

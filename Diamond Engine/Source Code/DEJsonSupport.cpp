@@ -68,6 +68,11 @@ Quat DEJson::ReadQuat(JSON_Object* obj, const char* name)
 	return Quat(json_array_get_number(vecArray, 0), json_array_get_number(vecArray, 1), json_array_get_number(vecArray, 2), json_array_get_number(vecArray, 3));
 }
 
+DEConfig::DEConfig(JSON_Object* _nObj)
+{
+	nObj = _nObj;
+}
+
 // ---------------------------------------------------------------------------------- //
 //Internal use only
 void DEConfig::PopulateArray(JSON_Value* _array, float* value, unsigned int size)
@@ -138,4 +143,19 @@ Quat DEConfig::ReadQuat(const char* name)
 {
 	JSON_Array* vecArray = json_object_dotget_array(nObj, name);
 	return Quat(json_array_get_number(vecArray, 0), json_array_get_number(vecArray, 1), json_array_get_number(vecArray, 2), json_array_get_number(vecArray, 3));
+}
+
+JSON_Array* DEConfig::ReadArray(const char* name)
+{
+	return json_object_get_array(nObj, name);
+}
+
+JSON_Object* DEConfig::ReadObject(const char* name)
+{
+	return json_object_get_object(nObj, "name");
+}
+
+JSON_Value* DEConfig::ReadValue(const char* name)
+{
+	return json_object_get_value(nObj, name);
 }

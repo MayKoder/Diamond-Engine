@@ -6,8 +6,8 @@
 #include"MathGeoLib/include/Math/float3.h"
 #include"MathGeoLib/include/Geometry/Plane.h"
 
-#include"ModuleRenderer3D.h"
-#include"M_Scene.h"
+#include"MO_Renderer3D.h"
+#include"MO_Scene.h"
 
 #include"GameObject.h"
 #include"C_Transform.h"

@@ -29,6 +29,7 @@ public:
 	void Destroy();
 
 	void SaveToJson(JSON_Array*);
+	void LoadFromJson(JSON_Object*);
 
 	void LoadComponents(JSON_Array* componentArray);
 	void RemoveComponent(Component* ptr);

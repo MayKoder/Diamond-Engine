@@ -1,0 +1,168 @@
+#include "IM_ModelImporter.h"
+#include"GameObject.h"
+#include"IM_FileSystem.h"
+#include"MO_Scene.h"
+
+#include "Assimp/include/cimport.h"
+#include "Assimp/include/scene.h"
+#include "Assimp/include/postprocess.h"
+#include "Assimp/include/cfileio.h"
+
+#include"IM_MeshLoader.h"
+void ModelImporter::Import(char* buffer, int bSize, Resource* res)
+{
+	const aiScene* scene = aiImportFileFromMemory(buffer, bSize, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
+
+	if (scene != nullptr && scene->HasMeshes())
+	{
+
+		std::vector<ResourceMesh*> sceneMeshes;
+		std::vector<ResourceTexture*> testTextures;
+
+		////This should not be here
+		//if (scene->HasMaterials())
+		//{
+		//	//Needs to be moved to another place
+		//	std::string generalPath(full_path);
+		//	generalPath = generalPath.substr(0, generalPath.find_last_of("/\\") + 1);
+		//	for (size_t k = 0; k < scene->mNumMaterials; k++)
+		//	{
+		//		aiMaterial* material = scene->mMaterials[k];
+		//		aiString str = material->GetName();
+		//		uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
+
+		//		if (numTextures > 0)
+		//		{
+		//			aiString path;
+		//			material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
+
+		//			std::string textureFileName = FileSystem::NormalizePath(path.C_Str());
+		//			size_t isLong = textureFileName.find_last_of("/");
+		//			if (isLong != textureFileName.npos)
+		//				textureFileName = textureFileName.substr(isLong + 1);
+
+		//			std::string localPath = generalPath;
+		//			localPath = localPath.substr(0, localPath.find_last_of('/') + 1);
+		//			localPath += FileSystem::NormalizePath(path.C_Str());
+
+		//			char* buffer = nullptr;
+		//			int size = FileSystem::LoadToBuffer(localPath.c_str(), &buffer);
+
+		//			if (buffer != nullptr)
+		//			{
+		//				int w = 0;
+		//				int h = 0;
+
+		//				GLuint id = TextureImporter::CustomLoadImage(buffer, size, &w, &h);
+		//				TextureImporter::SaveDDS(buffer, size, textureFileName.substr(0, textureFileName.find_last_of(".")).c_str());
+
+		//				//TODO: Request resource?
+		//				//ResourceTexture* meshTexture = new ResourceTexture(id, w, h, textureFileName.c_str(), localPath.c_str());
+
+		//				//testTextures.push_back(meshTexture);
+
+		//				RELEASE_ARRAY(buffer)
+		//			}
+
+		//			path.Clear();
+		//		}
+		//		else
+		//		{
+		//			//TODO: Temporal, think of a better way
+		//			//TODO: Request resource?
+		//			//ResourceTexture* meshTexture = new ResourceTexture(White);
+		//			//testTextures.push_back(meshTexture);
+		//		}
+		//	}
+		//}
+
+		//Load all meshes into mesh vector
+	//	if (scene->HasMeshes())
+	//	{
+	//		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
+	//		{
+	//			sceneMeshes.push_back(LoadMesh(scene->mMeshes[i]));
+	//		}
+	//	}
+
+	//	//Save custom format model
+	//	GameObject* root = new GameObject("First model GO", nullptr);
+	//	NodeToGameObject(scene->mMeshes, testTextures, sceneMeshes, scene->mRootNode, root, fileName.c_str());
+	//	ModelImporter::SaveModelCustom(root, fileName.c_str());
+	//	delete root;
+
+	//	//Only for memory cleanup, needs an update ASAP
+	//	for (unsigned int i = 0; i < sceneMeshes.size(); i++)
+	//	{
+	//		delete sceneMeshes[i];
+	//	}
+	//	for (unsigned int i = 0; i < testTextures.size(); i++)
+	//	{
+	//		delete testTextures[i];
+	//	}
+
+	//	sceneMeshes.clear();
+	//	testTextures.clear();
+
+	//	aiReleaseImport(scene);
+
+	//	ModelImporter::LoadModelCustom(fileName.c_str());
+	}
+	//else
+	//	LOG(LogType::L_ERROR, "Error loading scene % s", full_path);
+}
+
+void ModelImporter::SaveModelCustom(GameObject* root, const char* nameWithExtension)
+{
+	JSON_Value* file = json_value_init_object();
+	JSON_Object* root_object = json_value_get_object(file);
+
+	JSON_Value* goArray = json_value_init_array();
+	root->SaveToJson(json_value_get_array(goArray));
+	json_object_set_value(root_object, "Model Objects", goArray);
+
+	//Save file 
+	std::string dir = MODELS_PATH;
+	dir += nameWithExtension;
+	json_serialize_to_file_pretty(file, dir.c_str());
+	dir.clear();
+
+	//Free memory
+	json_value_free(file);
+}
+
+void ModelImporter::LoadModelCustom(const char* nameWithExtension)
+{
+
+	std::string dir = MODELS_PATH;
+	dir += nameWithExtension;
+
+	JSON_Value* scene = json_parse_file(dir.c_str());
+
+	if (scene == NULL)
+		return;
+
+	JSON_Object* sceneObj = json_value_get_object(scene);
+	JSON_Array* sceneGO = json_object_get_array(sceneObj, "Model Objects");
+
+	JSON_Object* goJsonObj = json_array_get_object(sceneGO, 0);
+
+	GameObject* parent = new GameObject(json_object_get_string(goJsonObj, "name"), EngineExternal->moduleScene->root, json_object_get_number(goJsonObj, "UID"));
+	for (size_t i = 1; i < json_array_get_count(sceneGO); i++)
+	{
+		goJsonObj = json_array_get_object(sceneGO, i);
+		GameObject* originalParent = parent;
+
+		while (parent != nullptr && json_object_get_number(goJsonObj, "ParentUID") != parent->UID)
+			parent = parent->parent;
+
+		if (parent == nullptr)
+			parent = originalParent;
+
+		parent = new GameObject(json_object_get_string(goJsonObj, "name"), parent, json_object_get_number(goJsonObj, "UID"));
+		parent->LoadFromJson(goJsonObj);
+	}
+	
+	//Free memory
+	json_value_free(scene);
+}

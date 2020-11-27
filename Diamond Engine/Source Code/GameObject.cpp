@@ -185,6 +185,12 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 	}
 }
 
+void GameObject::LoadFromJson(JSON_Object* _obj)
+{
+	transform->SetTransformMatrix(DEJson::ReadVector3(_obj, "Position"), DEJson::ReadQuat(_obj, "Rotation"), DEJson::ReadVector3(_obj, "Scale"));
+	LoadComponents(json_object_get_array(_obj, "Components"));
+}
+
 void GameObject::LoadComponents(JSON_Array* componentArray)
 {
 

@@ -1,19 +1,19 @@
 #include "W_Scene.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleWindow.h"
-#include "ModuleCamera3D.h"
+#include "MO_Renderer3D.h"
+#include "MO_Window.h"
+#include "MO_Camera3D.h"
 
 #include "OpenGL.h"
 #include"Application.h"
-#include"M_Editor.h"
+#include"MO_Editor.h"
+
+#include"MO_ResourceManager.h"
 
 #include"ImGui/imgui_internal.h"
 
 #include"C_Transform.h"
-#include"ModuleInput.h"
+#include"MO_Input.h"
 #include"GameObject.h"
-
-#include"I_FileSystem.h"
 
 #include"MathGeoLib/include/Math/float4x4.h"
 #include"MathGeoLib/include/Geometry/LineSegment.h"
@@ -61,7 +61,8 @@ void W_Scene::Draw()
 				//Drop asset from Asset window to scene window
 				const char* name = (const char*)payload->Data;
 				
-				FileSystem::LoadDroppedFile(name);
+				//TODO: This is working only with textures now
+				EngineExternal->moduleResources->ImportFile(name, Resource::Type::TEXTURE);
 				LOG(LogType::L_WARNING, "File %s loaded to scene", name);
 			}
 			ImGui::EndDragDropTarget();

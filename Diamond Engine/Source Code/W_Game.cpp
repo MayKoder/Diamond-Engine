@@ -17,7 +17,7 @@ void W_Game::Draw()
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/))
 	{
 		//Can't use if(true) return; because we need to call ImGui::End();
-		if (targetCamera != nullptr && targetCamera->framebuffer != -1) {
+		if (targetCamera != nullptr && targetCamera->framebuffer != 0) {
 			//LOG(LogType::L_WARNING, "Frame buffer game id: %d", targetCamera->framebuffer);
 			//TODO: Dont modify aspect ratio every frame
 			targetCamera->SetAspectRatio(ImGui::GetContentRegionAvail().x / ImGui::GetContentRegionAvail().y);

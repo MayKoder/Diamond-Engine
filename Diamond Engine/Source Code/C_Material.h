@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-class Texture;
+class ResourceTexture;
 
 class C_Material : public Component
 {
@@ -12,7 +12,7 @@ public:
 	bool OnEditor() override;
 	int GetTextureID();
 
-	Texture* matTexture;
+	ResourceTexture* matTexture;
 
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(JSON_Object* nObj) override;

@@ -2,7 +2,7 @@
 #include "MMGui.h"
 #include "GameObject.h"
 #include "Application.h"
-#include "M_Scene.h"
+#include "MO_Scene.h"
 
 W_Inspector::W_Inspector() : Window(), selectedGO(nullptr)
 {

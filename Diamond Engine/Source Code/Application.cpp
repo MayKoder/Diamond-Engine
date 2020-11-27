@@ -2,13 +2,16 @@
 #include<string>
 #include "Globals.h"
 
-#include"M_FileSystem.h"
-#include"ModuleWindow.h"
-#include"ModuleInput.h"
-#include"ModuleRenderer3D.h"
-#include"ModuleCamera3D.h"
-#include "M_Scene.h"
-#include"M_Editor.h"
+#include "MO_FileSystem.h"
+#include "MO_Window.h"
+#include "MO_Input.h"
+#include "MO_Renderer3D.h"
+#include "MO_Camera3D.h"
+#include "MO_Scene.h"
+#include "MO_Editor.h"
+#include "MO_ResourceManager.h"
+
+#include"DETime.h"
 
 
 //TODO: Change all std::string in methods to std::string&
@@ -19,10 +22,12 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 
 	moduleFileSystem = new M_FileSystem(this);
 	moduleWindow = new ModuleWindow(this);
-	moduleCamera = new ModuleCamera3D(this);
 	moduleInput = new ModuleInput(this);
 	moduleScene = new M_Scene(this);
 	moduleRenderer3D = new ModuleRenderer3D(this);
+	moduleCamera = new ModuleCamera3D(this);
+
+	moduleResources = new M_ResourceManager(this);
 	moduleEditor = new M_Editor(this);
 
 	// The order of calls is very important!
@@ -32,7 +37,6 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	// Main Modules
 	AddModule(moduleFileSystem);
 	AddModule(moduleWindow);
-	AddModule(moduleCamera);
 	AddModule(moduleInput);
 
 	//Should scene be here?
@@ -40,6 +44,9 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 
 	// Renderer last!
 	AddModule(moduleRenderer3D);
+	AddModule(moduleCamera);
+
+	AddModule(moduleResources);
 	AddModule(moduleEditor);
 }
 
@@ -75,6 +82,8 @@ bool Application::Init()
 	}
 
 	ms_timer.Start();
+	DETime::realStartTime = ms_timer.GetStartTime();
+
 	return ret;
 }
 
@@ -82,6 +91,11 @@ bool Application::Init()
 void Application::PrepareUpdate()
 {
 	dt = (float)ms_timer.Read() / 1000.0f;
+
+	//TODO, ASK: Should i do this here?
+	DETime::realTimeDeltaTime = dt;
+	DETime::realTimeSinceStartup += DETime::realTimeDeltaTime;
+
 	ms_timer.Start();
 }
 

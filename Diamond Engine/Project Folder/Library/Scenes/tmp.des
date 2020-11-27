@@ -1,0 +1,81 @@
+{
+    "EditorCameraPosition": [
+        8,
+        3,
+        8
+    ],
+    "EditorCameraZ": [
+        -0.68348616361618042,
+        -0.25630730390548706,
+        -0.68348616361618042
+    ],
+    "EditorCameraY": [
+        -0.1812366247177124,
+        0.96659541130065918,
+        -0.1812366247177124
+    ],
+    "Game Objects": [
+        {
+            "name": "Scene root",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 289500101,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Main Camera",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1152504626,
+            "ParentUID": 289500101,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 4,
+                    "Active": true,
+                    "fType": 2,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 10,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.5212764739990234
+                }
+            ]
+        }
+    ]
+}

@@ -8,7 +8,7 @@
 // ---------------------------------------------
 Timer::Timer()
 {
-	Start();
+	//Start();
 }
 
 // ---------------------------------------------
@@ -23,6 +23,11 @@ void Timer::Stop()
 {
 	running = false;
 	stopped_at = SDL_GetTicks();
+}
+
+Uint32 Timer::GetStartTime()
+{
+	return started_at;
 }
 
 // ---------------------------------------------
