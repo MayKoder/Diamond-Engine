@@ -8,16 +8,16 @@
 #include "MO_Camera3D.h"
 #include "MO_Scene.h"
 
-#include "W_Inspector.h"
-#include "W_Hierarchy.h"
-#include"W_Game.h"
+#include "WI_Inspector.h"
+#include "WI_Hierarchy.h"
+#include"WI_Game.h"
 
 #include "IM_FileSystem.h"
 
 #include"DEJsonSupport.h"
 #include"MaykMath.h"
-#include"C_Transform.h"
-#include"C_Camera.h"
+#include"CO_Transform.h"
+#include"CO_Camera.h"
 
 #include"DETime.h"
 

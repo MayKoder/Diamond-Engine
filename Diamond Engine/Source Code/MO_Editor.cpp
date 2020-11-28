@@ -17,17 +17,17 @@
 #include "MO_Renderer3D.h"
 #include "MO_Editor.h"
 #include "MO_Scene.h"
-#include "IM_FileSystem.h"
+#include "MO_ResourceManager.h"
 
 //Window types
-#include "W_Configuration.h"
-#include "W_Console.h"
-#include "W_About.h"
-#include "W_Inspector.h"
-#include "W_Hierarchy.h"
-#include "W_Scene.h"
-#include "W_Assets.h"
-#include "W_Game.h"
+#include "WI_Configuration.h"
+#include "WI_Console.h"
+#include "WI_About.h"
+#include "WI_Inspector.h"
+#include "WI_Hierarchy.h"
+#include "WI_Scene.h"
+#include "WI_Assets.h"
+#include "WI_Game.h"
 
 #include"GameObject.h"
 #include"IM_TextureImporter.h"
@@ -234,21 +234,21 @@ void M_Editor::DrawMenuBar()
 				//TODO: This is temporal, meshes should not laod every time and 
 				//should be stored only once, then only copy mesh pointers.
 				if (ImGui::MenuItem("Cube", nullptr))
-					FileSystem::LoadDroppedFile("Assets/Primitives/Cube.fbx");
+					App->moduleResources->RequestFromAssets("Assets/Primitives/Cube.fbx");
 				if (ImGui::MenuItem("Plane", nullptr))
-					FileSystem::LoadDroppedFile("Assets/Primitives/Plane.fbx");
+					App->moduleResources->RequestFromAssets("Assets/Primitives/Plane.fbx");
 				if (ImGui::MenuItem("Cylinder", nullptr))
-					FileSystem::LoadDroppedFile("Assets/Primitives/Cylinder.fbx");
+					App->moduleResources->RequestFromAssets("Assets/Primitives/Cylinder.fbx");
 				if (ImGui::MenuItem("Icosphere", nullptr))
-					FileSystem::LoadDroppedFile("Assets/Primitives/Icosphere.fbx");
+					App->moduleResources->RequestFromAssets("Assets/Primitives/Icosphere.fbx");
 				if (ImGui::MenuItem("Pyramid", nullptr))
-					FileSystem::LoadDroppedFile("Assets/Primitives/Pyramid.fbx");
+					App->moduleResources->RequestFromAssets("Assets/Primitives/Pyramid.fbx");
 				if (ImGui::MenuItem("Sphere", nullptr))
-					FileSystem::LoadDroppedFile("Assets/Primitives/Sphere.fbx");
+					App->moduleResources->RequestFromAssets("Assets/Primitives/Sphere.fbx");
 				if (ImGui::MenuItem("Torus", nullptr))
-					FileSystem::LoadDroppedFile("Assets/Primitives/Torus.fbx");
+					App->moduleResources->RequestFromAssets("Assets/Primitives/Torus.fbx");
 				if (ImGui::MenuItem("Monkey", nullptr))
-					FileSystem::LoadDroppedFile("Assets/Primitives/Monkey.fbx");
+					App->moduleResources->RequestFromAssets("Assets/Primitives/Monkey.fbx");
 				ImGui::EndMenu();
 			}
 

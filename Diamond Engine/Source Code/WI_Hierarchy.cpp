@@ -1,11 +1,11 @@
-#include "W_Hierarchy.h"
+#include "WI_Hierarchy.h"
 
 #include "Globals.h"
 #include "GameObject.h"
 #include "MO_Scene.h"
 #include "MO_Editor.h"
 #include "Application.h"
-#include "W_Inspector.h"
+#include "WI_Inspector.h"
 #include "MO_Input.h"
 
 W_Hierarchy::W_Hierarchy(M_Scene* _scene) : Window(), cSceneReference(_scene), dropTarget(nullptr)

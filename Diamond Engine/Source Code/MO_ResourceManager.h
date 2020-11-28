@@ -24,14 +24,13 @@ public:
 
 	void PopulateFileArray();
 
-
 	//Change int to UID?
 	int ExistsOnLibrary(const char* file_in_assets) const;
 	
 	int ImportFile(const char* assetsFile, Resource::Type type);
 
 	int CreateLibraryFromAssets(const char* assetsFile);
-	void AssetsToScene(const char* assets_path);
+	void RequestFromAssets(const char* assets_path);
 
 	int GenerateNewUID();
 

@@ -3,9 +3,9 @@
 #include "MO_Editor.h"
 
 #include "GameObject.h"
-#include "C_Transform.h"
-#include "C_MeshRenderer.h"
-#include "C_Material.h"
+#include "CO_Transform.h"
+#include "CO_MeshRenderer.h"
+#include "CO_Material.h"
 
 #include "RE_Mesh.h"
 #include "RE_Texture.h"

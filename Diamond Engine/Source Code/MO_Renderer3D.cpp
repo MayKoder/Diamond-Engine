@@ -12,14 +12,14 @@
 #include "DevIL\include\ilu.h"
 #include "DevIL\include\ilut.h"
 
-#include"W_Game.h"
+#include"WI_Game.h"
 
 #include"MO_Input.h"
 #include"GameObject.h"
 
-#include"C_MeshRenderer.h"
-#include"C_Camera.h"
-#include"C_Transform.h"
+#include"CO_MeshRenderer.h"
+#include"CO_Camera.h"
+#include"CO_Transform.h"
 
 #include"RE_Texture.h"
 #include"Primitive.h"
@@ -253,6 +253,9 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//Start test draw
 	if (gameCamera != nullptr) 
 	{
+		//gameCamera->GetGO()->transform->eulerRotation.y += 0.1f;
+		//gameCamera->GetGO()->transform->updateTransform = true;
+
 		gameCamera->StartDraw();
 
 		for (uint i = 0; i < MAX_LIGHTS; ++i)
@@ -453,24 +456,20 @@ void ModuleRenderer3D::RayToMeshQueueIntersection(LineSegment& ray)
 	std::map<float, C_MeshRenderer*> distMap;
 	for(auto i = canSelect.begin(); i != canSelect.end(); ++i)
 	{
-		const ResourceMesh* rMesh = (*i).second->GetRenderMesh();
-		if (rMesh)
+		const ResourceMesh* _mesh = (*i).second->GetRenderMesh();
+		if (_mesh)
 		{
 			LineSegment local = ray;
 			local.Transform((*i).second->GetGO()->transform->globalTransform.Inverted());
 
-			for (uint v = 0; v < rMesh->indices_count; v += 3)
+			for (uint index = 0; index < _mesh->indices_count; index += 3)
 			{
-				uint indexA = rMesh->indices[v] * 3;
-				float3 a(&rMesh->vertices[indexA]);
 
-				uint indexB = rMesh->indices[v + 1] * 3;
-				float3 b(&rMesh->vertices[indexB]);
+				float3 pA(&_mesh->vertices[_mesh->indices[index] * 3]);
+				float3 pB(&_mesh->vertices[_mesh->indices[index + 1] * 3]);
+				float3 pC(&_mesh->vertices[_mesh->indices[index + 2] * 3]);
 
-				uint indexC = rMesh->indices[v + 2] * 3;
-				float3 c(&rMesh->vertices[indexC]);
-
-				Triangle triangle(a, b, c);
+				Triangle triangle(pA, pB, pC);
 
 				float dist = 0;
 				if (local.Intersects(triangle, &dist, nullptr))

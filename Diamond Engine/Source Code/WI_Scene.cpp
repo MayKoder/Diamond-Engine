@@ -1,4 +1,4 @@
-#include "W_Scene.h"
+#include "WI_Scene.h"
 #include "MO_Renderer3D.h"
 #include "MO_Window.h"
 #include "MO_Camera3D.h"
@@ -12,7 +12,7 @@
 
 #include"ImGui/imgui_internal.h"
 
-#include"C_Transform.h"
+#include"CO_Transform.h"
 #include"MO_Input.h"
 #include"GameObject.h"
 
@@ -116,7 +116,7 @@ void W_Scene::Draw()
 			float4x4 mat = trans->globalTransform.Transposed();
 
 			//ERROR: World mode makes rotations go byebye
-			if (ImGuizmo::Manipulate(App->moduleCamera->editorCamera.GetOpenGLViewMatrix().v[0], App->moduleCamera->editorCamera.GetOpenGLProjectionMatrix().v[0], operation, mode, mat.ptr()))
+			if (ImGuizmo::Manipulate(App->moduleCamera->editorCamera.ViewMatrixOpenGL().v[0], App->moduleCamera->editorCamera.ProjectionMatrixOpenGL().v[0], operation, mode, mat.ptr()))
 			{
 				mat.Transpose();
 				//mat.Decompose(trans->position, trans->rotation, trans->localScale);

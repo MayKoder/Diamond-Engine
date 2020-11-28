@@ -1,7 +1,7 @@
 #pragma once
 #include "Module.h"
 
-#include"C_Camera.h"
+#include"CO_Camera.h"
 #include"MathGeoLib/include/Math/float4x4.h"
 #include"MathGeoLib/include/Math/Quat.h"
 

@@ -8,6 +8,7 @@
 
 #include "MO_Editor.h"
 #include "MO_ResourceManager.h"
+#include"MO_Scene.h"
 
 #include "PhysFS/include/physfs.h"
 

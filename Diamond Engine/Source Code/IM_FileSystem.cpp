@@ -13,7 +13,7 @@
 #include "PhysFS/include/physfs.h"
 #include "IM_MeshLoader.h"
 #include"GameObject.h"
-#include"C_Material.h"
+#include"CO_Material.h"
 
 #include"MO_Editor.h"
 #include"MO_ResourceManager.h"

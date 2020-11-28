@@ -1,4 +1,4 @@
-#include "W_Inspector.h"
+#include "WI_Inspector.h"
 #include "MMGui.h"
 #include "GameObject.h"
 #include "Application.h"
@@ -96,7 +96,11 @@ void W_Inspector::Draw()
 			if (ImGui::BeginCombo("##addComponent", "Add Component"))
 			{
 				//TODO: Do this with all the components
-				ImGui::Selectable("Mesh Renderer");
+				if (ImGui::Selectable("Material")) 
+				{
+					if(selectedGO->GetComponent(Component::Type::Material) == nullptr)
+						selectedGO->AddComponent(Component::Type::Material);
+				}
 
 
 				ImGui::EndCombo();

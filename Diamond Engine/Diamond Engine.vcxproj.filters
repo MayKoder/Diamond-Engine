@@ -144,14 +144,8 @@
     <ClInclude Include="Source Code\Window.h">
       <Filter>Sources\Editor\Windows\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\W_Configuration.h">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\Light.h">
       <Filter>Sources\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\W_Console.h">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\MathBuildConfig.h">
       <Filter>Externals\MathGeoLib</Filter>
@@ -336,9 +330,6 @@
     <ClInclude Include="Source Code\External Libraries\parson\parson.h">
       <Filter>Externals\parson</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\W_About.h">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\External Libraries\ImGui\ImGuiUtils.h">
       <Filter>Externals\ImGui</Filter>
     </ClInclude>
@@ -351,20 +342,8 @@
     <ClInclude Include="Source Code\MMGui.h">
       <Filter>Sources\Tools\MMath</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\W_Inspector.h">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\W_Hierarchy.h">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\MeshArrays.h">
       <Filter>Sources\Tools\MMath</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\W_Scene.h">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\W_Assets.h">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\External Libraries\DevIL\include\il.h">
       <Filter>Externals\DevIL</Filter>
@@ -396,24 +375,9 @@
     <ClInclude Include="Source Code\Component.h">
       <Filter>Sources\Components\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\C_MeshRenderer.h">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\C_Transform.h">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\C_Material.h">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source Code\DEJsonSupport.h">
       <Filter>Sources\Tools\MMath\MMJsonSupport</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\C_Camera.h">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\W_Game.h">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\External Libraries\ImGuizmo\ImGradient.h">
       <Filter>Externals\ImGuizmo</Filter>
@@ -484,6 +448,42 @@
     <ClInclude Include="Source Code\DEModelNode.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\WI_Scene.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\WI_Inspector.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\WI_Hierarchy.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\WI_Game.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\WI_Console.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\WI_Configuration.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\WI_Assets.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\WI_About.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Camera.h">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Material.h">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_MeshRenderer.h">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Transform.h">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -534,14 +534,8 @@
     <ClCompile Include="Source Code\Window.cpp">
       <Filter>Sources\Editor\Windows\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\W_Configuration.cpp">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\Light.cpp">
       <Filter>Sources\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\W_Console.cpp">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Time\Clock.cpp">
       <Filter>Externals\MathGeoLib\Time</Filter>
@@ -642,23 +636,8 @@
     <ClCompile Include="Source Code\External Libraries\parson\parson.c">
       <Filter>Externals\parson</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\W_About.cpp">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\External Libraries\mmgr\mmgr.cpp">
       <Filter>Externals\mmgr</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\W_Inspector.cpp">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\W_Hierarchy.cpp">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\W_Scene.cpp">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\W_Assets.cpp">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\GameObject.cpp">
       <Filter>Sources\Components</Filter>
@@ -666,23 +645,8 @@
     <ClCompile Include="Source Code\Component.cpp">
       <Filter>Sources\Components\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\C_MeshRenderer.cpp">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\C_Transform.cpp">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\C_Material.cpp">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\DEJsonSupport.cpp">
       <Filter>Sources\Tools\MMath\MMJsonSupport</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\C_Camera.cpp">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\W_Game.cpp">
-      <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\ImGuizmo\ImGuizmo.cpp">
       <Filter>Externals\ImGuizmo</Filter>
@@ -746,6 +710,42 @@
     </ClCompile>
     <ClCompile Include="Source Code\AssetDir.cpp">
       <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\WI_Scene.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\WI_Inspector.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\WI_Hierarchy.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\WI_Game.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\WI_Console.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\WI_Configuration.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\WI_Assets.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\WI_About.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Camera.cpp">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Material.cpp">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_MeshRenderer.cpp">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Transform.cpp">
+      <Filter>Sources\Components\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

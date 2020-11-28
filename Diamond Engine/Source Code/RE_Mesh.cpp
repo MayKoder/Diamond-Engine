@@ -4,7 +4,7 @@
 #include "IM_FileSystem.h"
 #include"Globals.h"
 
-ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MODEL), indices_id(0), vertices_id(0), generalWireframe(nullptr)
+ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH), indices_id(0), vertices_id(0), generalWireframe(nullptr)
 {
 
 }
@@ -108,7 +108,7 @@ bool ResourceMesh::UnloadFromMemory()
 void ResourceMesh::RenderMesh(GLuint textureID)
 {
 	//ASK: glDrawElementsInstanced()?
-	if(textureID != 0 && *generalWireframe == false)
+	if(textureID != 0 && (generalWireframe != nullptr && *generalWireframe == false))
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
 	//Vertices --------------------------------------------
@@ -169,7 +169,7 @@ void ResourceMesh::RenderMesh(GLuint textureID)
 	////--------------------------------------------
 
 	//Drawing cleanup --------------------------------------------
-	if (textureID != 0 && *generalWireframe == false)
+	if (textureID != 0 && (generalWireframe != nullptr && *generalWireframe == false))
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -396,6 +396,9 @@ void ResourceMesh::LoadCustomFormat(const char* path)
 	char* fileBuffer = nullptr;
 
 	uint size = FileSystem::LoadToBuffer(path, &fileBuffer);
+
+	if (size == 0)
+		return;
 
 	char* cursor = fileBuffer;
 	uint variables[4];

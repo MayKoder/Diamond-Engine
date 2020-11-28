@@ -1,10 +1,10 @@
 #include "GameObject.h"
 #include "Component.h"
 
-#include "C_Transform.h"
-#include "C_MeshRenderer.h"
-#include "C_Material.h"
-#include "C_Camera.h"
+#include "CO_Transform.h"
+#include "CO_MeshRenderer.h"
+#include "CO_Material.h"
+#include "CO_Camera.h"
 
 #include"MaykMath.h"
 #include"parson/parson.h"

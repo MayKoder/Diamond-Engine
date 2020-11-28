@@ -1,0 +1,37 @@
+{
+    "Model Objects": [
+        {
+            "name": "Cylinder",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1793545662,
+            "ParentUID": 233124021,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/146858028.mmh",
+                    "UID": 146858028
+                }
+            ]
+        }
+    ]
+}

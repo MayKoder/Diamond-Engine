@@ -146,6 +146,7 @@ void M_ResourceManager::NeedsDirsUpdate(AssetDir& dir)
 						this->ImportFile(modFile.importPath.c_str(), this->GetMetaType(modFile.metaFileDir.c_str()));
 					LOG(LogType::L_NORMAL, "Meta generated");
 				}
+				//TODO IMPORTANT: If file is updated, update library but not meta
 			}
 
 		}
@@ -179,23 +180,26 @@ Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 
 		static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 4, "Update all switches with new type");
 
-		
-		switch (GetTypeFromLibraryExtension(libraryPath))
+		//Save check
+		if (FileSystem::Exists(libraryPath))
 		{
-			case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
-			case Resource::Type::MODEL: ret = (Resource*) new ResourceMesh(uid); break;
-			case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
-			//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
-		}
+			switch (GetTypeFromLibraryExtension(libraryPath))
+			{
+				case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
+				//case Resource::Type::MODEL: ret = (Resource*) new ResourceMesh(uid); break;
+				case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
+				//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
+			}
 
-		if (ret != nullptr)
-		{
-			resources[uid] = ret;
-			ret->SetAssetsPath("");
-			ret->SetLibraryPath(libraryPath);
-			ret->IncreaseReferenceCount();
+			if (ret != nullptr)
+			{
+				resources[uid] = ret;
+				ret->SetAssetsPath("");
+				ret->SetLibraryPath(libraryPath);
+				ret->IncreaseReferenceCount();
 
-			ret->LoadToMemory();
+				ret->LoadToMemory();
+			}
 		}
 		return ret;
 	}
@@ -263,9 +267,8 @@ int M_ResourceManager::CreateLibraryFromAssets(const char* assetsFile)
 	return resID;
 }
 
-void M_ResourceManager::AssetsToScene(const char* assets_path)
+void M_ResourceManager::RequestFromAssets(const char* assets_path)
 {
-
 	if (ExistsOnLibrary(assets_path) != 0)
 	{
 		std::string meta = GetMetaPath(assets_path);
@@ -280,7 +283,6 @@ void M_ResourceManager::AssetsToScene(const char* assets_path)
 				case Resource::Type::TEXTURE: RequestResource(sceneObj.ReadInt("UID"), sceneObj.ReadString("Library Path")); break;
 				case Resource::Type::MODEL: ModelImporter::LoadModelCustom(sceneObj.ReadString("Library Path")); break;
 			}
-
 			//Free memory
 			json_value_free(scene);
 		}
@@ -299,7 +301,7 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid,
 	switch (type) 
 	{
 		case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
-		case Resource::Type::MODEL: ret = (Resource*) new ResourceMesh(uid); break;
+		case Resource::Type::MODEL: ret = new Resource(uid, Resource::Type::MODEL); break;
 		case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
 		//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
 	}

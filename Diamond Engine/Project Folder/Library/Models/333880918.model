@@ -1,7 +1,7 @@
 {
     "Model Objects": [
         {
-            "name": "Assets\/BakerHouse.fbx",
+            "name": "BakerHouse",
             "Position": [
                 0,
                 0,
@@ -18,8 +18,8 @@
                 1,
                 1
             ],
-            "UID": 1480026263,
-            "ParentUID": 1888990083,
+            "UID": 1644732135,
+            "ParentUID": 250055977,
             "Components": [
                 {
                     "Type": 1,
@@ -45,8 +45,8 @@
                 1,
                 1
             ],
-            "UID": 348105969,
-            "ParentUID": 1480026263,
+            "UID": 1920429148,
+            "ParentUID": 1644732135,
             "Components": [
                 {
                     "Type": 1,
@@ -55,8 +55,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1550695735.mmh",
-                    "UID": 1550695735
+                    "Path": "Library\/Meshes\/1121179572.mmh",
+                    "UID": 1121179572
                 },
                 {
                     "Type": 3,
@@ -85,8 +85,8 @@
                 1,
                 1
             ],
-            "UID": 1132711354,
-            "ParentUID": 1480026263,
+            "UID": 2013334335,
+            "ParentUID": 1644732135,
             "Components": [
                 {
                     "Type": 1,
@@ -95,8 +95,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/542380804.mmh",
-                    "UID": 542380804
+                    "Path": "Library\/Meshes\/907381056.mmh",
+                    "UID": 907381056
                 },
                 {
                     "Type": 3,

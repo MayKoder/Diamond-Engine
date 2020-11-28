@@ -1,4 +1,4 @@
-#include "C_MeshRenderer.h"
+#include "CO_MeshRenderer.h"
 #include "RE_Mesh.h"
 #include "OpenGL.h"
 
@@ -8,9 +8,9 @@
 #include"MO_ResourceManager.h"
 
 #include "GameObject.h"
-#include "C_Material.h"
-#include "C_Transform.h"
-#include"C_Camera.h"
+#include "CO_Material.h"
+#include "CO_Transform.h"
+#include"CO_Camera.h"
 
 #include "ImGui/imgui.h"
 #include"DEJsonSupport.h"
@@ -36,7 +36,7 @@ C_MeshRenderer::~C_MeshRenderer()
 void C_MeshRenderer::Update()
 {
 
-	if (!IsInsideFrustum(&EngineExternal->moduleRenderer3D->GetGameRenderTarget()->camFrustrum))
+	if (EngineExternal->moduleRenderer3D->GetGameRenderTarget() != nullptr && !IsInsideFrustum(&EngineExternal->moduleRenderer3D->GetGameRenderTarget()->camFrustrum))
 		return;
 	
 	EngineExternal->moduleRenderer3D->renderQueue.push_back(this);
@@ -93,19 +93,14 @@ void C_MeshRenderer::SaveData(JSON_Object* nObj)
 void C_MeshRenderer::LoadData(JSON_Object* nObj)
 {
 	Component::LoadData(nObj);
+
 	//There is no _mesh yet lol
 	DEConfig jsObj(nObj);
 
 	SetRenderMesh(dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(jsObj.ReadInt("UID"), jsObj.ReadString("Path"))));
 	_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
-	//_mesh->LoadCustomFormat(_mesh->GetLibraryPath());
 
 	gameObject->transform->UpdateBoxes();
-
-	//EngineExternal->moduleResources->RequestResource(_mesh->GetUID());
-	//_mesh->LoadToMemory();
-
-	//EngineExternal->moduleRenderer3D->globalMeshes.push_back(_mesh);
 }
 
 bool C_MeshRenderer::OnEditor()
@@ -139,8 +134,14 @@ bool C_MeshRenderer::OnEditor()
 					_mesh = nullptr;
 				}
 
-				//TODO: Almost done come on
-				//_mesh = dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(/*Get ID from library name?*/, libraryDrop.c_str()));
+				//TODO: Almost done come on TEMPORAL: This is the only way until fbx's .meta files
+				//Store an array of meshes to reference
+				std::string stID = "";
+				FileSystem::GetFileName(libraryDrop->c_str(), stID, false);
+
+				//ATOI is C++11 only, maybe not a good idea to use it
+				int UID = std::atoi(stID.c_str());
+				SetRenderMesh(dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(UID, libraryDrop->c_str())));
 				LOG(LogType::L_WARNING, "Mesh %s changed", (*libraryDrop).c_str());
 			}
 			ImGui::EndDragDropTarget();
@@ -176,7 +177,7 @@ bool C_MeshRenderer::IsInsideFrustum(Frustum* camFrustum)
 
 		for (size_t k = 0; k < 8; k++)
 		{
-			//LOG(LogType::L_NORMAL, "Dot %f", obbPoints[k].Dot(frustumPlanes[i].normal));
+			//Is "IsOnPositiveSide" slow?
 			if (frustumPlanes[i].IsOnPositiveSide(obbPoints[k])) {
 				iPtIn = 0;
 				--inCount;

@@ -1,7 +1,7 @@
 {
     "Model Objects": [
         {
-            "name": "skybox",
+            "name": "Cube",
             "Position": [
                 0,
                 0,
@@ -14,12 +14,12 @@
                 0.70710670948028564
             ],
             "Scale": [
-                99.999992370605469,
-                99.999992370605469,
-                99.999992370605469
+                1,
+                1,
+                1
             ],
-            "UID": 357168253,
-            "ParentUID": 1023237704,
+            "UID": 1247110185,
+            "ParentUID": 2138710637,
             "Components": [
                 {
                     "Type": 1,
@@ -28,15 +28,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1632751255.mmh",
-                    "UID": 1632751255
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "AssetPath": "",
-                    "LibraryPath": "Library\/Materials\/1976673753.dds",
-                    "UID": 1976673753
+                    "Path": "Library\/Meshes\/1944613698.mmh",
+                    "UID": 1944613698
                 }
             ]
         }

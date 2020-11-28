@@ -83,7 +83,11 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 
 		//Save custom format model
 		GameObject* root = new GameObject("First model GO", nullptr);
-		MeshLoader::NodeToGameObject(scene->mMeshes, texturesOnModelUIDs, meshesOnModelUIDs, scene->mRootNode, root, res->GetAssetPath());
+
+		std::string name = "";
+		FileSystem::GetFileName(res->GetAssetPath(), name, false);
+
+		MeshLoader::NodeToGameObject(scene->mMeshes, texturesOnModelUIDs, meshesOnModelUIDs, scene->mRootNode, root, name.c_str());
 		ModelImporter::SaveModelCustom(root->children[0], res->GetLibraryPath());
 		delete root;
 
@@ -119,10 +123,7 @@ void ModelImporter::SaveModelCustom(GameObject* root, const char* nameWithExtens
 
 void ModelImporter::LoadModelCustom(const char* nameWithExtension)
 {
-
-	std::string dir = nameWithExtension;
-
-	JSON_Value* scene = json_parse_file(dir.c_str());
+	JSON_Value* scene = json_parse_file(nameWithExtension);
 
 	if (scene == NULL)
 		return;

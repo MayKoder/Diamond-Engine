@@ -9,6 +9,7 @@
 typedef unsigned int ImGuiID;
 enum class LogType;
 class GameObject;
+class ResourceTexture;
 
 enum class EditorWindow {
 
@@ -63,6 +64,8 @@ private:
 
 	std::vector<Window*> windows;
 	std::vector<std::string> styles;
+
+	std::vector<ResourceTexture*> editorIcons;
 
 	//WARNING TODO: This is bad find a better way
 	char styleInput[MAX_STY_INPUT] = "";

@@ -1,4 +1,4 @@
-#include"W_Assets.h"
+#include"WI_Assets.h"
 
 #include"IM_FileSystem.h"
 #include"MO_ResourceManager.h"
@@ -60,8 +60,8 @@ void W_Assets::DrawFileTree(AssetDir& file)
 			else if (EngineExternal->moduleResources->GetTypeFromAssetExtension(file.importPath.c_str()) == Resource::Type::TEXTURE)
 				ImGui::SetDragDropPayload("_TEXTURE", &file.metaFileDir, file.metaFileDir.length());
 			else if (EngineExternal->moduleResources->GetTypeFromLibraryExtension(file.importPath.c_str()) == Resource::Type::MESH)
-				ImGui::SetDragDropPayload("_MESH", &file.metaFileDir, file.metaFileDir.length());
-
+				ImGui::SetDragDropPayload("_MESH", &file.importPath, file.importPath.length());
+			//TODO: File is generating .meta files for library meshes... fix
 
 			ImGui::Text("Import asset: %s", file.metaFileDir.c_str());
 			ImGui::EndDragDropSource();

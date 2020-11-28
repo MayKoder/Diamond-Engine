@@ -1,4 +1,4 @@
-#include "C_Material.h"
+#include "CO_Material.h"
 #include "ImGui/imgui.h"
 #include "Application.h"
 #include"MO_Renderer3D.h"
@@ -65,6 +65,19 @@ bool C_Material::OnEditor()
 			//BUG: FBX LOADED HAVE TEXTURE BUT IT'S EMPTY, FIND A BETTER WAY TO IMPORT NO TEXTURE MESHES
 			ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "No texture loaded, using default checkers");
 			ImGui::Image((ImTextureID)EngineExternal->moduleRenderer3D->checkersTexture, ImVec2(128, 128));
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
+				{
+					//Drop asset from Asset window to scene window
+					std::string* metaFileDrop = (std::string*)payload->Data;
+					std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
+
+					matTexture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
+					LOG(LogType::L_WARNING, "File %s loaded to scene", (*metaFileDrop).c_str());
+				}
+				ImGui::EndDragDropTarget();
+			}
 		}
 		return true;
 	}

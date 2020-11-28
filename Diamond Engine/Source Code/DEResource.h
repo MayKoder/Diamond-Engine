@@ -40,9 +40,9 @@ public:
 	//virtual void Save(Config& config) const;
 	//virtual void Load(const Config& config);
 
-	//virtual bool LoadToMemory() = 0;
-	virtual bool LoadToMemory() = 0;
-	virtual bool UnloadFromMemory() = 0;
+	//Can't be pure virtual "=0" until there is a resoruce model class
+	virtual bool LoadToMemory() { return false; }
+	virtual bool UnloadFromMemory() { return false; }
 
 protected:
 

@@ -1,4 +1,4 @@
-#include "C_Camera.h"
+#include "CO_Camera.h"
 #include"Globals.h"
 #include"DEJsonSupport.h"
 #include"ImGui/imgui.h"
@@ -10,7 +10,7 @@
 #include"MO_Scene.h"
 
 #include"GameObject.h"
-#include"C_Transform.h"
+#include"CO_Transform.h"
 #include"OpenGL.h"
 
 C_Camera::C_Camera() : Component(nullptr), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f)
@@ -45,13 +45,13 @@ C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(0), texColorBu
 
 C_Camera::~C_Camera()
 {
-	if (framebuffer == 0)
+	if (framebuffer != 0)
 		glDeleteFramebuffers(1, (GLuint*)&framebuffer);
 
-	if (texColorBuffer == 0)
+	if (texColorBuffer != 0)
 		glDeleteTextures(1, (GLuint*)&texColorBuffer);
 
-	if (rbo == 0)
+	if (rbo != 0)
 		glDeleteRenderbuffers(1, (GLuint*)&rbo);
 
 	if (EngineExternal && EngineExternal->moduleRenderer3D->GetGameRenderTarget() == this)
@@ -148,10 +148,10 @@ void C_Camera::StartDraw()
 
 	glLoadIdentity();
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf((GLfloat*)GetOpenGLProjectionMatrix().v);
+	glLoadMatrixf((GLfloat*)ProjectionMatrixOpenGL().v);
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf((GLfloat*)GetOpenGLViewMatrix().v);
+	glLoadMatrixf((GLfloat*)ViewMatrixOpenGL().v);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
@@ -179,13 +179,13 @@ void C_Camera::ReGenerateBuffer(int w, int h)
 {
 	SetAspectRatio((float)w / (float)h);
 
-	if (framebuffer == 0)
+	if (framebuffer != 0)
 		glDeleteFramebuffers(1, (GLuint*)&framebuffer);
 
-	if (texColorBuffer == 0)
+	if (texColorBuffer != 0)
 		glDeleteTextures(1, (GLuint*)&texColorBuffer);
 
-	if (rbo == 0)
+	if (rbo != 0)
 		glDeleteRenderbuffers(1, (GLuint*)&rbo);
 
 
@@ -243,13 +243,13 @@ void C_Camera::Move(const float3& Movement)
 	camFrustrum.pos += Movement;
 }
 
-float4x4 C_Camera::GetOpenGLViewMatrix() const
+float4x4 C_Camera::ViewMatrixOpenGL() const
 {
 	math::float4x4 mat = camFrustrum.ViewMatrix();
 	return mat.Transposed();
 }
 
-float4x4 C_Camera::GetOpenGLProjectionMatrix() const
+float4x4 C_Camera::ProjectionMatrixOpenGL() const
 {
 	return camFrustrum.ProjectionMatrix().Transposed();
 }

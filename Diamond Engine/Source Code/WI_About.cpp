@@ -1,4 +1,4 @@
-#include"W_About.h"
+#include"WI_About.h"
 #include"OpenGL.h"
 #include "SDL/include/SDL.h"
 #include "EngineVersion.h"

@@ -1,4 +1,4 @@
-#include "W_Configuration.h"
+#include "WI_Configuration.h"
 #include "MMGui.h"
 
 #include "Application.h"

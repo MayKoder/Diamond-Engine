@@ -18,8 +18,9 @@ public:
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(JSON_Object* nObj) override;
 
-	float4x4 GetOpenGLViewMatrix() const;
-	float4x4 GetOpenGLProjectionMatrix() const;
+	float4x4 ViewMatrixOpenGL() const;
+	float4x4 ProjectionMatrixOpenGL() const;
+
 	void SetAspectRatio(float aspectRatio);
 
 	void StartDraw();

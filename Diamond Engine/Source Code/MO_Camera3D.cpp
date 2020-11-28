@@ -7,7 +7,7 @@
 #include "MO_Editor.h"
 #include "GameObject.h"
 
-#include"C_Transform.h"
+#include"CO_Transform.h"
 #include"MathGeoLib/include/Math/float4.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled), mouseSensitivity(0.50f), cameraSpeed(4.f), cameraMovement(0.f, 0.f, 0.f)

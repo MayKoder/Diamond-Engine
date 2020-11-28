@@ -1,5 +1,5 @@
-#include "W_Game.h"
-#include "C_Camera.h"
+#include "WI_Game.h"
+#include "CO_Camera.h"
 #include"Globals.h"
 
 W_Game::W_Game() : Window(), targetCamera(nullptr)
