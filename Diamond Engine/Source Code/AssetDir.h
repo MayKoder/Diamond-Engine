@@ -13,7 +13,7 @@ struct AssetDir
 	void ClearData();
 
 	bool HasMeta();
-	void WriteMeta();
+	void GenerateMeta();
 	//void ReadMeta();
 
 	void GenerateMetaRecursive();

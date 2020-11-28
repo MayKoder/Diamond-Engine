@@ -18,8 +18,8 @@
                 1,
                 1
             ],
-            "UID": 946687187,
-            "ParentUID": 404611966,
+            "UID": 1480026263,
+            "ParentUID": 1888990083,
             "Components": [
                 {
                     "Type": 1,
@@ -45,8 +45,8 @@
                 1,
                 1
             ],
-            "UID": 888036050,
-            "ParentUID": 946687187,
+            "UID": 348105969,
+            "ParentUID": 1480026263,
             "Components": [
                 {
                     "Type": 1,
@@ -55,14 +55,15 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/Untitled.001.mmh"
+                    "Path": "Library\/Meshes\/1550695735.mmh",
+                    "UID": 1550695735
                 },
                 {
                     "Type": 3,
                     "Active": true,
                     "AssetPath": "",
-                    "LibraryPath": "Library\/Materials\/1502303885.dds",
-                    "UID": 1502303885
+                    "LibraryPath": "Library\/Materials\/760396950.dds",
+                    "UID": 760396950
                 }
             ]
         },
@@ -84,8 +85,8 @@
                 1,
                 1
             ],
-            "UID": 2051123567,
-            "ParentUID": 946687187,
+            "UID": 1132711354,
+            "ParentUID": 1480026263,
             "Components": [
                 {
                     "Type": 1,
@@ -94,14 +95,15 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/Untitled.mmh"
+                    "Path": "Library\/Meshes\/542380804.mmh",
+                    "UID": 542380804
                 },
                 {
                     "Type": 3,
                     "Active": true,
                     "AssetPath": "",
-                    "LibraryPath": "Library\/Materials\/1502303885.dds",
-                    "UID": 1502303885
+                    "LibraryPath": "Library\/Materials\/760396950.dds",
+                    "UID": 760396950
                 }
             ]
         }

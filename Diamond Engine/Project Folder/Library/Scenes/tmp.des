@@ -33,7 +33,7 @@
                 1,
                 1
             ],
-            "UID": 289500101,
+            "UID": 811537420,
             "Components": [
                 {
                     "Type": 1,
@@ -59,8 +59,8 @@
                 1,
                 1
             ],
-            "UID": 1152504626,
-            "ParentUID": 289500101,
+            "UID": 1899448897,
+            "ParentUID": 811537420,
             "Components": [
                 {
                     "Type": 1,
@@ -71,9 +71,9 @@
                     "Active": true,
                     "fType": 2,
                     "nearPlaneDist": 1,
-                    "farPlaneDist": 10,
+                    "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.5212764739990234
+                    "hFOV": 0.7209276556968689
                 }
             ]
         }

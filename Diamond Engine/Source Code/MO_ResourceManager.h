@@ -50,10 +50,10 @@ public:
 
 	int GetMetaUID(const char* metaFile);
 	std::string GetMetaPath(const char* assetsFile);
-	Resource::Type GetMetaType(const char* assetsFile);
+	Resource::Type GetMetaType(const char* metaFile);
 
-private:
 	void NeedsDirsUpdate(AssetDir& dir);
+private:
 
 	//const Resource* RequestResource(int uid) const;
 
@@ -71,5 +71,6 @@ private:
 	float fileUpdateDelay;
 
 public:
-	AssetDir rootFile;
+	AssetDir assetsRoot;
+	AssetDir meshesLibraryRoot;
 };

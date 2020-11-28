@@ -17,11 +17,14 @@ void W_Assets::Draw()
 {
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/))
 	{
-		DrawFileTree(EngineExternal->moduleResources->rootFile);
-	}
-	if (selectedFile != nullptr && EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) {
-		selectedFile->DeletePermanent();
-		selectedFile = nullptr;
+		DrawFileTree(EngineExternal->moduleResources->assetsRoot);
+		DrawFileTree(EngineExternal->moduleResources->meshesLibraryRoot);
+
+		if (selectedFile != nullptr && ImGui::IsWindowHovered() && EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) {
+			selectedFile->DeletePermanent();
+			selectedFile = nullptr;
+			EngineExternal->moduleResources->NeedsDirsUpdate(EngineExternal->moduleResources->assetsRoot);
+		}
 	}
 
 
@@ -53,7 +56,7 @@ void W_Assets::DrawFileTree(AssetDir& file)
 		if (ImGui::BeginDragDropSource(/*ImGuiDragDropFlags_SourceNoDisableHover*/))
 		{
 			if (EngineExternal->moduleResources->GetTypeFromAssetExtension(file.importPath.c_str()) == Resource::Type::MODEL)
-				ImGui::SetDragDropPayload("_MODEL", file.importPath.c_str(), file.importPath.length());
+				ImGui::SetDragDropPayload("_MODEL", &file.metaFileDir, file.metaFileDir.length());
 			else
 				ImGui::SetDragDropPayload("_TEXTURE", &file.metaFileDir, file.metaFileDir.length());
 

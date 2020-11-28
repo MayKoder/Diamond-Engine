@@ -15,15 +15,15 @@
 #include"RE_Mesh.h"
 #include"RE_Texture.h"
 #include"DEResource.h"
+
 void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 {
 	const aiScene* scene = aiImportFileFromMemory(buffer, bSize, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
-
-		std::vector<ResourceMesh*> sceneMeshes;
-		std::vector<ResourceTexture*> testTextures;
+		std::vector<ResourceMesh*> meshesOnModelUIDs;
+		std::vector<ResourceTexture*> texturesOnModelUIDs;
 
 		//This should not be here
 		if (scene->HasMaterials())
@@ -56,27 +56,9 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 					uint UID = EngineExternal->moduleResources->GetMetaUID(libraryPath.c_str());
 					libraryPath = EngineExternal->moduleResources->LibraryFromMeta(libraryPath.c_str());
 
-					ResourceTexture* texture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->LoadFromLibrary(libraryPath.c_str(), Resource::Type::TEXTURE, UID));
+					ResourceTexture* texture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(UID, libraryPath.c_str()));
 
-					testTextures.push_back(texture);
-					//char* buffer = nullptr;
-					//int size = FileSystem::LoadToBuffer(localPath.c_str(), &buffer);
-
-					//if (buffer != nullptr)
-					//{
-					//	int w = 0;
-					//	int h = 0;
-
-					//	//GLuint id = TextureImporter::CustomLoadImage(buffer, size, &w, &h);
-					//	//TextureImporter::SaveDDS(buffer, size, textureFileName.substr(0, textureFileName.find_last_of(".")).c_str());
-
-
-					//	//TODO: Request resource?
-					//	//ResourceTexture* meshTexture = new ResourceTexture(id, w, h, textureFileName.c_str(), localPath.c_str());
-
-
-					//	RELEASE_ARRAY(buffer)
-					//}
+					texturesOnModelUIDs.push_back(texture);
 
 					path.Clear();
 				}
@@ -85,7 +67,7 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 					//TODO: Temporal, think of a better way
 					//TODO: Request resource?
 					//ResourceTexture* meshTexture = new ResourceTexture(White);
-					testTextures.push_back(nullptr);
+					texturesOnModelUIDs.push_back(nullptr);
 				}
 			}
 		}
@@ -95,36 +77,25 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 		{
 			for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 			{
-				sceneMeshes.push_back(MeshLoader::LoadMesh(scene->mMeshes[i]));
+				meshesOnModelUIDs.push_back(MeshLoader::LoadMesh(scene->mMeshes[i]));
 			}
 		}
 
 		//Save custom format model
 		GameObject* root = new GameObject("First model GO", nullptr);
-		MeshLoader::NodeToGameObject(scene->mMeshes, testTextures, sceneMeshes, scene->mRootNode, root, res->GetAssetPath());
+		MeshLoader::NodeToGameObject(scene->mMeshes, texturesOnModelUIDs, meshesOnModelUIDs, scene->mRootNode, root, res->GetAssetPath());
 		ModelImporter::SaveModelCustom(root->children[0], res->GetLibraryPath());
 		delete root;
 
-	//	//Only for memory cleanup, needs an update ASAP
-		for (unsigned int i = 0; i < sceneMeshes.size(); i++)
-		{
-			EngineExternal->moduleResources->UnloadResource(sceneMeshes[i]->GetUID());
-		}
-		for (unsigned int i = 0; i < testTextures.size(); i++)
-		{
-			if(testTextures[i] != nullptr)
-				EngineExternal->moduleResources->UnloadResource(testTextures[i]->GetUID());
-		}
-
-		sceneMeshes.clear();
-		testTextures.clear();
+		meshesOnModelUIDs.clear();
+		texturesOnModelUIDs.clear();
 
 		aiReleaseImport(scene);
 
 		//ModelImporter::LoadModelCustom(res->GetLibraryPath());
 	}
-	//else
-	//	LOG(LogType::L_ERROR, "Error loading scene % s", full_path);
+	else
+		LOG(LogType::L_ERROR, "Error loading scene"/*, scene->name*/);
 }
 
 void ModelImporter::SaveModelCustom(GameObject* root, const char* nameWithExtension)

@@ -55,23 +55,24 @@ bool AssetDir::HasMeta()
 	return FileSystem::Exists(metaFileDir.c_str());
 }
 
-void AssetDir::WriteMeta()
+void AssetDir::GenerateMeta()
 {
+	GenerateMetaPath();
+
+	if (!HasMeta())
+	{
+		Resource::Type type = EngineExternal->moduleResources->GetTypeFromAssetExtension(importPath.c_str());
+		uint resUID = EngineExternal->moduleResources->GenerateNewUID();
+		metaUID = resUID;
+		EngineExternal->moduleResources->GenerateMeta(importPath.c_str(), EngineExternal->moduleResources->GenLibraryPath(resUID, type).c_str(), resUID, type);
+	}
 }
 
 void AssetDir::GenerateMetaRecursive()
 {
 	if (!isDir)
 	{
-		GenerateMetaPath();
-
-		if (!HasMeta())
-		{
-			Resource::Type type = EngineExternal->moduleResources->GetTypeFromAssetExtension(importPath.c_str());
-			uint resUID = EngineExternal->moduleResources->GenerateNewUID();
-			metaUID = resUID;
-			EngineExternal->moduleResources->GenerateMeta(importPath.c_str(), EngineExternal->moduleResources->GenLibraryPath(resUID, type).c_str(), resUID, type);
-		}
+		GenerateMeta();
 	}
 
 	for (size_t i = 0; i < childDirs.size(); i++)

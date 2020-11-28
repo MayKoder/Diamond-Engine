@@ -82,6 +82,7 @@ void C_MeshRenderer::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
 	DEJson::WriteString(nObj, "Path", _mesh->GetLibraryPath());
+	DEJson::WriteInt(nObj, "UID", _mesh->GetUID());
 }
 void C_MeshRenderer::LoadData(JSON_Object* nObj)
 {
@@ -89,14 +90,14 @@ void C_MeshRenderer::LoadData(JSON_Object* nObj)
 	//There is no _mesh yet lol
 	DEConfig jsObj(nObj);
 
-	SetRenderMesh(dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->LoadFromLibrary(jsObj.ReadString("Path"), Resource::Type::MESH, jsObj.ReadInt("UID"))));
+	SetRenderMesh(dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(jsObj.ReadInt("UID"), jsObj.ReadString("Path"))));
 	_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
-	_mesh->LoadCustomFormat(_mesh->GetLibraryPath());
+	//_mesh->LoadCustomFormat(_mesh->GetLibraryPath());
 
 	gameObject->transform->UpdateBoxes();
 
 	//EngineExternal->moduleResources->RequestResource(_mesh->GetUID());
-	_mesh->LoadToMemory();
+	//_mesh->LoadToMemory();
 
 	//EngineExternal->moduleRenderer3D->globalMeshes.push_back(_mesh);
 }
@@ -170,6 +171,7 @@ bool C_MeshRenderer::IsInsideFrustum(Frustum* camFrustum)
 void C_MeshRenderer::SetRenderMesh(ResourceMesh* mesh)
 { 
 	_mesh = mesh;
+	//_mesh->LoadCustomFormat(_mesh->GetLibraryPath());
 
 	globalOBB = _mesh->localAABB;
 	globalOBB.Transform(gameObject->transform->globalTransform);

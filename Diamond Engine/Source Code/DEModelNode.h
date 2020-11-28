@@ -2,12 +2,13 @@
 
 
 
-struct ModelNode
+struct DEModelNode
 {
-
 	const char* name;
 
-	float* transform;
+	float* position;
+	float* rotation;
+	float* scale;
 
 	unsigned int meshID;
 	unsigned int textureID;

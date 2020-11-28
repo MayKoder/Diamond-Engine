@@ -18,8 +18,8 @@
                 99.999992370605469,
                 99.999992370605469
             ],
-            "UID": 1392451727,
-            "ParentUID": 1400398587,
+            "UID": 741564227,
+            "ParentUID": 315866967,
             "Components": [
                 {
                     "Type": 1,
@@ -28,14 +28,15 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/Cube.002.mmh"
+                    "Path": "Library\/Meshes\/602691700.mmh",
+                    "UID": 602691700
                 },
                 {
                     "Type": 3,
                     "Active": true,
                     "AssetPath": "",
-                    "LibraryPath": "Library\/Materials\/785361778.dds",
-                    "UID": 785361778
+                    "LibraryPath": "Library\/Materials\/1976673753.dds",
+                    "UID": 1976673753
                 }
             ]
         }

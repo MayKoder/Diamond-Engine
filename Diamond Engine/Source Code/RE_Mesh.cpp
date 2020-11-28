@@ -6,6 +6,7 @@
 
 ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MODEL), indices_id(0), vertices_id(0), generalWireframe(nullptr)
 {
+
 }
 
 ResourceMesh::~ResourceMesh()
@@ -21,6 +22,8 @@ ResourceMesh::~ResourceMesh()
 bool ResourceMesh::LoadToMemory()
 {
 	LOG(LogType::L_WARNING, "Mesh loaded to memory");
+	LoadCustomFormat(GetLibraryPath());
+
 	// vertices_count = vector3's // size of the array (elements) = vertices_count * 3 // size of the array in bytes = sizeof(float) * vertices_count * 3
 	if (vertices_count != 0)
 	{

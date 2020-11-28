@@ -6,6 +6,7 @@
 #include "OpenGL.h"
 #include"Application.h"
 #include"MO_Editor.h"
+#include"MO_Scene.h"
 
 #include"MO_ResourceManager.h"
 
@@ -59,21 +60,23 @@ void W_Scene::Draw()
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_MODEL"))
 			{
 				//Drop asset from Asset window to scene window
-				const char* name = (const char*)payload->Data;
+				std::string* name = (std::string*)payload->Data;
 
 				//TODO: This is working only with textures now
-				EngineExternal->moduleResources->AssetsToScene(name);
-				LOG(LogType::L_WARNING, "Model %s loaded to resource manager", name);
+				std::string libPath = EngineExternal->moduleResources->LibraryFromMeta((*name).c_str());
+				EngineExternal->moduleScene->LoadModelTree(libPath.c_str());
+				
+				LOG(LogType::L_WARNING, "Model %s loaded to resource manager", (*name).c_str());
 			}
 
 			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
 			{
 				//Drop asset from Asset window to scene window
-				const char* name = (const char*)payload->Data;
+				std::string* name = (std::string*)payload->Data;
 				
 				//TODO: Change selected mesh texture
-				EngineExternal->moduleResources->AssetsToScene(name);
-				LOG(LogType::L_WARNING, "Texture %s did nothing", name);
+				//EngineExternal->moduleResources->AssetsToScene((*name).c_str());
+				LOG(LogType::L_WARNING, "Texture %s did nothing", (*name).c_str());
 			}
 			ImGui::EndDragDropTarget();
 		}

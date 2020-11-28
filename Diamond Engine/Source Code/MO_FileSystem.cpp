@@ -52,6 +52,9 @@ bool M_FileSystem::Start()
 	GenerateAllMetaFiles();
 	ImportAssetsToLibrary();
 
+	//TODO: Should be updated kinda like assetsRoot;
+	GetAllFilesRecursive(App->moduleResources->meshesLibraryRoot);
+
 	return true;
 }
 
@@ -119,10 +122,10 @@ int M_FileSystem::DeleteAssetFile(const char* fileDir)
 
 void M_FileSystem::GenerateAllMetaFiles()
 {
-	App->moduleResources->rootFile.GenerateMetaRecursive();
+	App->moduleResources->assetsRoot.GenerateMetaRecursive();
 }
 
 void M_FileSystem::ImportAssetsToLibrary()
 {
-	App->moduleResources->rootFile.CreateLibraryFileRecursive();
+	App->moduleResources->assetsRoot.CreateLibraryFileRecursive();
 }

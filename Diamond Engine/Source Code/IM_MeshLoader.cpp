@@ -245,13 +245,13 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTextur
 ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 {
 
+	uint UID = EngineExternal->moduleResources->GenerateNewUID();
 	LOG(LogType::L_NORMAL, "%s", importedMesh->mName.C_Str());
 	std::string file = MESHES_PATH;
-	file += importedMesh->mName.C_Str();
+	file += std::to_string(UID);
 	file += ".mmh";
 
-	uint UID = EngineExternal->moduleResources->GenerateNewUID();
-	ResourceMesh* _mesh = dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->LoadFromLibrary(file.c_str(), Resource::Type::MESH, UID));
+	ResourceMesh* _mesh = dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->CreateNewResource("", UID, Resource::Type::MESH));
 
 	// copy vertices
 	_mesh->vertices_count = importedMesh->mNumVertices;

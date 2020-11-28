@@ -38,13 +38,11 @@ bool M_Scene::Init()
 
 bool M_Scene::Start()
 {
-	FileSystem::LoadDroppedFile("Assets/skybox.fbx");
-	//FileSystem::LoadFile("Assets/skybox.fbx");
 	GameObject* cam = CreateGameObject("Main Camera", root);
 	C_Camera* c_comp = dynamic_cast<C_Camera*>(cam->AddComponent(Component::Type::Camera));
 	SetGameCamera(c_comp);
 
-	//LoadScene("Library/Scenes/scene.json");
+	LoadScene("Library/Scenes/Scene1.des");
 
 	return true;
 }
@@ -209,6 +207,44 @@ void M_Scene::LoadScene(const char* name)
 	root = CreateGameObject(json_object_get_string(goJsonObj, "name"), nullptr, json_object_get_number(goJsonObj, "UID"));
 
 	GameObject* parent = root;
+	for (size_t i = 1; i < json_array_get_count(sceneGO); i++)
+	{
+		goJsonObj = json_array_get_object(sceneGO, i);
+		GameObject* originalParent = parent;
+
+		while (parent != nullptr && json_object_get_number(goJsonObj, "ParentUID") != parent->UID)
+			parent = parent->parent;
+
+		if (parent == nullptr)
+			parent = originalParent;
+
+		parent = CreateGameObject(json_object_get_string(goJsonObj, "name"), parent, json_object_get_number(goJsonObj, "UID"));
+		parent->LoadFromJson(goJsonObj);
+
+	}
+
+	//Free memory
+	json_value_free(scene);
+}
+
+void M_Scene::LoadModelTree(const char* modelPath)
+{
+	JSON_Value* scene = json_parse_file(modelPath);
+
+	if (scene == NULL)
+		return;
+
+	//Clear all current scene memory
+	JSON_Object* sceneObj = json_value_get_object(scene);
+
+
+	JSON_Array* sceneGO = json_object_get_array(sceneObj, "Model Objects");
+
+	JSON_Object* goJsonObj = json_array_get_object(sceneGO, 0);
+	GameObject* mRoot = CreateGameObject(json_object_get_string(goJsonObj, "name"), root, json_object_get_number(goJsonObj, "UID"));
+	mRoot->LoadFromJson(goJsonObj);
+
+	GameObject* parent = mRoot;
 	for (size_t i = 1; i < json_array_get_count(sceneGO); i++)
 	{
 		goJsonObj = json_array_get_object(sceneGO, i);

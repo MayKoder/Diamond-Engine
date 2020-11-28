@@ -1,82 +1,5 @@
 {
-    "EditorCameraPosition": [
-        115.82488250732422,
-        69.1944580078125,
-        68.971733093261719
-    ],
-    "EditorCameraZ": [
-        -0.74852168560028076,
-        -0.54246014356613159,
-        -0.38138198852539063
-    ],
-    "EditorCameraY": [
-        -0.48333656787872314,
-        0.84008151292800903,
-        -0.24626980721950531
-    ],
-    "Game Objects": [
-        {
-            "name": "Scene root",
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 619965351,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                }
-            ]
-        },
-        {
-            "name": "Main Camera",
-            "Position": [
-                46.966365814208984,
-                26.339288711547852,
-                55.889919281005859
-            ],
-            "Rotation": [
-                0.04035235196352005,
-                -0.92981886863708496,
-                0.10728906095027924,
-                0.34971073269844055
-            ],
-            "Scale": [
-                1.0000122785568237,
-                1,
-                1.000012993812561
-            ],
-            "UID": 641000225,
-            "ParentUID": 619965351,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 4,
-                    "Active": true,
-                    "fType": 2,
-                    "nearPlaneDist": 1,
-                    "farPlaneDist": 300,
-                    "vFOV": 1.0471975803375244,
-                    "hFOV": 1.0416727066040039
-                }
-            ]
-        },
+    "Model Objects": [
         {
             "name": "Assets\/street\/scene.DAE",
             "Position": [
@@ -96,7 +19,7 @@
                 1
             ],
             "UID": 778105088,
-            "ParentUID": 619965351,
+            "ParentUID": 56766608,
             "Components": [
                 {
                     "Type": 1,
@@ -1427,46 +1350,6 @@
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/247856821.dds",
                     "UID": 247856821
-                }
-            ]
-        },
-        {
-            "name": "Assets\/skybox.fbx",
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                -0.7071068286895752,
-                0,
-                0,
-                0.70710670948028564
-            ],
-            "Scale": [
-                99.999992370605469,
-                99.999992370605469,
-                99.999992370605469
-            ],
-            "UID": 741564227,
-            "ParentUID": 619965351,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/602691700.mmh",
-                    "UID": 602691700
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "AssetPath": "",
-                    "LibraryPath": "Library\/Materials\/1976673753.dds",
-                    "UID": 1976673753
                 }
             ]
         }

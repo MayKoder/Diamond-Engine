@@ -121,56 +121,16 @@ void FileSystem::LoadDroppedFile(const char* globalPath)
 	}
 
 	//UPDATE ASSETS WINDOW WITH NEW FILE, JUST RECALCULATE ALL FOR NOW
-	EngineExternal->moduleResources->PopulateFileArray();
+	//TODO: Generate META FILE ASAP WHEN DROPPED
+	//EngineExternal->moduleResources->GenerateMeta();
+	std::string name = "";
+	GetFileName(fileNameAndExtension.c_str(), name, true);
 
-	//TODO: WE SHOULD MOVE THIS TO RESOURCE MANAGER
-	//char* buffer = nullptr;
-	//uint size = FileSystem::LoadToBuffer(fileNameAndExtension.c_str(), &buffer);
+	AssetDir nFile(name.c_str(), fileNameAndExtension.c_str(), EngineExternal->moduleFileSystem->GetLastModTime(fileNameAndExtension.c_str()), false);
+	nFile.GenerateMeta();
+	nFile.CreateLibraryFileRecursive();
 
-	//if (buffer != nullptr && size != 0) 
-	//{
-	//	switch (iType)
-	//	{
-
-	//		case ImportType::MESH: 
-	//		{
-	//			//MeshLoader::ImportFBXFromBuffer(normalizedPath.c_str(), buffer, size, EngineExternal->moduleScene->root);
-	//			MeshLoader::BufferToMeshes(normalizedPath.c_str(), buffer, size, EngineExternal->moduleScene->root);
-	//			break;
-	//		}
-
-	//		case ImportType::TEXTURE: 
-	//		{
-	//			int w = 0; int h = 0;
-	//			GLuint id = TextureImporter::CustomLoadImage(buffer, size, &w, &h);
-
-	//			std::string fileName;
-	//			GetFileName(fileNameAndExtension.c_str(), fileName, false);
-	//			TextureImporter::SaveDDS(buffer, size, fileName.c_str());
-
-	//			Texture* material = new Texture(id, w, h, fileNameAndExtension.substr(fileNameAndExtension.find_last_of('/') + 1), fileNameAndExtension);
-	//			EngineExternal->moduleRenderer3D->globalTextures.push_back(material);
-
-	//			if (EngineExternal->moduleEditor->GetSelectedGO()) 
-	//			{
-	//				C_Material* mat = dynamic_cast<C_Material*>(EngineExternal->moduleEditor->GetSelectedGO()->GetComponent(Component::Type::Material));
-	//				if (mat) 
-	//				{
-	//					mat->matTexture = material;
-	//				}
-	//				else {
-	//					C_Material* mat = dynamic_cast<C_Material*>(EngineExternal->moduleEditor->GetSelectedGO()->AddComponent(Component::Type::Material));
-	//					mat->matTexture = material;
-
-	//				}
-	//			}
-	//			break;
-	//		}
-
-	//	}
-	//	RELEASE_ARRAY(buffer);
-	//}
-
+	//EngineExternal->moduleResources->PopulateFileArray();
 }
 
 void FileSystem::CreateLibraryDirectories()

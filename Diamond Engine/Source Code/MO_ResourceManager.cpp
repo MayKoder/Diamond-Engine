@@ -15,8 +15,8 @@
 #include"DEJsonSupport.h"
 //#include"DEResource.h"
 
-M_ResourceManager::M_ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled), rootFile("Assets", "Assets", 0, true),
-fileCheckTime(0.f), fileUpdateDelay(2.f)
+M_ResourceManager::M_ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled), assetsRoot("Assets", "Assets", 0, true),
+fileCheckTime(0.f), fileUpdateDelay(2.f), meshesLibraryRoot("Meshes", "Library/Meshes", 0, true)
 {
 }
 
@@ -31,7 +31,7 @@ bool M_ResourceManager::Init()
 
 bool M_ResourceManager::Start()
 {
-	rootFile.lastModTime = App->moduleFileSystem->GetLastModTime(rootFile.importPath.c_str());
+	assetsRoot.lastModTime = App->moduleFileSystem->GetLastModTime(assetsRoot.importPath.c_str());
 	return true;
 }
 
@@ -40,8 +40,7 @@ update_status M_ResourceManager::PreUpdate(float dt)
 	fileCheckTime += dt;
 	if (fileCheckTime >= fileUpdateDelay) 
 	{
-		NeedsDirsUpdate(rootFile);
-		fileCheckTime = 0.f;
+		NeedsDirsUpdate(assetsRoot);
 	}
 
 
@@ -78,10 +77,10 @@ void M_ResourceManager::PopulateFileArray()
 	prof.Start();
 
 	//Dirs returns directories inside the folder so we should use some kind of recursive get until dirs is empty
-	rootFile.ClearData();
+	assetsRoot.ClearData();
 
-	rootFile = AssetDir("Assets", "Assets", App->moduleFileSystem->GetLastModTime("Assets"),true);
-	App->moduleFileSystem->GetAllFilesRecursive(rootFile);
+	assetsRoot = AssetDir("Assets", "Assets", App->moduleFileSystem->GetLastModTime("Assets"),true);
+	App->moduleFileSystem->GetAllFilesRecursive(assetsRoot);
 
 	LOG(LogType::L_WARNING, "Took %f seconds to calculate assets", ((float)prof.Read() / 1000.f));
 }
@@ -136,16 +135,29 @@ void M_ResourceManager::NeedsDirsUpdate(AssetDir& dir)
 
 			App->moduleFileSystem->GetAllFilesRecursive(dir);
 
+			for (size_t i = 0; i < dir.childDirs.size(); i++)
+			{
+				if (!dir.childDirs[i].HasMeta()) 
+				{
+					AssetDir& modFile = dir.childDirs[i];
+					modFile.GenerateMeta();
+					if(!this->ExistsOnLibrary(modFile.importPath.c_str()))
+						this->ImportFile(modFile.importPath.c_str(), this->GetMetaType(modFile.metaFileDir.c_str()));
+					LOG(LogType::L_NORMAL, "Meta generated");
+				}
+			}
+
 		}
 
 		//TODO: Then find modified files and create o recalulate .meta and library files
 		//SUPER IMPOIRTANT TODO DONT FFORGET, REGENERATE LIBRARY FILE BUT NEVER MODIFY META FILE
 		//Check if this works
-		if (!dir.isDir) {
+		if (!dir.isDir) 
+		{
 			LOG(LogType::L_WARNING, "File %s was modified, reimporting", dir.dirName.c_str());
-			this->ImportFile(dir.importPath.c_str(), this->GetMetaType(dir.metaFileDir.c_str()));
 		}
 	}
+	fileCheckTime = 0.f;
 }
 
 //Returns a resource* if the resource is loaded or creates a new resource from the library file
@@ -295,7 +307,7 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid,
 	{
 		resources[uid] = ret;
 		ret->SetAssetsPath(assetsFile);
-		ret->SetLibraryPath(GenLibraryPath(ret->GetUID(), ret->GetType()).c_str());
+		ret->SetLibraryPath(GenLibraryPath(ret->GetUID(), type).c_str());
 		ret->IncreaseReferenceCount();
 	}
 
@@ -352,7 +364,7 @@ std::string M_ResourceManager::GenLibraryPath(uint _uid, Resource::Type _type)
 	{
 		case Resource::Type::TEXTURE: ret = MATERIALS_PATH; ret += nameNoExt; ret += ".dds"; break;
 		case Resource::Type::MODEL: ret = MODELS_PATH; ret += nameNoExt; ret += ".model"; break;
-		case Resource::Type::MESH: ret = MODELS_PATH; ret += nameNoExt; ret += ".mmh"; break;
+		case Resource::Type::MESH: ret = MESHES_PATH; ret += nameNoExt; ret += ".mmh"; break;
 		case Resource::Type::SCENE : ret = SCENES_PATH; ret += nameNoExt; ret += ".des"; break;
 	}
 

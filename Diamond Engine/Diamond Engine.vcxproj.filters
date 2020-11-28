@@ -479,7 +479,10 @@
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\AssetDir.h">
-      <Filter>Sources\Containers</Filter>
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DEModelNode.h">
+      <Filter>Sources\Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -742,7 +745,7 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\AssetDir.cpp">
-      <Filter>Sources\Containers</Filter>
+      <Filter>Sources\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
