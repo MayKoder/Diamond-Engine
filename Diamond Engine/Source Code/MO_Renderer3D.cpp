@@ -254,6 +254,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	if (gameCamera != nullptr) 
 	{
 		gameCamera->StartDraw();
+
+		for (uint i = 0; i < MAX_LIGHTS; ++i)
+			lights[i].Render();
+
 		p.Render();
 		if (!renderQueue.empty())
 		{

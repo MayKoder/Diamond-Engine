@@ -53,6 +53,7 @@ bool M_FileSystem::Start()
 	ImportAssetsToLibrary();
 
 	//TODO: Should be updated kinda like assetsRoot;
+	//TODO: Add Library/ to gitignore?
 	GetAllFilesRecursive(App->moduleResources->meshesLibraryRoot);
 
 	return true;

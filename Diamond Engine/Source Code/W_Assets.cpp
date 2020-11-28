@@ -57,8 +57,10 @@ void W_Assets::DrawFileTree(AssetDir& file)
 		{
 			if (EngineExternal->moduleResources->GetTypeFromAssetExtension(file.importPath.c_str()) == Resource::Type::MODEL)
 				ImGui::SetDragDropPayload("_MODEL", &file.metaFileDir, file.metaFileDir.length());
-			else
+			else if (EngineExternal->moduleResources->GetTypeFromAssetExtension(file.importPath.c_str()) == Resource::Type::TEXTURE)
 				ImGui::SetDragDropPayload("_TEXTURE", &file.metaFileDir, file.metaFileDir.length());
+			else if (EngineExternal->moduleResources->GetTypeFromLibraryExtension(file.importPath.c_str()) == Resource::Type::MESH)
+				ImGui::SetDragDropPayload("_MESH", &file.metaFileDir, file.metaFileDir.length());
 
 
 			ImGui::Text("Import asset: %s", file.metaFileDir.c_str());

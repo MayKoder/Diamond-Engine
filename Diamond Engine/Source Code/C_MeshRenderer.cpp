@@ -26,8 +26,11 @@ faceNormals(false), vertexNormals(false), showAABB(false), showOBB(false)
 
 C_MeshRenderer::~C_MeshRenderer()
 {
-	EngineExternal->moduleResources->UnloadResource(_mesh->GetUID());
-	_mesh = nullptr;
+	if (_mesh != nullptr) 
+	{
+		EngineExternal->moduleResources->UnloadResource(_mesh->GetUID());
+		_mesh = nullptr;
+	}
 }
 
 void C_MeshRenderer::Update()
@@ -53,6 +56,9 @@ void C_MeshRenderer::Update()
 
 void C_MeshRenderer::RenderMesh()
 {
+	if (_mesh == nullptr)
+		return;
+
 
 	//Position matrix?
 	//BUG: Mesh rendering will crash if you dont fix the resource manager for meshes
@@ -107,17 +113,37 @@ bool C_MeshRenderer::OnEditor()
 	if (Component::OnEditor() == true)
 	{
 		ImGui::Separator();
-		//ImGui::Image((ImTextureID)_mesh->textureID, ImVec2(128, 128));
-		ImGui::Text("Vertices: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->vertices_count);
-		ImGui::Text("Normals: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->normals_count);
-		ImGui::Text("Indices: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->indices_count);
-		ImGui::Text("Texture coords: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->texCoords_count);
 
-		ImGui::Spacing();
-		ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _mesh->GetLibraryPath());
+		if (_mesh != nullptr) 
+		{
+			//ImGui::Image((ImTextureID)_mesh->textureID, ImVec2(128, 128));
+			ImGui::Text("Vertices: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->vertices_count);
+			ImGui::Text("Normals: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->normals_count);
+			ImGui::Text("Indices: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->indices_count);
+			ImGui::Text("Texture coords: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->texCoords_count);
 
-		if (ImGui::Button("Select Mesh")) {
+			ImGui::Spacing();
+			ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _mesh->GetLibraryPath());
+		}
 
+		ImGui::Button("Drop Mesh to change");
+		//TODO: Maybe move this into a function?
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_MESH"))
+			{
+				std::string* libraryDrop = (std::string*)payload->Data;
+
+				if (_mesh != nullptr) {
+					EngineExternal->moduleResources->UnloadResource(_mesh->GetUID());
+					_mesh = nullptr;
+				}
+
+				//TODO: Almost done come on
+				//_mesh = dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(/*Get ID from library name?*/, libraryDrop.c_str()));
+				LOG(LogType::L_WARNING, "Mesh %s changed", (*libraryDrop).c_str());
+			}
+			ImGui::EndDragDropTarget();
 		}
 
 		ImGui::Checkbox("Vertex Normals", &vertexNormals);
