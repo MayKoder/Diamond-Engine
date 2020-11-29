@@ -68,6 +68,7 @@ Engine v0.2
  - Components can be added from the inspector display with the "Add component" drop-down.
  - Resource manager process can be visualized on the console and the "Loaded resources" tab. 
  - Library folder can be removed and the code will regenerate all the data with the same Id's to keep saved scenes valid. 
+ - Each mesh component controls it's AABB and OBB display. 
  - **Innovation:** You can now delete assets from the asset window and the library and meta files will be deleted as well. 
  - **Innovation:** Multiple scene display, enjoy the views from the game camera and move it around. No debug info will be displayed on the game camera and you can render the editor and the game camera at the same time. 
  
