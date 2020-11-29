@@ -5,6 +5,7 @@
 
 class GameObject;
 
+#define MAX_NAME_SIZE 50
 class W_Inspector : public Window
 {
 
@@ -15,7 +16,7 @@ public:
 	void Draw() override;
 
 	GameObject* selectedGO;
-
+	char inputName[MAX_NAME_SIZE];
 
 };
 

@@ -72,14 +72,23 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 			}
 		}
 
-		//Load all meshes into mesh vector
+		//Load mesh uid from meta file
+		std::vector<uint> uids;
+		if (FileSystem::Exists(EngineExternal->moduleResources->GetMetaPath(res->GetAssetPath()).c_str()))
+			GetMeshesFromMeta(res->GetAssetPath(), uids);
+
+
 		if (scene->HasMeshes())
 		{
 			for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 			{
-				meshesOnModelUIDs.push_back(MeshLoader::LoadMesh(scene->mMeshes[i]));
+				if(uids.size() != 0)
+					meshesOnModelUIDs.push_back(MeshLoader::LoadMesh(scene->mMeshes[i], uids[i]));
+				else
+					meshesOnModelUIDs.push_back(MeshLoader::LoadMesh(scene->mMeshes[i]));
 			}
 		}
+		SaveMeshesToMeta(res->GetAssetPath(), meshesOnModelUIDs);
 
 		//Save custom format model
 		GameObject* root = new GameObject("First model GO", nullptr);
@@ -88,11 +97,14 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 		FileSystem::GetFileName(res->GetAssetPath(), name, false);
 
 		MeshLoader::NodeToGameObject(scene->mMeshes, texturesOnModelUIDs, meshesOnModelUIDs, scene->mRootNode, root, name.c_str());
-		ModelImporter::SaveModelCustom(root->children[0], res->GetLibraryPath());
+		
+		SaveModelCustom(root->children[0], res->GetLibraryPath());
 		delete root;
+
 
 		meshesOnModelUIDs.clear();
 		texturesOnModelUIDs.clear();
+		uids.clear();
 
 		aiReleaseImport(scene);
 
@@ -151,4 +163,48 @@ void ModelImporter::LoadModelCustom(const char* nameWithExtension)
 	
 	//Free memory
 	json_value_free(scene);
+}
+
+void ModelImporter::SaveMeshesToMeta(const char* assetFile, std::vector<ResourceMesh*>& meshes)
+{
+	JSON_Value* metaFile = json_parse_file(EngineExternal->moduleResources->GetMetaPath(assetFile).c_str());
+
+	if (metaFile == NULL)
+		return;
+
+	JSON_Object* sceneObj = json_value_get_object(metaFile);
+
+	JSON_Value* arrayVal = json_value_init_array();
+	JSON_Array* meshArray = json_value_get_array(arrayVal);
+
+	for (size_t i = 0; i < meshes.size(); i++)
+	{
+		json_array_append_number(meshArray, meshes[i]->GetUID());
+	}
+	json_object_set_value(sceneObj, "Meshes Inside", arrayVal);
+
+	json_serialize_to_file_pretty(metaFile, EngineExternal->moduleResources->GetMetaPath(assetFile).c_str());
+
+	//Free memory
+	json_value_free(metaFile);
+}
+
+void ModelImporter::GetMeshesFromMeta(const char* assetFile, std::vector<uint>& uids)
+{
+	JSON_Value* metaFile = json_parse_file(EngineExternal->moduleResources->GetMetaPath(assetFile).c_str());
+
+	if (metaFile == NULL)
+		return;
+
+	JSON_Object* sceneObj = json_value_get_object(metaFile);
+
+	JSON_Array* meshArray = json_object_get_array(sceneObj, "Meshes Inside");
+
+	for (size_t i = 0; i < json_array_get_count(meshArray); i++)
+	{
+		uids.push_back(json_array_get_number(meshArray, i));
+	}
+
+	//Free memory
+	json_value_free(metaFile);
 }

@@ -7,6 +7,7 @@
 #include "MO_Editor.h"
 #include "MO_Camera3D.h"
 #include "MO_Scene.h"
+#include "MO_ResourceManager.h"
 
 #include "WI_Inspector.h"
 #include "WI_Hierarchy.h"
@@ -42,7 +43,7 @@ bool M_Scene::Start()
 	C_Camera* c_comp = dynamic_cast<C_Camera*>(cam->AddComponent(Component::Type::Camera));
 	SetGameCamera(c_comp);
 
-	LoadScene("Library/Scenes/Scene1.des");
+	LoadScene(App->moduleResources->LibraryFromMeta(App->moduleResources->GetMetaPath("Assets/Scene1.des").c_str()).c_str());
 
 	return true;
 }
@@ -166,10 +167,7 @@ void M_Scene::SaveScene(const char* name)
 	json_object_set_value(root_object.nObj, "Game Objects", goArray);
 
 	//Save file 
-	std::string dir = SCENES_PATH;
-	dir += name;
-	json_serialize_to_file_pretty(file, dir.c_str());
-	dir.clear();
+	json_serialize_to_file_pretty(file, name);
 
 	//Free memory
 	json_value_free(file);

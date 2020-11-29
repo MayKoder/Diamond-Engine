@@ -30,8 +30,15 @@ void W_Inspector::Draw()
 
 			ImGui::SameLine();
 			
-			char* inputName = &selectedGO->name[0];
-			ImGui::InputText("##Name", inputName, selectedGO->name.size() + 1, ImGuiInputTextFlags_ReadOnly); ImGui::SameLine();
+			strcpy(inputName, selectedGO->name.c_str());
+			if (ImGui::InputText("##Name", &inputName[0], sizeof(inputName)) )
+			{
+				if(inputName[0] != '\0')
+					selectedGO->name = inputName;
+			}
+			ImGui::SameLine();
+
+
 			ImGui::Checkbox("Static", &selectedGO->isStatic);
 
 			ImGui::Text("Tag"); ImGui::SameLine();

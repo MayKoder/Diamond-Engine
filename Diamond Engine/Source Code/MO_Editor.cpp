@@ -200,12 +200,12 @@ void M_Editor::DrawMenuBar()
 			}
 			if (ImGui::MenuItem("Save scene", "CTRL+S"))
 			{
-				App->moduleScene->SaveScene("Scene1.des");
+				App->moduleScene->SaveScene("Assets/Scene1.des");
 			}
 			if (ImGui::MenuItem("Load scene"))
 			{
 				//TODO: How can we do this? we can't hardcode it
-				App->moduleScene->LoadScene("Library/Scenes/Scene1.des");
+				App->moduleScene->LoadScene(App->moduleResources->LibraryFromMeta("Assets/Scene1.des.meta").c_str());
 			}
 			if (ImGui::MenuItem("Quit", "Esc"))
 			{
@@ -376,13 +376,14 @@ void M_Editor::DrawTopBar()
 			{
 				if (DETime::state == GameState::STOP) 
 				{
-					App->moduleScene->SaveScene("tmp.des");
+					App->moduleScene->SaveScene("Library/Scenes/tmp.des");
 					DETime::Play();
 				}
 				else
 				{
 					DETime::Stop();
 					App->moduleScene->LoadScene("Library/Scenes/tmp.des");
+					App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code, mmove to method
 				}
 			}
 			ImGui::SameLine();
@@ -394,6 +395,7 @@ void M_Editor::DrawTopBar()
 				{
 					DETime::Stop();
 					App->moduleScene->LoadScene("Library/Scenes/tmp.des");
+					App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des");
 				}
 			}
 			ImGui::SameLine();

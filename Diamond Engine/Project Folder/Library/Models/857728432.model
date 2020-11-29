@@ -1,25 +1,25 @@
 {
     "Model Objects": [
         {
-            "name": "Cylinder",
+            "name": "Monkey",
             "Position": [
                 0,
                 0,
                 0
             ],
             "Rotation": [
+                -0.7071068286895752,
                 0,
                 0,
-                0,
-                1
+                0.70710670948028564
             ],
             "Scale": [
                 1,
                 1,
                 1
             ],
-            "UID": 1793545662,
-            "ParentUID": 233124021,
+            "UID": 2062582022,
+            "ParentUID": 858424685,
             "Components": [
                 {
                     "Type": 1,
@@ -28,8 +28,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/146858028.mmh",
-                    "UID": 146858028
+                    "Path": "Library\/Meshes\/1361253439.mmh",
+                    "UID": 1361253439
                 }
             ]
         }

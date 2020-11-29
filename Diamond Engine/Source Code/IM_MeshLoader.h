@@ -8,6 +8,7 @@ class aiNode;
 class aiMesh;
 class GameObject;
 class ResourceTexture;
+typedef unsigned int uint;
 
 //Change this to file system
 namespace MeshLoader
@@ -17,10 +18,10 @@ namespace MeshLoader
 
 	void logCallback(const char* message, char* user);
 
-	void BufferToMeshes(const char* full_path, char* buffer, int size, GameObject* gmRoot);
+	//void BufferToMeshes(const char* full_path, char* buffer, int size, GameObject* gmRoot);
 
 	void NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTexture*>& sceneTextures, std::vector<ResourceMesh*>& _sceneMeshes, aiNode* node, GameObject* gmParent, const char* holderName);
-	ResourceMesh* LoadMesh(aiMesh* importedMesh);
+	ResourceMesh* LoadMesh(aiMesh* importedMesh, uint oldUID = 0);
 
 	void PopulateTransform(GameObject* child, float3 position, Quat rotationQuat, float3 size);
 

@@ -1,25 +1,25 @@
 {
     "Model Objects": [
         {
-            "name": "Pyramid",
+            "name": "Icosphere",
             "Position": [
                 0,
                 0,
                 0
             ],
             "Rotation": [
+                -0.7071068286895752,
                 0,
                 0,
-                0,
-                1
+                0.70710670948028564
             ],
             "Scale": [
                 1,
                 1,
                 1
             ],
-            "UID": 744153255,
-            "ParentUID": 962107792,
+            "UID": 1936452138,
+            "ParentUID": 1093248472,
             "Components": [
                 {
                     "Type": 1,
@@ -28,8 +28,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1996447820.mmh",
-                    "UID": 1996447820
+                    "Path": "Library\/Meshes\/514132551.mmh",
+                    "UID": 514132551
                 }
             ]
         }

@@ -1,25 +1,25 @@
 {
     "Model Objects": [
         {
-            "name": "Icosphere",
+            "name": "Torus",
             "Position": [
                 0,
                 0,
                 0
             ],
             "Rotation": [
-                -0.7071068286895752,
                 0,
                 0,
-                0.70710670948028564
+                0,
+                1
             ],
             "Scale": [
                 1,
                 1,
                 1
             ],
-            "UID": 127539600,
-            "ParentUID": 40440077,
+            "UID": 757576880,
+            "ParentUID": 417841902,
             "Components": [
                 {
                     "Type": 1,
@@ -28,8 +28,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/858395640.mmh",
-                    "UID": 858395640
+                    "Path": "Library\/Meshes\/2118360703.mmh",
+                    "UID": 2118360703
                 }
             ]
         }

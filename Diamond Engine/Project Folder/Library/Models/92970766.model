@@ -1,7 +1,7 @@
 {
     "Model Objects": [
         {
-            "name": "Plane",
+            "name": "Cylinder",
             "Position": [
                 0,
                 0,
@@ -18,8 +18,8 @@
                 1,
                 1
             ],
-            "UID": 1732611610,
-            "ParentUID": 1087662537,
+            "UID": 38572382,
+            "ParentUID": 1219378666,
             "Components": [
                 {
                     "Type": 1,
@@ -28,8 +28,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/801470178.mmh",
-                    "UID": 801470178
+                    "Path": "Library\/Meshes\/1379317828.mmh",
+                    "UID": 1379317828
                 }
             ]
         }

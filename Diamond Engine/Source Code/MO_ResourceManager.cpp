@@ -8,6 +8,8 @@
 #include"IM_MeshLoader.h"
 #include"IM_ModelImporter.h"
 
+#include"MO_Scene.h"
+
 #include"Globals.h"
 
 #include"RE_Texture.h"
@@ -244,7 +246,7 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 		case Resource::Type::TEXTURE: TextureImporter::Import(fileBuffer, size, resource); break;
 		case Resource::Type::MODEL: ModelImporter::Import(fileBuffer, size, resource); break;
 		//case Resource::Type::MESH: MeshLoader::BufferToMeshes(fileBuffer, size, resource); break;
-		//case Resource::Type::SCENE: App->scene->Import(fileBuffer, resource); break;
+		case Resource::Type::SCENE: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 	}
 
 	//Save the resource to custom format
@@ -300,10 +302,10 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid,
 	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 4, "Update all switches with new type");
 	switch (type) 
 	{
+		case Resource::Type::SCENE : ret = new Resource(uid, Resource::Type::SCENE); break;
 		case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
 		case Resource::Type::MODEL: ret = new Resource(uid, Resource::Type::MODEL); break;
 		case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
-		//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
 	}
 
 	if (ret != nullptr)
@@ -398,6 +400,10 @@ Resource::Type M_ResourceManager::GetMetaType(const char* metaFile)
 std::string M_ResourceManager::LibraryFromMeta(const char* metaFile)
 {
 	JSON_Value* metaJSON = json_parse_file(metaFile);
+
+	if (metaJSON == nullptr)
+		return "";
+
 	DEConfig rObj(json_value_get_object(metaJSON));
 
 	std::string libPath = rObj.ReadString("Library Path");
@@ -463,6 +469,8 @@ Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFil
 		return Resource::Type::MODEL;
 	if (ext == "tga" || ext == "png" || ext == "jpg" || ext == "dds")
 		return Resource::Type::TEXTURE;
+	if (ext == "des")
+		return Resource::Type::SCENE;
 
 
 	return Resource::Type::UNKNOWN;

@@ -18,8 +18,8 @@
                 1,
                 1
             ],
-            "UID": 1644732135,
-            "ParentUID": 250055977,
+            "UID": 1867107098,
+            "ParentUID": 715361175,
             "Components": [
                 {
                     "Type": 1,
@@ -45,8 +45,8 @@
                 1,
                 1
             ],
-            "UID": 1920429148,
-            "ParentUID": 1644732135,
+            "UID": 530633301,
+            "ParentUID": 1867107098,
             "Components": [
                 {
                     "Type": 1,
@@ -55,15 +55,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1121179572.mmh",
-                    "UID": 1121179572
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "AssetPath": "",
-                    "LibraryPath": "Library\/Materials\/760396950.dds",
-                    "UID": 760396950
+                    "Path": "Library\/Meshes\/588616219.mmh",
+                    "UID": 588616219
                 }
             ]
         },
@@ -85,8 +78,8 @@
                 1,
                 1
             ],
-            "UID": 2013334335,
-            "ParentUID": 1644732135,
+            "UID": 59869580,
+            "ParentUID": 1867107098,
             "Components": [
                 {
                     "Type": 1,
@@ -95,15 +88,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/907381056.mmh",
-                    "UID": 907381056
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "AssetPath": "",
-                    "LibraryPath": "Library\/Materials\/760396950.dds",
-                    "UID": 760396950
+                    "Path": "Library\/Meshes\/1766830945.mmh",
+                    "UID": 1766830945
                 }
             ]
         }

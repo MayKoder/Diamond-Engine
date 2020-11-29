@@ -18,8 +18,8 @@
                 1,
                 1
             ],
-            "UID": 1247110185,
-            "ParentUID": 2138710637,
+            "UID": 1420784873,
+            "ParentUID": 2061754000,
             "Components": [
                 {
                     "Type": 1,
@@ -28,8 +28,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1944613698.mmh",
-                    "UID": 1944613698
+                    "Path": "Library\/Meshes\/796231171.mmh",
+                    "UID": 796231171
                 }
             ]
         }
