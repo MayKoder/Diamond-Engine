@@ -3,6 +3,7 @@
 #include"IM_FileSystem.h"
 #include"MO_ResourceManager.h"
 #include"MO_Input.h"
+#include"MO_Editor.h"
 
 W_Assets::W_Assets() : Window(), selectedFile(nullptr)
 {
@@ -20,7 +21,10 @@ void W_Assets::Draw()
 		DrawFileTree(EngineExternal->moduleResources->assetsRoot);
 		DrawFileTree(EngineExternal->moduleResources->meshesLibraryRoot);
 
-		if (selectedFile != nullptr && ImGui::IsWindowHovered() && EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) {
+		if (selectedFile != nullptr && ImGui::IsWindowHovered() && EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) 
+		{
+			EngineExternal->moduleEditor->SetSelectedGO(nullptr);
+
 			selectedFile->DeletePermanent();
 			selectedFile = nullptr;
 			EngineExternal->moduleResources->NeedsDirsUpdate(EngineExternal->moduleResources->assetsRoot);
@@ -47,9 +51,10 @@ void W_Assets::DrawFileTree(AssetDir& file)
 	//	flags |= ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_Selected;
 	bool nodeOpen = ImGui::TreeNodeEx(&file, flags, file.dirName.c_str());
 
-	if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(0)) {
+	if (ImGui::IsItemClicked()) {
 		selectedFile = &file;
 	}
+
 
 	if (!file.isDir) 
 	{

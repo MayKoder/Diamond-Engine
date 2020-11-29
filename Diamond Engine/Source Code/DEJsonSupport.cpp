@@ -152,7 +152,7 @@ JSON_Array* DEConfig::ReadArray(const char* name)
 
 JSON_Object* DEConfig::ReadObject(const char* name)
 {
-	return json_object_get_object(nObj, "name");
+	return json_object_get_object(nObj, name);
 }
 
 JSON_Value* DEConfig::ReadValue(const char* name)

@@ -35,6 +35,7 @@ public:
 	std::vector<GameObject*> destroyList;
 
 	void SetGameCamera(C_Camera* cam);
+	void CreateGameCamera(const char* name);
 
 	void OnGUI() override;
 

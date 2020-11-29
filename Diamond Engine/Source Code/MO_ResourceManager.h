@@ -61,6 +61,7 @@ private:
 	void ReleaseResource(int uid);
 
 	bool IsResourceLoaded(int uid);
+	void UpdateFile(AssetDir& modDir);
 
 
 private:

@@ -178,7 +178,8 @@ bool C_MeshRenderer::IsInsideFrustum(Frustum* camFrustum)
 		for (size_t k = 0; k < 8; k++)
 		{
 			//Is "IsOnPositiveSide" slow?
-			if (frustumPlanes[i].IsOnPositiveSide(obbPoints[k])) {
+			if (frustumPlanes[i].IsOnPositiveSide(obbPoints[k])) 
+			{
 				iPtIn = 0;
 				--inCount;
 			}

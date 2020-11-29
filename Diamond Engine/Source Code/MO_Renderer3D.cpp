@@ -462,19 +462,21 @@ void ModuleRenderer3D::RayToMeshQueueIntersection(LineSegment& ray)
 			LineSegment local = ray;
 			local.Transform((*i).second->GetGO()->transform->globalTransform.Inverted());
 
-			for (uint index = 0; index < _mesh->indices_count; index += 3)
+			if (_mesh->vertices_count >= 9) //TODO: Had to do this to avoid squared meshes crash
 			{
-
-				float3 pA(&_mesh->vertices[_mesh->indices[index] * 3]);
-				float3 pB(&_mesh->vertices[_mesh->indices[index + 1] * 3]);
-				float3 pC(&_mesh->vertices[_mesh->indices[index + 2] * 3]);
-
-				Triangle triangle(pA, pB, pC);
-
-				float dist = 0;
-				if (local.Intersects(triangle, &dist, nullptr))
+				for (uint index = 0; index < _mesh->indices_count; index += 3)
 				{
-					distMap[dist] = (*i).second;
+					float3 pA(&_mesh->vertices[_mesh->indices[index] * 3]);
+					float3 pB(&_mesh->vertices[_mesh->indices[index + 1] * 3]);
+					float3 pC(&_mesh->vertices[_mesh->indices[index + 2] * 3]);
+
+					Triangle triangle(pA, pB, pC);
+
+					float dist = 0;
+					if (local.Intersects(triangle, &dist, nullptr))
+					{
+						distMap[dist] = (*i).second;
+					}
 				}
 			}
 		}

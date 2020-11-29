@@ -7,6 +7,7 @@
 #include "Application.h"
 #include "WI_Inspector.h"
 #include "MO_Input.h"
+#include"AssetDir.h"
 
 W_Hierarchy::W_Hierarchy(M_Scene* _scene) : Window(), cSceneReference(_scene), dropTarget(nullptr)
 {
@@ -93,6 +94,8 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 		if (ImGui::IsItemClicked())
 		{
 			EngineExternal->moduleEditor->SetSelectedGO(node);
+			if (EngineExternal->moduleEditor->GetSelectedAsset() != nullptr)
+				EngineExternal->moduleEditor->SetSelectedAsset(nullptr);
 		}
 	}
 

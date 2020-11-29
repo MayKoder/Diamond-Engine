@@ -34,7 +34,7 @@ bool C_Material::OnEditor()
 			ImGui::Text("Texture Width: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", matTexture->tWidth);
 			ImGui::Text("Texture Height: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", matTexture->tHeight);
 			
-			ImGui::Image((ImTextureID)matTexture->textureID, ImVec2(128, 128));
+			ImGui::Image((ImTextureID)matTexture->textureID, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
 			if (ImGui::BeginDragDropTarget())
 			{
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
@@ -42,8 +42,6 @@ bool C_Material::OnEditor()
 					//Drop asset from Asset window to scene window
 					std::string* metaFileDrop = (std::string*)payload->Data;
 
-					//TODO: This is working only with textures now
-					//EngineExternal->moduleResources->AssetsToScene(name);
 					EngineExternal->moduleResources->UnloadResource(matTexture->GetUID());
 					std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
 					
@@ -94,7 +92,8 @@ void C_Material::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
 
-	if (matTexture) 
+	DEJson::WriteBool(nObj, "IsEmpty", (matTexture == nullptr) ? true : false);
+	if (matTexture != nullptr) 
 	{
 		DEJson::WriteString(nObj, "AssetPath", matTexture->GetAssetPath());
 		DEJson::WriteString(nObj, "LibraryPath", matTexture->GetLibraryPath());
@@ -106,31 +105,22 @@ void C_Material::SaveData(JSON_Object* nObj)
 void C_Material::LoadData(JSON_Object* nObj)
 {
 	Component::LoadData(nObj);
+	DEConfig jsObj(nObj);
 	//There is no _mesh yet lol
+
+	if (jsObj.ReadBool("IsEmpty") == true)
+		return;
+
 
 	int w, h;
 	w = h = 0;
-	std::string texPath = json_object_get_string(nObj, "AssetPath");
-	std::string texName = json_object_get_string(nObj, "LibraryPath");
+	std::string texPath = jsObj.ReadString("AssetPath");
+	std::string texName = jsObj.ReadString("LibraryPath");
 
 	if (texName == "" && texPath == "") {
 		LOG(LogType::L_WARNING, "Empty");
 		return;
 	}
 
-	DEConfig jsObj(nObj);
-
 	matTexture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(jsObj.ReadInt("UID"), texName.c_str()));
-	//matTexture->LoadToMemory();
-
-	//char* buffer = nullptr;
-	//int size = FileSystem::LoadToBuffer(texPath.c_str(), &buffer);
-	//GLuint id = TextureImporter::CustomLoadImage(buffer, size, &w, &h);
-
-	//TODO: Request resource
-	//matTexture = new ResourceTexture(id, w, h, texName, texPath);
-
-
-	//EngineExternal->moduleRenderer3D->globalTextures.push_back(matTexture);
-	//RELEASE_ARRAY(buffer);
 }

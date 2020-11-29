@@ -18,8 +18,8 @@
                 99.999992370605469,
                 99.999992370605469
             ],
-            "UID": 1310576208,
-            "ParentUID": 1061592160,
+            "UID": 1355125771,
+            "ParentUID": 2008483149,
             "Components": [
                 {
                     "Type": 1,
@@ -34,6 +34,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1768910240.dds",
                     "UID": 1768910240

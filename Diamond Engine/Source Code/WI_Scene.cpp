@@ -149,6 +149,7 @@ void W_Scene::Draw()
 				//ImGui::SetCursorPos(ImVec2(100, 30));
 				//ImGui::Text("%f, %f", normal.x, normal.y);
 				App->moduleRenderer3D->RayToMeshQueueIntersection(picking);
+				App->moduleEditor->SetSelectedAsset(nullptr);
 			}
 		}
 

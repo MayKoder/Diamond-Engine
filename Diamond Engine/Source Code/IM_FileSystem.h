@@ -31,16 +31,13 @@ namespace FileSystem
 	void FSInit();
 	void FSDeInit();
 
-	void CreateLibraryDirectories();
+	void CreateLibraryFolders();
 
 	// Utility functions
 	bool AddPath(const char* path_or_zip);
 	bool Exists(const char* file) /*const*/;
 	bool CreateDir(const char* dir);
 	bool IsDirectory(const char* file) /*const*/;
-
-	//void GetRealDir(const char* path, std::string& output);
-	//std::string GetPathRelativeToAssets(const char* originalPath) /*const*/;
 
 	std::string NormalizePath(const char* path) /*const*/;
 	void SplitFilePath(const char* full_path, std::string* path, std::string* file = nullptr, std::string* extension = nullptr) /*const*/;
@@ -52,6 +49,4 @@ namespace FileSystem
 	uint Save(const char* file, char* buffer, uint size, bool append);
 	void GetFileName(const char* file, std::string& fileName, bool extension);
 	uint Copy(const char* file, const char* dir, std::string& outputFile);
-
-	bool Remove(const char* file);
 }

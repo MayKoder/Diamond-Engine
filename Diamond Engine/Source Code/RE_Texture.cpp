@@ -20,7 +20,7 @@ ResourceTexture::~ResourceTexture()
 
 bool ResourceTexture::LoadToMemory()
 {
-	LOG(LogType::L_WARNING, "Mesh loaded to memory");
+	LOG(LogType::L_WARNING, "Texture loaded to memory");
 	char* buffer = nullptr;
 	int size = FileSystem::LoadToBuffer(GetLibraryPath(), &buffer);
 

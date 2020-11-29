@@ -140,13 +140,17 @@ void M_ResourceManager::NeedsDirsUpdate(AssetDir& dir)
 
 			for (size_t i = 0; i < dir.childDirs.size(); i++)
 			{
+				AssetDir& modFile = dir.childDirs[i];
 				if (!dir.childDirs[i].HasMeta()) 
 				{
-					AssetDir& modFile = dir.childDirs[i];
 					modFile.GenerateMeta();
 					if(!this->ExistsOnLibrary(modFile.importPath.c_str()))
 						this->ImportFile(modFile.importPath.c_str(), this->GetMetaType(modFile.metaFileDir.c_str()));
 					LOG(LogType::L_NORMAL, "Meta generated");
+				}
+				else if(modFile.lastModTime != App->moduleFileSystem->GetLastModTime(modFile.importPath.c_str()))
+				{
+					UpdateFile(dir);
 				}
 				//TODO IMPORTANT: If file is updated, update library but not meta
 			}
@@ -158,7 +162,7 @@ void M_ResourceManager::NeedsDirsUpdate(AssetDir& dir)
 		//Check if this works
 		if (!dir.isDir) 
 		{
-			LOG(LogType::L_WARNING, "File %s was modified, reimporting", dir.dirName.c_str());
+			UpdateFile(dir);
 		}
 	}
 	fileCheckTime = 0.f;
@@ -453,6 +457,13 @@ bool M_ResourceManager::IsResourceLoaded(int uid)
 		return true;
 
 	return false;
+}
+
+void M_ResourceManager::UpdateFile(AssetDir& modDir)
+{
+	LOG(LogType::L_WARNING, "File %s was modified, reimporting", modDir.dirName.c_str());
+	ImportFile(modDir.importPath.c_str(), App->moduleResources->GetMetaType(modDir.metaFileDir.c_str()));
+	modDir.lastModTime = App->moduleFileSystem->GetLastModTime(modDir.importPath.c_str());
 }
 
 Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFile)

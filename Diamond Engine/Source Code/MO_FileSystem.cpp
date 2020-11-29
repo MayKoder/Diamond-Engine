@@ -119,6 +119,9 @@ uint64 M_FileSystem::GetLastModTime(const char* filename)
 
 int M_FileSystem::DeleteAssetFile(const char* fileDir)
 {
+	if (fileDir == nullptr)
+		return 0;
+
 	return PHYSFS_delete(fileDir);
 }
 

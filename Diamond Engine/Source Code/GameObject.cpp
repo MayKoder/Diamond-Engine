@@ -238,10 +238,6 @@ void GameObject::ChangeParent(GameObject* newParent)
 
 bool GameObject::IsChild(GameObject* _toFind)
 {
-	//_toFind is the node we are dropping to
-	//If the parent is
-	//this is the node we are reparenting
-	//_tofind ==  this == if the parents of the node we are dropping is equal to "this", bad, dont reparent
 	if (_toFind == nullptr)
 		return false;
 

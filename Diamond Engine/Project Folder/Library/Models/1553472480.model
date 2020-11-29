@@ -18,8 +18,8 @@
                 1,
                 1
             ],
-            "UID": 903449594,
-            "ParentUID": 1340983432,
+            "UID": 1974644879,
+            "ParentUID": 426095090,
             "Components": [
                 {
                     "Type": 1,
@@ -45,8 +45,8 @@
                 1,
                 1
             ],
-            "UID": 1415646891,
-            "ParentUID": 903449594,
+            "UID": 1290490860,
+            "ParentUID": 1974644879,
             "Components": [
                 {
                     "Type": 1,
@@ -72,8 +72,8 @@
                 1,
                 1
             ],
-            "UID": 2137702893,
-            "ParentUID": 1415646891,
+            "UID": 990824521,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -88,6 +88,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/445551395.dds",
                     "UID": 445551395
@@ -112,8 +113,8 @@
                 1,
                 1
             ],
-            "UID": 1953925512,
-            "ParentUID": 1415646891,
+            "UID": 724267607,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -128,6 +129,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/521204416.dds",
                     "UID": 521204416
@@ -152,8 +154,8 @@
                 1,
                 1
             ],
-            "UID": 1896451737,
-            "ParentUID": 1415646891,
+            "UID": 1319035387,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -168,6 +170,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/486701648.dds",
                     "UID": 486701648
@@ -192,8 +195,8 @@
                 1,
                 1
             ],
-            "UID": 1276796823,
-            "ParentUID": 1415646891,
+            "UID": 1866965313,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -208,6 +211,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1658453042.dds",
                     "UID": 1658453042
@@ -232,8 +236,8 @@
                 1,
                 1
             ],
-            "UID": 1081013812,
-            "ParentUID": 1415646891,
+            "UID": 1396838051,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -265,8 +269,8 @@
                 0.97061598300933838,
                 0.99663501977920532
             ],
-            "UID": 550712490,
-            "ParentUID": 1415646891,
+            "UID": 464994276,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -298,8 +302,8 @@
                 1,
                 1
             ],
-            "UID": 2128716399,
-            "ParentUID": 1415646891,
+            "UID": 50510871,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -314,6 +318,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
                     "UID": 741462977
@@ -338,8 +343,8 @@
                 1,
                 1
             ],
-            "UID": 1222968015,
-            "ParentUID": 1415646891,
+            "UID": 1186619752,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -354,6 +359,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
                     "UID": 741462977
@@ -378,8 +384,8 @@
                 1,
                 1
             ],
-            "UID": 824536059,
-            "ParentUID": 1415646891,
+            "UID": 2105337549,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -394,6 +400,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/486701648.dds",
                     "UID": 486701648
@@ -418,8 +425,8 @@
                 1,
                 1
             ],
-            "UID": 639595682,
-            "ParentUID": 1415646891,
+            "UID": 1356656591,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -434,6 +441,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1921918051.dds",
                     "UID": 1921918051
@@ -458,8 +466,8 @@
                 1,
                 1
             ],
-            "UID": 1217555977,
-            "ParentUID": 1415646891,
+            "UID": 1162759657,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -474,6 +482,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/445551395.dds",
                     "UID": 445551395
@@ -498,8 +507,8 @@
                 1,
                 1
             ],
-            "UID": 1990160333,
-            "ParentUID": 1415646891,
+            "UID": 946522685,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -514,6 +523,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
                     "UID": 741462977
@@ -538,8 +548,8 @@
                 1,
                 1
             ],
-            "UID": 1307639353,
-            "ParentUID": 1415646891,
+            "UID": 172660543,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -554,6 +564,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
                     "UID": 741462977
@@ -578,8 +589,8 @@
                 1,
                 1
             ],
-            "UID": 885147942,
-            "ParentUID": 1415646891,
+            "UID": 1333691944,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -594,6 +605,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
                     "UID": 741462977
@@ -618,8 +630,8 @@
                 1,
                 1
             ],
-            "UID": 694135670,
-            "ParentUID": 1415646891,
+            "UID": 68904238,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -634,6 +646,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
                     "UID": 741462977
@@ -658,8 +671,8 @@
                 1,
                 1
             ],
-            "UID": 1594972629,
-            "ParentUID": 1415646891,
+            "UID": 1850970047,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -674,6 +687,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
                     "UID": 1479874027
@@ -698,8 +712,8 @@
                 1,
                 1
             ],
-            "UID": 1504984533,
-            "ParentUID": 1415646891,
+            "UID": 186953011,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -714,6 +728,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/486701648.dds",
                     "UID": 486701648
@@ -738,8 +753,8 @@
                 1,
                 1
             ],
-            "UID": 653551216,
-            "ParentUID": 1415646891,
+            "UID": 2104678011,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -754,6 +769,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1658453042.dds",
                     "UID": 1658453042
@@ -778,8 +794,8 @@
                 1,
                 1
             ],
-            "UID": 5696500,
-            "ParentUID": 1415646891,
+            "UID": 536118080,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -794,6 +810,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
                     "UID": 1479874027
@@ -818,8 +835,8 @@
                 1,
                 1
             ],
-            "UID": 1459035452,
-            "ParentUID": 1415646891,
+            "UID": 1811062820,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -834,6 +851,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
                     "UID": 1538850819
@@ -858,8 +876,8 @@
                 1,
                 1
             ],
-            "UID": 1383216945,
-            "ParentUID": 1415646891,
+            "UID": 649741262,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -891,8 +909,8 @@
                 1,
                 1
             ],
-            "UID": 1337745424,
-            "ParentUID": 1415646891,
+            "UID": 1040861294,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -907,6 +925,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
                     "UID": 1538850819
@@ -931,8 +950,8 @@
                 1,
                 1
             ],
-            "UID": 955877561,
-            "ParentUID": 1415646891,
+            "UID": 1115965206,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -947,6 +966,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
                     "UID": 1538850819
@@ -971,8 +991,8 @@
                 1,
                 1
             ],
-            "UID": 780937498,
-            "ParentUID": 1415646891,
+            "UID": 802742113,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -987,6 +1007,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/445551395.dds",
                     "UID": 445551395
@@ -1011,8 +1032,8 @@
                 1,
                 1
             ],
-            "UID": 1806057159,
-            "ParentUID": 1415646891,
+            "UID": 1594219645,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -1027,6 +1048,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1921918051.dds",
                     "UID": 1921918051
@@ -1051,8 +1073,8 @@
                 1,
                 1
             ],
-            "UID": 42967595,
-            "ParentUID": 1415646891,
+            "UID": 621092997,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -1067,6 +1089,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
                     "UID": 1479874027
@@ -1091,8 +1114,8 @@
                 1,
                 1
             ],
-            "UID": 2211224,
-            "ParentUID": 1415646891,
+            "UID": 1532311792,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -1107,6 +1130,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
                     "UID": 1538850819
@@ -1131,8 +1155,8 @@
                 1,
                 1
             ],
-            "UID": 1476287167,
-            "ParentUID": 1415646891,
+            "UID": 534138813,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -1147,6 +1171,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1921918051.dds",
                     "UID": 1921918051
@@ -1171,8 +1196,8 @@
                 1,
                 1
             ],
-            "UID": 2021508287,
-            "ParentUID": 1415646891,
+            "UID": 1451468421,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -1187,6 +1212,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
                     "UID": 1479874027
@@ -1211,8 +1237,8 @@
                 1,
                 1
             ],
-            "UID": 1940159435,
-            "ParentUID": 1415646891,
+            "UID": 692445209,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -1227,6 +1253,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
                     "UID": 1479874027
@@ -1251,8 +1278,8 @@
                 1,
                 1
             ],
-            "UID": 1266111482,
-            "ParentUID": 1415646891,
+            "UID": 2014987933,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -1267,6 +1294,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
                     "UID": 1538850819
@@ -1291,8 +1319,8 @@
                 1,
                 1
             ],
-            "UID": 186229913,
-            "ParentUID": 1415646891,
+            "UID": 1105643118,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -1307,6 +1335,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
                     "UID": 1538850819
@@ -1331,8 +1360,8 @@
                 1,
                 1
             ],
-            "UID": 1153996034,
-            "ParentUID": 1415646891,
+            "UID": 1575675210,
+            "ParentUID": 1290490860,
             "Components": [
                 {
                     "Type": 1,
@@ -1347,6 +1376,7 @@
                 {
                     "Type": 3,
                     "Active": true,
+                    "IsEmpty": false,
                     "AssetPath": "",
                     "LibraryPath": "Library\/Materials\/521204416.dds",
                     "UID": 521204416

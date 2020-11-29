@@ -39,9 +39,7 @@ bool M_Scene::Init()
 
 bool M_Scene::Start()
 {
-	GameObject* cam = CreateGameObject("Main Camera", root);
-	C_Camera* c_comp = dynamic_cast<C_Camera*>(cam->AddComponent(Component::Type::Camera));
-	SetGameCamera(c_comp);
+	CreateGameCamera("Main Camera");
 
 	LoadScene(App->moduleResources->LibraryFromMeta(App->moduleResources->GetMetaPath("Assets/Scene1.des").c_str()).c_str());
 
@@ -67,7 +65,7 @@ update_status M_Scene::PreUpdate(float dt)
 
 update_status M_Scene::Update(float dt)
 {
-	if (App->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && App->moduleEditor->GetSelectedGO() != nullptr)
+	if (App->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && App->moduleEditor->GetSelectedGO() != nullptr && App->moduleEditor->GetSelectedAsset() == nullptr)
 		App->moduleEditor->GetSelectedGO()->Destroy();
 
 	UpdateGameObjects();
@@ -96,6 +94,13 @@ void M_Scene::SetGameCamera(C_Camera* cam)
 {
 	App->moduleRenderer3D->SetGameRenderTarget(cam);
 	dynamic_cast<W_Game*>(App->moduleEditor->GetEditorWindow(EditorWindow::GAME))->SetTargetCamera(cam);
+}
+
+void M_Scene::CreateGameCamera(const char* name)
+{
+	GameObject* cam = CreateGameObject(name, root);
+	C_Camera* c_comp = dynamic_cast<C_Camera*>(cam->AddComponent(Component::Type::Camera));
+	SetGameCamera(c_comp);
 }
 
 void M_Scene::Destroy(GameObject* gm)

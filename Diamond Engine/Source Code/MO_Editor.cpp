@@ -12,6 +12,7 @@
 #include "ImGui/imgui_impl_opengl3.h"
 
 #include"DETime.h"
+#include"AssetDir.h"
 
 #include "MO_Window.h"
 #include "MO_Renderer3D.h"
@@ -104,7 +105,7 @@ bool M_Editor::Init()
 	ImGui_ImplOpenGL3_Init();
 
 	io.MouseDrawCursor = false;
-	io.IniFilename = "Settings/Styles/imgui.ini";
+	io.IniFilename = "Settings/imgui.ini";
 	//io.IniFilename = NULL;
 
 	return true;
@@ -251,6 +252,8 @@ void M_Editor::DrawMenuBar()
 					App->moduleResources->RequestFromAssets("Assets/Primitives/Monkey.fbx");
 				ImGui::EndMenu();
 			}
+			if (ImGui::MenuItem("Game Camera", nullptr))
+				App->moduleScene->CreateGameCamera("Game Camera");
 
 
 			ImGui::PopStyleColor(1);
@@ -573,6 +576,18 @@ GameObject* M_Editor::GetSelectedGO()
 void M_Editor::SetSelectedGO(GameObject* _obj)
 {
 	dynamic_cast<W_Inspector*>(GetEditorWindow(EditorWindow::INSPECTOR))->selectedGO = _obj;
+	//SetSelectedAsset(nullptr);
+}
+
+AssetDir* M_Editor::GetSelectedAsset()
+{
+	W_Assets* assets = dynamic_cast<W_Assets*>(GetEditorWindow(EditorWindow::ASSETS));
+	return (assets == nullptr) ? nullptr: assets->selectedFile;
+}
+
+void M_Editor::SetSelectedAsset(AssetDir* _file)
+{
+	dynamic_cast<W_Assets*>(GetEditorWindow(EditorWindow::ASSETS))->selectedFile = _file;
 }
 
 void M_Editor::LogToConsole(const char* msg, LogType _type)

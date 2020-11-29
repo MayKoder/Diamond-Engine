@@ -85,7 +85,7 @@ void FileSystem::FSInit()
 	FileSystem::AddPath("."); //Adding ProjectFolder (working directory)
 	FileSystem::AddPath("Assets");
 	//FileSystem::AddPath("Assets/Primitives");
-	FileSystem::CreateLibraryDirectories();
+	FileSystem::CreateLibraryFolders();
 }
 
 void FileSystem::FSDeInit()
@@ -93,7 +93,7 @@ void FileSystem::FSDeInit()
 	PHYSFS_deinit();
 }
 
-/*Load any file with a global path*/
+//TODO: Move this to resource manager
 void FileSystem::LoadDroppedFile(const char* globalPath)
 {
 
@@ -114,7 +114,7 @@ void FileSystem::LoadDroppedFile(const char* globalPath)
 	if (fileNameAndExtension.length() == 0)
 		fileNameAndExtension = normalizedPath;
 
-	if (PHYSFS_exists(fileNameAndExtension.c_str()) == 0)
+	if (Exists(fileNameAndExtension.c_str()) == 0)
 	{
 		Copy(globalPath, ASSETS_PATH, output);
 		fileNameAndExtension = output;
@@ -133,12 +133,11 @@ void FileSystem::LoadDroppedFile(const char* globalPath)
 	//EngineExternal->moduleResources->PopulateFileArray();
 }
 
-void FileSystem::CreateLibraryDirectories()
+void FileSystem::CreateLibraryFolders()
 {
 	CreateDir(LIBRARY_PATH);
 	CreateDir(MESHES_PATH);
 	CreateDir(MODELS_PATH);
-	//CreateDir(TEXTURES_PATH);
 	CreateDir(MATERIALS_PATH);
 	CreateDir(SCENES_PATH);
 }
@@ -295,24 +294,6 @@ int close_sdl_rwops(SDL_RWops* rw)
 	RELEASE_ARRAY(rw->hidden.mem.base);
 	SDL_FreeRW(rw);
 	return 0;
-}
-
-bool FileSystem::Remove(const char* file)
-{
-	bool ret = false;
-
-	if (file != nullptr)
-	{
-		if (PHYSFS_delete(file) != 0)
-		{
-			LOG(LogType::L_NORMAL, "File deleted: [%s]", file);
-			ret = true;
-		}
-		else
-			LOG(LogType::L_ERROR, "File System error while trying to delete [%s]: %s", file, PHYSFS_getLastError());
-	}
-
-	return ret;
 }
 
 /*Duplicate a file to a local PhysFS valid path*/
