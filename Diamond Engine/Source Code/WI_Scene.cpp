@@ -1,19 +1,14 @@
 #include "WI_Scene.h"
+
 #include "MO_Renderer3D.h"
 #include "MO_Window.h"
 #include "MO_Camera3D.h"
-
-#include "OpenGL.h"
-#include"Application.h"
-#include"MO_Editor.h"
-#include"MO_Scene.h"
-
-#include"MO_ResourceManager.h"
-
-#include"ImGui/imgui_internal.h"
+#include "MO_Editor.h"
+#include "MO_Scene.h"
+#include "MO_Input.h"
+#include "MO_ResourceManager.h"
 
 #include"CO_Transform.h"
-#include"MO_Input.h"
 #include"GameObject.h"
 
 #include"MathGeoLib/include/Math/float4x4.h"
@@ -86,7 +81,7 @@ void W_Scene::Draw()
 			(mode == ImGuizmo::MODE::LOCAL) ? mode = ImGuizmo::MODE::WORLD : mode = ImGuizmo::MODE::LOCAL;
 
 		//Draw gizmo
-		if (EngineExternal->moduleEditor->GetSelectedGO())
+		if (App->moduleEditor->GetSelectedGO())
 		{
 			if (!ImGuizmo::IsUsing()) {
 				if (App->moduleInput->GetKey(SDL_SCANCODE_W) == KEY_DOWN)

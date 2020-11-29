@@ -39,9 +39,12 @@ public:
 	
 	void RayToMeshQueueIntersection(LineSegment& ray);
 
+	C_Camera* GetGameRenderTarget()const;
+	void SetGameRenderTarget(C_Camera* cam);
 private:
 
 	void RenderWithOrdering();
+	void DebugLine(LineSegment& line);
 	void GetCAPS(std::string& caps);
 	std::string str_CAPS;
 
@@ -59,8 +62,6 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix;
 
-	C_Camera* GetGameRenderTarget()const;
-	void SetGameRenderTarget(C_Camera* cam);
 private:
 	C_Camera* gameCamera;
 	LineSegment pickingDebug;

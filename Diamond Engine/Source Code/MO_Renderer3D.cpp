@@ -228,14 +228,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		RenderWithOrdering();
 	}
 
-	glColor3f(1.f, 0.f, 0.f);
-	glLineWidth(2.f);
-	glBegin(GL_LINES);
-	glVertex3fv(&pickingDebug.a.x);
-	glVertex3fv(&pickingDebug.b.x);
-	glEnd();
-	glLineWidth(1.f);
-	glColor3f(1.f, 1.f, 1.f);
+	DebugLine(pickingDebug);
 	App->moduleCamera->editorCamera.EndDraw();
 
 	//Test new camera render here?
@@ -466,6 +459,18 @@ void ModuleRenderer3D::RenderWithOrdering()
 		for (auto d = range.first; d != range.second; ++d)
 			d->second->RenderMesh();
 	}
+}
+
+void ModuleRenderer3D::DebugLine(LineSegment& line)
+{
+	glColor3f(1.f, 0.f, 0.f);
+	glLineWidth(2.f);
+	glBegin(GL_LINES);
+	glVertex3fv(&pickingDebug.a.x);
+	glVertex3fv(&pickingDebug.b.x);
+	glEnd();
+	glLineWidth(1.f);
+	glColor3f(1.f, 1.f, 1.f);
 }
 
 /*Get SDL caps*/

@@ -45,20 +45,11 @@ update_status M_ResourceManager::PreUpdate(float dt)
 	{
 		NeedsDirsUpdate(assetsRoot);
 	}
-
-
 	return update_status::UPDATE_CONTINUE;
 }
 
 bool M_ResourceManager::CleanUp()
 {
-	//for (auto it = resources.begin(); it != resources.end(); ++it)
-	//{
-	//	(*it).second->UnloadFromMemory();
-	//	delete (*it).second;
-	//}
-	//resources.clear();
-
 	return true;
 }
 
@@ -265,10 +256,6 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 	ret = resource->GetUID();
 
 	RELEASE_ARRAY(fileBuffer);
-
-	//UnloadResource(resource->GetUID());
-	//TODO: Uncomment this in the future
-	//LoadResource(ret);
 	UnloadResource(ret);
 
 	return ret;

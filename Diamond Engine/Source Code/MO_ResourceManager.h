@@ -15,51 +15,43 @@ public:
 
 	bool Init() override;
 	bool Start() override;
-
 	update_status PreUpdate(float dt) override;
-
 	bool CleanUp() override;
-
 	void OnGUI() override;
 
-	void PopulateFileArray();
-
-	//Change int to UID?
-	int ExistsOnLibrary(const char* file_in_assets) const;
-	
-	int ImportFile(const char* assetsFile, Resource::Type type);
-
-	int CreateLibraryFromAssets(const char* assetsFile);
-	void RequestFromAssets(const char* assets_path);
 
 	int GenerateNewUID();
+	int GetMetaUID(const char* metaFile);
+	int ExistsOnLibrary(const char* file_in_assets) const;	
+	int CreateLibraryFromAssets(const char* assetsFile);
+	int ImportFile(const char* assetsFile, Resource::Type type);
 
-	Resource* CreateNewResource(const char* assetsFile, uint uid, Resource::Type type);
-	Resource* LoadFromLibrary(const char* libraryFile, Resource::Type type, uint _uid);
+	void PopulateFileArray();
+	void UnloadResource(int uid);
+	void RequestFromAssets(const char* assets_path);
+	void GenerateMeta(const char* aPath, const char* lPath, unsigned int uid, Resource::Type type);
 
 	Resource* RequestResource(int uid, const char* libraryPath = nullptr);
-	void UnloadResource(int uid);
-
+	Resource* CreateNewResource(const char* assetsFile, uint uid, Resource::Type type);
+	Resource* LoadFromLibrary(const char* libraryFile, Resource::Type type, uint _uid);
+	
+	Resource::Type GetMetaType(const char* metaFile);
 	Resource::Type GetTypeFromAssetExtension(const char* assetFile);
 	Resource::Type GetTypeFromLibraryExtension(const char* libraryFile);
 
-	void GenerateMeta(const char* aPath, const char* lPath, unsigned int uid, Resource::Type type);
+	std::string GetMetaPath(const char* assetsFile);
 	std::string LibraryFromMeta(const char* metaFile);
 	std::string GenLibraryPath(uint _uid, Resource::Type _type);
 
-	int GetMetaUID(const char* metaFile);
-	std::string GetMetaPath(const char* assetsFile);
-	Resource::Type GetMetaType(const char* metaFile);
-
-	void NeedsDirsUpdate(AssetDir& dir);
 	void UpdateMeshesDisplay();
+	void NeedsDirsUpdate(AssetDir& dir);
 
 private:
 	void LoadResource(int uid);
 	void ReleaseResource(int uid);
+	void UpdateFile(AssetDir& modDir);
 
 	bool IsResourceLoaded(int uid);
-	void UpdateFile(AssetDir& modDir);
 
 
 private:

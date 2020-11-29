@@ -49,6 +49,8 @@ bool M_FileSystem::Init()
 
 bool M_FileSystem::Start()
 {
+
+	//TODO: Move to resource manager
 	App->moduleResources->PopulateFileArray();
 	GenerateAllMetaFiles();
 	ImportAssetsToLibrary();
@@ -93,8 +95,6 @@ void M_FileSystem::GetAllFiles(const char* directory, std::vector<AssetDir>& fil
 
 void M_FileSystem::GetAllFilesRecursive(AssetDir& _file)
 {
-	//if (!Exists(directory))
-	//	return;
 	GetAllFiles(_file.importPath.c_str(), _file.childDirs);
 
 	if (_file.childDirs.size() != 0)
