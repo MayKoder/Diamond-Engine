@@ -247,7 +247,7 @@ bool GameObject::IsChild(GameObject* _toFind)
 	}
 	else
 	{
-		IsChild(_toFind->parent);
+		return IsChild(_toFind->parent);
 	}
 }
 

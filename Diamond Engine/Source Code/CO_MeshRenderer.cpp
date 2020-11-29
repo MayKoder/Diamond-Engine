@@ -126,7 +126,7 @@ bool C_MeshRenderer::OnEditor()
 			ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _mesh->GetLibraryPath());
 		}
 
-		ImGui::Button("Drop .mmh to change mesh", ImVec2(150, 50));
+		ImGui::Button("Drop .mmh to change mesh", ImVec2(200, 50));
 		//TODO: Maybe move this into a function?
 		if (ImGui::BeginDragDropTarget())
 		{

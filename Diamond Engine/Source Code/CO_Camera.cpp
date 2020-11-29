@@ -69,8 +69,10 @@ bool C_Camera::OnEditor()
 		ImGui::DragFloat("Near Distance: ", &camFrustrum.nearPlaneDistance, 0.1f, 0.01f, camFrustrum.farPlaneDistance);
 		ImGui::DragFloat("Far Distance: ", &camFrustrum.farPlaneDistance, 0.1f, camFrustrum.nearPlaneDistance, 10000.f);
 
-		ImGui::DragFloat("Vertical FOV: ", &camFrustrum.verticalFov, 0.1f, 0.0f, 300.f);
-		ImGui::DragFloat("Horizontal FOV: ", &camFrustrum.horizontalFov, 0.1f, 0.0f, 300.f);
+		ImGui::Separator();
+		ImGui::Text("Vertical FOV: %f", camFrustrum.verticalFov);
+		ImGui::Text("Horizontal FOV: %f", camFrustrum.horizontalFov);
+		ImGui::Separator();
 
 		if (ImGui::DragFloat("FOV: ", &fov, 0.1f, 1.0f, 180.f))
 		{

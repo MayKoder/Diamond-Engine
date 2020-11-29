@@ -34,6 +34,9 @@ bool C_Material::OnEditor()
 			ImGui::Text("Texture Width: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", matTexture->tWidth);
 			ImGui::Text("Texture Height: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", matTexture->tHeight);
 			
+			ImGui::Separator();
+
+			ImGui::Text("Drop any texture here to change it:");
 			ImGui::Image((ImTextureID)matTexture->textureID, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
 			if (ImGui::BeginDragDropTarget())
 			{
@@ -50,9 +53,10 @@ bool C_Material::OnEditor()
 				}
 				ImGui::EndDragDropTarget();
 			}
+			ImGui::Separator();
 
-			ImGui::Text("Texture Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", matTexture->GetAssetPath());
-			ImGui::Text("Texture Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", matTexture->GetLibraryPath());
+			//ImGui::Text("Asset Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", matTexture->GetAssetPath());
+			ImGui::Text("Library Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", matTexture->GetLibraryPath());
 
 			ImGui::Checkbox("View with checkers", &viewWithCheckers);
 
