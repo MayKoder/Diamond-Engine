@@ -61,8 +61,15 @@ Engine v0.2
  - Play/Pause/Stop/Step buttons. You can now press PLAY, move, remove or do anything to the scene, and when you stop playing you will recover the original state of the scene. This system is also ready to be used with a deltaTime an a timeScale for future simulations.
  - You can now change a GameObject's parent by draggin it on top of the desired parent on the Hierarchy. Trabsformations will be respected with every parent change.
  - Create empty GameObjects with right-click. If a GameObject is selected, the new empty GO will be added as a child.
- - 
- - **Innovation:** You can now delete assets from the asset window and the library and meta files will be deleted as well 
+ - Meshes can be changed by dragging a different mesh from the asset window to the mesh panel inside the mesh component. 
+ - Textures can be changed by dragging any texture from the assets window to the texture display inside the material component. 
+ - Models can be loaded as GameObject by dragging them from the assets window to the scene window. 
+ - Components and GameObject can be removed and deactivated. 
+ - Components can be added from the inspector display with the "Add component" drop-down.
+ - Resource manager process can be visualized on the console and the "Loaded resources" tab. 
+ - Library folder can be removed and the code will regenerate all the data with the same Id's to keep saved scenes valid. 
+ - **Innovation:** You can now delete assets from the asset window and the library and meta files will be deleted as well. 
+ - **Innovation:** Multiple scene display, enjoy the views from the game camera and move it around. No debug info will be displayed on the game camera and you can render the editor and the game camera at the same time. 
  
 <br></br>
 # Short-Term TODO list:
@@ -70,6 +77,7 @@ Engine v0.2
  - Resource manager should update files if the last modified date is changed, but if a file is changed while the engine is closed, this update won't happen until the file is changed again with the editor running. 
  - Add icons to every button possible, images are better than text. 
  - Clear out outdated code comments. 
+ - .model file optimizations, saving a lot of useless data. 
 
 <br></br>
 ## MIT License
