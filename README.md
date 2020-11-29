@@ -61,12 +61,15 @@ Engine v0.2
  - Play/Pause/Stop/Step buttons. You can now press PLAY, move, remove or do anything to the scene, and when you stop playing you will recover the original state of the scene. This system is also ready to be used with a deltaTime an a timeScale for future simulations.
  - You can now change a GameObject's parent by draggin it on top of the desired parent on the Hierarchy. Trabsformations will be respected with every parent change.
  - Create empty GameObjects with right-click. If a GameObject is selected, the new empty GO will be added as a child.
+ - 
+ - **Innovation:** You can now delete assets from the asset window and the library and meta files will be deleted as well 
  
 <br></br>
 # Short-Term TODO list:
 
- - Reduce the use of pointers in small size objects, like Texture class and others.
- - Add shader pipeline.
+ - Resource manager should update files if the last modified date is changed, but if a file is changed while the engine is closed, this update won't happen until the file is changed again with the editor running. 
+ - Add icons to every button possible, images are better than text. 
+ - Clear out outdated code comments. 
 
 <br></br>
 ## MIT License
