@@ -37,7 +37,7 @@ Simple guide to execute and use the engine:
 - Hold SHIFT to duplicate the movement speed.
 - Use the mouse wheel click to PAN the camera (Horizontal and Vertical movement)
 
-#### **Please remember that all the important data (loaded assets, time management, simulation state, editor camera movement settings) can be found inside the "Configuration" window on the right.**
+#### **Please remember that all the important data (loaded assets, time management, simulation state, editor camera movement settings) can be found inside the "Configuration" window on the right. Also, if it's the first time you use the engine, it will take a bit longer to start, it's generating the library files :).**
 
 <br></br>
 # Features
