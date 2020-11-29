@@ -40,6 +40,7 @@ Simple guide to execute and use the engine:
 <br></br>
 # Features
 
+Engine v0.1
  - Take cool screenshots with the "Take Screenshot" button located on the top-middle bar. (Screenshots will ignore editor layer).
  - Optimized scene window rendering, displaying only the needed section of the frame buffer, reducing wasted pixels and improving performance.
  - Style customization, save and load custom styles created with the "Style Settings" tab inside the "Configuration Window" window.
@@ -54,7 +55,12 @@ Simple guide to execute and use the engine:
  - Console log have types (Normal, Warning and Error) indicated by colors. 
  - Console logs can stack up if the value is the same and are equal as the last log.
  - Console logs and console can also be cleaned.
- - Meshes and textures are loaded only once per FBX.
+ 
+Engine v0.2
+ - Resource manager will make sure that assets are loaded only once in memory, and unloaded when they are not used anymore.
+ - Play/Pause/Stop/Step buttons. You can now press PLAY, move, remove or do anything to the scene, and when you stop playing you will recover the original state of the scene. This system is also ready to be used with a deltaTime an a timeScale for future simulations.
+ - You can now change a GameObject's parent by draggin it on top of the desired parent on the Hierarchy. Trabsformations will be respected with every parent change.
+ - Create empty GameObjects with right-click. If a GameObject is selected, the new empty GO will be added as a child.
  
 <br></br>
 # Short-Term TODO list:
