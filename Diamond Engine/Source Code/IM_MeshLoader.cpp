@@ -44,111 +44,6 @@ void MeshLoader::DisableDebugMode()
 	aiDetachAllLogStreams();
 }
 
-//void MeshLoader::BufferToMeshes(const char* full_path, char* buffer, int size, GameObject* gmRoot)
-//{
-//	const aiScene* scene = aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
-//
-//	std::string fileName = StringLogic::FileNameFromPath(full_path);
-//
-//	if (scene != nullptr && scene->HasMeshes())
-//	{
-//
-//		std::vector<ResourceMesh*> sceneMeshes;
-//		std::vector<ResourceTexture*> testTextures;
-//
-//		//This should not be here
-//		if (scene->HasMaterials())
-//		{
-//			//Needs to be moved to another place
-//			std::string generalPath(full_path);
-//			generalPath = generalPath.substr(0, generalPath.find_last_of("/\\") + 1);
-//			for (size_t k = 0; k < scene->mNumMaterials; k++)
-//			{
-//				aiMaterial* material = scene->mMaterials[k];
-//				aiString str = material->GetName();
-//				uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
-//
-//				if (numTextures > 0) 
-//				{
-//					aiString path;
-//					material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
-//
-//					std::string textureFileName = FileSystem::NormalizePath(path.C_Str());
-//					size_t isLong = textureFileName.find_last_of("/");
-//					if(isLong != textureFileName.npos)
-//						textureFileName = textureFileName.substr(isLong + 1);
-//
-//					std::string localPath = generalPath;
-//					localPath = localPath.substr(0, localPath.find_last_of('/')+1);
-//					localPath += FileSystem::NormalizePath(path.C_Str());
-//
-//					char* buffer = nullptr;
-//					int size = FileSystem::LoadToBuffer(localPath.c_str(), &buffer);
-//
-//					if (buffer != nullptr) 
-//					{
-//						int w = 0;
-//						int h = 0;
-//
-//						GLuint id = TextureImporter::CustomLoadImage(buffer, size, &w, &h);
-//						TextureImporter::SaveDDS(buffer, size, textureFileName.substr(0, textureFileName.find_last_of(".")).c_str());
-//
-//						//TODO: Request resource?
-//						//ResourceTexture* meshTexture = new ResourceTexture(id, w, h, textureFileName.c_str(), localPath.c_str());
-//
-//						//testTextures.push_back(meshTexture);
-//
-//						RELEASE_ARRAY(buffer)
-//					}
-//
-//					path.Clear();
-//				}
-//				else 
-//				{
-//					//TODO: Temporal, think of a better way
-//					//TODO: Request resource?
-//					//ResourceTexture* meshTexture = new ResourceTexture(White);
-//					testTextures.push_back(nullptr);
-//				}
-//			}
-//		}
-//
-//		//Load all meshes into mesh vector
-//		if (scene->HasMeshes()) 
-//		{
-//			for (unsigned int i = 0; i < scene->mNumMeshes; i++)
-//			{
-//				sceneMeshes.push_back(LoadMesh(scene->mMeshes[i]));
-//			}
-//		}
-//
-//		//Save custom format model
-//		GameObject* root = new GameObject("First model GO", nullptr);
-//		NodeToGameObject(scene->mMeshes, testTextures, sceneMeshes, scene->mRootNode, root, fileName.c_str());
-//		ModelImporter::SaveModelCustom(root, fileName.c_str());
-//		delete root;
-//
-//		//Only for memory cleanup, needs an update ASAP
-//		for (unsigned int i = 0; i < sceneMeshes.size(); i++)
-//		{
-//			delete sceneMeshes[i];
-//		}
-//		for (unsigned int i = 0; i < testTextures.size(); i++)
-//		{
-//			delete testTextures[i];
-//		}
-//
-//		sceneMeshes.clear();
-//		testTextures.clear();
-//
-//		aiReleaseImport(scene);
-//
-//		ModelImporter::LoadModelCustom(fileName.c_str());
-//	}
-//	else
-//		LOG(LogType::L_ERROR, "Error loading scene % s", full_path);
-//}
-
 //Following unity tree structure, comments represent blender tree structure
 void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTexture*>& sceneTextures, std::vector<ResourceMesh*>& _sceneMeshes, aiNode* node, GameObject* gmParent, const char* holderName)
 {
@@ -187,8 +82,6 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTextur
 	}
 
 
-
-
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		ResourceMesh* meshPointer = _sceneMeshes[node->mMeshes[i]];
@@ -208,12 +101,6 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTextur
 		}
 
 		PopulateTransform(gmNode, pos, rot, scale);
-
-		//if (transform->localTransform == transform->localTransform.nan || transform->globalTransform == float4x4::nan) {
-		//	LOG(LogType::L_ERROR, "Some matrix loading is NAN");
-		//}
-
-		//gmParent->children.push_back(gmNode);
 	}
 
 	if (node->mNumChildren > 0)
@@ -230,7 +117,6 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTextur
 		{
 			rootGO = new GameObject(holderName, gmParent);
 			PopulateTransform(rootGO, pos, rot, scale);
-			//gmParent->children.push_back(rootGO);
 		}
 
 		
@@ -315,7 +201,6 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 	}
 
 
-	//_mesh->GenBuffers();
 	_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
 
 	//TODO: Save on own file format

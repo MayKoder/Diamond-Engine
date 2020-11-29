@@ -88,7 +88,9 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 					meshesOnModelUIDs.push_back(MeshLoader::LoadMesh(scene->mMeshes[i]));
 			}
 		}
+
 		SaveMeshesToMeta(res->GetAssetPath(), meshesOnModelUIDs);
+		EngineExternal->moduleResources->UpdateMeshesDisplay();
 
 		//Save custom format model
 		GameObject* root = new GameObject("First model GO", nullptr);

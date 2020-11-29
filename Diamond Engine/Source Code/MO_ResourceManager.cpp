@@ -34,6 +34,7 @@ bool M_ResourceManager::Init()
 bool M_ResourceManager::Start()
 {
 	assetsRoot.lastModTime = App->moduleFileSystem->GetLastModTime(assetsRoot.importPath.c_str());
+	meshesLibraryRoot.lastModTime = App->moduleFileSystem->GetLastModTime(meshesLibraryRoot.importPath.c_str());
 	return true;
 }
 
@@ -166,6 +167,13 @@ void M_ResourceManager::NeedsDirsUpdate(AssetDir& dir)
 		}
 	}
 	fileCheckTime = 0.f;
+}
+
+void M_ResourceManager::UpdateMeshesDisplay()
+{
+	meshesLibraryRoot.childDirs.clear();
+	App->moduleFileSystem->GetAllFilesRecursive(meshesLibraryRoot);
+	LOG(LogType::L_WARNING, "Mesh display updated");
 }
 
 //Returns a resource* if the resource is loaded or creates a new resource from the library file

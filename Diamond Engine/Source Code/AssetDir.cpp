@@ -2,6 +2,7 @@
 #include"Application.h"
 #include"MO_ResourceManager.h"
 #include"IM_FileSystem.h"
+#include"IM_ModelImporter.h"
 
 AssetDir::AssetDir(const char* _dName, const char* _imPath, uint64 _lMod, bool _dir) : isDir(_dir), lastModTime(_lMod)
 {
@@ -118,11 +119,35 @@ void AssetDir::DeletePermanent()
 	}
 
 	//Remove library
-	if (!isDir)
+	if (!isDir) 
+	{
 		EngineExternal->moduleFileSystem->DeleteAssetFile(EngineExternal->moduleResources->LibraryFromMeta(this->metaFileDir.c_str()).c_str());
+
+		if (EngineExternal->moduleResources->GetMetaType(metaFileDir.c_str()) == Resource::Type::MODEL) 
+		{
+			std::vector<uint> meshesID;
+			//Get meshes from fbx meta
+			if (FileSystem::Exists(metaFileDir.c_str())) 
+			{
+				ModelImporter::GetMeshesFromMeta(importPath.c_str(), meshesID);
+
+				//Delete said meshes
+				for (int i = 0; i < meshesID.size(); i++)
+				{
+					std::string meshes = MESHES_PATH;
+					meshes += std::to_string(meshesID[i]);
+					meshes += ".mmh";
+					EngineExternal->moduleFileSystem->DeleteAssetFile(meshes.c_str());
+				}
+
+				EngineExternal->moduleResources->UpdateMeshesDisplay();
+			}		
+		}
+	}
 
 	EngineExternal->moduleFileSystem->DeleteAssetFile(importPath.c_str());
 	EngineExternal->moduleFileSystem->DeleteAssetFile(metaFileDir.c_str());
+
 
 	ClearData();
 }

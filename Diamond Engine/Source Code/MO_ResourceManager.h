@@ -52,11 +52,9 @@ public:
 	Resource::Type GetMetaType(const char* metaFile);
 
 	void NeedsDirsUpdate(AssetDir& dir);
+	void UpdateMeshesDisplay();
+
 private:
-
-	//const Resource* RequestResource(int uid) const;
-
-
 	void LoadResource(int uid);
 	void ReleaseResource(int uid);
 

@@ -44,7 +44,7 @@ void W_Scene::Draw()
 
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*//*, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse*/)) 
 	{
-		if (/*ImGui::IsWindowFocused() &&*/ ImGui::IsWindowHovered()) 
+		if (/*ImGui::IsWindowFocused() &&*/ ImGui::IsWindowHovered() && !ImGuizmo::IsUsing()) 
 		{
 			//TODO: Uncomment this, it's the editor camera input handler
 			App->moduleCamera->ProcessSceneKeyboard();
@@ -136,7 +136,7 @@ void W_Scene::Draw()
 			//}
 		}
 
-		if (ImGui::IsMouseClicked(0) && !ImGuizmo::IsUsing())
+		if (ImGui::IsMouseClicked(0) && !ImGuizmo::IsUsing() && !App->moduleInput->GetKey(SDL_SCANCODE_LALT) == KEY_DOWN)
 		{
 			ImVec2 position = ImGui::GetMousePos();
 			ImVec2 normal = NormalizeOnWindow(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y + ImGui::GetFrameHeight(), ImGui::GetWindowSize().x, ImGui::GetWindowSize().y - ImGui::GetFrameHeight(), position);

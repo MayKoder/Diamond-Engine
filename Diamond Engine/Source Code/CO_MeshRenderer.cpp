@@ -19,7 +19,7 @@
 #include"MathGeoLib/include/Geometry/Plane.h"
 
 C_MeshRenderer::C_MeshRenderer(GameObject* _gm) : Component(_gm), _mesh(nullptr),
-faceNormals(false), vertexNormals(false), showAABB(false), showOBB(false)
+faceNormals(false), vertexNormals(false), showAABB(true), showOBB(true)
 {
 	name = "Mesh Renderer";
 }
@@ -94,10 +94,15 @@ void C_MeshRenderer::LoadData(JSON_Object* nObj)
 {
 	Component::LoadData(nObj);
 
+
 	//There is no _mesh yet lol
 	DEConfig jsObj(nObj);
 
 	SetRenderMesh(dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(jsObj.ReadInt("UID"), jsObj.ReadString("Path"))));
+
+	if (_mesh == nullptr)
+		return;
+
 	_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
 
 	gameObject->transform->UpdateBoxes();
@@ -121,7 +126,7 @@ bool C_MeshRenderer::OnEditor()
 			ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _mesh->GetLibraryPath());
 		}
 
-		ImGui::Button("Drop Mesh to change");
+		ImGui::Button("Drop .mmh to change mesh", ImVec2(150, 50));
 		//TODO: Maybe move this into a function?
 		if (ImGui::BeginDragDropTarget())
 		{
@@ -200,6 +205,9 @@ void C_MeshRenderer::SetRenderMesh(ResourceMesh* mesh)
 { 
 	_mesh = mesh;
 	//_mesh->LoadCustomFormat(_mesh->GetLibraryPath());
+
+	if (mesh == nullptr)
+		return;
 
 	globalOBB = _mesh->localAABB;
 	globalOBB.Transform(gameObject->transform->globalTransform);

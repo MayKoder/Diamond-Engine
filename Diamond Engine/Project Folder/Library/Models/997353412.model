@@ -18,8 +18,8 @@
                 1,
                 1
             ],
-            "UID": 1880091579,
-            "ParentUID": 1033099243,
+            "UID": 564764326,
+            "ParentUID": 1737618837,
             "Components": [
                 {
                     "Type": 1,
@@ -45,8 +45,8 @@
                 1,
                 1
             ],
-            "UID": 432569615,
-            "ParentUID": 1880091579,
+            "UID": 1179047523,
+            "ParentUID": 564764326,
             "Components": [
                 {
                     "Type": 1,
@@ -55,8 +55,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/588616219.mmh",
-                    "UID": 588616219
+                    "Path": "Library\/Meshes\/5654754.mmh",
+                    "UID": 5654754
                 }
             ]
         },
@@ -78,8 +78,8 @@
                 1,
                 1
             ],
-            "UID": 1765984034,
-            "ParentUID": 1880091579,
+            "UID": 1052675855,
+            "ParentUID": 564764326,
             "Components": [
                 {
                     "Type": 1,
@@ -88,8 +88,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1766830945.mmh",
-                    "UID": 1766830945
+                    "Path": "Library\/Meshes\/700120833.mmh",
+                    "UID": 700120833
                 }
             ]
         }

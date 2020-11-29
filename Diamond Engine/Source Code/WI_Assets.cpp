@@ -21,13 +21,18 @@ void W_Assets::Draw()
 		DrawFileTree(EngineExternal->moduleResources->assetsRoot);
 		DrawFileTree(EngineExternal->moduleResources->meshesLibraryRoot);
 
-		if (selectedFile != nullptr && ImGui::IsWindowHovered() && EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) 
+		if (selectedFile != nullptr && /*ImGui::IsWindowHovered() &&*/ EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) 
 		{
-			EngineExternal->moduleEditor->SetSelectedGO(nullptr);
+			if (EngineExternal->moduleResources->GetTypeFromLibraryExtension(selectedFile->importPath.c_str()) == Resource::Type::UNKNOWN && strcmp(selectedFile->dirName.c_str(), "Meshes") != 0) //TODO: Temporal check
+			{
+				EngineExternal->moduleEditor->SetSelectedGO(nullptr);
 
-			selectedFile->DeletePermanent();
-			selectedFile = nullptr;
-			EngineExternal->moduleResources->NeedsDirsUpdate(EngineExternal->moduleResources->assetsRoot);
+				selectedFile->DeletePermanent();
+				selectedFile = nullptr;
+
+				EngineExternal->moduleResources->PopulateFileArray();
+			}
+
 		}
 	}
 

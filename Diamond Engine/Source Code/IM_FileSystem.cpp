@@ -96,7 +96,6 @@ void FileSystem::FSDeInit()
 //TODO: Move this to resource manager
 void FileSystem::LoadDroppedFile(const char* globalPath)
 {
-
 	ImportType iType = GetTypeFromPath(globalPath);
 
 	if (iType == ImportType::NOTYPE) {
@@ -130,7 +129,7 @@ void FileSystem::LoadDroppedFile(const char* globalPath)
 	nFile.GenerateMeta();
 	nFile.CreateLibraryFileRecursive();
 
-	//EngineExternal->moduleResources->PopulateFileArray();
+	EngineExternal->moduleResources->NeedsDirsUpdate(EngineExternal->moduleResources->assetsRoot);
 }
 
 void FileSystem::CreateLibraryFolders()
