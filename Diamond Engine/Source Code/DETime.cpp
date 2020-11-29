@@ -53,16 +53,6 @@ void DETime::PreUpdate()
 		state = GameState::PAUSE;
 		break;
 	}
-	
-	//if (state == GameState::PLAY) 
-	//{
-	//	time += gameTimer.Read() / 1000.f;
-	//	deltaTime = (float)gameTimer.Read() / 1000.0f;
-	//	gameTimer.Start();
-	//}
-
-	//if (state == GameState::STEP) 
-	//	Pause();
 }
 
 const char* DETime::GetStateString()

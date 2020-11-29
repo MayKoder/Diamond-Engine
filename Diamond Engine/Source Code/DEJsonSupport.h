@@ -30,13 +30,6 @@ namespace DEJson
 	Quat ReadQuat(JSON_Object* obj, const char* name);
 }
 
-//union VALUE {
-//	int v;
-//	float f;
-//	bool b;
-//
-//};
-
 struct DEConfig
 {
 

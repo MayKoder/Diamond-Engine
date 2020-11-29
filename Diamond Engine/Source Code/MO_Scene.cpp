@@ -83,10 +83,6 @@ bool M_Scene::CleanUp()
 GameObject* M_Scene::CreateGameObject(const char* name, GameObject* parent, int _uid)
 {
 	GameObject* gm = new GameObject(name, parent, _uid);
-
-	//if (parent != nullptr)
-	//	parent->children.push_back(gm);
-
 	return gm;
 }
 
@@ -165,7 +161,6 @@ void M_Scene::SaveScene(const char* name)
 	root_object.WriteVector3("EditorCameraPosition", &App->moduleCamera->editorCamera.camFrustrum.pos.x);
 	root_object.WriteVector3("EditorCameraZ", &App->moduleCamera->editorCamera.camFrustrum.front.x);
 	root_object.WriteVector3("EditorCameraY", &App->moduleCamera->editorCamera.camFrustrum.up.x);
-	//DEJson::WriteVector3(root_object, "EditorCameraZ", &App->moduleCamera->Z);
 
 	JSON_Value* goArray = json_value_init_array();
 	root->SaveToJson(json_value_get_array(goArray));
@@ -181,7 +176,6 @@ void M_Scene::SaveScene(const char* name)
 void M_Scene::LoadScene(const char* name)
 {
 	//TODO: ASK IF USER WANTS TO SAVE CHANGES
-
 	JSON_Value* scene = json_parse_file(name);
 
 	if (scene == NULL)
@@ -194,36 +188,20 @@ void M_Scene::LoadScene(const char* name)
 
 	SetGameCamera(nullptr);
 
-
 	JSON_Object* sceneObj = json_value_get_object(scene);
-
 	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.pos.x, &DEJson::ReadVector3(sceneObj, "EditorCameraPosition")[0], 3);
 	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.front.x, &DEJson::ReadVector3(sceneObj, "EditorCameraZ")[0], 3);
 	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.up.x, &DEJson::ReadVector3(sceneObj, "EditorCameraY")[0], 3);
-	//MaykMath::GeneralDataSet(&App->moduleCamera->Z.x, &DEJson::ReadVector3(sceneObj, "EditorCameraZ")[0], 3);
-
-
 
 	JSON_Array* sceneGO = json_object_get_array(sceneObj, "Game Objects");
-
 	JSON_Object* goJsonObj = json_array_get_object(sceneGO, 0);
+	
 	root = CreateGameObject(json_object_get_string(goJsonObj, "name"), nullptr, json_object_get_number(goJsonObj, "UID"));
 
 	GameObject* parent = root;
 	for (size_t i = 1; i < json_array_get_count(sceneGO); i++)
 	{
-		goJsonObj = json_array_get_object(sceneGO, i);
-		GameObject* originalParent = parent;
-
-		while (parent != nullptr && json_object_get_number(goJsonObj, "ParentUID") != parent->UID)
-			parent = parent->parent;
-
-		if (parent == nullptr)
-			parent = originalParent;
-
-		parent = CreateGameObject(json_object_get_string(goJsonObj, "name"), parent, json_object_get_number(goJsonObj, "UID"));
-		parent->LoadFromJson(goJsonObj);
-
+		parent = LoadGOData(json_array_get_object(sceneGO, i), parent);
 	}
 
 	//Free memory
@@ -250,20 +228,25 @@ void M_Scene::LoadModelTree(const char* modelPath)
 	GameObject* parent = mRoot;
 	for (size_t i = 1; i < json_array_get_count(sceneGO); i++)
 	{
-		goJsonObj = json_array_get_object(sceneGO, i);
-		GameObject* originalParent = parent;
-
-		while (parent != nullptr && json_object_get_number(goJsonObj, "ParentUID") != parent->UID)
-			parent = parent->parent;
-
-		if (parent == nullptr)
-			parent = originalParent;
-
-		parent = CreateGameObject(json_object_get_string(goJsonObj, "name"), parent, json_object_get_number(goJsonObj, "UID"));
-		parent->LoadFromJson(goJsonObj);
-
+		parent = LoadGOData(json_array_get_object(sceneGO, i), parent);
 	}
 
 	//Free memory
 	json_value_free(scene);
+}
+
+GameObject* M_Scene::LoadGOData(JSON_Object* goJsonObj,  GameObject* parent)
+{
+	//goJsonObj = json_array_get_object(sceneGO, i);
+	GameObject* originalParent = parent;
+
+	while (parent != nullptr && json_object_get_number(goJsonObj, "ParentUID") != parent->UID)
+		parent = parent->parent;
+
+	if (parent == nullptr)
+		parent = originalParent;
+
+	parent = CreateGameObject(json_object_get_string(goJsonObj, "name"), parent, json_object_get_number(goJsonObj, "UID"));
+	parent->LoadFromJson(goJsonObj);
+	return parent;
 }

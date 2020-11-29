@@ -24,7 +24,7 @@ bool ResourceTexture::LoadToMemory()
 	char* buffer = nullptr;
 	int size = FileSystem::LoadToBuffer(GetLibraryPath(), &buffer);
 
-	textureID = TextureImporter::CustomLoadImage(buffer, size, &tWidth, &tHeight);
+	textureID = TextureImporter::LoadToMemory(buffer, size, &tWidth, &tHeight);
 
 	delete[] buffer;
 	buffer = nullptr;

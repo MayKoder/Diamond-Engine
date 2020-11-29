@@ -44,4 +44,5 @@ private:
 
 	void UpdateGameObjects();
 	void RecursiveUpdate(GameObject* parent);
+	GameObject* LoadGOData(JSON_Object* goJsonObj, GameObject* parent);
 };

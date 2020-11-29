@@ -13,12 +13,6 @@ ResourceMesh::~ResourceMesh()
 {
 }
 
-//void Mesh::SetAsSphere()
-//{
-//	GenerateSphere(1, 30, 30);
-//	GenBuffers();
-//}
-
 bool ResourceMesh::LoadToMemory()
 {
 	LOG(LogType::L_WARNING, "Mesh loaded to memory");
@@ -129,7 +123,6 @@ void ResourceMesh::RenderMesh(GLuint textureID)
 	}
 	//--------------------------------------------
 
-
 	//Normals --------------------------------------------
 	if (normals_count != 0)
 	{
@@ -152,21 +145,6 @@ void ResourceMesh::RenderMesh(GLuint textureID)
 	//Drawing --------------------------------------------
 	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
 	//--------------------------------------------
-
-	////Wireframe temporal --------------------------------------------
-	//if(generalWireframe != nullptr && *generalWireframe == false)
-	//{
-	//	glColor3f(0, 1, 0);
-	//	glScalef(1.0001f, 1.0001f, 1.0001f);
-	//	glLineWidth(2.5f);
-	//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
-	//	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	//	glScalef(1.f, 1.f, 1.f);
-	//	glLineWidth(1.f);
-	//	glColor3f(1, 1, 1);
-	//}
-	////--------------------------------------------
 
 	//Drawing cleanup --------------------------------------------
 	if (textureID != 0 && (generalWireframe != nullptr && *generalWireframe == false))
@@ -219,11 +197,8 @@ void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)
 		glBegin(GL_LINES);
 		for (int i = 0; i < indices_count; i += 3)
 		{
-			//MaykMath::FindCentroid(&vertices[indices[i]], &vertices[indices[i + 1]], &vertices[indices[i + 2]], &middle.x);
 			vec3 A = GetVectorFromIndex(&vertices[indices[i] * 3]);
-
 			vec3 B = GetVectorFromIndex(&vertices[indices[i + 1] * 3]);
-
 			vec3 C = GetVectorFromIndex(&vertices[indices[i + 2] * 3]);
 
 			vec3 middle((A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z) / 3.f);
@@ -231,7 +206,6 @@ void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)
 			vec3 crossVec = cross((B - A), (C - A));
 			vec3 normalDirection = normalize(crossVec);
 
-			//LOG("%f, %f, %f", middle.x, middle.y, middle.z);
 			glVertex3f(middle.x, middle.y, middle.z);
 			glVertex3f(middle.x + normalDirection.x * normalLenght, middle.y + normalDirection.y * normalLenght, middle.z + normalDirection.z * normalLenght);
 		}

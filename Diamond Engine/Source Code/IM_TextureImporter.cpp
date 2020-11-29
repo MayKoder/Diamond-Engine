@@ -12,7 +12,7 @@
 #include"RE_Texture.h"
 
 
-GLuint TextureImporter::CustomLoadImage(char* buffer, int size, int* w, int* h)
+GLuint TextureImporter::LoadToMemory(char* buffer, int size, int* w, int* h)
 {
 	ILuint imageID;
 	ilGenImages(1, &imageID);
@@ -78,11 +78,6 @@ void TextureImporter::SaveDDS(char* buffer, int size, const char* fileName)
 	}
 
 	ilDeleteImages(1, &imageID);
-}
-
-char* TextureImporter::LoadDDS(const char* fileName)
-{
-	return nullptr;
 }
 
 void TextureImporter::Import(char* buffer, int bSize, Resource* res)

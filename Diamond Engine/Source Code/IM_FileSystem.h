@@ -10,8 +10,6 @@ enum class ImportType {
 };
 
 namespace StringLogic {
-
-	std::string FileNameFromPath(const char* _path);
 	std::string GlobalToLocalPath(const char* _globalPath);
 }
 

@@ -42,32 +42,22 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 					aiString path;
 					material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
 
-					std::string textureFileName = FileSystem::NormalizePath(path.C_Str());
-					size_t isLong = textureFileName.find_last_of("/");
-					if (isLong != textureFileName.npos)
-						textureFileName = textureFileName.substr(isLong + 1);
-
 					std::string localPath = generalPath;
 					localPath = localPath.substr(0, localPath.find_last_of('/') + 1);
 					localPath += FileSystem::NormalizePath(path.C_Str());
 
 					std::string libraryPath = EngineExternal->moduleResources->GetMetaPath(localPath.c_str());
-
 					uint UID = EngineExternal->moduleResources->GetMetaUID(libraryPath.c_str());
 					libraryPath = EngineExternal->moduleResources->LibraryFromMeta(libraryPath.c_str());
 
 					ResourceTexture* texture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(UID, libraryPath.c_str()));
 
 					texturesOnModelUIDs.push_back(texture);
-
 					path.Clear();
 				}
 				else
 				{
-					//TODO: Temporal, think of a better way
-					//TODO: Request resource?
-					//ResourceTexture* meshTexture = new ResourceTexture(White);
-					texturesOnModelUIDs.push_back(nullptr);
+					texturesOnModelUIDs.push_back(nullptr); //Empty texture
 				}
 			}
 		}
@@ -109,8 +99,6 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 		uids.clear();
 
 		aiReleaseImport(scene);
-
-		//ModelImporter::LoadModelCustom(res->GetLibraryPath());
 	}
 	else
 		LOG(LogType::L_ERROR, "Error loading scene"/*, scene->name*/);
@@ -125,11 +113,8 @@ void ModelImporter::SaveModelCustom(GameObject* root, const char* nameWithExtens
 	root->SaveToJson(json_value_get_array(goArray));
 	json_object_set_value(root_object, "Model Objects", goArray);
 
-	//Save file 
-	//std::string dir = MODELS_PATH;
-	//dir += nameWithExtension;
+	//Save file
 	json_serialize_to_file_pretty(file, nameWithExtension);
-	//dir.clear();
 
 	//Free memory
 	json_value_free(file);

@@ -19,17 +19,6 @@ AssetDir::AssetDir(const char* _dName, const char* _imPath, uint64 _lMod, bool _
 			metaUID = EngineExternal->moduleResources->GetMetaUID(metaFileDir.c_str());
 		}
 	}
-
-	//if (!isDir)
-	//{
-	//	GenerateMetaPath();
-
-	//	if (EngineExternal->moduleResources->ExistsOnLibrary(importPath.c_str()) == 0) /*TODO: Or has meta but the mirror on library does not exist*/
-	//	{
-	//		//Create mirror
-	//		uint id = EngineExternal->moduleResources->CreateLibraryFromAssets(importPath.c_str());
-	//	}
-	//}
 }
 
 AssetDir::~AssetDir()

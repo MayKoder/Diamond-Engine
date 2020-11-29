@@ -1,6 +1,6 @@
 #pragma once
 
-#include "glmath.h"
+#include "glmath.h" //Move to MathGeoLib
 #include <vector>
 #include<string>
 

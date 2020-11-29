@@ -15,5 +15,4 @@ namespace ModelImporter
 
 	void SaveMeshesToMeta(const char* assetFile, std::vector<ResourceMesh*>& meshes);
 	void GetMeshesFromMeta(const char* assetFile, std::vector<uint>& uids);
-
 }

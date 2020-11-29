@@ -12,10 +12,7 @@ public:
 		TEXTURE,
 		MODEL,
 		MESH,
-		//AUDIO,
 		SCENE,
-		//BONE,
-		//ANIMATION,
 		UNKNOWN
 	};
 

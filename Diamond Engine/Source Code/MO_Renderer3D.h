@@ -1,7 +1,6 @@
 #pragma once
 #include "Application.h"
 #include "Module.h"
-//#include "glmath.h"
 #include "Light.h"
 
 #include <queue>
@@ -36,31 +35,24 @@ public:
 	void OnResize(int width, int height);
 	void OnGUI() override;
 
-	//void ReGenerateFrameBuffer(int w, int h);
-
 	static void DrawBox(float3* points, float3 color = float3::one);
 	
 	void RayToMeshQueueIntersection(LineSegment& ray);
 
 private:
 
+	void RenderWithOrdering();
 	void GetCAPS(std::string& caps);
 	std::string str_CAPS;
 
 public:
 	bool vsync, wireframe, cull, lightng, color_material, texture_2d;
 
-	//Mesh testMesh;
-	std::vector<ResourceMesh*> globalMeshes;
-	std::vector<ResourceTexture*> globalTextures;
-
 	GLuint checkersTexture;
 	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
 
 	std::vector<C_MeshRenderer*> renderQueue;
 	std::multimap<float, C_MeshRenderer*> renderQueueMap;
-
-public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;

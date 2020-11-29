@@ -206,7 +206,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 
 	Grid p(0, 0, 0, 0);
-	//p.Scale();
 	p.axis = true;
 	p.Render();
 
@@ -216,27 +215,17 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		for (size_t i = 0; i < renderQueue.size(); i++)
 		{
 			//Maybe do culling check on the component update
-			if (gameCamera != nullptr){
-
-					float distance = App->moduleCamera->editorCamera.camFrustrum.pos.DistanceSq(renderQueue[i]->globalOBB.pos);
-					renderQueueMap.emplace(distance, renderQueue[i]);
+			if (gameCamera != nullptr)
+			{
+				float distance = App->moduleCamera->editorCamera.camFrustrum.pos.DistanceSq(renderQueue[i]->globalOBB.pos);
+				renderQueueMap.emplace(distance, renderQueue[i]);
 			}
 			else
 			{
 				renderQueue[i]->RenderMesh();
 			}
 		}
-
-
-		for (auto i = renderQueueMap.rbegin(); i != renderQueueMap.rend(); ++i)
-		{
-			// Get the range of the current key
-			auto range = renderQueueMap.equal_range(i->first);
-
-			// Now print out that whole range
-			for (auto d = range.first; d != range.second; ++d)
-				d->second->RenderMesh();
-		}
+		RenderWithOrdering();
 	}
 
 	glColor3f(1.f, 0.f, 0.f);
@@ -253,25 +242,15 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//Start test draw
 	if (gameCamera != nullptr) 
 	{
-		//gameCamera->GetGO()->transform->eulerRotation.y += 0.1f;
-		//gameCamera->GetGO()->transform->updateTransform = true;
-
 		gameCamera->StartDraw();
 
 		for (uint i = 0; i < MAX_LIGHTS; ++i)
 			lights[i].Render();
 
 		p.Render();
-		if (!renderQueue.empty())
-		{
-			for (size_t i = 0; i < renderQueue.size(); i++)
-			{
-				renderQueue[i]->RenderMesh();
-			}
-			//renderQueue.clear();
-		}
-		gameCamera->EndDraw();
+		RenderWithOrdering();
 
+		gameCamera->EndDraw();
 	}
 
 	glClearColor(0.08f, 0.08f, 0.08f, 1.f);
@@ -291,27 +270,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 bool ModuleRenderer3D::CleanUp()
 {
 	LOG(LogType::L_NORMAL, "Destroying 3D Renderer");
-
-
-	//glDeleteFramebuffers(1, &framebuffer);
-	//glDeleteTextures(1, &texColorBuffer);
-	//glDeleteRenderbuffers(1, &rbo);
-
-	for (unsigned int k = 0; k < globalTextures.size(); ++k)
-	{
-		glDeleteTextures(1, &globalTextures[k]->textureID);
-		delete globalTextures[k];
-		globalTextures[k] = nullptr;
-	}
-	globalTextures.clear();
-
-	for (unsigned int i = 0; i < globalMeshes.size(); i++)
-	{
-		delete globalMeshes[i];
-		globalMeshes[i] = nullptr;
-	}
-	globalMeshes.clear();
-
 	SDL_GL_DeleteContext(context);
 
 	return true;
@@ -492,6 +450,22 @@ void ModuleRenderer3D::RayToMeshQueueIntersection(LineSegment& ray)
 	//If nothing is selected, set selected GO to null
 	if(!selected)
 		App->moduleEditor->SetSelectedGO(nullptr);
+}
+
+void ModuleRenderer3D::RenderWithOrdering()
+{
+	if (renderQueueMap.empty())
+		return;
+
+	for (auto i = renderQueueMap.rbegin(); i != renderQueueMap.rend(); ++i)
+	{
+		// Get the range of the current key
+		auto range = renderQueueMap.equal_range(i->first);
+
+		// Now render out that whole range
+		for (auto d = range.first; d != range.second; ++d)
+			d->second->RenderMesh();
+	}
 }
 
 /*Get SDL caps*/

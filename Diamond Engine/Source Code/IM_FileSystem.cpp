@@ -22,17 +22,6 @@
 
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
-/*Get file name from any path*/
-std::string StringLogic::FileNameFromPath(const char* _path)
-{
-	std::string fileName(_path);
-
-	fileName = fileName.substr(fileName.find_last_of("/\\") + 1);
-	fileName = fileName.substr(0, fileName.find_last_of('.'));
-
-	return fileName;
-}
-
 /*Convert global path to local path*/
 std::string StringLogic::GlobalToLocalPath(const char* _globalPath)
 {
