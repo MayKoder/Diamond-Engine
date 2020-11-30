@@ -34,7 +34,6 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 			for (size_t k = 0; k < scene->mNumMaterials; k++)
 			{
 				aiMaterial* material = scene->mMaterials[k];
-				aiString str = material->GetName();
 				uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
 
 				if (numTextures > 0)

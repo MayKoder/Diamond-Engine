@@ -192,8 +192,8 @@ void C_Transform::SetTransformWithGlobal(float4x4& globalMat)
 	globalTransform = globalMat;
 	localTransform = gameObject->parent->transform->globalTransform.Inverted() * globalTransform;
 
-	Quat _rot;
-	float3 scale, pos;
+	//Quat _rot;
+	//float3 scale, pos;
 	localTransform.Decompose(position, rotation, localScale);
 
 	eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
