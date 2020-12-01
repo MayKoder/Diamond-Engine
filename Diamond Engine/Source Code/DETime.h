@@ -19,7 +19,6 @@ struct DETime
 	static float timeScale;
 
 	//Last frame completion time
-	//ASK: Should timeScale affect this deltatime?
 	static float deltaTime;
 
 	//Frames since game start

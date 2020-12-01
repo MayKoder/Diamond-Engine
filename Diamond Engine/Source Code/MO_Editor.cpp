@@ -7,12 +7,12 @@
 
 //ImGui Includes
 #include "ImGui/imgui.h"
-//#include "ImGui/imgui_internal.h"
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
 #include"DETime.h"
 #include"AssetDir.h"
+#include"RE_Texture.h"
 
 #include "MO_Window.h"
 #include "MO_Renderer3D.h"
@@ -182,6 +182,12 @@ bool M_Editor::CleanUp()
 	}
 	windows.clear();
 
+	for (unsigned int i = 0; i < editorIcons.size(); ++i)
+	{
+		App->moduleResources->UnloadResource(editorIcons[i]->GetUID());
+	}
+	editorIcons.clear();
+
 	LOG(LogType::L_NORMAL, "ImGui Shutdown");
 	return true;
 }
@@ -198,6 +204,7 @@ void M_Editor::DrawMenuBar()
 			if (ImGui::MenuItem("New"))
 			{
 				//Do something
+				App->moduleScene->CleanScene();
 			}
 			if (ImGui::MenuItem("Save scene", "CTRL+S"))
 			{
@@ -375,7 +382,7 @@ void M_Editor::DrawTopBar()
 		if (ImGui::BeginChild("##playBTS", ImVec2(200, ImGui::GetWindowContentRegionMax().y - style.FramePadding.y), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoDecoration)) {
 			
 			//Play game maybe if its clicked while game is playing, stop game?
-			if (ImGui::Button("Play")) 
+			if (ImGui::ImageButton((ImTextureID)editorIcons[0]->textureID, ImVec2(17, 17))) 
 			{
 				if (DETime::state == GameState::STOP) 
 				{
@@ -392,7 +399,7 @@ void M_Editor::DrawTopBar()
 			ImGui::SameLine();
 
 			//Stop game if playing
-			if (ImGui::Button("Stop")) 
+			if (ImGui::ImageButton((ImTextureID)editorIcons[1]->textureID, ImVec2(17, 17)))
 			{
 				if (DETime::state == GameState::PLAY || DETime::state == GameState::PAUSE)
 				{
@@ -404,12 +411,12 @@ void M_Editor::DrawTopBar()
 			ImGui::SameLine();
 
 			//Step one frame forward
-			if (ImGui::Button("Paus"))
+			if (ImGui::ImageButton((ImTextureID)editorIcons[2]->textureID, ImVec2(17, 17)))
 				DETime::Pause();
 
 			ImGui::SameLine();
 			//Step one frame forward
-			if (ImGui::Button("Step"))
+			if (ImGui::ImageButton((ImTextureID)editorIcons[3]->textureID, ImVec2(17, 17)))
 				DETime::Step();
 		}
 		ImGui::EndChild();

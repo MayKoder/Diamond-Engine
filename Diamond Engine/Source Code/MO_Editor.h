@@ -63,13 +63,13 @@ public:
 
 	void LogToConsole(const char* msg, LogType _type = LogType::L_NORMAL);
 
+	std::vector<ResourceTexture*> editorIcons;
 private:
 
 
 	std::vector<Window*> windows;
 	std::vector<std::string> styles;
 
-	std::vector<ResourceTexture*> editorIcons;
 
 	//WARNING TODO: This is bad find a better way
 	char styleInput[MAX_STY_INPUT] = "";

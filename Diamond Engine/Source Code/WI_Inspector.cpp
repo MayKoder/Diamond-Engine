@@ -102,11 +102,29 @@ void W_Inspector::Draw()
 			ImGui::CenterNextElement(ImGui::GetWindowSize(), 0.5f);		
 			if (ImGui::BeginCombo("##addComponent", "Add Component"))
 			{
-				//TODO: Do this with all the components
-				if (ImGui::Selectable("Material")) 
+				//TODO: Do this with all the components as a FOR loop
+				//for (size_t i = 0; i < (int)Component::Type::Count; i++)
+				//{
+				//	if (ImGui::Selectable("Material"))
+				//	{
+				//		if (selectedGO->GetComponent((Component::Type)i) == nullptr)
+				//			selectedGO->AddComponent((Component::Type)i);
+				//	}
+				//}
+				if (ImGui::Selectable("Mesh Renderer"))
 				{
-					if(selectedGO->GetComponent(Component::Type::Material) == nullptr)
+					if (selectedGO->GetComponent(Component::Type::MeshRenderer) == nullptr)
+						selectedGO->AddComponent(Component::Type::MeshRenderer);
+				}
+				if (ImGui::Selectable("Material"))
+				{
+					if (selectedGO->GetComponent(Component::Type::Material) == nullptr)
 						selectedGO->AddComponent(Component::Type::Material);
+				}		
+				if (ImGui::Selectable("Camera")) 
+				{
+					if(selectedGO->GetComponent(Component::Type::Camera) == nullptr)
+						selectedGO->AddComponent(Component::Type::Camera);
 				}
 
 

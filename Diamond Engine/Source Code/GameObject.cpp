@@ -6,6 +6,8 @@
 #include "CO_Material.h"
 #include "CO_Camera.h"
 
+#include"MO_Scene.h"
+
 #include"MaykMath.h"
 #include"parson/parson.h"
 #include"DEJsonSupport.h"
@@ -84,6 +86,7 @@ Component* GameObject::AddComponent(Component::Type _type)
 		break;
 	case Component::Type::Camera:
 		ret = new C_Camera(this);
+		EngineExternal->moduleScene->SetGameCamera(dynamic_cast<C_Camera*>(ret));
 		break;
 	}
 

@@ -215,6 +215,8 @@ void C_MeshRenderer::SetRenderMesh(ResourceMesh* mesh)
 	// Generate global AABB
 	globalAABB.SetNegativeInfinity();
 	globalAABB.Enclose(globalOBB);
+
+	_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
 }
 
 ResourceMesh* C_MeshRenderer::GetRenderMesh()

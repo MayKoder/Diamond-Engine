@@ -25,20 +25,17 @@ public:
 
 	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
 
+	void OnGUI() override;
 	void SaveScene(const char* name);
 	void LoadScene(const char* name);
-
-	void LoadModelTree(const char* modelPath);
-
-	GameObject* root;
-
-	std::vector<GameObject*> destroyList;
-
 	void SetGameCamera(C_Camera* cam);
 	void CreateGameCamera(const char* name);
+	void LoadModelTree(const char* modelPath);
 
-	void OnGUI() override;
+	void CleanScene();
 
+	std::vector<GameObject*> destroyList;
+	GameObject* root;
 private:
 	void Destroy(GameObject* gm);
 

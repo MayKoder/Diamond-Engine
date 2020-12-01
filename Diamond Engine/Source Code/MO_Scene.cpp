@@ -20,6 +20,8 @@
 #include"CO_Transform.h"
 #include"CO_Camera.h"
 
+#include"RE_Texture.h"
+
 #include"DETime.h"
 
 M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr)
@@ -42,6 +44,14 @@ bool M_Scene::Start()
 	CreateGameCamera("Main Camera");
 
 	LoadScene(App->moduleResources->LibraryFromMeta(App->moduleResources->GetMetaPath("Assets/Scene1.des").c_str()).c_str());
+
+	//TODO IMPORTANT: This is why we should save icons .meta, or we could generate them every time
+	//But this will introduce some randomized problems with ID duplications
+	// TODO: Maybe this should be handled on the editor module? texture #include is stupid
+	App->moduleEditor->editorIcons.push_back(dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/PlayButton.dds")));
+	App->moduleEditor->editorIcons.push_back(dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/StopButton.dds")));
+	App->moduleEditor->editorIcons.push_back(dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/PauseButton.dds")));
+	App->moduleEditor->editorIcons.push_back(dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/StepButton.dds")));
 
 	return true;
 }
@@ -143,7 +153,7 @@ void M_Scene::OnGUI()
 	if (ImGui::CollapsingHeader("Scene info", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::Text("Time since game start: %f", DETime::time);
-		ImGui::Text("Time scale: %f", DETime::timeScale);
+		ImGui::SliderFloat("Time scale", &DETime::timeScale, 0.f, 3.f);
 		ImGui::Text("Game delta time: %f", DETime::deltaTime);
 		ImGui::Text("Frame count: %i", DETime::frameCount);
 		ImGui::Text("Time since engine start: %f", DETime::realTimeSinceStartup);
@@ -182,11 +192,7 @@ void M_Scene::LoadScene(const char* name)
 		return;
 
 	//Clear all current scene memory
-	delete root;
-	root = nullptr;
-	App->moduleEditor->SetSelectedGO(nullptr);
-
-	SetGameCamera(nullptr);
+	CleanScene();
 
 	JSON_Object* sceneObj = json_value_get_object(scene);
 	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.pos.x, &DEJson::ReadVector3(sceneObj, "EditorCameraPosition")[0], 3);
@@ -233,6 +239,15 @@ void M_Scene::LoadModelTree(const char* modelPath)
 
 	//Free memory
 	json_value_free(scene);
+}
+
+void M_Scene::CleanScene()
+{
+	delete root;
+	root = nullptr;
+	App->moduleEditor->SetSelectedGO(nullptr);
+	SetGameCamera(nullptr);
+	root = CreateGameObject("Scene root", nullptr);
 }
 
 GameObject* M_Scene::LoadGOData(JSON_Object* goJsonObj,  GameObject* parent)
