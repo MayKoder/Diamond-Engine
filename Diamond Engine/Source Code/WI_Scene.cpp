@@ -111,7 +111,7 @@ void W_Scene::Draw()
 			float4x4 mat = trans->globalTransform.Transposed();
 
 			//ERROR: World mode makes rotations go byebye
-			if (ImGuizmo::Manipulate(App->moduleCamera->editorCamera.ViewMatrixOpenGL().v[0], App->moduleCamera->editorCamera.ProjectionMatrixOpenGL().v[0], operation, mode, mat.ptr()))
+			if (ImGuizmo::Manipulate(App->moduleCamera->editorCamera.ViewMatrixOpenGL().v[0], App->moduleCamera->editorCamera.ProjectionMatrixOpenGL().v[0], operation, mode, mat.ptr()) && ImGui::IsWindowHovered())
 			{
 				mat.Transpose();
 				//mat.Decompose(trans->position, trans->rotation, trans->localScale);
@@ -138,7 +138,7 @@ void W_Scene::Draw()
 			normal.x = (normal.x - 0.5f) / 0.5f;
 			normal.y = -((normal.y - 0.5f) / 0.5f);
 
-			if ((normal.x >= -1 && normal.x <= 1) && (normal.y >= -1 && normal.y <= 1))
+			if (ImGui::IsWindowHovered())
 			{
 				LineSegment picking = App->moduleCamera->editorCamera.camFrustrum.UnProjectLineSegment(normal.x, normal.y);
 				//ImGui::SetCursorPos(ImVec2(100, 30));

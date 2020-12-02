@@ -1,18 +1,16 @@
 #include "DETime.h"
 
+int DETime::frameCount;
 
 float DETime::time;
 float DETime::timeScale = 1.f;
 float DETime::deltaTime;
-
-int DETime::frameCount;
-
-float DETime::realTimeSinceStartup;
-float DETime::realTimeDeltaTime;
 float DETime::realStartTime;
+float DETime::realTimeDeltaTime;
+float DETime::realTimeSinceStartup;
 
-GameState DETime::state = GameState::STOP;
 Timer DETime::gameTimer;
+GameState DETime::state = GameState::STOP;
 
 void DETime::Play()
 {

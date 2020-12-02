@@ -425,9 +425,8 @@ void ModuleRenderer3D::RayToMeshQueueIntersection(LineSegment& ray)
 
 					float dist = 0;
 					if (local.Intersects(triangle, &dist, nullptr))
-					{
 						distMap[dist] = (*i).second;
-					}
+
 				}
 			}
 		}

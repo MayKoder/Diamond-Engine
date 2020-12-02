@@ -58,8 +58,6 @@ bool M_Scene::Start()
 
 update_status M_Scene::PreUpdate(float dt)
 {
-	DETime::PreUpdate();
-
 	/*Destroy gameobjects inside the destroy queue*/
 	if (destroyList.size() > 0) 
 	{

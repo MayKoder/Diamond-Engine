@@ -95,6 +95,7 @@ void Application::PrepareUpdate()
 	//TODO, ASK: Should i do this here?
 	DETime::realTimeDeltaTime = dt;
 	DETime::realTimeSinceStartup += DETime::realTimeDeltaTime;
+	DETime::PreUpdate();
 
 	ms_timer.Start();
 }
