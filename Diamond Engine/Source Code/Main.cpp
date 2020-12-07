@@ -20,11 +20,41 @@ enum main_states
 	MAIN_EXIT
 };
 
+//TODO IMPORTANT: Move all mono stuff to a custom module
+#include <mono/jit/jit.h>
+#include <mono/metadata/assembly.h>
+#include <mono/metadata/environment.h>
+#include <mono/utils/mono-publib.h>
+#include <mono/metadata/mono-config.h>
+#include <mono/metadata/object.h>
+#include <mono/metadata/debug-helpers.h>
+
+#pragma comment( lib, "mono-2.0-sgen.lib" )
+
+MonoString* gimme()
+{
+	return mono_string_new(mono_domain_get(), "LMAO");
+}
 
 //ASK IMPORTANT: Is vector iteration faster with iterators or via index?
 int main(int argc, char** argv)
 {
 	LOG(LogType::L_NORMAL, "Starting game '%s'...", TITLE);
+
+	//mono_config_parse(NULL);
+	//MonoDomain* domain = mono_jit_init("CSTest/netcoreapp3.1/Assembly-CSharp.dll");
+
+	//MonoAssembly* assembly;
+	//assembly = mono_domain_assembly_open(domain, "CSTest/netcoreapp3.1/Assembly-CSharp.dll");
+	//if (!assembly)
+	//	LOG(LogType::L_ERROR, "ERROR");
+
+
+	//MonoImage* image = mono_assembly_get_image(assembly);
+	//MonoClass* my_class = mono_class_from_name(image, "MaykLogic", "MonoEmbed");
+	//MonoObject* my_class_instance = mono_object_new(domain, my_class);
+	//mono_runtime_object_init(my_class_instance);
+	//int test = mono_object_hash(my_class_instance);
 
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
@@ -88,6 +118,8 @@ int main(int argc, char** argv)
 
 		}
 	}
+
+	//mono_jit_cleanup(domain); //Mono cleanup
 
 	EngineExternal = nullptr;
 	RELEASE(App);

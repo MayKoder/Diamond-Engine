@@ -18,6 +18,7 @@ public:
 	void DrawFileTree(AssetDir& file);
 
 	AssetDir* selectedFile;
+	AssetDir* displayFolder;
 };
 
 

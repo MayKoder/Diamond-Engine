@@ -43,3 +43,23 @@ bool ResourceTexture::UnloadFromMemory()
 
 	return true;
 }
+
+DERect ResourceTexture::GetTextureChunk(DERect area)
+{
+	//Rect of the chunk we need to get
+	DERect ret;
+	if (!DERect(0, 0, this->tWidth, this->tHeight).Contains(area))
+		return ret;
+
+	//Calculate rect as normalized rect
+	ret = area;
+
+	ret.x = ret.x / tWidth;
+	ret.w = (ret.x + ret.w) / tWidth;
+
+	ret.y = ret.y / tHeight;
+	ret.h = (ret.y + ret.h) / tHeight;
+
+		//Position should be inside the 0, 1 range and position + width (normalized) should not be more than 1
+	return ret;
+}

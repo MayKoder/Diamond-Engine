@@ -82,9 +82,6 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 		{
 			ImGui::SetDragDropPayload("_GAMEOBJECT", node, sizeof(GameObject*));
 
-			//void* data = nullptr;
-			//const void* testNode = node;
-			//memcpy(data, testNode, sizeof(GameObject*));
 			dropTarget = node;
 
 			ImGui::Text("Change parent to...");
@@ -99,8 +96,6 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 		}
 	}
 
-	//If we call this after BeginDragDropTarget() next child will crash because we are trying
-	//To show childrens of a flags = leaf node
 	node->showChildren = (node->children.size() == 0) ? false : nodeOpen;
 	
 	//All nodes can be a drop target

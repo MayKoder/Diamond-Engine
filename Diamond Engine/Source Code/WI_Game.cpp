@@ -5,6 +5,9 @@
 W_Game::W_Game() : Window(), targetCamera(nullptr)
 {
 	name = "Game";
+
+	aspect[0] = 16;
+	aspect[1] = 9;
 }
 
 W_Game::~W_Game()
@@ -16,13 +19,23 @@ void W_Game::Draw()
 	//TODO: Could we call this from the base Window class? Like with components? Maybe to avoid duplicated code?
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/))
 	{
+
 		//Can't use if(true) return; because we need to call ImGui::End();
 		if (targetCamera != nullptr && targetCamera->framebuffer != 0) {
 			//LOG(LogType::L_WARNING, "Frame buffer game id: %d", targetCamera->framebuffer);
 			//TODO: Dont modify aspect ratio every frame
 			targetCamera->SetAspectRatio(ImGui::GetContentRegionAvail().x / ImGui::GetContentRegionAvail().y);
+
+			//float w = ImGui::GetWindowSize().x;
+			//float h = (9 * w) / 16;
 			ImGui::Image((ImTextureID)targetCamera->texColorBuffer, ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
 		}
+
+		//ImGui::SetCursorPos(ImVec2(10, 50));
+		//if (ImGui::DragFloat2("Aspect Ratio", aspect, 0.2f, 0.f, 30.f))
+		//{
+		//	targetCamera->SetAspectRatio(aspect[0] / aspect[1]);
+		//}
 
 	}
 	ImGui::End();

@@ -26,14 +26,8 @@ public:
 	void SetRenderMesh(ResourceMesh* mesh);
 	ResourceMesh* GetRenderMesh();
 
-//private:
-
-	//Pointer to a mesh stored at ModuleRenderer3D
-	//Does not need a delete call
-
-	AABB globalAABB;
 	OBB globalOBB;
-
+	AABB globalAABB;
 	bool faceNormals, vertexNormals, showAABB, showOBB;
 
 private:

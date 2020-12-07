@@ -191,6 +191,7 @@ void M_Scene::LoadScene(const char* name)
 
 	//Clear all current scene memory
 	CleanScene();
+	RELEASE(root); //Had to remove root to create it later
 
 	JSON_Object* sceneObj = json_value_get_object(scene);
 	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.pos.x, &DEJson::ReadVector3(sceneObj, "EditorCameraPosition")[0], 3);

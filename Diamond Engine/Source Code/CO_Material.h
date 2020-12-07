@@ -12,11 +12,11 @@ public:
 	bool OnEditor() override;
 	int GetTextureID();
 
-	ResourceTexture* matTexture;
 
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(JSON_Object* nObj) override;
 
 	bool viewWithCheckers;
+	ResourceTexture* matTexture;
 
 };

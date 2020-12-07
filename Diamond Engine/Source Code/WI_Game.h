@@ -19,6 +19,7 @@ public:
 
 private: 
 	C_Camera* targetCamera;
+	float aspect[2];
 
 };
 

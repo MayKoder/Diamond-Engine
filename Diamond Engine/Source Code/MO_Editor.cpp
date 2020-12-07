@@ -93,7 +93,6 @@ bool M_Editor::Init()
 	style->Colors[ImGuiCol_WindowBg] = ImVec4(0.211, 0.211, 0.211, 1.f);
 	//style->WindowBorderSize = 0.0f;
 
-	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
 	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 	{
 		style->WindowRounding = 0.0f;
@@ -382,7 +381,7 @@ void M_Editor::DrawTopBar()
 		if (ImGui::BeginChild("##playBTS", ImVec2(200, ImGui::GetWindowContentRegionMax().y - style.FramePadding.y), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoDecoration)) {
 			
 			//Play game maybe if its clicked while game is playing, stop game?
-			if (ImGui::ImageButton((ImTextureID)editorIcons[0]->textureID, ImVec2(17, 17))) 
+			if (ImGui::ImageButton((ImTextureID)editorIcons[0]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
 			{
 				if (DETime::state == GameState::STOP) 
 				{
@@ -399,7 +398,7 @@ void M_Editor::DrawTopBar()
 			ImGui::SameLine();
 
 			//Stop game if playing
-			if (ImGui::ImageButton((ImTextureID)editorIcons[1]->textureID, ImVec2(17, 17)))
+			if (ImGui::ImageButton((ImTextureID)editorIcons[1]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
 			{
 				if (DETime::state == GameState::PLAY || DETime::state == GameState::PAUSE)
 				{
@@ -411,12 +410,12 @@ void M_Editor::DrawTopBar()
 			ImGui::SameLine();
 
 			//Step one frame forward
-			if (ImGui::ImageButton((ImTextureID)editorIcons[2]->textureID, ImVec2(17, 17)))
+			if (ImGui::ImageButton((ImTextureID)editorIcons[2]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
 				DETime::Pause();
 
 			ImGui::SameLine();
 			//Step one frame forward
-			if (ImGui::ImageButton((ImTextureID)editorIcons[3]->textureID, ImVec2(17, 17)))
+			if (ImGui::ImageButton((ImTextureID)editorIcons[3]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
 				DETime::Step();
 		}
 		ImGui::EndChild();

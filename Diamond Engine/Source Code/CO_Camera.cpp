@@ -23,7 +23,7 @@ C_Camera::C_Camera() : Component(nullptr), framebuffer(0), texColorBuffer(0), rb
 	camFrustrum.up = float3::unitY;
 
 	camFrustrum.verticalFov = 60.0f * DEGTORAD;
-	camFrustrum.horizontalFov = 2.0f * atanf(tanf(camFrustrum.verticalFov / 2.0f) * 1.3f);
+	camFrustrum.horizontalFov = 2.0f * atanf(tanf(camFrustrum.verticalFov / 2.0f) * 1.7f);
 
 	camFrustrum.pos = float3::zero;
 }
@@ -38,7 +38,7 @@ C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(0), texColorBu
 	camFrustrum.up = gameObject->transform->GetUp();
 
 	camFrustrum.verticalFov = 60.0f * DEGTORAD;
-	camFrustrum.horizontalFov = 2.0f * atanf(tanf(camFrustrum.verticalFov / 2.0f) * 1.3f);
+	camFrustrum.horizontalFov = 2.0f * atanf(tanf(camFrustrum.verticalFov / 2.0f) * 1.7f);
 	
 	camFrustrum.pos = gameObject->transform->position;
 }

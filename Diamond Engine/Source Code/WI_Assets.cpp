@@ -8,6 +8,7 @@
 W_Assets::W_Assets() : Window(), selectedFile(nullptr)
 {
 	name = "Assets";
+	displayFolder = &EngineExternal->moduleResources->assetsRoot;
 }
 
 W_Assets::~W_Assets()
@@ -18,7 +19,16 @@ void W_Assets::Draw()
 {
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/))
 	{
-		DrawFileTree(EngineExternal->moduleResources->assetsRoot);
+		if (ImGui::BeginChild("Test", ImVec2(70, 110), false, ImGuiWindowFlags_NoScrollbar))
+		{
+			//ImGui::hove
+			ImGui::Image((ImTextureID)1, ImVec2(70, 70));
+			ImGui::TextWrapped("Hola.exe");
+		}
+		ImGui::EndChild();
+		
+		
+		DrawFileTree(*displayFolder);
 		DrawFileTree(EngineExternal->moduleResources->meshesLibraryRoot);
 
 		if (selectedFile != nullptr && /*ImGui::IsWindowHovered() &&*/ EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) 
@@ -56,8 +66,12 @@ void W_Assets::DrawFileTree(AssetDir& file)
 	//	flags |= ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_Selected;
 	bool nodeOpen = ImGui::TreeNodeEx(&file, flags, file.dirName.c_str());
 
-	if (ImGui::IsItemClicked()) {
+	if (ImGui::IsItemClicked()) 
+	{
 		selectedFile = &file;
+
+		if (ImGui::IsMouseDoubleClicked(0) && file.isDir)
+			displayFolder = &file;
 	}
 
 
@@ -71,7 +85,6 @@ void W_Assets::DrawFileTree(AssetDir& file)
 				ImGui::SetDragDropPayload("_TEXTURE", &file.metaFileDir, file.metaFileDir.length());
 			else if (EngineExternal->moduleResources->GetTypeFromLibraryExtension(file.importPath.c_str()) == Resource::Type::MESH)
 				ImGui::SetDragDropPayload("_MESH", &file.importPath, file.importPath.length());
-			//TODO: File is generating .meta files for library meshes... fix
 
 			ImGui::Text("Import asset: %s", file.metaFileDir.c_str());
 			ImGui::EndDragDropSource();

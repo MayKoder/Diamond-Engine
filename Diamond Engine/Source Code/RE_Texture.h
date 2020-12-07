@@ -3,6 +3,8 @@
 #include"DEResource.h"
 #include<string>
 #include"Color.h"
+#include"DERect.h"
+
 typedef unsigned int GLuint;
 
 
@@ -14,6 +16,7 @@ public:
 
 	bool LoadToMemory() override;
 	bool UnloadFromMemory() override;
+	DERect GetTextureChunk(DERect area);
 
 public:
 	int tWidth;
