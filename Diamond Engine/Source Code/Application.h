@@ -13,6 +13,7 @@ class ModuleCamera3D;
 class M_Scene;
 class M_Editor;
 class M_ResourceManager;
+class M_MonoManager;
 
 #include"MathGeoLib/include/Algorithm/Random/LCG.h"
 
@@ -27,6 +28,7 @@ public:
 	M_Scene* moduleScene = nullptr;
 	M_Editor* moduleEditor = nullptr;
 	M_ResourceManager* moduleResources = nullptr;
+	M_MonoManager* moduleMono = nullptr;
 
 	std::vector<Module*> list_modules;
 

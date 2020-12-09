@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Assembly-CSharp": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false
+    }
+  }
+}

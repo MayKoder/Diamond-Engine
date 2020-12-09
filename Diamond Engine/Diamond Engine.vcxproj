@@ -99,6 +99,7 @@
     <ClInclude Include="Source Code\CO_Material.h" />
     <ClInclude Include="Source Code\CO_Transform.h" />
     <ClInclude Include="Source Code\DEJsonSupport.h" />
+    <ClInclude Include="Source Code\DERect.h" />
     <ClInclude Include="Source Code\DETime.h" />
     <ClInclude Include="Source Code\EngineVersion.h" />
     <ClInclude Include="Source Code\External Libraries\DevIL\include\devil_cpp_wrapper.hpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Source Code\Light.h" />
     <ClInclude Include="Source Code\MaykMath.h" />
     <ClInclude Include="Source Code\DEModelNode.h" />
+    <ClInclude Include="Source Code\MO_MonoManager.h" />
     <ClInclude Include="Source Code\RE_Mesh.h" />
     <ClInclude Include="Source Code\MeshArrays.h" />
     <ClInclude Include="Source Code\IM_MeshLoader.h" />
@@ -233,6 +235,7 @@
     <ClCompile Include="Source Code\CO_MeshRenderer.cpp" />
     <ClCompile Include="Source Code\CO_Transform.cpp" />
     <ClCompile Include="Source Code\DEJsonSupport.cpp" />
+    <ClCompile Include="Source Code\DERect.cpp" />
     <ClCompile Include="Source Code\DEResource.cpp" />
     <ClCompile Include="Source Code\DETime.cpp" />
     <ClCompile Include="Source Code\EngineVersion.cpp" />
@@ -285,6 +288,7 @@
     <ClCompile Include="Source Code\glmath.cpp" />
     <ClCompile Include="Source Code\IM_ModelImporter.cpp" />
     <ClCompile Include="Source Code\IM_TextureImporter.cpp" />
+    <ClCompile Include="Source Code\MO_MonoManager.cpp" />
     <ClCompile Include="Source Code\RE_Mesh.cpp" />
     <ClCompile Include="Source Code\IM_MeshLoader.cpp" />
     <ClCompile Include="Source Code\MO_FileSystem.cpp" />

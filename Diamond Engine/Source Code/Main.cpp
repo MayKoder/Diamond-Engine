@@ -20,42 +20,64 @@ enum main_states
 	MAIN_EXIT
 };
 
-//TODO IMPORTANT: Move all mono stuff to a custom module
-#include <mono/jit/jit.h>
-#include <mono/metadata/assembly.h>
-#include <mono/metadata/environment.h>
-#include <mono/utils/mono-publib.h>
-#include <mono/metadata/mono-config.h>
-#include <mono/metadata/object.h>
-#include <mono/metadata/debug-helpers.h>
-
-#pragma comment( lib, "mono-2.0-sgen.lib" )
-
-MonoString* gimme()
-{
-	return mono_string_new(mono_domain_get(), "LMAO");
-}
-
 //ASK IMPORTANT: Is vector iteration faster with iterators or via index?
 int main(int argc, char** argv)
 {
 	LOG(LogType::L_NORMAL, "Starting game '%s'...", TITLE);
 
-	//mono_config_parse(NULL);
-	//MonoDomain* domain = mono_jit_init("CSTest/netcoreapp3.1/Assembly-CSharp.dll");
+	//This compiles the solution, this is kinda cool, talk about this with the teacher
+	//UINT ret = WinExec("dotnet build I:/Git_Projecte/Diamond-Engine/Diamond Engine/Project Folder/CSTest/ConsoleApp1.sln --configuration Debug", SW_SHOW);
+	//system("msbuild C:/Users/Mique/Desktop/wetransfer-c6d5c3/CSTest/ConsoleApp1/ConsoleApp1.sln /p:Configuration=Debug");
+	
+//TODO: Maybe use CreateProcess? it's more flexible	
+//TODO IMPORTANT: You can get the warnings and errors from this code, do that to check if there is any compilation errors.
+#pragma region ShellExecute
+	SHELLEXECUTEINFO ShExecInfo = { 0 };
+	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+	ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
+	ShExecInfo.hwnd = NULL;
+	ShExecInfo.lpVerb = NULL;
+	ShExecInfo.lpFile = "cmd";
+	ShExecInfo.lpParameters = "/K dotnet build CSTest/ConsoleApp1.sln --configuration Release";
+	ShExecInfo.lpDirectory = NULL;
+	ShExecInfo.nShow = SW_SHOW;
+	ShExecInfo.hInstApp = NULL;
+	ShellExecuteEx(&ShExecInfo);
+	WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
+	CloseHandle(ShExecInfo.hProcess);
+#pragma endregion
 
-	//MonoAssembly* assembly;
-	//assembly = mono_domain_assembly_open(domain, "CSTest/netcoreapp3.1/Assembly-CSharp.dll");
-	//if (!assembly)
-	//	LOG(LogType::L_ERROR, "ERROR");
+//This works BUT i dont like to hardcode the cmd.exe path, i think this will cause some issues with different OS or system paths
+#pragma region CreateProcess
+	//STARTUPINFO si;
+	//SecureZeroMemory(&si, sizeof(STARTUPINFO));
+
+	//si.cb = sizeof(STARTUPINFO);
 
 
-	//MonoImage* image = mono_assembly_get_image(assembly);
-	//MonoClass* my_class = mono_class_from_name(image, "MaykLogic", "MonoEmbed");
-	//MonoObject* my_class_instance = mono_object_new(domain, my_class);
-	//mono_runtime_object_init(my_class_instance);
-	//int test = mono_object_hash(my_class_instance);
+	//PROCESS_INFORMATION pi;
 
+	//BOOL result = CreateProcess(
+	//	"c:\\windows\\system32\\cmd.exe",
+	//	"/c dotnet build CSTest/ConsoleApp1.sln --configuration Debug",
+	//	NULL,
+	//	NULL,
+	//	FALSE,
+	//	0,
+	//	NULL,
+	//	NULL,
+	//	&si,
+	//	&pi);
+
+	//if (result)
+	//{
+	//	WaitForSingleObject(pi.hProcess, INFINITE);
+	//	printf("Process with ID: %i has exited.\n", GetProcessId(pi.hProcess));
+	//	CloseHandle(pi.hProcess);
+	//}
+#pragma endregion
+
+	
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
 	Application* App = NULL;
@@ -118,8 +140,6 @@ int main(int argc, char** argv)
 
 		}
 	}
-
-	//mono_jit_cleanup(domain); //Mono cleanup
 
 	EngineExternal = nullptr;
 	RELEASE(App);

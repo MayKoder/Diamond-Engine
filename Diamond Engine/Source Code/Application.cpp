@@ -10,6 +10,7 @@
 #include "MO_Scene.h"
 #include "MO_Editor.h"
 #include "MO_ResourceManager.h"
+#include "MO_MonoManager.h"
 
 #include"DETime.h"
 
@@ -26,6 +27,8 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	moduleScene = new M_Scene(this);
 	moduleRenderer3D = new ModuleRenderer3D(this);
 	moduleCamera = new ModuleCamera3D(this);
+
+	moduleMono = new M_MonoManager(this);
 
 	moduleResources = new M_ResourceManager(this);
 	moduleEditor = new M_Editor(this);
@@ -45,6 +48,8 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	// Renderer last!
 	AddModule(moduleRenderer3D);
 	AddModule(moduleCamera);
+
+	AddModule(moduleMono);
 
 	AddModule(moduleResources);
 	AddModule(moduleEditor);

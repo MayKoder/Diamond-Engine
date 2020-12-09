@@ -484,6 +484,12 @@
     <ClInclude Include="Source Code\CO_Transform.h">
       <Filter>Sources\Components\Derived</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\DERect.h">
+      <Filter>Sources\Tools\MMath</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MO_MonoManager.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -746,6 +752,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\CO_Transform.cpp">
       <Filter>Sources\Components\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DERect.cpp">
+      <Filter>Sources\Tools\MMath</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_MonoManager.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
