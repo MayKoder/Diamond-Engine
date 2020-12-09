@@ -10,6 +10,7 @@
 #include <mono/metadata/object.h>
 #include <mono/metadata/debug-helpers.h>
 
+#pragma comment( lib, "mono-2.0-boehm.lib" )
 #pragma comment( lib, "mono-2.0-sgen.lib" )
 
 #pragma region Internals
