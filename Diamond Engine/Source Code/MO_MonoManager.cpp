@@ -10,8 +10,8 @@
 #include <mono/metadata/object.h>
 #include <mono/metadata/debug-helpers.h>
 
-#pragma comment( lib, "mono-2.0-boehm.lib" )
-#pragma comment( lib, "mono-2.0-sgen.lib" )
+#pragma comment( lib, "mono/libx86/mono-2.0-boehm.lib" )
+#pragma comment( lib, "mono/libx86/mono-2.0-sgen.lib" )
 
 #pragma region Internals
 //-------------------------------------------- Internals -----------------------------------------------//
@@ -80,6 +80,8 @@ bool M_MonoManager::Start()
 {
 	LOG(LogType::L_NORMAL, "Setting up the camera");
 	bool ret = true;
+
+	mono_set_dirs("lib", "etc");
 
 	mono_config_parse(NULL);
 	domain = mono_jit_init("CSTest/netcoreapp3.1/Assembly-CSharp.dll");
