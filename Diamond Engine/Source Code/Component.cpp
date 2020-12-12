@@ -45,6 +45,26 @@ bool Component::OnEditor()
 	return true;
 }
 
+void Component::DropField(const char* fieldName, const char* dropType)
+{
+	ImGui::PushID(fieldName);
+
+	ImGui::Text(fieldName);
+	ImGui::SameLine();
+
+	ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "Empty");
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(dropType))
+		{
+
+		}
+		ImGui::EndDragDropTarget();
+	}
+
+	ImGui::PopID();
+}
+
 void Component::SaveData(JSON_Object* nObj)
 {
 	DEJson::WriteInt(nObj, "Type", (int)type);

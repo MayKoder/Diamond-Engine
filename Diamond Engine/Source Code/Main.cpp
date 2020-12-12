@@ -32,19 +32,19 @@ int main(int argc, char** argv)
 //TODO: Maybe use CreateProcess? it's more flexible	
 //TODO IMPORTANT: You can get the warnings and errors from this code, do that to check if there is any compilation errors.
 #pragma region ShellExecute
-	//SHELLEXECUTEINFO ShExecInfo = { 0 };
-	//ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
-	//ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
-	//ShExecInfo.hwnd = NULL;
-	//ShExecInfo.lpVerb = NULL;
-	//ShExecInfo.lpFile = "cmd";
-	//ShExecInfo.lpParameters = "/K dotnet build CSTest/ConsoleApp1.sln --configuration Release";
-	//ShExecInfo.lpDirectory = NULL;
-	//ShExecInfo.nShow = SW_SHOW;
-	//ShExecInfo.hInstApp = NULL;
-	//ShellExecuteEx(&ShExecInfo);
-	//WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
-	//CloseHandle(ShExecInfo.hProcess);
+	SHELLEXECUTEINFO ShExecInfo = { 0 };
+	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+	ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
+	ShExecInfo.hwnd = NULL;
+	ShExecInfo.lpVerb = NULL;
+	ShExecInfo.lpFile = "cmd";
+	ShExecInfo.lpParameters = "/K dotnet build CSSolution/Assembly-CSharp.sln --configuration Release";
+	ShExecInfo.lpDirectory = NULL;
+	ShExecInfo.nShow = SW_SHOW;
+	ShExecInfo.hInstApp = NULL;
+	ShellExecuteEx(&ShExecInfo);
+	WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
+	CloseHandle(ShExecInfo.hProcess);
 #pragma endregion
 
 //This works BUT i dont like to hardcode the cmd.exe path, i think this will cause some issues with different OS or system paths

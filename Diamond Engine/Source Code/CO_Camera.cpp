@@ -100,7 +100,7 @@ void C_Camera::Update()
 {
 
 	//Maybe dont update every frame?
-	camFrustrum.pos = gameObject->transform->position;
+	camFrustrum.pos = gameObject->transform->globalTransform.TranslatePart();
 	camFrustrum.front = gameObject->transform->GetForward();
 	camFrustrum.up = gameObject->transform->GetUp();
 

@@ -490,6 +490,9 @@
     <ClInclude Include="Source Code\MO_MonoManager.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CO_Script.h">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -758,6 +761,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\MO_MonoManager.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Script.cpp">
+      <Filter>Sources\Components\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

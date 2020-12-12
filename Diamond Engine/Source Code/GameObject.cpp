@@ -5,6 +5,7 @@
 #include "CO_MeshRenderer.h"
 #include "CO_Material.h"
 #include "CO_Camera.h"
+#include "CO_Script.h"
 
 #include"MO_Scene.h"
 
@@ -83,6 +84,9 @@ Component* GameObject::AddComponent(Component::Type _type)
 		break;
 	case Component::Type::Material:
 		ret = new C_Material(this);
+		break;
+	case Component::Type::Script:
+		ret = new C_Script(this);
 		break;
 	case Component::Type::Camera:
 		ret = new C_Camera(this);
