@@ -2,6 +2,7 @@
 
 #include "Module.h"
 #include "Window.h"
+#include "Globals.h"
 
 #define STYLES_PATH "Settings/styles.json"
 #define MAX_STY_INPUT 15
@@ -81,4 +82,6 @@ private:
 
 	float viewportCorSize;
 	ImGuiID dockspace_id;
+
+	ImVec4 playingTint;
 };

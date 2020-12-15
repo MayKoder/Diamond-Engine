@@ -42,6 +42,7 @@
     <Compile Include="Core.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="InternalCalls.cs" />
+    <Compile Include="Quaternion.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -241,12 +241,12 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 	std::string meta = M_ResourceManager::GetMetaPath(assetsFile);
 	uint resUID = GetMetaUID(meta.c_str());
 
-	Resource* resource = CreateNewResource(assetsFile, resUID, type); //Save ID, assetsFile path, libraryFile path
+	Resource* resource = CreateNewResource(assetsFile, resUID, type);
 
 	int ret = 0;
 	
 	char* fileBuffer = nullptr;
-	unsigned int size = FileSystem::LoadToBuffer(assetsFile, &fileBuffer); //<-- pseudocode, load from File System
+	unsigned int size = FileSystem::LoadToBuffer(assetsFile, &fileBuffer);
 
 	switch (resource->GetType()) 
 	{
@@ -348,7 +348,7 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 	return ret;
 }
 
-int M_ResourceManager::GetMetaUID(const char* metaFile)
+int M_ResourceManager::GetMetaUID(const char* metaFile) const
 {
 	JSON_Value* metaJSON = json_parse_file(metaFile);
 	DEConfig rObj(json_value_get_object(metaJSON));
@@ -386,7 +386,7 @@ std::string M_ResourceManager::GetMetaPath(const char* assetsFile)
 	return metaFile;
 }
 
-Resource::Type M_ResourceManager::GetMetaType(const char* metaFile)
+Resource::Type M_ResourceManager::GetMetaType(const char* metaFile) const
 {
 	JSON_Value* metaJSON = json_parse_file(metaFile);
 	DEConfig rObj(json_value_get_object(metaJSON));
@@ -465,7 +465,7 @@ void M_ResourceManager::UpdateFile(AssetDir& modDir)
 	modDir.lastModTime = App->moduleFileSystem->GetLastModTime(modDir.importPath.c_str());
 }
 
-Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFile)
+Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFile) const
 {
 	std::string ext(assetFile);
 	ext = ext.substr(ext.find_last_of('.') + 1);
@@ -486,7 +486,7 @@ Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFil
 	return Resource::Type::UNKNOWN;
 }
 
-Resource::Type M_ResourceManager::GetTypeFromLibraryExtension(const char* libraryFile)
+Resource::Type M_ResourceManager::GetTypeFromLibraryExtension(const char* libraryFile) const
 {
 	std::string ext(libraryFile);
 	ext = ext.substr(ext.find_last_of('.') + 1);

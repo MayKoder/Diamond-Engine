@@ -14,6 +14,7 @@ C_Transform::C_Transform() : Component(nullptr), updateTransform(false)
 	localTransform.SetIdentity();
 
 	localTransform.Decompose(position, rotation, localScale);
+	rotation.Normalize();
 
 	eulerRotation = rotation.ToEulerXYZ();
 
@@ -29,6 +30,7 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 	localTransform.SetIdentity();
 
 	localTransform.Decompose(position, rotation, localScale);
+	rotation.Normalize();
 
 	eulerRotation = rotation.ToEulerXYZ();
 
@@ -91,6 +93,10 @@ bool C_Transform::OnEditor()
 		ImGui::SameLine();
 		ImGui::Text("%f, %f, %f", globalTransform.ToEulerXYZ().x, globalTransform.ToEulerXYZ().y, globalTransform.ToEulerXYZ().z);
 
+		ImGui::Text("Rotation Quaternion: ");
+		ImGui::SameLine();
+		Quat glQuat = globalTransform.RotatePart().ToQuat().Normalized();
+		ImGui::Text("%f, %f, %f, %f", glQuat.x, glQuat.y, glQuat.z, glQuat.w);
 
 		ImGui::Text("Scale: ");
 		ImGui::SameLine();
@@ -108,6 +114,8 @@ void C_Transform::UpdateTransform()
 	GetRecursiveTransforms(this, transformsToUpdate);
 
 	rotation = Quat::FromEulerXYZ(eulerRotation.x * DEGTORAD, eulerRotation.y * DEGTORAD, eulerRotation.z * DEGTORAD);
+	rotation.Normalize();
+
 	localTransform = float4x4::FromTRS(position, rotation, localScale);
 
 
@@ -173,7 +181,7 @@ void C_Transform::UpdateBoxes()
 void C_Transform::SetTransformMatrix(float3 _position, Quat _rotation, float3 _localScale)
 {
 	position = _position;
-	rotation = _rotation;
+	rotation = _rotation.Normalized();
 	localScale = _localScale;
 
 	eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
@@ -196,6 +204,7 @@ void C_Transform::SetTransformWithGlobal(float4x4& globalMat)
 	//float3 scale, pos;
 	localTransform.Decompose(position, rotation, localScale);
 
+	rotation.Normalize();
 	eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
 
 	globalTransformTRANS = globalTransform.Transposed();

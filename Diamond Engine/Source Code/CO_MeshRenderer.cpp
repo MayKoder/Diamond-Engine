@@ -22,6 +22,7 @@ C_MeshRenderer::C_MeshRenderer(GameObject* _gm) : Component(_gm), _mesh(nullptr)
 faceNormals(false), vertexNormals(false), showAABB(true), showOBB(true)
 {
 	name = "Mesh Renderer";
+	alternColor = float3::one;
 }
 
 C_MeshRenderer::~C_MeshRenderer()
@@ -75,7 +76,9 @@ void C_MeshRenderer::RenderMesh()
 	if (material != nullptr && material->IsActive())
 		id = material->GetTextureID();
 
+	glColor3fv(&alternColor.x);
 	_mesh->RenderMesh(id);
+	glColor3f(1.f, 1.f, 1.f);
 
 	if (vertexNormals || faceNormals)
 		_mesh->RenderMeshDebug(&vertexNormals, &faceNormals);
@@ -89,6 +92,7 @@ void C_MeshRenderer::SaveData(JSON_Object* nObj)
 	Component::SaveData(nObj);
 	DEJson::WriteString(nObj, "Path", _mesh->GetLibraryPath());
 	DEJson::WriteInt(nObj, "UID", _mesh->GetUID());
+	DEJson::WriteVector3(nObj, "alternColor", &alternColor.x);
 }
 void C_MeshRenderer::LoadData(JSON_Object* nObj)
 {
@@ -99,6 +103,8 @@ void C_MeshRenderer::LoadData(JSON_Object* nObj)
 	DEConfig jsObj(nObj);
 
 	SetRenderMesh(dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(jsObj.ReadInt("UID"), jsObj.ReadString("Path"))));
+
+	alternColor = jsObj.ReadVector3("alternColor");
 
 	if (_mesh == nullptr)
 		return;
@@ -159,6 +165,8 @@ bool C_MeshRenderer::OnEditor()
 		ImGui::Checkbox("Show AABB", &showAABB);
 		ImGui::SameLine();
 		ImGui::Checkbox("Show OBB", &showOBB);
+
+		ImGui::ColorPicker3("No texture color: ", &alternColor.x);
 
 		return true;
 	}

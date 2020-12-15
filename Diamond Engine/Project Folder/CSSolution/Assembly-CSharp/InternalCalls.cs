@@ -7,7 +7,13 @@ namespace DiamondEngine
     class InternalCalls
     {
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern bool GetKey(object keyPressed);
+        public static extern KeyState GetKey(object keyPressed);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetMouseX();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetMouseY();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void CSLog(object logText);
@@ -27,6 +33,10 @@ namespace DiamondEngine
         {
             zero = new Vector3(0, 0, 0);
             one = new Vector3(1, 1, 1);
+
+            right = new Vector3(1, 0, 0);
+            up = new Vector3(0, 1, 0);
+            forward = new Vector3(0,0,1);
         }
         public Vector3()
         {
@@ -43,6 +53,9 @@ namespace DiamondEngine
 
         public static Vector3 zero { get; }
         public static Vector3 one { get; }
+        public static Vector3 up { get; }
+        public static Vector3 forward { get; }
+        public static Vector3 right { get; }
 
         public void Set(float newX, float newY, float newZ)
         {
@@ -52,36 +65,155 @@ namespace DiamondEngine
         public float x, y, z;
     }
 
-    public sealed class Quaternion /*: IEquatable<Vector3>*/
+    public sealed class mat4x4 /*: IEquatable<Vector3>*/
     {
-        static Quaternion()
+        static mat4x4()
         {
-            zero = new Quaternion(0, 0, 0, 1);
+            //zero = new mat4x4(0, 0, 0, 1);
+            identity = new mat4x4();
+            identity.SetIdentity();
+
         }
-        public Quaternion()
+        public mat4x4()
         {
-            x = 0.0f;
-            y = 0.0f;
-            z = 0.0f;
-            w = 0.1f;
+            for (int i = 0; i < 16; i++)
+            {
+                v[i] = 0.0f;
+            }
         }
-        public Quaternion(float _x, float _y, float _z ,float _w)
+        public mat4x4(Vector3 pos, Quaternion rot, Vector3 size)
         {
-            x = _x;
-            y = _y;
-            z = _z;
-            w = _w;
+            SetFromTRS(pos, rot, size);
         }
 
-        public static Quaternion zero { get; }
-        public static Quaternion one { get; }
-
-        public void Set(float newX, float newY, float newZ, float newW)
+        public void SetFromTRS(Vector3 pos, Quaternion rot, Vector3 size)
         {
-            x = newX; y = newY; z = newZ; w = newW;
+            mat4x4 posMat = SetTranslatePart(pos);
+            mat4x4 rotMat = SetRotatePart(rot);
+            mat4x4 scaleMat = SetScalePart(size);
+
+            //InternalCalls.CSLog(posMat.ToString());
+            //InternalCalls.CSLog(rotMat.ToString());
+            //InternalCalls.CSLog(scaleMat.ToString());
+
+            InternalCalls.CSLog("Rot * scale: " + (mat4x4.Mult(ref rotMat, ref scaleMat)).ToString());
+
+            mat4x4 posRotMat = Mult(ref posMat, ref rotMat);
+
+            mat4x4 res = Mult(ref posRotMat, ref scaleMat);
+            v = res.v;
         }
 
-        public float x, y, z, w;
+        public static mat4x4 SetTranslatePart(Vector3 pos)
+        {
+            mat4x4 mat = identity;
+
+            mat.v[0] = 1; mat.v[1] = 0; mat.v[2] = 0; mat.v[3] = pos.x;
+            mat.v[4] = 0; mat.v[5] = 1; mat.v[6] = 0; mat.v[7] = pos.y;
+            mat.v[8] = 0; mat.v[9] = 0; mat.v[10] = 1; mat.v[11] = pos.z;
+            mat.v[12] = 0; mat.v[13] = 0; mat.v[14] = 0; mat.v[15] = 1;
+
+            InternalCalls.CSLog("Position: " + mat.ToString());
+
+            return mat;
+        }
+        public static mat4x4 SetRotatePart(Quaternion rot)
+        {
+            mat4x4 mat = identity;
+
+            float x = rot.x;
+            float y = rot.y;
+            float z = rot.z;
+            float w = rot.w;
+
+            mat.v[0] = 1 - 2 * (y * y + z * z); mat.v[1] = 2 * (x * y - z * w); mat.v[2] = 2 * (x * z + y * w); mat.v[3] = 0;
+            mat.v[4] = 2 * (x * y + z * w); mat.v[5] = 1 - 2 * (x * x + z * z); mat.v[6] = 2 * (y * z - x * w); mat.v[7] = 0;
+            mat.v[8] = 2 * (x * z - y * w); mat.v[9] = 2 * (y * z + x * w); mat.v[10] = 1 - 2 * (x * x + y * y); mat.v[11] = 0;
+            mat.v[12] = 0; mat.v[13] = 0; mat.v[14] = 0; mat.v[15] = 1;
+
+            InternalCalls.CSLog("Rotation: " +mat.ToString());
+
+            return mat;
+        }
+        public static mat4x4 SetScalePart(Vector3 scale)
+        {
+            mat4x4 mat = identity;
+
+            mat.v[0] = scale.x; mat.v[1] = 0; mat.v[2] = 0; mat.v[3] = 0;
+            mat.v[4] = 0; mat.v[5] = scale.y; mat.v[6] = 0; mat.v[7] = 0;
+            mat.v[8] = 0; mat.v[9] = 0; mat.v[10] = scale.z; mat.v[11] = 0;
+            mat.v[12] = 0; mat.v[13] = 0; mat.v[14] = 0; mat.v[15] = 1;
+
+            InternalCalls.CSLog("Scale: "+mat.ToString());
+
+
+            return mat;
+        }
+        void SetIdentity()
+        {
+            int iteration = 0;
+            for (int i = 0; i < 16; i += 4)
+            {
+                v[i] = (iteration == 0) ? 1.0f : 0.0f;
+                v[i + 1] = (iteration == 1) ? 1.0f : 0.0f;
+                v[i + 2] = (iteration == 2) ? 1.0f : 0.0f;
+                v[i + 3] = (iteration == 3) ? 1.0f : 0.0f;
+                iteration++;
+            }
+        }
+
+        public static mat4x4 zero { get; }
+        public static mat4x4 identity { get; }
+
+        public override string ToString()
+        {
+            string ret = "";
+            for (int i = 0; i < 16; i += 4)
+            {
+                ret += (v[i].ToString() + ", " + v[i + 1].ToString() + ", " + v[i + 2].ToString() + ", " + v[i+3].ToString()) + Environment.NewLine;
+            }
+
+            return ret;
+        }
+
+        //TODO: A && B are identity all the time, this why it aint working, find a way to fix
+        public static mat4x4 Mult(ref mat4x4 a, ref mat4x4 b)
+        {
+
+            InternalCalls.CSLog("A: " + a.ToString());
+            InternalCalls.CSLog("B: " + b.ToString());
+
+            mat4x4 C = identity;
+            int n = 4;
+            int m = 4;
+            int p = 4;
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < p; j++)
+                {
+                    float sum = 0;
+
+                    for (int k = 0; k < m; k++)
+                    {
+                        sum += + (a.At(i, k) * b.At(k, j));
+                    }
+                    C.Set(i, j, sum);
+                }
+            }
+            return C;
+        }
+
+        public float At(int x, int y)
+        {
+            return v[(y * 4) + x];
+        }
+        public void Set(int x, int y, float value)
+        {
+            v[(y * 4) + x] = value;
+        }
+
+        public float[] v = new float[16];
     }
 }
 
@@ -332,3 +464,10 @@ public enum DEKeyCode //This is a mirror from the SDL scancode enum to allow C# 
     AUDIOFASTFORWARD = 286,
     SDL_NUM_SCANCODES = 512
 }
+public enum KeyState
+{
+    KEY_IDLE = 0,
+    KEY_DOWN,
+    KEY_REPEAT,
+    KEY_UP
+};

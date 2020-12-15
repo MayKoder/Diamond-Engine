@@ -126,6 +126,11 @@ void W_Inspector::Draw()
 					if(selectedGO->GetComponent(Component::Type::Camera) == nullptr)
 						selectedGO->AddComponent(Component::Type::Camera);
 				}
+				if (ImGui::Selectable("Script"))
+				{
+					if (selectedGO->GetComponent(Component::Type::Script) == nullptr)
+						selectedGO->AddComponent(Component::Type::Script);
+				}
 
 
 				ImGui::EndCombo();

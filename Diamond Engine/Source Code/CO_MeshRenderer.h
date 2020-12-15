@@ -32,4 +32,5 @@ public:
 
 private:
 	ResourceMesh* _mesh;
+	float3 alternColor;
 };

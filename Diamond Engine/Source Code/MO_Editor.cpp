@@ -1,4 +1,3 @@
-#include "Globals.h"
 #include "Application.h"
 #include "MaykMath.h"
 
@@ -105,6 +104,7 @@ bool M_Editor::Init()
 
 	io.MouseDrawCursor = false;
 	io.IniFilename = "Settings/imgui.ini";
+	playingTint = ImVec4(1, 1, 1, 1);
 	//io.IniFilename = NULL;
 
 	return true;
@@ -208,6 +208,7 @@ void M_Editor::DrawMenuBar()
 			if (ImGui::MenuItem("Save scene", "CTRL+S"))
 			{
 				App->moduleScene->SaveScene("Assets/Scene1.des");
+				App->moduleResources->NeedsDirsUpdate(App->moduleResources->assetsRoot);
 			}
 			if (ImGui::MenuItem("Load scene"))
 			{
@@ -378,10 +379,11 @@ void M_Editor::DrawTopBar()
 		ImGui::PopItemWidth();
 
 		ImGui::SameLine((ImGui::GetContentRegionMax().x / 2.f) - 100);
-		if (ImGui::BeginChild("##playBTS", ImVec2(200, ImGui::GetWindowContentRegionMax().y - style.FramePadding.y), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoDecoration)) {
+		if (ImGui::BeginChild("##playBTS", ImVec2(200, ImGui::GetWindowContentRegionMax().y - style.FramePadding.y), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoDecoration)) 
+		{
 			
 			//Play game maybe if its clicked while game is playing, stop game?
-			if (ImGui::ImageButton((ImTextureID)editorIcons[0]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+			if (ImGui::ImageButton((ImTextureID)editorIcons[0]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), (DETime::state == GameState::PLAY) ? playingTint : ImVec4(0, 0, 0, 1)))
 			{
 				if (DETime::state == GameState::STOP) 
 				{

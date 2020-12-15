@@ -29,7 +29,6 @@ public:
 	virtual void Update();
 
 	virtual bool OnEditor();
-	void DropField(const char* fieldName, const char* dropType);
 
 	//Maybe return JSON_Value*?
 	virtual void SaveData(JSON_Object* nObj);

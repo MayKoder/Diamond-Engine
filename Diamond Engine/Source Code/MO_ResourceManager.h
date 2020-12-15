@@ -21,7 +21,7 @@ public:
 
 
 	int GenerateNewUID();
-	int GetMetaUID(const char* metaFile);
+	int GetMetaUID(const char* metaFile) const;
 	int ExistsOnLibrary(const char* file_in_assets) const;	
 	int CreateLibraryFromAssets(const char* assetsFile);
 	int ImportFile(const char* assetsFile, Resource::Type type);
@@ -35,9 +35,9 @@ public:
 	Resource* CreateNewResource(const char* assetsFile, uint uid, Resource::Type type);
 	Resource* LoadFromLibrary(const char* libraryFile, Resource::Type type, uint _uid);
 	
-	Resource::Type GetMetaType(const char* metaFile);
-	Resource::Type GetTypeFromAssetExtension(const char* assetFile);
-	Resource::Type GetTypeFromLibraryExtension(const char* libraryFile);
+	Resource::Type GetMetaType(const char* metaFile) const;
+	Resource::Type GetTypeFromAssetExtension(const char* assetFile) const;
+	Resource::Type GetTypeFromLibraryExtension(const char* libraryFile) const;
 
 	std::string GetMetaPath(const char* assetsFile);
 	std::string LibraryFromMeta(const char* metaFile);
