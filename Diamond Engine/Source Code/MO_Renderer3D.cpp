@@ -224,7 +224,11 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 				renderQueue[i]->RenderMesh();
 			}
 		}
+
+		//TODO: Make wireframe only affect scene window
+		//(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		RenderWithOrdering();
+		//(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
 	DebugLine(pickingDebug);
@@ -326,8 +330,7 @@ void ModuleRenderer3D::OnGUI()
 			//	LOG(LogType::L_WARNING, "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		ImGui::SameLine();
-		if (ImGui::Checkbox("Wireframe Mode", &wireframe))
-			(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		ImGui::Checkbox("Wireframe Mode", &wireframe);
 
 		//if (ImGui::Checkbox("Depth Test", &depth))
 		//	(depth) ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
@@ -503,7 +506,8 @@ void ModuleRenderer3D::SetGameRenderTarget(C_Camera* cam)
 {
 	gameCamera = cam;
 
-	//TODO: This is trash, dont use hardcoded stuff
+	//BUG TODO: If you remove and add cameras the culling will break at some point even if there is still
+	//active cameras around the scene
 	if (gameCamera != nullptr)
 		gameCamera->ReGenerateBuffer(App->moduleWindow->s_width, App->moduleWindow->s_height);
 }

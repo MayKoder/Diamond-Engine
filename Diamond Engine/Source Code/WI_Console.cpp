@@ -2,6 +2,10 @@
 #include "MMGui.h"
 #include"Globals.h"
 
+#include"Application.h"
+#include"MO_Editor.h"
+#include"RE_Texture.h"
+
 W_Console::W_Console() : Window(), collapseMode(true), scrollToBottom(false)
 {
 	name = "Console";
@@ -46,12 +50,11 @@ void W_Console::Draw()
 			{
 				cLog = &logs[i];
 
-				//ImGui::TextWrapped("[%c]", GetMsgType(cLog->lType));
-				char labelLevel = GetMsgType(cLog->lType, labelColor);
-
-				ImGui::TextColored(labelColor, "[%c]", labelLevel);
+				ImGui::Image(GetMsgType(cLog->lType), ImVec2(20, 20), ImVec2(0, 1), ImVec2(1, 0));
 
 				ImGui::SameLine();
+	
+				ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 4);
 				ImGui::TextWrapped(cLog->msg.c_str());
 
 				if (logs[i].prints > 1)
@@ -89,25 +92,22 @@ void W_Console::AddLog(const char* s_msg, LogType _type)
 
 }
 
-char W_Console::GetMsgType(LogType type, ImVec4 &lColor)
+ImTextureID W_Console::GetMsgType(LogType type)
 {	
-	char ret = 'I';
+	ImTextureID ret = 0;
 
 	switch (type)
 	{
 		case LogType::L_NORMAL:
-			ret = 'I';
-			lColor = ImVec4(1.f, 1.f, 1.f, 1.f);
+			ret = (ImTextureID)EngineExternal->moduleEditor->editorIcons[(int)Icons::I_Info]->textureID;
 			break;
 
 		case LogType::L_WARNING:
-			ret = 'W';
-			lColor = ImVec4(1.f, 1.f, 0.f, 1.f);
+			ret = (ImTextureID)EngineExternal->moduleEditor->editorIcons[(int)Icons::I_Warning]->textureID;
 			break;
 
 		case LogType::L_ERROR:
-			ret = 'E';
-			lColor = ImVec4(1.f, 0.f, 0.f, 1.f);
+			ret = (ImTextureID)EngineExternal->moduleEditor->editorIcons[(int)Icons::I_Error]->textureID;
 			break;
 	}
 

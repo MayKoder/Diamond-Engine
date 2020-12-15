@@ -17,7 +17,9 @@ C_Script::C_Script(GameObject* _gm) : Component(_gm), temporalReference(nullptr)
 	name = "Script";
 
 	EngineExternal->moduleMono->DebugAllFields("Core", fields);
+
 	EngineExternal->moduleMono->DebugAllMethods("GameObject", methods);
+	EngineExternal->moduleMono->DebugAllMethods("Core", methods);
 
 	MonoClass* klass = mono_class_from_name(EngineExternal->moduleMono->image, "DiamondEngine", "Core");
 	coreObject = mono_object_new(EngineExternal->moduleMono->domain, klass);
@@ -122,13 +124,14 @@ void C_Script::DropField(SerializedField& field, const char* dropType)
 		break;
 
 	case MonoTypeEnum::MONO_TYPE_CLASS:
-		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "This is a custom class field");
+		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), (field.fiValue.goValue != nullptr) ? field.fiValue.goValue->name.c_str() : "None");
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(dropType))
 			{
 				temporalReference = EngineExternal->moduleEditor->GetSelectedGO();
 				SetField(field.field, temporalReference);
+				field.fiValue.goValue = temporalReference;
 			}
 			ImGui::EndDragDropTarget();
 		}

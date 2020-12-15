@@ -19,13 +19,13 @@ void W_Assets::Draw()
 {
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/))
 	{
-		if (ImGui::BeginChild("Test", ImVec2(70, 110), false, ImGuiWindowFlags_NoScrollbar))
-		{
-			//ImGui::hove
-			ImGui::Image((ImTextureID)1, ImVec2(70, 70));
-			ImGui::TextWrapped("Hola.exe");
-		}
-		ImGui::EndChild();
+		//if (ImGui::BeginChild("Test", ImVec2(70, 110), false, ImGuiWindowFlags_NoScrollbar))
+		//{
+		//	//ImGui::hove
+		//	ImGui::Image((ImTextureID)1, ImVec2(70, 70));
+		//	ImGui::TextWrapped("Hola.exe");
+		//}
+		//ImGui::EndChild();
 		
 		
 		DrawFileTree(*displayFolder);

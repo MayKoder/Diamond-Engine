@@ -26,7 +26,7 @@ public:
 	void Draw() override;
 	void AddLog(const char*, LogType);
 
-	char GetMsgType(LogType, ImVec4&);
+	ImTextureID GetMsgType(LogType);
 
 	std::vector<LogMessage> logs;
 	bool collapseMode;

@@ -32,6 +32,13 @@ enum class EditorWindow {
 	MAX
 };
 
+enum class Icons {
+	I_Play, I_Stop, I_Pause, I_Step,
+	I_Warning, I_Error, I_Info,
+
+	I_Max
+};
+
 class M_Editor : public Module
 {
 

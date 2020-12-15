@@ -147,6 +147,7 @@ void C_Camera::LoadData(JSON_Object* nObj)
 void C_Camera::StartDraw()
 {
 	glEnable(GL_DEPTH_TEST);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
 	glLoadIdentity();
 	glMatrixMode(GL_PROJECTION);

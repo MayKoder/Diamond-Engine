@@ -83,7 +83,8 @@ void W_Scene::Draw()
 		//Draw gizmo
 		if (App->moduleEditor->GetSelectedGO())
 		{
-			if (!ImGuizmo::IsUsing()) {
+			if (!ImGuizmo::IsUsing() && ImGui::IsWindowHovered()) 
+			{
 				if (App->moduleInput->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 					operation = ImGuizmo::OPERATION::TRANSLATE;
 				if (App->moduleInput->GetKey(SDL_SCANCODE_E) == KEY_DOWN)

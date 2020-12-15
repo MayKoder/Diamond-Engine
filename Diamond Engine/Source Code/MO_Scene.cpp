@@ -48,10 +48,14 @@ bool M_Scene::Start()
 	//TODO IMPORTANT: This is why we should save icons .meta, or we could generate them every time
 	//But this will introduce some randomized problems with ID duplications
 	// TODO: Maybe this should be handled on the editor module? texture #include is stupid
-	App->moduleEditor->editorIcons.push_back(dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/PlayButton.dds")));
-	App->moduleEditor->editorIcons.push_back(dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/StopButton.dds")));
-	App->moduleEditor->editorIcons.push_back(dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/PauseButton.dds")));
-	App->moduleEditor->editorIcons.push_back(dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/StepButton.dds")));
+	App->moduleEditor->editorIcons = std::vector<ResourceTexture*>(static_cast<unsigned int>(Icons::I_Max), nullptr);
+	App->moduleEditor->editorIcons[(int)Icons::I_Play] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/PlayButton.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Stop] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/StopButton.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Pause] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/PauseButton.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Step] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/StepButton.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Warning] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Warning.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Error] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Error.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Info] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Info.dds"));
 
 	return true;
 }
