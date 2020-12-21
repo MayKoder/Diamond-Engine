@@ -6,6 +6,7 @@ enum class GameState {
 	PAUSE,
 	STOP,
 	STEP,
+	PRESTEP,
 };
 
 //TODO: Would be cooler to be a namespace like unity, but static and externals are going wild

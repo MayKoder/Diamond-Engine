@@ -159,6 +159,7 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 	//Save all gameObject data
 	json_object_set_string(goData, "name", name.c_str());
 
+	DEJson::WriteBool(goData, "Active", active);
 	DEJson::WriteVector3(goData, "Position", &transform->position[0]);
 	DEJson::WriteQuat(goData, "Rotation", &transform->rotation.x);
 	DEJson::WriteVector3(goData, "Scale", &transform->localScale[0]);
@@ -194,6 +195,8 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 
 void GameObject::LoadFromJson(JSON_Object* _obj)
 {
+
+	active = DEJson::ReadBool(_obj, "Active");
 	transform->SetTransformMatrix(DEJson::ReadVector3(_obj, "Position"), DEJson::ReadQuat(_obj, "Rotation"), DEJson::ReadVector3(_obj, "Scale"));
 	LoadComponents(json_object_get_array(_obj, "Components"));
 }

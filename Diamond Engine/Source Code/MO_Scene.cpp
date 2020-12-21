@@ -92,6 +92,23 @@ bool M_Scene::CleanUp()
 	return true;
 }
 
+//Think about todo: Maybe avoid recursivity? Could store all GO'S in a vector and just iterate as linear?
+GameObject* M_Scene::GetGOFromUID(GameObject* n, uint sUID)
+{
+	if (n->UID == sUID)
+		return n;
+
+	GameObject* ret = nullptr;
+	for (size_t i = 0; i < n->children.size(); i++)
+	{
+		ret = GetGOFromUID(n->children[i], sUID);
+		if (ret != nullptr)
+			return ret;
+	}
+
+	return nullptr;
+}
+
 GameObject* M_Scene::CreateGameObject(const char* name, GameObject* parent, int _uid)
 {
 	GameObject* gm = new GameObject(name, parent, _uid);

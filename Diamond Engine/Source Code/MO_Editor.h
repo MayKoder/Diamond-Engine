@@ -64,6 +64,7 @@ public:
 	void UpdateLoadedStylesVector(std::vector<std::string>* _styles);
 
 	GameObject* GetSelectedGO();
+	GameObject* GetDraggingGO();
 	void SetSelectedGO(GameObject* _obj);
 
 	AssetDir* GetSelectedAsset();

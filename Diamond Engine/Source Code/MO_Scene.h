@@ -6,6 +6,7 @@
 #include"parson/parson.h"
 class GameObject;
 class C_Camera;
+typedef unsigned int uint;
 
 class M_Scene : public Module
 {
@@ -23,6 +24,7 @@ public:
 	bool CleanUp() override;
 
 
+	GameObject* GetGOFromUID(GameObject* n, uint sUID);
 	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
 
 	void OnGUI() override;

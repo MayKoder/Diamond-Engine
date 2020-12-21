@@ -24,7 +24,7 @@ union FieldValue
 struct SerializedField
 {
 	SerializedField();
-	SerializedField(MonoClassField* _field, void* _value);
+	SerializedField(MonoClassField* _field, MonoObject* _object);
 
 	MonoClassField* field;
 	MonoTypeEnum type = MonoTypeEnum::MONO_TYPE_END;
@@ -43,15 +43,16 @@ public:
 public:
 	MonoDomain* domain;
 	MonoAssembly* assembly;
-	MonoObject* coreObject;
 	MonoMethod* updateMethod;
 	MonoImage* image;
 
 	static float3 UnboxVector(MonoObject* _obj);
 	static Quat UnboxQuat(MonoObject* _obj);
 
-	static void DebugAllFields(const char* className, std::vector<SerializedField>& _data);
-	static void DebugAllMethods(const char* className, std::vector<std::string>& _data);
+	static void DebugAllFields(const char* className, std::vector<SerializedField>& _data, MonoObject* obj);
+	static void DebugAllMethods(const char* nsName, const char* className, std::vector<std::string>& _data);
+	static void LoadFieldData(SerializedField& _field, MonoObject* _object);
+
 
 	MonoObject* GoToCSGO(GameObject* inGo) const;
 	MonoObject* Float3ToCS(float3& inVec) const;

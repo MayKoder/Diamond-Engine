@@ -2,6 +2,9 @@
 #include "Application.h"
 #include "Globals.h"
 
+#include<ShObjIdl_core.h>
+
+
 #include "SDL/include/SDL.h"
 #pragma comment( lib, "SDL/libx86/SDL2.lib" )
 #pragma comment( lib, "SDL/libx86/SDL2main.lib" )
@@ -38,7 +41,7 @@ int main(int argc, char** argv)
 	ShExecInfo.hwnd = NULL;
 	ShExecInfo.lpVerb = NULL;
 	ShExecInfo.lpFile = "cmd";
-	ShExecInfo.lpParameters = "/K dotnet build CSSolution/Assembly-CSharp.sln --configuration Release";
+	ShExecInfo.lpParameters = "/C dotnet build CSSolution/Assembly-CSharp.sln --configuration Release";
 	ShExecInfo.lpDirectory = NULL;
 	ShExecInfo.nShow = SW_SHOW;
 	ShExecInfo.hInstApp = NULL;

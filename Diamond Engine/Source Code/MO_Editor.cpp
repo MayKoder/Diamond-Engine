@@ -142,6 +142,12 @@ void M_Editor::Draw()
 		}
 	}
 
+	if (ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left)) 
+	{
+		W_Hierarchy* hier = dynamic_cast<W_Hierarchy*>(GetEditorWindow(EditorWindow::HIERARCHY));
+		hier->dropTarget = nullptr;
+	}
+
 	if (displayWindow)
 	{
 		ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_MenuBarBg, ImVec4(0.f, 0.f, 0.f, 1.f));
@@ -212,8 +218,15 @@ void M_Editor::DrawMenuBar()
 			}
 			if (ImGui::MenuItem("Load scene"))
 			{
-				//TODO: How can we do this? we can't hardcode it
-				App->moduleScene->LoadScene(App->moduleResources->LibraryFromMeta("Assets/Scene1.des.meta").c_str());
+
+				std::string sceneDir = M_FileSystem::OpenFileSelectDialog();
+
+				App->moduleFileSystem->ToLocalAssetsPath(sceneDir);
+				if (!sceneDir.empty()) 
+				{
+					std::string metaDir = App->moduleResources->GetMetaPath(sceneDir.c_str());
+					App->moduleScene->LoadScene(App->moduleResources->LibraryFromMeta(metaDir.c_str()).c_str());
+				}
 			}
 			if (ImGui::MenuItem("Quit", "Esc"))
 			{
@@ -579,6 +592,12 @@ GameObject* M_Editor::GetSelectedGO()
 {
 	W_Inspector* inspector =dynamic_cast<W_Inspector*>(GetEditorWindow(EditorWindow::INSPECTOR));
 	return inspector->selectedGO;
+}
+
+GameObject* M_Editor::GetDraggingGO()
+{
+	W_Hierarchy* hier = dynamic_cast<W_Hierarchy*>(GetEditorWindow(EditorWindow::HIERARCHY));
+	return hier->dropTarget;
 }
 
 void M_Editor::SetSelectedGO(GameObject* _obj)

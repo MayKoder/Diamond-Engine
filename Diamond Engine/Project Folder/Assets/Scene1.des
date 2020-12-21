@@ -1,22 +1,23 @@
 {
     "EditorCameraPosition": [
-        -19.022066116333008,
-        13.061375617980957,
-        -14.510618209838867
+        43.414241790771484,
+        9.9921541213989258,
+        -16.020391464233398
     ],
     "EditorCameraZ": [
-        0.8596380352973938,
-        -0.44272178411483765,
-        0.25499022006988525
+        -0.92077791690826416,
+        -0.11417663097381592,
+        0.37300372123718262
     ],
     "EditorCameraY": [
-        0.42444610595703125,
-        0.89665901660919189,
-        0.12588919699192047
+        -0.10582384467124939,
+        0.99346047639846802,
+        0.042867451906204224
     ],
     "Game Objects": [
         {
             "name": "Scene root",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -43,6 +44,7 @@
         },
         {
             "name": "Tank_Holder",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -68,12 +70,20 @@
                 },
                 {
                     "Type": 5,
-                    "Active": true
+                    "Active": true,
+                    "reference": 628896181,
+                    "testInt": 0,
+                    "rotationSpeed": 0.0020000000949949026,
+                    "movementSpeed": 0.02500000037252903,
+                    "testBool": false,
+                    "testString": "Empty",
+                    "once": true
                 }
             ]
         },
         {
             "name": "Tank_Meshes",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -101,6 +111,7 @@
         },
         {
             "name": "TankRenderers",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -128,6 +139,7 @@
         },
         {
             "name": "TankChassis",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -166,6 +178,7 @@
         },
         {
             "name": "TankChassis",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -204,6 +217,7 @@
         },
         {
             "name": "TankChassis",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -242,6 +256,7 @@
         },
         {
             "name": "TankTracksRight",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -280,6 +295,7 @@
         },
         {
             "name": "TankTracksRight",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -318,6 +334,7 @@
         },
         {
             "name": "TankTracksLeft",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -356,6 +373,7 @@
         },
         {
             "name": "TankTracksLeft",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -393,10 +411,11 @@
             ]
         },
         {
-            "name": "TankTurret",
+            "name": "PivotChange",
+            "Active": true,
             "Position": [
                 0,
-                0,
+                110.54074859619141,
                 0
             ],
             "Rotation": [
@@ -406,12 +425,40 @@
                 1
             ],
             "Scale": [
-                1,
-                1,
+                50,
+                50,
+                50
+            ],
+            "UID": 849076695,
+            "ParentUID": 1466445437,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "TankTurret",
+            "Active": true,
+            "Position": [
+                0,
+                -2.1355447769165039,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
                 1
             ],
+            "Scale": [
+                0.019999999552965164,
+                0.019999999552965164,
+                0.019999999552965164
+            ],
             "UID": 1877707350,
-            "ParentUID": 1466445437,
+            "ParentUID": 849076695,
             "Components": [
                 {
                     "Type": 1,
@@ -432,6 +479,7 @@
         },
         {
             "name": "TankTurret",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -470,21 +518,22 @@
         },
         {
             "name": "Main Camera",
+            "Active": true,
             "Position": [
                 0,
-                5.9078035354614258,
+                7.1851186752319336,
                 -13.013992309570313
             ],
             "Rotation": [
-                0.06513204425573349,
+                0.094575487077236176,
                 0,
                 0,
-                0.99787664413452148
+                0.9955177903175354
             ],
             "Scale": [
                 1,
-                0.99999994039535522,
-                0.99999994039535522
+                0.99999833106994629,
+                0.99999833106994629
             ],
             "UID": 176655709,
             "ParentUID": 628896181,
@@ -500,12 +549,13 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 300,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 0.89662885665893555
+                    "hFOV": 1.537421703338623
                 }
             ]
         },
         {
             "name": "scene",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -533,6 +583,7 @@
         },
         {
             "name": "Dummy001",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -560,6 +611,7 @@
         },
         {
             "name": "City_building_004",
+            "Active": true,
             "Position": [
                 -41.47589111328125,
                 21.01409912109375,
@@ -598,7 +650,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/445551395.dds",
                     "UID": 445551395
                 }
@@ -606,6 +658,7 @@
         },
         {
             "name": "City_building_001",
+            "Active": true,
             "Position": [
                 17.707164764404297,
                 20.053276062011719,
@@ -644,7 +697,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/521204416.dds",
                     "UID": 521204416
                 }
@@ -652,6 +705,7 @@
         },
         {
             "name": "City_building_007",
+            "Active": true,
             "Position": [
                 16.010492324829102,
                 37.4932861328125,
@@ -690,7 +744,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/486701648.dds",
                     "UID": 486701648
                 }
@@ -698,6 +752,7 @@
         },
         {
             "name": "Line002",
+            "Active": true,
             "Position": [
                 -2.1597719192504883,
                 1.8538379669189453,
@@ -741,6 +796,7 @@
         },
         {
             "name": "Plane001",
+            "Active": true,
             "Position": [
                 -0.028603000566363335,
                 0.026032000780105591,
@@ -779,7 +835,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1093215599.dds",
                     "UID": 1093215599
                 }
@@ -787,6 +843,7 @@
         },
         {
             "name": "City_building_010",
+            "Active": true,
             "Position": [
                 25.154010772705078,
                 -39.153720855712891,
@@ -825,7 +882,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
                     "UID": 741462977
                 }
@@ -833,6 +890,7 @@
         },
         {
             "name": "City_building_010",
+            "Active": true,
             "Position": [
                 25.154010772705078,
                 -39.153720855712891,
@@ -871,7 +929,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
                     "UID": 741462977
                 }
@@ -879,6 +937,7 @@
         },
         {
             "name": "City_building_011",
+            "Active": true,
             "Position": [
                 30.134540557861328,
                 37.4932861328125,
@@ -917,7 +976,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/486701648.dds",
                     "UID": 486701648
                 }
@@ -925,6 +984,7 @@
         },
         {
             "name": "City_building_013",
+            "Active": true,
             "Position": [
                 -42.288055419921875,
                 33.201576232910156,
@@ -963,7 +1023,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1921918051.dds",
                     "UID": 1921918051
                 }
@@ -971,6 +1031,7 @@
         },
         {
             "name": "City_building_014",
+            "Active": true,
             "Position": [
                 -19.439706802368164,
                 32.061729431152344,
@@ -1009,7 +1070,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/445551395.dds",
                     "UID": 445551395
                 }
@@ -1017,6 +1078,7 @@
         },
         {
             "name": "City_building_016",
+            "Active": true,
             "Position": [
                 34.270423889160156,
                 -41.972747802734375,
@@ -1055,7 +1117,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
                     "UID": 741462977
                 }
@@ -1063,6 +1125,7 @@
         },
         {
             "name": "City_building_016",
+            "Active": true,
             "Position": [
                 34.270423889160156,
                 -41.972747802734375,
@@ -1101,7 +1164,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
                     "UID": 741462977
                 }
@@ -1109,6 +1172,7 @@
         },
         {
             "name": "City_building_017",
+            "Active": true,
             "Position": [
                 44.260082244873047,
                 -39.153720855712891,
@@ -1147,7 +1211,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
                     "UID": 741462977
                 }
@@ -1155,6 +1219,7 @@
         },
         {
             "name": "City_building_017",
+            "Active": true,
             "Position": [
                 44.260082244873047,
                 -39.153720855712891,
@@ -1193,7 +1258,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
                     "UID": 741462977
                 }
@@ -1201,6 +1266,7 @@
         },
         {
             "name": "City_building_022",
+            "Active": true,
             "Position": [
                 -20.831323623657227,
                 -27.426488876342773,
@@ -1239,7 +1305,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
                     "UID": 1479874027
                 }
@@ -1247,6 +1313,7 @@
         },
         {
             "name": "City_building_023",
+            "Active": true,
             "Position": [
                 42.130641937255859,
                 37.4932861328125,
@@ -1285,7 +1352,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/486701648.dds",
                     "UID": 486701648
                 }
@@ -1293,6 +1360,7 @@
         },
         {
             "name": "City_building_024",
+            "Active": true,
             "Position": [
                 -20.572771072387695,
                 43.060829162597656,
@@ -1331,7 +1399,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1658453042.dds",
                     "UID": 1658453042
                 }
@@ -1339,6 +1407,7 @@
         },
         {
             "name": "City_building_026",
+            "Active": true,
             "Position": [
                 31.51188850402832,
                 -16.446016311645508,
@@ -1377,7 +1446,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
                     "UID": 1479874027
                 }
@@ -1385,6 +1454,7 @@
         },
         {
             "name": "City_building_028",
+            "Active": true,
             "Position": [
                 13.38798999786377,
                 -33.755039215087891,
@@ -1423,7 +1493,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
                     "UID": 1538850819
                 }
@@ -1431,6 +1501,7 @@
         },
         {
             "name": "Object010",
+            "Active": true,
             "Position": [
                 -20.604873657226563,
                 4.066741943359375,
@@ -1469,6 +1540,7 @@
         },
         {
             "name": "City_building_030",
+            "Active": true,
             "Position": [
                 -42.807239532470703,
                 -41.835563659667969,
@@ -1507,7 +1579,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
                     "UID": 1538850819
                 }
@@ -1515,6 +1587,7 @@
         },
         {
             "name": "City_building_031",
+            "Active": true,
             "Position": [
                 -34.679481506347656,
                 -41.835563659667969,
@@ -1553,7 +1626,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
                     "UID": 1538850819
                 }
@@ -1561,6 +1634,7 @@
         },
         {
             "name": "City_building_032",
+            "Active": true,
             "Position": [
                 -29.478403091430664,
                 21.01409912109375,
@@ -1599,7 +1673,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/445551395.dds",
                     "UID": 445551395
                 }
@@ -1607,6 +1681,7 @@
         },
         {
             "name": "City_building_033",
+            "Active": true,
             "Position": [
                 -32.361495971679688,
                 42.37042236328125,
@@ -1645,7 +1720,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1921918051.dds",
                     "UID": 1921918051
                 }
@@ -1653,6 +1728,7 @@
         },
         {
             "name": "City_building_034",
+            "Active": true,
             "Position": [
                 16.049516677856445,
                 -16.696884155273438,
@@ -1691,7 +1767,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
                     "UID": 1479874027
                 }
@@ -1699,6 +1775,7 @@
         },
         {
             "name": "City_building_035",
+            "Active": true,
             "Position": [
                 13.38798999786377,
                 -40.802516937255859,
@@ -1737,7 +1814,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
                     "UID": 1538850819
                 }
@@ -1745,6 +1822,7 @@
         },
         {
             "name": "City_building_036",
+            "Active": true,
             "Position": [
                 -31.216331481933594,
                 33.201576232910156,
@@ -1783,7 +1861,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1921918051.dds",
                     "UID": 1921918051
                 }
@@ -1791,6 +1869,7 @@
         },
         {
             "name": "City_building_037",
+            "Active": true,
             "Position": [
                 -20.317693710327148,
                 -16.163608551025391,
@@ -1829,7 +1908,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
                     "UID": 1479874027
                 }
@@ -1837,6 +1916,7 @@
         },
         {
             "name": "City_building_038",
+            "Active": true,
             "Position": [
                 -41.649002075195313,
                 -16.495393753051758,
@@ -1875,7 +1955,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
                     "UID": 1479874027
                 }
@@ -1883,6 +1963,7 @@
         },
         {
             "name": "City_building_039",
+            "Active": true,
             "Position": [
                 -42.807239532470703,
                 -30.643888473510742,
@@ -1921,7 +2002,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
                     "UID": 1538850819
                 }
@@ -1929,6 +2010,7 @@
         },
         {
             "name": "City_building_040",
+            "Active": true,
             "Position": [
                 -34.679481506347656,
                 -30.643888473510742,
@@ -1967,7 +2049,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
                     "UID": 1538850819
                 }
@@ -1975,6 +2057,7 @@
         },
         {
             "name": "City_building_041",
+            "Active": true,
             "Position": [
                 30.695278167724609,
                 21.612646102905273,
@@ -2013,7 +2096,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/521204416.dds",
                     "UID": 521204416
                 }
@@ -2021,6 +2104,7 @@
         },
         {
             "name": "City_building_008",
+            "Active": true,
             "Position": [
                 40.979995727539063,
                 18.270824432373047,
@@ -2059,7 +2143,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1658453042.dds",
                     "UID": 1658453042
                 }
@@ -2067,6 +2151,7 @@
         },
         {
             "name": "skybox",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -2079,9 +2164,9 @@
                 0.70710670948028564
             ],
             "Scale": [
-                99.999992370605469,
-                99.999969482421875,
-                99.999969482421875
+                200,
+                200,
+                200
             ],
             "UID": 838783541,
             "ParentUID": 1828803901,
@@ -2105,7 +2190,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": false,
-                    "AssetPath": "",
+                    "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1768910240.dds",
                     "UID": 1768910240
                 }

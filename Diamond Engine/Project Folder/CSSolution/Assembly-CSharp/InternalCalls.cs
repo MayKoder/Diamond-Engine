@@ -16,104 +16,169 @@ namespace DiamondEngine
         public static extern int GetMouseY();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern void CSLog(object logText);
+        public static extern void CreateGameObject(object name, object position);
+
+        //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+        //public static extern void UpdateCppGO(int UID, Vector3 position, Quaternion quat, Vector3 scale);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern void CreateGameObject(object name, Vector3 position);
+        public static extern void UpdateCppPosition(int UID, object position);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void UpdateCppRotation(int UID, object quat);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void UpdateCppScale(int UID, object scale);
     }
 
-    public sealed class Vector3 /*: IEquatable<Vector3>*/
+    class Debug
     {
-        //public bool Equals(Vector3 other)
-        //{
-        //    return (x == other.x && y == other.y && z == other.z);
-        //}
-
-        static Vector3()
-        {
-            zero = new Vector3(0, 0, 0);
-            one = new Vector3(1, 1, 1);
-
-            right = new Vector3(1, 0, 0);
-            up = new Vector3(0, 1, 0);
-            forward = new Vector3(0,0,1);
-        }
-        public Vector3()
-        {
-            x = 0.0f;
-            y = 0.0f;
-            z = 0.0f;
-        }
-        public Vector3(float _x, float _y, float _z)
-        {
-            x = _x;
-            y = _y;
-            z = _z;
-        }
-
-        public static Vector3 zero { get; }
-        public static Vector3 one { get; }
-        public static Vector3 up { get; }
-        public static Vector3 forward { get; }
-        public static Vector3 right { get; }
-
-        public void Set(float newX, float newY, float newZ)
-        {
-            x = newX; y = newY; z = newZ;
-        }
-
-        public float x, y, z;
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void Log(object logText);
     }
 
-    public sealed class mat4x4 /*: IEquatable<Vector3>*/
+    [StructLayout(LayoutKind.Sequential)]
+    public partial struct mat4x4 /*: IEquatable<Vector3>*/
     {
-        static mat4x4()
-        {
-            //zero = new mat4x4(0, 0, 0, 1);
-            identity = new mat4x4();
-            identity.SetIdentity();
+        //    |  0   1   2   3
+        // ---+----------------
+        // 0  | m00 m10 m20 m30
+        // 1  | m01 m11 m21 m31
+        // 2  | m02 m12 m22 m32
+        // 3  | m03 m13 m23 m33
 
-        }
-        public mat4x4()
+        public float m00;
+        public float m10;
+        public float m20;
+        public float m30;
+        public float m01;
+        public float m11;
+        public float m21;
+        public float m31;
+        public float m02;
+        public float m12;
+        public float m22;
+        public float m32;
+        public float m03;
+        public float m13;
+        public float m23;
+        public float m33;
+
+        public mat4x4(Quaternion column0, Quaternion column1, Quaternion column2, Quaternion column3)
         {
-            for (int i = 0; i < 16; i++)
+            this.m00 = column0.x; this.m01 = column1.x; this.m02 = column2.x; this.m03 = column3.x;
+            this.m10 = column0.y; this.m11 = column1.y; this.m12 = column2.y; this.m13 = column3.y;
+            this.m20 = column0.z; this.m21 = column1.z; this.m22 = column2.z; this.m23 = column3.z;
+            this.m30 = column0.w; this.m31 = column1.w; this.m32 = column2.w; this.m33 = column3.w;
+        }
+        public float this[int row, int column]
+        {
+            get
             {
-                v[i] = 0.0f;
+                return this[row + column * 4];
+            }
+
+            set
+            {
+                this[row + column * 4] = value;
             }
         }
-        public mat4x4(Vector3 pos, Quaternion rot, Vector3 size)
+        public float this[int index]
         {
-            SetFromTRS(pos, rot, size);
+            get
+            {
+                switch (index)
+                {
+                    case 0: return m00;
+                    case 1: return m10;
+                    case 2: return m20;
+                    case 3: return m30;
+                    case 4: return m01;
+                    case 5: return m11;
+                    case 6: return m21;
+                    case 7: return m31;
+                    case 8: return m02;
+                    case 9: return m12;
+                    case 10: return m22;
+                    case 11: return m32;
+                    case 12: return m03;
+                    case 13: return m13;
+                    case 14: return m23;
+                    case 15: return m33;
+                    default:
+                        throw new IndexOutOfRangeException("Invalid matrix index!");
+                }
+            }
+
+            set
+            {
+                switch (index)
+                {
+                    case 0: m00 = value; break;
+                    case 1: m10 = value; break;
+                    case 2: m20 = value; break;
+                    case 3: m30 = value; break;
+                    case 4: m01 = value; break;
+                    case 5: m11 = value; break;
+                    case 6: m21 = value; break;
+                    case 7: m31 = value; break;
+                    case 8: m02 = value; break;
+                    case 9: m12 = value; break;
+                    case 10: m22 = value; break;
+                    case 11: m32 = value; break;
+                    case 12: m03 = value; break;
+                    case 13: m13 = value; break;
+                    case 14: m23 = value; break;
+                    case 15: m33 = value; break;
+
+                    default:
+                        throw new IndexOutOfRangeException("Invalid matrix index!");
+                }
+            }
         }
 
-        public void SetFromTRS(Vector3 pos, Quaternion rot, Vector3 size)
+        public void SetFromTRS(Vector3 pos, Quaternion r, Vector3 s)
         {
-            mat4x4 posMat = SetTranslatePart(pos);
-            mat4x4 rotMat = SetRotatePart(rot);
-            mat4x4 scaleMat = SetScalePart(size);
+            //mat4x4 posMat = SetTranslatePart(pos);
+            //mat4x4 rotMat = SetRotatePart(rot);
+            //mat4x4 scaleMat = SetScalePart(size);
 
             //InternalCalls.CSLog(posMat.ToString());
             //InternalCalls.CSLog(rotMat.ToString());
             //InternalCalls.CSLog(scaleMat.ToString());
 
-            InternalCalls.CSLog("Rot * scale: " + (mat4x4.Mult(ref rotMat, ref scaleMat)).ToString());
+            //mat4x4 posRotMat = posMat * rotMat;
 
-            mat4x4 posRotMat = Mult(ref posMat, ref rotMat);
+            this[0] = (1.0f - 2.0f * (r.y * r.y + r.z * r.z)) * s.x;
+            this[1] = (r.x * r.y + r.z * r.w) * s.x * 2.0f;
+            this[2] = (r.x * r.z - r.y * r.w) * s.x * 2.0f;
+            this[3] = 0.0f;
+            this[4] = (r.x * r.y - r.z * r.w) * s.y * 2.0f;
+            this[5] = (1.0f - 2.0f * (r.x * r.x + r.z * r.z)) * s.y;
+            this[6] = (r.y * r.z + r.x * r.w) * s.y * 2.0f;
+            this[7] = 0.0f;
+            this[8] = (r.x * r.z + r.y * r.w) * s.z * 2.0f;
+            this[9] = (r.y * r.z - r.x * r.w) * s.z * 2.0f;
+            this[10] = (1.0f - 2.0f * (r.x * r.x + r.y * r.y)) * s.z;
+            this[11] = 0.0f;
+            this[12] = pos.x;
+            this[13] = pos.y;
+            this[14] = pos.z;
+            this[15] = 1.0f;
 
-            mat4x4 res = Mult(ref posRotMat, ref scaleMat);
-            v = res.v;
+            //InternalCalls.CSLog("Pos * Rot * scale: " + this.GetForward().ToString());
         }
 
         public static mat4x4 SetTranslatePart(Vector3 pos)
         {
             mat4x4 mat = identity;
 
-            mat.v[0] = 1; mat.v[1] = 0; mat.v[2] = 0; mat.v[3] = pos.x;
-            mat.v[4] = 0; mat.v[5] = 1; mat.v[6] = 0; mat.v[7] = pos.y;
-            mat.v[8] = 0; mat.v[9] = 0; mat.v[10] = 1; mat.v[11] = pos.z;
-            mat.v[12] = 0; mat.v[13] = 0; mat.v[14] = 0; mat.v[15] = 1;
+            mat[0] = 1; mat[1] = 0; mat[2] = 0; mat[3] = pos.x;
+            mat[4] = 0; mat[5] = 1; mat[6] = 0; mat[7] = pos.y;
+            mat[8] = 0; mat[9] = 0; mat[10] = 1; mat[11] = pos.z;
+            mat[12] = 0; mat[13] = 0; mat[14] = 0; mat[15] = 1;
 
-            InternalCalls.CSLog("Position: " + mat.ToString());
+            Debug.Log("Position: " + mat.ToString());
 
             return mat;
         }
@@ -126,12 +191,12 @@ namespace DiamondEngine
             float z = rot.z;
             float w = rot.w;
 
-            mat.v[0] = 1 - 2 * (y * y + z * z); mat.v[1] = 2 * (x * y - z * w); mat.v[2] = 2 * (x * z + y * w); mat.v[3] = 0;
-            mat.v[4] = 2 * (x * y + z * w); mat.v[5] = 1 - 2 * (x * x + z * z); mat.v[6] = 2 * (y * z - x * w); mat.v[7] = 0;
-            mat.v[8] = 2 * (x * z - y * w); mat.v[9] = 2 * (y * z + x * w); mat.v[10] = 1 - 2 * (x * x + y * y); mat.v[11] = 0;
-            mat.v[12] = 0; mat.v[13] = 0; mat.v[14] = 0; mat.v[15] = 1;
+            mat[0] = 1 - 2 * (y * y + z * z); mat[1] = 2 * (x * y - z * w); mat[2] = 2 * (x * z + y * w); mat[3] = 0;
+            mat[4] = 2 * (x * y + z * w); mat[5] = 1 - 2 * (x * x + z * z); mat[6] = 2 * (y * z - x * w); mat[7] = 0;
+            mat[8] = 2 * (x * z - y * w); mat[9] = 2 * (y * z + x * w); mat[10] = 1 - 2 * (x * x + y * y); mat[11] = 0;
+            mat[12] = 0; mat[13] = 0; mat[14] = 0; mat[15] = 1;
 
-            InternalCalls.CSLog("Rotation: " +mat.ToString());
+            Debug.Log("Rotation: " +mat.ToString());
 
             return mat;
         }
@@ -139,81 +204,143 @@ namespace DiamondEngine
         {
             mat4x4 mat = identity;
 
-            mat.v[0] = scale.x; mat.v[1] = 0; mat.v[2] = 0; mat.v[3] = 0;
-            mat.v[4] = 0; mat.v[5] = scale.y; mat.v[6] = 0; mat.v[7] = 0;
-            mat.v[8] = 0; mat.v[9] = 0; mat.v[10] = scale.z; mat.v[11] = 0;
-            mat.v[12] = 0; mat.v[13] = 0; mat.v[14] = 0; mat.v[15] = 1;
+            mat[0] = scale.x; mat[1] = 0; mat[2] = 0; mat[3] = 0;
+            mat[4] = 0; mat[5] = scale.y; mat[6] = 0; mat[7] = 0;
+            mat[8] = 0; mat[9] = 0; mat[10] = scale.z; mat[11] = 0;
+            mat[12] = 0; mat[13] = 0; mat[14] = 0; mat[15] = 1;
 
-            InternalCalls.CSLog("Scale: "+mat.ToString());
+            Debug.Log("Scale: "+mat.ToString());
 
 
             return mat;
         }
         void SetIdentity()
         {
-            int iteration = 0;
-            for (int i = 0; i < 16; i += 4)
-            {
-                v[i] = (iteration == 0) ? 1.0f : 0.0f;
-                v[i + 1] = (iteration == 1) ? 1.0f : 0.0f;
-                v[i + 2] = (iteration == 2) ? 1.0f : 0.0f;
-                v[i + 3] = (iteration == 3) ? 1.0f : 0.0f;
-                iteration++;
-            }
+            this.m00 = 1; this.m01 = 0; this.m02 = 0; this.m03 = 0;
+            this.m10 = 0; this.m11 = 1; this.m12 = 0; this.m13 = 0;
+            this.m20 = 0; this.m21 = 0; this.m22 = 1; this.m23 = 0;
+            this.m30 = 0; this.m31 = 0; this.m32 = 0; this.m33 = 1;
         }
 
-        public static mat4x4 zero { get; }
-        public static mat4x4 identity { get; }
+        public Vector3 GetRight()
+        {
+            Vector3 ret = Vector3.zero;
+            ret.Set(this[0], this[1], this[2]);
+            return ret.normalized;
+        }
+        public Vector3 GetForward()
+        {
+            Vector3 ret = Vector3.zero;
+            ret.Set(this[8], this[9], this[10]);
+            return ret.normalized;
+        }
+
+        static readonly mat4x4 zeroMatrix = new mat4x4(new Quaternion(0, 0, 0, 0),
+            new Quaternion(0, 0, 0, 0),
+            new Quaternion(0, 0, 0, 0),
+            new Quaternion(0, 0, 0, 0));
+
+        // Returns a matrix with all elements set to zero (RO).
+        public static mat4x4 zero { get { return zeroMatrix; } }
+
+        static readonly mat4x4 identityMatrix = new mat4x4(new Quaternion(1, 0, 0, 0),
+            new Quaternion(0, 1, 0, 0),
+            new Quaternion(0, 0, 1, 0),
+            new Quaternion(0, 0, 0, 1));
+
+        // Returns the identity matrix (RO).
+        public static mat4x4 identity { get { return identityMatrix; } }
 
         public override string ToString()
         {
             string ret = "";
             for (int i = 0; i < 16; i += 4)
             {
-                ret += (v[i].ToString() + ", " + v[i + 1].ToString() + ", " + v[i + 2].ToString() + ", " + v[i+3].ToString()) + Environment.NewLine;
+                ret += (this[i].ToString() + ", " + this[i + 1].ToString() + ", " + this[i + 2].ToString() + ", " + this[i+3].ToString()) + Environment.NewLine;
             }
 
             return ret;
         }
 
-        //TODO: A && B are identity all the time, this why it aint working, find a way to fix
-        public static mat4x4 Mult(ref mat4x4 a, ref mat4x4 b)
+        public static mat4x4 operator *(mat4x4 lhs, mat4x4 rhs)
         {
+            mat4x4 res = identity;
+            res.m00 = lhs.m00 * rhs.m00 + lhs.m01 * rhs.m10 + lhs.m02 * rhs.m20 + lhs.m03 * rhs.m30;
+            res.m01 = lhs.m00 * rhs.m01 + lhs.m01 * rhs.m11 + lhs.m02 * rhs.m21 + lhs.m03 * rhs.m31;
+            res.m02 = lhs.m00 * rhs.m02 + lhs.m01 * rhs.m12 + lhs.m02 * rhs.m22 + lhs.m03 * rhs.m32;
+            res.m03 = lhs.m00 * rhs.m03 + lhs.m01 * rhs.m13 + lhs.m02 * rhs.m23 + lhs.m03 * rhs.m33;
 
-            InternalCalls.CSLog("A: " + a.ToString());
-            InternalCalls.CSLog("B: " + b.ToString());
+            res.m10 = lhs.m10 * rhs.m00 + lhs.m11 * rhs.m10 + lhs.m12 * rhs.m20 + lhs.m13 * rhs.m30;
+            res.m11 = lhs.m10 * rhs.m01 + lhs.m11 * rhs.m11 + lhs.m12 * rhs.m21 + lhs.m13 * rhs.m31;
+            res.m12 = lhs.m10 * rhs.m02 + lhs.m11 * rhs.m12 + lhs.m12 * rhs.m22 + lhs.m13 * rhs.m32;
+            res.m13 = lhs.m10 * rhs.m03 + lhs.m11 * rhs.m13 + lhs.m12 * rhs.m23 + lhs.m13 * rhs.m33;
 
-            mat4x4 C = identity;
-            int n = 4;
-            int m = 4;
-            int p = 4;
+            res.m20 = lhs.m20 * rhs.m00 + lhs.m21 * rhs.m10 + lhs.m22 * rhs.m20 + lhs.m23 * rhs.m30;
+            res.m21 = lhs.m20 * rhs.m01 + lhs.m21 * rhs.m11 + lhs.m22 * rhs.m21 + lhs.m23 * rhs.m31;
+            res.m22 = lhs.m20 * rhs.m02 + lhs.m21 * rhs.m12 + lhs.m22 * rhs.m22 + lhs.m23 * rhs.m32;
+            res.m23 = lhs.m20 * rhs.m03 + lhs.m21 * rhs.m13 + lhs.m22 * rhs.m23 + lhs.m23 * rhs.m33;
 
-            for (int i = 0; i < n; i++)
+            res.m30 = lhs.m30 * rhs.m00 + lhs.m31 * rhs.m10 + lhs.m32 * rhs.m20 + lhs.m33 * rhs.m30;
+            res.m31 = lhs.m30 * rhs.m01 + lhs.m31 * rhs.m11 + lhs.m32 * rhs.m21 + lhs.m33 * rhs.m31;
+            res.m32 = lhs.m30 * rhs.m02 + lhs.m31 * rhs.m12 + lhs.m32 * rhs.m22 + lhs.m33 * rhs.m32;
+            res.m33 = lhs.m30 * rhs.m03 + lhs.m31 * rhs.m13 + lhs.m32 * rhs.m23 + lhs.m33 * rhs.m33;
+
+            return res;
+        }
+
+        public Quaternion GetColumn(int index)
+        {
+            switch (index)
             {
-                for (int j = 0; j < p; j++)
-                {
-                    float sum = 0;
-
-                    for (int k = 0; k < m; k++)
-                    {
-                        sum += + (a.At(i, k) * b.At(k, j));
-                    }
-                    C.Set(i, j, sum);
-                }
+                case 0: return new Quaternion(m00, m10, m20, m30);
+                case 1: return new Quaternion(m01, m11, m21, m31);
+                case 2: return new Quaternion(m02, m12, m22, m32);
+                case 3: return new Quaternion(m03, m13, m23, m33);
+                default:
+                    throw new IndexOutOfRangeException("Invalid column index!");
             }
-            return C;
+        }
+
+        // Returns a row of the matrix.
+        public Quaternion GetRow(int index)
+        {
+            switch (index)
+            {
+                case 0: return new Quaternion(m00, m01, m02, m03);
+                case 1: return new Quaternion(m10, m11, m12, m13);
+                case 2: return new Quaternion(m20, m21, m22, m23);
+                case 3: return new Quaternion(m30, m31, m32, m33);
+                default:
+                    throw new IndexOutOfRangeException("Invalid row index!");
+            }
+        }
+
+        // Sets a column of the matrix.
+        public void SetColumn(int index, Quaternion column)
+        {
+            this[0, index] = column.x;
+            this[1, index] = column.y;
+            this[2, index] = column.z;
+            this[3, index] = column.w;
+        }
+
+        // Sets a row of the matrix.
+        public void SetRow(int index, Quaternion row)
+        {
+            this[index, 0] = row.x;
+            this[index, 1] = row.y;
+            this[index, 2] = row.z;
+            this[index, 3] = row.w;
         }
 
         public float At(int x, int y)
         {
-            return v[(y * 4) + x];
+            return this[(y * 4) + x];
         }
         public void Set(int x, int y, float value)
         {
-            v[(y * 4) + x] = value;
+            this[(y * 4) + x] = value;
         }
-
-        public float[] v = new float[16];
     }
 }
 

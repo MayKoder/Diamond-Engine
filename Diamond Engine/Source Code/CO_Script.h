@@ -20,6 +20,9 @@ public:
 
 	bool OnEditor() override;
 
+	void SaveData(JSON_Object* nObj) override;
+	void LoadData(JSON_Object* nObj) override;
+
 	void DropField(SerializedField& fieldName, const char* dropType);
 	void SetField(MonoClassField* field, GameObject* value);
 
@@ -29,5 +32,5 @@ public:
 	MonoObject* coreObject;
 	MonoMethod* updateMethod;
 
-	GameObject* temporalReference;
+	static C_Script* runningScript;
 };

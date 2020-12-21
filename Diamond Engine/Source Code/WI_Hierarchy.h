@@ -17,12 +17,12 @@ public:
 
 	void SetCurrentScene(M_Scene* _scene);
 
+	GameObject* dropTarget;
 private:
 	//Maybe use stack iteration and not recursive iteration
 	void DrawGameObjectsTree(GameObject* node, bool drawAsDisabled);
 
 	M_Scene* cSceneReference;
-	GameObject* dropTarget;
 };
 
 #endif //__W_HIERARCHY_H__

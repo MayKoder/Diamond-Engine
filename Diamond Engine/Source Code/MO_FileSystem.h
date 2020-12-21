@@ -24,6 +24,9 @@ public:
 	void GetAllFilesRecursive(AssetDir& _file);
 	uint64 GetLastModTime(const char* filename);
 
+	static std::string OpenFileSelectDialog();
+	static void ToLocalAssetsPath(std::string& inp);
+
 	//Permanent delete, use with caution
 	int DeleteAssetFile(const char* fileDir);
 

@@ -45,6 +45,9 @@ void DETime::PreUpdate()
 	case GameState::STOP:
 		time = 0.0f;
 		break;
+	case GameState::PRESTEP:
+		state = GameState::STEP;
+		break;
 	case GameState::STEP:
 		time += realTimeDeltaTime;
 		deltaTime = realTimeDeltaTime * timeScale;
@@ -95,7 +98,7 @@ void DETime::Pause()
 void DETime::Step()
 {
 	if (state == GameState::PAUSE)
-		state = GameState::STEP;
+		state = GameState::PRESTEP;
 }
 
 void DETime::Resume()

@@ -21,11 +21,15 @@ float DEJson::ReadFloat(JSON_Object* obj, const char* name)
 }
 void DEJson::WriteString(JSON_Object* obj, const char* name, const char* value)
 {
+	if (strcmp(value, "") == 0)
+		value = "Empty";
+
 	json_object_set_string(obj, name, value);
 }
 const char* DEJson::ReadString(JSON_Object* obj, const char* name)
 {
-	return json_object_get_string(obj, name);
+	const char* ret = json_object_get_string(obj, name);
+	return ret;
 }
 void DEJson::WriteBool(JSON_Object* obj, const char* name, bool value)
 {

@@ -23,6 +23,9 @@ void W_Hierarchy::Draw()
 {
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*/)) 
 	{
+		//if (ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left)) {
+		//	dropTarget = nullptr;
+		//}
 		if (cSceneReference != nullptr && cSceneReference->root != nullptr)
 		{
 			DrawGameObjectsTree(cSceneReference->root, false);
@@ -88,7 +91,7 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 			ImGui::EndDragDropSource();
 		}
 
-		if (ImGui::IsItemClicked())
+		if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left))
 		{
 			EngineExternal->moduleEditor->SetSelectedGO(node);
 			if (EngineExternal->moduleEditor->GetSelectedAsset() != nullptr)
