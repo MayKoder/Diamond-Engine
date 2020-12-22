@@ -13,6 +13,9 @@ typedef struct _MonoClassField MonoClassField;
 
 class GameObject;
 
+#define USER_SCRIPTS_NAMESPACE ""
+#define DE_SCRIPTS_NAMESPACE "DiamondEngine"
+
 union FieldValue
 {
 	int iValue;
@@ -40,21 +43,24 @@ public:
 	bool Init() override;
 	bool CleanUp() override;
 
+	static Quat UnboxQuat(MonoObject* _obj);
+	static float3 UnboxVector(MonoObject* _obj);
+
+	static void LoadFieldData(SerializedField& _field, MonoObject* _object);
+	static void DebugAllFields(const char* className, std::vector<SerializedField>& _data, MonoObject* obj);
+	static void DebugAllMethods(const char* nsName, const char* className, std::vector<std::string>& _data);
+
+
+	MonoObject* QuatToCS(Quat& inVec) const;
+	MonoObject* Float3ToCS(float3& inVec) const;
+	MonoObject* GoToCSGO(GameObject* inGo) const;
+
 public:
 	MonoDomain* domain;
 	MonoAssembly* assembly;
 	MonoMethod* updateMethod;
 	MonoImage* image;
 
-	static float3 UnboxVector(MonoObject* _obj);
-	static Quat UnboxQuat(MonoObject* _obj);
+	std::vector<MonoClass*> userScripts;
 
-	static void DebugAllFields(const char* className, std::vector<SerializedField>& _data, MonoObject* obj);
-	static void DebugAllMethods(const char* nsName, const char* className, std::vector<std::string>& _data);
-	static void LoadFieldData(SerializedField& _field, MonoObject* _object);
-
-
-	MonoObject* GoToCSGO(GameObject* inGo) const;
-	MonoObject* Float3ToCS(float3& inVec) const;
-	MonoObject* QuatToCS(Quat& inVec) const;
 };

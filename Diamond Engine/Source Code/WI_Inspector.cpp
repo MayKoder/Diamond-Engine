@@ -4,6 +4,10 @@
 #include "Application.h"
 #include "MO_Scene.h"
 
+#include"MO_MonoManager.h"
+#include"mono/metadata/class.h"
+#include"CO_Script.h"
+
 W_Inspector::W_Inspector() : Window(), selectedGO(nullptr)
 {
 	name = "Inspector";
@@ -126,10 +130,14 @@ void W_Inspector::Draw()
 					if(selectedGO->GetComponent(Component::Type::Camera) == nullptr)
 						selectedGO->AddComponent(Component::Type::Camera);
 				}
-				if (ImGui::Selectable("Script"))
+
+				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)
 				{
-					if (selectedGO->GetComponent(Component::Type::Script) == nullptr)
-						selectedGO->AddComponent(Component::Type::Script);
+					if (ImGui::Selectable(mono_class_get_name(EngineExternal->moduleMono->userScripts[i]))) 
+					{
+						C_Script* cs = dynamic_cast<C_Script*>(selectedGO->AddComponent(Component::Type::Script));
+						cs->LoadScriptData(mono_class_get_name(EngineExternal->moduleMono->userScripts[i]));
+					}
 				}
 
 

@@ -20,11 +20,11 @@ C_Script::C_Script(GameObject* _gm) : Component(_gm)
 	name = "Script";
 
 
-	EngineExternal->moduleMono->DebugAllMethods("DiamondEngine", "GameObject", methods);
-	EngineExternal->moduleMono->DebugAllMethods("DiamondEngine", "Core", methods);
+	EngineExternal->moduleMono->DebugAllMethods(DE_SCRIPTS_NAMESPACE, "GameObject", methods);
+	EngineExternal->moduleMono->DebugAllMethods(USER_SCRIPTS_NAMESPACE, "Core", methods);
 	//EngineExternal->moduleMono->DebugAllMethods("System", "Object", methods);
 
-	MonoClass* klass = mono_class_from_name(EngineExternal->moduleMono->image, "DiamondEngine", "Core");
+	MonoClass* klass = mono_class_from_name(EngineExternal->moduleMono->image, USER_SCRIPTS_NAMESPACE, "Core");
 	
 	coreObject = mono_object_new(EngineExternal->moduleMono->domain, klass);
 	mono_runtime_object_init(coreObject);
@@ -38,6 +38,9 @@ C_Script::C_Script(GameObject* _gm) : Component(_gm)
 
 C_Script::~C_Script()
 {
+	if (C_Script::runningScript == this)
+		C_Script::runningScript = nullptr;
+
 	methods.clear();
 	fields.clear();
 }
@@ -256,6 +259,30 @@ void C_Script::DropField(SerializedField& field, const char* dropType)
 	//TODO: Update C# field value
 
 	ImGui::PopID();
+}
+
+void C_Script::LoadScriptData(const char* scriptName)
+{
+	methods.clear();
+	fields.clear();
+
+	//if(coreObject)
+	//	mono_free(coreObject);
+
+
+	EngineExternal->moduleMono->DebugAllMethods(USER_SCRIPTS_NAMESPACE, scriptName, methods);
+	//EngineExternal->moduleMono->DebugAllMethods("System", "Object", methods);
+
+	MonoClass* klass = mono_class_from_name(EngineExternal->moduleMono->image, USER_SCRIPTS_NAMESPACE, scriptName);
+
+	coreObject = mono_object_new(EngineExternal->moduleMono->domain, klass);
+	mono_runtime_object_init(coreObject);
+
+	MonoMethodDesc* mdesc = mono_method_desc_new(":Update", false);
+	updateMethod = mono_method_desc_search_in_class(mdesc, klass);
+	mono_free(mdesc);
+
+	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, coreObject);
 }
 
 void C_Script::SetField(MonoClassField* field, GameObject* value)

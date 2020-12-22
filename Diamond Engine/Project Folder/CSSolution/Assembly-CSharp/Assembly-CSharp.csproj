@@ -41,11 +41,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BH_Bullet.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="InternalCalls.cs" />
     <Compile Include="main.cs" />
     <Compile Include="Quaternion.cs" />
+    <Compile Include="Time.cs" />
     <Compile Include="Vector3.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -11,15 +11,8 @@ namespace DiamondEngine
             globalMatrix = mat4x4.identity;
             name = "Empty";
 
-
-            lPosition = Vector3.zero;
-            position = Vector3.zero;
-
             lRotation = Quaternion.identity;
-            rotation = Quaternion.identity;
-
             lScale = Vector3.one;
-            scale = Vector3.one;
         }
         public GameObject(string _name, int _UID)
         {
@@ -27,52 +20,33 @@ namespace DiamondEngine
 
             name = _name;
 
-            lPosition = Vector3.zero;
-            position = Vector3.zero;
-
             lRotation = Quaternion.identity;
-            rotation = Quaternion.identity;
-
             lScale = Vector3.one;
-            scale = Vector3.one;
 
             UID = _UID;
         }
-        public GameObject(string _name, Vector3 _position, Quaternion _rotation, Vector3 _scale, int _UID)
+        public GameObject(string _name, Quaternion _rotation, Vector3 _scale, int _UID)
         {
             _rotation.Normalize();
             globalMatrix = mat4x4.identity;
 
-            name = _name;
-
-            lPosition = _position;
-            position = _position;
+            name = _name; 
 
             lRotation = _rotation;
-            rotation = _rotation;
-
             lScale = _scale;
-            scale = _scale;
 
             UID = _UID;
         }
 
         public string name; //Can't use get; set; because mono can't use mono_get_field then lol
 
-        private Vector3 lPosition = Vector3.zero;
-        public Vector3 position
+        public extern Vector3 position
         {
-            get
-            {
-                return lPosition;
-            }
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            get;
 
-            set
-            {
-                lPosition = value;
-                globalMatrix.SetFromTRS(lPosition, lRotation, lScale);
-                InternalCalls.UpdateCppPosition(UID, lPosition);
-            }
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            set;
         }
 
         private Quaternion lRotation = Quaternion.identity;
@@ -89,7 +63,7 @@ namespace DiamondEngine
                 //Debug.Log("PreSet: " + name.ToString() + ": " + lRotation.ToString() + " // " + value.ToString() + " and Test = " + Test.ToString());
 
                 this.lRotation = value;
-                globalMatrix.SetFromTRS(lPosition, lRotation, lScale); //Something wrong here, doing crasy stuff while mixing the pyramid variables
+                globalMatrix.SetFromTRS(position, lRotation, lScale); //Something wrong here, doing crasy stuff while mixing the pyramid variables
                 InternalCalls.UpdateCppRotation(UID, lRotation);
                 //Debug.Log("Exit: " + lScale.ToString());
                 //InternalCalls.UpdateCppGO(UID, this.lPosition, this.lRotation/*, this.lScale*/);
@@ -108,18 +82,9 @@ namespace DiamondEngine
             set
             {
                 lScale = value;
-                globalMatrix.SetFromTRS(lPosition, lRotation, lScale);
+                globalMatrix.SetFromTRS(position, lRotation, lScale);
                 InternalCalls.UpdateCppScale(UID, lScale);
             }
-        }
-
-        public extern Vector3 testPosition 
-        {
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            get;
-
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            set; 
         }
 
         int GetHash()

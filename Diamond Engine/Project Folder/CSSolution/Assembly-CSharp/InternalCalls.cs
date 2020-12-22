@@ -22,13 +22,13 @@ namespace DiamondEngine
         //public static extern void UpdateCppGO(int UID, Vector3 position, Quaternion quat, Vector3 scale);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern void UpdateCppPosition(int UID, object position);
-
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void UpdateCppRotation(int UID, object quat);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void UpdateCppScale(int UID, object scale);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void Destroy(object go);
     }
 
     class Debug

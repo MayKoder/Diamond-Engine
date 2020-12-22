@@ -23,8 +23,10 @@ public:
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(JSON_Object* nObj) override;
 
-	void DropField(SerializedField& fieldName, const char* dropType);
 	void SetField(MonoClassField* field, GameObject* value);
+	void DropField(SerializedField& fieldName, const char* dropType);
+
+	void LoadScriptData(const char*);
 
 	std::vector<std::string> methods;
 	std::vector<SerializedField> fields;

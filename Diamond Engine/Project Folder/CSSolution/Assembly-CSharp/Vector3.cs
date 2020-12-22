@@ -9,7 +9,7 @@ namespace DiamondEngine
 {
 
     [StructLayout(LayoutKind.Sequential)]
-    public partial struct Vector3
+    public partial class Vector3 //We use class because struct needs to be boxed and unboxed but class doesn't
     {
         //public bool Equals(Vector3 other)
         //{
@@ -46,13 +46,17 @@ namespace DiamondEngine
             }
         }
 
-        public Vector3(float x, float y, float z) { this.x = x; this.y = y; this.z = z; Debug.Log("Setting: " + x + ", " + y + ", " + z); }
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector3(float x, float y, float z) { this.x = x; this.y = y; this.z = z; /*Debug.Log("Setting: " + x + ", " + y + ", " + z);*/ }
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector3(float x, float y) { this.x = x; this.y = y; z = 0F; }
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Set(float newX, float newY, float newZ) { x = newX; y = newY; z = newZ;}
 
         public static Vector3 operator *(Vector3 a, float d) { return new Vector3(a.x * d, a.y * d, a.z * d); }
         public static Vector3 operator +(Vector3 a, Vector3 b) { return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z); }
         public static Vector3 operator /(Vector3 a, float d) { return new Vector3(a.x / d, a.y / d, a.z / d); }
+        public static Vector3 operator -(Vector3 a, float d) { return new Vector3(a.x - d, a.y - d, a.z - d); }
 
         static readonly Vector3 zeroVector = new Vector3(0F, 0F, 0F);
         static readonly Vector3 oneVector = new Vector3(1F, 1F, 1F);
@@ -83,14 +87,14 @@ namespace DiamondEngine
                 return zero;
         }
 
-        public void Normalize()
-        {
-            float mag = Magnitude(this);
-            if (mag > float.Epsilon)
-                this = this / mag;
-            else
-                this = zero;
-        }
+        //public void Normalize()
+        //{
+        //    float mag = Magnitude(this);
+        //    if (mag > float.Epsilon)
+        //        this = this / mag;
+        //    else
+        //        this = zero;
+        //}
 
         public Vector3 normalized { get { return Vector3.Normalize(this); } }
 

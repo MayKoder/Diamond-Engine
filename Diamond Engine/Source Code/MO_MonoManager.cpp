@@ -64,36 +64,8 @@ void CSCreateGameObject(MonoObject* name, MonoObject* position)
 
 	go->transform->position = posVector;
 	go->transform->updateTransform = true;
-
-	//MonoImage* image = mono_assembly_get_image(EngineExternal->moduleMono->assembly);
-	//MonoClass* klass;
-	//MonoObject* obj;
-	//klass = mono_class_from_name(image, "DiamondEngine", "Core");
-	//if (!klass) {
-	//	fprintf(stderr, "Can't find MyType in assembly %s\n", mono_image_get_filename(image));
-	//	exit(1);
-	//}
-	//obj = mono_object_new(EngineExternal->moduleMono->domain, klass);
-	//mono_runtime_object_init(obj);
-	//mono_field_set_value(obj, mono_class_get_field_from_name(klass, "reference"), go);
 }
 
-void UpdateCppPosition(int _UID, MonoObject* position)
-{
-	if (EngineExternal == nullptr)
-		return;
-
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID);
-	if (workGO == nullptr)
-		return;
-
-
-	float3 newPos = EngineExternal->moduleMono->UnboxVector(position);
-
-	workGO->transform->SetTransformMatrix(newPos, workGO->transform->rotation, workGO->transform->localScale);
-	workGO->transform->updateTransform = true;
-
-}
 void UpdateCppRotation(int _UID, MonoObject* rotation)
 {
 	if (EngineExternal == nullptr)
@@ -126,12 +98,55 @@ void UpdateCppScale(int _UID, MonoObject* scale)
 
 }
 
-MonoObject* SendPosition()
+MonoObject* SendPosition(MonoObject* obj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class
 {
-	if (EngineExternal == nullptr)
+	if (EngineExternal == nullptr || C_Script::runningScript == nullptr)
 		return nullptr;
 
-	return EngineExternal->moduleMono->Float3ToCS(C_Script::runningScript->GetGO()->transform->position);
+	//const char* name = mono_class_get_name(mono_object_get_class(obj));
+
+	MonoClass* vecClass = mono_class_from_name(EngineExternal->moduleMono->image, DE_SCRIPTS_NAMESPACE, "Vector3");
+	//return mono_value_box(EngineExternal->moduleMono->domain, vecClass, EngineExternal->moduleMono->Float3ToCS(C_Script::runningScript->GetGO()->transform->position)); //Use this method to send "object" types
+	return EngineExternal->moduleMono->Float3ToCS(C_Script::runningScript->GetGO()->transform->position); //Use this method to send class types
+}
+void RecievePosition(MonoObject* obj, MonoObject* secObj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class
+{
+	//void* data = mono_object_unbox(obj);
+	//float3 test = EngineExternal->moduleMono->UnboxVector(obj)
+
+	if (EngineExternal == nullptr)
+		return;
+
+	if (C_Script::runningScript == nullptr)
+		return;
+
+	float3 omgItWorks = EngineExternal->moduleMono->UnboxVector(secObj);
+	GameObject* workGO = C_Script::runningScript->GetGO();
+
+	if (workGO->transform) 
+	{
+		workGO->transform->SetTransformMatrix(omgItWorks, workGO->transform->rotation, workGO->transform->localScale);
+		workGO->transform->updateTransform = true;
+	}
+}
+
+float GetDT() //TODO: Can we do this without duplicating code? plsssss
+{
+	return DETime::deltaTime;
+}
+
+void Destroy(MonoObject* go) 
+{
+	MonoClass* klass = mono_object_get_class(go);
+	int uid;
+	mono_field_get_value(go, mono_class_get_field_from_name(klass, "UID"), &uid);
+
+	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, uid);
+	if (workGO == nullptr)
+		return;
+
+	workGO->Destroy();
+
 }
 
 #pragma endregion
@@ -150,17 +165,41 @@ M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app,
 	mono_add_internal_call("DiamondEngine.InternalCalls::GetMouseX", MouseX);
 	mono_add_internal_call("DiamondEngine.InternalCalls::GetMouseY", MouseY);
 	//mono_add_internal_call("DiamondEngine.InternalCalls::UpdateCppGO", UpdateTransformFromCS);
-	mono_add_internal_call("DiamondEngine.InternalCalls::UpdateCppPosition", UpdateCppPosition);
 	mono_add_internal_call("DiamondEngine.InternalCalls::UpdateCppRotation", UpdateCppRotation);
 	mono_add_internal_call("DiamondEngine.InternalCalls::UpdateCppScale", UpdateCppScale);
+	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
 
-	mono_add_internal_call("DiamondEngine.GameObject::get_testPosition", SendPosition);
+	mono_add_internal_call("DiamondEngine.GameObject::get_position", SendPosition);
+	mono_add_internal_call("DiamondEngine.GameObject::set_position", RecievePosition);
+
+	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
 
 	assembly = mono_domain_assembly_open(domain, "CSSolution/Assembly-CSharp/Build/Assembly-CSharp.dll");
 	if (!assembly)
 		LOG(LogType::L_ERROR, "ERROR");
 
 	image = mono_assembly_get_image(assembly);
+
+
+
+	const MonoTableInfo* table_info = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
+	int rows = mono_table_info_get_rows(table_info);
+
+	MonoClass* _class = nullptr;
+	for (int i = 1; i < rows; i++)
+	{
+		uint32_t cols[MONO_TYPEDEF_SIZE];
+		mono_metadata_decode_row(table_info, i, cols, MONO_TYPEDEF_SIZE);
+		const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
+		const char* name_space = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
+		_class = mono_class_from_name(image, name_space, name);
+
+		if (strcmp(mono_class_get_namespace(_class), DE_SCRIPTS_NAMESPACE) != 0 && !mono_class_is_enum(_class))
+		{
+			userScripts.push_back(_class);
+			LOG(LogType::L_WARNING, "%s", mono_class_get_name(_class));
+		}
+	}
 }
 
 M_MonoManager::~M_MonoManager()
@@ -212,7 +251,7 @@ void M_MonoManager::DebugAllFields(const char* className, std::vector<Serialized
 {
 	void* iter = NULL;
 	MonoClassField* field;
-	MonoClass* klass = mono_class_from_name(mono_assembly_get_image(EngineExternal->moduleMono->assembly), "DiamondEngine", className);
+	MonoClass* klass = mono_class_from_name(mono_assembly_get_image(EngineExternal->moduleMono->assembly), USER_SCRIPTS_NAMESPACE, className);
 	while (field = mono_class_get_fields(klass, &iter))
 	{
 		SerializedField pushField = SerializedField(field, obj);
@@ -238,17 +277,16 @@ void M_MonoManager::DebugAllMethods(const char* nsName, const char* className, s
 
 MonoObject* M_MonoManager::GoToCSGO(GameObject* inGo) const
 {
-	MonoClass* goClass = mono_class_from_name(image, "DiamondEngine", "GameObject");
+	MonoClass* goClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "GameObject");
 
-	void* args[5];
+	void* args[4];
 	args[0] = mono_string_new(domain, inGo->name.c_str());
-	args[1] = Float3ToCS(inGo->transform->position);
-	args[2] = QuatToCS(inGo->transform->rotation);
-	args[3] = Float3ToCS(inGo->transform->localScale);
-	args[4] = &inGo->UID;
+	args[1] = QuatToCS(inGo->transform->rotation);
+	args[2] = Float3ToCS(inGo->transform->localScale);
+	args[3] = &inGo->UID;
 	
 	//DebugAllMethods("GameObject");
-	MonoMethodDesc* constructorDesc = mono_method_desc_new("DiamondEngine.GameObject:.ctor(string,DiamondEngine.Vector3,DiamondEngine.Quaternion,DiamondEngine.Vector3,int)", true);
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("DiamondEngine.GameObject:.ctor(string,DiamondEngine.Quaternion,DiamondEngine.Vector3,int)", true);
 	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, goClass);
 	MonoObject* goObj = mono_object_new(domain, goClass);
 	mono_runtime_invoke(method, goObj, args, NULL);
@@ -259,9 +297,10 @@ MonoObject* M_MonoManager::GoToCSGO(GameObject* inGo) const
 MonoObject* M_MonoManager::Float3ToCS(float3& inVec) const
 {
 
-	MonoClass* vecClass = mono_class_from_name(image, "DiamondEngine", "Vector3");
+	MonoClass* vecClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "Vector3");
 
 	MonoObject* vecObject = mono_object_new(domain, vecClass);
+	const char* name = mono_class_get_name(mono_object_get_class(vecObject));
 
 	void* args[3];
 	args[0] = &inVec.x;
@@ -309,7 +348,7 @@ void M_MonoManager::LoadFieldData(SerializedField& _field, MonoObject* _object)
 MonoObject* M_MonoManager::QuatToCS(Quat& inVec) const
 {
 
-	MonoClass* quadClass = mono_class_from_name(image, "DiamondEngine", "Quaternion");
+	MonoClass* quadClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "Quaternion");
 	MonoObject* quatObject = mono_object_new(domain, quadClass);
 
 	void* args[4];
