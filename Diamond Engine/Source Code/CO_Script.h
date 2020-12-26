@@ -13,7 +13,7 @@ class C_Script : public Component
 {
 public:
 
-	C_Script(GameObject* _gm);
+	C_Script(GameObject* _gm, const char* scriptName);
 	virtual ~C_Script();
 
 	void Update() override;

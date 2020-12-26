@@ -16,14 +16,13 @@ public class BH_Bullet
         if (currentLifeTime >= maxLifeTime)
             InternalCalls.Destroy(thisReference);
 
-        thisReference.position += thisReference.globalMatrix.GetForward() * speed;
+        thisReference.position += thisReference.GetForward() * speed;
         //thisReference.position += (Vector3.up * -1) * Time.deltaTime;
 
         //Debug.Log(Time.deltaTime);
     }
 
     //Things i need
-        //DT
         //Spawn gameobject with mesh...
 
 }

@@ -493,6 +493,9 @@
     <ClInclude Include="Source Code\CO_Script.h">
       <Filter>Sources\Components\Derived</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CS_Transform_Bindings.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">

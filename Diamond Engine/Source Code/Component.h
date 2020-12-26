@@ -4,6 +4,7 @@ class GameObject;
 
 //ERROR: Remove this include from here
 #include"parson/parson.h"
+#include<string>
 
 class Component
 {
@@ -48,6 +49,6 @@ protected:
 	//const char* name;
 	bool active;
 	GameObject* gameObject;
-	const char* name;
+	std::string name;
 
 };

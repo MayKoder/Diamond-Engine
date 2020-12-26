@@ -56,6 +56,7 @@ public:
 
 	bool CleanUp() override;
 
+	void DrawCreateMenu();
 	Window* GetEditorWindow(EditorWindow type);
 
 	void SaveStyle(const char* styleName);

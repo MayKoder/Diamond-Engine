@@ -73,6 +73,8 @@
                     "Active": true,
                     "ScriptName": "Core",
                     "reference": 628896181,
+                    "turret": 849076695,
+                    "shootPoint": 1165000028,
                     "testInt": 0,
                     "rotationSpeed": 0.0020000000949949026,
                     "movementSpeed": 0.02500000037252903,

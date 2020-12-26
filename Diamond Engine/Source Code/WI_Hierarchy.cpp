@@ -33,11 +33,10 @@ void W_Hierarchy::Draw()
 
 		if (ImGui::BeginPopupContextWindow())
 		{
+			EngineExternal->moduleEditor->DrawCreateMenu();
 			if (ImGui::Selectable("Create Empty"))
 			{
 				GameObject* parent = (EngineExternal->moduleEditor->GetSelectedGO() != nullptr) ? EngineExternal->moduleEditor->GetSelectedGO() : EngineExternal->moduleScene->root;
-
-
 				EngineExternal->moduleScene->CreateGameObject("Empty", parent);
 
 				ImGui::CloseCurrentPopup();

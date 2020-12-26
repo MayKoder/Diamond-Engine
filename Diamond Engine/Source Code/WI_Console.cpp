@@ -46,7 +46,7 @@ void W_Console::Draw()
 			LogMessage* cLog = nullptr;
 			ImVec4 labelColor(0.f, 0.f, 0.f, 0.f);
 
-			for (unsigned int i = 0; i < logs.size(); ++i)
+			for (unsigned int i = 0; i < logs.size(); ++i) //Rendering all logs is dumb, need to find a way to ignore out-of-view logs
 			{
 				cLog = &logs[i];
 

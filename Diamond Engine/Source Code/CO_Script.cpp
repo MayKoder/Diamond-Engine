@@ -15,25 +15,13 @@
 #include <mono/metadata/debug-helpers.h>
 
 C_Script* C_Script::runningScript = nullptr;
-C_Script::C_Script(GameObject* _gm) : Component(_gm)
+C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm)
 {
-	name = "Script";
-
+	name = scriptName;
+	//strcpy(name, scriptName);
 
 	EngineExternal->moduleMono->DebugAllMethods(DE_SCRIPTS_NAMESPACE, "GameObject", methods);
-	EngineExternal->moduleMono->DebugAllMethods(USER_SCRIPTS_NAMESPACE, "Core", methods);
-	//EngineExternal->moduleMono->DebugAllMethods("System", "Object", methods);
-
-	MonoClass* klass = mono_class_from_name(EngineExternal->moduleMono->image, USER_SCRIPTS_NAMESPACE, "Core");
-	
-	coreObject = mono_object_new(EngineExternal->moduleMono->domain, klass);
-	mono_runtime_object_init(coreObject);
-
-	MonoMethodDesc* mdesc = mono_method_desc_new(":Update", false);
-	updateMethod = mono_method_desc_search_in_class(mdesc, klass);
-	mono_free(mdesc);
-
-	EngineExternal->moduleMono->DebugAllFields("Core", fields, coreObject);
+	LoadScriptData(scriptName);
 }
 
 C_Script::~C_Script()
@@ -124,6 +112,7 @@ bool C_Script::OnEditor()
 void C_Script::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
+	DEJson::WriteString(nObj, "ScriptName", name.c_str());
 
 	for (int i = 0; i < fields.size(); i++)
 	{

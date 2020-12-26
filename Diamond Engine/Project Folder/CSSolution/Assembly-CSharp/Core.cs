@@ -8,6 +8,7 @@ public class Core
 {
 	public GameObject reference = null;
 	public GameObject turret = null;
+	public GameObject shootPoint = null;
 
 	public int testInt = 0;
 		
@@ -27,9 +28,9 @@ public class Core
 
         //Log does not work if we compile with Release wtf?
         if (InternalCalls.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
-            reference.position += reference.globalMatrix.GetForward() * movementSpeed;
+            reference.position += reference.GetForward() * movementSpeed;
         if (InternalCalls.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT)
-            reference.position += reference.globalMatrix.GetForward() * -movementSpeed;
+            reference.position += reference.GetForward() * -movementSpeed;
         if (InternalCalls.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT)
             reference.rotation *= Quaternion.RotateAroundAxis(Vector3.up, rotationSpeed);
         if (InternalCalls.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
@@ -45,7 +46,7 @@ public class Core
         //}
 
         if (InternalCalls.GetKey(DEKeyCode.SPACE) == KeyState.KEY_DOWN)
-            InternalCalls.CreateGameObject("Bullet", reference.position);
+            InternalCalls.CreateBullet(shootPoint.position, shootPoint.rotation, shootPoint.scale);
 
         //if (rotationSpeed != 0.0f)
         //{

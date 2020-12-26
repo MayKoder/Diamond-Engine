@@ -3,7 +3,7 @@
 #include"ImGui/imgui.h"
 #include"GameObject.h"
 
-Component::Component(GameObject* _gm) : active(true), /*name(""),*/ gameObject(_gm), type(Type::None), name(nullptr)
+Component::Component(GameObject* _gm) : active(true), /*name(""),*/ gameObject(_gm), type(Type::None)
 {
 }
 
@@ -25,7 +25,7 @@ void Component::Update()
 
 bool Component::OnEditor()
 {
-	bool ret = ImGui::CollapsingHeader(name, ImGuiTreeNodeFlags_DefaultOpen);
+	bool ret = ImGui::CollapsingHeader(name.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
 
 	if (!ret)
 		return false;

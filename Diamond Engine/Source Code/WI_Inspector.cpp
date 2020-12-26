@@ -135,8 +135,8 @@ void W_Inspector::Draw()
 				{
 					if (ImGui::Selectable(mono_class_get_name(EngineExternal->moduleMono->userScripts[i]))) 
 					{
-						C_Script* cs = dynamic_cast<C_Script*>(selectedGO->AddComponent(Component::Type::Script));
-						cs->LoadScriptData(mono_class_get_name(EngineExternal->moduleMono->userScripts[i]));
+						const char* name = mono_class_get_name(EngineExternal->moduleMono->userScripts[i]);
+						C_Script* cs = dynamic_cast<C_Script*>(selectedGO->AddComponent(Component::Type::Script, name));
 					}
 				}
 

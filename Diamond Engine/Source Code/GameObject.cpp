@@ -66,7 +66,7 @@ void GameObject::Update()
 	}
 }
 
-Component* GameObject::AddComponent(Component::Type _type)
+Component* GameObject::AddComponent(Component::Type _type, const char* params)
 {
 
 	assert(_type != Component::Type::None, "Can't create a NONE component");
@@ -86,7 +86,8 @@ Component* GameObject::AddComponent(Component::Type _type)
 		ret = new C_Material(this);
 		break;
 	case Component::Type::Script:
-		ret = new C_Script(this);
+		assert(params != nullptr, "Script without name can't be created");
+		ret = new C_Script(this, params);
 		break;
 	case Component::Type::Camera:
 		ret = new C_Camera(this);
@@ -204,13 +205,15 @@ void GameObject::LoadFromJson(JSON_Object* _obj)
 void GameObject::LoadComponents(JSON_Array* componentArray)
 {
 
-	JSON_Object* jsComponent = nullptr;
+	DEConfig conf(nullptr);
 	for (size_t i = 1; i < json_array_get_count(componentArray); i++)
 	{
-		jsComponent = json_array_get_object(componentArray, i);
+		conf.nObj = json_array_get_object(componentArray, i);
 
-		Component* comp = AddComponent((Component::Type)json_object_get_number(jsComponent, "Type"));
-		comp->LoadData(jsComponent);
+		const char* scName = conf.ReadString("ScriptName");
+		Component* comp = AddComponent((Component::Type)conf.ReadInt("Type"), scName);
+
+		comp->LoadData(conf.nObj);
 
 	}
 

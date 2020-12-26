@@ -18,6 +18,9 @@ namespace DiamondEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void CreateGameObject(object name, object position);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void CreateBullet(object position, object rotation, object scale);
+
         //[MethodImplAttribute(MethodImplOptions.InternalCall)]
         //public static extern void UpdateCppGO(int UID, Vector3 position, Quaternion quat, Vector3 scale);
 

@@ -244,39 +244,7 @@ void M_Editor::DrawMenuBar()
 		}
 		if (ImGui::BeginMenu("GameObject"))
 		{
-
-			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
-
-			if (ImGui::MenuItem("Empty", nullptr))
-				App->moduleScene->CreateGameObject("Empty", App->moduleScene->root);
-
-			if (ImGui::BeginMenu("3D")) 
-			{
-				//TODO: This is temporal, meshes should not laod every time and 
-				//should be stored only once, then only copy mesh pointers.
-				if (ImGui::MenuItem("Cube", nullptr))
-					App->moduleResources->RequestFromAssets("Assets/Primitives/Cube.fbx");
-				if (ImGui::MenuItem("Plane", nullptr))
-					App->moduleResources->RequestFromAssets("Assets/Primitives/Plane.fbx");
-				if (ImGui::MenuItem("Cylinder", nullptr))
-					App->moduleResources->RequestFromAssets("Assets/Primitives/Cylinder.fbx");
-				if (ImGui::MenuItem("Icosphere", nullptr))
-					App->moduleResources->RequestFromAssets("Assets/Primitives/Icosphere.fbx");
-				if (ImGui::MenuItem("Pyramid", nullptr))
-					App->moduleResources->RequestFromAssets("Assets/Primitives/Pyramid.fbx");
-				if (ImGui::MenuItem("Sphere", nullptr))
-					App->moduleResources->RequestFromAssets("Assets/Primitives/Sphere.fbx");
-				if (ImGui::MenuItem("Torus", nullptr))
-					App->moduleResources->RequestFromAssets("Assets/Primitives/Torus.fbx");
-				if (ImGui::MenuItem("Monkey", nullptr))
-					App->moduleResources->RequestFromAssets("Assets/Primitives/Monkey.fbx");
-				ImGui::EndMenu();
-			}
-			if (ImGui::MenuItem("Game Camera", nullptr))
-				App->moduleScene->CreateGameCamera("Game Camera");
-
-
-			ImGui::PopStyleColor(1);
+			DrawCreateMenu();
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Windows"))
@@ -462,6 +430,42 @@ void M_Editor::CreateDockSpace()
 	dockspace_id = ImGui::DockSpaceOverViewportCustom(viewport, ImGuiDockNodeFlags_PassthruCentralNode, dockPos, dockSize, nullptr);
 }
 
+
+void M_Editor::DrawCreateMenu()
+{
+	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 1.f, 1.f));
+
+	if (ImGui::MenuItem("Empty", nullptr))
+		App->moduleScene->CreateGameObject("Empty", App->moduleScene->root);
+
+	if (ImGui::BeginMenu("3D"))
+	{
+		//TODO: This is temporal, meshes should not laod every time and 
+		//should be stored only once, then only copy mesh pointers.
+		if (ImGui::MenuItem("Cube", nullptr))
+			App->moduleResources->RequestFromAssets("Assets/Primitives/Cube.fbx");
+		if (ImGui::MenuItem("Plane", nullptr))
+			App->moduleResources->RequestFromAssets("Assets/Primitives/Plane.fbx");
+		if (ImGui::MenuItem("Cylinder", nullptr))
+			App->moduleResources->RequestFromAssets("Assets/Primitives/Cylinder.fbx");
+		if (ImGui::MenuItem("Icosphere", nullptr))
+			App->moduleResources->RequestFromAssets("Assets/Primitives/Icosphere.fbx");
+		if (ImGui::MenuItem("Pyramid", nullptr))
+			App->moduleResources->RequestFromAssets("Assets/Primitives/Pyramid.fbx");
+		if (ImGui::MenuItem("Sphere", nullptr))
+			App->moduleResources->RequestFromAssets("Assets/Primitives/Sphere.fbx");
+		if (ImGui::MenuItem("Torus", nullptr))
+			App->moduleResources->RequestFromAssets("Assets/Primitives/Torus.fbx");
+		if (ImGui::MenuItem("Monkey", nullptr))
+			App->moduleResources->RequestFromAssets("Assets/Primitives/Monkey.fbx");
+		ImGui::EndMenu();
+	}
+	if (ImGui::MenuItem("Game Camera", nullptr))
+		App->moduleScene->CreateGameCamera("Game Camera");
+
+
+	ImGui::PopStyleColor(1);
+}
 
 //Returns nullptr if the window doesn't exist in the editor.
 //Use dynamic_cast to convert from Window* to the type of editor window 

@@ -11,146 +11,11 @@
 #include <mono/metadata/class.h>
 
 #include"GameObject.h"
-#include"DETime.h"
 #include"CO_Script.h"
+#include"CS_Transform_Bindings.h"
 
 #pragma comment( lib, "mono/libx86/mono-2.0-boehm.lib" )
 #pragma comment( lib, "mono/libx86/mono-2.0-sgen.lib" )
-
-#pragma region Internals
-//-------------------------------------------- Internals -----------------------------------------------//
-void CSLog(MonoObject* x)
-{
-	if (x == NULL)
-		return;
-
-	MonoString* string = mono_object_to_string(x, NULL);
-	LOG(LogType::L_WARNING, mono_string_to_utf8(string));
-}
-
-#include"MO_Input.h"
-int GetKey(MonoObject* x)
-{
-	if (EngineExternal != nullptr)
-		return EngineExternal->moduleInput->GetKey(*(int*)mono_object_unbox(x));
-
-	return false;
-}
-int MouseX()
-{
-	if (EngineExternal != nullptr)
-		return EngineExternal->moduleInput->GetMouseXMotion();
-}
-int MouseY()
-{
-	if (EngineExternal != nullptr)
-		return EngineExternal->moduleInput->GetMouseYMotion();
-}
-
-#include"MO_Scene.h"
-#include"GameObject.h"
-#include"MathGeoLib/include/Math/float3.h"
-#include"CO_Transform.h"
-void CSCreateGameObject(MonoObject* name, MonoObject* position)
-{
-	if (EngineExternal == nullptr)
-		return;
-
-	char* p = mono_string_to_utf8(mono_object_to_string(name, NULL));
-	GameObject* go = EngineExternal->moduleScene->CreateGameObject(p, EngineExternal->moduleScene->root);
-	mono_free(p);
-
-	float3 posVector = M_MonoManager::UnboxVector(position);
-
-	go->transform->position = posVector;
-	go->transform->updateTransform = true;
-}
-
-void UpdateCppRotation(int _UID, MonoObject* rotation)
-{
-	if (EngineExternal == nullptr)
-		return;
-
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID);
-	if (workGO == nullptr)
-		return;
-
-	Quat newRot = EngineExternal->moduleMono->UnboxQuat(rotation);
-
-	workGO->transform->SetTransformMatrix(workGO->transform->position, newRot, workGO->transform->localScale);
-	workGO->transform->updateTransform = true;
-
-}
-void UpdateCppScale(int _UID, MonoObject* scale)
-{
-	if (EngineExternal == nullptr)
-		return;
-
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID);
-	if (workGO == nullptr)
-		return;
-
-
-	float3 newScale = EngineExternal->moduleMono->UnboxVector(scale);
-
-	workGO->transform->SetTransformMatrix(workGO->transform->position, workGO->transform->rotation, newScale);
-	workGO->transform->updateTransform = true;
-
-}
-
-MonoObject* SendPosition(MonoObject* obj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class
-{
-	if (EngineExternal == nullptr || C_Script::runningScript == nullptr)
-		return nullptr;
-
-	//const char* name = mono_class_get_name(mono_object_get_class(obj));
-
-	MonoClass* vecClass = mono_class_from_name(EngineExternal->moduleMono->image, DE_SCRIPTS_NAMESPACE, "Vector3");
-	//return mono_value_box(EngineExternal->moduleMono->domain, vecClass, EngineExternal->moduleMono->Float3ToCS(C_Script::runningScript->GetGO()->transform->position)); //Use this method to send "object" types
-	return EngineExternal->moduleMono->Float3ToCS(C_Script::runningScript->GetGO()->transform->position); //Use this method to send class types
-}
-void RecievePosition(MonoObject* obj, MonoObject* secObj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class
-{
-	//void* data = mono_object_unbox(obj);
-	//float3 test = EngineExternal->moduleMono->UnboxVector(obj)
-
-	if (EngineExternal == nullptr)
-		return;
-
-	if (C_Script::runningScript == nullptr)
-		return;
-
-	float3 omgItWorks = EngineExternal->moduleMono->UnboxVector(secObj);
-	GameObject* workGO = C_Script::runningScript->GetGO();
-
-	if (workGO->transform) 
-	{
-		workGO->transform->SetTransformMatrix(omgItWorks, workGO->transform->rotation, workGO->transform->localScale);
-		workGO->transform->updateTransform = true;
-	}
-}
-
-float GetDT() //TODO: Can we do this without duplicating code? plsssss
-{
-	return DETime::deltaTime;
-}
-
-void Destroy(MonoObject* go) 
-{
-	MonoClass* klass = mono_object_get_class(go);
-	int uid;
-	mono_field_get_value(go, mono_class_get_field_from_name(klass, "UID"), &uid);
-
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, uid);
-	if (workGO == nullptr)
-		return;
-
-	workGO->Destroy();
-
-}
-
-#pragma endregion
-
 
 M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app, start_enabled), domain(nullptr), updateMethod(nullptr), assembly(nullptr), image(nullptr)	
 {
@@ -168,9 +33,11 @@ M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app,
 	mono_add_internal_call("DiamondEngine.InternalCalls::UpdateCppRotation", UpdateCppRotation);
 	mono_add_internal_call("DiamondEngine.InternalCalls::UpdateCppScale", UpdateCppScale);
 	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
+	mono_add_internal_call("DiamondEngine.InternalCalls::CreateBullet", CreateBullet);
 
 	mono_add_internal_call("DiamondEngine.GameObject::get_position", SendPosition);
 	mono_add_internal_call("DiamondEngine.GameObject::set_position", RecievePosition);
+	mono_add_internal_call("DiamondEngine.GameObject::GetForward", GetForward);
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
 
