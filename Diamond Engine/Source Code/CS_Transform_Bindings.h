@@ -18,6 +18,50 @@
 #include"GameObject.h"
 #include"MathGeoLib/include/Math/float3.h"
 
+//------//
+MonoObject* DE_Box_Vector(MonoObject* obj, const char* type, bool global)
+{
+	if (EngineExternal == nullptr)
+		return nullptr;
+
+	const char* name = mono_class_get_name(mono_object_get_class(obj));
+
+	uint _UID = 0;
+	mono_field_get_value(obj, mono_class_get_field_from_name(mono_object_get_class(obj), "UID"), &_UID);
+
+	float3 value;
+	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID);
+
+	if (strcmp(type, "POSITION") == 0)
+	{
+		(global == true) ? value = workGO->transform->globalTransform.TranslatePart() : value = workGO->transform->position;
+	}
+	else
+	{
+		(global == true) ? value = workGO->transform->globalTransform.GetScale() : value = workGO->transform->localScale;
+	}
+
+	return EngineExternal->moduleMono->Float3ToCS(value);
+}
+MonoObject* DE_Box_Quat(MonoObject* obj, bool global)
+{
+	if (EngineExternal == nullptr)
+		return nullptr;
+
+	const char* name = mono_class_get_name(mono_object_get_class(obj));
+
+	uint _UID = 0;
+	mono_field_get_value(obj, mono_class_get_field_from_name(mono_object_get_class(obj), "UID"), &_UID);
+
+	Quat value;
+	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID);
+
+	(global == true) ? value = workGO->transform->globalTransform.RotatePart().ToQuat() : value = workGO->transform->rotation;
+
+
+	return EngineExternal->moduleMono->QuatToCS(value);
+}
+
 #pragma region Internals
 //-------------------------------------------- Internals -----------------------------------------------//
 void CSLog(MonoObject* x)
@@ -62,51 +106,10 @@ void CSCreateGameObject(MonoObject* name, MonoObject* position)
 	go->transform->updateTransform = true;
 }
 
-void UpdateCppRotation(int _UID, MonoObject* rotation)
-{
-	if (EngineExternal == nullptr)
-		return;
-
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID);
-	if (workGO == nullptr)
-		return;
-
-	Quat newRot = EngineExternal->moduleMono->UnboxQuat(rotation);
-
-	workGO->transform->SetTransformMatrix(workGO->transform->position, newRot, workGO->transform->localScale);
-	workGO->transform->updateTransform = true;
-
-}
-void UpdateCppScale(int _UID, MonoObject* scale)
-{
-	if (EngineExternal == nullptr)
-		return;
-
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID);
-	if (workGO == nullptr)
-		return;
-
-
-	float3 newScale = EngineExternal->moduleMono->UnboxVector(scale);
-
-	workGO->transform->SetTransformMatrix(workGO->transform->position, workGO->transform->rotation, newScale);
-	workGO->transform->updateTransform = true;
-
-}
-
 MonoObject* SendPosition(MonoObject* obj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class
 {
-	if (EngineExternal == nullptr)
-		return nullptr;
-
-	const char* name = mono_class_get_name(mono_object_get_class(obj));
-
-	uint _UID = 0;
-	mono_field_get_value(obj,  mono_class_get_field_from_name(mono_object_get_class(obj) ,"UID"), &_UID);
-
-	MonoClass* vecClass = mono_class_from_name(EngineExternal->moduleMono->image, DE_SCRIPTS_NAMESPACE, "Vector3");
 	//return mono_value_box(EngineExternal->moduleMono->domain, vecClass, EngineExternal->moduleMono->Float3ToCS(C_Script::runningScript->GetGO()->transform->position)); //Use this method to send "object" types
-	return EngineExternal->moduleMono->Float3ToCS(EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID)->transform->position); //Use this method to send class types
+	return DE_Box_Vector(obj, "POSITION", false); //Use this method to send class types
 }
 void RecievePosition(MonoObject* obj, MonoObject* secObj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class
 {
@@ -125,26 +128,6 @@ void RecievePosition(MonoObject* obj, MonoObject* secObj) //Allows to send float
 		workGO->transform->updateTransform = true;
 	}
 }
-
-float GetDT() //TODO: Can we do this without duplicating code? plsssss
-{
-	return DETime::deltaTime;
-}
-
-void Destroy(MonoObject* go)
-{
-	MonoClass* klass = mono_object_get_class(go);
-	int uid;
-	mono_field_get_value(go, mono_class_get_field_from_name(klass, "UID"), &uid);
-
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, uid);
-	if (workGO == nullptr)
-		return;
-
-	workGO->Destroy();
-
-}
-
 MonoObject* GetForward(MonoObject* go)
 {
 	if (EngineExternal == nullptr || C_Script::runningScript == nullptr)
@@ -159,6 +142,75 @@ MonoObject* GetForward(MonoObject* go)
 	MonoClass* vecClass = mono_class_from_name(EngineExternal->moduleMono->image, DE_SCRIPTS_NAMESPACE, "Vector3");
 	return EngineExternal->moduleMono->Float3ToCS(workGO->transform->GetForward());
 }
+
+MonoObject* SendRotation(MonoObject* obj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class
+{
+	return DE_Box_Quat(obj, false); //Use this method to send class types
+}
+void RecieveRotation(MonoObject* obj, MonoObject* secObj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	Quat omgItWorks = EngineExternal->moduleMono->UnboxQuat(secObj);
+
+	uint _UID = 0;
+	mono_field_get_value(obj, mono_class_get_field_from_name(mono_object_get_class(obj), "UID"), &_UID);
+	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID); //TODO IMPORTANT: First parameter is the object reference, use that to find UID
+
+	if (workGO->transform)
+	{
+		workGO->transform->SetTransformMatrix(workGO->transform->position, omgItWorks, workGO->transform->localScale);
+		workGO->transform->updateTransform = true;
+	}
+}
+
+MonoObject* SendScale(MonoObject* obj)
+{
+	return DE_Box_Vector(obj, "SCALE", false);
+}
+void RecieveScale(MonoObject* obj, MonoObject* secObj)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float3 omgItWorks = EngineExternal->moduleMono->UnboxVector(secObj);
+
+	uint _UID = 0;
+	mono_field_get_value(obj, mono_class_get_field_from_name(mono_object_get_class(obj), "UID"), &_UID);
+	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID); //TODO IMPORTANT: First parameter is the object reference, use that to find UID
+
+	if (workGO->transform)
+	{
+		workGO->transform->SetTransformMatrix(workGO->transform->position, workGO->transform->rotation, omgItWorks);
+		workGO->transform->updateTransform = true;
+	}
+}
+
+float GetDT() //TODO: Can we do this without duplicating code? plsssss
+{
+	return DETime::deltaTime;
+}
+
+void Destroy(MonoObject* go)
+{
+	if (go == NULL)
+		return;
+
+	MonoClass* klass = mono_object_get_class(go);
+	const char* name = mono_class_get_name(klass);
+
+	int uid;
+	mono_field_get_value(go, mono_class_get_field_from_name(klass, "UID"), &uid);
+
+	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, uid);
+	if (workGO == nullptr)
+		return;
+
+	workGO->Destroy();
+
+}
+
 
 void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale) //TODO: We really need prefabs
 {
@@ -181,6 +233,23 @@ void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale)
 	meshRenderer->SetRenderMesh(test);
 
 	go->AddComponent(Component::Type::Script, "BH_Bullet");
+}
+
+//---------- GLOBAL GETTERS ----------//
+MonoObject* SendGlobalPosition(MonoObject* obj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class
+{
+	//return mono_value_box(EngineExternal->moduleMono->domain, vecClass, EngineExternal->moduleMono->Float3ToCS(C_Script::runningScript->GetGO()->transform->position)); //Use this method to send "object" types
+	return DE_Box_Vector(obj, "POSITION", true); //Use this method to send class types
+}
+MonoObject* SendGlobalRotation(MonoObject* obj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class
+{
+	//return mono_value_box(EngineExternal->moduleMono->domain, vecClass, EngineExternal->moduleMono->Float3ToCS(C_Script::runningScript->GetGO()->transform->position)); //Use this method to send "object" types
+	return DE_Box_Quat(obj, true); //Use this method to send class types
+}
+MonoObject* SendGlobalScale(MonoObject* obj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class
+{
+	//return mono_value_box(EngineExternal->moduleMono->domain, vecClass, EngineExternal->moduleMono->Float3ToCS(C_Script::runningScript->GetGO()->transform->position)); //Use this method to send "object" types
+	return DE_Box_Vector(obj, "SCALE", true); //Use this method to send class types
 }
 
 #pragma endregion

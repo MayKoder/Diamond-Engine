@@ -31,6 +31,9 @@ bool Component::OnEditor()
 		return false;
 
 	ImGui::PushID(&this->active);
+
+	ImGui::Text("UID: %i", gameObject->UID);
+
 	if (this->type != Component::Type::Transform) 
 	{
 		ImGui::Text("Active: "); ImGui::SameLine(); ImGui::Checkbox("##MeshActive", &active);

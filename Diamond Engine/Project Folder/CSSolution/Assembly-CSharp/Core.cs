@@ -28,17 +28,17 @@ public class Core
 
         //Log does not work if we compile with Release wtf?
         if (InternalCalls.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
-            reference.position += reference.GetForward() * movementSpeed;
+            reference.localPosition += reference.GetForward() * movementSpeed;
         if (InternalCalls.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT)
-            reference.position += reference.GetForward() * -movementSpeed;
+            reference.localPosition += reference.GetForward() * -movementSpeed;
         if (InternalCalls.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT)
-            reference.rotation *= Quaternion.RotateAroundAxis(Vector3.up, rotationSpeed);
+            reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, rotationSpeed);
         if (InternalCalls.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
-            reference.rotation *= Quaternion.RotateAroundAxis(Vector3.up, -rotationSpeed);
+            reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -rotationSpeed);
 
         if (InternalCalls.GetMouseX() != 0 && turret != null)
         {
-            turret.rotation *= Quaternion.RotateAroundAxis(Vector3.up, -InternalCalls.GetMouseX() * 0.001f);
+            turret.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -InternalCalls.GetMouseX() * 0.001f);
         }
         //if (InternalCalls.GetMouseY() != 0 && turret != null)
         //{
@@ -46,7 +46,7 @@ public class Core
         //}
 
         if (InternalCalls.GetKey(DEKeyCode.SPACE) == KeyState.KEY_DOWN)
-            InternalCalls.CreateBullet(shootPoint.position, shootPoint.rotation, shootPoint.scale);
+            InternalCalls.CreateBullet(shootPoint.globalPosition, shootPoint.globalRotation, shootPoint.globalScale);
 
         //if (rotationSpeed != 0.0f)
         //{

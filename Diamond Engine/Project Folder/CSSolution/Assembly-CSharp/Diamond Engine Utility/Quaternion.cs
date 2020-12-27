@@ -7,7 +7,7 @@ namespace DiamondEngine
 {
 
     [StructLayout(LayoutKind.Sequential)]
-    public partial struct Quaternion /*: IEquatable<Vector3>*/
+    public partial class Quaternion /*: IEquatable<Vector3>*/
     {
 
         public float x;
@@ -99,7 +99,11 @@ namespace DiamondEngine
 
         public void Normalize()
         {
-            this = Normalize(this);
+            Quaternion norm = Normalize(this);
+            x = norm.x;
+            y = norm.y;
+            z = norm.z;
+            w = norm.w;
         }
 
         public Quaternion normalized

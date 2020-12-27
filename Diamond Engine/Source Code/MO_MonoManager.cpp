@@ -30,14 +30,21 @@ M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app,
 	mono_add_internal_call("DiamondEngine.InternalCalls::GetMouseX", MouseX);
 	mono_add_internal_call("DiamondEngine.InternalCalls::GetMouseY", MouseY);
 	//mono_add_internal_call("DiamondEngine.InternalCalls::UpdateCppGO", UpdateTransformFromCS);
-	mono_add_internal_call("DiamondEngine.InternalCalls::UpdateCppRotation", UpdateCppRotation);
-	mono_add_internal_call("DiamondEngine.InternalCalls::UpdateCppScale", UpdateCppScale);
 	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateBullet", CreateBullet);
 
-	mono_add_internal_call("DiamondEngine.GameObject::get_position", SendPosition);
-	mono_add_internal_call("DiamondEngine.GameObject::set_position", RecievePosition);
+	mono_add_internal_call("DiamondEngine.GameObject::get_localPosition", SendPosition);
+	mono_add_internal_call("DiamondEngine.GameObject::get_globalPosition", SendGlobalPosition);
+	mono_add_internal_call("DiamondEngine.GameObject::set_localPosition", RecievePosition);
 	mono_add_internal_call("DiamondEngine.GameObject::GetForward", GetForward);
+
+	mono_add_internal_call("DiamondEngine.GameObject::get_localRotation", SendRotation);
+	mono_add_internal_call("DiamondEngine.GameObject::get_globalRotation", SendGlobalRotation);
+	mono_add_internal_call("DiamondEngine.GameObject::set_localRotation", RecieveRotation);
+
+	mono_add_internal_call("DiamondEngine.GameObject::get_localScale", SendScale);
+	mono_add_internal_call("DiamondEngine.GameObject::get_globalScale", SendGlobalScale);
+	mono_add_internal_call("DiamondEngine.GameObject::set_localScale", RecieveScale);
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
 
