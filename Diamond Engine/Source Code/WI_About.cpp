@@ -7,6 +7,8 @@
 #include"PhysFS/include/physfs.h"
 #include"Assimp/include/version.h"
 
+#include"ImTextEditor/TextEditor.h"
+
 //TODO: DevIL version is missing
 
 W_About::W_About() : Window()

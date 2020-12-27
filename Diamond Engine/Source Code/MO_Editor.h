@@ -22,6 +22,7 @@ enum class EditorWindow {
 	INSPECTOR,
 	SCENE,
 	GAME,
+	TEXTEDITOR,
 
 	//Help tab
 	ABOUT,

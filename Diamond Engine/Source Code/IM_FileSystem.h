@@ -46,4 +46,6 @@ namespace FileSystem
 
 	uint Save(const char* file, char* buffer, uint size, bool append);
 	uint Copy(const char* file, const char* dir, std::string& outputFile);
+
+	std::string FileToText(const char* path);
 }

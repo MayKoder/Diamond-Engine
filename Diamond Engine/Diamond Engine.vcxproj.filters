@@ -85,6 +85,9 @@
     <Filter Include="Sources\Resources">
       <UniqueIdentifier>{23844b4e-cab4-4cba-aff6-3bb865bd7c1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Externals\ImTextEditor">
+      <UniqueIdentifier>{0c8d2baa-8e1d-4d91-bfec-cee46e78021c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -496,6 +499,12 @@
     <ClInclude Include="Source Code\CS_Transform_Bindings.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImTextEditor\TextEditor.h">
+      <Filter>Externals\ImTextEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\WI_TextEditor.h">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -767,6 +776,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\CO_Script.cpp">
       <Filter>Sources\Components\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImTextEditor\TextEditor.cpp">
+      <Filter>Externals\ImTextEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\WI_TextEditor.cpp">
+      <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

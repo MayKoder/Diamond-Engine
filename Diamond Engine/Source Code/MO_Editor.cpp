@@ -28,6 +28,7 @@
 #include "WI_Scene.h"
 #include "WI_Assets.h"
 #include "WI_Game.h"
+#include "WI_TextEditor.h"
 
 #include"GameObject.h"
 #include"IM_TextureImporter.h"
@@ -46,6 +47,7 @@ viewportCorSize(0.f), dockspace_id(0)
 	windows[static_cast<unsigned int>(EditorWindow::INSPECTOR)] = new W_Inspector();
 	windows[static_cast<unsigned int>(EditorWindow::SCENE)] = new W_Scene(App);
 	windows[static_cast<unsigned int>(EditorWindow::GAME)] = new W_Game();
+	windows[static_cast<unsigned int>(EditorWindow::TEXTEDITOR)] = new W_TextEditor();
 
 	//TODO: This 2 windows are last on the enum to keep them from drawing on the window
 	//tab on the main menu bar, and are drawed by hand on other tabs, there

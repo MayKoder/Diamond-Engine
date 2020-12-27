@@ -9,6 +9,7 @@
 #include <fstream>
 #include <iostream>
 #include <filesystem>
+#include <sstream> //std::stringstream
 
 #include "PhysFS/include/physfs.h"
 #include "IM_MeshLoader.h"
@@ -330,6 +331,21 @@ uint FileSystem::Copy(const char* file, const char* dir, std::string& outputFile
 		LOG(LogType::L_ERROR, "FILE SYSTEM: Could not open file '%s' to read", file);
 
 	return size;
+}
+
+
+std::string FileSystem::FileToText(const char* path)
+{
+	// Read from the text file
+	std::ifstream MyReadFile(path);
+
+	std::stringstream buffer;
+	buffer << MyReadFile.rdbuf();
+
+	// Close the file
+	MyReadFile.close();
+
+	return buffer.str();
 }
 
 void FileSystem::GetFileName(const char* file, std::string& fileName, bool extension)
