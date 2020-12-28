@@ -13,8 +13,11 @@ public:
 
 	void Draw() override;
 
+	void SetTextFromFile(const char* path);
+
 private:
 	TextEditor txtEditor;
+	const char* txtName;
 };
 
 

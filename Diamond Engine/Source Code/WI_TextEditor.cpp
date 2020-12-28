@@ -1,13 +1,11 @@
 #include "WI_TextEditor.h"
 #include"IM_FileSystem.h"
 
-W_TextEditor::W_TextEditor() : Window() /*: texColorBuffer(-1)*/
+W_TextEditor::W_TextEditor() : Window(), txtName(nullptr) /*: texColorBuffer(-1)*/
 {
 	name = "Text Editor"; //No lng definition for C# :(
 
-	//txtEditor.SetText();
-	std::string test = FileSystem::FileToText("CSSolution/Assembly-CSharp/Core.cs");
-	txtEditor.SetText(test);
+	SetTextFromFile("CSSolution/Assembly-CSharp/Core.cs");
 }
 
 W_TextEditor::~W_TextEditor()
@@ -21,9 +19,17 @@ void W_TextEditor::Draw()
 
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*//*, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse*/))
 	{
-		txtEditor.Render("Script");
+		txtEditor.Render(txtName);
 	}
 	ImGui::End();
 	ImGui::PopStyleVar();
 
+}
+
+void W_TextEditor::SetTextFromFile(const char* path)
+{
+	txtName = path;
+
+	std::string test = FileSystem::FileToText(path);
+	txtEditor.SetText(test);
 }

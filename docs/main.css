@@ -1,3 +1,33 @@
+html, body {
+  height: 100%;
+  margin: 0px;
+}
+.containerDE {
+  background: #f0e68c;
+  height: 75%;
+  width: 90%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container{ /* This class is not defines here, it's part of another .css*/
+  background-color: #8cd0f0;
+}
+
+.hrList {
+  display: flex;
+}
+.hrList__image{
+  margin: 0 30px 0 0;
+  align-self: flex-start;
+}
+.hrList__text{
+  flex: auto;
+}
+
+
+
 /* Add a black background color to the top navigation */
 .topnav {
   background-color: #333;
@@ -27,4 +57,41 @@
 .topnav a.active {
   background-color: #4CAF50;
   color: white;
+}
+
+.vertical-center {
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.cool-button {
+  background-color: black;
+  color: white;
+  border: 2px solid rgb(255, 255, 255); /* Green */
+  cursor:pointer;
+  padding: calc(0.8vh + 0.3vw);
+  font-size: calc(0.8vh + 0.6vw);
+  margin-right: 4px;
+}
+.cool-button:hover
+{
+background-image:none;
+background-color: rgb(145, 113, 66);
+}
+
+.cool-button:focus{
+  background-color: black;
+}
+.spacer{
+  margin-bottom: calc(1vh + 1vw) !important;
+}
+
+ul > li{
+  display:inline-block;
 }

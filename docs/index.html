@@ -8,11 +8,13 @@
     <meta name="author" content="">
     <title>Diamond Engine</title>
     
+    <link rel="icon" href="media/DiamondIcon.ico"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="main.css">
-
+  
 </head>
 
-<body style="margin: 0">
+<body style="margin: 0;">
     
     <!--
     <div class="topnav">
@@ -22,13 +24,131 @@
       <a href="#about">About</a>
     </div>
     -->
+    <!-- <div>
+        Could be a cool idea to make the "Download" button get a direct download link and not a link to the last release
+    </div> -->
 
-    <div style="width: 100%; height: 100vh; background-image: linear-gradient(to right,blue, cyan);">
+    <div style="position: relative; height: 97%;">
+        <img src="media/S1.png" alt="background" style="
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background-position: center;
+        filter: brightness(1.05);
+        filter: blur(3px);">
+            
+        <div class="vertical-center" style="left: calc(2vh + 5vw);">
+            <h1 style="font-size: calc(3vh + 3vw); color: white; margin-bottom: 0 !important; margin-top: 0 !important; text-shadow: 2px 2px 4px #000000;">Diamond Engine</h1>
+            <p style="font-size: calc(1vh + 1vw); color: white; text-shadow: 1.5px 1.5px 4px #000000;">Create fast performance games</p>
+            <div class="spacer"></div>
         
-        <h2 style="position: absolute; color: white;">Diamond Engine</h2>
-        
+            <button class="cool-button" onclick="window.open('https://github.com/MayKoder/Diamond-Engine/releases/latest', '_blank')">Download Engine</button>
+            <button class="cool-button" onclick="window.open('https://github.com/MayKoder/Diamond-Engine','_blank')">View GitHub</button>
+        </div>
     </div>
+
+    <div class="spacer"></div> <!-- ---------- SPACER --------- -->
+
+    <div class="container" style="text-align: center;">
+        <h2>All about Diamond Engine</h2>
+        <p>Diamong Engine is a lightweight 3D (and future 2D) game development engine. This engine was developed as part of a collage assigment. The engine supports
+             almost every editor feature that you could expect from a game development engine, but the most relevant feature is the added support to interpret and work with
+             C# code and a component based GameObject system.
+        </p>
+
+        <p>
+            The C# support was possible thanks to the mono runtime.
+        </p>
+    </div>
+
+    <div class="container">
+        <div class="hrList">
+            <img class="hrList__image" style='vertical-align:middle; width: 30%;' src='media/PF1.jpg'>
+            <div class="hrList__text">
+              <!-- <h2>Miquel Suau Gonzàlez</h2> -->
+              <p>Hi, I'm Mayk. I'm the only developer involved on the "Diamond Engine" project, and i've been working on it since early 2020. (explain here all about you and the project maybe?)</p>
+            </div>
+        </div>
+
+
+        <!-- <img style='vertical-align:middle; width: 30%;' src='media/PF1.jpg'>
+        <div style='vertical-align:top; display:inline;'>
+        Hi, I'm Mayk. I'm the only developer involved on the "Diamond Engine" project, and i've been working on it since early 2020. (explain here all about you and the project maybe?)
+        </div> -->
+    </div>
+
+    <div class="spacer"></div> <!-- ---------- SPACER --------- -->
+
+    <div class="container" style="text-align: center;">
+
+        <h2>Core Sub-Systems</h2>
+    </div>
+
+    <div class="spacer"></div> <!-- ---------- SPACER --------- -->
+
+    <div class="container" style="text-align: center;">
+
+        <h2>C# Sub-System</h2>
+
+
+
+
+            <img style='vertical-align:middle; width: 40%;' src='media/GifHolder1.gif'>
+            <img style='vertical-align:middle; width: 40%;' src='media/GifHolder2.gif'>
+
+    </div>
+
+    <div class="spacer"></div> <!-- ---------- SPACER --------- -->
+
+    <div class="container">
+        <h2 style="text-align: center;">Workflow video</h2>
+        <video width="100%" height="100%" controls>
+            <source src="media/AttackRender.mp4" type="video/mp4">
+            <!-- <source src="movie.ogg" type="video/ogg"> -->
+          Your browser does not support the video tag.
+          </video>
+    </div>
+
+    <div class="container" style="text-align:center;">
+        <h2>Licence</h2>
+        <p>MIT License</p>
+        <p>Copyright (c) 2020 MayKoder</p>
+        <p>Permission is hereby granted, free of charge, to any person obtaining a copy
+            of this software and associated documentation files (the "Software"), to deal
+            in the Software without restriction, including without limitation the rights
+            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+            copies of the Software, and to permit persons to whom the Software is
+            furnished to do so, subject to the following conditions:</p>
+
+        <p>The above copyright notice and this permission notice shall be included in all
+            copies or substantial portions of the Software.</p>
+
+        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.</p>
+    </div>
+    <!-- <h2 style="position: absolute; color: white;">Diamond Engine</h2> -->
     
+    <div style="width: 100%; background-color: cyan; text-align: center;">
+        <p>Page designed and created by Miquel Suau Gonzàlez</p>
+        ©2020 Miquel Suau Gonzàlez <a href="https://github.com/MayKoder" target="_blank">(@MayKoder)</a>
+        <br>
+        All Rights Reserved.
+
+    </div>
+    <!-- <img src="assets/background/IMG_3219.jpg" alt="background" style="
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-position: center;
+    filter: brightness(1.05);"> -->
+
     
 
 </body>
