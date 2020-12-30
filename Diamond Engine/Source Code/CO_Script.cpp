@@ -15,7 +15,7 @@
 #include <mono/metadata/debug-helpers.h>
 
 C_Script* C_Script::runningScript = nullptr;
-C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm)
+C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), coreObject(nullptr), noGCobject(0)
 {
 	name = scriptName;
 	//strcpy(name, scriptName);
@@ -28,8 +28,13 @@ C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm)
 		const char* name = mono_field_get_name(fields[i].field);
 		if (strcmp(mono_field_get_name(fields[i].field), "thisReference") == 0) 
 		{
-			fields[i].fiValue.goValue = this->gameObject;
-			SetField(fields[i].field, fields[i].fiValue.goValue);
+			fields[i].fiValue.goValue = _gm;
+			SetField(fields[i].field, _gm);
+		}
+		else
+		{
+			if(fields[i].type == MonoTypeEnum::MONO_TYPE_CLASS)
+				LOG(LogType::L_WARNING, "This reference not found");
 		}
 	}
 
@@ -41,16 +46,23 @@ C_Script::~C_Script()
 	if (C_Script::runningScript == this)
 		C_Script::runningScript = nullptr;
 
+	mono_gchandle_free(noGCobject);
 	methods.clear();
 	fields.clear();
 }
 
+#include"CO_MeshRenderer.h"
+#include"RE_Mesh.h"
+#include"MO_ResourceManager.h"
 void C_Script::Update()
 {
 	if (DETime::state == GameState::STOP || DETime::state == GameState::PAUSE)
 		return;
 
 	C_Script::runningScript = this; // I really think this is the peak of stupid code, but hey, it works, slow as hell but works.
+
+
+	mono_runtime_invoke(updateMethod, mono_gchandle_get_target(noGCobject), NULL, NULL);
 
 	//int x = 0;
 	//void* args[1];
@@ -59,7 +71,7 @@ void C_Script::Update()
 	//if (x == 0)
 	//{
 		//BUG IMPORTANT: Core variables are like... shared? Maybe because the main? Rotation is affecting both scripts if you rotate +1 and -1 neither rotates
-		/*lengthObj = */mono_runtime_invoke(updateMethod, coreObject, NULL, NULL); //TODO IMPORTANT: This is super slow, use managed chunks (mono documentation)
+		/*lengthObj = *//*mono_runtime_invoke(updateMethod, coreObject, NULL, NULL);*/ //TODO IMPORTANT: This is super slow, use managed chunks (mono documentation)
 		//x = *(int*)mono_object_unbox(lengthObj);
 
 		//for (int i = 0; i < fields.size(); i++) //TODO IMPORTANT: Better idea, add a callback on position, rotation or scale set{} in C# that calls an update on the c++ gameObject
@@ -243,10 +255,13 @@ void C_Script::DropField(SerializedField& field, const char* dropType)
 		}
 		break;
 
-	case MonoTypeEnum::MONO_TYPE_R4:
+	case MonoTypeEnum::MONO_TYPE_R4: {
+		//float test = 0.f;
+		//mono_field_get_value(coreObject, field.field, &test); //TODO: IMPORTANT THIS IS A TEST, REMOVE TEST
 		if(ImGui::InputFloat(mono_field_get_name(field.field), &field.fiValue.fValue, 0.1f))
 			mono_field_set_value(coreObject, field.field, &field.fiValue.fValue);
 		break;
+	}
 
 	case MonoTypeEnum::MONO_TYPE_STRING:
 		if(ImGui::InputText(mono_field_get_name(field.field), &field.fiValue.strValue[0], 50))
@@ -278,6 +293,10 @@ void C_Script::LoadScriptData(const char* scriptName)
 
 	coreObject = mono_object_new(EngineExternal->moduleMono->domain, klass);
 	mono_runtime_object_init(coreObject);
+
+	noGCobject = mono_gchandle_new(coreObject, false);
+
+	LOG(LogType::L_ERROR, "%p", coreObject);
 
 	MonoMethodDesc* mdesc = mono_method_desc_new(":Update", false);
 	updateMethod = mono_method_desc_search_in_class(mdesc, klass);

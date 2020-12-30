@@ -41,6 +41,7 @@ public:
 	virtual ~M_MonoManager();
 
 	bool Init() override;
+	update_status Update(float dt) override;
 	bool CleanUp() override;
 
 	static Quat UnboxQuat(MonoObject* _obj);

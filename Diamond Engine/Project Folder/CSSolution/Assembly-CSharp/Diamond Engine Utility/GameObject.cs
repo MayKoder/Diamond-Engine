@@ -8,27 +8,18 @@ namespace DiamondEngine
     {
         public GameObject()
         {
-            //globalMatrix = mat4x4.identity;
             name = "Empty";
+            UID = 0;
         }
         public GameObject(string _name, int _UID)
         {
-            //globalMatrix = mat4x4.identity;
-
             name = _name;
             UID = _UID;
-        }
-        public GameObject(string _name, Quaternion _rotation, Vector3 _scale, int _UID)
-        {
-            _rotation.Normalize();
-            //globalMatrix = mat4x4.identity;
-
-            name = _name; 
-            UID = _UID;
+            //Debug.Log("Created: " + UID.ToString());
         }
 
         public string name; //Can't use get; set; because mono can't use mono_get_field then lol
-
+        public int UID;
         public extern Vector3 localPosition
         {
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -87,7 +78,5 @@ namespace DiamondEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void AddComponent(int componentType);
 
-        //public mat4x4 globalMatrix;
-        public int UID = 0;
     }
 }

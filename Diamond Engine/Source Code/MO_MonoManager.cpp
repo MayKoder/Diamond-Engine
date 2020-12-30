@@ -9,6 +9,7 @@
 #include <mono/metadata/object.h>
 #include <mono/metadata/debug-helpers.h>
 #include <mono/metadata/class.h>
+#include <mono/metadata/threads.h>
 
 #include"GameObject.h"
 #include"CO_Script.h"
@@ -19,10 +20,13 @@
 
 M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app, start_enabled), domain(nullptr), updateMethod(nullptr), assembly(nullptr), image(nullptr)	
 {
+
 	mono_set_dirs("mono-runtime/lib", "mono-runtime/etc");
 
 	mono_config_parse(NULL);
 	domain = mono_jit_init("CSSolution/Assembly-CSharp/Build/Assembly-CSharp.dll");
+
+	mono_thread_attach(domain);
 
 	mono_add_internal_call("DiamondEngine.Debug::Log", CSLog);
 	mono_add_internal_call("DiamondEngine.InternalCalls::GetKey", GetKey);
@@ -97,6 +101,18 @@ bool M_MonoManager::CleanUp()
 	return true;
 }
 
+update_status M_MonoManager::Update(float dt)
+{
+	float3 pos = float3(0, 0, 0);
+	Quat rot = Quat::identity;
+	float3 scale = float3(1, 1, 1);
+	if (App->moduleInput->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+		CreateBullet(Float3ToCS(pos), QuatToCS(rot), Float3ToCS(scale));
+
+
+	return update_status::UPDATE_CONTINUE;
+}
+
 //ASK: Is this the worst idea ever? TOO SLOW
 float3 M_MonoManager::UnboxVector(MonoObject* _obj)
 {
@@ -153,14 +169,12 @@ MonoObject* M_MonoManager::GoToCSGO(GameObject* inGo) const
 {
 	MonoClass* goClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "GameObject");
 
-	void* args[4];
+	void* args[2];
 	args[0] = mono_string_new(domain, inGo->name.c_str());
-	args[1] = QuatToCS(inGo->transform->rotation);
-	args[2] = Float3ToCS(inGo->transform->localScale);
-	args[3] = &inGo->UID;
+	args[1] = &inGo->UID;
 	
 	//DebugAllMethods("GameObject");
-	MonoMethodDesc* constructorDesc = mono_method_desc_new("DiamondEngine.GameObject:.ctor(string,DiamondEngine.Quaternion,DiamondEngine.Vector3,int)", true);
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("DiamondEngine.GameObject:.ctor(string,int)", true);
 	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, goClass);
 	MonoObject* goObj = mono_object_new(domain, goClass);
 	mono_runtime_invoke(method, goObj, args, NULL);

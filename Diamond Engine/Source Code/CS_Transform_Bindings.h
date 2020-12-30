@@ -64,13 +64,14 @@ MonoObject* DE_Box_Quat(MonoObject* obj, bool global)
 
 #pragma region Internals
 //-------------------------------------------- Internals -----------------------------------------------//
-void CSLog(MonoObject* x)
+void CSLog(MonoString* x)
 {
 	if (x == NULL)
 		return;
 
-	MonoString* string = mono_object_to_string(x, NULL);
-	LOG(LogType::L_WARNING, mono_string_to_utf8(string));
+	char* msg = mono_string_to_utf8(x);
+	LOG(LogType::L_WARNING, msg);
+	mono_free(msg);
 }
 
 int GetKey(MonoObject* x)
@@ -78,17 +79,21 @@ int GetKey(MonoObject* x)
 	if (EngineExternal != nullptr)
 		return EngineExternal->moduleInput->GetKey(*(int*)mono_object_unbox(x));
 
-	return false;
+	return 0;
 }
 int MouseX()
 {
 	if (EngineExternal != nullptr)
 		return EngineExternal->moduleInput->GetMouseXMotion();
+
+	return 0;
 }
 int MouseY()
 {
 	if (EngineExternal != nullptr)
 		return EngineExternal->moduleInput->GetMouseYMotion();
+
+	return 0;
 }
 
 void CSCreateGameObject(MonoObject* name, MonoObject* position)
@@ -192,7 +197,7 @@ float GetDT() //TODO: Can we do this without duplicating code? plsssss
 	return DETime::deltaTime;
 }
 
-void Destroy(MonoObject* go)
+void Destroy(MonoObject* go, MonoObject* id)
 {
 	if (go == NULL)
 		return;
@@ -200,15 +205,17 @@ void Destroy(MonoObject* go)
 	MonoClass* klass = mono_object_get_class(go);
 	const char* name = mono_class_get_name(klass);
 
-	int uid;
-	mono_field_get_value(go, mono_class_get_field_from_name(klass, "UID"), &uid);
+	int uid = *(int*)mono_object_unbox(id);
+	//mono_field_get_value(go, mono_class_get_field_from_name(klass, "UID"), &uid);
 
 	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, uid);
-	if (workGO == nullptr)
+	//GameObject* workGO = C_Script::runningScript->GetGO();
+	if (workGO == nullptr) {
+		LOG(LogType::L_ERROR, "AY LMAO CANT DELETE AYAYAYAYTA");
 		return;
+	}
 
 	workGO->Destroy();
-
 }
 
 
@@ -217,7 +224,8 @@ void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale)
 	if (EngineExternal == nullptr)
 		return;
 
-	GameObject* go = EngineExternal->moduleScene->CreateGameObject("Bullet", EngineExternal->moduleScene->root);
+	GameObject* go = EngineExternal->moduleScene->CreateGameObject("Empty", EngineExternal->moduleScene->root);
+	go->name = std::to_string(go->UID);
 
 	float3 posVector = M_MonoManager::UnboxVector(position);
 	Quat rotQuat = M_MonoManager::UnboxQuat(rotation);

@@ -1,22 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Diamond Engine", "Diamond Engine.vcxproj", "{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		DllGen|Win32 = DllGen|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}.Debug|Win32.ActiveCfg = Debug|Win32
 		{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}.Debug|Win32.Build.0 = Debug|Win32
+		{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}.DllGen|Win32.ActiveCfg = DllGen|Win32
+		{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}.DllGen|Win32.Build.0 = DllGen|Win32
 		{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}.Release|Win32.ActiveCfg = Release|Win32
 		{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {996E74C8-3AC1-4EB3-9DBF-D69E12A23A5A}
 	EndGlobalSection
 EndGlobal

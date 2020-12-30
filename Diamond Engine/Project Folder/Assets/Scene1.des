@@ -74,8 +74,8 @@
                     "ScriptName": "Core",
                     "reference": 628896181,
                     "testInt": 0,
-                    "rotationSpeed": 0.0020000000949949026,
-                    "movementSpeed": 0.02500000037252903,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 25,
                     "testBool": false,
                     "testString": "Empty",
                     "once": true
@@ -576,7 +576,7 @@
                     "Active": true,
                     "fType": 2,
                     "nearPlaneDist": 1,
-                    "farPlaneDist": 300,
+                    "farPlaneDist": 500,
                     "vFOV": 1.0471975803375244,
                     "hFOV": 1.5265995264053345
                 }

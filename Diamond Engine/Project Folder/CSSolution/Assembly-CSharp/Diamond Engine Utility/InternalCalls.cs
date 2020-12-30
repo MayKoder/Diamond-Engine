@@ -25,13 +25,16 @@ namespace DiamondEngine
         //public static extern void UpdateCppGO(int UID, Vector3 position, Quaternion quat, Vector3 scale);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern void Destroy(object go);
+        public static extern void Destroy(object go, object id);
     }
 
-    class Debug
+    public partial class Debug
     {
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void Log(object logText);
+
+        //[DllImport("__Internal", EntryPoint = "CSLog")]
+        //public static extern void Log(string logText);
     }
 
     [StructLayout(LayoutKind.Sequential)]

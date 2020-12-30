@@ -34,5 +34,7 @@ public:
 	MonoObject* coreObject;
 	MonoMethod* updateMethod;
 
+	uint32_t noGCobject;
+
 	static C_Script* runningScript;
 };

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 using DiamondEngine;
 
-public class Core
+public class Core : DiamondComponent
 {
 	public GameObject reference = null;
 	public GameObject turret = null;
@@ -12,8 +12,8 @@ public class Core
 
 	public int testInt = 0;
 		
-	public float rotationSpeed = 0.002f;
-	public float movementSpeed = 0.025f;
+	public float rotationSpeed = 2.0f;
+	public float movementSpeed = 25.0f;
 
 	public bool testBool = false;
 	public string testString = "Hello World";
@@ -28,25 +28,29 @@ public class Core
 
         //Log does not work if we compile with Release wtf?
         if (InternalCalls.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
-            reference.localPosition += reference.GetForward() * movementSpeed;
+            reference.localPosition += reference.GetForward() * movementSpeed * Time.deltaTime;
         if (InternalCalls.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT)
-            reference.localPosition += reference.GetForward() * -movementSpeed;
+            reference.localPosition += reference.GetForward() * -movementSpeed * Time.deltaTime;
         if (InternalCalls.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT)
-            reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, rotationSpeed);
+            reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, rotationSpeed * Time.deltaTime);
         if (InternalCalls.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
-            reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -rotationSpeed);
+            reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -rotationSpeed * Time.deltaTime);
 
         if (InternalCalls.GetMouseX() != 0 && turret != null)
         {
-            turret.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -InternalCalls.GetMouseX() * 0.001f);
+            turret.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -InternalCalls.GetMouseX() * Time.deltaTime);
         }
         //if (InternalCalls.GetMouseY() != 0 && turret != null)
         //{
-        //    turret.rotation *= Quaternion.RotateAroundAxis(turret.globalMatrix.GetRight(), InternalCalls.GetMouseY() * 0.001f);
+        //    turret.localRotation *= Quaternion.RotateAroundAxis(turret.globalMatrix.GetRight(), InternalCalls.GetMouseY() * 0.001f);
         //}
 
-        if (InternalCalls.GetKey(DEKeyCode.SPACE) == KeyState.KEY_DOWN)
+        if (InternalCalls.GetKey(DEKeyCode.SPACE) == KeyState.KEY_REPEAT)
+        {
             InternalCalls.CreateBullet(shootPoint.globalPosition, shootPoint.globalRotation, shootPoint.globalScale);
+        }
+
+        //InternalCalls.CreateBullet(Vector3.zero, Quaternion.identity, Vector3.one);
 
         //if (rotationSpeed != 0.0f)
         //{

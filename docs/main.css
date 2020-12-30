@@ -1,6 +1,9 @@
 html, body {
   height: 100%;
   margin: 0px;
+
+  /* font-family: cursive; */
+  font-family: cursive !important;
 }
 .containerDE {
   background: #f0e68c;
@@ -17,10 +20,12 @@ html, body {
 
 .hrList {
   display: flex;
+  position: relative;
 }
 .hrList__image{
   margin: 0 30px 0 0;
   align-self: flex-start;
+  border-radius: 50%;
 }
 .hrList__text{
   flex: auto;
@@ -71,18 +76,23 @@ html, body {
   transform: translateY(-50%);
 }
 .cool-button {
-  background-color: black;
+  background-color: #2196f3;
   color: white;
   border: 2px solid rgb(255, 255, 255); /* Green */
   cursor:pointer;
   padding: calc(0.8vh + 0.3vw);
   font-size: calc(0.8vh + 0.6vw);
-  margin-right: 4px;
+  margin-right: 1vw;
+
+
+  line-height: 1.5rem;
+  white-space: nowrap;
+  font-weight: 700;
 }
 .cool-button:hover
 {
 background-image:none;
-background-color: rgb(145, 113, 66);
+background-color: #56adf5;
 }
 
 .cool-button:focus{
@@ -94,4 +104,11 @@ background-color: rgb(145, 113, 66);
 
 ul > li{
   display:inline-block;
+}
+
+h2{
+  font-weight: bold;
+}
+h3{
+  font-weight: bold;
 }

@@ -41,7 +41,8 @@ int main(int argc, char** argv)
 	ShExecInfo.hwnd = NULL;
 	ShExecInfo.lpVerb = NULL;
 	ShExecInfo.lpFile = "cmd";
-	ShExecInfo.lpParameters = "/C dotnet build CSSolution/Assembly-CSharp.sln --configuration Release";
+	//ShExecInfo.lpParameters = "/K dotnet build CSSolution/Assembly-CSharp.sln --configuration Release";
+	ShExecInfo.lpParameters = "/C msbuild CSSolution/Assembly-CSharp.sln"; //Should include msbuild to the editor folder to make sure this will work?
 	ShExecInfo.lpDirectory = NULL;
 	ShExecInfo.nShow = SW_SHOW;
 	ShExecInfo.hInstApp = NULL;

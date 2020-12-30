@@ -2,31 +2,30 @@
 using DiamondEngine;
 
 
-public class BH_Bullet
+public class BH_Bullet : DiamondComponent
 {
-    public GameObject thisReference; //This is needed until i make all this be part of a component base class
+    public GameObject thisReference = null; //This is needed until i make all this be part of a component base class
 
-    public float speed = 0.10f;
+    public float speed = 35.0f;
     public float maxLifeTime = 5.0f;
 
-    private float currentLifeTime = 0.0f;
+    public float currentLifeTime = 0.0f;
+
+    public float yVel = 0.0f;
+
     public void Update()
     {
         currentLifeTime += Time.deltaTime;
+
+        thisReference.localPosition += thisReference.GetForward() * (speed * Time.deltaTime);
+
+        yVel -= Time.deltaTime / 15.0f;
+        thisReference.localPosition += (Vector3.up * yVel);
+
         if (currentLifeTime >= maxLifeTime)
         {
-            Debug.Log(/*thisReference.ToString() +*/ "Bullet removed after:  " + currentLifeTime.ToString());
-            InternalCalls.Destroy(thisReference);
+            InternalCalls.Destroy(this.thisReference, this.thisReference.UID);
         }
-
-        thisReference.localPosition += thisReference.GetForward() * speed;
-        //thisReference.position += (Vector3.up * -1) * Time.deltaTime;
-
-        //Debug.Log(Time.deltaTime);
     }
-
-    //Things i need
-        //Spawn gameobject with mesh...
-
 }
 
