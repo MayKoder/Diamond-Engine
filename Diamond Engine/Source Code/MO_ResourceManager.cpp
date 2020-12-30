@@ -404,8 +404,11 @@ std::string M_ResourceManager::LibraryFromMeta(const char* metaFile)
 {
 	JSON_Value* metaJSON = json_parse_file(metaFile);
 
-	if (metaJSON == nullptr)
+	if (metaJSON == nullptr) 
+	{
+		std::string err = std::strerror(errno);
 		return "";
+	}
 
 	DEConfig rObj(json_value_get_object(metaJSON));
 

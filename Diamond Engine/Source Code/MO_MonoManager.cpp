@@ -101,17 +101,11 @@ bool M_MonoManager::CleanUp()
 	return true;
 }
 
-update_status M_MonoManager::Update(float dt)
-{
-	float3 pos = float3(0, 0, 0);
-	Quat rot = Quat::identity;
-	float3 scale = float3(1, 1, 1);
-	if (App->moduleInput->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-		CreateBullet(Float3ToCS(pos), QuatToCS(rot), Float3ToCS(scale));
-
-
-	return update_status::UPDATE_CONTINUE;
-}
+//update_status M_MonoManager::Update(float dt)
+//{
+//
+//	return update_status::UPDATE_CONTINUE;
+//}
 
 //ASK: Is this the worst idea ever? TOO SLOW
 float3 M_MonoManager::UnboxVector(MonoObject* _obj)

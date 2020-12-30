@@ -221,14 +221,21 @@ void M_Editor::DrawMenuBar()
 			if (ImGui::MenuItem("Load scene"))
 			{
 
-				std::string sceneDir = M_FileSystem::OpenFileSelectDialog();
+				//std::string sceneDir = M_FileSystem::OpenFileSelectDialog(); //TODO IMPORTANT: If i use this scene loading with JSON goes nono
+				//
+				//sceneDir += ".meta";
+				////App->moduleFileSystem->ToLocalAssetsPath(sceneDir);
+				////if (!sceneDir.empty()) 
+				////{
+				////	std::string metaDir = App->moduleResources->GetMetaPath(sceneDir.c_str());
 
-				App->moduleFileSystem->ToLocalAssetsPath(sceneDir);
-				if (!sceneDir.empty()) 
-				{
-					std::string metaDir = App->moduleResources->GetMetaPath(sceneDir.c_str());
-					App->moduleScene->LoadScene(App->moduleResources->LibraryFromMeta(metaDir.c_str()).c_str());
-				}
+				////	metaDir.push_back('\0');
+				////	std::string test = App->moduleResources->LibraryFromMeta("Assets/Scene1.des.meta");
+				////	App->moduleScene->LoadScene(test.c_str());
+				////}
+
+				//App->moduleScene->LoadScene(App->moduleResources->LibraryFromMeta(sceneDir.c_str()).c_str());
+				App->moduleScene->LoadScene(App->moduleResources->LibraryFromMeta("Assets/Scene1.des.meta").c_str());
 			}
 			if (ImGui::MenuItem("Quit", "Esc"))
 			{
@@ -409,7 +416,7 @@ void M_Editor::DrawTopBar()
 		ImGui::SameLine(ImGui::GetContentRegionMax().x - (ImGui::GetButtonSize("Take Screenshoot").x + style.FramePadding.x));
 		if (ImGui::Button("Take Screenshoot")) 
 		{
-			TextureImporter::TakeScreenshot(dynamic_cast<W_Game*>(this->GetEditorWindow(EditorWindow::GAME))->GetTargetCamera()->framebuffer);
+			TextureImporter::TakeScreenshot(App->moduleCamera->editorCamera.framebuffer);
 		}
 	}
 	ImGui::End();

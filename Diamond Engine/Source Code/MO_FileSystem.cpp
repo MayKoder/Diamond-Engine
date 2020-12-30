@@ -120,6 +120,7 @@ uint64 M_FileSystem::GetLastModTime(const char* filename)
 std::string M_FileSystem::OpenFileSelectDialog()
 {
 	char filename[MAX_PATH];
+	filename[0] = '\0';
 
 	OPENFILENAME ofn;
 	ZeroMemory(&filename, sizeof(filename));
