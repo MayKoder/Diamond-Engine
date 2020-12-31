@@ -221,21 +221,19 @@ void M_Editor::DrawMenuBar()
 			if (ImGui::MenuItem("Load scene"))
 			{
 
-				//std::string sceneDir = M_FileSystem::OpenFileSelectDialog(); //TODO IMPORTANT: If i use this scene loading with JSON goes nono
-				//
-				//sceneDir += ".meta";
-				////App->moduleFileSystem->ToLocalAssetsPath(sceneDir);
-				////if (!sceneDir.empty()) 
-				////{
-				////	std::string metaDir = App->moduleResources->GetMetaPath(sceneDir.c_str());
-
-				////	metaDir.push_back('\0');
-				////	std::string test = App->moduleResources->LibraryFromMeta("Assets/Scene1.des.meta");
-				////	App->moduleScene->LoadScene(test.c_str());
-				////}
+				std::string sceneDir = M_FileSystem::OpenFileSelectDialog(); //TODO IMPORTANT: If i use this scene loading with JSON goes nono
+				
+				//WARNINR: Can't we += .meta to the string?
+				App->moduleFileSystem->ToLocalAssetsPath(sceneDir);
+				if (!sceneDir.empty()) 
+				{
+					std::string metaDir = App->moduleResources->GetMetaPath(sceneDir.c_str());
+					std::string test = App->moduleResources->LibraryFromMeta(metaDir.c_str());
+					App->moduleScene->LoadScene(test.c_str());
+				}
 
 				//App->moduleScene->LoadScene(App->moduleResources->LibraryFromMeta(sceneDir.c_str()).c_str());
-				App->moduleScene->LoadScene(App->moduleResources->LibraryFromMeta("Assets/Scene1.des.meta").c_str());
+				//App->moduleScene->LoadScene(App->moduleResources->LibraryFromMeta("Assets/Scene1.des.meta").c_str());
 			}
 			if (ImGui::MenuItem("Quit", "Esc"))
 			{

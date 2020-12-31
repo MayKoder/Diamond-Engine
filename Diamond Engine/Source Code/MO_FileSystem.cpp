@@ -131,8 +131,8 @@ std::string M_FileSystem::OpenFileSelectDialog()
 	ofn.lpstrFile = filename;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.lpstrTitle = "Select a File, yo!";
-	ofn.Flags = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST;
-
+	ofn.Flags = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
+	
 	if (GetOpenFileNameA(&ofn))
 	{
 		/*std::cout << "You chose the file \"" << filename << "\"\n";*/
