@@ -24,7 +24,7 @@ public class BH_Bullet : DiamondComponent
 
         if (currentLifeTime >= maxLifeTime)
         {
-            InternalCalls.Destroy(this.thisReference, this.thisReference.UID);
+            InternalCalls.Destroy(this.thisReference);
         }
     }
 }

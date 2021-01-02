@@ -129,6 +129,7 @@ void FileSystem::CreateLibraryFolders()
 	CreateDir(MODELS_PATH);
 	CreateDir(MATERIALS_PATH);
 	CreateDir(SCENES_PATH);
+	CreateDir(SCRIPTS_PATH);
 }
 
 // Add a new zip file or folder

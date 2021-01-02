@@ -263,6 +263,8 @@ void M_Scene::LoadModelTree(const char* modelPath)
 
 void M_Scene::CleanScene()
 {
+	if (root == nullptr)
+		return;
 	delete root;
 	root = nullptr;
 	App->moduleEditor->SetSelectedGO(nullptr);

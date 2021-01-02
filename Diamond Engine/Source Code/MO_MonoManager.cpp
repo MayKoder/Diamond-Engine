@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "MO_MonoManager.h"
+#include"MO_Renderer3D.h"
 
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
@@ -18,15 +19,13 @@
 #pragma comment( lib, "mono/libx86/mono-2.0-boehm.lib" )
 #pragma comment( lib, "mono/libx86/mono-2.0-sgen.lib" )
 
-M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app, start_enabled), domain(nullptr), updateMethod(nullptr), assembly(nullptr), image(nullptr)	
+M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app, start_enabled), domain(nullptr), domainThread(nullptr), assembly(nullptr), image(nullptr)	
 {
 
+	//mono_jit_set_aot_mode(MonoAotMode::MONO_AOT_MODE_HYBRID);
 	mono_set_dirs("mono-runtime/lib", "mono-runtime/etc");
-
 	mono_config_parse(NULL);
-	domain = mono_jit_init("CSSolution/Assembly-CSharp/Build/Assembly-CSharp.dll");
-
-	mono_thread_attach(domain);
+	mono_jit_init("myapp");
 
 	mono_add_internal_call("DiamondEngine.Debug::Log", CSLog);
 	mono_add_internal_call("DiamondEngine.InternalCalls::GetKey", GetKey);
@@ -52,32 +51,7 @@ M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app,
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
 
-	assembly = mono_domain_assembly_open(domain, "CSSolution/Assembly-CSharp/Build/Assembly-CSharp.dll");
-	if (!assembly)
-		LOG(LogType::L_ERROR, "ERROR");
-
-	image = mono_assembly_get_image(assembly);
-
-
-
-	const MonoTableInfo* table_info = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
-	int rows = mono_table_info_get_rows(table_info);
-
-	MonoClass* _class = nullptr;
-	for (int i = 1; i < rows; i++)
-	{
-		uint32_t cols[MONO_TYPEDEF_SIZE];
-		mono_metadata_decode_row(table_info, i, cols, MONO_TYPEDEF_SIZE);
-		const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
-		const char* name_space = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
-		_class = mono_class_from_name(image, name_space, name);
-
-		if (strcmp(mono_class_get_namespace(_class), DE_SCRIPTS_NAMESPACE) != 0 && !mono_class_is_enum(_class))
-		{
-			userScripts.push_back(_class);
-			LOG(LogType::L_WARNING, "%s", mono_class_get_name(_class));
-		}
-	}
+	InitMono();
 }
 
 M_MonoManager::~M_MonoManager()
@@ -96,16 +70,56 @@ bool M_MonoManager::Init()
 bool M_MonoManager::CleanUp()
 {
 	LOG(LogType::L_NORMAL, "Cleaning mono domain");
+
 	mono_jit_cleanup(domain); //Mono cleanup
 
 	return true;
 }
 
-//update_status M_MonoManager::Update(float dt)
-//{
-//
-//	return update_status::UPDATE_CONTINUE;
-//}
+update_status M_MonoManager::Update(float dt)
+{
+	if (App->moduleInput->GetKey(SDL_SCANCODE_T) == KEY_DOWN) 
+	{
+		App->moduleScene->CleanScene();
+		App->moduleRenderer3D->ClearAllRenderData();
+
+		//mono_runtime_cleanup(domain);
+		//mono_jit_cleanup(domain); //Mono cleanup
+		
+
+		//mono_assemblies_cleanup();
+		//mono_domain_unload(domain);
+
+		mono_domain_unload(domain);
+		//mono_thread_detach(domainThread);
+		//mono_domain_finalize(domain, 0);
+		//mono_config_cleanup();
+		//mono_thread_cleanup();
+		//mono_runtime_quit();
+		//mono_runtime_set_shutting_down();
+
+		//mono_assembly_close(assembly);
+		//mono_assemblies_cleanup();
+		//mono_image_close(image);
+		//mono_images_cleanup();
+
+		while (mono_domain_is_unloading(domain) == true)
+		{
+
+		}
+
+		CompileCS();
+
+		//domain = mono_domain_create_appdomain("CSSolution/Assembly-CSharp/Build/Assembly-CSharp.dll", NULL);
+		//mono_domain_set(domain, 0);
+		//mono_thread_attach(domain);
+		InitMono();
+
+		App->moduleScene->LoadScene("Assets/Scene1.des");
+	}
+
+	return update_status::UPDATE_CONTINUE;
+}
 
 //ASK: Is this the worst idea ever? TOO SLOW
 float3 M_MonoManager::UnboxVector(MonoObject* _obj)
@@ -162,13 +176,16 @@ void M_MonoManager::DebugAllMethods(const char* nsName, const char* className, s
 MonoObject* M_MonoManager::GoToCSGO(GameObject* inGo) const
 {
 	MonoClass* goClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "GameObject");
+	uintptr_t goPtr = reinterpret_cast<uintptr_t>(inGo);
 
 	void* args[2];
 	args[0] = mono_string_new(domain, inGo->name.c_str());
-	args[1] = &inGo->UID;
+	args[1] = &goPtr;
 	
+	std::vector<std::string> methods;
+	DebugAllMethods("DiamondEngine", "GameObject", methods);
 	//DebugAllMethods("GameObject");
-	MonoMethodDesc* constructorDesc = mono_method_desc_new("DiamondEngine.GameObject:.ctor(string,int)", true);
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("DiamondEngine.GameObject:.ctor(string,uintptr)", true);
 	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, goClass);
 	MonoObject* goObj = mono_object_new(domain, goClass);
 	mono_runtime_invoke(method, goObj, args, NULL);
@@ -247,6 +264,16 @@ MonoObject* M_MonoManager::QuatToCS(Quat& inVec) const
 	return quatObject;
 }
 
+GameObject* M_MonoManager::GameObject_From_CSGO(MonoObject* goObj)
+{
+	uintptr_t ptr = 0;
+	MonoClass* goClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "GameObject");
+
+	mono_field_get_value(goObj, mono_class_get_field_from_name(goClass, "pointer"), &ptr);
+
+	return reinterpret_cast<GameObject*>(ptr);
+}
+
 SerializedField::SerializedField() : field(nullptr)
 {
 	fiValue.iValue = 0;
@@ -259,4 +286,46 @@ SerializedField::SerializedField(MonoClassField* _field, MonoObject* _object)
 	fiValue.iValue = 0;
 
 	M_MonoManager::LoadFieldData(*this, _object);
+}
+
+
+void M_MonoManager::InitMono()
+{
+	//mono_set_dirs("mono-runtime/lib", "mono-runtime/etc");
+	//mono_config_parse(NULL);
+
+	domain = mono_domain_create_appdomain("D1", NULL);
+	mono_domain_set(domain, 0);
+	domainThread = mono_thread_attach(domain);
+
+	//mono_thread_attach(domain);
+
+	MonoImageOpenStatus sts;
+	assembly = mono_assembly_open("Library/ScriptsAssembly/Assembly-CSharp.dll", &sts);
+	//assembly = mono_domain_assembly_open(domain, "CSSolution/Assembly-CSharp/Build/Assembly-CSharp.dll");
+	if (!assembly)
+		LOG(LogType::L_ERROR, "ERROR");
+
+	image = mono_assembly_get_image(assembly);
+
+
+
+	const MonoTableInfo* table_info = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
+	int rows = mono_table_info_get_rows(table_info);
+
+	MonoClass* _class = nullptr;
+	for (int i = 1; i < rows; i++)
+	{
+		uint32_t cols[MONO_TYPEDEF_SIZE];
+		mono_metadata_decode_row(table_info, i, cols, MONO_TYPEDEF_SIZE);
+		const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
+		const char* name_space = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
+		_class = mono_class_from_name(image, name_space, name);
+
+		if (strcmp(mono_class_get_namespace(_class), DE_SCRIPTS_NAMESPACE) != 0 && !mono_class_is_enum(_class))
+		{
+			userScripts.push_back(_class);
+			LOG(LogType::L_WARNING, "%s", mono_class_get_name(_class));
+		}
+	}
 }

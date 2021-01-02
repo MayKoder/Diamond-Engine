@@ -6,6 +6,7 @@
 
 #include<mono/metadata/object-forward.h>
 #include <mono/metadata/blob.h>
+#include<mono/metadata/threads.h>
 
 typedef struct _MonoDomain MonoDomain;
 typedef struct _MonoAssembly MonoAssembly;
@@ -41,7 +42,7 @@ public:
 	virtual ~M_MonoManager();
 
 	bool Init() override;
-	//update_status Update(float dt) override;
+	update_status Update(float dt) override;
 	bool CleanUp() override;
 
 	static Quat UnboxQuat(MonoObject* _obj);
@@ -51,6 +52,7 @@ public:
 	static void DebugAllFields(const char* className, std::vector<SerializedField>& _data, MonoObject* obj);
 	static void DebugAllMethods(const char* nsName, const char* className, std::vector<std::string>& _data);
 
+	GameObject* GameObject_From_CSGO(MonoObject* goObj);
 
 	MonoObject* QuatToCS(Quat& inVec) const;
 	MonoObject* Float3ToCS(float3& inVec) const;
@@ -59,9 +61,12 @@ public:
 public:
 	MonoDomain* domain;
 	MonoAssembly* assembly;
-	MonoMethod* updateMethod;
 	MonoImage* image;
+	MonoThread* domainThread;
 
 	std::vector<MonoClass*> userScripts;
+
+private:
+	void InitMono();
 
 };

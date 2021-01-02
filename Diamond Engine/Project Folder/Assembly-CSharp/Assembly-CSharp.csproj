@@ -18,12 +18,13 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Build\</OutputPath>
+    <OutputPath>..\Library\ScriptsAssembly\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,10 +47,10 @@
     <Compile Include="Diamond Engine Utility\DiamondComponent.cs" />
     <Compile Include="Diamond Engine Utility\GameObject.cs" />
     <Compile Include="Diamond Engine Utility\InternalCalls.cs" />
-    <Compile Include="main.cs" />
     <Compile Include="Diamond Engine Utility\Quaternion.cs" />
     <Compile Include="Diamond Engine Utility\Time.cs" />
     <Compile Include="Diamond Engine Utility\Vector3.cs" />
+    <Compile Include="main.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

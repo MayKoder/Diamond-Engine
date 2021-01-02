@@ -20,6 +20,7 @@ namespace StringLogic {
 #define MATERIALS_PATH "Library/Materials/"
 #define MODELS_PATH "Library/Models/"
 #define SCENES_PATH "Library/Scenes/"
+#define SCRIPTS_PATH "Library/ScriptsAssembly/"
 
 namespace FileSystem
 {

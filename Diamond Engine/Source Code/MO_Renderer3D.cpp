@@ -254,8 +254,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	App->moduleEditor->Draw();
 	
 	//TEMPORAL: Delete here so you can call mouse picking from scene window, should not be here in the future
-	renderQueueMap.clear();
-	renderQueue.clear();
+	ClearAllRenderData();
 
 	SDL_GL_SwapWindow(App->moduleWindow->window);
 
@@ -267,6 +266,7 @@ bool ModuleRenderer3D::CleanUp()
 {
 	LOG(LogType::L_NORMAL, "Destroying 3D Renderer");
 	SDL_GL_DeleteContext(context);
+	ClearAllRenderData();
 
 	return true;
 }
@@ -510,4 +510,10 @@ void ModuleRenderer3D::SetGameRenderTarget(C_Camera* cam)
 	//active cameras around the scene
 	if (gameCamera != nullptr)
 		gameCamera->ReGenerateBuffer(App->moduleWindow->s_width, App->moduleWindow->s_height);
+}
+
+void ModuleRenderer3D::ClearAllRenderData()
+{
+	renderQueueMap.clear();
+	renderQueue.clear();
 }

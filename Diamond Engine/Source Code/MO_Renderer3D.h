@@ -41,6 +41,8 @@ public:
 
 	C_Camera* GetGameRenderTarget()const;
 	void SetGameRenderTarget(C_Camera* cam);
+
+	void ClearAllRenderData();
 private:
 
 	void RenderWithOrdering();

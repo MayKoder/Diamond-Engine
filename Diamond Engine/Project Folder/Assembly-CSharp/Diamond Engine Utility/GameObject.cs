@@ -4,22 +4,24 @@ using System.Runtime.InteropServices;
 
 namespace DiamondEngine
 {
+
     public sealed class GameObject
     {
         public GameObject()
         {
             name = "Empty";
-            UID = 0;
+            pointer = UIntPtr.Zero;
         }
-        public GameObject(string _name, int _UID)
+        public GameObject(string _name, UIntPtr ptr)
         {
             name = _name;
-            UID = _UID;
+            pointer = ptr;
+            //Debug.Log(ptr.ToString());
             //Debug.Log("Created: " + UID.ToString());
         }
 
-        public string name; //Can't use get; set; because mono can't use mono_get_field then lol
-        public int UID;
+        public string name;
+        public UIntPtr pointer; //Searching all the GO's with UID's? Nah boy we cast stuff here
         public extern Vector3 localPosition
         {
             [MethodImplAttribute(MethodImplOptions.InternalCall)]

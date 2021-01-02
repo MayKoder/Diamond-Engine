@@ -61,6 +61,26 @@ typedef unsigned __int64 uint64;
 //	UPDATE_ERROR
 //};
 
+static void CompileCS() 
+{
+#pragma region ShellExecute
+	SHELLEXECUTEINFO ShExecInfo = { 0 };
+	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+	ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
+	ShExecInfo.hwnd = NULL;
+	ShExecInfo.lpVerb = NULL;
+	ShExecInfo.lpFile = "cmd";
+	//ShExecInfo.lpParameters = "/K dotnet build CSSolution/Assembly-CSharp.sln --configuration Release";
+	ShExecInfo.lpParameters = "/K msbuild Assembly-CSharp.sln"; //Should include msbuild to the editor folder to make sure this will work?
+	ShExecInfo.lpDirectory = NULL;
+	ShExecInfo.nShow = SW_SHOW; /*SW_SHOW  SW_HIDE*/
+	ShExecInfo.hInstApp = NULL;
+	ShellExecuteEx(&ShExecInfo);
+	WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
+	CloseHandle(ShExecInfo.hProcess);
+#pragma endregion
+}
+
 // Configuration ----------- ASK: Should we load this from an XML?
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080

@@ -9,8 +9,9 @@ public class Core : DiamondComponent
 	public GameObject reference = null;
 	public GameObject turret = null;
 	public GameObject shootPoint = null;
+    public int Holas = 0;
 
-	public int testInt = 0;
+    public int testInt = 0;
 		
 	public float rotationSpeed = 2.0f;
 	public float movementSpeed = 25.0f;

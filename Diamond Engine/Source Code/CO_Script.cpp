@@ -51,9 +51,6 @@ C_Script::~C_Script()
 	fields.clear();
 }
 
-#include"CO_MeshRenderer.h"
-#include"RE_Mesh.h"
-#include"MO_ResourceManager.h"
 void C_Script::Update()
 {
 	if (DETime::state == GameState::STOP || DETime::state == GameState::PAUSE)
@@ -296,7 +293,7 @@ void C_Script::LoadScriptData(const char* scriptName)
 
 	noGCobject = mono_gchandle_new(coreObject, false);
 
-	LOG(LogType::L_ERROR, "%p", coreObject);
+	//LOG(LogType::L_ERROR, "%p", coreObject);
 
 	MonoMethodDesc* mdesc = mono_method_desc_new(":Update", false);
 	updateMethod = mono_method_desc_search_in_class(mdesc, klass);

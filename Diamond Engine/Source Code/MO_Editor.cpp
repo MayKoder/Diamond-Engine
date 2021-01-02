@@ -215,8 +215,14 @@ void M_Editor::DrawMenuBar()
 			}
 			if (ImGui::MenuItem("Save scene", "CTRL+S"))
 			{
-				App->moduleScene->SaveScene("Assets/Scene1.des");
-				App->moduleResources->NeedsDirsUpdate(App->moduleResources->assetsRoot);
+				std::string sceneDir = M_FileSystem::OpenSaveAsDialog();
+				App->moduleFileSystem->ToLocalAssetsPath(sceneDir);
+				if (!sceneDir.empty())
+				{
+					App->moduleScene->SaveScene(sceneDir.c_str());
+					App->moduleResources->NeedsDirsUpdate(App->moduleResources->assetsRoot);
+				}
+
 			}
 			if (ImGui::MenuItem("Load scene"))
 			{

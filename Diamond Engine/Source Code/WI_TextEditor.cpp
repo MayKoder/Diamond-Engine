@@ -5,7 +5,7 @@ W_TextEditor::W_TextEditor() : Window(), txtName(nullptr) /*: texColorBuffer(-1)
 {
 	name = "Text Editor"; //No lng definition for C# :(
 
-	SetTextFromFile("CSSolution/Assembly-CSharp/Core.cs");
+	SetTextFromFile("Assets/Scripts/Core.cs");
 }
 
 W_TextEditor::~W_TextEditor()

@@ -11,8 +11,8 @@
 #include"CO_Script.h"
 #include"CO_Transform.h"
 
-#include"MO_Scene.h"
 #include"MO_Input.h"
+#include"MO_Scene.h"
 #include"MO_ResourceManager.h"
 
 #include"GameObject.h"
@@ -26,11 +26,8 @@ MonoObject* DE_Box_Vector(MonoObject* obj, const char* type, bool global)
 
 	const char* name = mono_class_get_name(mono_object_get_class(obj));
 
-	uint _UID = 0;
-	mono_field_get_value(obj, mono_class_get_field_from_name(mono_object_get_class(obj), "UID"), &_UID);
-
 	float3 value;
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID);
+	GameObject* workGO = EngineExternal->moduleMono->GameObject_From_CSGO(obj);
 
 	if (strcmp(type, "POSITION") == 0)
 	{
@@ -50,13 +47,10 @@ MonoObject* DE_Box_Quat(MonoObject* obj, bool global)
 
 	const char* name = mono_class_get_name(mono_object_get_class(obj));
 
-	uint _UID = 0;
-	mono_field_get_value(obj, mono_class_get_field_from_name(mono_object_get_class(obj), "UID"), &_UID);
-
 	Quat value;
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID);
+	GameObject* workGO = EngineExternal->moduleMono->GameObject_From_CSGO(obj);
 
-	(global == true) ? value = workGO->transform->globalTransform.RotatePart().ToQuat() : value = workGO->transform->rotation;
+	(global == true) ? value = workGO->transform->globalTransform.RotatePart().ToQuat().Normalized() : value = workGO->transform->rotation;
 
 
 	return EngineExternal->moduleMono->QuatToCS(value);
@@ -122,10 +116,7 @@ void RecievePosition(MonoObject* obj, MonoObject* secObj) //Allows to send float
 		return;
 
 	float3 omgItWorks = EngineExternal->moduleMono->UnboxVector(secObj);
-
-	uint _UID = 0;
-	mono_field_get_value(obj, mono_class_get_field_from_name(mono_object_get_class(obj), "UID"), &_UID);
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID); //TODO IMPORTANT: First parameter is the object reference, use that to find UID
+	GameObject* workGO = EngineExternal->moduleMono->GameObject_From_CSGO(obj); //TODO IMPORTANT: First parameter is the object reference, use that to find UID
 
 	if (workGO->transform)
 	{
@@ -139,10 +130,7 @@ MonoObject* GetForward(MonoObject* go)
 		return nullptr;
 
 	const char* name = mono_class_get_name(mono_object_get_class(go));
-
-	uint _UID = 0;
-	mono_field_get_value(go, mono_class_get_field_from_name(mono_object_get_class(go), "UID"), &_UID);
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID);
+	GameObject* workGO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
 	MonoClass* vecClass = mono_class_from_name(EngineExternal->moduleMono->image, DE_SCRIPTS_NAMESPACE, "Vector3");
 	return EngineExternal->moduleMono->Float3ToCS(workGO->transform->GetForward());
@@ -158,10 +146,7 @@ void RecieveRotation(MonoObject* obj, MonoObject* secObj) //Allows to send float
 		return;
 
 	Quat omgItWorks = EngineExternal->moduleMono->UnboxQuat(secObj);
-
-	uint _UID = 0;
-	mono_field_get_value(obj, mono_class_get_field_from_name(mono_object_get_class(obj), "UID"), &_UID);
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID); //TODO IMPORTANT: First parameter is the object reference, use that to find UID
+	GameObject* workGO = EngineExternal->moduleMono->GameObject_From_CSGO(obj); //TODO IMPORTANT: First parameter is the object reference, use that to find UID
 
 	if (workGO->transform)
 	{
@@ -180,10 +165,7 @@ void RecieveScale(MonoObject* obj, MonoObject* secObj)
 		return;
 
 	float3 omgItWorks = EngineExternal->moduleMono->UnboxVector(secObj);
-
-	uint _UID = 0;
-	mono_field_get_value(obj, mono_class_get_field_from_name(mono_object_get_class(obj), "UID"), &_UID);
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, _UID); //TODO IMPORTANT: First parameter is the object reference, use that to find UID
+	GameObject* workGO = EngineExternal->moduleMono->GameObject_From_CSGO(obj); //TODO IMPORTANT: First parameter is the object reference, use that to find UID
 
 	if (workGO->transform)
 	{
@@ -197,7 +179,7 @@ float GetDT() //TODO: Can we do this without duplicating code? plsssss
 	return DETime::deltaTime;
 }
 
-void Destroy(MonoObject* go, MonoObject* id)
+void Destroy(MonoObject* go)
 {
 	if (go == NULL)
 		return;
@@ -205,10 +187,7 @@ void Destroy(MonoObject* go, MonoObject* id)
 	MonoClass* klass = mono_object_get_class(go);
 	const char* name = mono_class_get_name(klass);
 
-	int uid = *(int*)mono_object_unbox(id);
-	//mono_field_get_value(go, mono_class_get_field_from_name(klass, "UID"), &uid);
-
-	GameObject* workGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, uid);
+	GameObject* workGO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 	//GameObject* workGO = C_Script::runningScript->GetGO();
 	if (workGO == nullptr) {
 		LOG(LogType::L_ERROR, "AY LMAO CANT DELETE AYAYAYAYTA");
