@@ -77,7 +77,7 @@ namespace DiamondEngine
             ret.w = (float)Math.Cos(angle / 2.0);
 
             //InternalCalls.CSLog(ret);
-            ret = ret.normalized;
+            //ret = ret.normalized;
 
             return ret;
         }

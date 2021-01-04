@@ -71,7 +71,7 @@ static void CMDCompileCS()
 	ShExecInfo.lpVerb = NULL;
 	ShExecInfo.lpFile = "cmd";
 	//ShExecInfo.lpParameters = "/K dotnet build Assembly-CSharp.sln --configuration Release";
-	ShExecInfo.lpParameters = "/K msbuild Assembly-CSharp.sln /p:Configuration=Release"; //Should include msbuild to the editor folder to make sure this will work?
+	ShExecInfo.lpParameters = "/K msbuild Assembly-CSharp.sln"; //Should include msbuild to the editor folder to make sure this will work? /p:Configuration=Release
 	ShExecInfo.lpDirectory = NULL;
 	ShExecInfo.nShow = SW_SHOW; /*SW_SHOW  SW_HIDE*/
 	ShExecInfo.hInstApp = NULL;

@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BH_Bullet.cs" />
+    <Compile Include="BH_Plane.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Diamond Engine Utility\DiamondComponent.cs" />
     <Compile Include="Diamond Engine Utility\GameObject.cs" />
