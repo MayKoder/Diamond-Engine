@@ -24,6 +24,10 @@ void W_Console::Draw()
 		ImGui::SetCursorPosX(offset);
 		if (ImGui::Button("Clear"/*, ImGuiDir_Right*/))
 		{
+			for (int i = 0; i < logs.size(); i++)
+			{
+				logs[i].msg.clear();
+			}
 			logs.clear();
 		}
 		ImGui::SameLine();

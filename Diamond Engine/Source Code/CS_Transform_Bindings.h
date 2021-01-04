@@ -195,7 +195,7 @@ void Destroy(MonoObject* go)
 		return;
 
 	MonoClass* klass = mono_object_get_class(go);
-	const char* name = mono_class_get_name(klass);
+	//const char* name = mono_class_get_name(klass);
 
 	GameObject* workGO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 	//GameObject* workGO = C_Script::runningScript->GetGO();
