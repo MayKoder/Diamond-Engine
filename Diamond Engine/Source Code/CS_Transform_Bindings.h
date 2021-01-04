@@ -214,7 +214,7 @@ void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale)
 		return;
 
 	GameObject* go = EngineExternal->moduleScene->CreateGameObject("Empty", EngineExternal->moduleScene->root);
-	go->name = std::to_string(go->UID);
+	////go->name = std::to_string(go->UID);
 
 	float3 posVector = M_MonoManager::UnboxVector(position);
 	Quat rotQuat = M_MonoManager::UnboxQuat(rotation);

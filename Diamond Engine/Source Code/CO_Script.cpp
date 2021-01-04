@@ -20,7 +20,7 @@ C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), co
 	name = scriptName;
 	//strcpy(name, scriptName);
 
-	EngineExternal->moduleMono->DebugAllMethods(DE_SCRIPTS_NAMESPACE, "GameObject", methods);
+	//EngineExternal->moduleMono->DebugAllMethods(DE_SCRIPTS_NAMESPACE, "GameObject", methods);
 	LoadScriptData(scriptName);
 
 	for (unsigned int i = 0; i < fields.size(); i++)
@@ -49,6 +49,7 @@ C_Script::~C_Script()
 	mono_gchandle_free(noGCobject);
 	methods.clear();
 	fields.clear();
+	name.clear();
 }
 
 void C_Script::Update()
@@ -60,53 +61,6 @@ void C_Script::Update()
 
 
 	mono_runtime_invoke(updateMethod, mono_gchandle_get_target(noGCobject), NULL, NULL);
-
-	//int x = 0;
-	//void* args[1];
-	//args[0] = &x;
-	//MonoObject* lengthObj = nullptr;
-	//if (x == 0)
-	//{
-		//BUG IMPORTANT: Core variables are like... shared? Maybe because the main? Rotation is affecting both scripts if you rotate +1 and -1 neither rotates
-		/*lengthObj = *//*mono_runtime_invoke(updateMethod, coreObject, NULL, NULL);*/ //TODO IMPORTANT: This is super slow, use managed chunks (mono documentation)
-		//x = *(int*)mono_object_unbox(lengthObj);
-
-		//for (int i = 0; i < fields.size(); i++) //TODO IMPORTANT: Better idea, add a callback on position, rotation or scale set{} in C# that calls an update on the c++ gameObject
-		//{
-		//	if (fields[i].type == MonoTypeEnum::MONO_TYPE_CLASS && fields[i].fiValue.goValue != nullptr) 
-		//	{
-		//		//TODO IMPORTANT: WE SHOULD USE TOKENS
-		//		MonoClass* klass = mono_class_from_name(EngineExternal->moduleMono->image, "DiamondEngine", "Core");
-		//		MonoClass* goClass = mono_class_from_name(EngineExternal->moduleMono->image, "DiamondEngine", "GameObject");
-
-		//		const char* test = mono_field_get_name(fields[i].field);
-		//		MonoClassField* coreProperty = mono_class_get_field_from_name(klass, test);
-		//		MonoObject* referenceObject = mono_field_get_value_object(EngineExternal->moduleMono->domain, coreProperty, coreObject);
-
-		//		//MonoTypeEnum name = (MonoTypeEnum)mono_type_get_type(mono_field_get_type(mono_class_get_field_from_name(klass, "reference")));
-		//		if (referenceObject)
-		//		{
-		//			MonoObject* vecObject = mono_object_new(EngineExternal->moduleMono->domain, mono_class_from_name(EngineExternal->moduleMono->image, "DiamondEngine", "Vector3"));
-		//			mono_field_get_value(referenceObject, mono_class_get_field_from_name(goClass, "lPosition"), &vecObject);
-		//			float3 csPosition = M_MonoManager::UnboxVector(vecObject);
-
-		//			MonoObject* rotationObject = mono_object_new(EngineExternal->moduleMono->domain, mono_class_from_name(EngineExternal->moduleMono->image, "DiamondEngine", "Quaternion"));
-		//			mono_field_get_value(referenceObject, mono_class_get_field_from_name(goClass, "lRotation"), &rotationObject);
-		//			Quat csQuat = M_MonoManager::UnboxQuat(rotationObject);
-
-		//			MonoObject* scaleObject = mono_object_new(EngineExternal->moduleMono->domain, mono_class_from_name(EngineExternal->moduleMono->image, "DiamondEngine", "Vector3"));
-		//			mono_field_get_value(referenceObject, mono_class_get_field_from_name(goClass, "lScale"), &scaleObject);
-		//			float3 csScale = M_MonoManager::UnboxVector(scaleObject);
-
-		//			C_Transform* transform = fields[i].fiValue.goValue->transform; // TODO: This wont work because its hardcoded
-		//			//LOG(LogType::L_WARNING, "C++ %f %f %f vs C# %f %f %f", transform->position.x, transform->position.y, transform->position.z, test.x, test.y, test.z);
-		//			transform->SetTransformMatrix(csPosition, csQuat, csScale);
-		//			transform->updateTransform = true;
-		//		}
-		//	}
-		//}
-
-	//}
 }
 
 bool C_Script::OnEditor()
@@ -297,7 +251,7 @@ void C_Script::LoadScriptData(const char* scriptName)
 
 	MonoMethodDesc* mdesc = mono_method_desc_new(":Update", false);
 	updateMethod = mono_method_desc_search_in_class(mdesc, klass);
-	mono_free(mdesc);
+	mono_method_desc_free(mdesc);
 
 	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, coreObject);
 }

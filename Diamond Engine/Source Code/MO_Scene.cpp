@@ -138,6 +138,7 @@ void M_Scene::Destroy(GameObject* gm)
 			break;
 		}
 	}
+	gm->parent->children.shrink_to_fit();
 
 	delete gm;
 	gm = nullptr;
