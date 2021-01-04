@@ -106,25 +106,23 @@ void C_Material::SaveData(JSON_Object* nObj)
 	//TODO: Call texture importer and load data
 }
 
-void C_Material::LoadData(JSON_Object* nObj)
+void C_Material::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
-	DEConfig jsObj(nObj);
-	//There is no _mesh yet lol
 
-	if (jsObj.ReadBool("IsEmpty") == true)
+	if (nObj.ReadBool("IsEmpty") == true)
 		return;
 
 
 	int w, h;
 	w = h = 0;
-	std::string texPath = jsObj.ReadString("AssetPath");
-	std::string texName = jsObj.ReadString("LibraryPath");
+	std::string texPath = nObj.ReadString("AssetPath");
+	std::string texName = nObj.ReadString("LibraryPath");
 
 	if (texName == "" && texPath == "") {
 		LOG(LogType::L_WARNING, "Empty");
 		return;
 	}
 
-	matTexture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(jsObj.ReadInt("UID"), texName.c_str()));
+	matTexture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), texName.c_str()));
 }

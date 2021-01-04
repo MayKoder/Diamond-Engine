@@ -14,10 +14,10 @@ public:
 
 	void Update() override;
 
-	void RenderMesh();
+	void RenderMesh(bool rTex = false);
 
 	void SaveData(JSON_Object* nObj) override;
-	void LoadData(JSON_Object* nObj) override;
+	void LoadData(DEConfig& nObj) override;
 
 	bool OnEditor() override;
 

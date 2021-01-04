@@ -19,13 +19,14 @@
 #pragma comment( lib, "mono/libx86/mono-2.0-boehm.lib" )
 #pragma comment( lib, "mono/libx86/mono-2.0-sgen.lib" )
 
-M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app, start_enabled), domain(nullptr), domainThread(nullptr), assembly(nullptr), image(nullptr)	
+M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app, start_enabled), domain(nullptr), domainThread(nullptr), assembly(nullptr), image(nullptr)
+,jitDomain(nullptr)
 {
 
 	//mono_jit_set_aot_mode(MonoAotMode::MONO_AOT_MODE_HYBRID);
 	mono_set_dirs("mono-runtime/lib", "mono-runtime/etc");
 	mono_config_parse(NULL);
-	mono_jit_init("myapp");
+	jitDomain = mono_jit_init("myapp");
 
 	mono_add_internal_call("DiamondEngine.Debug::Log", CSLog);
 	mono_add_internal_call("DiamondEngine.InternalCalls::GetKey", GetKey);
@@ -39,7 +40,9 @@ M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app,
 	mono_add_internal_call("DiamondEngine.GameObject::get_localPosition", SendPosition);
 	mono_add_internal_call("DiamondEngine.GameObject::get_globalPosition", SendGlobalPosition);
 	mono_add_internal_call("DiamondEngine.GameObject::set_localPosition", RecievePosition);
+
 	mono_add_internal_call("DiamondEngine.GameObject::GetForward", GetForward);
+	mono_add_internal_call("DiamondEngine.GameObject::GetRight", GetRight);
 
 	mono_add_internal_call("DiamondEngine.GameObject::get_localRotation", SendRotation);
 	mono_add_internal_call("DiamondEngine.GameObject::get_globalRotation", SendGlobalRotation);
@@ -71,7 +74,8 @@ bool M_MonoManager::CleanUp()
 {
 	LOG(LogType::L_NORMAL, "Cleaning mono domain");
 
-	mono_jit_cleanup(domain); //Mono cleanup
+	//mono_domain_unload(domain);
+	mono_jit_cleanup(jitDomain); //Mono cleanup
 
 	return true;
 }
@@ -80,45 +84,56 @@ update_status M_MonoManager::Update(float dt)
 {
 	if (App->moduleInput->GetKey(SDL_SCANCODE_T) == KEY_DOWN) 
 	{
-		App->moduleScene->CleanScene();
-		App->moduleRenderer3D->ClearAllRenderData();
-
-		//mono_runtime_cleanup(domain);
-		//mono_jit_cleanup(domain); //Mono cleanup
-		
-
-		//mono_assemblies_cleanup();
-		//mono_domain_unload(domain);
-
-		mono_domain_unload(domain);
-		//mono_thread_detach(domainThread);
-		//mono_domain_finalize(domain, 0);
-		//mono_config_cleanup();
-		//mono_thread_cleanup();
-		//mono_runtime_quit();
-		//mono_runtime_set_shutting_down();
-
-		//mono_assembly_close(assembly);
-		//mono_assemblies_cleanup();
-		//mono_image_close(image);
-		//mono_images_cleanup();
-
-		while (mono_domain_is_unloading(domain) == true)
-		{
-
-		}
-
-		CompileCS();
-
-		//domain = mono_domain_create_appdomain("CSSolution/Assembly-CSharp/Build/Assembly-CSharp.dll", NULL);
-		//mono_domain_set(domain, 0);
-		//mono_thread_attach(domain);
-		InitMono();
-
-		App->moduleScene->LoadScene("Assets/Scene1.des");
+		ReCompileCS();
 	}
 
 	return update_status::UPDATE_CONTINUE;
+}
+
+void M_MonoManager::ReCompileCS() 
+{
+	if (DETime::state == GameState::PLAY)
+		return;
+
+	App->moduleScene->SaveScene("Library/Scenes/tmp.des");
+
+	App->moduleScene->CleanScene();
+	App->moduleRenderer3D->ClearAllRenderData();
+
+	//mono_runtime_cleanup(domain);
+	//mono_jit_cleanup(domain); //Mono cleanup
+
+
+	//mono_assemblies_cleanup();
+	//mono_domain_unload(domain);
+
+	mono_domain_unload(domain);
+	//mono_thread_detach(domainThread);
+	//mono_domain_finalize(domain, 0);
+	//mono_config_cleanup();
+	//mono_thread_cleanup();
+	//mono_runtime_quit();
+	//mono_runtime_set_shutting_down();
+
+	//mono_assembly_close(assembly);
+	//mono_assemblies_cleanup();
+	//mono_image_close(image);
+	//mono_images_cleanup();
+
+	while (mono_domain_is_unloading(domain) == true)
+	{
+
+	}
+
+	CMDCompileCS();
+
+	//domain = mono_domain_create_appdomain("CSSolution/Assembly-CSharp/Build/Assembly-CSharp.dll", NULL);
+	//mono_domain_set(domain, 0);
+	//mono_thread_attach(domain);
+	InitMono();
+
+	App->moduleScene->LoadScene("Library/Scenes/tmp.des");
+	App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code, mmove to method
 }
 
 //ASK: Is this the worst idea ever? TOO SLOW
@@ -190,6 +205,7 @@ MonoObject* M_MonoManager::GoToCSGO(GameObject* inGo) const
 	MonoObject* goObj = mono_object_new(domain, goClass);
 	mono_runtime_invoke(method, goObj, args, NULL);
 
+	mono_method_desc_free(constructorDesc);
 	return goObj;
 }
 
@@ -211,6 +227,7 @@ MonoObject* M_MonoManager::Float3ToCS(float3& inVec) const
 
 	mono_runtime_invoke(method, vecObject, args, NULL);
 
+	mono_method_desc_free(constDesc);
 	return vecObject;
 }
 
@@ -261,6 +278,7 @@ MonoObject* M_MonoManager::QuatToCS(Quat& inVec) const
 
 	mono_runtime_invoke(method, quatObject, args, NULL);
 
+	mono_method_desc_free(constDesc);
 	return quatObject;
 }
 

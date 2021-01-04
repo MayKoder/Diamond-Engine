@@ -55,7 +55,7 @@ void C_MeshRenderer::Update()
 	}
 }
 
-void C_MeshRenderer::RenderMesh()
+void C_MeshRenderer::RenderMesh(bool rTex)
 {
 	if (_mesh == nullptr)
 		return;
@@ -77,7 +77,9 @@ void C_MeshRenderer::RenderMesh()
 		id = material->GetTextureID();
 
 	glColor3fv(&alternColor.x);
-	_mesh->RenderMesh(id);
+
+	_mesh->RenderMesh(id, rTex);
+
 	glColor3f(1.f, 1.f, 1.f);
 
 	if (vertexNormals || faceNormals)
@@ -94,17 +96,14 @@ void C_MeshRenderer::SaveData(JSON_Object* nObj)
 	DEJson::WriteInt(nObj, "UID", _mesh->GetUID());
 	DEJson::WriteVector3(nObj, "alternColor", &alternColor.x);
 }
-void C_MeshRenderer::LoadData(JSON_Object* nObj)
+void C_MeshRenderer::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
 
 
-	//There is no _mesh yet lol
-	DEConfig jsObj(nObj);
+	SetRenderMesh(dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), nObj.ReadString("Path"))));
 
-	SetRenderMesh(dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(jsObj.ReadInt("UID"), jsObj.ReadString("Path"))));
-
-	alternColor = jsObj.ReadVector3("alternColor");
+	alternColor = nObj.ReadVector3("alternColor");
 
 	if (_mesh == nullptr)
 		return;

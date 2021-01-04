@@ -34,7 +34,7 @@ int main(int argc, char** argv)
 	
 //TODO: Maybe use CreateProcess? it's more flexible	
 //TODO IMPORTANT: You can get the warnings and errors from this code, do that to check if there is any compilation errors.
-	CompileCS();
+	CMDCompileCS();
 
 //This works BUT i dont like to hardcode the cmd.exe path, i think this will cause some issues with different OS or system paths
 #pragma region CreateProcess

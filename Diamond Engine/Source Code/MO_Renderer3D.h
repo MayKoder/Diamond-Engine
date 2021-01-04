@@ -45,7 +45,7 @@ public:
 	void ClearAllRenderData();
 private:
 
-	void RenderWithOrdering();
+	void RenderWithOrdering(bool rTex = false);
 	void DebugLine(LineSegment& line);
 	void GetCAPS(std::string& caps);
 	std::string str_CAPS;

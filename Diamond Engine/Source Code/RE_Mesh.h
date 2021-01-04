@@ -20,7 +20,7 @@ public:
 	bool LoadToMemory() override;
 	bool UnloadFromMemory() override;
 
-	void RenderMesh(GLuint textureID);
+	void RenderMesh(GLuint textureID, bool renderTexture = false);
 	void RenderMeshDebug(bool* vertexNormals, bool* faceNormals);
 
 	vec3 GetVectorFromIndex(float* startValue);

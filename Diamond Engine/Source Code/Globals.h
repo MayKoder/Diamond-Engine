@@ -61,7 +61,7 @@ typedef unsigned __int64 uint64;
 //	UPDATE_ERROR
 //};
 
-static void CompileCS() 
+static void CMDCompileCS() 
 {
 #pragma region ShellExecute
 	SHELLEXECUTEINFO ShExecInfo = { 0 };

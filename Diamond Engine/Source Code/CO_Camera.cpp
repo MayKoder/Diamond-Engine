@@ -127,17 +127,17 @@ void C_Camera::SaveData(JSON_Object* nObj)
 	DEJson::WriteFloat(nObj, "hFOV", camFrustrum.horizontalFov);
 }
 
-void C_Camera::LoadData(JSON_Object* nObj)
+void C_Camera::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
 
-	camFrustrum.type = (FrustumType)DEJson::ReadInt(nObj, "fType");
+	camFrustrum.type = (FrustumType)nObj.ReadInt("fType");
 
-	camFrustrum.nearPlaneDistance = DEJson::ReadFloat(nObj, "nearPlaneDist");
-	camFrustrum.farPlaneDistance = DEJson::ReadFloat(nObj, "farPlaneDist");
+	camFrustrum.nearPlaneDistance = nObj.ReadFloat("nearPlaneDist");
+	camFrustrum.farPlaneDistance = nObj.ReadFloat("farPlaneDist");
 
-	camFrustrum.verticalFov = DEJson::ReadFloat(nObj, "vFOV");
-	camFrustrum.horizontalFov = DEJson::ReadFloat(nObj, "hFOV");
+	camFrustrum.verticalFov = nObj.ReadFloat("vFOV");
+	camFrustrum.horizontalFov = nObj.ReadFloat("hFOV");
 
 	//Need to reset W_Game target canera
 	EngineExternal->moduleScene->SetGameCamera(this);

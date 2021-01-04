@@ -99,10 +99,10 @@ bool ResourceMesh::UnloadFromMemory()
 	return true;
 }
 
-void ResourceMesh::RenderMesh(GLuint textureID)
+void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture)
 {
 	//ASK: glDrawElementsInstanced()?
-	if(textureID != 0 && (generalWireframe != nullptr && *generalWireframe == false))
+	if(textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
 	//Vertices --------------------------------------------
@@ -147,7 +147,7 @@ void ResourceMesh::RenderMesh(GLuint textureID)
 	//--------------------------------------------
 
 	//Drawing cleanup --------------------------------------------
-	if (textureID != 0 && (generalWireframe != nullptr && *generalWireframe == false))
+	if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

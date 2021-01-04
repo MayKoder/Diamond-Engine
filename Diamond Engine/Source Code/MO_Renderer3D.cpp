@@ -226,9 +226,9 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		}
 
 		//TODO: Make wireframe only affect scene window
-		//(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		RenderWithOrdering();
-		//(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
 	DebugLine(pickingDebug);
@@ -244,7 +244,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			lights[i].Render();
 
 		p.Render();
-		RenderWithOrdering();
+		RenderWithOrdering(true);
 
 		gameCamera->EndDraw();
 	}
@@ -453,7 +453,7 @@ void ModuleRenderer3D::RayToMeshQueueIntersection(LineSegment& ray)
 		App->moduleEditor->SetSelectedGO(nullptr);
 }
 
-void ModuleRenderer3D::RenderWithOrdering()
+void ModuleRenderer3D::RenderWithOrdering(bool rTex)
 {
 	if (renderQueueMap.empty())
 		return;
@@ -465,7 +465,7 @@ void ModuleRenderer3D::RenderWithOrdering()
 
 		// Now render out that whole range
 		for (auto d = range.first; d != range.second; ++d)
-			d->second->RenderMesh();
+			d->second->RenderMesh(rTex);
 	}
 }
 

@@ -14,7 +14,7 @@ public:
 
 
 	void SaveData(JSON_Object* nObj) override;
-	void LoadData(JSON_Object* nObj) override;
+	void LoadData(DEConfig& nObj) override;
 
 	bool viewWithCheckers;
 	ResourceTexture* matTexture;

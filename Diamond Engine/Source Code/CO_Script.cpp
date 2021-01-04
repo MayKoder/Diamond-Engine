@@ -166,7 +166,7 @@ void C_Script::SaveData(JSON_Object* nObj)
 		}
 	}
 }
-void C_Script::LoadData(JSON_Object* nObj)
+void C_Script::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
 
@@ -178,16 +178,16 @@ void C_Script::LoadData(JSON_Object* nObj)
 		switch (_field->type)
 		{
 		case MonoTypeEnum::MONO_TYPE_BOOLEAN:
-			_field->fiValue.bValue = DEJson::ReadBool(nObj, mono_field_get_name(_field->field));
+			_field->fiValue.bValue = nObj.ReadBool(mono_field_get_name(_field->field));
 			break;
 
 		case MonoTypeEnum::MONO_TYPE_I4:
-			_field->fiValue.iValue = DEJson::ReadInt(nObj, mono_field_get_name(_field->field));
+			_field->fiValue.iValue = nObj.ReadInt(mono_field_get_name(_field->field));
 			break;
 
 		case MonoTypeEnum::MONO_TYPE_CLASS:
 			//ERROR BUG IMPORTANT: Reference not working, if the object is a child, it wont be selected
-			_field->fiValue.goValue = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, DEJson::ReadInt(nObj, mono_field_get_name(_field->field)));
+			_field->fiValue.goValue = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, nObj.ReadInt(mono_field_get_name(_field->field)));
 
 			if(_field->fiValue.goValue)
 				SetField(_field->field, _field->fiValue.goValue);
@@ -195,12 +195,12 @@ void C_Script::LoadData(JSON_Object* nObj)
 			break;
 
 		case MonoTypeEnum::MONO_TYPE_R4:
-			_field->fiValue.fValue = DEJson::ReadFloat(nObj, mono_field_get_name(_field->field));
+			_field->fiValue.fValue = nObj.ReadFloat(mono_field_get_name(_field->field));
 			break;
 
 		case MonoTypeEnum::MONO_TYPE_STRING: 
 		{
-			const char* ret = DEJson::ReadString(nObj, mono_field_get_name(_field->field));
+			const char* ret = nObj.ReadString(mono_field_get_name(_field->field));
 
 			if (ret == NULL)
 				ret = "\0";
@@ -211,7 +211,7 @@ void C_Script::LoadData(JSON_Object* nObj)
 		}
 
 		default:
-			_field->fiValue.iValue = DEJson::ReadInt(nObj, mono_field_get_name(_field->field));
+			_field->fiValue.iValue = nObj.ReadInt(mono_field_get_name(_field->field));
 			break;
 		}
 	}

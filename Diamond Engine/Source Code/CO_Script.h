@@ -21,7 +21,7 @@ public:
 	bool OnEditor() override;
 
 	void SaveData(JSON_Object* nObj) override;
-	void LoadData(JSON_Object* nObj) override;
+	void LoadData(DEConfig& nObj) override;
 
 	void SetField(MonoClassField* field, GameObject* value);
 	void DropField(SerializedField& fieldName, const char* dropType);

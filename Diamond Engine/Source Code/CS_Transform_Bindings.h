@@ -129,11 +129,21 @@ MonoObject* GetForward(MonoObject* go)
 	if (EngineExternal == nullptr || C_Script::runningScript == nullptr)
 		return nullptr;
 
-	const char* name = mono_class_get_name(mono_object_get_class(go));
 	GameObject* workGO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
 	MonoClass* vecClass = mono_class_from_name(EngineExternal->moduleMono->image, DE_SCRIPTS_NAMESPACE, "Vector3");
+
 	return EngineExternal->moduleMono->Float3ToCS(workGO->transform->GetForward());
+}
+MonoObject* GetRight(MonoObject* go)
+{
+	if (EngineExternal == nullptr)
+		return nullptr;
+
+	GameObject* workGO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
+
+	MonoClass* vecClass = mono_class_from_name(EngineExternal->moduleMono->image, DE_SCRIPTS_NAMESPACE, "Vector3");
+	return EngineExternal->moduleMono->Float3ToCS(workGO->transform->GetRight());
 }
 
 MonoObject* SendRotation(MonoObject* obj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class

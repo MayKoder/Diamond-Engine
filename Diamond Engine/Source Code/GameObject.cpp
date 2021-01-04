@@ -213,7 +213,7 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 		const char* scName = conf.ReadString("ScriptName");
 		Component* comp = AddComponent((Component::Type)conf.ReadInt("Type"), scName);
 
-		comp->LoadData(conf.nObj);
+		comp->LoadData(conf);
 
 	}
 

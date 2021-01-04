@@ -211,6 +211,7 @@ void M_Scene::LoadScene(const char* name)
 		return;
 
 	//Clear all current scene memory
+	destroyList.clear();
 	CleanScene();
 	RELEASE(root); //Had to remove root to create it later
 

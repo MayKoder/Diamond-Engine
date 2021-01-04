@@ -58,8 +58,11 @@ public:
 	MonoObject* Float3ToCS(float3& inVec) const;
 	MonoObject* GoToCSGO(GameObject* inGo) const;
 
+	void ReCompileCS();
+
 public:
 	MonoDomain* domain;
+	MonoDomain* jitDomain;
 	MonoAssembly* assembly;
 	MonoImage* image;
 	MonoThread* domainThread;

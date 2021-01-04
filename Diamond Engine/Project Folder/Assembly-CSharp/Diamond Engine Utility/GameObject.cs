@@ -78,6 +78,9 @@ namespace DiamondEngine
         public extern Vector3 GetForward();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern Vector3 GetRight();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void AddComponent(int componentType);
 
     }

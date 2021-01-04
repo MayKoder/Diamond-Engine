@@ -3,7 +3,7 @@
 class GameObject;
 
 //ERROR: Remove this include from here
-#include"parson/parson.h"
+#include"DEJsonSupport.h"
 #include<string>
 
 class Component
@@ -33,7 +33,7 @@ public:
 
 	//Maybe return JSON_Value*?
 	virtual void SaveData(JSON_Object* nObj);
-	virtual void LoadData(JSON_Object* nObj);
+	virtual void LoadData(DEConfig& nObj);
 
 	inline bool IsActive() {
 		return active;

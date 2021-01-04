@@ -9,7 +9,7 @@ public class Core : DiamondComponent
 	public GameObject reference = null;
 	public GameObject turret = null;
 	public GameObject shootPoint = null;
-    public int Holas = 0;
+    //public int Holas = 0;
 
     public int testInt = 0;
 		
@@ -20,12 +20,13 @@ public class Core : DiamondComponent
 	public string testString = "Hello World";
 
 	public bool once = true;
-
 	public void Update(/*int x*/)
 	{
 		//x += 10;
 		if (this.reference == null)
 			return;
+
+        //Debug.Log(reference.GetForward());
 
         //Log does not work if we compile with Release wtf?
         if (InternalCalls.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
@@ -37,14 +38,14 @@ public class Core : DiamondComponent
         if (InternalCalls.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
             reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -rotationSpeed * Time.deltaTime);
 
+        //if (InternalCalls.GetMouseY() != 0 && turret != null)
+        //{
+        //    turret.localRotation *= Quaternion.RotateAroundAxis(turret.GetRight(), InternalCalls.GetMouseY() * 0.001f);
+        //}
         if (InternalCalls.GetMouseX() != 0 && turret != null)
         {
             turret.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -InternalCalls.GetMouseX() * Time.deltaTime);
         }
-        //if (InternalCalls.GetMouseY() != 0 && turret != null)
-        //{
-        //    turret.localRotation *= Quaternion.RotateAroundAxis(turret.globalMatrix.GetRight(), InternalCalls.GetMouseY() * 0.001f);
-        //}
 
         if (InternalCalls.GetKey(DEKeyCode.SPACE) == KeyState.KEY_REPEAT)
         {

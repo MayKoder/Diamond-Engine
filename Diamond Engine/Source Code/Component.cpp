@@ -54,7 +54,7 @@ void Component::SaveData(JSON_Object* nObj)
 	DEJson::WriteBool(nObj, "Active", active);
 }
 
-void Component::LoadData(JSON_Object* nObj)
+void Component::LoadData(DEConfig& nObj)
 {
-	active = DEJson::ReadBool(nObj, "Active");
+	active = nObj.ReadBool("Active");
 }
