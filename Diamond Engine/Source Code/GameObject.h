@@ -7,6 +7,7 @@
 #include"parson/parson.h"
 
 class C_Transform;
+struct SerializedField;
 
 class GameObject
 {
@@ -45,6 +46,8 @@ public:
 	std::vector<GameObject*> children;
 
 	std::vector<Component*> components;
+
+	std::vector<SerializedField*> csReferences;
 
 public:
 	std::string name;

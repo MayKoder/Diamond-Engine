@@ -48,6 +48,13 @@ GameObject::~GameObject()
 		children[i] = nullptr;
 	}
 	children.clear();
+
+	for (size_t i = 0; i < csReferences.size(); i++)
+	{
+		mono_field_set_value(mono_gchandle_get_target(csReferences[i]->parentSC->noGCobject), csReferences[i]->field, NULL);
+		csReferences[i]->fiValue.goValue = nullptr;
+	}
+	csReferences.clear();
 }
 
 void GameObject::Update()

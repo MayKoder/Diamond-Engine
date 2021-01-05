@@ -160,14 +160,14 @@ Quat M_MonoManager::UnboxQuat(MonoObject* _obj)
 	return ret;
 }
 
-void M_MonoManager::DebugAllFields(const char* className, std::vector<SerializedField>& _data, MonoObject* obj)
+void M_MonoManager::DebugAllFields(const char* className, std::vector<SerializedField>& _data, MonoObject* obj, C_Script* script)
 {
 	void* iter = NULL;
 	MonoClassField* field;
 	MonoClass* klass = mono_class_from_name(mono_assembly_get_image(EngineExternal->moduleMono->assembly), USER_SCRIPTS_NAMESPACE, className);
 	while (field = mono_class_get_fields(klass, &iter))
 	{
-		SerializedField pushField = SerializedField(field, obj);
+		SerializedField pushField = SerializedField(field, obj, script);
 
 
 
@@ -291,16 +291,16 @@ GameObject* M_MonoManager::GameObject_From_CSGO(MonoObject* goObj)
 	return reinterpret_cast<GameObject*>(ptr);
 }
 
-SerializedField::SerializedField() : field(nullptr)
+SerializedField::SerializedField() : field(nullptr), parentSC(nullptr)
 {
 	fiValue.iValue = 0;
 }
 
-SerializedField::SerializedField(MonoClassField* _field, MonoObject* _object)
+SerializedField::SerializedField(MonoClassField* _field, MonoObject* _object, C_Script* parent) : field(_field)
 {
-	field = _field;
 	type = static_cast<MonoTypeEnum>(mono_type_get_type(mono_field_get_type(field)));
 	fiValue.iValue = 0;
+	parentSC = parent;
 
 	M_MonoManager::LoadFieldData(*this, _object);
 }

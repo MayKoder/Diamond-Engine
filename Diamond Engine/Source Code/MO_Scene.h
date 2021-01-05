@@ -2,11 +2,13 @@
 
 #include "Module.h"
 #include<vector>
+#include<map>
 
 #include"parson/parson.h"
 class GameObject;
 class C_Camera;
 typedef unsigned int uint;
+struct SerializedField;
 
 class M_Scene : public Module
 {
@@ -36,8 +38,9 @@ public:
 
 	void CleanScene();
 
-	std::vector<GameObject*> destroyList;
 	GameObject* root;
+	std::vector<GameObject*> destroyList;
+	std::multimap<uint, SerializedField*> referenceMap;
 private:
 	void Destroy(GameObject* gm);
 

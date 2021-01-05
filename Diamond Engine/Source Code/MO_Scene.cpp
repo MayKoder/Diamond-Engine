@@ -8,20 +8,20 @@
 #include "MO_Camera3D.h"
 #include "MO_Scene.h"
 #include "MO_ResourceManager.h"
+#include"MO_MonoManager.h"
 
-#include "WI_Inspector.h"
 #include "WI_Hierarchy.h"
 #include"WI_Game.h"
+#include"MaykMath.h"
 
 #include "IM_FileSystem.h"
 
 #include"DEJsonSupport.h"
-#include"MaykMath.h"
 #include"CO_Transform.h"
 #include"CO_Camera.h"
+#include"CO_Script.h"
 
 #include"RE_Texture.h"
-
 #include"DETime.h"
 
 M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr)
@@ -231,6 +231,25 @@ void M_Scene::LoadScene(const char* name)
 	{
 		parent = LoadGOData(json_array_get_object(sceneGO, i), parent);
 	}
+
+	for (auto i = referenceMap.begin(); i != referenceMap.end(); ++i)
+	{
+		// Get the range of the current key
+		auto range = referenceMap.equal_range(i->first);
+
+		// Now render out that whole range
+		for (auto d = range.first; d != range.second; ++d) 
+		{
+			d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
+
+			if (d->second->fiValue.goValue) {
+				d->second->fiValue.goValue->csReferences.push_back(d->second);
+				d->second->parentSC->SetField(d->second->field, d->second->fiValue.goValue);
+			}
+		}
+	}
+
+	referenceMap.clear();
 
 	//Free memory
 	json_value_free(scene);

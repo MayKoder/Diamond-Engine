@@ -47,6 +47,14 @@ C_Script::~C_Script()
 
 	mono_gchandle_free(noGCobject);
 
+	for (unsigned int i = 0; i < fields.size(); i++)
+	{
+		if (fields[i].type == MonoTypeEnum::MONO_TYPE_CLASS && fields[i].fiValue.goValue != nullptr && fields[i].fiValue.goValue->csReferences.size() != 0)
+		{
+			fields[i].fiValue.goValue->csReferences.erase(std::find(fields[i].fiValue.goValue->csReferences.begin(), fields[i].fiValue.goValue->csReferences.end(), &fields[i]));
+		}
+	}
+
 	methods.clear();
 	fields.clear();
 	name.clear();
@@ -59,8 +67,20 @@ void C_Script::Update()
 
 	C_Script::runningScript = this; // I really think this is the peak of stupid code, but hey, it works, slow as hell but works.
 
+	MonoObject* exec = nullptr;
+	mono_runtime_invoke(updateMethod, mono_gchandle_get_target(noGCobject), NULL, &exec);
 
-	mono_runtime_invoke(updateMethod, mono_gchandle_get_target(noGCobject), NULL, NULL);
+	if (exec != nullptr) 
+	{
+		if (strcmp(mono_class_get_name(mono_object_get_class(exec)), "NullReferenceException") == 0) 
+		{
+			LOG(LogType::L_ERROR, "Null reference exception detected");
+		}
+		else 
+		{
+			LOG(LogType::L_ERROR, "Something went wrong");
+		}
+	}
 }
 
 bool C_Script::OnEditor()
@@ -139,15 +159,20 @@ void C_Script::LoadData(DEConfig& nObj)
 			_field->fiValue.iValue = nObj.ReadInt(mono_field_get_name(_field->field));
 			break;
 
-		case MonoTypeEnum::MONO_TYPE_CLASS:
-			//ERROR BUG IMPORTANT: Reference not working, if the object is a child, it wont be selected
-			_field->fiValue.goValue = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, nObj.ReadInt(mono_field_get_name(_field->field)));
+		case MonoTypeEnum::MONO_TYPE_CLASS: {
 
-			if(_field->fiValue.goValue)
-				SetField(_field->field, _field->fiValue.goValue);
+			//ERROR BUG IMPORTANT: Reference not working, if the object is a child, it wont be selected
+			//ERROR BUG IMPORTANT: Do this only with GameObjets, what if it's a Vector3?
+			//_field->fiValue.goValue = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, nObj.ReadInt(mono_field_get_name(_field->field)));
+
+			//if(_field->fiValue.goValue)
+			//	SetField(_field->field, _field->fiValue.goValue);
+
+			EngineExternal->moduleScene->referenceMap.emplace(nObj.ReadInt(mono_field_get_name(_field->field)), _field);
 
 			break;
 
+		}
 		case MonoTypeEnum::MONO_TYPE_R4:
 			_field->fiValue.fValue = nObj.ReadFloat(mono_field_get_name(_field->field));
 			break;
@@ -249,7 +274,7 @@ void C_Script::LoadScriptData(const char* scriptName)
 	updateMethod = mono_method_desc_search_in_class(mdesc, klass);
 	mono_method_desc_free(mdesc);
 
-	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject));
+	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject), this);
 }
 
 void C_Script::SetField(MonoClassField* field, GameObject* value)
