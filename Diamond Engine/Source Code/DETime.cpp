@@ -16,6 +16,8 @@ void DETime::Play()
 {
 	state = GameState::PLAY;
 	gameTimer.Start();
+
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 }
 
 void DETime::Stop()
@@ -26,6 +28,7 @@ void DETime::Stop()
 	frameCount = 0;
 
 	gameTimer.Stop();
+	SDL_SetRelativeMouseMode(SDL_FALSE);
 }
 
 void DETime::PreUpdate()

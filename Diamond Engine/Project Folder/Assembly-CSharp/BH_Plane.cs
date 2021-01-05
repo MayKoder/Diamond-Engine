@@ -27,17 +27,17 @@ public class BH_Plane : DiamondComponent
         if (InternalCalls.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
             thisReference.localRotation = Quaternion.RotateAroundAxis(Vector3.up, -0.4f * Time.deltaTime) * thisReference.localRotation;
 
-        if (InternalCalls.GetKey(DEKeyCode.KP_6) == KeyState.KEY_REPEAT)
-            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.forward, 0.4f * Time.deltaTime);
+        if (InternalCalls.GetMouseX() > 0)
+            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.forward, InternalCalls.GetMouseX() * 0.5f * Time.deltaTime);
 
-        if (InternalCalls.GetKey(DEKeyCode.KP_4) == KeyState.KEY_REPEAT)
-            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.forward, -0.4f * Time.deltaTime);
+        if (InternalCalls.GetMouseX() < 0)
+            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.forward, InternalCalls.GetMouseX() * 0.5f * Time.deltaTime);
 
-        if (InternalCalls.GetKey(DEKeyCode.KP_5) == KeyState.KEY_REPEAT)
-            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.right, -0.4f * Time.deltaTime);
+        if (InternalCalls.GetMouseY() > 0)
+            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.right, InternalCalls.GetMouseY() * 0.5f * Time.deltaTime);
 
-        if (InternalCalls.GetKey(DEKeyCode.KP_8) == KeyState.KEY_REPEAT)
-            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.right, 0.4f * Time.deltaTime);
+        if (InternalCalls.GetMouseY() < 0)
+            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.right, InternalCalls.GetMouseY() * 0.5f * Time.deltaTime);
 
         thisReference.localPosition += thisReference.GetForward() * cSpeed;
     }

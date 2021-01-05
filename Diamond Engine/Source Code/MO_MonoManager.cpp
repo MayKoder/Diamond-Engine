@@ -111,7 +111,7 @@ void M_MonoManager::ReCompileCS()
 	//mono_thread_detach(domainThread);
 	//mono_domain_finalize(domain, 0);
 	//mono_config_cleanup();
-	//mono_thread_cleanup();
+	mono_thread_cleanup();
 	//mono_runtime_quit();
 	//mono_runtime_set_shutting_down();
 

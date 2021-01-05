@@ -205,7 +205,7 @@ Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 
 				ret->LoadToMemory();
 			}
-			//LOG(LogType::L_NORMAL, "Requested resource loaded as new"); //UNCOMMENT
+			LOG(LogType::L_NORMAL, "Requested resource loaded as new"); //UNCOMMENT
 		}
 		else
 			LOG(LogType::L_ERROR, "Requested resource does not exist");

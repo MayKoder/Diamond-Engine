@@ -15,7 +15,7 @@ ResourceMesh::~ResourceMesh()
 
 bool ResourceMesh::LoadToMemory()
 {
-	//LOG(LogType::L_WARNING, "Mesh loaded to memory"); //UNCOMMENT
+	LOG(LogType::L_WARNING, "Mesh loaded to memory"); //UNCOMMENT
 	LoadCustomFormat(GetLibraryPath());
 
 	// vertices_count = vector3's // size of the array (elements) = vertices_count * 3 // size of the array in bytes = sizeof(float) * vertices_count * 3
