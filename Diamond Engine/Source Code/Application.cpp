@@ -46,13 +46,14 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	AddModule(moduleScene);
 
 	// Renderer last!
-	AddModule(moduleRenderer3D);
 	AddModule(moduleCamera);
 
 	AddModule(moduleMono);
 
 	AddModule(moduleResources);
 	AddModule(moduleEditor);
+
+	AddModule(moduleRenderer3D);
 }
 
 
