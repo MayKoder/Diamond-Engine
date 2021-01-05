@@ -15,7 +15,7 @@
 #include <mono/metadata/debug-helpers.h>
 
 C_Script* C_Script::runningScript = nullptr;
-C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), coreObject(nullptr), noGCobject(0)
+C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), noGCobject(0)
 {
 	name = scriptName;
 	//strcpy(name, scriptName);
@@ -38,7 +38,6 @@ C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), co
 		}
 	}
 
-
 }
 
 C_Script::~C_Script()
@@ -47,6 +46,7 @@ C_Script::~C_Script()
 		C_Script::runningScript = nullptr;
 
 	mono_gchandle_free(noGCobject);
+
 	methods.clear();
 	fields.clear();
 	name.clear();
@@ -185,12 +185,12 @@ void C_Script::DropField(SerializedField& field, const char* dropType)
 	{
 	case MonoTypeEnum::MONO_TYPE_BOOLEAN:
 		if(ImGui::Checkbox(mono_field_get_name(field.field), &field.fiValue.bValue))
-			mono_field_set_value(coreObject, field.field, &field.fiValue.bValue);
+			mono_field_set_value(mono_gchandle_get_target(noGCobject), field.field, &field.fiValue.bValue);
 		break;
 
 	case MonoTypeEnum::MONO_TYPE_I4:
 		if(ImGui::InputInt(mono_field_get_name(field.field), &field.fiValue.iValue, 1, 10))
-			mono_field_set_value(coreObject, field.field, &field.fiValue.iValue);
+			mono_field_set_value(mono_gchandle_get_target(noGCobject), field.field, &field.fiValue.iValue);
 		break;
 
 	case MonoTypeEnum::MONO_TYPE_CLASS:
@@ -210,13 +210,13 @@ void C_Script::DropField(SerializedField& field, const char* dropType)
 		//float test = 0.f;
 		//mono_field_get_value(coreObject, field.field, &test); //TODO: IMPORTANT THIS IS A TEST, REMOVE TEST
 		if(ImGui::InputFloat(mono_field_get_name(field.field), &field.fiValue.fValue, 0.1f))
-			mono_field_set_value(coreObject, field.field, &field.fiValue.fValue);
+			mono_field_set_value(mono_gchandle_get_target(noGCobject), field.field, &field.fiValue.fValue);
 		break;
 	}
 
 	case MonoTypeEnum::MONO_TYPE_STRING:
 		if(ImGui::InputText(mono_field_get_name(field.field), &field.fiValue.strValue[0], 50))
-			mono_field_set_value(coreObject, field.field, mono_string_new(EngineExternal->moduleMono->domain, field.fiValue.strValue));
+			mono_field_set_value(mono_gchandle_get_target(noGCobject), field.field, &field.fiValue.strValue);
 		break;
 
 	default:
@@ -238,25 +238,21 @@ void C_Script::LoadScriptData(const char* scriptName)
 
 
 	EngineExternal->moduleMono->DebugAllMethods(USER_SCRIPTS_NAMESPACE, scriptName, methods);
-	//EngineExternal->moduleMono->DebugAllMethods("System", "Object", methods);
 
 	MonoClass* klass = mono_class_from_name(EngineExternal->moduleMono->image, USER_SCRIPTS_NAMESPACE, scriptName);
 
-	coreObject = mono_object_new(EngineExternal->moduleMono->domain, klass);
-	mono_runtime_object_init(coreObject);
 
-	noGCobject = mono_gchandle_new(coreObject, false);
-
-	//LOG(LogType::L_ERROR, "%p", coreObject);
+	noGCobject = mono_gchandle_new(mono_object_new(EngineExternal->moduleMono->domain, klass), false);
+	mono_runtime_object_init(mono_gchandle_get_target(noGCobject));
 
 	MonoMethodDesc* mdesc = mono_method_desc_new(":Update", false);
 	updateMethod = mono_method_desc_search_in_class(mdesc, klass);
 	mono_method_desc_free(mdesc);
 
-	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, coreObject);
+	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject));
 }
 
 void C_Script::SetField(MonoClassField* field, GameObject* value)
 {
-	mono_field_set_value(coreObject, field, EngineExternal->moduleMono->GoToCSGO(value));
+	mono_field_set_value(mono_gchandle_get_target(noGCobject), field, EngineExternal->moduleMono->GoToCSGO(value));
 }

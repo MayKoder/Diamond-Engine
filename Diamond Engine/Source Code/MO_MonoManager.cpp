@@ -194,18 +194,17 @@ MonoObject* M_MonoManager::GoToCSGO(GameObject* inGo) const
 	uintptr_t goPtr = reinterpret_cast<uintptr_t>(inGo);
 
 	void* args[2];
-	args[0] = mono_string_new(domain, inGo->name.c_str());
+	args[0] = &inGo->name;
 	args[1] = &goPtr;
 	
-	std::vector<std::string> methods;
-	DebugAllMethods("DiamondEngine", "GameObject", methods);
-	//DebugAllMethods("GameObject");
+
 	MonoMethodDesc* constructorDesc = mono_method_desc_new("DiamondEngine.GameObject:.ctor(string,uintptr)", true);
 	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, goClass);
 	MonoObject* goObj = mono_object_new(domain, goClass);
 	mono_runtime_invoke(method, goObj, args, NULL);
 
 	mono_method_desc_free(constructorDesc);
+
 	return goObj;
 }
 

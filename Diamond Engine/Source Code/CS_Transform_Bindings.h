@@ -211,7 +211,7 @@ void Destroy(MonoObject* go)
 void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale) //TODO: We really need prefabs
 {
 	if (EngineExternal == nullptr)
-		return;
+		return /*nullptr*/;
 
 	GameObject* go = EngineExternal->moduleScene->CreateGameObject("Empty", EngineExternal->moduleScene->root);
 	////go->name = std::to_string(go->UID);
@@ -230,6 +230,8 @@ void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale)
 	meshRenderer->SetRenderMesh(test);
 
 	go->AddComponent(Component::Type::Script, "BH_Bullet");
+
+	/*return mono_gchandle_get_target(cmp->noGCobject);*/
 }
 
 //---------- GLOBAL GETTERS ----------//

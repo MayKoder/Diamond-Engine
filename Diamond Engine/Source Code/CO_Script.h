@@ -31,9 +31,7 @@ public:
 	std::vector<std::string> methods;
 	std::vector<SerializedField> fields;
 
-	MonoObject* coreObject;
 	MonoMethod* updateMethod;
-
 	uint32_t noGCobject;
 
 	static C_Script* runningScript;
