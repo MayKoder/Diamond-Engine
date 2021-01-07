@@ -42,16 +42,24 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BH_Bullet.cs" />
-    <Compile Include="BH_Plane.cs" />
-    <Compile Include="Core.cs" />
+    <Compile Include="..\Assets\Scripts\BH_Bullet.cs">
+      <Link>BH_Bullet.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\BH_Plane.cs">
+      <Link>BH_Plane.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Core.cs">
+      <Link>Core.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\main.cs">
+      <Link>main.cs</Link>
+    </Compile>
     <Compile Include="Diamond Engine Utility\DiamondComponent.cs" />
     <Compile Include="Diamond Engine Utility\GameObject.cs" />
     <Compile Include="Diamond Engine Utility\InternalCalls.cs" />
     <Compile Include="Diamond Engine Utility\Quaternion.cs" />
     <Compile Include="Diamond Engine Utility\Time.cs" />
     <Compile Include="Diamond Engine Utility\Vector3.cs" />
-    <Compile Include="main.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

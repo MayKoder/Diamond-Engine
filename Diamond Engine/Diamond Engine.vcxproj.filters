@@ -88,6 +88,9 @@
     <Filter Include="Externals\ImTextEditor">
       <UniqueIdentifier>{0c8d2baa-8e1d-4d91-bfec-cee46e78021c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Externals\PugiXML">
+      <UniqueIdentifier>{8d7a61ce-5fc5-4d64-a398-1e455f4ea9b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -505,6 +508,12 @@
     <ClInclude Include="Source Code\WI_TextEditor.h">
       <Filter>Sources\Editor\Windows\Derived</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\PugiXML\pugiconfig.hpp">
+      <Filter>Externals\PugiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\PugiXML\pugixml.hpp">
+      <Filter>Externals\PugiXML</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -782,6 +791,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\WI_TextEditor.cpp">
       <Filter>Sources\Editor\Windows\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\PugiXML\pugixml.cpp">
+      <Filter>Externals\PugiXML</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

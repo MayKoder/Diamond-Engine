@@ -233,6 +233,8 @@
     <ClInclude Include="Source Code\External Libraries\mmgr\mmgr.h" />
     <ClInclude Include="Source Code\External Libraries\mmgr\nommgr.h" />
     <ClInclude Include="Source Code\External Libraries\parson\parson.h" />
+    <ClInclude Include="Source Code\External Libraries\PugiXML\pugiconfig.hpp" />
+    <ClInclude Include="Source Code\External Libraries\PugiXML\pugixml.hpp" />
     <ClInclude Include="Source Code\IM_FileSystem.h" />
     <ClInclude Include="Source Code\GameObject.h" />
     <ClInclude Include="Source Code\glmath.h" />
@@ -332,6 +334,7 @@
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Time\Clock.cpp" />
     <ClCompile Include="Source Code\External Libraries\mmgr\mmgr.cpp" />
     <ClCompile Include="Source Code\External Libraries\parson\parson.c" />
+    <ClCompile Include="Source Code\External Libraries\PugiXML\pugixml.cpp" />
     <ClCompile Include="Source Code\IM_FileSystem.cpp" />
     <ClCompile Include="Source Code\GameObject.cpp" />
     <ClCompile Include="Source Code\glmath.cpp" />

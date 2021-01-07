@@ -4,6 +4,8 @@ html, body {
 
   /* font-family: cursive; */
   font-family: Arial, Helvetica, sans-serif !important;
+
+  /* font-size: large; */
 }
 .containerDE {
   background: #f0e68c;
@@ -32,7 +34,9 @@ html, body {
   flex: auto;
 }
 
-
+p{
+  font-size:large;
+}
 
 /* Add a black background color to the top navigation */
 .topnav {
