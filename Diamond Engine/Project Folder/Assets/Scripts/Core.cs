@@ -19,7 +19,6 @@ public class Core : DiamondComponent
 	public bool testBool = false;
 	public string testString = "Hello World";
 
-	public bool once = true;
 	public void Update(/*int x*/)
 	{
 		//x += 10;

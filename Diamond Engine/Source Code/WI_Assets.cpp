@@ -4,6 +4,7 @@
 #include"MO_ResourceManager.h"
 #include"MO_Input.h"
 #include"MO_Editor.h"
+#include"MO_MonoManager.h"
 
 W_Assets::W_Assets() : Window(), selectedFile(nullptr)
 {
@@ -43,6 +44,33 @@ void W_Assets::Draw()
 				EngineExternal->moduleResources->PopulateFileArray();
 			}
 
+		}
+
+		if (ImGui::BeginPopupContextWindow())
+		{
+
+			if (ImGui::BeginMenu("Create C# Script"))
+			{
+				static char name[50] = "\0";
+
+				ImGui::Text("Script path: "); ImGui::SameLine();
+				ImGui::InputText("##Scriptname", name, sizeof(char) * 50);
+				if (ImGui::Button("Create"))
+				{
+					std::string path = name;
+					if(path.find('.') == path.npos)
+						path += ".cs";
+
+					if (path.find('.cs') != path.npos)
+						EngineExternal->moduleMono->CreateAssetsScript(path.c_str());
+
+					ImGui::CloseCurrentPopup();
+				}
+
+
+				ImGui::EndMenu();
+			}
+			ImGui::EndPopup();
 		}
 	}
 

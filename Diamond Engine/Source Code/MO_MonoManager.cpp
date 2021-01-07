@@ -16,6 +16,11 @@
 #include"CO_Script.h"
 #include"CS_Transform_Bindings.h"
 
+#include <iostream>
+#include <fstream> 
+#include"PugiXML/pugixml.hpp"
+#include"IM_FileSystem.h"
+
 #pragma comment( lib, "mono/libx86/mono-2.0-boehm.lib" )
 #pragma comment( lib, "mono/libx86/mono-2.0-sgen.lib" )
 
@@ -82,10 +87,10 @@ bool M_MonoManager::CleanUp()
 
 update_status M_MonoManager::Update(float dt)
 {
-	if (App->moduleInput->GetKey(SDL_SCANCODE_T) == KEY_DOWN) 
-	{
-		ReCompileCS();
-	}
+	//if (App->moduleInput->GetKey(SDL_SCANCODE_T) == KEY_DOWN) 
+	//{
+	//	ReCompileCS();
+	//}
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -305,6 +310,78 @@ SerializedField::SerializedField(MonoClassField* _field, MonoObject* _object, C_
 	M_MonoManager::LoadFieldData(*this, _object);
 }
 
+void M_MonoManager::CreateAssetsScript(const char* localPath) 
+{
+	std::ofstream outfile("Assets\\Scripts\\test.cs");
+
+	outfile << "using System;" << std::endl << "using DiamondEngine;" << std::endl << std::endl << "public class Test : DiamondComponent" << std::endl << "{" << std::endl <<
+		"	public void Update()" << std::endl << "	{" << std::endl << std::endl << "	}" << std::endl << std::endl << "}";
+
+	outfile.close();
+
+	AddScriptToSLN("Assets\\Scripts\\test.cs");
+}
+
+void M_MonoManager::AddScriptToSLN(const char* scriptLocalPath)
+{
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file("Assembly-CSharp.csproj");
+
+	if (result.status == pugi::xml_parse_status::status_file_not_found)
+		assert(false, "XML File not loaded");
+
+	std::string path; // Should be like ../Assets/Scripts/Hola.cs
+	path += scriptLocalPath;
+	std::string name = path.substr(path.find_last_of("\\"));
+
+	pugi::xml_node whereToAdd = doc.child("Project");
+	for (pugi::xml_node panel = whereToAdd.first_child(); panel != nullptr; panel = panel.next_sibling())
+	{
+		if (strcmp(panel.name(), "ItemGroup") == 0 && strcmp(panel.first_child().name(), "Compile") == 0)
+		{
+			panel = panel.append_child();
+			panel.set_name("Compile");
+			pugi::xml_attribute att = panel.append_attribute("Include");
+			att.set_value(path.c_str());
+
+			break;
+		}
+	}
+
+	doc.save_file("Assembly-CSharp.csproj");
+}
+
+void M_MonoManager::RemoveScriptFromSLN(const char* scriptLocalPath)
+{
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file("Assembly-CSharp.csproj");
+
+	if (result.status == pugi::xml_parse_status::status_file_not_found)
+		assert(false, "XML File not loaded");
+
+	std::string path; // Should be like ../Assets/Scripts/Hola.cs
+
+	pugi::xml_node whereToRemove = doc.child("Project");
+	for (pugi::xml_node panel = whereToRemove.first_child(); panel != nullptr; panel = panel.next_sibling())
+	{
+		if (strcmp(panel.name(), "ItemGroup") == 0 && strcmp(panel.first_child().name(), "Compile") == 0)
+		{
+			for (pugi::xml_node toRemove = panel.first_child(); toRemove != nullptr; toRemove = toRemove.next_sibling())
+			{
+				path = FileSystem::NormalizePath(toRemove.attribute("Include").as_string());
+
+				if (strcmp(path.c_str(), scriptLocalPath) == 0)
+				{
+					panel.remove_child(toRemove);
+					break;
+				}
+			}
+		}
+	}
+
+	doc.save_file("Assembly-CSharp.csproj");
+}
+
 
 void M_MonoManager::InitMono()
 {
@@ -331,6 +408,8 @@ void M_MonoManager::InitMono()
 	int rows = mono_table_info_get_rows(table_info);
 
 	MonoClass* _class = nullptr;
+
+	userScripts.clear();
 	for (int i = 1; i < rows; i++)
 	{
 		uint32_t cols[MONO_TYPEDEF_SIZE];

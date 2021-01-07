@@ -3,6 +3,7 @@
 #include"MO_ResourceManager.h"
 #include"IM_FileSystem.h"
 #include"IM_ModelImporter.h"
+#include"MO_MonoManager.h"
 
 AssetDir::AssetDir(const char* _dName, const char* _imPath, uint64 _lMod, bool _dir) : isDir(_dir), lastModTime(_lMod)
 {
@@ -111,6 +112,11 @@ void AssetDir::DeletePermanent()
 	if (!isDir) 
 	{
 		EngineExternal->moduleFileSystem->DeleteAssetFile(EngineExternal->moduleResources->LibraryFromMeta(this->metaFileDir.c_str()).c_str());
+		
+		if (EngineExternal->moduleResources->GetMetaType(metaFileDir.c_str()) == Resource::Type::SCRIPT)
+		{
+			EngineExternal->moduleMono->RemoveScriptFromSLN(this->importPath.c_str());
+		}
 
 		if (EngineExternal->moduleResources->GetMetaType(metaFileDir.c_str()) == Resource::Type::MODEL) 
 		{

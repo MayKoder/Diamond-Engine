@@ -13,6 +13,7 @@ public:
 		MODEL,
 		MESH,
 		SCENE,
+		SCRIPT,
 		UNKNOWN
 	};
 

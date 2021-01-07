@@ -51,8 +51,12 @@ public:
 	static float3 UnboxVector(MonoObject* _obj);
 
 	static void LoadFieldData(SerializedField& _field, MonoObject* _object);
-	static void DebugAllFields(const char* className, std::vector<SerializedField>& _data, MonoObject* obj, C_Script* script);
 	static void DebugAllMethods(const char* nsName, const char* className, std::vector<std::string>& _data);
+	static void DebugAllFields(const char* className, std::vector<SerializedField>& _data, MonoObject* obj, C_Script* script);
+
+	void CreateAssetsScript(const char* localPath);
+	void AddScriptToSLN(const char* scriptLocalPath);
+	void RemoveScriptFromSLN(const char* scriptLocalPath);
 
 	GameObject* GameObject_From_CSGO(MonoObject* goObj);
 

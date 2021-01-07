@@ -15,6 +15,8 @@
 #include"RE_Texture.h"
 #include"RE_Mesh.h"
 #include"DEJsonSupport.h"
+#include"MO_Window.h"
+#include"MO_MonoManager.h"
 //#include"DEResource.h"
 
 M_ResourceManager::M_ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled), assetsRoot("Assets", "Assets", 0, true),
@@ -41,7 +43,7 @@ bool M_ResourceManager::Start()
 update_status M_ResourceManager::PreUpdate(float dt)
 {
 	fileCheckTime += dt;
-	if (fileCheckTime >= fileUpdateDelay) 
+	if (fileCheckTime >= fileUpdateDelay && (SDL_GetWindowFlags(App->moduleWindow->window) & SDL_WindowFlags::SDL_WINDOW_MOUSE_FOCUS || SDL_GetWindowFlags(App->moduleWindow->window) & SDL_WindowFlags::SDL_WINDOW_INPUT_FOCUS))
 	{
 		NeedsDirsUpdate(assetsRoot);
 	}
@@ -125,6 +127,16 @@ void M_ResourceManager::NeedsDirsUpdate(AssetDir& dir)
 		if (dir.isDir) 
 		{
 			LOG(LogType::L_WARNING, "Dir %s updated", dir.importPath.c_str());
+
+			for (size_t i = 0; i < dir.childDirs.size(); i++)
+			{
+				AssetDir& modFile = dir.childDirs[i];
+				if (modFile.lastModTime != App->moduleFileSystem->GetLastModTime(modFile.importPath.c_str()))
+				{
+					UpdateFile(modFile);
+				}
+			}
+
 			dir.childDirs.clear();
 			dir.lastModTime = App->moduleFileSystem->GetLastModTime(dir.importPath.c_str());
 
@@ -142,7 +154,7 @@ void M_ResourceManager::NeedsDirsUpdate(AssetDir& dir)
 				}
 				else if(modFile.lastModTime != App->moduleFileSystem->GetLastModTime(modFile.importPath.c_str()))
 				{
-					UpdateFile(dir);
+					UpdateFile(modFile);
 				}
 				//TODO IMPORTANT: If file is updated, update library but not meta
 			}
@@ -183,7 +195,7 @@ Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 	{
 		Resource* ret = nullptr;
 
-		static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 4, "Update all switches with new type");
+		static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 5, "Update all switches with new type");
 
 		//Save check
 		if (FileSystem::Exists(libraryPath))
@@ -242,6 +254,9 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 	uint resUID = GetMetaUID(meta.c_str());
 
 	Resource* resource = CreateNewResource(assetsFile, resUID, type);
+
+	if (resource == nullptr)
+		return 0;
 
 	int ret = 0;
 	
@@ -302,13 +317,14 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid,
 {
 	Resource* ret = nullptr;
 
-	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 4, "Update all switches with new type");
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 5, "Update all switches with new type");
 	switch (type) 
 	{
 		case Resource::Type::SCENE : ret = new Resource(uid, Resource::Type::SCENE); break;
 		case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
 		case Resource::Type::MODEL: ret = new Resource(uid, Resource::Type::MODEL); break;
 		case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
+		case Resource::Type::SCRIPT: App->moduleMono->ReCompileCS(); break;
 	}
 
 	if (ret != nullptr)
@@ -326,7 +342,7 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 {
 	Resource* ret = nullptr;
 
-	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 4, "Update all switches with new type");
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 5, "Update all switches with new type");
 
 	int uid = _uid;
 	switch (type)
@@ -484,6 +500,8 @@ Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFil
 		return Resource::Type::TEXTURE;
 	if (ext == "des")
 		return Resource::Type::SCENE;
+	if (ext == "cs")
+		return Resource::Type::SCRIPT;
 
 
 	return Resource::Type::UNKNOWN;
