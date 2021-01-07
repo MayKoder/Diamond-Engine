@@ -349,10 +349,10 @@ void ModuleRenderer3D::OnGUI()
 
 		ImGui::Separator();
 
-		if (ImGui::DragFloat4("Ambient: ", &lights[0].ambient, 0.01f, 0.f, 1.f) || ImGui::DragFloat4("Diffuse: ", &lights[0].diffuse, 0.01f, 0.f, 1.f)) 
-		{
+		if (ImGui::DragFloat4("Ambient: ", &lights[0].ambient, 0.01f, 0.f, 1.f))
 			lights[0].Init();
-		}
+		if(ImGui::DragFloat4("Diffuse: ", &lights[0].diffuse, 0.01f, 0.f, 1.f)) 
+			lights[0].Init();
 
 	}
 }

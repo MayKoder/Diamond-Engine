@@ -45,6 +45,7 @@ public:
 
 	bool Init() override;
 	update_status Update(float dt) override;
+	void OnGUI() override;
 	bool CleanUp() override;
 
 	static Quat UnboxQuat(MonoObject* _obj);

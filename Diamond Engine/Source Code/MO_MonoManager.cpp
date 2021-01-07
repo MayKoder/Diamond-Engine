@@ -20,6 +20,7 @@
 #include <fstream> 
 #include"PugiXML/pugixml.hpp"
 #include"IM_FileSystem.h"
+#include"ImGui/imgui.h"
 
 #pragma comment( lib, "mono/libx86/mono-2.0-boehm.lib" )
 #pragma comment( lib, "mono/libx86/mono-2.0-sgen.lib" )
@@ -93,6 +94,15 @@ update_status M_MonoManager::Update(float dt)
 	//}
 
 	return update_status::UPDATE_CONTINUE;
+}
+
+void M_MonoManager::OnGUI()
+{
+	if (ImGui::CollapsingHeader("Mono Settings", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Text("Compile tool: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "MSBuild portable version");
+		
+	}
 }
 
 void M_MonoManager::ReCompileCS() 

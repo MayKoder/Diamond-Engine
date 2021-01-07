@@ -91,7 +91,7 @@ bool ModuleWindow::Init()
 	}
 
 	//Title Init
-	const std::string title(TITLE + EngineVersion::GetVersion());
+	const std::string title(TITLE + EngineVersion::GetVersion() + " by Miquel Suau Gonzalez (MayKoder)");
 	SetTitle(title.c_str());
 
 	return ret;
