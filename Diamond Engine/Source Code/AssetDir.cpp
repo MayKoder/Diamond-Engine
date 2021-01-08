@@ -116,6 +116,7 @@ void AssetDir::DeletePermanent()
 		if (EngineExternal->moduleResources->GetMetaType(metaFileDir.c_str()) == Resource::Type::SCRIPT)
 		{
 			EngineExternal->moduleMono->RemoveScriptFromSLN(this->importPath.c_str());
+			EngineExternal->moduleMono->ReCompileCS();
 		}
 
 		if (EngineExternal->moduleResources->GetMetaType(metaFileDir.c_str()) == Resource::Type::MODEL) 

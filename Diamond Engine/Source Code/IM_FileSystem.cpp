@@ -199,6 +199,16 @@ std::string FileSystem::NormalizePath(const char* full_path) /*const*/
 	}
 	return newPath;
 }
+std::string FileSystem::UnNormalizePath(const char* full_path) /*const*/
+{
+	std::string newPath(full_path);
+	for (int i = 0; i < newPath.size(); ++i)
+	{
+		if (newPath[i] == '/')
+			newPath[i] = '\\';
+	}
+	return newPath;
+}
 
 void FileSystem::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension) /*const*/
 {

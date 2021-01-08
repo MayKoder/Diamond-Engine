@@ -40,6 +40,8 @@ namespace FileSystem
 	bool AddPath(const char* path_or_zip);
 
 	std::string NormalizePath(const char* path) /*const*/;
+	std::string UnNormalizePath(const char* full_path);
+
 
 	// Open for Read/Write
 	unsigned int LoadToBuffer(const char* file, char** buffer) /*const*/;

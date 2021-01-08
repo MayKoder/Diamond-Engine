@@ -5,6 +5,7 @@
 #include"MO_Input.h"
 #include"MO_Editor.h"
 #include"MO_MonoManager.h"
+#include"WI_TextEditor.h"
 
 W_Assets::W_Assets() : Window(), selectedFile(nullptr)
 {
@@ -90,16 +91,21 @@ void W_Assets::DrawFileTree(AssetDir& file)
 		flags |= ImGuiTreeNodeFlags_Selected;
 	}
 
-	//if (node == EngineExternal->moduleEditor->GetSelectedGO())
-	//	flags |= ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_Selected;
 	bool nodeOpen = ImGui::TreeNodeEx(&file, flags, file.dirName.c_str());
 
 	if (ImGui::IsItemClicked()) 
 	{
 		selectedFile = &file;
 
-		if (ImGui::IsMouseDoubleClicked(0) && file.isDir)
-			displayFolder = &file;
+		//if (ImGui::IsMouseDoubleClicked(0) && file.isDir)
+		//	displayFolder = &file;
+		if(file.isDir == false && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_::ImGuiMouseButton_Left))
+			if (EngineExternal->moduleResources->GetTypeFromAssetExtension(file.importPath.c_str()) == Resource::Type::SCRIPT) 
+			{
+				W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::TEXTEDITOR));
+				txtEditor->SetTextFromFile(file.importPath.c_str());
+				//Load script text and open visual studio?
+			}
 	}
 
 

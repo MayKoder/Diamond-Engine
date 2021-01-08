@@ -15,7 +15,7 @@
 #include <mono/metadata/debug-helpers.h>
 
 C_Script* C_Script::runningScript = nullptr;
-C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), noGCobject(0)
+C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), noGCobject(0), updateMethod(nullptr)
 {
 	name = scriptName;
 	//strcpy(name, scriptName);
@@ -62,7 +62,7 @@ C_Script::~C_Script()
 
 void C_Script::Update()
 {
-	if (DETime::state == GameState::STOP || DETime::state == GameState::PAUSE)
+	if (DETime::state == GameState::STOP || DETime::state == GameState::PAUSE || updateMethod == nullptr)
 		return;
 
 	C_Script::runningScript = this; // I really think this is the peak of stupid code, but hey, it works, slow as hell but works.
@@ -262,10 +262,16 @@ void C_Script::LoadScriptData(const char* scriptName)
 	//	mono_free(coreObject);
 
 
-	EngineExternal->moduleMono->DebugAllMethods(USER_SCRIPTS_NAMESPACE, scriptName, methods);
-
 	MonoClass* klass = mono_class_from_name(EngineExternal->moduleMono->image, USER_SCRIPTS_NAMESPACE, scriptName);
 
+	if (klass == nullptr) 
+	{
+		LOG(LogType::L_ERROR, "Script %s was deleted and can't be loaded", scriptName);
+		name = "Missing script reference";
+		return;
+	}
+
+	EngineExternal->moduleMono->DebugAllMethods(USER_SCRIPTS_NAMESPACE, scriptName, methods);
 
 	noGCobject = mono_gchandle_new(mono_object_new(EngineExternal->moduleMono->domain, klass), false);
 	mono_runtime_object_init(mono_gchandle_get_target(noGCobject));

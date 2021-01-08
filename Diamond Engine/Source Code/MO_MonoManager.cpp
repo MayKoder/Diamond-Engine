@@ -322,14 +322,24 @@ SerializedField::SerializedField(MonoClassField* _field, MonoObject* _object, C_
 
 void M_MonoManager::CreateAssetsScript(const char* localPath) 
 {
-	std::ofstream outfile("Assets\\Scripts\\test.cs");
+	std::string unnormalizedPath("Assets/");
+	unnormalizedPath += localPath;
+	unnormalizedPath = FileSystem::UnNormalizePath(unnormalizedPath.c_str());
 
-	outfile << "using System;" << std::endl << "using DiamondEngine;" << std::endl << std::endl << "public class Test : DiamondComponent" << std::endl << "{" << std::endl <<
+	std::ofstream outfile(unnormalizedPath.c_str());
+
+	std::string className("Assets/");
+	className += localPath;
+	className = className.substr(className.find_last_of("/") + 1);
+	className = className.substr(0, className.find_last_of("."));
+
+	outfile << "using System;" << std::endl << "using DiamondEngine;" << std::endl << std::endl << "public class " << className.c_str() << " : DiamondComponent" << std::endl << "{" << std::endl <<
 		"	public void Update()" << std::endl << "	{" << std::endl << std::endl << "	}" << std::endl << std::endl << "}";
 
 	outfile.close();
 
-	AddScriptToSLN("Assets\\Scripts\\test.cs");
+	AddScriptToSLN(unnormalizedPath.c_str());
+	ReCompileCS();
 }
 
 void M_MonoManager::AddScriptToSLN(const char* scriptLocalPath)

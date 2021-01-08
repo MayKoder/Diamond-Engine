@@ -20,7 +20,7 @@ void W_TextEditor::Draw()
 
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*//*, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse*/))
 	{
-		if (ImGui::Button("Add test file")) 
+		if (ImGui::Button("Open Visual Studio Project")) 
 		{
 
 			//EngineExternal->moduleMono->ReCompileCS();
@@ -35,6 +35,7 @@ void W_TextEditor::Draw()
 
 void W_TextEditor::SetTextFromFile(const char* path)
 {
+	//txtEditor.Delete();
 	txtName = path;
 
 	std::string test = FileSystem::FileToText(path);
