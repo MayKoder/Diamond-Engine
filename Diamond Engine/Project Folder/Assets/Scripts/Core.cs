@@ -19,6 +19,8 @@ public class Core : DiamondComponent
 	public bool testBool = false;
 	public string testString = "Hello World";
 
+    public Vector3 testOtherClass; //Should find a way to tell if the class is a gameobject or not
+
 	public void Update(/*int x*/)
 	{
 		//x += 10;
@@ -28,25 +30,25 @@ public class Core : DiamondComponent
         //Debug.Log(reference.GetForward());
 
         //Log does not work if we compile with Release wtf?
-        if (InternalCalls.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
+        if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
             reference.localPosition += reference.GetForward() * movementSpeed * Time.deltaTime;
-        if (InternalCalls.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT)
+        if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT)
             reference.localPosition += reference.GetForward() * -movementSpeed * Time.deltaTime;
-        if (InternalCalls.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT)
+        if (Input.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT)
             reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, rotationSpeed * Time.deltaTime);
-        if (InternalCalls.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
+        if (Input.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
             reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -rotationSpeed * Time.deltaTime);
 
         //if (InternalCalls.GetMouseY() != 0 && turret != null)
         //{
         //    turret.localRotation *= Quaternion.RotateAroundAxis(turret.GetRight(), InternalCalls.GetMouseY() * 0.001f);
         //}
-        if (InternalCalls.GetMouseX() != 0 && turret != null)
+        if (Input.GetMouseX() != 0 && turret != null)
         {
-            turret.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -InternalCalls.GetMouseX() * Time.deltaTime);
+            turret.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -Input.GetMouseX() * Time.deltaTime);
         }
 
-        if (InternalCalls.GetKey(DEKeyCode.SPACE) == KeyState.KEY_REPEAT)
+        if (Input.GetKey(DEKeyCode.SPACE) == KeyState.KEY_REPEAT)
         {
             InternalCalls.CreateBullet(shootPoint.globalPosition, shootPoint.globalRotation, shootPoint.globalScale);
         }

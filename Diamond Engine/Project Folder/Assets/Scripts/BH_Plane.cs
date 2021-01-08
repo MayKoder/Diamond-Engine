@@ -11,33 +11,33 @@ public class BH_Plane : DiamondComponent
 
     public void Update()
     {
-        if (InternalCalls.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT && cSpeed < 0.18f)
+        if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT && cSpeed < 0.18f)
             cSpeed += speedIncrement * Time.deltaTime;
 
-        if ((InternalCalls.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT || InternalCalls.GetKey(DEKeyCode.W) == KeyState.KEY_IDLE) && cSpeed > 0.05f)
+        if ((Input.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT || Input.GetKey(DEKeyCode.W) == KeyState.KEY_IDLE) && cSpeed > 0.05f)
         {
             cSpeed -= speedIncrement * Time.deltaTime;
             if(cSpeed < 0.05f)
                 cSpeed = 0.05f;
         }
 
-        if (InternalCalls.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT)
+        if (Input.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT)
             thisReference.localRotation = Quaternion.RotateAroundAxis(Vector3.up, 0.4f * Time.deltaTime) * thisReference.localRotation;
 
-        if (InternalCalls.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
+        if (Input.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
             thisReference.localRotation = Quaternion.RotateAroundAxis(Vector3.up, -0.4f * Time.deltaTime) * thisReference.localRotation;
 
-        if (InternalCalls.GetMouseX() > 0)
-            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.forward, InternalCalls.GetMouseX() * 0.1f * Time.deltaTime);
+        if (Input.GetMouseX() > 0)
+            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.forward, Input.GetMouseX() * 0.1f * Time.deltaTime);
 
-        if (InternalCalls.GetMouseX() < 0)
-            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.forward, InternalCalls.GetMouseX() * 0.1f * Time.deltaTime);
+        if (Input.GetMouseX() < 0)
+            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.forward, Input.GetMouseX() * 0.1f * Time.deltaTime);
 
-        if (InternalCalls.GetMouseY() > 0)
-            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.right, -InternalCalls.GetMouseY() * 0.1f * Time.deltaTime);
+        if (Input.GetMouseY() > 0)
+            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.right, -Input.GetMouseY() * 0.1f * Time.deltaTime);
 
-        if (InternalCalls.GetMouseY() < 0)
-            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.right, -InternalCalls.GetMouseY() * 0.1f * Time.deltaTime);
+        if (Input.GetMouseY() < 0)
+            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.right, -Input.GetMouseY() * 0.1f * Time.deltaTime);
 
         thisReference.localPosition += thisReference.GetForward() * cSpeed;
     }

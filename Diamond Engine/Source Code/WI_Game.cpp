@@ -2,6 +2,9 @@
 #include "CO_Camera.h"
 #include"Globals.h"
 
+#include"DETime.h"
+#include "SDL/include/SDL_mouse.h"
+
 W_Game::W_Game() : Window(), targetCamera(nullptr)
 {
 	name = "Game";
@@ -30,6 +33,8 @@ void W_Game::Draw()
 			//float h = (9 * w) / 16;
 			ImGui::Image((ImTextureID)targetCamera->texColorBuffer, ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
 		}
+		if (ImGui::IsWindowHovered() && DETime::state == GameState::PLAY && ImGui::IsMouseClicked(ImGuiMouseButton_Left)) 
+			SDL_SetRelativeMouseMode(SDL_TRUE);
 
 		//ImGui::SetCursorPos(ImVec2(10, 50));
 		//if (ImGui::DragFloat2("Aspect Ratio", aspect, 0.2f, 0.f, 30.f))

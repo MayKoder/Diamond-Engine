@@ -13,7 +13,7 @@
 #include"CO_Transform.h"
 #include"OpenGL.h"
 
-C_Camera::C_Camera() : Component(nullptr), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f)
+C_Camera::C_Camera() : Component(nullptr), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f), cullingState(false)
 {
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
@@ -28,7 +28,7 @@ C_Camera::C_Camera() : Component(nullptr), framebuffer(0), texColorBuffer(0), rb
 	camFrustrum.pos = float3::zero;
 }
 
-C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f)
+C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f), cullingState(false)
 {
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
@@ -90,6 +90,9 @@ bool C_Camera::OnEditor()
 
 			ImGui::EndCombo();
 		}
+
+		ImGui::Text("Camera Culling: "); ImGui::SameLine();
+		ImGui::Checkbox("##cameraCulling", &cullingState);
 
 		return true;
 	}

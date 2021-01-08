@@ -31,11 +31,6 @@ C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), no
 			fields[i].fiValue.goValue = _gm;
 			SetField(fields[i].field, _gm);
 		}
-		else
-		{
-			if(fields[i].type == MonoTypeEnum::MONO_TYPE_CLASS)
-				LOG(LogType::L_WARNING, "This reference not found");
-		}
 	}
 
 }
@@ -153,10 +148,12 @@ void C_Script::LoadData(DEConfig& nObj)
 		{
 		case MonoTypeEnum::MONO_TYPE_BOOLEAN:
 			_field->fiValue.bValue = nObj.ReadBool(mono_field_get_name(_field->field));
+			mono_field_set_value(mono_gchandle_get_target(noGCobject), _field->field, &_field->fiValue.bValue);
 			break;
 
 		case MonoTypeEnum::MONO_TYPE_I4:
 			_field->fiValue.iValue = nObj.ReadInt(mono_field_get_name(_field->field));
+			mono_field_set_value(mono_gchandle_get_target(noGCobject), _field->field, &_field->fiValue.iValue);
 			break;
 
 		case MonoTypeEnum::MONO_TYPE_CLASS: {
@@ -168,13 +165,15 @@ void C_Script::LoadData(DEConfig& nObj)
 			//if(_field->fiValue.goValue)
 			//	SetField(_field->field, _field->fiValue.goValue);
 
-			EngineExternal->moduleScene->referenceMap.emplace(nObj.ReadInt(mono_field_get_name(_field->field)), _field);
+			if (strcmp(mono_type_get_name(mono_field_get_type(_field->field)), "DiamondEngine.GameObject") == 0)
+				EngineExternal->moduleScene->referenceMap.emplace(nObj.ReadInt(mono_field_get_name(_field->field)), _field);
 
 			break;
 
 		}
 		case MonoTypeEnum::MONO_TYPE_R4:
 			_field->fiValue.fValue = nObj.ReadFloat(mono_field_get_name(_field->field));
+			mono_field_set_value(mono_gchandle_get_target(noGCobject), _field->field, &_field->fiValue.fValue);
 			break;
 
 		case MonoTypeEnum::MONO_TYPE_STRING: 
@@ -186,11 +185,14 @@ void C_Script::LoadData(DEConfig& nObj)
 
 			strcpy(&_field->fiValue.strValue[0], ret);
 
+			MonoString* str = mono_string_new(EngineExternal->moduleMono->domain, _field->fiValue.strValue);
+			mono_field_set_value(mono_gchandle_get_target(noGCobject), _field->field, str);
 			break;
 		}
 
 		default:
 			_field->fiValue.iValue = nObj.ReadInt(mono_field_get_name(_field->field));
+			mono_field_set_value(mono_gchandle_get_target(noGCobject), _field->field, &_field->fiValue.iValue);
 			break;
 		}
 	}
@@ -205,20 +207,28 @@ void C_Script::DropField(SerializedField& field, const char* dropType)
 	ImGui::Text(fieldName);
 	ImGui::SameLine();
 
-
 	switch (field.type)
 	{
 	case MonoTypeEnum::MONO_TYPE_BOOLEAN:
-		if(ImGui::Checkbox(mono_field_get_name(field.field), &field.fiValue.bValue))
+		mono_field_get_value(mono_gchandle_get_target(noGCobject), field.field, &field.fiValue.bValue);
+		if(ImGui::Checkbox(field.displayName.c_str(), &field.fiValue.bValue))
 			mono_field_set_value(mono_gchandle_get_target(noGCobject), field.field, &field.fiValue.bValue);
 		break;
 
 	case MonoTypeEnum::MONO_TYPE_I4:
-		if(ImGui::InputInt(mono_field_get_name(field.field), &field.fiValue.iValue, 1, 10))
+		mono_field_get_value(mono_gchandle_get_target(noGCobject), field.field, &field.fiValue.iValue);
+		if(ImGui::InputInt(field.displayName.c_str(), &field.fiValue.iValue, 1, 10))
 			mono_field_set_value(mono_gchandle_get_target(noGCobject), field.field, &field.fiValue.iValue);
 		break;
 
 	case MonoTypeEnum::MONO_TYPE_CLASS:
+
+		if (strcmp(mono_type_get_name(mono_field_get_type(field.field)), "DiamondEngine.GameObject") != 0) 
+		{
+			ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "The class %s can't be serialized yet", mono_type_get_name(mono_field_get_type(field.field)));
+			break;
+		}
+
 		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), (field.fiValue.goValue != nullptr) ? field.fiValue.goValue->name.c_str() : "None");
 		if (ImGui::BeginDragDropTarget())
 		{
@@ -233,23 +243,37 @@ void C_Script::DropField(SerializedField& field, const char* dropType)
 
 	case MonoTypeEnum::MONO_TYPE_R4: {
 		//float test = 0.f;
-		//mono_field_get_value(coreObject, field.field, &test); //TODO: IMPORTANT THIS IS A TEST, REMOVE TEST
-		if(ImGui::InputFloat(mono_field_get_name(field.field), &field.fiValue.fValue, 0.1f))
+		mono_field_get_value(mono_gchandle_get_target(noGCobject), field.field, &field.fiValue.fValue);
+		if(ImGui::InputFloat(field.displayName.c_str(), &field.fiValue.fValue, 0.1f))
 			mono_field_set_value(mono_gchandle_get_target(noGCobject), field.field, &field.fiValue.fValue);
 		break;
 	}
 
-	case MonoTypeEnum::MONO_TYPE_STRING:
-		if(ImGui::InputText(mono_field_get_name(field.field), &field.fiValue.strValue[0], 50))
-			mono_field_set_value(mono_gchandle_get_target(noGCobject), field.field, &field.fiValue.strValue);
+	case MonoTypeEnum::MONO_TYPE_STRING: 
+	{
+		
+		MonoString* str = nullptr;
+		mono_field_get_value(mono_gchandle_get_target(noGCobject), field.field, &str);
+		
+		char* value = mono_string_to_utf8(str);
+		strcpy(field.fiValue.strValue, value);
+		mono_free(value);
+
+		if (ImGui::InputText(field.displayName.c_str(), &field.fiValue.strValue[0], 50))
+		{
+			str = mono_string_new(EngineExternal->moduleMono->domain, field.fiValue.strValue);
+			mono_field_set_value(mono_gchandle_get_target(noGCobject), field.field, str);
+			//mono_free(str);
+		}
 		break;
+	}
 
 	default:
 		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), mono_type_get_name(mono_field_get_type(field.field)));
 		break;
 	}
 	//TODO: Update C# field value
-
+	//ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), mono_type_get_name(mono_field_get_type(field.field)));
 	ImGui::PopID();
 }
 

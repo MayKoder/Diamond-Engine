@@ -133,6 +133,10 @@ void DEConfig::WriteVector3(const char* name, float* value)
 float3 DEConfig::ReadVector3(const char* name)
 {
 	JSON_Array* vecArray = json_object_dotget_array(nObj, name);
+
+	if (vecArray == nullptr)
+		return float3::one;
+
 	return float3(json_array_get_number(vecArray, 0), json_array_get_number(vecArray, 1), json_array_get_number(vecArray, 2));
 }
 void DEConfig::WriteQuat(const char* name, float* value)

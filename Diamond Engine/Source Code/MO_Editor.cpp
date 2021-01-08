@@ -191,7 +191,8 @@ bool M_Editor::CleanUp()
 
 	for (unsigned int i = 0; i < editorIcons.size(); ++i)
 	{
-		App->moduleResources->UnloadResource(editorIcons[i]->GetUID());
+		if(editorIcons[i] != nullptr)
+			App->moduleResources->UnloadResource(editorIcons[i]->GetUID());
 	}
 	editorIcons.clear();
 
@@ -455,22 +456,22 @@ void M_Editor::DrawCreateMenu()
 	{
 		//TODO: This is temporal, meshes should not laod every time and 
 		//should be stored only once, then only copy mesh pointers.
-		if (ImGui::MenuItem("Cube", nullptr))
-			App->moduleResources->RequestFromAssets("Assets/Primitives/Cube.fbx");
+		if (ImGui::MenuItem("Cube", nullptr)) 
+			EngineExternal->moduleScene->LoadModelTree(EngineExternal->moduleResources->LibraryFromMeta("Assets/Primitives/Cube.fbx.meta").c_str());
 		if (ImGui::MenuItem("Plane", nullptr))
-			App->moduleResources->RequestFromAssets("Assets/Primitives/Plane.fbx");
+			EngineExternal->moduleScene->LoadModelTree(EngineExternal->moduleResources->LibraryFromMeta("Assets/Primitives/Plane.fbx.meta").c_str());
 		if (ImGui::MenuItem("Cylinder", nullptr))
-			App->moduleResources->RequestFromAssets("Assets/Primitives/Cylinder.fbx");
+			EngineExternal->moduleScene->LoadModelTree(EngineExternal->moduleResources->LibraryFromMeta("Assets/Primitives/Cylinder.fbx.meta").c_str());
 		if (ImGui::MenuItem("Icosphere", nullptr))
-			App->moduleResources->RequestFromAssets("Assets/Primitives/Icosphere.fbx");
+			EngineExternal->moduleScene->LoadModelTree(EngineExternal->moduleResources->LibraryFromMeta("Assets/Primitives/Icosphere.fbx.meta").c_str());
 		if (ImGui::MenuItem("Pyramid", nullptr))
-			App->moduleResources->RequestFromAssets("Assets/Primitives/Pyramid.fbx");
+			EngineExternal->moduleScene->LoadModelTree(EngineExternal->moduleResources->LibraryFromMeta("Assets/Primitives/Pyramid.fbx.meta").c_str());
 		if (ImGui::MenuItem("Sphere", nullptr))
-			App->moduleResources->RequestFromAssets("Assets/Primitives/Sphere.fbx");
+			EngineExternal->moduleScene->LoadModelTree(EngineExternal->moduleResources->LibraryFromMeta("Assets/Primitives/Sphere.fbx.meta").c_str());
 		if (ImGui::MenuItem("Torus", nullptr))
-			App->moduleResources->RequestFromAssets("Assets/Primitives/Torus.fbx");
+			EngineExternal->moduleScene->LoadModelTree(EngineExternal->moduleResources->LibraryFromMeta("Assets/Primitives/Torus.fbx.meta").c_str());
 		if (ImGui::MenuItem("Monkey", nullptr))
-			App->moduleResources->RequestFromAssets("Assets/Primitives/Monkey.fbx");
+			EngineExternal->moduleScene->LoadModelTree(EngineExternal->moduleResources->LibraryFromMeta("Assets/Primitives/Monkey.fbx.meta").c_str());
 		ImGui::EndMenu();
 	}
 	if (ImGui::MenuItem("Game Camera", nullptr))

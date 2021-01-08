@@ -35,10 +35,10 @@ M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app,
 	jitDomain = mono_jit_init("myapp");
 
 	mono_add_internal_call("DiamondEngine.Debug::Log", CSLog);
-	mono_add_internal_call("DiamondEngine.InternalCalls::GetKey", GetKey);
+	mono_add_internal_call("DiamondEngine.Input::GetKey", GetKey);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateGameObject", CSCreateGameObject);
-	mono_add_internal_call("DiamondEngine.InternalCalls::GetMouseX", MouseX);
-	mono_add_internal_call("DiamondEngine.InternalCalls::GetMouseY", MouseY);
+	mono_add_internal_call("DiamondEngine.Input::GetMouseX", MouseX);
+	mono_add_internal_call("DiamondEngine.Input::GetMouseY", MouseY);
 	//mono_add_internal_call("DiamondEngine.InternalCalls::UpdateCppGO", UpdateTransformFromCS);
 	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateBullet", CreateBullet);
@@ -316,6 +316,9 @@ SerializedField::SerializedField(MonoClassField* _field, MonoObject* _object, C_
 	type = static_cast<MonoTypeEnum>(mono_type_get_type(mono_field_get_type(field)));
 	fiValue.iValue = 0;
 	parentSC = parent;
+
+	displayName += "##";
+	displayName += mono_field_get_name(_field);
 
 	M_MonoManager::LoadFieldData(*this, _object);
 }

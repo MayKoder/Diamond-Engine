@@ -79,8 +79,7 @@
                     "rotationSpeed": 2,
                     "movementSpeed": 25,
                     "testBool": false,
-                    "testString": "Empty",
-                    "once": true
+                    "testString": "Hello World testing"
                 }
             ]
         },
@@ -580,7 +579,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 500,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6234337091445923
+                    "hFOV": 1.4522591829299927
                 }
             ]
         },

@@ -6,14 +6,6 @@ namespace DiamondEngine
 {
     class InternalCalls
     {
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern KeyState GetKey(object keyPressed);
-
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern int GetMouseX();
-
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern int GetMouseY();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void CreateGameObject(object name, object position);
@@ -26,6 +18,17 @@ namespace DiamondEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void Destroy(object go);
+    }
+    public class Input
+    {
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern KeyState GetKey(object keyPressed);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetMouseX();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetMouseY();
     }
 
     public partial class Debug

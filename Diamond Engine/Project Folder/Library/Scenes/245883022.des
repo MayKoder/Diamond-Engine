@@ -555,10 +555,10 @@
                 -13.013992309570313
             ],
             "Rotation": [
-                0.094575472176074982,
+                0.094575487077236176,
                 0,
                 0,
-                0.99551767110824585
+                0.9955177903175354
             ],
             "Scale": [
                 1,
@@ -579,7 +579,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 500,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4522591829299927
+                    "hFOV": 1.4802753925323486
                 }
             ]
         },
@@ -2223,6 +2223,217 @@
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1768910240.dds",
                     "UID": 1768910240
+                }
+            ]
+        },
+        {
+            "name": "skybox",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                99.999992370605469,
+                99.999992370605469,
+                99.999992370605469
+            ],
+            "UID": 716978913,
+            "ParentUID": 1828803901,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1506955713.mmh",
+                    "UID": 1506955713,
+                    "alternColor": [
+                        1,
+                        0.99998998641967773,
+                        0.99998998641967773
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": false,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Materials\/1768910240.dds",
+                    "UID": 1768910240
+                }
+            ]
+        },
+        {
+            "name": "skybox",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                99.999992370605469,
+                99.999992370605469,
+                99.999992370605469
+            ],
+            "UID": 679011105,
+            "ParentUID": 1828803901,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1506955713.mmh",
+                    "UID": 1506955713,
+                    "alternColor": [
+                        1,
+                        0.99998998641967773,
+                        0.99998998641967773
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": false,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Materials\/1768910240.dds",
+                    "UID": 1768910240
+                }
+            ]
+        },
+        {
+            "name": "Cube",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 874619794,
+            "ParentUID": 1828803901,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/796231171.mmh",
+                    "UID": 796231171,
+                    "alternColor": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Cube",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 5867389,
+            "ParentUID": 1828803901,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/796231171.mmh",
+                    "UID": 796231171,
+                    "alternColor": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Plane",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 471596639,
+            "ParentUID": 1828803901,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1658323125.mmh",
+                    "UID": 1658323125,
+                    "alternColor": [
+                        0,
+                        0,
+                        0
+                    ]
                 }
             ]
         }

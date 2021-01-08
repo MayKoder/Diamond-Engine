@@ -122,6 +122,18 @@ Component* GameObject::GetComponent(Component::Type _type)
 	return nullptr;
 }
 
+//When we load models from model trees the UID should get regenerated
+//because the .model UID are not unique.
+void GameObject::RecursiveUIDRegeneration()
+{
+	this->UID = EngineExternal->GetRandomInt();
+
+	for (size_t i = 0; i < this->children.size(); i++)
+	{
+		this->children[i]->RecursiveUIDRegeneration();
+	}
+}
+
 bool GameObject::isActive() const
 {
 	return active;

@@ -21,6 +21,8 @@ public:
 	Component* AddComponent(Component::Type _type, const char* params = nullptr);
 	Component* GetComponent(Component::Type _type);
 
+	void RecursiveUIDRegeneration();
+
 	bool isActive() const;
 
 	void Enable();

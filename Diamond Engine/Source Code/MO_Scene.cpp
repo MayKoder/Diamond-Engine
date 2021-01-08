@@ -56,6 +56,8 @@ bool M_Scene::Start()
 	App->moduleEditor->editorIcons[(int)Icons::I_Warning] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Warning.dds"));
 	App->moduleEditor->editorIcons[(int)Icons::I_Error] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Error.dds"));
 	App->moduleEditor->editorIcons[(int)Icons::I_Info] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Info.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Folder] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Folder.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Models] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Models.dds"));
 
 	return true;
 }
@@ -280,6 +282,8 @@ void M_Scene::LoadModelTree(const char* modelPath)
 
 	//Free memory
 	json_value_free(scene);
+
+	mRoot->RecursiveUIDRegeneration();
 }
 
 void M_Scene::CleanScene()

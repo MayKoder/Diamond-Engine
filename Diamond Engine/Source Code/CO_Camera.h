@@ -34,6 +34,7 @@ public:
 
 	Frustum camFrustrum;
 	float fov;
+	bool cullingState;
 
 //Movement logic
 public: 

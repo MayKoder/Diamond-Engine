@@ -35,6 +35,7 @@ struct SerializedField
 	MonoTypeEnum type = MonoTypeEnum::MONO_TYPE_END;
 	FieldValue fiValue;
 	C_Script* parentSC;
+	std::string displayName;
 };
 
 class M_MonoManager : public Module

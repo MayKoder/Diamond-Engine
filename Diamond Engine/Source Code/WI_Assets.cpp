@@ -5,6 +5,7 @@
 #include"MO_Input.h"
 #include"MO_Editor.h"
 #include"MO_MonoManager.h"
+#include"RE_Texture.h"
 #include"WI_TextEditor.h"
 
 W_Assets::W_Assets() : Window(), selectedFile(nullptr)
@@ -90,6 +91,15 @@ void W_Assets::DrawFileTree(AssetDir& file)
 	{
 		flags |= ImGuiTreeNodeFlags_Selected;
 	}
+
+	if (file.isDir) 
+	{
+		ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons[static_cast<int>(Icons::I_Folder)]->textureID, ImVec2(12, 12), ImVec2(0, 1), ImVec2(1, 0));
+	}
+	else {
+		ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons[static_cast<int>(Icons::I_Models)]->textureID, ImVec2(12, 12), ImVec2(0, 1), ImVec2(1, 0));
+	}
+	ImGui::SameLine();
 
 	bool nodeOpen = ImGui::TreeNodeEx(&file, flags, file.dirName.c_str());
 
