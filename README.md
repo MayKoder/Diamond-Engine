@@ -86,6 +86,7 @@ Engine v0.2
 ## AGPL-3.0 License
 
 Diamond Engine, lightweight 3D game engine software.
+
 Copyright (C) 2020  Miquel Suau Gonzalez
 
 This program is free software: you can redistribute it and/or modify
