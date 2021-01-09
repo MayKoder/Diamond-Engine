@@ -15,9 +15,9 @@ public:
 
 	void SetTextFromFile(const char* path);
 
+	const char* txtName;
 private:
 	TextEditor txtEditor;
-	const char* txtName;
 };
 
 

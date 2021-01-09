@@ -345,19 +345,19 @@ uint FileSystem::Copy(const char* file, const char* dir, std::string& outputFile
 }
 
 
-std::string FileSystem::FileToText(const char* path)
-{
-	// Read from the text file
-	std::ifstream MyReadFile(path);
-
-	std::stringstream buffer;
-	buffer << MyReadFile.rdbuf();
-
-	// Close the file
-	MyReadFile.close();
-
-	return buffer.str();
-}
+//std::string FileSystem::FileToText(const char* path)
+//{
+//	// Read from the text file
+//	std::ifstream readFile(path);
+//
+//	std::stringstream buffer;
+//	buffer << readFile.rdbuf();
+//
+//	// Close the file
+//	readFile.close();
+//
+//	return buffer.str();
+//}
 
 void FileSystem::GetFileName(const char* file, std::string& fileName, bool extension)
 {

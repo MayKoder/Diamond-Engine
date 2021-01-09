@@ -5,8 +5,6 @@
 W_TextEditor::W_TextEditor() : Window(), txtName(nullptr) /*: texColorBuffer(-1)*/
 {
 	name = "Text Editor"; //No lng definition for C# :(
-
-	SetTextFromFile("Assets/Scripts/Core.cs");
 }
 
 W_TextEditor::~W_TextEditor()
@@ -16,28 +14,49 @@ W_TextEditor::~W_TextEditor()
 
 void W_TextEditor::Draw()
 {
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*//*, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse*/))
 	{
+		ImGui::Dummy(ImVec2(10, 10));
 		if (ImGui::Button("Open Visual Studio Project")) 
 		{
-
+			ShellExecute(0, 0, "Assembly-CSharp.sln", 0, 0, SW_SHOW);
 			//EngineExternal->moduleMono->ReCompileCS();
 		}
+		ImGui::SameLine();
+		if (ImGui::Button("Save and Reload Script"))
+		{
+			std::string str = txtEditor.GetText();
+			char* cstr = &str[0];
 
-		txtEditor.Render(txtName);
+			FileSystem::Save(txtName, cstr, str.length(), false);		
+		}
+
+		ImGui::Dummy(ImVec2(10, 10));
+
+		ImGui::Text("Editing script: "); ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f) , (txtName != nullptr) ? txtName : "No script loaded");
+
+		if(txtName != nullptr)
+			txtEditor.Render(txtName);
 	}
 	ImGui::End();
-	ImGui::PopStyleVar();
-
 }
 
 void W_TextEditor::SetTextFromFile(const char* path)
 {
 	//txtEditor.Delete();
-	txtName = path;
+	
+	char* buffer = nullptr;
+	FileSystem::LoadToBuffer(path, &buffer);
 
-	std::string test = FileSystem::FileToText(path);
-	txtEditor.SetText(test);
+	//std::string test = FileSystem::FileToText(path); //Can't use physFS because it's
+
+	if (buffer != nullptr) 
+	{
+		txtName = path;
+		txtEditor.SetText(buffer);
+
+		RELEASE_ARRAY(buffer);
+	}
 }

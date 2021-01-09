@@ -506,6 +506,10 @@ void ModuleRenderer3D::SetGameRenderTarget(C_Camera* cam)
 {
 	gameCamera = cam;
 
+	W_Game* gWindow = dynamic_cast<W_Game*>(App->moduleEditor->GetEditorWindow(EditorWindow::GAME));
+	if (gWindow != nullptr && gameCamera != nullptr)
+		gWindow->SetTargetCamera(gameCamera);
+
 	//BUG TODO: If you remove and add cameras the culling will break at some point even if there is still
 	//active cameras around the scene
 	if (gameCamera != nullptr)

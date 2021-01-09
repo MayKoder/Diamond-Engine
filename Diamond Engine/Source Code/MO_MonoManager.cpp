@@ -21,6 +21,8 @@
 #include"PugiXML/pugixml.hpp"
 #include"IM_FileSystem.h"
 #include"ImGui/imgui.h"
+#include"WI_TextEditor.h"
+#include"MO_Editor.h"
 
 #pragma comment( lib, "mono/libx86/mono-2.0-boehm.lib" )
 #pragma comment( lib, "mono/libx86/mono-2.0-sgen.lib" )
@@ -149,6 +151,10 @@ void M_MonoManager::ReCompileCS()
 
 	App->moduleScene->LoadScene("Library/Scenes/tmp.des");
 	App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code, mmove to method
+
+	W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(App->moduleEditor->GetEditorWindow(EditorWindow::TEXTEDITOR));
+	if (txtEditor != nullptr)
+		txtEditor->SetTextFromFile(txtEditor->txtName);
 }
 
 //ASK: Is this the worst idea ever? TOO SLOW

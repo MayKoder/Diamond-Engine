@@ -70,3 +70,8 @@ public class Core : DiamondComponent
 	}
 }
 
+
+
+
+
+
