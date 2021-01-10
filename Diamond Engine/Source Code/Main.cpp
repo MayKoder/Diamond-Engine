@@ -31,10 +31,6 @@ int main(int argc, char** argv)
 	//This compiles the solution, this is kinda cool, talk about this with the teacher
 	//UINT ret = WinExec("dotnet build I:/Git_Projecte/Diamond-Engine/Diamond Engine/Project Folder/CSTest/ConsoleApp1.sln --configuration Debug", SW_SHOW);
 	//system("msbuild C:/Users/Mique/Desktop/wetransfer-c6d5c3/CSTest/ConsoleApp1/ConsoleApp1.sln /p:Configuration=Debug");
-	
-//TODO: Maybe use CreateProcess? it's more flexible	
-//TODO IMPORTANT: You can get the warnings and errors from this code, do that to check if there is any compilation errors.
-	CMDCompileCS();
 
 //This works BUT i dont like to hardcode the cmd.exe path, i think this will cause some issues with different OS or system paths
 #pragma region CreateProcess

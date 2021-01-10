@@ -31,6 +31,19 @@ M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app,
 ,jitDomain(nullptr)
 {
 
+}
+
+M_MonoManager::~M_MonoManager()
+{}
+
+// -----------------------------------------------------------------
+bool M_MonoManager::Init()
+{
+	LOG(LogType::L_NORMAL, "Setting up the camera");
+	bool ret = true;
+
+	CMDCompileCS();
+
 	//mono_jit_set_aot_mode(MonoAotMode::MONO_AOT_MODE_HYBRID);
 	mono_set_dirs("mono-runtime/lib", "mono-runtime/etc");
 	mono_config_parse(NULL);
@@ -64,16 +77,6 @@ M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app,
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
 
 	InitMono();
-}
-
-M_MonoManager::~M_MonoManager()
-{}
-
-// -----------------------------------------------------------------
-bool M_MonoManager::Init()
-{
-	LOG(LogType::L_NORMAL, "Setting up the camera");
-	bool ret = true;
 
 	return ret;
 }
@@ -394,6 +397,10 @@ void M_MonoManager::InitMono()
 	//mono_thread_attach(domain);
 
 	MonoImageOpenStatus sts;
+
+	if (FileSystem::Exists("Library/ScriptsAssembly/Assembly-CSharp.dll") == false)
+		assert(false && "You need to install the 'Visual Studio .NET desktop development pack' to run the engine :(");
+
 	assembly = mono_assembly_open("Library/ScriptsAssembly/Assembly-CSharp.dll", &sts);
 	//assembly = mono_domain_assembly_open(domain, "CSSolution/Assembly-CSharp/Build/Assembly-CSharp.dll");
 	if (!assembly)

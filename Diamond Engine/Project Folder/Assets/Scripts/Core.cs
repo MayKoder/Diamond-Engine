@@ -17,8 +17,7 @@ public class Core : DiamondComponent
 	public bool testBool = false;
 	public string testString = "Hello World";
 
-    public Vector3 testOtherClass; //Should find a way to tell if the class is a gameobject or not
-
+    //public Vector3 testOtherClass; //Should find a way to tell if the class is a gameobject or not
 
 	public void Update(/*int x*/)
 	{
@@ -50,6 +49,8 @@ public class Core : DiamondComponent
         return;
 	}
 }
+
+
 
 
 

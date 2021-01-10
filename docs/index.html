@@ -61,10 +61,10 @@
     <div class="container" style="text-align: center;">
         <h3>All about Diamond Engine</h3>
         <p>
-            Diamong Engine is a lightweight 3D (and future 2D) game development engine. This engine 
-            was developed as part of a college assigment. The engine supports almost every editor 
-            feature that you could expect from a game development engine, but the most relevant feature 
-            is the added support to interpret and work with C# code on a component based GameObject system.
+            Diamond Engine is a lightweight 3D (and future 2D) game development engine. This engine was 
+            developed as part of a college assignment. The engine supports almost every editor feature 
+            that you could expect from a game development engine, but the most relevant feature is the 
+            added support to interpret and work with C# code on a component based GameObject system.
         </p>
         <p>
             The C# implementation was mainly focused on making it as fast an reliable as possible. 
@@ -73,8 +73,8 @@
             at runtime to make the iteration time as fast as possible.
         </p>
         <p>
-            Apart from the performance and the reliable dynamic memory managment, the engine is also 
-            focused on being visualy atractive to the users. Also new features are being added to make
+            Apart from the performance and the reliable dynamic memory management, the engine is also 
+            focused on being visually attractive to the users. Also new features are being added to make
              the engine able to generate bigger and better games.
         </p>
     </div>
@@ -89,18 +89,19 @@
             <div class="hrList__text">
               <h3 style="font-weight: bold; margin-top: 0;">About me</h3>
               <p>
-                  Hi, I'm Mayk. I'm the only developer involved on the "Diamond Engine" project, and 
-                  i've been working on it since early 2020. (explain here all about you and the project maybe?)</p>
+                Hi, I'm Mayk. I'm the only developer involved on the "Diamond Engine" project and I've
+                 been working on it since early 2020.
+                </p>
               <p>
-                  I've been coding and making "games" since I was 14 and when I saw a chance to start 
-                  developing my own engine I really tried my best to do something i could be proud of. 
-                  My first contact with the Game Development word was thanks to the Unity Engine, and 
-                  I allways wanted to know how it was made.
+                I've been coding and making "games" since I was 14 and when I saw a chance to start developing 
+                my own engine I really tried my best to do something i could be proud of. My first contact with 
+                the Game Development word was thanks to the Unity Engine, and I always wanted to know how it was 
+                made.
               </p>
               <p>
-                  Working on Diamond Engine was, and still is, the better way for me to learn new things,
-                   and I really enjoy 3D math and coding so it was perfect. I really think this engine 
-                   reflects what I'm capable of as in 2020, and I plan to get better.
+                Working on Diamond Engine was and still is, the better way for me to learn new things, and I 
+                really enjoy 3D math and coding so it was perfect. I really think this engine reflects what 
+                I'm capable of as in 2020, and I plan to get better.
               </p>
               <p>
                   Here's my LinkedIn page if you are interested in some of my other work.
@@ -137,63 +138,136 @@
                     OpenGL rendering was optimized avoiding deprecated methods and systems, and its 
                     performance was also improved by rendering as much as possible with retained mode.
                 </p>
+                <p>
+                    Texture transparency has been added too, and models are rendered front to back to 
+                    allow transparency to work as expected.
+                </p>
             </li>
             <li>
                 <h4>Camera Culling</h4>
                 <p>
-                    Scene rendering time was reduced with camera culling, camera frustrum and AABB boxes 
+                    Scene rendering time was reduced with camera culling, camera frustum and AABB boxes 
                     to discard all the meshes outside the camera view. A future improvement will be made 
-                    by adding space partitioning 
+                    by adding space partitioning
                     <a href="https://maykoder.github.io/Space-Partitioning/">
-                        (a field I made a small study of back in 2018 that can be readed here).
+                        (a field I made a small study of back in 2018 that can be found here).
                     </a>
                 </p>
             </li>
             <li>
-                <h4>Editor Docking</h4></li>
-            <li>
-                <h4>Script editor</h4></li>
-            <li>
-                <h4>GameObject & Component System</h4></li>
-            <li>
-                <h4>Multi-viewport Rendering</h4></li>
-            <li>
-                <h4>Memory managment</h4></li>
-            <li>
-                <h4>Time Managment</h4>
+                <h4>Editor Docking</h4>
                 <p>
-                    The time managment system makes it possible to start/stop/pause/step a simulation that 
-                    will also run other systems (like shaders, particles...). The content played during this 
-                    simulation will be the exact content played/displayed when the game is compiled and 
-                    executed as a standalone application.
+                    Thanks to ImGui's docking, adding docking was fast and cool. Windows can be docked and 
+                    moved around the editor and can even be moved outside the main viewport.
+                </p>
+            </li>
+            <li>
+                <h4>Script Creation</h4>
+                <p>
+                    Right-click inside the Assets window to use the script creation popup. With this popup you 
+                    can create scripts that will be added to the .sln file and will be created with template code 
+                    and a Update() method.
+                </p>
+                <p>
+                    These new scripts will be added to the C# Visual Studio solution and can be directly edited with 
+                    no restart needed.
+                </p>
+            </li>
+            <li>
+                <h4>Script editor</h4>
+                <p>
+                    A script editor was added to allow fast script modification, but I recommend using Visual Studio
+                     2019.
+                </p>
+                <p>
+                    Msbuild was added as a portable exec to allow everyone to use the engine without any kind of 
+                    installation nor external software, and also to avoid problems with the C# compilation. 
+                    (Missing dotnet or msbuild paths).
+                </p>
+                <h5>
+                    Important note: The build 3.0 requires the .NET desktop development pack to work, if it's 
+                    not installed, the engine will crash. An assertion has been added in new versions to alert 
+                    the new users.
+                </h5>
+            </li>
+            <li>
+                <h4>GameObject & Component System</h4>
+                <p>
+                    The engine works with a GameObject and component system which means that each entity is known 
+                    as a GameObject and this object contains components, each component derives from the same 
+                    class but has different functionality.
+                </p>
+            </li>
+            <li>
+                <h4>Multi-viewport Rendering</h4>
+                <p>
+                    Giving each camera component its own buffers allowed me to create multi camera rendering, which 
+                    means that more than one camera can be rendered at once in different windows.
+                </p>
+            </li>
+            <li>
+                <h4>Memory management</h4>
+                <p>
+                    Memory has been closely monitored to avoid leaks and innecessary usage increments. The use of 
+                    containers was selected with performance and memory in mind, and I can proudly say that there 
+                    is, at least not detected, any memory leaks.
+                </p>
+                <p>
+                    Also memory usage is kept flat and straight during the majority of the engine usage time and it 
+                    only changes when loading scenes and assets as nen memory is temporally allocated, but at the 
+                    end all memory is deleted. 
+                </p>
+                <p>
+                    Even some tests have been made while creating ≈ 2000 objects and deleting them 5 seconds later, 
+                    and the memory usage is kept almost the same, when all created objects are deleted, memory usage
+                     is exactly the same as before spawning anything.
+                </p>
+            </li>
+            <li>
+                <h4>Time management</h4>
+                <p>
+                    The time management system makes it possible to start/stop/pause/step a simulation that will 
+                    also run other systems (Like shaders, particles...). The content played during this simulation 
+                    will be the exact content played/displayed when the game is compiled and executed as a 
+                    standalone application.
                 </p>
             </li>
             <li>
                 <h4>Resource Manager</h4>
                 <p>
-                    Resource managment systems make sure that we don't use more memory than we really need by 
-                    only loading resources once to memory, and then the system will assign references (pointers) 
-                    to those loaded resources. This system reduces drasticly the memory usage of the application 
-                    and the final game.
+                    Resource management systems make sure that we don't use more memory than we really need by only 
+                    loading resources once to memory, and then the system will assign references (pointers) to those 
+                    loaded resources. This system drastically reduces the usage of the and the game.
+                </p>
+            </li>
+            <li>
+                <h4>Editor camera movement</h4>
+                <p>
+                    Editor camera movement options are smooth, and there's a lot to choose from, Fps, orbital camera, 
+                    panning, zoom... All those types of movement have been made from scratch because I like 3D math and 
+                    it was a cool moment to dust off my quaternions old notes.
                 </p>
             </li>
             <li>
                 <h4>Style Customization</h4>
+                <p>
+                    The user can create, edit and save their own editor styles, custom colors and shapes to go 
+                    with every different work style. The dark theme is the default, but themes can be created 
+                    and share because they are saved in a JSON file.
+                </p>
             </li>
             <li>
-                <h4>Screenshoot System</h4>
+                <h4>Screenshot System</h4>
                 <p>
-                    A small screenshoot system was added to the editor that allows the user to capture simulation 
+                    A small screenshot system was added to the editor that allows the user to capture simulation 
                     moments or editor frames as .PNG files.
                 </p>
             </li>
           </ul>
 
-
-        <p>Bla bla bla cool core sub-systems blablabla</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, aspernatur id tempore dolores exercitationem magnam officiis deleniti harum itaque soluta facere molestiae adipisci provident modi vel iure aliquam, commodi nulla.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, aspernatur id tempore dolores exercitationem magnam officiis deleniti harum itaque soluta facere molestiae adipisci provident modi vel iure aliquam, commodi nulla.</p>
-
+          <p>
+            There are more sub-systems to talk about, but those are the most relevant ones.
+          </p>
     </div>
 
     <div class="spacer"></div> <!-- ---------- SPACER --------- -->
@@ -210,7 +284,7 @@
                 code iterations.
             </p>
             <p>
-                This implementation makes heavy use of extern methods to send and recieve data from C++ and C#, 
+                This implementation makes heavy use of extern methods to send and receive data from C++ and C#, 
                 which are connected.
             </p>
             <p>
@@ -225,23 +299,25 @@
 
             <p>
                 Talk about the exception handling and how good the fields are managed to auto-fill on scene loading 
-                and how well managed the code is to block crashes from GaneObject maniulation. Also talk about how 
+                and how well managed the code is to block crashes from GaneObject manipulation. Also talk about how 
                 there is 0 memory leaks and how the memory is stable during scene loading, script loading and even 
                 C# dynamic GameObject creation.
             </p>
 
             <p>
-                On the left gif we can see 
+                On the left gif we can see a script being modified via Visual Studio and how it hot-reloads when we 
+                focus back in the engine.
             </p>
 
             <p>
-                Also on the right gif we can appreciate 
+                Also, on the right gif we can see a gift being created from the engine and how it hot-reloads to add 
+                itself to the solution. We can also see the simulation in action.
             </p>
 
             <p>
-                Talk about the perfect memory managment, the 0 memory leaks, the hot-reloading, hot the script variables 
-                auto-fill on restart. Also talk about the scripts adding themself to the Visual Studio Solution and hot 
-                they are linked via code to avoid file duplication.
+                Talk about the perfect memory management, the 0 memory leaks, the hot-reloading, hot the script 
+                variables auto-fill on restart. Also talk about the scripts adding themselves to the Visual 
+                Studio Solution and hot they are linked via code to avoid file duplication.
             </p>
             <p>
                 Also, I'm adding an XML parser because i hate myself. Talk how the sln is perfect and the solution links work perfect too.

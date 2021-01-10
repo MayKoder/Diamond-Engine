@@ -75,6 +75,7 @@ static void CMDCompileCS()
 	execInfo.lpDirectory = NULL;
 	execInfo.nShow = SW_SHOW; /*SW_SHOW  SW_HIDE*/
 	execInfo.hInstApp = NULL;
+
 	ShellExecuteEx(&execInfo);
 
 	if (execInfo.hProcess != NULL) {
