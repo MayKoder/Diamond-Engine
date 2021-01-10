@@ -489,7 +489,7 @@ Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFil
 	std::string ext(assetFile);
 	ext = ext.substr(ext.find_last_of('.') + 1);
 
-	for (int i = 0; i < ext.length(); i++)
+	for (size_t i = 0; i < ext.length(); i++)
 	{
 		ext[i] = std::tolower(ext[i]);
 	}

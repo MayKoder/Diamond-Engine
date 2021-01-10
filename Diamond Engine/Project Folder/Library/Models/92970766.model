@@ -2,6 +2,7 @@
     "Model Objects": [
         {
             "name": "Cylinder",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -18,8 +19,8 @@
                 1,
                 1
             ],
-            "UID": 291585321,
-            "ParentUID": 1491870063,
+            "UID": 2071304055,
+            "ParentUID": 1773205157,
             "Components": [
                 {
                     "Type": 1,
@@ -29,7 +30,12 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/1379317828.mmh",
-                    "UID": 1379317828
+                    "UID": 1379317828,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         }

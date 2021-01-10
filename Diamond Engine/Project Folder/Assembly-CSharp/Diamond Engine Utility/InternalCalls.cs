@@ -25,6 +25,9 @@ namespace DiamondEngine
         public static extern KeyState GetKey(object keyPressed);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern KeyState GetMouseClick(object keyPressed);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern int GetMouseX();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -601,3 +604,10 @@ public enum KeyState
     KEY_REPEAT,
     KEY_UP
 };
+
+public enum MouseButton
+{
+    LEFT = 1,
+    MIDDLE,
+    RIGHT,
+}

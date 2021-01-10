@@ -38,10 +38,11 @@ M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app,
 
 	mono_add_internal_call("DiamondEngine.Debug::Log", CSLog);
 	mono_add_internal_call("DiamondEngine.Input::GetKey", GetKey);
+	mono_add_internal_call("DiamondEngine.Input::GetMouseClick", GetMouseClick);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateGameObject", CSCreateGameObject);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseX", MouseX);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseY", MouseY);
-	//mono_add_internal_call("DiamondEngine.InternalCalls::UpdateCppGO", UpdateTransformFromCS);
+
 	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateBullet", CreateBullet);
 
@@ -88,16 +89,6 @@ bool M_MonoManager::CleanUp()
 	return true;
 }
 
-update_status M_MonoManager::Update(float dt)
-{
-	//if (App->moduleInput->GetKey(SDL_SCANCODE_T) == KEY_DOWN) 
-	//{
-	//	ReCompileCS();
-	//}
-
-	return update_status::UPDATE_CONTINUE;
-}
-
 void M_MonoManager::OnGUI()
 {
 	if (ImGui::CollapsingHeader("Mono Settings", ImGuiTreeNodeFlags_DefaultOpen))
@@ -117,25 +108,8 @@ void M_MonoManager::ReCompileCS()
 	App->moduleScene->CleanScene();
 	App->moduleRenderer3D->ClearAllRenderData();
 
-	//mono_runtime_cleanup(domain);
-	//mono_jit_cleanup(domain); //Mono cleanup
-
-
-	//mono_assemblies_cleanup();
-	//mono_domain_unload(domain);
-
 	mono_domain_unload(domain);
-	//mono_thread_detach(domainThread);
-	//mono_domain_finalize(domain, 0);
-	//mono_config_cleanup();
 	mono_thread_cleanup();
-	//mono_runtime_quit();
-	//mono_runtime_set_shutting_down();
-
-	//mono_assembly_close(assembly);
-	//mono_assemblies_cleanup();
-	//mono_image_close(image);
-	//mono_images_cleanup();
 
 	while (mono_domain_is_unloading(domain) == true)
 	{
@@ -143,10 +117,6 @@ void M_MonoManager::ReCompileCS()
 	}
 
 	CMDCompileCS();
-
-	//domain = mono_domain_create_appdomain("CSSolution/Assembly-CSharp/Build/Assembly-CSharp.dll", NULL);
-	//mono_domain_set(domain, 0);
-	//mono_thread_attach(domain);
 	InitMono();
 
 	App->moduleScene->LoadScene("Library/Scenes/tmp.des");
@@ -154,7 +124,7 @@ void M_MonoManager::ReCompileCS()
 
 	W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(App->moduleEditor->GetEditorWindow(EditorWindow::TEXTEDITOR));
 	if (txtEditor != nullptr)
-		txtEditor->SetTextFromFile(txtEditor->txtName);
+		txtEditor->SetTextFromFile(txtEditor->txtName.c_str());
 }
 
 //ASK: Is this the worst idea ever? TOO SLOW

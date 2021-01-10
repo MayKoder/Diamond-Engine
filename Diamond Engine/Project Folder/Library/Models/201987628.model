@@ -2,6 +2,7 @@
     "Model Objects": [
         {
             "name": "Icosphere",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -18,8 +19,8 @@
                 1,
                 1
             ],
-            "UID": 831645702,
-            "ParentUID": 298718250,
+            "UID": 331344887,
+            "ParentUID": 585233458,
             "Components": [
                 {
                     "Type": 1,
@@ -29,7 +30,12 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/514132551.mmh",
-                    "UID": 514132551
+                    "UID": 514132551,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         }

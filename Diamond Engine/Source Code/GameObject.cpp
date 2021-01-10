@@ -15,6 +15,7 @@
 #include <algorithm>
 
 #include"Application.h"
+#include"MO_Editor.h"
 
 GameObject::GameObject(const char* _name, GameObject* parent, int _uid) : parent(parent), name(_name), showChildren(false),
 active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr)
@@ -35,6 +36,9 @@ active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), d
 
 GameObject::~GameObject()
 {
+	if (EngineExternal->moduleEditor->GetSelectedGO() == this)
+		EngineExternal->moduleEditor->SetSelectedGO(nullptr);
+
 	for (size_t i = 0; i < components.size(); i++)
 	{
 		delete components[i];

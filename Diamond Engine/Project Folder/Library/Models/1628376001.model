@@ -2,6 +2,7 @@
     "Model Objects": [
         {
             "name": "Sphere",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -18,8 +19,8 @@
                 1,
                 1
             ],
-            "UID": 1996142361,
-            "ParentUID": 1234274239,
+            "UID": 1542002083,
+            "ParentUID": 827541019,
             "Components": [
                 {
                     "Type": 1,
@@ -29,7 +30,12 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/1736836885.mmh",
-                    "UID": 1736836885
+                    "UID": 1736836885,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         }

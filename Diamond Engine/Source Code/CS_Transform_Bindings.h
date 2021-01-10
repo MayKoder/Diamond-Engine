@@ -75,6 +75,13 @@ int GetKey(MonoObject* x)
 
 	return 0;
 }
+int GetMouseClick(MonoObject* x)
+{
+	if (EngineExternal != nullptr)
+		return EngineExternal->moduleInput->GetMouseButton(*(int*)mono_object_unbox(x));
+
+	return 0;
+}
 int MouseX()
 {
 	if (EngineExternal != nullptr)

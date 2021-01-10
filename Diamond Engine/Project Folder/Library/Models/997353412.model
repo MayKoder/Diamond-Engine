@@ -2,6 +2,7 @@
     "Model Objects": [
         {
             "name": "BakerHouse",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -18,8 +19,8 @@
                 1,
                 1
             ],
-            "UID": 1759224002,
-            "ParentUID": 525568228,
+            "UID": 686194789,
+            "ParentUID": 2135710582,
             "Components": [
                 {
                     "Type": 1,
@@ -29,6 +30,7 @@
         },
         {
             "name": "Chimney",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -45,8 +47,8 @@
                 1,
                 1
             ],
-            "UID": 1499403891,
-            "ParentUID": 1759224002,
+            "UID": 646193807,
+            "ParentUID": 686194789,
             "Components": [
                 {
                     "Type": 1,
@@ -56,12 +58,18 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/5654754.mmh",
-                    "UID": 5654754
+                    "UID": 5654754,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         },
         {
             "name": "Baker_house",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -78,8 +86,8 @@
                 1,
                 1
             ],
-            "UID": 818214641,
-            "ParentUID": 1759224002,
+            "UID": 1024116144,
+            "ParentUID": 686194789,
             "Components": [
                 {
                     "Type": 1,
@@ -89,7 +97,12 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/700120833.mmh",
-                    "UID": 700120833
+                    "UID": 700120833,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         }

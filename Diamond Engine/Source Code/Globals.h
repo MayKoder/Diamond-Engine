@@ -64,20 +64,24 @@ typedef unsigned __int64 uint64;
 static void CMDCompileCS() 
 {
 #pragma region ShellExecute
-	SHELLEXECUTEINFO ShExecInfo = { 0 };
-	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
-	ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
-	ShExecInfo.hwnd = NULL;
-	ShExecInfo.lpVerb = NULL;
-	ShExecInfo.lpFile = "cmd";
+	SHELLEXECUTEINFO execInfo = { 0 };
+	execInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+	execInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
+	execInfo.hwnd = NULL;
+	execInfo.lpVerb = NULL;
+	execInfo.lpFile = "cmd";
 	//ShExecInfo.lpParameters = "/K dotnet build Assembly-CSharp.sln --configuration Release";
-	ShExecInfo.lpParameters = "/K cd mono-runtime/MSBuild & msbuild ../../Assembly-CSharp.sln /p:Configuration=Release"; //Should include msbuild to the editor folder to make sure this will work? /p:Configuration=Release
-	ShExecInfo.lpDirectory = NULL;
-	ShExecInfo.nShow = SW_SHOW; /*SW_SHOW  SW_HIDE*/
-	ShExecInfo.hInstApp = NULL;
-	ShellExecuteEx(&ShExecInfo);
-	WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
-	CloseHandle(ShExecInfo.hProcess);
+	execInfo.lpParameters = "/C cd mono-runtime/MSBuild & msbuild ../../Assembly-CSharp.sln /p:Configuration=Release"; //Should include msbuild to the editor folder to make sure this will work? /p:Configuration=Release
+	execInfo.lpDirectory = NULL;
+	execInfo.nShow = SW_SHOW; /*SW_SHOW  SW_HIDE*/
+	execInfo.hInstApp = NULL;
+	ShellExecuteEx(&execInfo);
+
+	if (execInfo.hProcess != NULL) {
+		WaitForSingleObject(execInfo.hProcess, INFINITE);
+		CloseHandle(execInfo.hProcess);
+	}
+
 #pragma endregion
 }
 
@@ -85,8 +89,8 @@ static void CMDCompileCS()
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
 
-#define MIN_WIDTH 960
-#define MIN_HEIGHT 540
+#define MIN_WIDTH 1024
+#define MIN_HEIGHT 768
 
 #define SCREEN_SIZE 1
 #define TITLE "Diamond Engine v"

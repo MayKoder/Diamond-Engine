@@ -2,6 +2,7 @@
     "Model Objects": [
         {
             "name": "Torus",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -18,8 +19,8 @@
                 1,
                 1
             ],
-            "UID": 170164833,
-            "ParentUID": 1170583223,
+            "UID": 1776063596,
+            "ParentUID": 872023366,
             "Components": [
                 {
                     "Type": 1,
@@ -29,7 +30,12 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/2118360703.mmh",
-                    "UID": 2118360703
+                    "UID": 2118360703,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         }

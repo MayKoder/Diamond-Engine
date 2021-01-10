@@ -112,12 +112,6 @@ void AssetDir::DeletePermanent()
 	if (!isDir) 
 	{
 		EngineExternal->moduleFileSystem->DeleteAssetFile(EngineExternal->moduleResources->LibraryFromMeta(this->metaFileDir.c_str()).c_str());
-		
-		if (EngineExternal->moduleResources->GetMetaType(metaFileDir.c_str()) == Resource::Type::SCRIPT)
-		{
-			EngineExternal->moduleMono->RemoveScriptFromSLN(this->importPath.c_str());
-			EngineExternal->moduleMono->ReCompileCS();
-		}
 
 		if (EngineExternal->moduleResources->GetMetaType(metaFileDir.c_str()) == Resource::Type::MODEL) 
 		{
@@ -142,8 +136,17 @@ void AssetDir::DeletePermanent()
 	}
 
 	EngineExternal->moduleFileSystem->DeleteAssetFile(importPath.c_str());
-	EngineExternal->moduleFileSystem->DeleteAssetFile(metaFileDir.c_str());
 
+	if (!isDir)
+	{
+		if (EngineExternal->moduleResources->GetMetaType(metaFileDir.c_str()) == Resource::Type::SCRIPT)
+		{
+			EngineExternal->moduleMono->RemoveScriptFromSLN(this->importPath.c_str());
+			EngineExternal->moduleMono->ReCompileCS();
+		}
+	}
+
+	EngineExternal->moduleFileSystem->DeleteAssetFile(metaFileDir.c_str());
 
 	ClearData();
 }

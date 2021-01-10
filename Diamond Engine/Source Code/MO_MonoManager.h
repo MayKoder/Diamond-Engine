@@ -45,7 +45,6 @@ public:
 	virtual ~M_MonoManager();
 
 	bool Init() override;
-	update_status Update(float dt) override;
 	void OnGUI() override;
 	bool CleanUp() override;
 

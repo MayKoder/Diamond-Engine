@@ -63,8 +63,10 @@ void W_Assets::Draw()
 					if(path.find('.') == path.npos)
 						path += ".cs";
 
-					if (path.find('.cs') != path.npos)
+					if (path.find('.cs') != path.npos) {
 						EngineExternal->moduleMono->CreateAssetsScript(path.c_str());
+						name[0] = '\0';
+					}
 
 					ImGui::CloseCurrentPopup();
 				}

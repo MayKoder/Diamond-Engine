@@ -67,7 +67,6 @@ update_status M_Scene::PreUpdate(float dt)
 	/*Destroy gameobjects inside the destroy queue*/
 	if (destroyList.size() > 0) 
 	{
-		App->moduleEditor->SetSelectedGO(nullptr);
 		for (size_t i = 0; i < destroyList.size(); ++i)
 		{
 			Destroy(destroyList[i]);

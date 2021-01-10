@@ -2,6 +2,7 @@
     "Model Objects": [
         {
             "name": "Cube",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -18,8 +19,8 @@
                 1,
                 1
             ],
-            "UID": 2146117035,
-            "ParentUID": 770300739,
+            "UID": 1125572047,
+            "ParentUID": 782377455,
             "Components": [
                 {
                     "Type": 1,
@@ -29,7 +30,12 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/796231171.mmh",
-                    "UID": 796231171
+                    "UID": 796231171,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         }

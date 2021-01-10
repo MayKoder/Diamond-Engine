@@ -2,6 +2,7 @@
     "Model Objects": [
         {
             "name": "Tank",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -18,8 +19,8 @@
                 1,
                 1
             ],
-            "UID": 628896181,
-            "ParentUID": 436285569,
+            "UID": 130779818,
+            "ParentUID": 65548233,
             "Components": [
                 {
                     "Type": 1,
@@ -29,24 +30,25 @@
         },
         {
             "name": "Tank",
+            "Active": true,
             "Position": [
                 0,
                 0,
                 0
             ],
             "Rotation": [
-                0.70710676908493042,
+                0.7071068286895752,
                 0,
                 0,
-                0.70710676908493042
+                0.7071068286895752
             ],
             "Scale": [
                 1,
                 1,
                 1
             ],
-            "UID": 1484422365,
-            "ParentUID": 628896181,
+            "UID": 1838529345,
+            "ParentUID": 130779818,
             "Components": [
                 {
                     "Type": 1,
@@ -56,6 +58,7 @@
         },
         {
             "name": "TankRenderers",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -72,8 +75,8 @@
                 1,
                 1
             ],
-            "UID": 1466445437,
-            "ParentUID": 1484422365,
+            "UID": 1636232457,
+            "ParentUID": 1838529345,
             "Components": [
                 {
                     "Type": 1,
@@ -83,6 +86,7 @@
         },
         {
             "name": "TankTurret",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -99,8 +103,8 @@
                 1,
                 1
             ],
-            "UID": 1877707350,
-            "ParentUID": 1466445437,
+            "UID": 722350035,
+            "ParentUID": 1636232457,
             "Components": [
                 {
                     "Type": 1,
@@ -110,12 +114,18 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/229611332.mmh",
-                    "UID": 229611332
+                    "UID": 229611332,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         },
         {
             "name": "TankTurret",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -132,8 +142,8 @@
                 1,
                 1
             ],
-            "UID": 1943886872,
-            "ParentUID": 1466445437,
+            "UID": 959741289,
+            "ParentUID": 1636232457,
             "Components": [
                 {
                     "Type": 1,
@@ -143,12 +153,18 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/2049760551.mmh",
-                    "UID": 2049760551
+                    "UID": 2049760551,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         },
         {
             "name": "TankTracksLeft",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -165,8 +181,8 @@
                 1,
                 1
             ],
-            "UID": 928481572,
-            "ParentUID": 1466445437,
+            "UID": 1342088711,
+            "ParentUID": 1636232457,
             "Components": [
                 {
                     "Type": 1,
@@ -176,12 +192,18 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/1796010727.mmh",
-                    "UID": 1796010727
+                    "UID": 1796010727,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         },
         {
             "name": "TankTracksLeft",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -198,8 +220,8 @@
                 1,
                 1
             ],
-            "UID": 410265865,
-            "ParentUID": 1466445437,
+            "UID": 544667561,
+            "ParentUID": 1636232457,
             "Components": [
                 {
                     "Type": 1,
@@ -209,12 +231,18 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/679994245.mmh",
-                    "UID": 679994245
+                    "UID": 679994245,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         },
         {
             "name": "TankTracksRight",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -231,8 +259,8 @@
                 1,
                 1
             ],
-            "UID": 1587282065,
-            "ParentUID": 1466445437,
+            "UID": 34025655,
+            "ParentUID": 1636232457,
             "Components": [
                 {
                     "Type": 1,
@@ -242,12 +270,18 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/602333030.mmh",
-                    "UID": 602333030
+                    "UID": 602333030,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         },
         {
             "name": "TankTracksRight",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -264,8 +298,8 @@
                 1,
                 1
             ],
-            "UID": 803656392,
-            "ParentUID": 1466445437,
+            "UID": 225664114,
+            "ParentUID": 1636232457,
             "Components": [
                 {
                     "Type": 1,
@@ -275,12 +309,18 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/1114706661.mmh",
-                    "UID": 1114706661
+                    "UID": 1114706661,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         },
         {
             "name": "TankChassis",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -297,8 +337,8 @@
                 1,
                 1
             ],
-            "UID": 822728494,
-            "ParentUID": 1466445437,
+            "UID": 2118402989,
+            "ParentUID": 1636232457,
             "Components": [
                 {
                     "Type": 1,
@@ -308,12 +348,18 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/1228410195.mmh",
-                    "UID": 1228410195
+                    "UID": 1228410195,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         },
         {
             "name": "TankChassis",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -330,8 +376,8 @@
                 1,
                 1
             ],
-            "UID": 1496647990,
-            "ParentUID": 1466445437,
+            "UID": 452588503,
+            "ParentUID": 1636232457,
             "Components": [
                 {
                     "Type": 1,
@@ -341,12 +387,18 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/1757427967.mmh",
-                    "UID": 1757427967
+                    "UID": 1757427967,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         },
         {
             "name": "TankChassis",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -363,8 +415,8 @@
                 1,
                 1
             ],
-            "UID": 75675703,
-            "ParentUID": 1466445437,
+            "UID": 1784098579,
+            "ParentUID": 1636232457,
             "Components": [
                 {
                     "Type": 1,
@@ -374,7 +426,12 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/1011702682.mmh",
-                    "UID": 1011702682
+                    "UID": 1011702682,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         }

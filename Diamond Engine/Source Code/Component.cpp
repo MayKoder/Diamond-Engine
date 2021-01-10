@@ -25,6 +25,7 @@ void Component::Update()
 
 bool Component::OnEditor()
 {
+	ImGui::Dummy(ImVec2(15, 10));
 	bool ret = ImGui::CollapsingHeader(name.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
 
 	if (!ret)
@@ -32,7 +33,7 @@ bool Component::OnEditor()
 
 	ImGui::PushID(&this->active);
 
-	ImGui::Text("UID: %i", gameObject->UID);
+	//ImGui::Text("UID: %i", gameObject->UID);
 
 	if (this->type != Component::Type::Transform) 
 	{

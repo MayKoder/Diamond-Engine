@@ -232,7 +232,7 @@ void M_Editor::DrawMenuBar()
 			if (ImGui::MenuItem("Load scene"))
 			{
 
-				std::string sceneDir = M_FileSystem::OpenFileSelectDialog(); //TODO IMPORTANT: If i use this scene loading with JSON goes nono
+				std::string sceneDir = M_FileSystem::OpenFileSelectDialog();
 				
 				//WARNINR: Can't we += .meta to the string?
 				App->moduleFileSystem->ToLocalAssetsPath(sceneDir);
@@ -242,9 +242,6 @@ void M_Editor::DrawMenuBar()
 					std::string test = App->moduleResources->LibraryFromMeta(metaDir.c_str());
 					App->moduleScene->LoadScene(test.c_str());
 				}
-
-				//App->moduleScene->LoadScene(App->moduleResources->LibraryFromMeta(sceneDir.c_str()).c_str());
-				//App->moduleScene->LoadScene(App->moduleResources->LibraryFromMeta("Assets/Scene1.des.meta").c_str());
 			}
 			if (ImGui::MenuItem("Quit", "Esc"))
 			{
@@ -612,6 +609,9 @@ void M_Editor::UpdateLoadedStylesVector(std::vector<std::string>* _styles)
 
 GameObject* M_Editor::GetSelectedGO()
 {
+	if (windows.size() == 0)
+		return nullptr;
+
 	W_Inspector* inspector =dynamic_cast<W_Inspector*>(GetEditorWindow(EditorWindow::INSPECTOR));
 	return inspector->selectedGO;
 }

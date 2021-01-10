@@ -2,6 +2,7 @@
     "Model Objects": [
         {
             "name": "Monkey",
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -18,8 +19,8 @@
                 1,
                 1
             ],
-            "UID": 340577150,
-            "ParentUID": 1698812175,
+            "UID": 765239113,
+            "ParentUID": 293041753,
             "Components": [
                 {
                     "Type": 1,
@@ -29,7 +30,12 @@
                     "Type": 2,
                     "Active": true,
                     "Path": "Library\/Meshes\/1361253439.mmh",
-                    "UID": 1361253439
+                    "UID": 1361253439,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         }

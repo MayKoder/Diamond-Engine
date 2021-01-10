@@ -78,7 +78,7 @@ bool C_Transform::OnEditor()
 			ResetTransform();
 
 		// GLOBAL MATRIX //
-		ImGui::Separator();
+		/*ImGui::Separator();
 		ImGui::Text("Global Position: ");
 		ImGui::SameLine();
 		ImGui::PushItemWidth(50);
@@ -100,7 +100,7 @@ bool C_Transform::OnEditor()
 
 		ImGui::Text("Scale: ");
 		ImGui::SameLine();
-		ImGui::Text("%f, %f, %f", globalTransform.GetScale().x, globalTransform.GetScale().y, globalTransform.GetScale().z);
+		ImGui::Text("%f, %f, %f", globalTransform.GetScale().x, globalTransform.GetScale().y, globalTransform.GetScale().z);*/
 
 		return true;
 	}

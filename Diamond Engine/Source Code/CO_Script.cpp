@@ -109,10 +109,12 @@ void C_Script::SaveData(JSON_Object* nObj)
 		switch (fields[i].type)
 		{
 		case MonoTypeEnum::MONO_TYPE_BOOLEAN:
+			mono_field_get_value(mono_gchandle_get_target(noGCobject), fields[i].field, &fields[i].fiValue.bValue);
 			DEJson::WriteBool(nObj, mono_field_get_name(fields[i].field), fields[i].fiValue.bValue);
 			break;
 
 		case MonoTypeEnum::MONO_TYPE_I4:
+			mono_field_get_value(mono_gchandle_get_target(noGCobject), fields[i].field, &fields[i].fiValue.iValue);
 			DEJson::WriteInt(nObj, mono_field_get_name(fields[i].field), fields[i].fiValue.iValue);
 			break;
 
@@ -122,6 +124,7 @@ void C_Script::SaveData(JSON_Object* nObj)
 			break;
 
 		case MonoTypeEnum::MONO_TYPE_R4:
+			mono_field_get_value(mono_gchandle_get_target(noGCobject), fields[i].field, &fields[i].fiValue.fValue);
 			DEJson::WriteFloat(nObj, mono_field_get_name(fields[i].field), fields[i].fiValue.fValue);
 			break;
 
@@ -156,20 +159,12 @@ void C_Script::LoadData(DEConfig& nObj)
 			mono_field_set_value(mono_gchandle_get_target(noGCobject), _field->field, &_field->fiValue.iValue);
 			break;
 
-		case MonoTypeEnum::MONO_TYPE_CLASS: {
-
-			//ERROR BUG IMPORTANT: Reference not working, if the object is a child, it wont be selected
-			//ERROR BUG IMPORTANT: Do this only with GameObjets, what if it's a Vector3?
-			//_field->fiValue.goValue = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, nObj.ReadInt(mono_field_get_name(_field->field)));
-
-			//if(_field->fiValue.goValue)
-			//	SetField(_field->field, _field->fiValue.goValue);
-
+		case MonoTypeEnum::MONO_TYPE_CLASS:
+		{
 			if (strcmp(mono_type_get_name(mono_field_get_type(_field->field)), "DiamondEngine.GameObject") == 0)
 				EngineExternal->moduleScene->referenceMap.emplace(nObj.ReadInt(mono_field_get_name(_field->field)), _field);
 
 			break;
-
 		}
 		case MonoTypeEnum::MONO_TYPE_R4:
 			_field->fiValue.fValue = nObj.ReadFloat(mono_field_get_name(_field->field));
@@ -281,9 +276,6 @@ void C_Script::LoadScriptData(const char* scriptName)
 {
 	methods.clear();
 	fields.clear();
-
-	//if(coreObject)
-	//	mono_free(coreObject);
 
 
 	MonoClass* klass = mono_class_from_name(EngineExternal->moduleMono->image, USER_SCRIPTS_NAMESPACE, scriptName);

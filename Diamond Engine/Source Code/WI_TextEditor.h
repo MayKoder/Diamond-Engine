@@ -15,7 +15,7 @@ public:
 
 	void SetTextFromFile(const char* path);
 
-	const char* txtName;
+	std::string txtName;
 private:
 	TextEditor txtEditor;
 };
