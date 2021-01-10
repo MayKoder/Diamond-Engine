@@ -41,7 +41,7 @@ Simple guide to execute and use the engine:
 - Use W, E and R keys while hovering or focusing the scene window to change between ImGuizmo's TRASNLATE, ROTATE or SCALE modes.
 
 ### Important to know
-- ## IMPORTANT: You need to have the (Visual Studio) .NETFramework version v4.7.2 to run the engine, if you don't have it the engine hot-reloading system won't work.
+- ## IMPORTANT: You need to have the (Visual Studio) .NETFramework version v4.7.2 to run the engine, if you don't have it the engine hot-reloading system won't work and won't even start on some cases.
 <p align="center">
   <img src="docs/media/netversion.jpg">
 </p>
