@@ -48,6 +48,8 @@ Simple guide to execute and use the engine:
 - Double click any .cs file in the Assets window to change the current script opened in the Text Editor window.
 - Camera culling can be Enabled/Disabled from the camera component.
 - The game camera target can be changed from the camera component.
+- Shoot the demo tank with the MOUSE-LEFT click while RUNNING the simulation.
+- When the simulation starts running, the mouse will be locked and turn invisible. **The mouse can be visible and unlocked clicking the ESC key.**
 
 
 #### **Please remember that all the important data (loaded assets, time management, simulation state, editor camera movement settings) can be found inside the "Configuration" window on the right. Also, if it's the first time you use the engine, it will take a bit longer to start, it's generating the library files :).**
