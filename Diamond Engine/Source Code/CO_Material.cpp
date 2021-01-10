@@ -8,7 +8,6 @@
 
 #include"DEJsonSupport.h"
 #include"IM_TextureImporter.h"
-#include"IM_FileSystem.h"
 
 C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false), matTexture(nullptr)
 {

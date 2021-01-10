@@ -11,17 +11,10 @@
 #include"MO_Scene.h"
 
 #include "PhysFS/include/physfs.h"
-
-//IMPORTANT TODO ASK: We should clear json usage, could be a hard hit on the grade
-#include"parson/parson.h"
 #include"DEJsonSupport.h"
 
-//TODO: This should not be here
-#pragma comment( lib, "DevIL/libx86/DevIL.lib" )
 #include "DevIL\include\ilu.h"
-#pragma comment( lib, "DevIL/libx86/ILU.lib" )
 #include "DevIL\include\ilut.h"
-#pragma comment( lib, "DevIL/libx86/ILUT.lib" )
 
 
 M_FileSystem::M_FileSystem(Application* app, bool start_enabled) : Module(app, start_enabled)

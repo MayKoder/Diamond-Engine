@@ -11,6 +11,10 @@
 #include"DEResource.h"
 #include"RE_Texture.h"
 
+#pragma comment( lib, "DevIL/libx86/DevIL.lib" )
+#pragma comment( lib, "DevIL/libx86/ILU.lib" )
+#pragma comment( lib, "DevIL/libx86/ILUT.lib" )
+
 
 GLuint TextureImporter::LoadToMemory(char* buffer, int size, int* w, int* h)
 {

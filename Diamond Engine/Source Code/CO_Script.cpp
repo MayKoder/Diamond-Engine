@@ -267,8 +267,7 @@ void C_Script::DropField(SerializedField& field, const char* dropType)
 		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), mono_type_get_name(mono_field_get_type(field.field)));
 		break;
 	}
-	//TODO: Update C# field value
-	//ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), mono_type_get_name(mono_field_get_type(field.field)));
+
 	ImGui::PopID();
 }
 

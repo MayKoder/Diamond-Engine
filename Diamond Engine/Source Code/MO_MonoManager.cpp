@@ -5,9 +5,7 @@
 
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
-#include <mono/metadata/environment.h>
 #include <mono/metadata/mono-config.h>
-#include <mono/metadata/object.h>
 #include <mono/metadata/debug-helpers.h>
 #include <mono/metadata/class.h>
 #include <mono/metadata/threads.h>

@@ -1,5 +1,4 @@
 #include "Application.h"
-#include "MaykMath.h"
 
 #include "MMGui.h"
 #include "parson/parson.h"

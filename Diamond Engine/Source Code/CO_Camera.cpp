@@ -233,22 +233,6 @@ void C_Camera::LookAt(const float3& Spot)
 	camFrustrum.up = camFrustrum.front.Cross(X);
 }
 
-//void C_Camera::Look(const float3& Position, const float3& Reference, bool RotateAroundReference)
-//{
-//	//	editorCamera.camFrustrum.pos = Position;
-////	editorCamera.camFrustrum.pos = Reference;
-////
-////	Z = normalize(Position - Reference);
-////	X = normalize(cross(float3(0.0f, 1.0f, 0.0f), Z));
-////	Y = cross(Z, X);
-////
-////	if(!RotateAroundReference)
-////	{
-////		this->Reference = editorCamera.camFrustrum.pos;
-////		editorCamera.camFrustrum.pos += Z * 0.05f;
-////	}
-//}
-
 void C_Camera::Move(const float3& Movement)
 {
 	camFrustrum.pos += Movement;
