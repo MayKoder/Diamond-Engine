@@ -113,6 +113,7 @@ Engine v0.2
 - **Innovation:** The added Text Editor can modify scripts, open the C# Visual project and even hot-reload scripts.
 - **Innovation:** Console log icons, images are better than text with colors.
 - **Innovation:** All scripts can be added to any GameObject with the "Add Component" dropdown.
+- **Innovation:** Create scripts left-clicking inside the Assets window, this scripts will be automatically  added to the C# solution and can be edited without the need of a restart (Unity style).
  
  
 <br></br>
