@@ -41,6 +41,7 @@ Simple guide to execute and use the engine:
 - Use W, E and R keys while hovering or focusing the scene window to change between ImGuizmo's TRASNLATE, ROTATE or SCALE modes.
 
 ### Important to know
+- **IMPORTANT:** You need to have the (Visual Studio) .NETFramework version v4.7.2 to run the engine, if you don't have it the engine won't execute at all.
 - The first time the engine is executed, it may take a bit longer to start because it has to generate a lot of data (library folder).
 - Use the top-middle buttons (Start, Stop, Pause, Step) to run the simulation. C# scripts will be executed during the simulation.
 - Avoid hot-reloading while simulating, changes will not apply until the simulation is stopped and there is new changes.
@@ -91,7 +92,7 @@ Engine v0.2
  
  Engine v0.3
  - C# support added with mono-runtime.
-- mono-runtime and msbuild are now portable, so no installation is needed to run and work with the engine.
+- mono-runtime is now portable, so no installation is needed to run and work with the engine.
 - Home made C# libraries like Vector3, Quaternion, mat4x4...
 - C# input/transform support with extern functions.
 - Inspector display variables which values can be modified in-engine.
