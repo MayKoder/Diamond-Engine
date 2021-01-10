@@ -83,7 +83,7 @@ Engine v0.2
  - Components can be added from the inspector display with the "Add component" drop-down.
  - Resource manager process can be visualized on the console and the "Loaded resources" tab. 
  - Library folder can be removed and the code will regenerate all the data with the same Id's to keep saved scenes valid. 
- - Each mesh component controls it's own AABB and OBB display. 
+ - Each mesh component controls its own AABB and OBB display. 
  - **Innovation:** You can now delete assets from the asset window and the library and meta files will be deleted as well. 
  - **Innovation:** Multiple scene display, enjoy the views from the game camera and move it around. No debug info will be displayed on the game camera and you can render the editor and the game camera at the same time. 
  
@@ -93,7 +93,7 @@ Engine v0.2
 - Home made C# libraries like Vector3, Quaternion, mat4x4...
 - C# input/transform support with extern functions.
 - Inspector display variables which values can be modified in-engine.
-- C# exception handling, if something goes wrong in the C# side while running a script, a LOG message with the error will notify the user (just a generic error for now but working on a full handler). Careful, this handler could not work if you are launching the engine from the source code (Visual Studio) because you need to tell visual to ignore the Update exceptions so the handler can catch them. (This exception will launch at CO_Script::Update() method, and you need to tell visual to ignore that kind of exceptions, its a checkbox under the popup exception window in Visual Studio).
+- C# exception handling, if something goes wrong in the C# side while running a script, a LOG message with the error will notify the user (just a generic error for now but working on a full handler). Careful, this handler could not work if you are launching the engine from the source code (Visual Studio) because you need to tell visual to ignore the Update exceptions so the handler can catch them. (This exception will launch at CO_Script::Update() method, and you need to tell visual to ignore that kind of exceptions, it's a checkbox under the popup exception window in Visual Studio).
 - GameObject drag & drop to C# variables, if a variable is a GameObject, one GameObject can be dropped on top of the variable to assign that GO to the C# variable.
 - Optimal C# GO management, the C# GO class will only store a pointer to the C++ GameObject, making it a lot faster to find GameObjects when sending them from C# to C++.
 - **Innovation:** C# hot-reloading, all changes made to a script will cause a hot-reload. Saving "CTRL+S" on Visual Studio (C#) will also trigger a hot-reload and all changes will apply to the current loaded scene.
