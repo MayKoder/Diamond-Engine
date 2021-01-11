@@ -61,21 +61,20 @@
     <div class="container" style="text-align: center;">
         <h3>All about Diamond Engine</h3>
         <p>
-            Diamond Engine is a lightweight 3D (and future 2D) game development engine. This engine was 
-            developed as part of a college assignment. The engine supports almost every editor feature 
-            that you could expect from a game development engine, but the most relevant feature is the 
-            added support to interpret and work with C# code on a component based GameObject system.
+            Diamond Engine is a lightweight 3D (and future 2D) game development engine. This engine was developed 
+            as part of a college assignment. The engine supports almost every editor feature that you could expect 
+            from a game development engine, but the most relevant feature is the added support to interpret and work 
+            with C# code on a component-based GameObject system.
         </p>
         <p>
-            The C# implementation was mainly focused on making it as fast an reliable as possible. 
-            This implementation uses the mono runtime working with JIT to execute C# code at runtime.
-            With this implementation and the app-domain system, it is also possible to recompile code 
-            at runtime to make the iteration time as fast as possible.
+            The C# implementation was mainly focused on making it as fast and reliable as possible. This implementation uses the 
+            mono runtime working with JIT to execute C# code at runtime. With this implementation and the app-domain 
+            system, it is also possible to recompile code at runtime to make the iteration time as fast as possible.
         </p>
         <p>
-            Apart from the performance and the reliable dynamic memory management, the engine is also 
-            focused on being visually attractive to the users. Also new features are being added to make
-             the engine able to generate bigger and better games.
+            Apart from the performance and reliable dynamic memory management, the engine is also focused on being 
+            visually attractive to the users. Also, new features are being added to make the engine able to generate 
+            bigger and better games.
         </p>
     </div>
 
@@ -89,19 +88,18 @@
             <div class="hrList__text">
               <h3 style="font-weight: bold; margin-top: 0;">About me</h3>
               <p>
-                Hi, I'm Mayk. I'm the only developer involved on the "Diamond Engine" project and I've
-                 been working on it since early 2020.
+                  Hi, I'm Mayk. I'm the only developer involved in the "Diamond Engine" project and I've been working 
+                  on it since early 2020.
                 </p>
               <p>
-                I've been coding and making "games" since I was 14 and when I saw a chance to start developing 
-                my own engine I really tried my best to do something i could be proud of. My first contact with 
-                the Game Development word was thanks to the Unity Engine, and I always wanted to know how it was 
-                made.
+                  I've been coding and making "games" since I was 14 and when I saw a chance to start developing my 
+                  engine I tried my best to do something I could be proud of. My first contact with the Game Development 
+                  word was thanks to the Unity Engine, and I always wanted to know how it was made.
               </p>
               <p>
-                Working on Diamond Engine was and still is, the better way for me to learn new things, and I 
-                really enjoy 3D math and coding so it was perfect. I really think this engine reflects what 
-                I'm capable of as in 2020, and I plan to get better.
+                  Working on Diamond Engine was and still is, the better way for me to learn new things, and I enjoy 3D 
+                  math and coding so it was perfect. I think this engine reflects what I'm capable of as in 2020, and I 
+                  plan to get better.
               </p>
               <p>
                   Here's my LinkedIn page if you are interested in some of my other work.
@@ -146,7 +144,7 @@
             <li>
                 <h4>Camera Culling</h4>
                 <p>
-                    Scene rendering time was reduced with camera culling, camera frustum and AABB boxes 
+                    Scene rendering time was reduced with camera culling, camera frustum, and AABB boxes 
                     to discard all the meshes outside the camera view. A future improvement will be made 
                     by adding space partitioning
                     <a href="https://maykoder.github.io/Space-Partitioning/">
@@ -164,9 +162,8 @@
             <li>
                 <h4>Script Creation</h4>
                 <p>
-                    Right-click inside the Assets window to use the script creation popup. With this popup you 
-                    can create scripts that will be added to the .sln file and will be created with template code 
-                    and a Update() method.
+                    Right-click inside the Assets window to use the script creation popup. With this popup, you can create scripts 
+                    that will be added to the .sln file and will be created with template code and an Update() method.
                 </p>
                 <p>
                     These new scripts will be added to the C# Visual Studio solution and can be directly edited with 
@@ -180,9 +177,8 @@
                      2019.
                 </p>
                 <p>
-                    Msbuild was added as a portable exec to allow everyone to use the engine without any kind of 
-                    installation nor external software, and also to avoid problems with the C# compilation. 
-                    (Missing dotnet or msbuild paths).
+                    MSBuild was added as a portable exec to allow everyone to use the engine without any kind of installation 
+                    nor external software, and also to avoid problems with the C# compilation. (Missing dotnet or MSBuild paths).
                 </p>
                 <h5>
                     Important note: The build 3.0 requires the .NET desktop development pack to work, if it's 
@@ -201,26 +197,25 @@
             <li>
                 <h4>Multi-viewport Rendering</h4>
                 <p>
-                    Giving each camera component its own buffers allowed me to create multi camera rendering, which 
-                    means that more than one camera can be rendered at once in different windows.
+                    Giving each camera component its buffers allowed me to create multi-camera rendering, which means 
+                    that more than one camera can be rendered at once in different windows.
                 </p>
             </li>
             <li>
                 <h4>Memory management</h4>
                 <p>
-                    Memory has been closely monitored to avoid leaks and innecessary usage increments. The use of 
-                    containers was selected with performance and memory in mind, and I can proudly say that there 
-                    is, at least not detected, any memory leaks.
+                    Memory has been closely monitored to avoid leaks and unnecessary usage increments. The use of containers 
+                    was selected with performance and memory in mind, and I can proudly say that there are, at least not 
+                    detected, any memory leaks.
                 </p>
                 <p>
-                    Also memory usage is kept flat and straight during the majority of the engine usage time and it 
-                    only changes when loading scenes and assets as nen memory is temporally allocated, but at the 
-                    end all memory is deleted. 
+                    Also, memory usage is kept flat and straight during the majority of the engine usage time and it only changes 
+                    when loading scenes and assets as nen memory are temporally allocated, but at the end, all memory is deleted. 
                 </p>
                 <p>
-                    Even some tests have been made while creating ≈ 2000 objects and deleting them 5 seconds later, 
-                    and the memory usage is kept almost the same, when all created objects are deleted, memory usage
-                     is exactly the same as before spawning anything.
+                    Even some tests have been made while creating ≈ 2000 objects and deleting them 5 seconds later, and the memory 
+                    usage is kept almost the same, when all created objects are deleted, memory usage is the same as before spawning 
+                    anything.
                 </p>
             </li>
             <li>
@@ -235,9 +230,9 @@
             <li>
                 <h4>Resource Manager</h4>
                 <p>
-                    Resource management systems make sure that we don't use more memory than we really need by only 
-                    loading resources once to memory, and then the system will assign references (pointers) to those 
-                    loaded resources. This system drastically reduces the usage of the and the game.
+                    Resource management systems make sure that we don't use more memory than we need by only loading resources once to 
+                    memory, and then the system will assign references (pointers) to those loaded resources. This system drastically reduces 
+                    the usage of and the game.
                 </p>
             </li>
             <li>
@@ -251,9 +246,8 @@
             <li>
                 <h4>Style Customization</h4>
                 <p>
-                    The user can create, edit and save their own editor styles, custom colors and shapes to go 
-                    with every different work style. The dark theme is the default, but themes can be created 
-                    and share because they are saved in a JSON file.
+                    The user can create, edit, and save their editor styles, custom colors, and shapes to go with every different 
+                    work style. The dark theme is the default, but themes can be created and share because they are saved in a JSON file.
                 </p>
             </li>
             <li>
@@ -310,7 +304,7 @@
 
             <p>
                 On the left gif we can see a script being modified via Visual Studio and how it hot-reloads when we 
-                focus back in the engine. Also how the variables are changed in the inspector.
+                focus back on the engine. Also how the variables are changed in the inspector.
             </p>
 
             <p>
