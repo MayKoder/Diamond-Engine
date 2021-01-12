@@ -795,6 +795,9 @@
     <ClCompile Include="Source Code\External Libraries\PugiXML\pugixml.cpp">
       <Filter>Externals\PugiXML</Filter>
     </ClCompile>
+    <ClCompile Include="Source Code\MMGui.cpp">
+      <Filter>Sources\Tools\MMath</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source Code\External Libraries\MathGeoLib\include\Math\Matrix.inl">

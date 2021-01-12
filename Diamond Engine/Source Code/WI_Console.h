@@ -8,7 +8,7 @@ enum class LogType;
 
 struct LogMessage
 {
-	LogMessage(std::string, LogType);
+	LogMessage(std::string&, LogType);
 	bool EqualsStr(const char*);
 
 	std::string msg;

@@ -82,12 +82,8 @@ private:
 	std::vector<Window*> windows;
 	std::vector<std::string> styles;
 
-
 	//WARNING TODO: This is bad find a better way
 	char styleInput[MAX_STY_INPUT] = "";
-	
-	//TODO: Save current style and load it at init to keep styles between uses
-	//std::string currentStyle;
 
 	bool displayWindow;
 

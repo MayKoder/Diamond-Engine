@@ -91,7 +91,7 @@ void W_Console::AddLog(const char* s_msg, LogType _type)
 		}
 	}
 
-	logs.push_back(LogMessage(s_msg, _type));
+	logs.push_back(LogMessage(std::string(s_msg), _type));
 	scrollToBottom = true;
 
 }
@@ -118,7 +118,7 @@ ImTextureID W_Console::GetMsgType(LogType type)
 	return ret;
 }
 
-LogMessage::LogMessage(std::string s_msg, LogType _type) : prints(1), lType(_type)
+LogMessage::LogMessage(std::string& s_msg, LogType _type) : prints(1), lType(_type)
 {
 	msg = s_msg;
 }
