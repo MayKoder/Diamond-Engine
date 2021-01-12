@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include "WI_Inspector.h"
 #include "MMGui.h"
 #include "GameObject.h"
@@ -142,3 +144,5 @@ void W_Inspector::Draw()
 
 	ImGui::End();
 }
+
+#endif // !STANDALONE

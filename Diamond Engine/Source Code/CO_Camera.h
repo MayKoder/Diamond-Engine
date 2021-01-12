@@ -10,8 +10,9 @@ public:
 	C_Camera(GameObject* _gm);
 	virtual ~C_Camera();
 
-	/*void Update() override;*/
+#ifndef STANDALONE
 	bool OnEditor() override;
+#endif // !STANDALONE
 
 	void Update() override;
 

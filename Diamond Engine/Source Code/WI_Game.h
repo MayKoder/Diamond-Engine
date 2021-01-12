@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #ifndef __W_GAME_H__
 #define __W_GAME_H__
 
@@ -25,3 +27,4 @@ private:
 
 #endif //__W_GAME_H__
 
+#endif // !STANDALONE

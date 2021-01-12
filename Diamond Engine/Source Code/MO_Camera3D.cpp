@@ -41,6 +41,7 @@ bool ModuleCamera3D::CleanUp()
 	return true;
 }
 
+#ifndef STANDALONE
 void ModuleCamera3D::OnGUI()
 {
 	if (ImGui::CollapsingHeader("3D Input Settings", ImGuiTreeNodeFlags_DefaultOpen))
@@ -49,6 +50,7 @@ void ModuleCamera3D::OnGUI()
 		ImGui::TextWrapped("Camera Movement Speed"); ImGui::SameLine(); ImGui::PushItemWidth(100.f); ImGui::DragFloat("##cms", &cameraSpeed, 0.01f, 0.f, 999.f);
 	}
 }
+#endif // !STANDALONE
 
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
@@ -106,6 +108,7 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 		FreeRotation(dt);
 	}
 
+#ifndef STANDALONE
 	//Rotate around 0,0,0
 	//ASK: Should i also include Right alt?
 	//Maybe we could use quaternions?
@@ -131,6 +134,8 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 		}
 		FocusCamera(target, 10.f);
 	}
+#endif // !STANDALONE
+
 
 	if (App->moduleInput->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
 		PanCamera(dt);

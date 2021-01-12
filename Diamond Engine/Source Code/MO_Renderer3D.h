@@ -33,7 +33,10 @@ public:
 	bool CleanUp() override;
 
 	void OnResize(int width, int height);
+
+#ifndef STANDALONE
 	void OnGUI() override;
+#endif // !STANDALONE
 
 	static void DrawBox(float3* points, float3 color = float3::one);
 	

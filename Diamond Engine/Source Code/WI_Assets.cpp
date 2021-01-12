@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include"WI_Assets.h"
 
 #include"IM_FileSystem.h"
@@ -148,3 +150,5 @@ void W_Assets::DrawFileTree(AssetDir& file)
 		ImGui::TreePop();
 	}
 }
+#endif // !STANDALONE
+

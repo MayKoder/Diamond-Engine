@@ -8,8 +8,10 @@ public:
 	C_Material(GameObject* _gm);
 	virtual ~C_Material();
 
-	/*void Update() override;*/
+#ifndef STANDALONE
 	bool OnEditor() override;
+#endif // !STANDALONE
+
 	int GetTextureID();
 
 

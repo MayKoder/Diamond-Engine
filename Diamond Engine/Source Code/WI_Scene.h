@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #ifndef __W_SCENE_H__
 #define __W_SCENE_H__
 
@@ -27,3 +29,4 @@ public:
 
 #endif //__W_SCENE_H__
 
+#endif // !STANDALONE

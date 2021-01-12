@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include "WI_Scene.h"
 
 #include "MO_Renderer3D.h"
@@ -164,3 +166,5 @@ ImVec2 W_Scene::NormalizeOnWindow(float x, float y, float w, float h, ImVec2 poi
 
 	return normalizedPoint;
 }
+
+#endif // !STANDALONE

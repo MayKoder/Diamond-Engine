@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include "WI_Game.h"
 #include "CO_Camera.h"
 #include"Globals.h"
@@ -55,3 +57,5 @@ C_Camera* W_Game::GetTargetCamera()
 {
 	return targetCamera;
 }
+
+#endif // !STANDALONE

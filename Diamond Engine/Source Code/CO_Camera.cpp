@@ -58,6 +58,7 @@ C_Camera::~C_Camera()
 		EngineExternal->moduleRenderer3D->SetGameRenderTarget(nullptr);
 }
 
+#ifndef STANDALONE
 bool C_Camera::OnEditor()
 {
 	if (Component::OnEditor() == true)
@@ -103,6 +104,7 @@ bool C_Camera::OnEditor()
 	}
 	return false;
 }
+#endif // !STANDALONE
 
 void C_Camera::Update()
 {
@@ -147,9 +149,7 @@ void C_Camera::LoadData(DEConfig& nObj)
 	camFrustrum.verticalFov = nObj.ReadFloat("vFOV");
 	camFrustrum.horizontalFov = nObj.ReadFloat("hFOV");
 
-	//Need to reset W_Game target canera
 	EngineExternal->moduleScene->SetGameCamera(this);
-
 }
 
 void C_Camera::StartDraw()
@@ -164,7 +164,10 @@ void C_Camera::StartDraw()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf((GLfloat*)ViewMatrixOpenGL().v);
 
+#ifndef STANDALONE
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+#endif // !STANDALONE
+
 
 	glClearColor(0.08f, 0.08f, 0.08f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -179,7 +182,9 @@ void C_Camera::StartDraw()
 
 void C_Camera::EndDraw()
 {
+#ifndef STANDALONE
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+#endif // !STANDALONE
 	glDisable(GL_DEPTH_TEST);
 
 	//glClearColor(0.05f, 0.05f, 0.05f, 1.f);

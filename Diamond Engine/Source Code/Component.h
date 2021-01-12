@@ -29,7 +29,9 @@ public:
 
 	virtual void Update();
 
+#ifndef STANDALONE
 	virtual bool OnEditor();
+#endif // !STANDALONE
 
 	//Maybe return JSON_Value*?
 	virtual void SaveData(JSON_Object* nObj);

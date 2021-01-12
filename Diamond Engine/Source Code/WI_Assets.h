@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #ifndef __W_ASSETS_H__
 #define __W_ASSETS_H__
 
@@ -24,3 +26,5 @@ public:
 
 
 #endif //__W_ASSETS_H__
+
+#endif // !STANDALONE

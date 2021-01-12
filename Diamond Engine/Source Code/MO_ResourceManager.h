@@ -17,7 +17,10 @@ public:
 	bool Start() override;
 	update_status PreUpdate(float dt) override;
 	bool CleanUp() override;
+
+#ifndef STANDALONE
 	void OnGUI() override;
+#endif // !STANDALONE
 
 
 	int GenerateNewUID();

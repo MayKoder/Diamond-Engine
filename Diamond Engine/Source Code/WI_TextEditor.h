@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #pragma once
 
 #include "Window.h"
@@ -20,4 +22,4 @@ private:
 	TextEditor txtEditor;
 };
 
-
+#endif // !STANDALONE

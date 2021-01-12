@@ -45,7 +45,11 @@ public:
 	virtual ~M_MonoManager();
 
 	bool Init() override;
+
+#ifndef STANDALONE
 	void OnGUI() override;
+#endif // !STANDALONE
+
 	bool CleanUp() override;
 
 	static Quat UnboxQuat(MonoObject* _obj);

@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include "WI_TextEditor.h"
 #include"IM_FileSystem.h"
 #include"MO_MonoManager.h"
@@ -64,3 +66,5 @@ void W_TextEditor::SetTextFromFile(const char* path)
 		txtName = "";
 	}
 }
+
+#endif // !STANDALONE

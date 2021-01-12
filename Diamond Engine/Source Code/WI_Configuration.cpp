@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include "WI_Configuration.h"
 #include "MMGui.h"
 
@@ -86,5 +88,4 @@ void W_Configuration::UpdateInfoLogs()
 
 }
 
-
-
+#endif // !STANDALONE

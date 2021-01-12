@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include "Application.h"
 
 #include "MMGui.h"
@@ -645,3 +647,5 @@ void M_Editor::LogToConsole(const char* msg, LogType _type)
 		if (consoleWindow != nullptr)
 			consoleWindow->AddLog(msg, _type);
 }
+
+#endif

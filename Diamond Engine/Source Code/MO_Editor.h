@@ -1,3 +1,4 @@
+#ifndef STANDALONE
 #pragma once
 
 #include "Module.h"
@@ -92,3 +93,5 @@ private:
 
 	ImVec4 playingTint;
 };
+
+#endif

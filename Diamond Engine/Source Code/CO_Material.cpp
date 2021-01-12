@@ -20,6 +20,7 @@ C_Material::~C_Material()
 		EngineExternal->moduleResources->UnloadResource(matTexture->GetUID());
 }
 
+#ifndef STANDALONE
 bool C_Material::OnEditor()
 {
 	if (Component::OnEditor() == true)
@@ -84,6 +85,7 @@ bool C_Material::OnEditor()
 	}
 	return false;
 }
+#endif // !STANDALONE
 
 int C_Material::GetTextureID()
 {

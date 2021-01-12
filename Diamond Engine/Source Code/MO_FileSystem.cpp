@@ -35,7 +35,11 @@ bool M_FileSystem::Init()
 	ilutRenderer(ILUT_OPENGL);
 
 	FileSystem::FSInit();
+
+#ifndef STANDALONE
 	MeshLoader::EnableDebugMode();
+#endif // !STANDALONE
+
 
 	return true;
 }
@@ -59,7 +63,10 @@ bool M_FileSystem::CleanUp()
 {
 
 	FileSystem::FSDeInit();
+
+#ifndef STANDALONE
 	MeshLoader::DisableDebugMode();
+#endif // !STANDALONE
 
 	return true;
 }

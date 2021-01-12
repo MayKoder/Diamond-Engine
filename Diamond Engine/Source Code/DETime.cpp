@@ -10,7 +10,12 @@ float DETime::realTimeDeltaTime;
 float DETime::realTimeSinceStartup;
 
 Timer DETime::gameTimer;
+
+#ifndef STANDALONE
 GameState DETime::state = GameState::STOP;
+#else
+GameState DETime::state = GameState::PLAY;
+#endif // !STANDALONE
 
 void DETime::Play()
 {

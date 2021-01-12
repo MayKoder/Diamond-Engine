@@ -37,12 +37,12 @@ C_MeshRenderer::~C_MeshRenderer()
 
 void C_MeshRenderer::Update()
 {
-
-	if (EngineExternal->moduleRenderer3D->GetGameRenderTarget() != nullptr && EngineExternal->moduleRenderer3D->GetGameRenderTarget()->cullingState == true && !IsInsideFrustum(&EngineExternal->moduleRenderer3D->GetGameRenderTarget()->camFrustrum))
+	if (EngineExternal->moduleRenderer3D->GetGameRenderTarget() != nullptr && EngineExternal->moduleRenderer3D->GetGameRenderTarget()->cullingState == true && !IsInsideFrustum(&EngineExternal->moduleRenderer3D->GetGameRenderTarget()->camFrustrum)) 
 		return;
 	
 	EngineExternal->moduleRenderer3D->renderQueue.push_back(this);
 
+#ifndef STANDALONE
 	if (showAABB ==true) {
 		float3 points[8];
 		globalAABB.GetCornerPoints(points);
@@ -54,6 +54,8 @@ void C_MeshRenderer::Update()
 		globalOBB.GetCornerPoints(points);
 		ModuleRenderer3D::DrawBox(points);
 	}
+#endif // !STANDALONE
+
 }
 
 void C_MeshRenderer::RenderMesh(bool rTex)
@@ -114,6 +116,7 @@ void C_MeshRenderer::LoadData(DEConfig& nObj)
 	gameObject->transform->UpdateBoxes();
 }
 
+#ifndef STANDALONE
 bool C_MeshRenderer::OnEditor()
 {
 	if (Component::OnEditor() == true)
@@ -172,6 +175,7 @@ bool C_MeshRenderer::OnEditor()
 	}
 	return false;
 }
+#endif // !STANDALONE
 
 bool C_MeshRenderer::IsInsideFrustum(Frustum* camFrustum)
 {

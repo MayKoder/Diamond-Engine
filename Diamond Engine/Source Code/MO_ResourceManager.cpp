@@ -55,6 +55,7 @@ bool M_ResourceManager::CleanUp()
 	return true;
 }
 
+#ifndef STANDALONE
 void M_ResourceManager::OnGUI()
 {
 	//TODO: Move this to a new editor window
@@ -67,6 +68,7 @@ void M_ResourceManager::OnGUI()
 		}
 	}
 }
+#endif // !STANDALONE
 
 void M_ResourceManager::PopulateFileArray()
 {

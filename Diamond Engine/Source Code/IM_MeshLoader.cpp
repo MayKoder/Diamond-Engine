@@ -24,7 +24,7 @@
 
 #pragma comment (lib, "Assimp/libx86/assimp-vc142-mt.lib")
 
-
+#ifndef STANDALONE
 void  MeshLoader::logCallback(const char* message, char* user)
 {
 	EngineExternal->moduleEditor->LogToConsole(message);
@@ -37,12 +37,15 @@ void MeshLoader::EnableDebugMode()
 	stream.callback = logCallback;
 	aiAttachLogStream(&stream);
 }
-
 void MeshLoader::DisableDebugMode()
 {
 	// detach log stream
 	aiDetachAllLogStreams();
 }
+#endif // !STANDALONE
+
+
+
 
 //Following unity tree structure, comments represent blender tree structure
 void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTexture*>& sceneTextures, std::vector<ResourceMesh*>& _sceneMeshes, aiNode* node, GameObject* gmParent, const char* holderName)

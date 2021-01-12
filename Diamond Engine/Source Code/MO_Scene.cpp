@@ -48,6 +48,8 @@ bool M_Scene::Start()
 	//TODO IMPORTANT: This is why we should save icons .meta, or we could generate them every time
 	//But this will introduce some randomized problems with ID duplications
 	// TODO: Maybe this should be handled on the editor module? texture #include is stupid
+
+#ifndef STANDALONE
 	App->moduleEditor->editorIcons = std::vector<ResourceTexture*>(static_cast<unsigned int>(Icons::I_Max), nullptr);
 	App->moduleEditor->editorIcons[(int)Icons::I_Play] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/PlayButton.dds"));
 	App->moduleEditor->editorIcons[(int)Icons::I_Stop] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/StopButton.dds"));
@@ -58,6 +60,7 @@ bool M_Scene::Start()
 	App->moduleEditor->editorIcons[(int)Icons::I_Info] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Info.dds"));
 	App->moduleEditor->editorIcons[(int)Icons::I_Folder] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Folder.dds"));
 	App->moduleEditor->editorIcons[(int)Icons::I_Models] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Models.dds"));
+#endif // !STANDALONE
 
 	return true;
 }
@@ -78,8 +81,11 @@ update_status M_Scene::PreUpdate(float dt)
 
 update_status M_Scene::Update(float dt)
 {
+#ifndef STANDALONE
 	if (App->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && App->moduleEditor->GetSelectedGO() != nullptr && App->moduleEditor->GetSelectedAsset() == nullptr)
 		App->moduleEditor->GetSelectedGO()->Destroy();
+#endif // !STANDALONE
+
 
 	UpdateGameObjects();
 
@@ -119,14 +125,18 @@ GameObject* M_Scene::CreateGameObject(const char* name, GameObject* parent, int 
 void M_Scene::SetGameCamera(C_Camera* cam)
 {
 	App->moduleRenderer3D->SetGameRenderTarget(cam);
+
+#ifndef STANDALONE
 	dynamic_cast<W_Game*>(App->moduleEditor->GetEditorWindow(EditorWindow::GAME))->SetTargetCamera(cam);
+#endif // !STANDALONE
 }
 
 void M_Scene::CreateGameCamera(const char* name)
 {
 	GameObject* cam = CreateGameObject(name, root);
 	C_Camera* c_comp = dynamic_cast<C_Camera*>(cam->AddComponent(Component::Type::Camera));
-	SetGameCamera(c_comp);
+
+	//SetGameCamera(c_comp);
 }
 
 void M_Scene::Destroy(GameObject* gm)
@@ -169,6 +179,7 @@ void M_Scene::RecursiveUpdate(GameObject* parent)
 	}
 }
 
+#ifndef STANDALONE
 void M_Scene::OnGUI()
 {
 	if (ImGui::CollapsingHeader("Scene info", ImGuiTreeNodeFlags_DefaultOpen))
@@ -183,6 +194,7 @@ void M_Scene::OnGUI()
 		ImGui::Text("Game state %s", DETime::GetStateString());
 	}
 }
+#endif // !STANDALONE
 
 void M_Scene::SaveScene(const char* name)
 {
@@ -291,8 +303,12 @@ void M_Scene::CleanScene()
 		return;
 	delete root;
 	root = nullptr;
+
+#ifndef STANDALONE
 	App->moduleEditor->SetSelectedGO(nullptr);
 	SetGameCamera(nullptr);
+#endif
+
 	root = CreateGameObject("Scene root", nullptr);
 }
 

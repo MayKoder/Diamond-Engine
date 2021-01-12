@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include "WI_Console.h"
 #include "MMGui.h"
 #include"Globals.h"
@@ -127,3 +129,5 @@ bool LogMessage::EqualsStr(const char* cmp)
 {
 	return (strcmp(msg.c_str(), cmp) == 0) ? true : false;
 }
+
+#endif // !STANDALONE

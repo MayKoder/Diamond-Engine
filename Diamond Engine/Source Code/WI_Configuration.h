@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #pragma once
 #ifndef __W_CONFIGURATION_H__
 #define __W_CONFIGURATION_H__
@@ -30,3 +32,4 @@ private:
 
 #endif //__W_CONFIGURATION_H__
 
+#endif // !STANDALONE

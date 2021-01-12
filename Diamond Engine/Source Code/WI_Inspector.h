@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #ifndef __W_INSPECTOR_H__
 #define __W_INSPECTOR_H__
 
@@ -22,3 +24,4 @@ public:
 
 #endif //__W_INSPECTOR_H__
 
+#endif // !STANDALONE

@@ -96,7 +96,11 @@ update_status ModuleInput::PreUpdate(float dt)
 	SDL_Event e;
 	while(SDL_PollEvent(&e))
 	{
+
+#ifndef STANDALONE
 		ImGui_ImplSDL2_ProcessEvent(&e);
+#endif // !STANDALONE
+
 		switch(e.type)
 		{
 			case SDL_MOUSEWHEEL:
@@ -155,6 +159,7 @@ bool ModuleInput::CleanUp()
 	return true;
 }
 
+#ifndef STANDALONE
 void ModuleInput::OnGUI()
 {
 	if (ImGui::CollapsingHeader("Input", ImGuiTreeNodeFlags_DefaultOpen))
@@ -163,3 +168,4 @@ void ModuleInput::OnGUI()
 		ImGui::Text("Mouse motion: %d, %d", mouse_x_motion, mouse_y_motion);
 	}
 }
+#endif // !STANDALONE

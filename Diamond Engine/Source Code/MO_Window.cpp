@@ -113,6 +113,7 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
+#ifndef STANDALONE
 void ModuleWindow::OnGUI()
 {
 	if (ImGui::CollapsingHeader("Window", ImGuiTreeNodeFlags_DefaultOpen))
@@ -169,6 +170,7 @@ void ModuleWindow::OnGUI()
 		ImGui::NewLine();
 	}
 }
+#endif // !STANDALONE
 
 void ModuleWindow::SetTitle(const char* title)
 {
