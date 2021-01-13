@@ -36,6 +36,9 @@ public:
 	Frustum camFrustrum;
 	float fov;
 	bool cullingState;
+	bool MSAA;
+
+	float2 texBufferSize;
 
 //Movement logic
 public: 

@@ -33,6 +33,7 @@ bool M_ResourceManager::Init()
 	return true;
 }
 
+#ifndef STANDALONE
 bool M_ResourceManager::Start()
 {
 	assetsRoot.lastModTime = App->moduleFileSystem->GetLastModTime(assetsRoot.importPath.c_str());
@@ -49,6 +50,7 @@ update_status M_ResourceManager::PreUpdate(float dt)
 	}
 	return update_status::UPDATE_CONTINUE;
 }
+#endif // !STANDALONE
 
 bool M_ResourceManager::CleanUp()
 {

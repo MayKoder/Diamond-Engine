@@ -14,8 +14,12 @@ public:
 	virtual ~M_ResourceManager();
 
 	bool Init() override;
+
+#ifndef STANDALONE
 	bool Start() override;
 	update_status PreUpdate(float dt) override;
+#endif // !STANDALONE
+
 	bool CleanUp() override;
 
 #ifndef STANDALONE

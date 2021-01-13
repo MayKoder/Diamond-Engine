@@ -147,7 +147,7 @@ bool ModuleRenderer3D::Init()
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
-		
+		glEnable(GL_MULTISAMPLE);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
 		lights[0].Active(true);
@@ -259,8 +259,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 
 #ifndef STANDALONE
-	glClearColor(0.08f, 0.08f, 0.08f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	App->moduleEditor->Draw();
 #endif // !STANDALONE
 	

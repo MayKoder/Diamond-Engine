@@ -38,6 +38,11 @@ bool ModuleInput::Init()
 
 	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
 
+#ifdef STANDALONE
+	SDL_SetRelativeMouseMode(SDL_TRUE);
+#endif // STANDALONE
+
+
 	return ret;
 }
 

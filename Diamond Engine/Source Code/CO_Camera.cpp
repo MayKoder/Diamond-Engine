@@ -12,8 +12,10 @@
 #include"GameObject.h"
 #include"CO_Transform.h"
 #include"OpenGL.h"
+#include"MO_Window.h"
 
-C_Camera::C_Camera() : Component(nullptr), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f), cullingState(true)
+C_Camera::C_Camera() : Component(nullptr), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f), cullingState(true), MSAA(false)
+, texBufferSize(float2::zero)
 {
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
@@ -28,8 +30,14 @@ C_Camera::C_Camera() : Component(nullptr), framebuffer(0), texColorBuffer(0), rb
 	camFrustrum.pos = float3::zero;
 }
 
-C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f), cullingState(true)
+C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f), cullingState(true),
+texBufferSize(float2::zero), MSAA(false)
 {
+#ifdef STANDALONE
+	MSAA = true;
+#endif // !STANDALONE
+
+
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
 	camFrustrum.nearPlaneDistance = 1;
@@ -114,13 +122,13 @@ void C_Camera::Update()
 	camFrustrum.front = gameObject->transform->GetForward();
 	camFrustrum.up = gameObject->transform->GetUp();
 
-	
-	//glVertex3f(gameObject->transform->position.x, gameObject->transform->position.y, gameObject->transform->position.z);
-	//glVertex3f(gameObject->transform->position.x + forward.x, gameObject->transform->position.y + forward.y, gameObject->transform->position.z + forward.z);
+#ifndef STANDALONE
 	float3 points[8];
 	camFrustrum.GetCornerPoints(points);
 
 	ModuleRenderer3D::DrawBox(points, float3(0.180f, 1.f, 0.937f));
+#endif // !STANDALONE
+
 }
 
 
@@ -164,10 +172,7 @@ void C_Camera::StartDraw()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf((GLfloat*)ViewMatrixOpenGL().v);
 
-#ifndef STANDALONE
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-#endif // !STANDALONE
-
 
 	glClearColor(0.08f, 0.08f, 0.08f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -182,18 +187,34 @@ void C_Camera::StartDraw()
 
 void C_Camera::EndDraw()
 {
-#ifndef STANDALONE
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-#endif // !STANDALONE
-	glDisable(GL_DEPTH_TEST);
+	//Is this important?
 
-	//glClearColor(0.05f, 0.05f, 0.05f, 1.f);
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glBindTexture(GL_TEXTURE_2D, texColorBuffer);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+
+	/*TODO: IMPORTANT This is the MSAA resolving to screen, to resolve a MSAA FBO to a Normal FBO we need to do the same but
+	add the normal fbo as the GL_DRAW_FRAMEBUFFER*/
+#ifdef STANDALONE 
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, framebuffer);
+	glBlitFramebuffer(0, 0, texBufferSize.x, texBufferSize.y, 0, 0, texBufferSize.x, texBufferSize.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+#endif // !STANDALONE
+
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
+	glDisable(GL_DEPTH_TEST);
 }
 
 void C_Camera::ReGenerateBuffer(int w, int h)
 {
 	SetAspectRatio((float)w / (float)h);
+	texBufferSize = float2(w, h);
 
 	if (framebuffer != 0)
 		glDeleteFramebuffers(1, (GLuint*)&framebuffer);
@@ -209,18 +230,26 @@ void C_Camera::ReGenerateBuffer(int w, int h)
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
 	glGenTextures(1, (GLuint*)&texColorBuffer);
-	glBindTexture(GL_TEXTURE_2D, texColorBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, 0);
+
+	auto textureTypr = (MSAA) ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
+	glBindTexture(textureTypr, texColorBuffer);
+	(MSAA) ? glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGB, w, h, GL_TRUE) : glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(textureTypr, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(textureTypr, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
 
 	// attach it to currently bound framebuffer object
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColorBuffer, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, textureTypr, texColorBuffer, 0);
+
+
 
 	glGenRenderbuffers(1, (GLuint*)&rbo);
 	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, w, h);
+	if(MSAA)
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH24_STENCIL8, w, h);
+	else
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, w, h);
+
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
