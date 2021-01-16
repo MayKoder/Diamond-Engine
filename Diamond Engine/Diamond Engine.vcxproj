@@ -282,6 +282,7 @@
     <ClInclude Include="Source Code\glmath.h" />
     <ClInclude Include="Source Code\Globals.h" />
     <ClInclude Include="Source Code\IM_ModelImporter.h" />
+    <ClInclude Include="Source Code\IM_ShaderImporter.h" />
     <ClInclude Include="Source Code\IM_TextureImporter.h" />
     <ClInclude Include="Source Code\Light.h" />
     <ClInclude Include="Source Code\MaykMath.h" />
@@ -303,6 +304,7 @@
     <ClInclude Include="Source Code\OpenGL.h" />
     <ClInclude Include="Source Code\Primitive.h" />
     <ClInclude Include="Source Code\DEResource.h" />
+    <ClInclude Include="Source Code\RE_Shader.h" />
     <ClInclude Include="Source Code\RE_Texture.h" />
     <ClInclude Include="Source Code\Timer.h" />
     <ClInclude Include="Source Code\Window.h" />
@@ -381,6 +383,7 @@
     <ClCompile Include="Source Code\GameObject.cpp" />
     <ClCompile Include="Source Code\glmath.cpp" />
     <ClCompile Include="Source Code\IM_ModelImporter.cpp" />
+    <ClCompile Include="Source Code\IM_ShaderImporter.cpp" />
     <ClCompile Include="Source Code\IM_TextureImporter.cpp" />
     <ClCompile Include="Source Code\MMGui.cpp" />
     <ClCompile Include="Source Code\MO_MonoManager.cpp" />
@@ -389,6 +392,7 @@
     <ClCompile Include="Source Code\MO_FileSystem.cpp" />
     <ClCompile Include="Source Code\MO_ResourceManager.cpp" />
     <ClCompile Include="Source Code\MO_Scene.cpp" />
+    <ClCompile Include="Source Code\RE_Shader.cpp" />
     <ClCompile Include="Source Code\RE_Texture.cpp" />
     <ClCompile Include="Source Code\WI_Assets.cpp" />
     <ClCompile Include="Source Code\WI_Game.cpp" />

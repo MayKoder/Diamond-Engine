@@ -514,6 +514,12 @@
     <ClInclude Include="Source Code\External Libraries\PugiXML\pugixml.hpp">
       <Filter>Externals\PugiXML</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\RE_Shader.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\IM_ShaderImporter.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -797,6 +803,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\MMGui.cpp">
       <Filter>Sources\Tools\MMath</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\RE_Shader.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\IM_ShaderImporter.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

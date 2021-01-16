@@ -14,6 +14,7 @@ public:
 		MESH,
 		SCENE,
 		SCRIPT,
+		SHADER,
 		UNKNOWN
 	};
 

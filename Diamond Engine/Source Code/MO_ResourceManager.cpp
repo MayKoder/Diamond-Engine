@@ -7,17 +7,18 @@
 #include"IM_TextureImporter.h"
 #include"IM_MeshLoader.h"
 #include"IM_ModelImporter.h"
+#include"IM_ShaderImporter.h"
 
 #include"MO_Scene.h"
-
 #include"Globals.h"
 
 #include"RE_Texture.h"
 #include"RE_Mesh.h"
+#include"RE_Shader.h"
+
 #include"DEJsonSupport.h"
 #include"MO_Window.h"
 #include"MO_MonoManager.h"
-//#include"DEResource.h"
 
 M_ResourceManager::M_ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled), assetsRoot("Assets", "Assets", 0, true),
 fileCheckTime(0.f), fileUpdateDelay(2.f), meshesLibraryRoot("Meshes", "Library/Meshes", 0, true)
@@ -199,7 +200,7 @@ Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 	{
 		Resource* ret = nullptr;
 
-		static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 5, "Update all switches with new type");
+		static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 6, "Update all switches with new type");
 
 		//Save check
 		if (FileSystem::Exists(libraryPath))
@@ -209,6 +210,7 @@ Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 				case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
 				//case Resource::Type::MODEL: ret = (Resource*) new ResourceMesh(uid); break;
 				case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
+				case Resource::Type::SHADER: ret = dynamic_cast<Resource*>(new ResourceShader(uid, ShaderImporter::GetShaderType())); break;
 				//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
 			}
 
@@ -273,6 +275,7 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 		case Resource::Type::MODEL: ModelImporter::Import(fileBuffer, size, resource); break;
 		//case Resource::Type::MESH: MeshLoader::BufferToMeshes(fileBuffer, size, resource); break;
 		case Resource::Type::SCENE: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
+		case Resource::Type::SHADER: ShaderImporter::Import(fileBuffer, size, resource); break;
 	}
 
 	//Save the resource to custom format
@@ -321,7 +324,7 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid,
 {
 	Resource* ret = nullptr;
 
-	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 5, "Update all switches with new type");
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 6, "Update all switches with new type");
 	switch (type) 
 	{
 		case Resource::Type::SCENE : ret = new Resource(uid, Resource::Type::SCENE); break;
@@ -329,6 +332,7 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid,
 		case Resource::Type::MODEL: ret = new Resource(uid, Resource::Type::MODEL); break;
 		case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
 		case Resource::Type::SCRIPT: App->moduleMono->ReCompileCS(); break;
+		case Resource::Type::SHADER: ret = (Resource*) new ResourceShader(uid); break;
 	}
 
 	if (ret != nullptr)
@@ -394,6 +398,7 @@ std::string M_ResourceManager::GenLibraryPath(uint _uid, Resource::Type _type)
 		case Resource::Type::MODEL: ret = MODELS_PATH; ret += nameNoExt; ret += ".model"; break;
 		case Resource::Type::MESH: ret = MESHES_PATH; ret += nameNoExt; ret += ".mmh"; break;
 		case Resource::Type::SCENE : ret = SCENES_PATH; ret += nameNoExt; ret += ".des"; break;
+		case Resource::Type::SHADER : ret = SHADERS_PATH; ret += nameNoExt; ret += ".shdr"; break;
 	}
 
 	return ret;
@@ -529,6 +534,13 @@ Resource::Type M_ResourceManager::GetTypeFromLibraryExtension(const char* librar
 		return Resource::Type::MESH;
 	if (ext == "des")
 		return Resource::Type::SCENE;
+
+	/*The thing is, if i check both extensions, the shader will import itself twice, if i ignore one extension
+	and the other is not in the same directory, we are f**ed up... TODO IMPORTANT WARNING ERROR BUG check this...
+	I don't know what to do now*/
+	if (ext == "vert" /*|| ext == "frag"*/)
+		return Resource::Type::SHADER;
+	
 
 	return Resource::Type::UNKNOWN;
 }
