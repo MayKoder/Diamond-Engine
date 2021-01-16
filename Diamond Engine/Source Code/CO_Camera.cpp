@@ -14,8 +14,8 @@
 #include"OpenGL.h"
 #include"MO_Window.h"
 
-C_Camera::C_Camera() : Component(nullptr), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f), cullingState(true), MSAA(false)
-, texBufferSize(float2::zero)
+C_Camera::C_Camera() : Component(nullptr), fov(60.0f), cullingState(true), MSAA(false),
+msaaSamples(4)
 {
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
@@ -30,8 +30,8 @@ C_Camera::C_Camera() : Component(nullptr), framebuffer(0), texColorBuffer(0), rb
 	camFrustrum.pos = float3::zero;
 }
 
-C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f), cullingState(true),
-texBufferSize(float2::zero), MSAA(false)
+C_Camera::C_Camera(GameObject* _gm) : Component(_gm), fov(60.0f), cullingState(true), MSAA(false),
+msaaSamples(4)
 {
 #ifdef STANDALONE
 	MSAA = true;
@@ -53,14 +53,8 @@ texBufferSize(float2::zero), MSAA(false)
 
 C_Camera::~C_Camera()
 {
-	if (framebuffer != 0)
-		glDeleteFramebuffers(1, (GLuint*)&framebuffer);
-
-	if (texColorBuffer != 0)
-		glDeleteTextures(1, (GLuint*)&texColorBuffer);
-
-	if (rbo != 0)
-		glDeleteRenderbuffers(1, (GLuint*)&rbo);
+	msaaFBO.ClearBuffer();
+	resolvedFBO.ClearBuffer();
 
 	if (EngineExternal && EngineExternal->moduleRenderer3D->GetGameRenderTarget() == this)
 		EngineExternal->moduleRenderer3D->SetGameRenderTarget(nullptr);
@@ -73,7 +67,7 @@ bool C_Camera::OnEditor()
 	{
 		ImGui::Separator();
 
-		ImGui::Text("FB %i, TB %i, RBO %i", framebuffer, texColorBuffer, rbo);
+		//ImGui::Text("FB %i, TB %i, RBO %i", framebuffer, texColorBuffer, rbo);
 
 		ImGui::DragFloat("Near Distance: ", &camFrustrum.nearPlaneDistance, 0.1f, 0.01f, camFrustrum.farPlaneDistance);
 		ImGui::DragFloat("Far Distance: ", &camFrustrum.farPlaneDistance, 0.1f, camFrustrum.nearPlaneDistance, 10000.f);
@@ -102,6 +96,13 @@ bool C_Camera::OnEditor()
 
 		ImGui::Text("Camera Culling: "); ImGui::SameLine();
 		ImGui::Checkbox("##cameraCulling", &cullingState);
+
+		ImGui::Text("MSAA Samples: "); ImGui::SameLine(); 
+		if (ImGui::SliderInt("##msaasamp", &msaaSamples, 1, 4)) 
+		{
+			msaaFBO.ReGenerateBuffer(msaaFBO.texBufferSize.x, msaaFBO.texBufferSize.y, true, msaaSamples);
+			resolvedFBO.ReGenerateBuffer(resolvedFBO.texBufferSize.x, resolvedFBO.texBufferSize.y, false, 0);
+		}
 
 		if(ImGui::Button("Set as Game Camera")) 
 		{
@@ -172,7 +173,7 @@ void C_Camera::StartDraw()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf((GLfloat*)ViewMatrixOpenGL().v);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, msaaFBO.GetFrameBuffer());
 
 	glClearColor(0.08f, 0.08f, 0.08f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -189,7 +190,7 @@ void C_Camera::EndDraw()
 {
 	//Is this important?
 
-	glBindTexture(GL_TEXTURE_2D, texColorBuffer);
+	glBindTexture(GL_TEXTURE_2D, msaaFBO.GetTextureBuffer());
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -198,10 +199,18 @@ void C_Camera::EndDraw()
 	add the normal fbo as the GL_DRAW_FRAMEBUFFER*/
 #ifdef STANDALONE 
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, framebuffer);
-	glBlitFramebuffer(0, 0, texBufferSize.x, texBufferSize.y, 0, 0, texBufferSize.x, texBufferSize.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, msaaFBO.GetFrameBuffer());
+	glBlitFramebuffer(0, 0, msaaFBO.texBufferSize.x, msaaFBO.texBufferSize.y, 0, 0, msaaFBO.texBufferSize.x, msaaFBO.texBufferSize.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+
+#else
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, msaaFBO.GetFrameBuffer());
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, resolvedFBO.GetFrameBuffer());
+	glBlitFramebuffer(0, 0, msaaFBO.texBufferSize.x, msaaFBO.texBufferSize.y, 0, 0, resolvedFBO.texBufferSize.x, resolvedFBO.texBufferSize.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 #endif // !STANDALONE
 
 
@@ -214,49 +223,9 @@ void C_Camera::EndDraw()
 void C_Camera::ReGenerateBuffer(int w, int h)
 {
 	SetAspectRatio((float)w / (float)h);
-	texBufferSize = float2(w, h);
-
-	if (framebuffer != 0)
-		glDeleteFramebuffers(1, (GLuint*)&framebuffer);
-
-	if (texColorBuffer != 0)
-		glDeleteTextures(1, (GLuint*)&texColorBuffer);
-
-	if (rbo != 0)
-		glDeleteRenderbuffers(1, (GLuint*)&rbo);
-
-
-	glGenFramebuffers(1, (GLuint*)&framebuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-
-	glGenTextures(1, (GLuint*)&texColorBuffer);
-
-	auto textureTypr = (MSAA) ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
-	glBindTexture(textureTypr, texColorBuffer);
-	(MSAA) ? glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGB, w, h, GL_TRUE) : glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(textureTypr, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(textureTypr, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
-
-	// attach it to currently bound framebuffer object
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, textureTypr, texColorBuffer, 0);
-
-
-
-	glGenRenderbuffers(1, (GLuint*)&rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	if(MSAA)
-		glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH24_STENCIL8, w, h);
-	else
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, w, h);
-
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		LOG(LogType::L_ERROR, "ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	
+	msaaFBO.ReGenerateBuffer(w, h, true, 4);
+	resolvedFBO.ReGenerateBuffer(w, h, false, 0);
 }
 
 void C_Camera::LookAt(const float3& Spot)

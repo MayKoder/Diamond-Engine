@@ -1,10 +1,14 @@
 #pragma once
 
-class Resource;
+#include"RE_Shader.h"
+#include<string>
 
 namespace ShaderImporter
 {
-	void Import(char* buffer, int bSize, Resource* res);
+	void Import(char* buffer, int bSize, ResourceShader* res, const char* assetsPath);
 
-	int GetAssetsShaderType(const char* path);
+	int GetTypeMacro(ShaderType type);
+	ShaderType GetAssetsObjType(const char* assetsPath, std::string& pairString);
+
+	GLuint Compile(char* fileBuffer, ShaderType type);
 }

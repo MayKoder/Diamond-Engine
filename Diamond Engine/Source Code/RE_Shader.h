@@ -4,7 +4,7 @@
 
 typedef unsigned int GLuint;
 
-enum Shader_OBType
+enum ShaderType
 {
 	SH_Vertex,
 	SH_Frag,
@@ -18,11 +18,13 @@ public:
 	ResourceShader(unsigned int _uid);
 	~ResourceShader();
 
+	void LinkToProgram();
+
 	bool LoadToMemory() override;
 	bool UnloadFromMemory() override;
 
-	void SaveShaderCustomFormat();
-	void LoadShaderCustomFormat();
+	char* SaveShaderCustomFormat(char* vertexObjectBuffer, int vofSize, char* fragObjectBuffer, int fobSize);
+	void LoadShaderCustomFormat(const char*);
 
 	GLuint shaderObjects[SH_Max];
 

@@ -24,7 +24,8 @@
 #include"RE_Texture.h"
 #include"DETime.h"
 
-M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr)
+M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr),
+defaultShader(nullptr)
 {
 }
 
@@ -41,6 +42,7 @@ bool M_Scene::Init()
 
 bool M_Scene::Start()
 {
+	defaultShader = (ResourceShader*)App->moduleResources->RequestResource(0, "Library/Shaders/1042663147.shdr");
 	CreateGameCamera("Main Camera");
 
 	LoadScene(App->moduleResources->LibraryFromMeta(App->moduleResources->GetMetaPath("Assets/PlaneScene.des").c_str()).c_str());

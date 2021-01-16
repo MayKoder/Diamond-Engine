@@ -73,6 +73,7 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 		glMultMatrixf(transform->GetGlobalTransposed());
 	}
 
+	//TODO IMPORTANT: Optimize this, save this pointer or something
 	C_Material* material = dynamic_cast<C_Material*>(gameObject->GetComponent(Component::Type::Material));
 	GLuint id = 0;
 

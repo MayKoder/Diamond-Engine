@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include"DE_FrameBuffer.h"
 
 #include"MathGeoLib/include/Geometry/Frustum.h"
 
@@ -29,21 +30,19 @@ public:
 
 	void ReGenerateBuffer(int w, int h);
 
-	unsigned int framebuffer;
-	unsigned int texColorBuffer;
-	unsigned int rbo;
+	DE_FrameBuffer resolvedFBO;
+	DE_FrameBuffer msaaFBO;
 
 	Frustum camFrustrum;
 	float fov;
 	bool cullingState;
 	bool MSAA;
 
-	float2 texBufferSize;
-
 //Movement logic
 public: 
 	void LookAt(const float3& Spot);
-
-	//void Look(const float3 &Position, const float3&Reference, bool RotateAroundReference = false);
 	void Move(const float3& Movement);
+
+private:
+	int msaaSamples;
 };

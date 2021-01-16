@@ -425,7 +425,7 @@ void M_Editor::DrawTopBar()
 		ImGui::SameLine(ImGui::GetContentRegionMax().x - (ImGui::GetButtonSize("Take Screenshoot").x + style.FramePadding.x));
 		if (ImGui::Button("Take Screenshoot")) 
 		{
-			TextureImporter::TakeScreenshot(App->moduleCamera->editorCamera.framebuffer);
+			TextureImporter::TakeScreenshot(App->moduleCamera->editorCamera.resolvedFBO.GetFrameBuffer());
 		}
 	}
 	ImGui::End();

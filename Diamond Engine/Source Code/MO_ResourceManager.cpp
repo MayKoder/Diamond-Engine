@@ -210,7 +210,7 @@ Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 				case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
 				//case Resource::Type::MODEL: ret = (Resource*) new ResourceMesh(uid); break;
 				case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
-				case Resource::Type::SHADER: ret = dynamic_cast<Resource*>(new ResourceShader(uid, ShaderImporter::GetShaderType())); break;
+				case Resource::Type::SHADER: ret = dynamic_cast<Resource*>(new ResourceShader(uid)); break;
 				//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
 			}
 
@@ -275,7 +275,7 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 		case Resource::Type::MODEL: ModelImporter::Import(fileBuffer, size, resource); break;
 		//case Resource::Type::MESH: MeshLoader::BufferToMeshes(fileBuffer, size, resource); break;
 		case Resource::Type::SCENE: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
-		case Resource::Type::SHADER: ShaderImporter::Import(fileBuffer, size, resource); break;
+		case Resource::Type::SHADER: ShaderImporter::Import(fileBuffer, size, dynamic_cast<ResourceShader*>(resource), assetsFile); break;
 	}
 
 	//Save the resource to custom format
@@ -350,7 +350,7 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 {
 	Resource* ret = nullptr;
 
-	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 5, "Update all switches with new type");
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 6, "Update all switches with new type");
 
 	int uid = _uid;
 	switch (type)
@@ -358,6 +358,7 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 		case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
 		case Resource::Type::MODEL: ret = (Resource*) new ResourceMesh(uid); break;
 		case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
+		case Resource::Type::SHADER: ret = (Resource*) new ResourceShader(uid); break;
 		//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
 	}
 
@@ -512,6 +513,9 @@ Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFil
 	if (ext == "cs")
 		return Resource::Type::SCRIPT;
 
+	if (ext == "vert")
+		return Resource::Type::SHADER;
+
 
 	return Resource::Type::UNKNOWN;
 }
@@ -538,7 +542,7 @@ Resource::Type M_ResourceManager::GetTypeFromLibraryExtension(const char* librar
 	/*The thing is, if i check both extensions, the shader will import itself twice, if i ignore one extension
 	and the other is not in the same directory, we are f**ed up... TODO IMPORTANT WARNING ERROR BUG check this...
 	I don't know what to do now*/
-	if (ext == "vert" /*|| ext == "frag"*/)
+	if (ext == "shdr" /*|| ext == "frag"*/)
 		return Resource::Type::SHADER;
 	
 

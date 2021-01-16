@@ -26,14 +26,14 @@ void W_Game::Draw()
 	{
 
 		//Can't use if(true) return; because we need to call ImGui::End();
-		if (targetCamera != nullptr && targetCamera->framebuffer != 0) {
+		if (targetCamera != nullptr && targetCamera->resolvedFBO.GetFrameBuffer() != 0) {
 			//LOG(LogType::L_WARNING, "Frame buffer game id: %d", targetCamera->framebuffer);
 			//TODO: Dont modify aspect ratio every frame
 			targetCamera->SetAspectRatio(ImGui::GetContentRegionAvail().x / ImGui::GetContentRegionAvail().y);
 
 			//float w = ImGui::GetWindowSize().x;
 			//float h = (9 * w) / 16;
-			ImGui::Image((ImTextureID)targetCamera->texColorBuffer, ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
+			ImGui::Image((ImTextureID)targetCamera->resolvedFBO.GetTextureBuffer(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
 		}
 		if (ImGui::IsWindowHovered() && DETime::state == GameState::PLAY && ImGui::IsMouseClicked(ImGuiMouseButton_Left)) 
 			SDL_SetRelativeMouseMode(SDL_TRUE);

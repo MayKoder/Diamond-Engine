@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 class ResourceTexture;
+class ResourceShader;
 
 class C_Material : public Component
 {
@@ -20,5 +21,6 @@ public:
 
 	bool viewWithCheckers;
 	ResourceTexture* matTexture;
+	ResourceShader* shader;
 
 };

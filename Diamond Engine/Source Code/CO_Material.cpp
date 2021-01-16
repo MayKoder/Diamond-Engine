@@ -4,12 +4,14 @@
 #include"MO_Renderer3D.h"
 
 #include"RE_Texture.h"
+#include"RE_Shader.h"
 #include"MO_ResourceManager.h"
 
 #include"DEJsonSupport.h"
 #include"IM_TextureImporter.h"
 
-C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false), matTexture(nullptr)
+C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false), matTexture(nullptr),
+shader(nullptr)
 {
 	name = "Material";
 }
@@ -18,6 +20,9 @@ C_Material::~C_Material()
 {
 	if(matTexture != nullptr)
 		EngineExternal->moduleResources->UnloadResource(matTexture->GetUID());
+
+	if (shader != nullptr)
+		EngineExternal->moduleResources->UnloadResource(shader->GetUID());
 }
 
 #ifndef STANDALONE
@@ -59,6 +64,8 @@ bool C_Material::OnEditor()
 			ImGui::Text("Library Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", matTexture->GetLibraryPath());
 
 			ImGui::Checkbox("View with checkers", &viewWithCheckers);
+
+			ImGui::Text((shader != nullptr) ? "Using shader" : "Not using shader");
 
 
 		}
