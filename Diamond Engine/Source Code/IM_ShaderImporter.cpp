@@ -28,8 +28,8 @@ void ShaderImporter::Import(char* buffer, int bSize, ResourceShader* res, const 
 
 	if (vertexShader != 0 && fragmentShader != 0)
 	{
-		res->shaderObjects[ShaderType::SH_Vertex] = vertexShader;
-		res->shaderObjects[ShaderType::SH_Frag] = fragmentShader;
+		res->shaderObjects[(int)ShaderType::SH_Vertex] = vertexShader;
+		res->shaderObjects[(int)ShaderType::SH_Frag] = fragmentShader;
 
 		res->LinkToProgram();
 
@@ -39,7 +39,7 @@ void ShaderImporter::Import(char* buffer, int bSize, ResourceShader* res, const 
 		shaderFileName += std::to_string(res->GetUID());
 		shaderFileName += ".shdr";
 		
-		FileSystem::Save(shaderFileName.c_str(), saveBuffer, bSize + fobSize, false);
+		FileSystem::Save(shaderFileName.c_str(), saveBuffer, 8 + bSize + fobSize, false);
 
 		//res->LoadShaderCustomFormat(shaderFileName.c_str());
 
@@ -56,7 +56,6 @@ void ShaderImporter::Import(char* buffer, int bSize, ResourceShader* res, const 
 
 GLuint ShaderImporter::Compile(char* fileBuffer, ShaderType type)
 {
-
 	GLuint compileShader = 0;
 	compileShader = glCreateShader((type == ShaderType::SH_Vertex) ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER);
 	glShaderSource(compileShader, 1, &fileBuffer, NULL);

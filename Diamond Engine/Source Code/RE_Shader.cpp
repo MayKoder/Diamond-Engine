@@ -83,10 +83,9 @@ bool ResourceShader::UnloadFromMemory()
 
 char* ResourceShader::SaveShaderCustomFormat(char* vertexObjectBuffer, int vofSize, char* fragObjectBuffer, int fobSize)
 {
-
 	int aCounts[2] = { vofSize, fobSize};
 
-	int retSize = sizeof(aCounts) + vofSize + fobSize;
+	int retSize = sizeof(aCounts) + (sizeof(char) * vofSize) + (sizeof(char) * fobSize);
 
 	char* fileBuffer = new char[retSize];
 	char* cursor = fileBuffer;
@@ -123,21 +122,23 @@ void ResourceShader::LoadShaderCustomFormat(const char* libraryPath)
 	cursor += bytes;
 
 
-	bytes = sizeof(char) * variables[ShaderType::SH_Vertex];
-	char* vertex = new char[variables[ShaderType::SH_Vertex]];
+	bytes = sizeof(char) * variables[(int)ShaderType::SH_Vertex];
+	char* vertex = new char[variables[(int)ShaderType::SH_Vertex]];
 	memcpy(vertex, cursor, bytes);
 	cursor += bytes;
+	vertex[bytes] = '\0';
 
-	bytes = sizeof(char) * variables[ShaderType::SH_Frag];
-	char* fragment = new char[variables[ShaderType::SH_Frag]];
+	bytes = sizeof(char) * variables[(int)ShaderType::SH_Frag];
+	char* fragment = new char[variables[(int)ShaderType::SH_Frag]];
 	memcpy(fragment, cursor, bytes);
+	fragment[bytes] = '\0';
 
-	shaderObjects[ShaderType::SH_Vertex] = ShaderImporter::Compile(vertex, ShaderType::SH_Vertex);
-	shaderObjects[ShaderType::SH_Frag] = ShaderImporter::Compile(fragment, ShaderType::SH_Frag);
+	shaderObjects[(int)ShaderType::SH_Vertex] = ShaderImporter::Compile(vertex, ShaderType::SH_Vertex);
+	shaderObjects[(int)ShaderType::SH_Frag] = ShaderImporter::Compile(fragment, ShaderType::SH_Frag);
 
 	this->LinkToProgram();
 
 	RELEASE_ARRAY(fileBuffer);
-	RELEASE_ARRAY(vertex);
-	RELEASE_ARRAY(fragment);
+	//RELEASE_ARRAY(vertex);
+	//RELEASE_ARRAY(fragment);
 }

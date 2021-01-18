@@ -30,13 +30,14 @@ public:
 
 	void ReGenerateBuffer(int w, int h);
 
+	void PushCameraMatrix();
+
 	DE_FrameBuffer resolvedFBO;
 	DE_FrameBuffer msaaFBO;
 
 	Frustum camFrustrum;
 	float fov;
 	bool cullingState;
-	bool MSAA;
 
 //Movement logic
 public: 

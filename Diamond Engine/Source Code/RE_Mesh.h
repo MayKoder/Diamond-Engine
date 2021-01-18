@@ -9,6 +9,8 @@
 
 typedef unsigned int GLuint;
 typedef unsigned int uint;
+class ResourceShader;
+class C_Transform;
 
 class ResourceMesh  : public Resource
 {
@@ -20,7 +22,7 @@ public:
 	bool LoadToMemory() override;
 	bool UnloadFromMemory() override;
 
-	void RenderMesh(GLuint textureID, bool renderTexture = false);
+	void RenderMesh(GLuint textureID, bool renderTexture = false, ResourceShader* shader = nullptr, C_Transform* _transform = nullptr);
 	void RenderMeshDebug(bool* vertexNormals, bool* faceNormals);
 
 	vec3 GetVectorFromIndex(float* startValue);

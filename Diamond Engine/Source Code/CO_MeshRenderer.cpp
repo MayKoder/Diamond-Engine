@@ -4,8 +4,9 @@
 
 #include "Application.h"
 #include "MO_Renderer3D.h"
-#include "IM_FileSystem.h"
 #include"MO_ResourceManager.h"
+#include"RE_Shader.h"
+#include "IM_FileSystem.h"
 
 #include "GameObject.h"
 #include "CO_Material.h"
@@ -13,6 +14,7 @@
 #include"CO_Camera.h"
 
 #include "ImGui/imgui.h"
+#include"MO_Scene.h"
 
 #include"DEJsonSupport.h"
 
@@ -43,16 +45,38 @@ void C_MeshRenderer::Update()
 	EngineExternal->moduleRenderer3D->renderQueue.push_back(this);
 
 #ifndef STANDALONE
-	if (showAABB ==true) {
+	if (showAABB ==true) 
+	{
+		C_Transform* transform = gameObject->transform;
+		if (transform != nullptr)
+		{
+			glPushMatrix();
+			glMultMatrixf(transform->GetGlobalTransposed());
+		}
+
 		float3 points[8];
 		globalAABB.GetCornerPoints(points);
 		ModuleRenderer3D::DrawBox(points, float3(0.2f, 1.f, 0.101f));
+
+		if (transform != nullptr)
+			glPopMatrix();
 	}
 
-	if (showOBB == true) {
+	if (showOBB == true) 
+	{
+		C_Transform* transform = gameObject->transform;
+		if (transform != nullptr)
+		{
+			glPushMatrix();
+			glMultMatrixf(transform->GetGlobalTransposed());
+		}
+
 		float3 points[8];
 		globalOBB.GetCornerPoints(points);
 		ModuleRenderer3D::DrawBox(points);
+
+		if (transform != nullptr)
+			glPopMatrix();
 	}
 #endif // !STANDALONE
 
@@ -64,14 +88,12 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 		return;
 
 
-	//Position matrix?
-	//BUG: Mesh rendering will crash if you dont fix the resource manager for meshes
 	C_Transform* transform = gameObject->transform;
-	if (transform != nullptr)
-	{
-		glPushMatrix();
-		glMultMatrixf(transform->GetGlobalTransposed());
-	}
+	//if (transform != nullptr)
+	//{
+	//	glPushMatrix();
+	//	glMultMatrixf(transform->GetGlobalTransposed());
+	//}
 
 	//TODO IMPORTANT: Optimize this, save this pointer or something
 	C_Material* material = dynamic_cast<C_Material*>(gameObject->GetComponent(Component::Type::Material));
@@ -82,15 +104,15 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 
 	glColor3fv(&alternColor.x);
 
-	_mesh->RenderMesh(id, rTex);
+	_mesh->RenderMesh(id, rTex, material->shader, transform);
 
 	glColor3f(1.f, 1.f, 1.f);
 
 	if (vertexNormals || faceNormals)
 		_mesh->RenderMeshDebug(&vertexNormals, &faceNormals);
 
-	if (transform != nullptr)
-		glPopMatrix();
+	//if (transform != nullptr)
+	//	glPopMatrix();
 }
 
 void C_MeshRenderer::SaveData(JSON_Object* nObj)

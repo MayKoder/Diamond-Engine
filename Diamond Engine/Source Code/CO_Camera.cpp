@@ -14,7 +14,7 @@
 #include"OpenGL.h"
 #include"MO_Window.h"
 
-C_Camera::C_Camera() : Component(nullptr), fov(60.0f), cullingState(true), MSAA(false),
+C_Camera::C_Camera() : Component(nullptr), fov(60.0f), cullingState(true),
 msaaSamples(4)
 {
 	name = "Camera";
@@ -30,13 +30,9 @@ msaaSamples(4)
 	camFrustrum.pos = float3::zero;
 }
 
-C_Camera::C_Camera(GameObject* _gm) : Component(_gm), fov(60.0f), cullingState(true), MSAA(false),
+C_Camera::C_Camera(GameObject* _gm) : Component(_gm), fov(60.0f), cullingState(true),
 msaaSamples(4)
 {
-#ifdef STANDALONE
-	MSAA = true;
-#endif // !STANDALONE
-
 
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
@@ -166,12 +162,7 @@ void C_Camera::StartDraw()
 	glEnable(GL_DEPTH_TEST);
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-	glLoadIdentity();
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf((GLfloat*)ProjectionMatrixOpenGL().v);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf((GLfloat*)ViewMatrixOpenGL().v);
+	PushCameraMatrix();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, msaaFBO.GetFrameBuffer());
 
@@ -226,6 +217,16 @@ void C_Camera::ReGenerateBuffer(int w, int h)
 	
 	msaaFBO.ReGenerateBuffer(w, h, true, 4);
 	resolvedFBO.ReGenerateBuffer(w, h, false, 0);
+}
+
+void C_Camera::PushCameraMatrix()
+{
+	glLoadIdentity();
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf((GLfloat*)ProjectionMatrixOpenGL().v);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf((GLfloat*)ViewMatrixOpenGL().v);
 }
 
 void C_Camera::LookAt(const float3& Spot)
