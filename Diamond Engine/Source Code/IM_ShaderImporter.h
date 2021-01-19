@@ -2,6 +2,7 @@
 
 #include"RE_Shader.h"
 #include<string>
+typedef int GLint;
 
 namespace ShaderImporter
 {
@@ -10,5 +11,5 @@ namespace ShaderImporter
 	int GetTypeMacro(ShaderType type);
 	ShaderType GetAssetsObjType(const char* assetsPath, std::string& pairString);
 
-	GLuint Compile(char* fileBuffer, ShaderType type);
+	GLuint Compile(char* fileBuffer, ShaderType type, const GLint size);
 }

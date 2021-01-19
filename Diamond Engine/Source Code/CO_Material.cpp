@@ -6,6 +6,7 @@
 #include"RE_Texture.h"
 #include"RE_Shader.h"
 #include"MO_ResourceManager.h"
+#include"MO_Scene.h"
 
 #include"DEJsonSupport.h"
 #include"IM_TextureImporter.h"
@@ -14,6 +15,7 @@ C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false
 shader(nullptr)
 {
 	name = "Material";
+	shader = EngineExternal->moduleScene->defaultShader;
 }
 
 C_Material::~C_Material()
@@ -21,8 +23,8 @@ C_Material::~C_Material()
 	if(matTexture != nullptr)
 		EngineExternal->moduleResources->UnloadResource(matTexture->GetUID());
 
-	if (shader != nullptr)
-		EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+	//if (shader != nullptr)
+	//	EngineExternal->moduleResources->UnloadResource(shader->GetUID());
 }
 
 #ifndef STANDALONE

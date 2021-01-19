@@ -111,16 +111,19 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 	if(textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
-	glUseProgram(EngineExternal->moduleScene->defaultShader->shaderProgramID);
+	if (shader) 
+	{
+		shader->Bind();
 
-	GLint modelLoc = glGetUniformLocation(EngineExternal->moduleScene->defaultShader->shaderProgramID, "model_matrix");
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, _transform->GetGlobalTransposed());
+		GLint modelLoc = glGetUniformLocation(shader->shaderProgramID, "model_matrix");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, _transform->GetGlobalTransposed());
 
-	modelLoc = glGetUniformLocation(EngineExternal->moduleScene->defaultShader->shaderProgramID, "view");
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleCamera->editorCamera.ViewMatrixOpenGL().ptr());
+		modelLoc = glGetUniformLocation(shader->shaderProgramID, "view");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ViewMatrixOpenGL().ptr());
 
-	modelLoc = glGetUniformLocation(EngineExternal->moduleScene->defaultShader->shaderProgramID, "projection");
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleCamera->editorCamera.ProjectionMatrixOpenGL().ptr());
+		modelLoc = glGetUniformLocation(shader->shaderProgramID, "projection");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
+	}
 
 	//Vertices --------------------------------------------
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -183,10 +186,12 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	//--------------------------------------------
 
-
-	glUseProgram(0);
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(2);
+	if (shader) 
+	{
+		shader->Unbind();
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(2);
+	}
 }
 
 void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)

@@ -23,6 +23,9 @@ public:
 	bool LoadToMemory() override;
 	bool UnloadFromMemory() override;
 
+	void Bind();
+	void Unbind();
+
 	char* SaveShaderCustomFormat(char* vertexObjectBuffer, int vofSize, char* fragObjectBuffer, int fobSize);
 	void LoadShaderCustomFormat(const char*);
 

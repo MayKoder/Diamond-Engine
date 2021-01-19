@@ -81,6 +81,16 @@ bool ResourceShader::UnloadFromMemory()
 	return true;
 }
 
+void ResourceShader::Bind()
+{
+	glUseProgram(shaderProgramID);
+}
+
+void ResourceShader::Unbind()
+{
+	glUseProgram(0);
+}
+
 char* ResourceShader::SaveShaderCustomFormat(char* vertexObjectBuffer, int vofSize, char* fragObjectBuffer, int fobSize)
 {
 	int aCounts[2] = { vofSize, fobSize};
@@ -100,6 +110,7 @@ char* ResourceShader::SaveShaderCustomFormat(char* vertexObjectBuffer, int vofSi
 
 	bytes = fobSize;
 	memcpy(cursor, fragObjectBuffer, bytes);
+	std::string hola(cursor);
 	cursor += bytes;
 
 	return fileBuffer;
@@ -124,21 +135,22 @@ void ResourceShader::LoadShaderCustomFormat(const char* libraryPath)
 
 	bytes = sizeof(char) * variables[(int)ShaderType::SH_Vertex];
 	char* vertex = new char[variables[(int)ShaderType::SH_Vertex]];
+	ZeroMemory(vertex, bytes);
 	memcpy(vertex, cursor, bytes);
 	cursor += bytes;
-	vertex[bytes] = '\0';
+
 
 	bytes = sizeof(char) * variables[(int)ShaderType::SH_Frag];
-	char* fragment = new char[variables[(int)ShaderType::SH_Frag]];
+	char* fragment = new char[bytes];
+	ZeroMemory(fragment, bytes);
 	memcpy(fragment, cursor, bytes);
-	fragment[bytes] = '\0';
 
-	shaderObjects[(int)ShaderType::SH_Vertex] = ShaderImporter::Compile(vertex, ShaderType::SH_Vertex);
-	shaderObjects[(int)ShaderType::SH_Frag] = ShaderImporter::Compile(fragment, ShaderType::SH_Frag);
+	shaderObjects[(int)ShaderType::SH_Vertex] = ShaderImporter::Compile(vertex, ShaderType::SH_Vertex, variables[(int)ShaderType::SH_Vertex]);
+	shaderObjects[(int)ShaderType::SH_Frag] = ShaderImporter::Compile(fragment, ShaderType::SH_Frag, variables[(int)ShaderType::SH_Frag]);
 
 	this->LinkToProgram();
 
+	RELEASE_ARRAY(vertex);
+	RELEASE_ARRAY(fragment);
 	RELEASE_ARRAY(fileBuffer);
-	//RELEASE_ARRAY(vertex);
-	//RELEASE_ARRAY(fragment);
 }

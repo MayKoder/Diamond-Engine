@@ -23,8 +23,8 @@ void ShaderImporter::Import(char* buffer, int bSize, ResourceShader* res, const 
 	GLuint vertexShader = 0;
 	GLuint fragmentShader = 0;
 
-	vertexShader = Compile(buffer, type);
-	fragmentShader = Compile(pairBuffer, ShaderType::SH_Frag);
+	vertexShader = Compile(buffer, type, bSize);
+	fragmentShader = Compile(pairBuffer, ShaderType::SH_Frag, fobSize);
 
 	if (vertexShader != 0 && fragmentShader != 0)
 	{
@@ -54,11 +54,11 @@ void ShaderImporter::Import(char* buffer, int bSize, ResourceShader* res, const 
 		RELEASE_ARRAY(pairBuffer);
 }
 
-GLuint ShaderImporter::Compile(char* fileBuffer, ShaderType type)
+GLuint ShaderImporter::Compile(char* fileBuffer, ShaderType type, const GLint size)
 {
 	GLuint compileShader = 0;
 	compileShader = glCreateShader((type == ShaderType::SH_Vertex) ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER);
-	glShaderSource(compileShader, 1, &fileBuffer, NULL);
+	glShaderSource(compileShader, 1, &fileBuffer, &size);
 	glCompileShader(compileShader);
 
 	int success = 0;

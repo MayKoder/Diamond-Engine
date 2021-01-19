@@ -23,6 +23,7 @@
 
 #include"RE_Texture.h"
 #include"DETime.h"
+#include"RE_Shader.h"
 
 M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr),
 defaultShader(nullptr)
@@ -97,6 +98,9 @@ update_status M_Scene::Update(float dt)
 bool M_Scene::CleanUp()
 {
 	//This will delete all the gameObjects
+	if (defaultShader != nullptr)
+		EngineExternal->moduleResources->UnloadResource(defaultShader->GetUID());
+
 	delete root;
 	return true;
 }

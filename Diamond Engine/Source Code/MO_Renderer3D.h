@@ -67,6 +67,8 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix;
 
+	C_Camera* activeRenderCamera = nullptr; //TODO: This is temporal
+
 private:
 	C_Camera* gameCamera;
 	LineSegment pickingDebug;
