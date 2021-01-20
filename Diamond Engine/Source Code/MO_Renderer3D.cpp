@@ -6,22 +6,26 @@
 #include "MO_Camera3D.h"
 #include "MO_Editor.h"
 #include "MO_Scene.h"
+#include "MO_Input.h"
 
 #include "RE_Mesh.h"
+#include "RE_Texture.h"
 #include "mmgr/mmgr.h"
 
 #include"WI_Game.h"
 
-#include"MO_Input.h"
 #include"GameObject.h"
 
 #include"CO_MeshRenderer.h"
 #include"CO_Camera.h"
 #include"CO_Transform.h"
 
-#include"RE_Texture.h"
 #include"Primitive.h"
 #include"MathGeoLib/include/Geometry/Triangle.h"
+
+#include"IM_TextureImporter.h"			//Delete this
+#include "MO_ResourceManager.h"			//Delete this
+#include"RE_Shader.h"					//Delete this
 
 #ifdef _DEBUG
 #pragma comment (lib, "MathGeoLib/libx86/MGDebug/MathGeoLib.lib")
@@ -180,6 +184,18 @@ bool ModuleRenderer3D::Init()
 
 	// Projection matrix for
 	OnResize(App->moduleWindow->s_width, App->moduleWindow->s_height);
+
+	std::vector<std::string> faces = {
+		"EngineIcons/Skybox/right.jpg",
+		"EngineIcons/Skybox/left.jpg",
+		"EngineIcons/Skybox/top.jpg",
+		"EngineIcons/Skybox/bottom.jpg",
+		"EngineIcons/Skybox/front.jpg",
+		"EngineIcons/Skybox/back.jpg"};
+
+	skybox.shaderRes =dynamic_cast<ResourceShader*>(App->moduleResources->RequestResource(-1, "Library/Shaders/2136643433.shdr"));
+	TextureImporter::LoadCubeMap(faces, skybox);
+	skybox.CreateGLData();
 	
 	return ret;
 }
@@ -227,6 +243,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
+	skybox.DrawAsSkybox(&App->moduleCamera->editorCamera);
+
 	DebugLine(pickingDebug);
 	App->moduleCamera->editorCamera.EndDraw();
 #endif // !STANDALONE
@@ -241,8 +259,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		for (uint i = 0; i < MAX_LIGHTS; ++i)
 			lights[i].Render();
 
-		p.Render();
-
 		if (!renderQueue.empty())
 		{
 			for (size_t i = 0; i < renderQueue.size(); i++)
@@ -254,6 +270,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			RenderWithOrdering(true);
 		}
 
+		skybox.DrawAsSkybox(gameCamera);
 		gameCamera->EndDraw();
 	}
 
@@ -274,6 +291,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 bool ModuleRenderer3D::CleanUp()
 {
 	LOG(LogType::L_NORMAL, "Destroying 3D Renderer");
+	skybox.ClearMemory();
+
 	SDL_GL_DeleteContext(context);
 	ClearAllRenderData();
 

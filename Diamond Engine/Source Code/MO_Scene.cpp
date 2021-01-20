@@ -43,7 +43,7 @@ bool M_Scene::Init()
 
 bool M_Scene::Start()
 {
-	defaultShader = (ResourceShader*)App->moduleResources->RequestResource(0, "Library/Shaders/1042663147.shdr");
+	defaultShader = (ResourceShader*)App->moduleResources->RequestResource(-1, "Library/Shaders/1042663147.shdr");
 	CreateGameCamera("Main Camera");
 
 	LoadScene(App->moduleResources->LibraryFromMeta(App->moduleResources->GetMetaPath("Assets/PlaneScene.des").c_str()).c_str());
@@ -54,15 +54,15 @@ bool M_Scene::Start()
 
 #ifndef STANDALONE
 	App->moduleEditor->editorIcons = std::vector<ResourceTexture*>(static_cast<unsigned int>(Icons::I_Max), nullptr);
-	App->moduleEditor->editorIcons[(int)Icons::I_Play] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/PlayButton.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Stop] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/StopButton.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Pause] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/PauseButton.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Step] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/StepButton.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Warning] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Warning.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Error] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Error.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Info] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Info.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Folder] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Folder.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Models] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Models.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Play] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(-1, "EngineIcons/PlayButton.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Stop] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(-1, "EngineIcons/StopButton.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Pause] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(-1, "EngineIcons/PauseButton.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Step] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(-1, "EngineIcons/StepButton.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Warning] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(-1, "EngineIcons/Warning.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Error] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(-1, "EngineIcons/Error.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Info] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(-1, "EngineIcons/Info.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Folder] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(-1, "EngineIcons/Folder.dds"));
+	App->moduleEditor->editorIcons[(int)Icons::I_Models] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(-1, "EngineIcons/Models.dds"));
 #endif // !STANDALONE
 
 	return true;

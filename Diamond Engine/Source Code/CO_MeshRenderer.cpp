@@ -45,7 +45,6 @@ void C_MeshRenderer::Update()
 	EngineExternal->moduleRenderer3D->renderQueue.push_back(this);
 
 #ifndef STANDALONE
-	//EngineExternal->moduleRenderer3D->edito->PushCameraMatrix();
 	if (showAABB ==true) 
 	{
 

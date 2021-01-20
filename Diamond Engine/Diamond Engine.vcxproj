@@ -188,6 +188,7 @@
     <ClInclude Include="Source Code\DEJsonSupport.h" />
     <ClInclude Include="Source Code\DERect.h" />
     <ClInclude Include="Source Code\DETime.h" />
+    <ClInclude Include="Source Code\DE_Cubemap.h" />
     <ClInclude Include="Source Code\DE_FrameBuffer.h" />
     <ClInclude Include="Source Code\EngineVersion.h" />
     <ClInclude Include="Source Code\External Libraries\DevIL\include\devil_cpp_wrapper.hpp" />
@@ -333,6 +334,7 @@
     <ClCompile Include="Source Code\DERect.cpp" />
     <ClCompile Include="Source Code\DEResource.cpp" />
     <ClCompile Include="Source Code\DETime.cpp" />
+    <ClCompile Include="Source Code\DE_Cubemap.cpp" />
     <ClCompile Include="Source Code\DE_FrameBuffer.cpp" />
     <ClCompile Include="Source Code\EngineVersion.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGuizmo\ImCurveEdit.cpp" />

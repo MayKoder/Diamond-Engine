@@ -67,6 +67,7 @@ bool C_Material::OnEditor()
 
 			ImGui::Checkbox("View with checkers", &viewWithCheckers);
 
+			ImGui::Dummy(ImVec2(0, 15));
 			ImGui::Text((shader != nullptr) ? "Using shader" : "Not using shader");
 
 
@@ -90,6 +91,11 @@ bool C_Material::OnEditor()
 				ImGui::EndDragDropTarget();
 			}
 		}
+
+		if (shader)
+			shader->DrawEditor();
+
+
 		return true;
 	}
 	return false;

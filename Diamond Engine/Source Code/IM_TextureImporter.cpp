@@ -10,6 +10,7 @@
 
 #include"DEResource.h"
 #include"RE_Texture.h"
+#include"DE_Cubemap.h"
 
 #pragma comment( lib, "DevIL/libx86/DevIL.lib" )
 #pragma comment( lib, "DevIL/libx86/ILU.lib" )
@@ -102,4 +103,55 @@ void TextureImporter::TakeScreenshot(int frameBuffer)
 	ilDeleteImage(imageID);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void TextureImporter::LoadCubeMap(std::vector<std::string>& faces, DE_Cubemap& cubeMap)
+{
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+
+	int width = 0, height = 0, nrChannels = 0;
+	for (unsigned int i = 0; i < faces.size(); i++)
+	{
+		char* buffer = nullptr;
+		unsigned int size = FileSystem::LoadToBuffer(faces[i].c_str(), &buffer);
+
+		ILuint imageID;
+		ilGenImages(1, &imageID);
+		ilBindImage(imageID);
+
+		if (!ilLoadL(IL_TYPE_UNKNOWN, buffer, size))
+			LOG(LogType::L_ERROR, "Image not loaded");
+
+		width = ilGetInteger(IL_IMAGE_WIDTH);
+		height = ilGetInteger(IL_IMAGE_HEIGHT);
+
+		unsigned char* data = ilGetData();
+
+		if (data)
+		{
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+				0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
+			);
+		}
+		else
+		{
+			LOG(LogType::L_ERROR, "Cubemap tex failed to load at path: %s", faces[i]);
+		}
+
+		RELEASE_ARRAY(buffer);
+		ilDeleteImage(imageID);
+		ilBindImage(0);
+	}
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+	cubeMap.textureID = textureID;
 }

@@ -124,6 +124,11 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 		modelLoc = glGetUniformLocation(shader->shaderProgramID, "projection");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
 	}
+	else
+	{
+		glPushMatrix();
+		glMultMatrixf(_transform->GetGlobalTransposed());
+	}
 
 	//Vertices --------------------------------------------
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -191,6 +196,10 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 		shader->Unbind();
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(2);
+	}
+	else 
+	{
+		glPopMatrix();
 	}
 }
 

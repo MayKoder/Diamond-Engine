@@ -188,11 +188,14 @@ void M_ResourceManager::UpdateMeshesDisplay()
 Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 {
 	//Find if the resource is already loaded
-	std::map<int, Resource*>::iterator it = resources.find(uid);
-	if (it != resources.end())
+	if (uid > -1) 
 	{
-		it->second->IncreaseReferenceCount();
-		return it->second;
+		std::map<int, Resource*>::iterator it = resources.find(uid);
+		if (it != resources.end())
+		{
+			it->second->IncreaseReferenceCount();
+			return it->second;
+		}
 	}
 
 	//Find the library file (if exists) and load the custom file format
