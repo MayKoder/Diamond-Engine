@@ -10,7 +10,7 @@
 #include"CO_Transform.h"
 #include"MathGeoLib/include/Math/float4.h"
 
-ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled), mouseSensitivity(0.50f), cameraSpeed(4.f), cameraMovement(0.f, 0.f, 0.f)
+ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled), mouseSensitivity(0.50f), cameraSpeed(40.f), cameraMovement(0.f, 0.f, 0.f)
 {
 	editorCamera.camFrustrum.farPlaneDistance = 5000;
 	editorCamera.camFrustrum.pos = float3(8.0f, 3.0f, 8.0f);

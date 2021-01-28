@@ -80,6 +80,9 @@ bool ResourceShader::UnloadFromMemory()
 	glDeleteShader(shaderProgramID);
 	shaderProgramID = 0;
 
+	uniforms.clear();
+	attributes.clear();
+
 	return true;
 }
 
@@ -115,7 +118,7 @@ void ResourceShader::DrawEditor()
 
 		case GL_SAMPLER_2D: 
 		{
-			//ImGui::SameLine();
+			ImGui::SameLine();
 			//GLuint test = 0;
 			//glGetUniformuiv(shaderProgramID, uniforms[i].vIndex, &test);
 			//ImGui::Image((ImTextureID)test, ImVec2(50, 50));
@@ -179,7 +182,6 @@ char* ResourceShader::SaveShaderCustomFormat(char* vertexObjectBuffer, int vofSi
 
 	bytes = fobSize;
 	memcpy(cursor, fragObjectBuffer, bytes);
-	std::string hola(cursor);
 	cursor += bytes;
 
 	return fileBuffer;

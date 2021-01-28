@@ -5,14 +5,14 @@
         6.281865119934082
     ],
     "EditorCameraZ": [
-        -0.57466733455657959,
-        -0.81788456439971924,
-        -0.028676271438598633
+        -0.54489040374755859,
+        -0.81980752944946289,
+        -0.17609649896621704
     ],
     "EditorCameraY": [
-        -0.81686902046203613,
-        0.57538235187530518,
-        -0.040745258331298828
+        -0.78007686138153076,
+        0.5726391077041626,
+        -0.25212010741233826
     ],
     "Game Objects": [
         {
@@ -149,7 +149,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/2091676807.dds",
-                    "UID": 2091676807
+                    "UID": 2091676807,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -406,7 +409,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/445551395.dds",
-                    "UID": 445551395
+                    "UID": 445551395,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -453,7 +459,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/521204416.dds",
-                    "UID": 521204416
+                    "UID": 521204416,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -500,7 +509,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/486701648.dds",
-                    "UID": 486701648
+                    "UID": 486701648,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -547,7 +559,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1658453042.dds",
-                    "UID": 1658453042
+                    "UID": 1658453042,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -633,7 +648,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1093215599.dds",
-                    "UID": 1093215599
+                    "UID": 1093215599,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -680,7 +698,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
-                    "UID": 741462977
+                    "UID": 741462977,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -727,7 +748,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
-                    "UID": 741462977
+                    "UID": 741462977,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -774,7 +798,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/486701648.dds",
-                    "UID": 486701648
+                    "UID": 486701648,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -821,7 +848,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1921918051.dds",
-                    "UID": 1921918051
+                    "UID": 1921918051,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -868,7 +898,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/445551395.dds",
-                    "UID": 445551395
+                    "UID": 445551395,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -915,7 +948,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
-                    "UID": 741462977
+                    "UID": 741462977,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -962,7 +998,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
-                    "UID": 741462977
+                    "UID": 741462977,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1009,7 +1048,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
-                    "UID": 741462977
+                    "UID": 741462977,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1056,7 +1098,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/741462977.dds",
-                    "UID": 741462977
+                    "UID": 741462977,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1103,7 +1148,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
-                    "UID": 1479874027
+                    "UID": 1479874027,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1150,7 +1198,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/486701648.dds",
-                    "UID": 486701648
+                    "UID": 486701648,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1197,7 +1248,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1658453042.dds",
-                    "UID": 1658453042
+                    "UID": 1658453042,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1244,7 +1298,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
-                    "UID": 1479874027
+                    "UID": 1479874027,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1291,7 +1348,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
-                    "UID": 1538850819
+                    "UID": 1538850819,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1377,7 +1437,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
-                    "UID": 1538850819
+                    "UID": 1538850819,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1424,7 +1487,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
-                    "UID": 1538850819
+                    "UID": 1538850819,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1471,7 +1537,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/445551395.dds",
-                    "UID": 445551395
+                    "UID": 445551395,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1518,7 +1587,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1921918051.dds",
-                    "UID": 1921918051
+                    "UID": 1921918051,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1565,7 +1637,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
-                    "UID": 1479874027
+                    "UID": 1479874027,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1612,7 +1687,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
-                    "UID": 1538850819
+                    "UID": 1538850819,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1659,7 +1737,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1921918051.dds",
-                    "UID": 1921918051
+                    "UID": 1921918051,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1706,7 +1787,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
-                    "UID": 1479874027
+                    "UID": 1479874027,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1753,7 +1837,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1479874027.dds",
-                    "UID": 1479874027
+                    "UID": 1479874027,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1800,7 +1887,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
-                    "UID": 1538850819
+                    "UID": 1538850819,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1847,7 +1937,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/1538850819.dds",
-                    "UID": 1538850819
+                    "UID": 1538850819,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         },
@@ -1894,7 +1987,10 @@
                     "IsEmpty": false,
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Materials\/521204416.dds",
-                    "UID": 521204416
+                    "UID": 521204416,
+                    "ShaderAssetPath": "Empty",
+                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
+                    "ShaderUID": 1042663147
                 }
             ]
         }

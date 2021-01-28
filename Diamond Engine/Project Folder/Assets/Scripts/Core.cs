@@ -45,10 +45,10 @@ public class Core : DiamondComponent
         {
             InternalCalls.CreateBullet(shootPoint.globalPosition, shootPoint.globalRotation, shootPoint.globalScale);
         }
-
-        return;
 	}
 }
+
+
 
 
 

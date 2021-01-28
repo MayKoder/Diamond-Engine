@@ -93,8 +93,13 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 void C_MeshRenderer::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
-	DEJson::WriteString(nObj, "Path", _mesh->GetLibraryPath());
-	DEJson::WriteInt(nObj, "UID", _mesh->GetUID());
+
+	if (_mesh) //TODO: I don't think this is a good idea
+	{
+		DEJson::WriteString(nObj, "Path", _mesh->GetLibraryPath());
+		DEJson::WriteInt(nObj, "UID", _mesh->GetUID());
+	}
+
 	DEJson::WriteVector3(nObj, "alternColor", &alternColor.x);
 }
 void C_MeshRenderer::LoadData(DEConfig& nObj)

@@ -162,6 +162,8 @@ void C_Camera::StartDraw()
 	EngineExternal->moduleRenderer3D->activeRenderCamera = this;
 
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
 	PushCameraMatrix();

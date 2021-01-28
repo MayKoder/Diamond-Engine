@@ -7,6 +7,7 @@
 W_TextEditor::W_TextEditor() : Window(), txtName("") /*: texColorBuffer(-1)*/
 {
 	name = "Text Editor"; //No lng definition for C# :(
+	txtEditor.SetLanguageDefinition(TextEditor::LanguageDefinition::GLSL());
 }
 
 W_TextEditor::~W_TextEditor()

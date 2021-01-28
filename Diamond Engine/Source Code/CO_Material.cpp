@@ -15,7 +15,7 @@ C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false
 shader(nullptr)
 {
 	name = "Material";
-	shader = EngineExternal->moduleScene->defaultShader;
+	shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleScene->defaultShader->GetUID()));
 }
 
 C_Material::~C_Material()
@@ -23,8 +23,8 @@ C_Material::~C_Material()
 	if(matTexture != nullptr)
 		EngineExternal->moduleResources->UnloadResource(matTexture->GetUID());
 
-	//if (shader != nullptr)
-	//	EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+	if (shader != nullptr)
+		EngineExternal->moduleResources->UnloadResource(shader->GetUID());
 }
 
 #ifndef STANDALONE
@@ -119,6 +119,12 @@ void C_Material::SaveData(JSON_Object* nObj)
 		DEJson::WriteString(nObj, "LibraryPath", matTexture->GetLibraryPath());
 		DEJson::WriteInt(nObj, "UID", matTexture->GetUID());
 	}
+	if (shader != nullptr) 
+	{
+		DEJson::WriteString(nObj, "ShaderAssetPath", shader->GetAssetPath());
+		DEJson::WriteString(nObj, "ShaderLibraryPath", shader->GetLibraryPath());
+		DEJson::WriteInt(nObj, "ShaderUID", shader->GetUID());
+	}
 	//TODO: Call texture importer and load data
 }
 
@@ -141,4 +147,12 @@ void C_Material::LoadData(DEConfig& nObj)
 	}
 
 	matTexture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), texName.c_str()));
+
+	if (shader != nullptr) 
+	{
+		EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+		shader = nullptr;
+	}
+
+	shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("ShaderUID")));
 }

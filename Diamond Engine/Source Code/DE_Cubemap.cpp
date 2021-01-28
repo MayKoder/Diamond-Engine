@@ -3,6 +3,8 @@
 #include"RE_Shader.h"
 #include"CO_Camera.h"
 #include"MathGeoLib/include/Math/float4x4.h"
+#include"Application.h"
+#include"MO_ResourceManager.h"
 
 DE_Cubemap::DE_Cubemap() : shaderRes(nullptr), textureID(0), vboId(0)
 {
@@ -33,12 +35,20 @@ void DE_Cubemap::ClearMemory()
 	if (vboId != 0)
 		glDeleteBuffers(1, &vboId);
 
-	if(shaderRes)
-		shaderRes->UnloadFromMemory();
+	if (shaderRes)
+		EngineExternal->moduleResources->UnloadResource(shaderRes->GetUID());
 }
 
 void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 {
+	glDepthFunc(GL_LEQUAL);
+	//glDisable(GL_DEPTH_TEST);
+	//glDepthFunc(GL_EQUAL);
+
+	//glDepthMask(GL_FALSE);
+	//glDepthRange(1.f, 1.f);
+	//glEnable(GL_DEPTH_CLAMP);
+
 	shaderRes->Bind();
 
 
@@ -49,17 +59,27 @@ void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 	modelLoc = glGetUniformLocation(shaderRes->shaderProgramID, "projection");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, _camera->ProjectionMatrixOpenGL().ptr());
 
+	//glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
 
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
 
-	shaderRes->Unbind();
+	glDrawArrays(GL_TRIANGLES, 0, 36);
 
 	glDisableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 	glBindVertexArray(0);
+
+	//glDepthRange(0.f, 1.f);
+	glDepthFunc(GL_LESS);
+	//glDisable(GL_DEPTH_CLAMP);
+	//glEnable(GL_DEPTH_TEST);
+	//glDepthFunc(GL_LESS);
+
+	shaderRes->Unbind();
+
 }

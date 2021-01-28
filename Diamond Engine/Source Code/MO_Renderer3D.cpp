@@ -24,8 +24,6 @@
 #include"MathGeoLib/include/Geometry/Triangle.h"
 
 #include"IM_TextureImporter.h"			//Delete this
-#include "MO_ResourceManager.h"			//Delete this
-#include"RE_Shader.h"					//Delete this
 
 #ifdef _DEBUG
 #pragma comment (lib, "MathGeoLib/libx86/MGDebug/MathGeoLib.lib")
@@ -191,12 +189,13 @@ bool ModuleRenderer3D::Init()
 		"EngineIcons/Skybox/top.jpg",
 		"EngineIcons/Skybox/bottom.jpg",
 		"EngineIcons/Skybox/front.jpg",
-		"EngineIcons/Skybox/back.jpg"};
+		"EngineIcons/Skybox/back.jpg"
+	};
 
-	skybox.shaderRes =dynamic_cast<ResourceShader*>(App->moduleResources->RequestResource(-1, "Library/Shaders/2136643433.shdr"));
 	TextureImporter::LoadCubeMap(faces, skybox);
 	skybox.CreateGLData();
-	
+	//glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
 	return ret;
 }
 
@@ -242,6 +241,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		RenderWithOrdering();
 		(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
+
 
 	skybox.DrawAsSkybox(&App->moduleCamera->editorCamera);
 

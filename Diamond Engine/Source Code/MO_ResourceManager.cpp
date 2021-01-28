@@ -188,14 +188,14 @@ void M_ResourceManager::UpdateMeshesDisplay()
 Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 {
 	//Find if the resource is already loaded
-	if (uid > -1) 
+	if (uid <= -1)
+		return nullptr;
+
+	std::map<int, Resource*>::iterator it = resources.find(uid);
+	if (it != resources.end())
 	{
-		std::map<int, Resource*>::iterator it = resources.find(uid);
-		if (it != resources.end())
-		{
-			it->second->IncreaseReferenceCount();
-			return it->second;
-		}
+		it->second->IncreaseReferenceCount();
+		return it->second;
 	}
 
 	//Find the library file (if exists) and load the custom file format
@@ -208,6 +208,7 @@ Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 		//Save check
 		if (FileSystem::Exists(libraryPath))
 		{
+			//uid = 0; //This should be the uid from library
 			switch (GetTypeFromLibraryExtension(libraryPath))
 			{
 				case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;

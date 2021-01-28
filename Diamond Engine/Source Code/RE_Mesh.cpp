@@ -134,9 +134,13 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, vertices_id);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
-	glEnableVertexAttribArray(0);
-	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+	if (shader) 
+	{
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+		glEnableVertexAttribArray(0);
+	}
+	else
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
 	//--------------------------------------------
 
 
@@ -145,12 +149,13 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 	{
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, texCoords_id);
-		//glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-
-
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		glEnableVertexAttribArray(2);
-		//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		if (shader) 
+		{
+			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+			glEnableVertexAttribArray(2);
+		}
+		else
+			glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 	}
 	//--------------------------------------------
 
@@ -159,9 +164,13 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 	{
 		glEnableClientState(GL_NORMAL_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, normalbuffer_id);
-		glNormalPointer(GL_FLOAT, 0, NULL);
-		//glEnableVertexAttribArray(2);
-		//glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		if (shader) 
+		{
+			glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+			glEnableVertexAttribArray(3);
+		}
+		else
+			glNormalPointer(GL_FLOAT, 0, NULL);
 	}
 	//--------------------------------------------
 
@@ -196,6 +205,7 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 		shader->Unbind();
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(2);
+		glDisableVertexAttribArray(3);
 	}
 	else 
 	{
