@@ -140,6 +140,7 @@ void C_Camera::SaveData(JSON_Object* nObj)
 
 	DEJson::WriteFloat(nObj, "vFOV", camFrustrum.verticalFov);
 	DEJson::WriteFloat(nObj, "hFOV", camFrustrum.horizontalFov);
+	DEJson::WriteBool(nObj, "culling", cullingState);
 }
 
 void C_Camera::LoadData(DEConfig& nObj)
@@ -153,6 +154,7 @@ void C_Camera::LoadData(DEConfig& nObj)
 
 	camFrustrum.verticalFov = nObj.ReadFloat("vFOV");
 	camFrustrum.horizontalFov = nObj.ReadFloat("hFOV");
+	cullingState = nObj.ReadBool("culling");
 
 	EngineExternal->moduleScene->SetGameCamera(this);
 }

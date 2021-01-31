@@ -22,7 +22,7 @@
 #include"MathGeoLib/include/Geometry/Plane.h"
 
 C_MeshRenderer::C_MeshRenderer(GameObject* _gm) : Component(_gm), _mesh(nullptr),
-faceNormals(false), vertexNormals(false), showAABB(true), showOBB(true)
+faceNormals(false), vertexNormals(false), showAABB(false), showOBB(false)
 {
 	name = "Mesh Renderer";
 	alternColor = float3::one;

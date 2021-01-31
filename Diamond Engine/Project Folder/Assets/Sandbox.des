@@ -277,7 +277,8 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6568517684936523
+                    "hFOV": 1.6568517684936523,
+                    "culling": false
                 }
             ]
         }

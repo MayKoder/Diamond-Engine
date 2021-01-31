@@ -136,8 +136,8 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 
 	if (shader) 
 	{
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
 		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
 	}
 	else
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
@@ -151,8 +151,8 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 		glBindBuffer(GL_ARRAY_BUFFER, texCoords_id);
 		if (shader) 
 		{
-			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 			glEnableVertexAttribArray(2);
+			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		}
 		else
 			glTexCoordPointer(2, GL_FLOAT, 0, NULL);
@@ -166,8 +166,8 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 		glBindBuffer(GL_ARRAY_BUFFER, normalbuffer_id);
 		if (shader) 
 		{
-			glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 			glEnableVertexAttribArray(3);
+			glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		}
 		else
 			glNormalPointer(GL_FLOAT, 0, NULL);

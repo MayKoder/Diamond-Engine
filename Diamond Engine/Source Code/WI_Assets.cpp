@@ -113,13 +113,16 @@ void W_Assets::DrawFileTree(AssetDir& file)
 
 		//if (ImGui::IsMouseDoubleClicked(0) && file.isDir)
 		//	displayFolder = &file;
-		if(file.isDir == false && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_::ImGuiMouseButton_Left))
-			if (EngineExternal->moduleResources->GetTypeFromAssetExtension(file.importPath.c_str()) == Resource::Type::SCRIPT) 
+		if (file.isDir == false && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_::ImGuiMouseButton_Left)) 
+		{
+			Resource::Type type = EngineExternal->moduleResources->GetTypeFromAssetExtension(file.importPath.c_str());
+			if (type == Resource::Type::SCRIPT /*|| type == Resource::Type::SHADER*/)
 			{
 				W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::TEXTEDITOR));
 				txtEditor->SetTextFromFile(file.importPath.c_str());
 				//Load script text and open visual studio?
 			}
+		}
 	}
 
 

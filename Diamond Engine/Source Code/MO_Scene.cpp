@@ -45,7 +45,7 @@ bool M_Scene::Start()
 {
 	CreateGameCamera("Main Camera");
 
-	LoadScene(App->moduleResources->LibraryFromMeta(App->moduleResources->GetMetaPath("Assets/PlaneScene.des").c_str()).c_str());
+	LoadScene(App->moduleResources->LibraryFromMeta(App->moduleResources->GetMetaPath("Assets/Sandbox.des").c_str()).c_str());
 
 	//TODO IMPORTANT: This is why we should save icons .meta, or we could generate them every time
 	//But this will introduce some randomized problems with ID duplications
