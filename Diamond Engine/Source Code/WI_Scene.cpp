@@ -78,9 +78,11 @@ void W_Scene::Draw()
 			ImGui::EndDragDropTarget();
 		}
 
-		ImGui::SetCursorPos(ImVec2(10, 30));
+		int position = 10;
+		ImGui::SetCursorPos(ImVec2(position, 30));
 		if (ImGui::Button((mode == ImGuizmo::MODE::LOCAL) ? "LOCAL" : "WORLD"))
 			(mode == ImGuizmo::MODE::LOCAL) ? mode = ImGuizmo::MODE::WORLD : mode = ImGuizmo::MODE::LOCAL;
+
 
 		//Draw gizmo
 		if (App->moduleEditor->GetSelectedGO())

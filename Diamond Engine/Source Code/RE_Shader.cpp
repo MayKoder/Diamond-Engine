@@ -89,6 +89,10 @@ bool ResourceShader::UnloadFromMemory()
 void ResourceShader::Bind()
 {
 	glUseProgram(shaderProgramID);
+
+	//Push all uniforms
+
+
 }
 
 void ResourceShader::Unbind()
@@ -118,7 +122,7 @@ void ResourceShader::DrawEditor()
 
 		case GL_SAMPLER_2D: 
 		{
-			ImGui::SameLine();
+			//ImGui::SameLine();
 			//GLuint test = 0;
 			//glGetUniformuiv(shaderProgramID, uniforms[i].vIndex, &test);
 			//ImGui::Image((ImTextureID)test, ImVec2(50, 50));
@@ -133,6 +137,20 @@ void ResourceShader::DrawEditor()
 			ImGui::ColorEdit4("##test", &ret.x);
 			break;
 		}
+
+		case GL_FLOAT_VEC4: 
+		{
+			ImGui::SameLine();
+			ImVec4 ret = ImVec4(0, 0, 0, 0);
+			ImGui::ColorEdit4("##test", &ret.x);
+			break;
+		}
+
+		case GL_FLOAT_MAT4:
+			ImGui::SameLine();
+			ImGui::Text("Matrix here");
+			break;
+
 		default:
 			break;
 		}
@@ -227,7 +245,8 @@ void ResourceShader::LoadShaderCustomFormat(const char* libraryPath)
 	RELEASE_ARRAY(fileBuffer);
 }
 
-ShaderVariable::ShaderVariable() : vIndex(0), data(nullptr), vType(0), nameLength(0),
+ShaderVariable::ShaderVariable() : vIndex(0), vType(GL_INT), nameLength(0),
 name(""), vSize(0)
 {
+	//data.intValue = 0;
 }

@@ -526,6 +526,9 @@
     <ClInclude Include="Source Code\DE_Cubemap.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\MA_IconSystem.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -820,6 +823,9 @@
       <Filter>Sources\Containers</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\DE_Cubemap.cpp">
+      <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MA_IconSystem.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
   </ItemGroup>

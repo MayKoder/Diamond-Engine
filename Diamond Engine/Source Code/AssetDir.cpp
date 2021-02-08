@@ -18,6 +18,7 @@ AssetDir::AssetDir(const char* _dName, const char* _imPath, uint64 _lMod, bool _
 		if (HasMeta()) 
 		{
 			metaUID = EngineExternal->moduleResources->GetMetaUID(metaFileDir.c_str());
+			resourceType = EngineExternal->moduleResources->GetMetaType(metaFileDir.c_str());
 		}
 	}
 }
@@ -52,10 +53,12 @@ void AssetDir::GenerateMeta()
 
 	if (!HasMeta())
 	{
-		Resource::Type type = EngineExternal->moduleResources->GetTypeFromAssetExtension(importPath.c_str());
+		resourceType = EngineExternal->moduleResources->GetTypeFromAssetExtension(importPath.c_str());
 		uint resUID = EngineExternal->moduleResources->GenerateNewUID();
 		metaUID = resUID;
-		EngineExternal->moduleResources->GenerateMeta(importPath.c_str(), EngineExternal->moduleResources->GenLibraryPath(resUID, type).c_str(), resUID, type);
+
+		EngineExternal->moduleResources->GenerateMeta(importPath.c_str(), EngineExternal->moduleResources->GenLibraryPath(resUID, resourceType).c_str(), resUID, resourceType);
+
 	}
 }
 
@@ -113,7 +116,7 @@ void AssetDir::DeletePermanent()
 	{
 		EngineExternal->moduleFileSystem->DeleteAssetFile(EngineExternal->moduleResources->LibraryFromMeta(this->metaFileDir.c_str()).c_str());
 
-		if (EngineExternal->moduleResources->GetMetaType(metaFileDir.c_str()) == Resource::Type::MODEL) 
+		if (resourceType == Resource::Type::MODEL) 
 		{
 			std::vector<uint> meshesID;
 			//Get meshes from fbx meta
@@ -139,7 +142,7 @@ void AssetDir::DeletePermanent()
 
 	if (!isDir)
 	{
-		if (EngineExternal->moduleResources->GetMetaType(metaFileDir.c_str()) == Resource::Type::SCRIPT)
+		if (resourceType == Resource::Type::SCRIPT)
 		{
 			EngineExternal->moduleMono->RemoveScriptFromSLN(this->importPath.c_str());
 			EngineExternal->moduleMono->ReCompileCS();

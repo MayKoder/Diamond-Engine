@@ -12,7 +12,6 @@
 
 #include"DETime.h"
 #include"AssetDir.h"
-#include"RE_Texture.h"
 
 #include "MO_Window.h"
 #include "MO_Renderer3D.h"
@@ -196,12 +195,11 @@ bool M_Editor::CleanUp()
 	}
 	windows.clear();
 
-	for (unsigned int i = 0; i < editorIcons.size(); ++i)
-	{
-		if(editorIcons[i] != nullptr)
-			App->moduleResources->UnloadResource(editorIcons[i]->GetUID());
-	}
-	editorIcons.clear();
+#ifndef STANDALONE
+	//Must manual cleanup to avoid leaks and crashed with the resource manager
+	editorIcons.CleanUp(); 
+#endif // !STANDALONE
+
 
 	LOG(LogType::L_NORMAL, "ImGui Shutdown");
 	return true;
@@ -382,7 +380,7 @@ void M_Editor::DrawTopBar()
 		{
 			
 			//Play game maybe if its clicked while game is playing, stop game?
-			if (ImGui::ImageButton((ImTextureID)editorIcons[(int)Icons::I_Play]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), (DETime::state == GameState::PLAY) ? playingTint : ImVec4(0, 0, 0, 1)))
+			if (ImGui::ImageButton((ImTextureID)editorIcons.GetIconTextureID("PLAY"), ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), (DETime::state == GameState::PLAY) ? playingTint : ImVec4(0, 0, 0, 1)))
 			{
 				if (DETime::state == GameState::STOP) 
 				{
@@ -399,7 +397,7 @@ void M_Editor::DrawTopBar()
 			ImGui::SameLine();
 
 			//Stop game if playing
-			if (ImGui::ImageButton((ImTextureID)editorIcons[(int)Icons::I_Stop]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+			if (ImGui::ImageButton((ImTextureID)editorIcons.GetIconTextureID("STOP"), ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
 			{
 				if (DETime::state == GameState::PLAY || DETime::state == GameState::PAUSE)
 				{
@@ -411,12 +409,12 @@ void M_Editor::DrawTopBar()
 			ImGui::SameLine();
 
 			//Step one frame forward
-			if (ImGui::ImageButton((ImTextureID)editorIcons[(int)Icons::I_Pause]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+			if (ImGui::ImageButton((ImTextureID)editorIcons.GetIconTextureID("PAUSE"), ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
 				DETime::Pause();
 
 			ImGui::SameLine();
 			//Step one frame forward
-			if (ImGui::ImageButton((ImTextureID)editorIcons[(int)Icons::I_Step]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+			if (ImGui::ImageButton((ImTextureID)editorIcons.GetIconTextureID("STEP"), ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
 				DETime::Step();
 		}
 		ImGui::EndChild();

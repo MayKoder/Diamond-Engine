@@ -38,7 +38,7 @@ void W_Assets::Draw()
 
 		if (selectedFile != nullptr && /*ImGui::IsWindowHovered() &&*/ EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) 
 		{
-			if (EngineExternal->moduleResources->GetTypeFromLibraryExtension(selectedFile->importPath.c_str()) == Resource::Type::UNKNOWN && strcmp(selectedFile->dirName.c_str(), "Meshes") != 0) //TODO: Temporal check
+			if (EngineExternal->moduleResources->GetTypeFromLibraryExtension(selectedFile->importPath.c_str()) != Resource::Type::UNKNOWN && strcmp(selectedFile->dirName.c_str(), "Meshes") != 0) //TODO: Temporal check
 			{
 				EngineExternal->moduleEditor->SetSelectedGO(nullptr);
 
@@ -98,10 +98,10 @@ void W_Assets::DrawFileTree(AssetDir& file)
 
 	if (file.isDir) 
 	{
-		ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons[static_cast<int>(Icons::I_Folder)]->textureID, ImVec2(12, 12), ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID("FOLDER"), ImVec2(12, 12), ImVec2(0, 1), ImVec2(1, 0));
 	}
 	else {
-		ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons[static_cast<int>(Icons::I_Models)]->textureID, ImVec2(12, 12), ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID(file.resourceType), ImVec2(12, 12), ImVec2(0, 1), ImVec2(1, 0));
 	}
 	ImGui::SameLine();
 

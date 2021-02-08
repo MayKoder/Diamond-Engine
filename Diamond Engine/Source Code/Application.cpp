@@ -154,7 +154,7 @@ float Application::GetFrameRate() const
 	return 1.f / GetDT();
 }
 
-int Application::GetRandomInt()
+int Application::GetRandomInt() //TODO: We could add iconCount here to make sure we don't get duplicated id's?
 {
 	return randomizer.Int();
 }

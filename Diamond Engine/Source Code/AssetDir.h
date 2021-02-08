@@ -3,6 +3,7 @@
 #include<string>
 #include"Globals.h"
 #include<vector>
+#include"DEResource.h"
 
 //TODO: Add full directory name to use as loading target
 struct AssetDir
@@ -33,4 +34,5 @@ struct AssetDir
 	uint64 lastModTime = 0;
 	bool isDir = false;
 	uint metaUID;
+	Resource::Type resourceType;
 };

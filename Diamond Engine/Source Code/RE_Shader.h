@@ -2,6 +2,7 @@
 
 #include"DEResource.h"
 #include<vector>
+#include"MathGeoLib/include/Math/float4x4.h"
 
 typedef unsigned int GLuint;
 typedef unsigned int GLenum;
@@ -14,6 +15,12 @@ enum ShaderType
 	SH_Frag,
 	SH_Max
 };
+union ShdrValue {
+	int intValue = 0;
+	float floatValue;
+	GLuint textureValue;
+	float4x4* matrixValue;
+};
 
 struct ShaderVariable
 {
@@ -25,7 +32,7 @@ struct ShaderVariable
 
 	GLsizei nameLength;
 	char name[25];
-	void* data;
+	ShdrValue data;
 };
 
 class ResourceShader : public Resource

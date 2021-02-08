@@ -560,6 +560,8 @@ void M_ResourceManager::GenerateMeta(const char* aPath, const char* lPath, unsig
 	DEConfig rObj(json_value_get_object(file));
 
 	rObj.WriteString("Assets Path", aPath);
+
+	rObj.WriteInt("modTime", App->moduleFileSystem->GetLastModTime(aPath));
 	rObj.WriteString("Library Path", lPath);
 
 	rObj.WriteInt("UID", uid);

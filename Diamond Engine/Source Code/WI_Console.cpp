@@ -105,15 +105,15 @@ ImTextureID W_Console::GetMsgType(LogType type)
 	switch (type)
 	{
 		case LogType::L_NORMAL:
-			ret = (ImTextureID)EngineExternal->moduleEditor->editorIcons[(int)Icons::I_Info]->textureID;
+			ret = (ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID("INFO");
 			break;
 
 		case LogType::L_WARNING:
-			ret = (ImTextureID)EngineExternal->moduleEditor->editorIcons[(int)Icons::I_Warning]->textureID;
+			ret = (ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID("WARNING");
 			break;
 
 		case LogType::L_ERROR:
-			ret = (ImTextureID)EngineExternal->moduleEditor->editorIcons[(int)Icons::I_Error]->textureID;
+			ret = (ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID("ERROR");
 			break;
 	}
 
