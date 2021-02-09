@@ -57,7 +57,7 @@ bool M_FileSystem::Start()
 	//TODO: Add Library/ to gitignore?
 	GetAllFilesRecursive(App->moduleResources->meshesLibraryRoot);
 
-	App->moduleScene->defaultShader = (ResourceShader*)App->moduleResources->RequestResource(1042663147, "Library/Shaders/1042663147.shdr");
+	App->moduleScene->defaultShader = (ResourceShader*)App->moduleResources->RequestResource(1042663147, "Library/Shaders/54042063.shdr");
 	App->moduleRenderer3D->skybox.shaderRes = dynamic_cast<ResourceShader*>(App->moduleResources->RequestResource(2136643433, "Library/Shaders/2136643433.shdr"));
 
 	return true;

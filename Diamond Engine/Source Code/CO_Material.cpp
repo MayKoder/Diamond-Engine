@@ -66,11 +66,6 @@ bool C_Material::OnEditor()
 			ImGui::Text("Library Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", matTexture->GetLibraryPath());
 
 			ImGui::Checkbox("View with checkers", &viewWithCheckers);
-
-			ImGui::Dummy(ImVec2(0, 15));
-			ImGui::Text((shader != nullptr) ? "Using shader" : "Not using shader");
-
-
 		}
 		else
 		{
@@ -92,10 +87,12 @@ bool C_Material::OnEditor()
 			}
 		}
 
-		if (shader)
+		if (shader) 
+		{
+			ImGui::Dummy(ImVec2(0, 15));
+			ImGui::Text("Using shader %s", shader->GetAssetPath());
 			shader->DrawEditor();
-
-
+		}
 		return true;
 	}
 	return false;

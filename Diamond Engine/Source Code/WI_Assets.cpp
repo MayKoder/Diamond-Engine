@@ -116,7 +116,7 @@ void W_Assets::DrawFileTree(AssetDir& file)
 		if (file.isDir == false && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_::ImGuiMouseButton_Left)) 
 		{
 			Resource::Type type = EngineExternal->moduleResources->GetTypeFromAssetExtension(file.importPath.c_str());
-			if (type == Resource::Type::SCRIPT /*|| type == Resource::Type::SHADER*/)
+			if (type == Resource::Type::SCRIPT || type == Resource::Type::SHADER)
 			{
 				W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::TEXTEDITOR));
 				txtEditor->SetTextFromFile(file.importPath.c_str());

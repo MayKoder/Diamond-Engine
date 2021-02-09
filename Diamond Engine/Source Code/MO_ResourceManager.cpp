@@ -517,7 +517,7 @@ Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFil
 	if (ext == "cs")
 		return Resource::Type::SCRIPT;
 
-	if (ext == "vert")
+	if (ext == "glsl")
 		return Resource::Type::SHADER;
 
 

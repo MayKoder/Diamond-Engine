@@ -6,25 +6,38 @@
 
 void ShaderImporter::Import(char* buffer, int bSize, ResourceShader* res, const char* assetsPath)
 {
-	//Load/Compile vertex binary and frag binary to resource shaderObjects array [DONE]
-	//Create shaderProgram														 [DONE]
-	//Save .vert and .frag to .shdr? Like meshes
-	//Save shaderProgram as .shdr to library
+//Get every shader typs string from the glsl
+	//Buffer is now a complete shader with 2 types
+	//Get a string for every shader type with find
+	//Compile string
+	//Save binary as type sizes + shader codes
 
-	std::string pairShader = "";
-	char* pairBuffer = nullptr;
+	std::string bufferString(buffer);
 
-	ShaderType type = GetAssetsObjType(assetsPath, pairShader);
+	std::pair<size_t, char*> vertexShaderPair;
+	size_t startByte = bufferString.find("#ifdef vertex");
+	if (startByte != std::string::npos)
+	{
+		startByte += sizeof("#ifdef vertex");
+		vertexShaderPair.first = bufferString.find("#endif", startByte)  - startByte - 1;
+		vertexShaderPair.second = &buffer[startByte];
+	}
+	startByte = std::string::npos;
 
-	int fobSize = FileSystem::LoadToBuffer(pairShader.c_str(), &pairBuffer);
-	if (fobSize == 0)
-		return;
+	std::pair<size_t, char*> fragmentShaderPair;
+	startByte = bufferString.find("#ifdef fragment");
+	if (startByte != std::string::npos)
+	{
+		startByte += sizeof("#ifdef fragment");
+		fragmentShaderPair.first = bufferString.find("#endif", startByte) - startByte - 1;
+		fragmentShaderPair.second = &buffer[startByte];
+	}
 
 	GLuint vertexShader = 0;
 	GLuint fragmentShader = 0;
 
-	vertexShader = Compile(buffer, type, bSize);
-	fragmentShader = Compile(pairBuffer, ShaderType::SH_Frag, fobSize);
+	vertexShader = Compile(vertexShaderPair.second, ShaderType::SH_Vertex, vertexShaderPair.first);
+	fragmentShader = Compile(fragmentShaderPair.second, ShaderType::SH_Frag, fragmentShaderPair.first);
 
 	if (vertexShader != 0 && fragmentShader != 0)
 	{
@@ -33,26 +46,67 @@ void ShaderImporter::Import(char* buffer, int bSize, ResourceShader* res, const 
 
 		res->LinkToProgram();
 
-		char* saveBuffer = res->SaveShaderCustomFormat(buffer, bSize, pairBuffer, fobSize);
+		char* saveBuffer = res->SaveShaderCustomFormat(vertexShaderPair.second, vertexShaderPair.first, fragmentShaderPair.second, fragmentShaderPair.first);
 		
 		std::string shaderFileName = SHADERS_PATH;
 		shaderFileName += std::to_string(res->GetUID());
 		shaderFileName += ".shdr";
 		
-		FileSystem::Save(shaderFileName.c_str(), saveBuffer, 8 + bSize + fobSize, false);
+		FileSystem::Save(shaderFileName.c_str(), saveBuffer, 8 + vertexShaderPair.first + fragmentShaderPair.first, false);
 
 		//res->LoadShaderCustomFormat(shaderFileName.c_str());
 
 		RELEASE_ARRAY(saveBuffer);
 	}
-
-	//RELEASE_ARRAY(buffer);
-	if (pairBuffer == nullptr) {
-		LOG(LogType::L_ERROR, "One of the shader objects does not exist");
-	}
-	else
-		RELEASE_ARRAY(pairBuffer);
 }
+
+/*Method to import different file shaders, not in use for now*/
+//void ShaderImporter::Import(char* buffer, int bSize, ResourceShader* res, const char* assetsPath)
+//{
+//	//Get every shader typs string from the glsl
+//
+//	std::string pairShader = "";
+//	char* pairBuffer = nullptr;
+//
+//	ShaderType type = GetAssetsObjType(assetsPath, pairShader);
+//
+//	int fobSize = FileSystem::LoadToBuffer(pairShader.c_str(), &pairBuffer);
+//	if (fobSize == 0)
+//		return;
+//
+//	GLuint vertexShader = 0;
+//	GLuint fragmentShader = 0;
+//
+//	vertexShader = Compile(buffer, type, bSize);
+//	fragmentShader = Compile(pairBuffer, ShaderType::SH_Frag, fobSize);
+//
+//	if (vertexShader != 0 && fragmentShader != 0)
+//	{
+//		res->shaderObjects[(int)ShaderType::SH_Vertex] = vertexShader;
+//		res->shaderObjects[(int)ShaderType::SH_Frag] = fragmentShader;
+//
+//		res->LinkToProgram();
+//
+//		char* saveBuffer = res->SaveShaderCustomFormat(buffer, bSize, pairBuffer, fobSize);
+//
+//		std::string shaderFileName = SHADERS_PATH;
+//		shaderFileName += std::to_string(res->GetUID());
+//		shaderFileName += ".shdr";
+//
+//		FileSystem::Save(shaderFileName.c_str(), saveBuffer, 8 + bSize + fobSize, false);
+//
+//		//res->LoadShaderCustomFormat(shaderFileName.c_str());
+//
+//		RELEASE_ARRAY(saveBuffer);
+//	}
+//
+//	//RELEASE_ARRAY(buffer);
+//	if (pairBuffer == nullptr) {
+//		LOG(LogType::L_ERROR, "One of the shader objects does not exist");
+//	}
+//	else
+//		RELEASE_ARRAY(pairBuffer);
+//}
 
 GLuint ShaderImporter::Compile(char* fileBuffer, ShaderType type, const GLint size)
 {

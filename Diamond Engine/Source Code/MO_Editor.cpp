@@ -114,9 +114,9 @@ bool M_Editor::Init()
 
 bool M_Editor::Start()
 {
-	W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(GetEditorWindow(EditorWindow::TEXTEDITOR));
-	if(txtEditor != nullptr)
-		txtEditor->SetTextFromFile("Assets/Scripts/Core.cs");
+	//W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(GetEditorWindow(EditorWindow::TEXTEDITOR));
+	//if(txtEditor != nullptr)
+	//	txtEditor->SetTextFromFile("Assets/Scripts/Core.cs");
 
 	return true;
 }
