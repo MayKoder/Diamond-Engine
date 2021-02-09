@@ -4,8 +4,9 @@
 #include"IM_FileSystem.h"
 #include"MO_MonoManager.h"
 #include"MO_ResourceManager.h"
+#include"IM_ShaderImporter.h"
 
-W_TextEditor::W_TextEditor() : Window(), txtName(""), textType(Resource::Type::SHADER) /*: texColorBuffer(-1)*/
+W_TextEditor::W_TextEditor() : Window(), txtName(""), textType(Resource::Type::UNKNOWN) /*: texColorBuffer(-1)*/
 {
 	name = "Text Editor"; //No lng definition for C# :(
 	txtEditor.SetLanguageDefinition(TextEditor::LanguageDefinition::GLSL());
@@ -22,7 +23,9 @@ void W_TextEditor::Draw()
 
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*//*, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse*/))
 	{
-		(textType == Resource::Type::SHADER) ? DrawShaderEditor() : DrawScriptEditor(); //Move to switch in a future
+		if(textType != Resource::Type::UNKNOWN)
+			(textType == Resource::Type::SHADER) ? DrawShaderEditor() : DrawScriptEditor(); //Move to switch in a future
+
 		if(!txtName.empty())
 			txtEditor.Render(txtName.c_str());
 	}
@@ -31,7 +34,26 @@ void W_TextEditor::Draw()
 
 void W_TextEditor::DrawShaderEditor() 
 {
+	ImGui::Dummy(ImVec2(10, 10));
+	if (ImGui::Button("Save and compile shader"))
+	{
+		//Check for errors
+		TempShader vertexShaderPair, fragmentShaderPair;
+		if (ShaderImporter::CheckForErrors(txtEditor.GetText(), vertexShaderPair, fragmentShaderPair) == false)
+			return;
 
+		//Find resource
+		uint uid = EngineExternal->moduleResources->GetMetaUID(EngineExternal->moduleResources->GetMetaPath(txtName.c_str()).c_str());
+		Resource* res = EngineExternal->moduleResources->GetResourceFromUID(uid);
+
+		//if(res != nullptr)
+
+		//Save glsl
+		//Save .shdr
+		//Get resource pointer
+		//Clean data
+		//Reupload shader data to resource
+	}
 }
 void W_TextEditor::DrawScriptEditor() 
 {

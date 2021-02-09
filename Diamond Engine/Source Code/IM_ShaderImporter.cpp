@@ -13,51 +13,57 @@ void ShaderImporter::Import(char* buffer, int bSize, ResourceShader* res, const 
 	//Save binary as type sizes + shader codes
 
 	std::string bufferString(buffer);
+	TempShader vertexShaderPair;
+	TempShader fragmentShaderPair;
 
-	std::pair<size_t, char*> vertexShaderPair;
-	size_t startByte = bufferString.find("#ifdef vertex");
-	if (startByte != std::string::npos)
+	CheckForErrors(bufferString, vertexShaderPair, fragmentShaderPair);
+
+	if (vertexShaderPair.tmpID != 0 && fragmentShaderPair.tmpID != 0)
 	{
-		startByte += sizeof("#ifdef vertex");
-		vertexShaderPair.first = bufferString.find("#endif", startByte)  - startByte - 1;
-		vertexShaderPair.second = &buffer[startByte];
-	}
-	startByte = std::string::npos;
-
-	std::pair<size_t, char*> fragmentShaderPair;
-	startByte = bufferString.find("#ifdef fragment");
-	if (startByte != std::string::npos)
-	{
-		startByte += sizeof("#ifdef fragment");
-		fragmentShaderPair.first = bufferString.find("#endif", startByte) - startByte - 1;
-		fragmentShaderPair.second = &buffer[startByte];
-	}
-
-	GLuint vertexShader = 0;
-	GLuint fragmentShader = 0;
-
-	vertexShader = Compile(vertexShaderPair.second, ShaderType::SH_Vertex, vertexShaderPair.first);
-	fragmentShader = Compile(fragmentShaderPair.second, ShaderType::SH_Frag, fragmentShaderPair.first);
-
-	if (vertexShader != 0 && fragmentShader != 0)
-	{
-		res->shaderObjects[(int)ShaderType::SH_Vertex] = vertexShader;
-		res->shaderObjects[(int)ShaderType::SH_Frag] = fragmentShader;
+		res->shaderObjects[(int)ShaderType::SH_Vertex] = vertexShaderPair.tmpID;
+		res->shaderObjects[(int)ShaderType::SH_Frag] = fragmentShaderPair.tmpID;
 
 		res->LinkToProgram();
 
-		char* saveBuffer = res->SaveShaderCustomFormat(vertexShaderPair.second, vertexShaderPair.first, fragmentShaderPair.second, fragmentShaderPair.first);
+		char* saveBuffer = res->SaveShaderCustomFormat(vertexShaderPair.data.second, vertexShaderPair.data.first, fragmentShaderPair.data.second, fragmentShaderPair.data.first);
 		
 		std::string shaderFileName = SHADERS_PATH;
 		shaderFileName += std::to_string(res->GetUID());
 		shaderFileName += ".shdr";
 		
-		FileSystem::Save(shaderFileName.c_str(), saveBuffer, 8 + vertexShaderPair.first + fragmentShaderPair.first, false);
+		FileSystem::Save(shaderFileName.c_str(), saveBuffer, 8 + vertexShaderPair.data.first + fragmentShaderPair.data.first, false);
 
 		//res->LoadShaderCustomFormat(shaderFileName.c_str());
 
 		RELEASE_ARRAY(saveBuffer);
 	}
+}
+
+bool ShaderImporter::CheckForErrors(std::string& glslBuffer, TempShader& vertexShader, TempShader& fragmentShader)
+{
+	size_t startByte = glslBuffer.find("#ifdef vertex");
+	if (startByte != std::string::npos)
+	{
+		startByte += sizeof("#ifdef vertex");
+		vertexShader.data.first = glslBuffer.find("#endif", startByte) - startByte - 1;
+		vertexShader.data.second = &glslBuffer[startByte];
+	}
+	startByte = std::string::npos;
+
+	startByte = glslBuffer.find("#ifdef fragment");
+	if (startByte != std::string::npos)
+	{
+		startByte += sizeof("#ifdef fragment");
+		fragmentShader.data.first = glslBuffer.find("#endif", startByte) - startByte - 1;
+		fragmentShader.data.second = &glslBuffer[startByte];
+	}
+
+	vertexShader.tmpID = Compile(vertexShader.data.second, ShaderType::SH_Vertex, vertexShader.data.first);
+	fragmentShader.tmpID = Compile(fragmentShader.data.second, ShaderType::SH_Frag, fragmentShader.data.first);
+
+
+	//RELEASE_ARRAY(buffer);
+	return (vertexShader.tmpID == 0 && fragmentShader.tmpID == 0) ? false : true;
 }
 
 /*Method to import different file shaders, not in use for now*/
@@ -130,6 +136,7 @@ GLuint ShaderImporter::Compile(char* fileBuffer, ShaderType type, const GLint si
 			LOG(LogType::L_ERROR, "Error compilating fragment shader: %s", infoLog);
 		}
 		glDeleteShader(compileShader);
+		return 0;
 	}
 
 	return compileShader;

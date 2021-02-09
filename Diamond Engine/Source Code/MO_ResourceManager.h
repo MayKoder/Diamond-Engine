@@ -41,6 +41,7 @@ public:
 	Resource* RequestResource(int uid, const char* libraryPath = nullptr);
 	Resource* CreateNewResource(const char* assetsFile, uint uid, Resource::Type type);
 	Resource* LoadFromLibrary(const char* libraryFile, Resource::Type type, uint _uid);
+	Resource* GetResourceFromUID(uint uid);
 	
 	Resource::Type GetMetaType(const char* metaFile) const;
 	Resource::Type GetTypeFromAssetExtension(const char* assetFile) const;

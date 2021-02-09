@@ -40,7 +40,10 @@ bool M_MonoManager::Init()
 	LOG(LogType::L_NORMAL, "Setting up the camera");
 	bool ret = true;
 
+#ifndef STANDALONE
 	CMDCompileCS();
+#endif // !STANDALONE
+
 
 	//mono_jit_set_aot_mode(MonoAotMode::MONO_AOT_MODE_HYBRID);
 	mono_set_dirs("mono-runtime/lib", "mono-runtime/etc");

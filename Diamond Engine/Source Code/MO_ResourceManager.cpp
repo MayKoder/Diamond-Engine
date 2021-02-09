@@ -377,6 +377,21 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 	return ret;
 }
 
+Resource* M_ResourceManager::GetResourceFromUID(uint uid)
+{
+	//Find if the resource is already loaded
+	if (uid <= -1)
+		return nullptr;
+
+	std::map<int, Resource*>::iterator it = resources.find(uid);
+	if (it != resources.end())
+	{
+		return it->second;
+	}
+
+	return nullptr;
+}
+
 int M_ResourceManager::GetMetaUID(const char* metaFile) const
 {
 	JSON_Value* metaJSON = json_parse_file(metaFile);
