@@ -42,17 +42,19 @@ void W_TextEditor::DrawShaderEditor()
 		if (ShaderImporter::CheckForErrors(txtEditor.GetText(), vertexShaderPair, fragmentShaderPair) == false)
 			return;
 
+		//Save glsl
+		FileSystem::Save(txtName.c_str(), &txtEditor.GetText()[0], txtEditor.GetText().length(), false);
+
 		//Find resource
 		uint uid = EngineExternal->moduleResources->GetMetaUID(EngineExternal->moduleResources->GetMetaPath(txtName.c_str()).c_str());
 		Resource* res = EngineExternal->moduleResources->GetResourceFromUID(uid);
 
-		//if(res != nullptr)
+		//Clear resource
+		if (res != nullptr)
+			res->UnloadFromMemory();
 
-		//Save glsl
-		//Save .shdr
-		//Get resource pointer
-		//Clean data
-		//Reupload shader data to resource
+		//Save .shdr and reimport data
+		ShaderImporter::Import(&txtEditor.GetText()[0], txtEditor.GetText().length(), dynamic_cast<ResourceShader*>(res), txtName.c_str());
 	}
 }
 void W_TextEditor::DrawScriptEditor() 

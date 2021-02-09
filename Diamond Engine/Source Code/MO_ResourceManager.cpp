@@ -263,7 +263,9 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 	std::string meta = M_ResourceManager::GetMetaPath(assetsFile);
 	uint resUID = GetMetaUID(meta.c_str());
 
-	Resource* resource = CreateNewResource(assetsFile, resUID, type);
+	Resource* resource = GetResourceFromUID(resUID);
+	if(resource == nullptr)
+		resource = CreateNewResource(assetsFile, resUID, type);
 
 	if (resource == nullptr)
 		return 0;
@@ -286,7 +288,9 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 	ret = resource->GetUID();
 
 	RELEASE_ARRAY(fileBuffer);
-	UnloadResource(ret);
+
+	if(resource->GetReferenceCount() <= 1)
+		UnloadResource(ret);
 
 	return ret;
 }
@@ -377,7 +381,7 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 	return ret;
 }
 
-Resource* M_ResourceManager::GetResourceFromUID(uint uid)
+Resource* M_ResourceManager::GetResourceFromUID(int uid)
 {
 	//Find if the resource is already loaded
 	if (uid <= -1)
