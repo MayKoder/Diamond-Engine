@@ -20,7 +20,7 @@ public:
 	bool CleanUp() override;
 
 public:
-	void GetAllFiles(const char* directory, std::vector<AssetDir>& file_list);
+	void GetAllFiles(AssetDir& file, const char* directory);
 	void GetAllFilesRecursive(AssetDir& _file);
 	uint64 GetLastModTime(const char* filename);
 

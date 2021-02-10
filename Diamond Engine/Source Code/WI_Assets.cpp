@@ -13,7 +13,9 @@
 W_Assets::W_Assets() : Window(), selectedFile(nullptr)
 {
 	name = "Assets";
+
 	displayFolder = &EngineExternal->moduleResources->assetsRoot;
+	bigDisplayFolder = displayFolder;
 }
 
 W_Assets::~W_Assets()
@@ -30,24 +32,46 @@ void W_Assets::Draw()
 
 		int cellsPerRow = windowWidth / cellSize;
 		int counter = 0;
-		for (size_t i = 0; i < displayFolder->childDirs.size(); i++)
+
+		AssetDir* toChange = nullptr;
+
+		if (bigDisplayFolder->parentDir != nullptr)
+			if (ImGui::Button("Go back"))
+				bigDisplayFolder = bigDisplayFolder->parentDir;
+
+		for (auto it = bigDisplayFolder->childDirs.begin(); it != bigDisplayFolder->childDirs.end(); ++it)
 		{
-			if (ImGui::BeginChild(displayFolder->childDirs[i].dirName.c_str(), ImVec2(70, 110), false, ImGuiWindowFlags_NoScrollbar))
+			if (ImGui::BeginChild(it->dirName.c_str(), ImVec2(70, 110), false, ImGuiWindowFlags_NoScrollbar))
 			{
-				//ImGui::hove
-				//ImGui::Image((ImTextureID)1, ImVec2(70, 70));
-				ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID(displayFolder->childDirs[i].resourceType), ImVec2(70, 70), ImVec2(0, 1), ImVec2(1, 0));
-				ImGui::TextWrapped(displayFolder->childDirs[i].dirName.c_str());
+				//if (ImGui::IsWindowHovered())
+				//	ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ChildBg, ImGui::GetStyle().Colors[ImGuiCol_HeaderHovered]);
+				if (!it->isDir && ImGui::BeginDragDropSource(/*ImGuiDragDropFlags_SourceNoDisableHover*/))
+				{
+					ImGui::Text("Drag");
+					ImGui::EndDragDropSource();
+				}
+				if(it->isDir && ImGui::IsMouseDoubleClicked(0) && ImGui::IsWindowHovered())
+					toChange = it._Ptr;
+
+				ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID(it->resourceType), ImVec2(70, 70), ImVec2(0, 1), ImVec2(1, 0));
+				ImGui::TextWrapped(it->dirName.c_str());
+
+				//if (ImGui::IsWindowHovered())
+				//	ImGui::PopStyleColor();
 			}
 			ImGui::EndChild();
 
 			counter++;
-			if (counter < cellsPerRow && i != displayFolder->childDirs.size() - 1)
+			if (counter < cellsPerRow && it != bigDisplayFolder->childDirs.end() - 1)
 				ImGui::SameLine(0.0f, 15.0f);
 			else
 				counter = 0;
 		}
-		
+		if (toChange != nullptr) 
+		{
+			bigDisplayFolder = toChange;
+			ImGui::SetScrollHereY(0.0f);
+		}
 		
 		DrawFileTree(*displayFolder);
 		DrawFileTree(EngineExternal->moduleResources->meshesLibraryRoot);

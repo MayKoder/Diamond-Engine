@@ -75,7 +75,7 @@ bool M_FileSystem::CleanUp()
 	return true;
 }
 
-void M_FileSystem::GetAllFiles(const char* directory, std::vector<AssetDir>& file_list)
+void M_FileSystem::GetAllFiles(AssetDir& file, const char* directory)
 {
 	char** files = PHYSFS_enumerateFiles(directory);
 
@@ -87,10 +87,9 @@ void M_FileSystem::GetAllFiles(const char* directory, std::vector<AssetDir>& fil
 
 		if (ext != "meta") 
 		{
-			if (FileSystem::IsDirectory(str.c_str()))
-				file_list.push_back(AssetDir(*i, str.c_str(), GetLastModTime(str.c_str()), true)); //It's a folder
-			else
-				file_list.push_back(AssetDir(*i, str.c_str(), GetLastModTime(str.c_str()), false)); //It's a file, TODO: ADD FILE PATH
+			AssetDir child = AssetDir(*i, str.c_str(), GetLastModTime(str.c_str()), (FileSystem::IsDirectory(str.c_str())) ?true :false);
+			child.parentDir = &file;
+			file.childDirs.push_back(child); //It's a file, TODO: ADD FILE PATH
 		}
 	}
 
@@ -99,7 +98,7 @@ void M_FileSystem::GetAllFiles(const char* directory, std::vector<AssetDir>& fil
 
 void M_FileSystem::GetAllFilesRecursive(AssetDir& _file)
 {
-	GetAllFiles(_file.importPath.c_str(), _file.childDirs);
+	GetAllFiles(_file, _file.importPath.c_str());
 
 	if (_file.childDirs.size() != 0)
 	{

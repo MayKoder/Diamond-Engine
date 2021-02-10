@@ -20,6 +20,7 @@ public:
 	void DrawFileTree(AssetDir& file);
 
 	AssetDir* selectedFile;
+	AssetDir* bigDisplayFolder;
 	AssetDir* displayFolder;
 };
 

@@ -35,4 +35,6 @@ struct AssetDir
 	bool isDir = false;
 	uint metaUID;
 	Resource::Type resourceType;
+
+	AssetDir* parentDir;
 };

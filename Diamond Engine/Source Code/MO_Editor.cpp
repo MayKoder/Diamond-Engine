@@ -376,7 +376,7 @@ void M_Editor::DrawTopBar()
 		ImGui::PopItemWidth();
 
 		ImGui::SameLine((ImGui::GetContentRegionMax().x / 2.f) - 100);
-		if (ImGui::BeginChild("##playBTS", ImVec2(200, ImGui::GetWindowContentRegionMax().y - style.FramePadding.y), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoDecoration)) 
+		if (ImGui::BeginChild("##playBTS", ImVec2(130, ImGui::GetWindowContentRegionMax().y - style.FramePadding.y), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoDecoration)) 
 		{
 			
 			//Play game maybe if its clicked while game is playing, stop game?

@@ -5,7 +5,8 @@
 #include"IM_ModelImporter.h"
 #include"MO_MonoManager.h"
 
-AssetDir::AssetDir(const char* _dName, const char* _imPath, uint64 _lMod, bool _dir) : isDir(_dir), lastModTime(_lMod), resourceType(Resource::Type::UNKNOWN)
+AssetDir::AssetDir(const char* _dName, const char* _imPath, uint64 _lMod, bool _dir) : isDir(_dir), lastModTime(_lMod),
+resourceType(Resource::Type::UNKNOWN), parentDir(nullptr)
 {
 	dirName = _dName;
 	dirName.push_back('\0');
