@@ -264,8 +264,12 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 	uint resUID = GetMetaUID(meta.c_str());
 
 	Resource* resource = GetResourceFromUID(resUID);
-	if(resource == nullptr)
+
+	bool isCreated = false;
+	if (resource == nullptr) {
 		resource = CreateNewResource(assetsFile, resUID, type);
+		isCreated = true;
+	}
 
 	if (resource == nullptr)
 		return 0;
@@ -289,7 +293,7 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 
 	RELEASE_ARRAY(fileBuffer);
 
-	if(resource->GetReferenceCount() <= 1)
+	if(resource->GetReferenceCount() <= 1 && isCreated == true)
 		UnloadResource(ret);
 
 	return ret;

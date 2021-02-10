@@ -24,13 +24,29 @@ void W_Assets::Draw()
 {
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/))
 	{
-		//if (ImGui::BeginChild("Test", ImVec2(70, 110), false, ImGuiWindowFlags_NoScrollbar))
-		//{
-		//	//ImGui::hove
-		//	ImGui::Image((ImTextureID)1, ImVec2(70, 70));
-		//	ImGui::TextWrapped("Hola.exe");
-		//}
-		//ImGui::EndChild();
+
+		int cellSize = 70 + 15;
+		int windowWidth = (int)ImGui::GetWindowContentRegionMax().x;
+
+		int cellsPerRow = windowWidth / cellSize;
+		int counter = 0;
+		for (size_t i = 0; i < displayFolder->childDirs.size(); i++)
+		{
+			if (ImGui::BeginChild(displayFolder->childDirs[i].dirName.c_str(), ImVec2(70, 110), false, ImGuiWindowFlags_NoScrollbar))
+			{
+				//ImGui::hove
+				//ImGui::Image((ImTextureID)1, ImVec2(70, 70));
+				ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID(displayFolder->childDirs[i].resourceType), ImVec2(70, 70), ImVec2(0, 1), ImVec2(1, 0));
+				ImGui::TextWrapped(displayFolder->childDirs[i].dirName.c_str());
+			}
+			ImGui::EndChild();
+
+			counter++;
+			if (counter < cellsPerRow && i != displayFolder->childDirs.size() - 1)
+				ImGui::SameLine(0.0f, 15.0f);
+			else
+				counter = 0;
+		}
 		
 		
 		DrawFileTree(*displayFolder);
@@ -96,13 +112,8 @@ void W_Assets::DrawFileTree(AssetDir& file)
 		flags |= ImGuiTreeNodeFlags_Selected;
 	}
 
-	if (file.isDir) 
-	{
-		ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID("FOLDER"), ImVec2(12, 12), ImVec2(0, 1), ImVec2(1, 0));
-	}
-	else {
-		ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID(file.resourceType), ImVec2(12, 12), ImVec2(0, 1), ImVec2(1, 0));
-	}
+
+	ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID(file.resourceType), ImVec2(12, 12), ImVec2(0, 1), ImVec2(1, 0));
 	ImGui::SameLine();
 
 	bool nodeOpen = ImGui::TreeNodeEx(&file, flags, file.dirName.c_str());

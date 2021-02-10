@@ -38,6 +38,7 @@ void IconManager::LoadPreDefinedIcons()
 	LoadEditorIcon("TEXTURE", "EngineIcons/texture.dds");
 	LoadEditorIcon("SCRIPT", "EngineIcons/cs.dds");
 	LoadEditorIcon("SCENE", "EngineIcons/scene.dds");
+	LoadEditorIcon("SHADER", "EngineIcons/shaders.dds");
 }
 
 void IconManager::LoadEditorIcon(const char* iconID, const char* path)
@@ -74,10 +75,10 @@ GLuint IconManager::GetIconTextureID(Resource::Type iconType)
 		ret = "SCRIPT";
 		break;
 	case Resource::Type::SHADER:
-		ret = "MODELS";
+		ret = "SHADER";
 		break;
 	case Resource::Type::UNKNOWN:
-		ret = "MODELS";
+		ret = "FOLDER";
 		break;
 	default:
 		ret = "MODELS";
