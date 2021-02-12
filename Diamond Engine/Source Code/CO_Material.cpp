@@ -15,7 +15,7 @@ C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false
 shader(nullptr)
 {
 	name = "Material";
-	shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleScene->defaultShader->GetUID()));
+	shader = NULL;
 }
 
 C_Material::~C_Material()
