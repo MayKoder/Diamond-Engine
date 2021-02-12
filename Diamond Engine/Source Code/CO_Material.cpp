@@ -87,6 +87,20 @@ bool C_Material::OnEditor()
 			}
 		}
 
+		ImGui::Text("Drop here to change shader");
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_SHADER"))
+			{
+				std::string* metaFileDrop = (std::string*)payload->Data;
+				std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
+
+				EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+				shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
+			}
+			ImGui::EndDragDropTarget();
+		}
+
 		if (shader) 
 		{
 			ImGui::Dummy(ImVec2(0, 15));

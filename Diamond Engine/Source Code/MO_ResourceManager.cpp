@@ -94,7 +94,6 @@ int M_ResourceManager::ExistsOnLibrary(const char* file_in_assets) const
 
 	if (FileSystem::Exists(metaFile.c_str())) 
 	{
-		//TODO: Move all json usage to own structure ASAP
 		JSON_Value* metaJSON = json_parse_file(metaFile.c_str());
 		DEConfig rObj(json_value_get_object(metaJSON));
 
@@ -444,8 +443,7 @@ Resource::Type M_ResourceManager::GetMetaType(const char* metaFile) const
 	JSON_Value* metaJSON = json_parse_file(metaFile);
 	DEConfig rObj(json_value_get_object(metaJSON));
 
-	//TODO: Change this casts with xxx_cast<>
-	Resource::Type mUID = (Resource::Type)rObj.ReadInt("Type");
+	Resource::Type mUID = static_cast<Resource::Type>(rObj.ReadInt("Type"));
 
 	//Free memory
 	json_value_free(metaJSON);
@@ -565,11 +563,7 @@ Resource::Type M_ResourceManager::GetTypeFromLibraryExtension(const char* librar
 		return Resource::Type::MESH;
 	if (ext == "des")
 		return Resource::Type::SCENE;
-
-	/*The thing is, if i check both extensions, the shader will import itself twice, if i ignore one extension
-	and the other is not in the same directory, we are f**ed up... TODO IMPORTANT WARNING ERROR BUG check this...
-	I don't know what to do now*/
-	if (ext == "shdr" /*|| ext == "frag"*/)
+	if (ext == "shdr")
 		return Resource::Type::SHADER;
 	
 
@@ -578,7 +572,7 @@ Resource::Type M_ResourceManager::GetTypeFromLibraryExtension(const char* librar
 
 void M_ResourceManager::GenerateMeta(const char* aPath, const char* lPath, unsigned int uid, Resource::Type type)
 {
-	//TODO: Move all json usage to own structure ASAP
+
 	JSON_Value* file = json_value_init_object();
 	DEConfig rObj(json_value_get_object(file));
 

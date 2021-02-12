@@ -9,6 +9,7 @@
 #include"MO_Scene.h" //This can be removed
 #include"MO_Camera3D.h" //This can be deleted
 #include"CO_Transform.h"
+#include"DETime.h"
 
 ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH), indices_id(0), vertices_id(0), generalWireframe(nullptr)
 {
@@ -123,6 +124,9 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 
 		modelLoc = glGetUniformLocation(shader->shaderProgramID, "projection");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
+
+		modelLoc = glGetUniformLocation(shader->shaderProgramID, "time");
+		glUniform1f(modelLoc, DETime::realTimeSinceStartup);
 	}
 	else
 	{

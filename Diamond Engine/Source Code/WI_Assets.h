@@ -5,6 +5,7 @@
 
 #include "Window.h"
 #include<vector>
+#include<functional>
 
 class AssetDir;
 
@@ -18,6 +19,7 @@ public:
 	void Draw() override;
 
 	void DrawFileTree(AssetDir& file);
+	void DrawCreationPopup(const char* popName, const char* dotExtension, std::function<void(const char*)> f);
 
 	AssetDir* selectedFile;
 	AssetDir* bigDisplayFolder;

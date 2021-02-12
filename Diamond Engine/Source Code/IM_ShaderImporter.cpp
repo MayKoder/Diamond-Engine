@@ -11,6 +11,8 @@ void ShaderImporter::Import(char* buffer, int bSize, ResourceShader* res, const 
 	//Get a string for every shader type with find
 	//Compile string
 	//Save binary as type sizes + shader codes
+	if (buffer == NULL)
+		return;
 
 	std::string bufferString(buffer);
 	TempShader vertexShaderPair;
@@ -193,4 +195,13 @@ ShaderType ShaderImporter::GetAssetsObjType(const char* assetsPath, std::string 
 
 	LOG(LogType::L_ERROR, "SHADER EXTENSION NOT FOUND");
 	return ShaderType::SH_Max;
+}
+
+void ShaderImporter::CreateBaseShaderFile(const char* path)
+{
+	std::string defaultFile;
+
+	defaultFile = "#ifdef vertex\n#version 330 core\n\n#endif\n\n#ifdef fragment\n#version 330 core\n\n#endif";
+
+	FileSystem::Save(path, &defaultFile[0], defaultFile.length(), false);
 }

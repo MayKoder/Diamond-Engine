@@ -14,6 +14,8 @@ uniform mat4 model_matrix;
 uniform mat4 view;
 uniform mat4 projection;
 
+uniform float time;
+
 void main()
 {
 Normal = mat3(transpose(inverse(model_matrix))) * normals;
@@ -38,6 +40,8 @@ uniform sampler2D ourTexture;
 in vec3 fPosition;
 in vec3 Normal;
 
+uniform float time;
+
 vec2 blinnPhongDir(vec3 lightDir, float lightInt, float Ka, float Kd, float Ks, float shininess)
 {
 vec3 s = normalize(lightDir);
@@ -56,6 +60,10 @@ vec2 inten = blinnPhongDir(vec3(0.8,1,0.2), 0.5, 0.2, 0.8, 0.3, 80.0);
 gl_FragColor = vec4(lcolor * inten.x + vec3(1.0) * inten.y, 1.0) * texture(ourTexture, TexCoord);
 }
 #endif
+
+
+
+
 
 
 

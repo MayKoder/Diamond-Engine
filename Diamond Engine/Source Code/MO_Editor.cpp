@@ -144,7 +144,7 @@ void M_Editor::Draw()
 
 	for (unsigned int i = 0; i < windows.size(); i++)
 	{
-		if (windows[i]->active) 
+		if (windows[i]->active)
 		{
 			windows[i]->Draw();
 		}

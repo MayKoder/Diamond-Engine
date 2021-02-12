@@ -9,6 +9,7 @@
 #include"MO_MonoManager.h"
 #include"RE_Texture.h"
 #include"WI_TextEditor.h"
+#include"IM_ShaderImporter.h"
 
 W_Assets::W_Assets() : Window(), selectedFile(nullptr)
 {
@@ -70,15 +71,15 @@ void W_Assets::Draw()
 		if (toChange != nullptr) 
 		{
 			bigDisplayFolder = toChange;
-			ImGui::SetScrollHereY(0.0f);
+			//ImGui::SetScrollHereY(1.0f);
 		}
 		
 		DrawFileTree(*displayFolder);
 		DrawFileTree(EngineExternal->moduleResources->meshesLibraryRoot);
 
 		if (selectedFile != nullptr && /*ImGui::IsWindowHovered() &&*/ EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) 
-		{
-			if (EngineExternal->moduleResources->GetTypeFromLibraryExtension(selectedFile->importPath.c_str()) != Resource::Type::UNKNOWN && strcmp(selectedFile->dirName.c_str(), "Meshes") != 0) //TODO: Temporal check
+		{																																	//This prevents mesh removal because mesh files have no dirName
+			if (EngineExternal->moduleResources->GetTypeFromLibraryExtension(selectedFile->libraryPath.c_str()) != Resource::Type::UNKNOWN && strcmp(selectedFile->dirName.c_str(), "Meshes") != 0) 
 			{
 				EngineExternal->moduleEditor->SetSelectedGO(nullptr);
 
@@ -92,30 +93,18 @@ void W_Assets::Draw()
 
 		if (ImGui::BeginPopupContextWindow())
 		{
-
-			if (ImGui::BeginMenu("Create C# Script"))
+			if (ImGui::BeginMenu("Create C# Script")) 
 			{
-				static char name[50] = "\0";
-
-				ImGui::Text("Script path: "); ImGui::SameLine();
-				ImGui::InputText("##Scriptname", name, sizeof(char) * 50);
-				if (ImGui::Button("Create"))
-				{
-					std::string path = name;
-					if(path.find('.') == path.npos)
-						path += ".cs";
-
-					if (path.find('.cs') != path.npos) {
-						EngineExternal->moduleMono->CreateAssetsScript(path.c_str());
-						name[0] = '\0';
-					}
-
-					ImGui::CloseCurrentPopup();
-				}
-
-
+				DrawCreationPopup("Script path: ", ".cs", std::bind(&M_MonoManager::CreateAssetsScript, EngineExternal->moduleMono, std::placeholders::_1));
 				ImGui::EndMenu();
 			}
+
+			if (ImGui::BeginMenu("Create GLSL Shader"))
+			{
+				DrawCreationPopup("Shader path: ", ".glsl",  ShaderImporter::CreateBaseShaderFile);
+				ImGui::EndMenu();
+			}
+
 			ImGui::EndPopup();
 		}
 	}
@@ -165,12 +154,24 @@ void W_Assets::DrawFileTree(AssetDir& file)
 	{
 		if (ImGui::BeginDragDropSource(/*ImGuiDragDropFlags_SourceNoDisableHover*/))
 		{
-			if (EngineExternal->moduleResources->GetTypeFromAssetExtension(file.importPath.c_str()) == Resource::Type::MODEL)
+			switch (file.resourceType)
+			{
+			case  Resource::Type::MODEL:
 				ImGui::SetDragDropPayload("_MODEL", &file.metaFileDir, file.metaFileDir.length());
-			else if (EngineExternal->moduleResources->GetTypeFromAssetExtension(file.importPath.c_str()) == Resource::Type::TEXTURE)
+				break;
+			case  Resource::Type::TEXTURE:
 				ImGui::SetDragDropPayload("_TEXTURE", &file.metaFileDir, file.metaFileDir.length());
-			else if (EngineExternal->moduleResources->GetTypeFromLibraryExtension(file.importPath.c_str()) == Resource::Type::MESH)
+				break;
+			case  Resource::Type::MESH:
 				ImGui::SetDragDropPayload("_MESH", &file.importPath, file.importPath.length());
+				break;
+			case  Resource::Type::SHADER:
+				ImGui::SetDragDropPayload("_SHADER", &file.metaFileDir, file.metaFileDir.length());
+				break;
+
+			default:
+				break;
+			}
 
 			ImGui::Text("Import asset: %s", file.metaFileDir.c_str());
 			ImGui::EndDragDropSource();
@@ -186,6 +187,32 @@ void W_Assets::DrawFileTree(AssetDir& file)
 			DrawFileTree(file.childDirs[i]);
 		}
 		ImGui::TreePop();
+	}
+}
+void W_Assets::DrawCreationPopup(const char* popDisplay, const char* dotExtension, std::function<void(const char*)> f)
+{
+	static char name[50] = "\0";
+
+	ImGui::Text(popDisplay); ImGui::SameLine();
+
+	std::string id("##");
+	id += dotExtension;
+
+	ImGui::InputText(id.c_str(), name, sizeof(char) * 50);
+	if (ImGui::Button("Create"))
+	{
+		std::string path = name;
+		if (path.find('.') == path.npos)
+			path += dotExtension;
+
+		//TODO: Check if the extension is correct, to avoid a .cs.glsl file
+		if (path.find(dotExtension) != path.npos) 
+		{ 
+			f(name);
+			name[0] = '\0';
+		}
+
+		ImGui::CloseCurrentPopup();
 	}
 }
 #endif // !STANDALONE

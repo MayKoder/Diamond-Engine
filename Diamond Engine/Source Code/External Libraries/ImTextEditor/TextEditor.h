@@ -150,6 +150,14 @@ public:
 
 	struct LanguageDefinition
 	{
+
+		~LanguageDefinition() 
+		{
+			mKeywords.clear();
+			mIdentifiers.clear();
+			mPreprocIdentifiers.clear();
+		}
+
 		typedef std::pair<std::string, PaletteIndex> TokenRegexString;
 		typedef std::vector<TokenRegexString> TokenRegexStrings;
 		typedef bool(*TokenizeCallback)(const char * in_begin, const char * in_end, const char *& out_begin, const char *& out_end, PaletteIndex & paletteIndex);
@@ -173,19 +181,22 @@ public:
 		{
 		}
 
-		static const LanguageDefinition& CPlusPlus();
-		static const LanguageDefinition& HLSL();
-		static const LanguageDefinition& GLSL();
-		static const LanguageDefinition& C();
-		static const LanguageDefinition& SQL();
-		static const LanguageDefinition& AngelScript();
-		static const LanguageDefinition& Lua();
+		static const LanguageDefinition* CPlusPlus();
+		static const LanguageDefinition* HLSL();
+		static const LanguageDefinition* GLSL();
+		static const LanguageDefinition* C();
+		static const LanguageDefinition* SQL();
+		static const LanguageDefinition* AngelScript();
+		static const LanguageDefinition* Lua();
 	};
 
 	TextEditor();
 	~TextEditor();
 
-	void SetLanguageDefinition(const LanguageDefinition& aLanguageDef);
+	void SetLanguageDefinition(const LanguageDefinition* aLanguageDef);
+	static std::map<std::string, const TextEditor::LanguageDefinition*> initDefinitions;
+
+
 	const LanguageDefinition& GetLanguageDefinition() const { return mLanguageDefinition; }
 
 	const Palette& GetPalette() const { return mPaletteBase; }

@@ -18,5 +18,7 @@ namespace ShaderImporter
 	int GetTypeMacro(ShaderType type);
 	ShaderType GetAssetsObjType(const char* assetsPath, std::string& pairString);
 
+	void CreateBaseShaderFile(const char* path);
+
 	GLuint Compile(char* fileBuffer, ShaderType type, const GLint size);
 }

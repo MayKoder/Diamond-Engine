@@ -5,7 +5,6 @@
 #include<vector>
 #include"DEResource.h"
 
-//TODO: Add full directory name to use as loading target
 struct AssetDir
 {
 	AssetDir(const char* _dName, const char* _imPath, uint64 _lMod, bool _dir = false);
@@ -15,6 +14,7 @@ struct AssetDir
 
 	bool HasMeta();
 	void GenerateMeta();
+	void LoadDataFromMeta();
 	//void ReadMeta();
 
 	void GenerateMetaRecursive();
@@ -24,12 +24,14 @@ struct AssetDir
 
 	void DeletePermanent();
 
-	std::string dirName = "";
-	std::string importPath = "";
+	std::string dirName = ""; //File name
 
-	std::string metaFileDir = "";
+	std::string importPath = ""; //Assets path
+	std::string metaFileDir = ""; //Meta file dir 
 
-	std::vector<AssetDir> childDirs;
+	std::string libraryPath; //Linked library path
+
+	std::vector<AssetDir> childDirs; //If it's a folder, files inside
 
 	uint64 lastModTime = 0;
 	bool isDir = false;

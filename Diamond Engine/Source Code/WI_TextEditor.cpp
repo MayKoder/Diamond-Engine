@@ -6,7 +6,7 @@
 #include"MO_ResourceManager.h"
 #include"IM_ShaderImporter.h"
 
-W_TextEditor::W_TextEditor() : Window(), txtName(""), textType(Resource::Type::UNKNOWN) /*: texColorBuffer(-1)*/
+W_TextEditor::W_TextEditor() : Window(), txtName(""), textType(Resource::Type::UNKNOWN)
 {
 	name = "Text Editor"; //No lng definition for C# :(
 	txtEditor.SetLanguageDefinition(TextEditor::LanguageDefinition::GLSL());
@@ -15,7 +15,7 @@ W_TextEditor::W_TextEditor() : Window(), txtName(""), textType(Resource::Type::U
 
 W_TextEditor::~W_TextEditor()
 {
-
+	txtEditor.Delete();
 }
 
 void W_TextEditor::Draw()
@@ -82,11 +82,12 @@ void W_TextEditor::DrawScriptEditor()
 
 void W_TextEditor::SetTextFromFile(const char* path)
 {
+	txtEditor.Delete();
 	char* buffer = nullptr;
 	textType = EngineExternal->moduleResources->GetTypeFromAssetExtension(path);
 	FileSystem::LoadToBuffer(path, &buffer);
 
-	TextEditor::LanguageDefinition lng;
+	const TextEditor::LanguageDefinition* lng;
 	(textType == Resource::Type::SHADER) ? lng = TextEditor::LanguageDefinition::GLSL() : lng = TextEditor::LanguageDefinition::C();
 	txtEditor.SetLanguageDefinition(lng);
 	//std::string test = FileSystem::FileToText(path); //Can't use physFS because it's
