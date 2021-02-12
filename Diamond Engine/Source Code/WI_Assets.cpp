@@ -28,51 +28,53 @@ void W_Assets::Draw()
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/))
 	{
 
-		int cellSize = 70 + 15;
-		int windowWidth = (int)ImGui::GetWindowContentRegionMax().x;
+#pragma region Just hide this for a bit
+		//int cellSize = 70 + 15;
+		//int windowWidth = (int)ImGui::GetWindowContentRegionMax().x;
 
-		int cellsPerRow = windowWidth / cellSize;
-		int counter = 0;
+		//int cellsPerRow = windowWidth / cellSize;
+		//int counter = 0;
 
-		AssetDir* toChange = nullptr;
+		//AssetDir* toChange = nullptr;
 
-		if (bigDisplayFolder->parentDir != nullptr)
-			if (ImGui::Button("Go back"))
-				bigDisplayFolder = bigDisplayFolder->parentDir;
+		//if (bigDisplayFolder->parentDir != nullptr)
+		//	if (ImGui::Button("Go back"))
+		//		bigDisplayFolder = bigDisplayFolder->parentDir;
 
-		for (auto it = bigDisplayFolder->childDirs.begin(); it != bigDisplayFolder->childDirs.end(); ++it)
-		{
-			if (ImGui::BeginChild(it->dirName.c_str(), ImVec2(70, 110), false, ImGuiWindowFlags_NoScrollbar))
-			{
-				//if (ImGui::IsWindowHovered())
-				//	ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ChildBg, ImGui::GetStyle().Colors[ImGuiCol_HeaderHovered]);
-				if (!it->isDir && ImGui::BeginDragDropSource(/*ImGuiDragDropFlags_SourceNoDisableHover*/))
-				{
-					ImGui::Text("Drag");
-					ImGui::EndDragDropSource();
-				}
-				if(it->isDir && ImGui::IsMouseDoubleClicked(0) && ImGui::IsWindowHovered())
-					toChange = it._Ptr;
+		//for (auto it = bigDisplayFolder->childDirs.begin(); it != bigDisplayFolder->childDirs.end(); ++it)
+		//{
+		//	if (ImGui::BeginChild(it->dirName.c_str(), ImVec2(70, 110), false, ImGuiWindowFlags_NoScrollbar))
+		//	{
+		//		//if (ImGui::IsWindowHovered())
+		//		//	ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ChildBg, ImGui::GetStyle().Colors[ImGuiCol_HeaderHovered]);
+		//		if (!it->isDir && ImGui::BeginDragDropSource(/*ImGuiDragDropFlags_SourceNoDisableHover*/))
+		//		{
+		//			ImGui::Text("Drag");
+		//			ImGui::EndDragDropSource();
+		//		}
+		//		if(it->isDir && ImGui::IsMouseDoubleClicked(0) && ImGui::IsWindowHovered())
+		//			toChange = it._Ptr;
 
-				ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID(it->resourceType), ImVec2(70, 70), ImVec2(0, 1), ImVec2(1, 0));
-				ImGui::TextWrapped(it->dirName.c_str());
+		//		ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID(it->resourceType), ImVec2(70, 70), ImVec2(0, 1), ImVec2(1, 0));
+		//		ImGui::TextWrapped(it->dirName.c_str());
 
-				//if (ImGui::IsWindowHovered())
-				//	ImGui::PopStyleColor();
-			}
-			ImGui::EndChild();
+		//		//if (ImGui::IsWindowHovered())
+		//		//	ImGui::PopStyleColor();
+		//	}
+		//	ImGui::EndChild();
 
-			counter++;
-			if (counter < cellsPerRow && it != bigDisplayFolder->childDirs.end() - 1)
-				ImGui::SameLine(0.0f, 15.0f);
-			else
-				counter = 0;
-		}
-		if (toChange != nullptr) 
-		{
-			bigDisplayFolder = toChange;
-			//ImGui::SetScrollHereY(1.0f);
-		}
+		//	counter++;
+		//	if (counter < cellsPerRow && it != bigDisplayFolder->childDirs.end() - 1)
+		//		ImGui::SameLine(0.0f, 15.0f);
+		//	else
+		//		counter = 0;
+		//}
+		//if (toChange != nullptr) 
+		//{
+		//	bigDisplayFolder = toChange;
+		//	//ImGui::SetScrollHereY(1.0f);
+		//}
+#pragma endregion
 		
 		DrawFileTree(*displayFolder);
 		DrawFileTree(EngineExternal->moduleResources->meshesLibraryRoot);
