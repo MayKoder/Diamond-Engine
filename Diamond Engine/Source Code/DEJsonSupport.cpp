@@ -104,7 +104,7 @@ void DEConfig::WriteString(const char* name, const char* value)
 }
 const char* DEConfig::ReadString(const char* name)
 {
-	return json_object_get_string(nObj, name);
+	return (json_object_get_string(nObj, name) != nullptr) ? json_object_get_string(nObj, name) : "";
 }
 void DEConfig::WriteBool(const char* name, bool value)
 {
