@@ -28,7 +28,7 @@ void W_Assets::Draw()
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/))
 	{
 
-#pragma region Hide this for now
+#pragma region Just hide this for now
 		//int cellSize = 70 + 15;
 		//int windowWidth = (int)ImGui::GetWindowContentRegionMax().x;
 
