@@ -47,7 +47,6 @@ bool M_FileSystem::Init()
 
 bool M_FileSystem::Start()
 {
-	App->moduleScene->defaultShader = (ResourceShader*)App->moduleResources->RequestResource(54042063, "Library/Shaders/54042063.shdr");
 
 	//TODO: Move to resource manager
 	App->moduleResources->PopulateFileArray();
@@ -57,6 +56,7 @@ bool M_FileSystem::Start()
 	//TODO: Should be updated kinda like assetsRoot;
 	//TODO: Add Library/ to gitignore?
 	GetAllFilesRecursive(App->moduleResources->meshesLibraryRoot);
+	App->moduleScene->defaultShader = (ResourceShader*)App->moduleResources->RequestResource(54042063, "Library/Shaders/54042063.shdr");
 	App->moduleRenderer3D->skybox.shaderRes = dynamic_cast<ResourceShader*>(App->moduleResources->RequestResource(2136643433, "Library/Shaders/2136643433.shdr"));
 
 	return true;
