@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 class ResourceTexture;
+class ResourceShader;
 
 class C_Material : public Component
 {
@@ -8,8 +9,10 @@ public:
 	C_Material(GameObject* _gm);
 	virtual ~C_Material();
 
-	/*void Update() override;*/
+#ifndef STANDALONE
 	bool OnEditor() override;
+#endif // !STANDALONE
+
 	int GetTextureID();
 
 
@@ -18,5 +21,6 @@ public:
 
 	bool viewWithCheckers;
 	ResourceTexture* matTexture;
+	ResourceShader* shader;
 
 };

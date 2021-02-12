@@ -490,9 +490,6 @@
     <ClInclude Include="Source Code\CO_Transform.h">
       <Filter>Sources\Components\Derived</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\DERect.h">
-      <Filter>Sources\Tools\MMath</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\MO_MonoManager.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
@@ -513,6 +510,24 @@
     </ClInclude>
     <ClInclude Include="Source Code\External Libraries\PugiXML\pugixml.hpp">
       <Filter>Externals\PugiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\RE_Shader.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\IM_ShaderImporter.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DE_FrameBuffer.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DERect.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DE_Cubemap.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MA_IconSystem.h">
+      <Filter>Sources\Containers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -777,9 +792,6 @@
     <ClCompile Include="Source Code\CO_Transform.cpp">
       <Filter>Sources\Components\Derived</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\DERect.cpp">
-      <Filter>Sources\Tools\MMath</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\MO_MonoManager.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
@@ -797,6 +809,24 @@
     </ClCompile>
     <ClCompile Include="Source Code\MMGui.cpp">
       <Filter>Sources\Tools\MMath</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\RE_Shader.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\IM_ShaderImporter.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DE_FrameBuffer.cpp">
+      <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DERect.cpp">
+      <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DE_Cubemap.cpp">
+      <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MA_IconSystem.cpp">
+      <Filter>Sources\Containers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

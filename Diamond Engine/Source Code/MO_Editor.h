@@ -1,8 +1,10 @@
+#ifndef STANDALONE
 #pragma once
 
 #include "Module.h"
 #include "Window.h"
 #include "Globals.h"
+#include "MA_IconSystem.h"
 
 #define STYLES_PATH "Settings/styles.json"
 #define MAX_STY_INPUT 15
@@ -31,14 +33,6 @@ enum class EditorWindow {
 	CONFIGURATION,
 	
 	MAX
-};
-
-enum class Icons {
-	I_Play, I_Stop, I_Pause, I_Step,
-	I_Warning, I_Error, I_Info, I_Folder,
-	I_Models,
-
-	I_Max
 };
 
 class M_Editor : public Module
@@ -75,10 +69,9 @@ public:
 
 	void LogToConsole(const char* msg, LogType _type = LogType::L_NORMAL);
 
-	std::vector<ResourceTexture*> editorIcons;
+	IconManager editorIcons;
+
 private:
-
-
 	std::vector<Window*> windows;
 	std::vector<std::string> styles;
 
@@ -92,3 +85,5 @@ private:
 
 	ImVec4 playingTint;
 };
+
+#endif

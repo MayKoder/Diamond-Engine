@@ -21,6 +21,7 @@ namespace StringLogic {
 #define MODELS_PATH "Library/Models/"
 #define SCENES_PATH "Library/Scenes/"
 #define SCRIPTS_PATH "Library/ScriptsAssembly/"
+#define SHADERS_PATH "Library/Shaders/"
 
 namespace FileSystem
 {

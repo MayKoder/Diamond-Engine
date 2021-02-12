@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #ifndef __W_HIERARCHY_H__
 #define __W_HIERARCHY_H__
 
@@ -27,3 +29,4 @@ private:
 
 #endif //__W_HIERARCHY_H__
 
+#endif // !STANDALONE

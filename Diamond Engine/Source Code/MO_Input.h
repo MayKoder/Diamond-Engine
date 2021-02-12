@@ -22,7 +22,9 @@ public:
 	update_status PreUpdate(float dt) override;
 	bool CleanUp() override;
 
+#ifndef STANDALONE
 	void OnGUI() override;
+#endif // !STANDALONE
 
 	KEY_STATE GetKey(int id) const
 	{

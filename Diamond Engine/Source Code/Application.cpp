@@ -8,7 +8,12 @@
 #include "MO_Renderer3D.h"
 #include "MO_Camera3D.h"
 #include "MO_Scene.h"
+
+#ifndef STANDALONE
 #include "MO_Editor.h"
+#endif // !STANDALONE
+
+
 #include "MO_ResourceManager.h"
 #include "MO_MonoManager.h"
 
@@ -31,7 +36,10 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	moduleMono = new M_MonoManager(this);
 
 	moduleResources = new M_ResourceManager(this);
+
+#ifndef STANDALONE
 	moduleEditor = new M_Editor(this);
+#endif
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -51,7 +59,10 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	AddModule(moduleMono);
 
 	AddModule(moduleResources);
+
+#ifndef STANDALONE
 	AddModule(moduleEditor);
+#endif
 
 	AddModule(moduleRenderer3D);
 }
@@ -143,7 +154,7 @@ float Application::GetFrameRate() const
 	return 1.f / GetDT();
 }
 
-int Application::GetRandomInt()
+int Application::GetRandomInt() //TODO: We could add iconCount here to make sure we don't get duplicated id's?
 {
 	return randomizer.Int();
 }

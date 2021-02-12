@@ -4,8 +4,10 @@
 #include"IM_FileSystem.h"
 #include"IM_ModelImporter.h"
 #include"MO_MonoManager.h"
+#include"DEJsonSupport.h"
 
-AssetDir::AssetDir(const char* _dName, const char* _imPath, uint64 _lMod, bool _dir) : isDir(_dir), lastModTime(_lMod)
+AssetDir::AssetDir(const char* _dName, const char* _imPath, uint64 _lMod, bool _dir) : isDir(_dir), lastModTime(_lMod),
+resourceType(Resource::Type::UNKNOWN), parentDir(nullptr)
 {
 	dirName = _dName;
 	dirName.push_back('\0');
@@ -17,7 +19,11 @@ AssetDir::AssetDir(const char* _dName, const char* _imPath, uint64 _lMod, bool _
 		GenerateMetaPath();
 		if (HasMeta()) 
 		{
-			metaUID = EngineExternal->moduleResources->GetMetaUID(metaFileDir.c_str());
+			LoadDataFromMeta();
+		}
+		else if(!isDir)
+		{
+			resourceType = Resource::Type::MESH;
 		}
 	}
 }
@@ -28,6 +34,7 @@ AssetDir::~AssetDir()
 	childDirs.clear();
 	importPath.clear();
 	metaFileDir.clear();
+	libraryPath.clear();
 	lastModTime = 0;
 }
 
@@ -52,11 +59,26 @@ void AssetDir::GenerateMeta()
 
 	if (!HasMeta())
 	{
-		Resource::Type type = EngineExternal->moduleResources->GetTypeFromAssetExtension(importPath.c_str());
-		uint resUID = EngineExternal->moduleResources->GenerateNewUID();
-		metaUID = resUID;
-		EngineExternal->moduleResources->GenerateMeta(importPath.c_str(), EngineExternal->moduleResources->GenLibraryPath(resUID, type).c_str(), resUID, type);
+		this->resourceType = EngineExternal->moduleResources->GetTypeFromAssetExtension(importPath.c_str());
+		this->metaUID = EngineExternal->moduleResources->GenerateNewUID();
+		this->libraryPath = EngineExternal->moduleResources->GenLibraryPath(metaUID, resourceType).c_str();
+
+		EngineExternal->moduleResources->GenerateMeta(importPath.c_str(), libraryPath.c_str(), metaUID, resourceType);
+
 	}
+}
+
+void AssetDir::LoadDataFromMeta()
+{
+	JSON_Value* metaJSON = json_parse_file(metaFileDir.c_str());
+	DEConfig rObj(json_value_get_object(metaJSON));
+
+	metaUID = rObj.ReadInt("UID");
+	resourceType = static_cast<Resource::Type>(rObj.ReadInt("Type"));
+	libraryPath = rObj.ReadString("Library Path");
+
+	//Free memory
+	json_value_free(metaJSON);
 }
 
 void AssetDir::GenerateMetaRecursive()
@@ -75,7 +97,7 @@ void AssetDir::GenerateMetaRecursive()
 void AssetDir::CreateLibraryFileRecursive()
 {
 	//Create library file
-	if (!isDir && EngineExternal->moduleResources->ExistsOnLibrary(importPath.c_str()) == 0) /*TODO: Or has meta but the mirror on library does not exist*/
+	if (!isDir && EngineExternal->moduleResources->ExistsOnLibrary(importPath.c_str()) == 0)
 	{
 		//Create mirror
 		uint id = EngineExternal->moduleResources->CreateLibraryFromAssets(importPath.c_str());
@@ -111,9 +133,9 @@ void AssetDir::DeletePermanent()
 	//Remove library
 	if (!isDir) 
 	{
-		EngineExternal->moduleFileSystem->DeleteAssetFile(EngineExternal->moduleResources->LibraryFromMeta(this->metaFileDir.c_str()).c_str());
+		EngineExternal->moduleFileSystem->DeleteAssetFile(libraryPath.c_str());
 
-		if (EngineExternal->moduleResources->GetMetaType(metaFileDir.c_str()) == Resource::Type::MODEL) 
+		if (resourceType == Resource::Type::MODEL) 
 		{
 			std::vector<uint> meshesID;
 			//Get meshes from fbx meta
@@ -139,7 +161,7 @@ void AssetDir::DeletePermanent()
 
 	if (!isDir)
 	{
-		if (EngineExternal->moduleResources->GetMetaType(metaFileDir.c_str()) == Resource::Type::SCRIPT)
+		if (resourceType == Resource::Type::SCRIPT)
 		{
 			EngineExternal->moduleMono->RemoveScriptFromSLN(this->importPath.c_str());
 			EngineExternal->moduleMono->ReCompileCS();

@@ -3,6 +3,13 @@
 #include "MeshArrays.h"
 #include "IM_FileSystem.h"
 #include"Globals.h"
+#include"RE_Shader.h"
+
+#include"Application.h"
+#include"MO_Scene.h" //This can be removed
+#include"MO_Camera3D.h" //This can be deleted
+#include"CO_Transform.h"
+#include"DETime.h"
 
 ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH), indices_id(0), vertices_id(0), generalWireframe(nullptr)
 {
@@ -99,16 +106,45 @@ bool ResourceMesh::UnloadFromMemory()
 	return true;
 }
 
-void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture)
+void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShader* shader, C_Transform* _transform)
 {
 	//ASK: glDrawElementsInstanced()?
 	if(textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
+	if (shader) 
+	{
+		shader->Bind();
+
+		GLint modelLoc = glGetUniformLocation(shader->shaderProgramID, "model_matrix");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, _transform->GetGlobalTransposed());
+
+		modelLoc = glGetUniformLocation(shader->shaderProgramID, "view");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ViewMatrixOpenGL().ptr());
+
+		modelLoc = glGetUniformLocation(shader->shaderProgramID, "projection");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
+
+		modelLoc = glGetUniformLocation(shader->shaderProgramID, "time");
+		glUniform1f(modelLoc, DETime::realTimeSinceStartup);
+	}
+	else
+	{
+		glPushMatrix();
+		glMultMatrixf(_transform->GetGlobalTransposed());
+	}
+
 	//Vertices --------------------------------------------
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, vertices_id);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	if (shader) 
+	{
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+	}
+	else
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
 	//--------------------------------------------
 
 
@@ -117,9 +153,13 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture)
 	{
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, texCoords_id);
-		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-		//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		//glEnableVertexAttribArray(1);
+		if (shader) 
+		{
+			glEnableVertexAttribArray(2);
+			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		}
+		else
+			glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 	}
 	//--------------------------------------------
 
@@ -128,9 +168,13 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture)
 	{
 		glEnableClientState(GL_NORMAL_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, normalbuffer_id);
-		glNormalPointer(GL_FLOAT, 0, NULL);
-		//glEnableVertexAttribArray(2);
-		//glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		if (shader) 
+		{
+			glEnableVertexAttribArray(3);
+			glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		}
+		else
+			glNormalPointer(GL_FLOAT, 0, NULL);
 	}
 	//--------------------------------------------
 
@@ -159,6 +203,18 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture)
 	if (texCoords_count != 0)
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	//--------------------------------------------
+
+	if (shader) 
+	{
+		shader->Unbind();
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(2);
+		glDisableVertexAttribArray(3);
+	}
+	else 
+	{
+		glPopMatrix();
+	}
 }
 
 void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)

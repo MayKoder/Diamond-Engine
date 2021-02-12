@@ -74,7 +74,7 @@ bool ModuleWindow::Init()
 		SDL_SetWindowPosition(window, (sWidth / 2) - (MIN_WIDTH / 2), (sHeight / 2) - (MIN_HEIGHT / 2));
 
 		SDL_SetWindowMinimumSize(window, MIN_WIDTH, MIN_HEIGHT);
-		//SDL_MaximizeWindow(window);
+		SDL_MaximizeWindow(window);
 
 		SDL_GetWindowSize(window, &s_width, &s_height);
 
@@ -113,6 +113,7 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
+#ifndef STANDALONE
 void ModuleWindow::OnGUI()
 {
 	if (ImGui::CollapsingHeader("Window", ImGuiTreeNodeFlags_DefaultOpen))
@@ -169,6 +170,7 @@ void ModuleWindow::OnGUI()
 		ImGui::NewLine();
 	}
 }
+#endif // !STANDALONE
 
 void ModuleWindow::SetTitle(const char* title)
 {

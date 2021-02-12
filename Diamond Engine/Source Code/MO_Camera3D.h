@@ -15,7 +15,9 @@ public:
 	update_status Update(float dt) override;
 	bool CleanUp() override;
 
+#ifndef STANDALONE
 	void OnGUI() override;
+#endif // !STANDALONE
 
 	void ProcessSceneKeyboard();
 

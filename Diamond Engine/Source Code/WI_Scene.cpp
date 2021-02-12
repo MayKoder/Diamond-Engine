@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include "WI_Scene.h"
 
 #include "MO_Renderer3D.h"
@@ -48,7 +50,7 @@ void W_Scene::Draw()
 		ImVec2 size = ImGui::GetContentRegionAvail();
 
 		App->moduleCamera->editorCamera.SetAspectRatio(ImGui::GetContentRegionAvail().x / ImGui::GetContentRegionAvail().y);
-		ImGui::Image((ImTextureID)App->moduleCamera->editorCamera.texColorBuffer, size, ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((ImTextureID)App->moduleCamera->editorCamera.resolvedFBO.GetTextureBuffer(), size, ImVec2(0, 1), ImVec2(1, 0));
 
 		if (ImGui::BeginDragDropTarget())
 		{
@@ -76,9 +78,11 @@ void W_Scene::Draw()
 			ImGui::EndDragDropTarget();
 		}
 
-		ImGui::SetCursorPos(ImVec2(10, 30));
+		int position = 10;
+		ImGui::SetCursorPos(ImVec2(position, 30));
 		if (ImGui::Button((mode == ImGuizmo::MODE::LOCAL) ? "LOCAL" : "WORLD"))
 			(mode == ImGuizmo::MODE::LOCAL) ? mode = ImGuizmo::MODE::WORLD : mode = ImGuizmo::MODE::LOCAL;
+
 
 		//Draw gizmo
 		if (App->moduleEditor->GetSelectedGO())
@@ -164,3 +168,5 @@ ImVec2 W_Scene::NormalizeOnWindow(float x, float y, float w, float h, ImVec2 poi
 
 	return normalizedPoint;
 }
+
+#endif // !STANDALONE

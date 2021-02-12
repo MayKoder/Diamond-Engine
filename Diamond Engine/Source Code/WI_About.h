@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #ifndef __W_ABOUT_H__
 #define __W_ABOUT_H__
 
@@ -17,6 +19,6 @@ public:
 
 };
 
-
-
 #endif //__W_ABOUT_H__
+
+#endif // !STANDALONE

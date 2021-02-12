@@ -35,8 +35,11 @@ active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), d
 
 GameObject::~GameObject()
 {
+#ifndef STANDALONE
 	if (EngineExternal->moduleEditor->GetSelectedGO() == this)
 		EngineExternal->moduleEditor->SetSelectedGO(nullptr);
+#endif // !STANDALONE
+
 
 	for (size_t i = 0; i < components.size(); i++)
 	{

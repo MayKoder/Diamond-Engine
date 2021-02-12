@@ -4,8 +4,9 @@
 
 #include "Application.h"
 #include "MO_Renderer3D.h"
-#include "IM_FileSystem.h"
 #include"MO_ResourceManager.h"
+#include"RE_Shader.h"
+#include "IM_FileSystem.h"
 
 #include "GameObject.h"
 #include "CO_Material.h"
@@ -13,6 +14,7 @@
 #include"CO_Camera.h"
 
 #include "ImGui/imgui.h"
+#include"MO_Scene.h"
 
 #include"DEJsonSupport.h"
 
@@ -20,7 +22,7 @@
 #include"MathGeoLib/include/Geometry/Plane.h"
 
 C_MeshRenderer::C_MeshRenderer(GameObject* _gm) : Component(_gm), _mesh(nullptr),
-faceNormals(false), vertexNormals(false), showAABB(true), showOBB(true)
+faceNormals(false), vertexNormals(false), showAABB(false), showOBB(false)
 {
 	name = "Mesh Renderer";
 	alternColor = float3::one;
@@ -37,23 +39,29 @@ C_MeshRenderer::~C_MeshRenderer()
 
 void C_MeshRenderer::Update()
 {
-
-	if (EngineExternal->moduleRenderer3D->GetGameRenderTarget() != nullptr && EngineExternal->moduleRenderer3D->GetGameRenderTarget()->cullingState == true && !IsInsideFrustum(&EngineExternal->moduleRenderer3D->GetGameRenderTarget()->camFrustrum))
+	if (EngineExternal->moduleRenderer3D->GetGameRenderTarget() != nullptr && EngineExternal->moduleRenderer3D->GetGameRenderTarget()->cullingState == true && !IsInsideFrustum(&EngineExternal->moduleRenderer3D->GetGameRenderTarget()->camFrustrum)) 
 		return;
 	
 	EngineExternal->moduleRenderer3D->renderQueue.push_back(this);
 
-	if (showAABB ==true) {
+#ifndef STANDALONE
+	if (showAABB ==true) 
+	{
+
 		float3 points[8];
 		globalAABB.GetCornerPoints(points);
 		ModuleRenderer3D::DrawBox(points, float3(0.2f, 1.f, 0.101f));
 	}
 
-	if (showOBB == true) {
+	if (showOBB == true) 
+	{
+
 		float3 points[8];
 		globalOBB.GetCornerPoints(points);
 		ModuleRenderer3D::DrawBox(points);
 	}
+#endif // !STANDALONE
+
 }
 
 void C_MeshRenderer::RenderMesh(bool rTex)
@@ -62,15 +70,9 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 		return;
 
 
-	//Position matrix?
-	//BUG: Mesh rendering will crash if you dont fix the resource manager for meshes
 	C_Transform* transform = gameObject->transform;
-	if (transform != nullptr)
-	{
-		glPushMatrix();
-		glMultMatrixf(transform->GetGlobalTransposed());
-	}
 
+	//TODO IMPORTANT: Optimize this, save this pointer or something
 	C_Material* material = dynamic_cast<C_Material*>(gameObject->GetComponent(Component::Type::Material));
 	GLuint id = 0;
 
@@ -79,22 +81,25 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 
 	glColor3fv(&alternColor.x);
 
-	_mesh->RenderMesh(id, rTex);
+	_mesh->RenderMesh(id, rTex, (material != nullptr) ? material->shader : nullptr, transform);
 
 	glColor3f(1.f, 1.f, 1.f);
 
 	if (vertexNormals || faceNormals)
 		_mesh->RenderMeshDebug(&vertexNormals, &faceNormals);
 
-	if (transform != nullptr)
-		glPopMatrix();
 }
 
 void C_MeshRenderer::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
-	DEJson::WriteString(nObj, "Path", _mesh->GetLibraryPath());
-	DEJson::WriteInt(nObj, "UID", _mesh->GetUID());
+
+	if (_mesh) //TODO: I don't think this is a good idea
+	{
+		DEJson::WriteString(nObj, "Path", _mesh->GetLibraryPath());
+		DEJson::WriteInt(nObj, "UID", _mesh->GetUID());
+	}
+
 	DEJson::WriteVector3(nObj, "alternColor", &alternColor.x);
 }
 void C_MeshRenderer::LoadData(DEConfig& nObj)
@@ -114,6 +119,7 @@ void C_MeshRenderer::LoadData(DEConfig& nObj)
 	gameObject->transform->UpdateBoxes();
 }
 
+#ifndef STANDALONE
 bool C_MeshRenderer::OnEditor()
 {
 	if (Component::OnEditor() == true)
@@ -172,6 +178,7 @@ bool C_MeshRenderer::OnEditor()
 	}
 	return false;
 }
+#endif // !STANDALONE
 
 bool C_MeshRenderer::IsInsideFrustum(Frustum* camFrustum)
 {

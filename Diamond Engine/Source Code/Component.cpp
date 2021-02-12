@@ -23,6 +23,7 @@ void Component::Update()
 {
 }
 
+#ifndef STANDALONE
 bool Component::OnEditor()
 {
 	ImGui::Dummy(ImVec2(15, 10));
@@ -48,6 +49,7 @@ bool Component::OnEditor()
 
 	return true;
 }
+#endif // !STANDALONE
 
 void Component::SaveData(JSON_Object* nObj)
 {

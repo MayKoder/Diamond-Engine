@@ -4,22 +4,30 @@
 #include"MO_Renderer3D.h"
 
 #include"RE_Texture.h"
+#include"RE_Shader.h"
 #include"MO_ResourceManager.h"
+#include"MO_Scene.h"
 
 #include"DEJsonSupport.h"
 #include"IM_TextureImporter.h"
 
-C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false), matTexture(nullptr)
+C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false), matTexture(nullptr),
+shader(nullptr)
 {
 	name = "Material";
+	shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleScene->defaultShader->GetUID()));
 }
 
 C_Material::~C_Material()
 {
 	if(matTexture != nullptr)
 		EngineExternal->moduleResources->UnloadResource(matTexture->GetUID());
+
+	if (shader != nullptr)
+		EngineExternal->moduleResources->UnloadResource(shader->GetUID());
 }
 
+#ifndef STANDALONE
 bool C_Material::OnEditor()
 {
 	if (Component::OnEditor() == true)
@@ -58,8 +66,6 @@ bool C_Material::OnEditor()
 			ImGui::Text("Library Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", matTexture->GetLibraryPath());
 
 			ImGui::Checkbox("View with checkers", &viewWithCheckers);
-
-
 		}
 		else
 		{
@@ -80,10 +86,32 @@ bool C_Material::OnEditor()
 				ImGui::EndDragDropTarget();
 			}
 		}
+
+		ImGui::Text("Drop here to change shader");
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_SHADER"))
+			{
+				std::string* metaFileDrop = (std::string*)payload->Data;
+				std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
+
+				EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+				shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		if (shader) 
+		{
+			ImGui::Dummy(ImVec2(0, 15));
+			ImGui::Text("Using shader %s", shader->GetAssetPath());
+			shader->DrawEditor();
+		}
 		return true;
 	}
 	return false;
 }
+#endif // !STANDALONE
 
 int C_Material::GetTextureID()
 {
@@ -101,6 +129,12 @@ void C_Material::SaveData(JSON_Object* nObj)
 		DEJson::WriteString(nObj, "AssetPath", matTexture->GetAssetPath());
 		DEJson::WriteString(nObj, "LibraryPath", matTexture->GetLibraryPath());
 		DEJson::WriteInt(nObj, "UID", matTexture->GetUID());
+	}
+	if (shader != nullptr) 
+	{
+		DEJson::WriteString(nObj, "ShaderAssetPath", shader->GetAssetPath());
+		DEJson::WriteString(nObj, "ShaderLibraryPath", shader->GetLibraryPath());
+		DEJson::WriteInt(nObj, "ShaderUID", shader->GetUID());
 	}
 	//TODO: Call texture importer and load data
 }
@@ -124,4 +158,12 @@ void C_Material::LoadData(DEConfig& nObj)
 	}
 
 	matTexture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), texName.c_str()));
+
+	if (shader != nullptr) 
+	{
+		EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+		shader = nullptr;
+	}
+
+	shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("ShaderUID")));
 }

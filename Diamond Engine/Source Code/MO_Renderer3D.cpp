@@ -6,24 +6,24 @@
 #include "MO_Camera3D.h"
 #include "MO_Editor.h"
 #include "MO_Scene.h"
+#include "MO_Input.h"
 
 #include "RE_Mesh.h"
+#include "RE_Texture.h"
 #include "mmgr/mmgr.h"
-#include "DevIL\include\ilu.h"
-#include "DevIL\include\ilut.h"
 
 #include"WI_Game.h"
 
-#include"MO_Input.h"
 #include"GameObject.h"
 
 #include"CO_MeshRenderer.h"
 #include"CO_Camera.h"
 #include"CO_Transform.h"
 
-#include"RE_Texture.h"
 #include"Primitive.h"
 #include"MathGeoLib/include/Geometry/Triangle.h"
+
+#include"IM_TextureImporter.h"			//Delete this
 
 #ifdef _DEBUG
 #pragma comment (lib, "MathGeoLib/libx86/MGDebug/MathGeoLib.lib")
@@ -149,7 +149,7 @@ bool ModuleRenderer3D::Init()
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
-		
+		glEnable(GL_MULTISAMPLE);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
 		lights[0].Active(true);
@@ -182,13 +182,28 @@ bool ModuleRenderer3D::Init()
 
 	// Projection matrix for
 	OnResize(App->moduleWindow->s_width, App->moduleWindow->s_height);
-	
+
+	std::vector<std::string> faces = {
+		"EngineIcons/Skybox/right.png",
+		"EngineIcons/Skybox/left.png",
+		"EngineIcons/Skybox/top.png",
+		"EngineIcons/Skybox/bottom.png",
+		"EngineIcons/Skybox/front.png",
+		"EngineIcons/Skybox/back.png"
+	};
+
+	TextureImporter::LoadCubeMap(faces, skybox);
+	skybox.CreateGLData();
+	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
 	return ret;
 }
 
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+
+#ifndef STANDALONE
 	App->moduleCamera->editorCamera.StartDraw();
 
 	//Light 0 on cam pos
@@ -196,6 +211,8 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
+
+#endif // !STANDALONE
 
 	return UPDATE_CONTINUE;
 }
@@ -206,6 +223,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	Grid p(0, 0, 0, 0);
 	p.axis = true;
+
+#ifndef STANDALONE
 	p.Render();
 
 	//TODO: This should not be here
@@ -213,16 +232,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	{
 		for (size_t i = 0; i < renderQueue.size(); i++)
 		{
-			//Maybe do culling check on the component update
-			if (gameCamera != nullptr)
-			{
-				float distance = App->moduleCamera->editorCamera.camFrustrum.pos.DistanceSq(renderQueue[i]->globalOBB.pos);
-				renderQueueMap.emplace(distance, renderQueue[i]);
-			}
-			else
-			{
-				renderQueue[i]->RenderMesh();
-			}
+			float distance = App->moduleCamera->editorCamera.camFrustrum.pos.DistanceSq(renderQueue[i]->globalOBB.pos);
+			renderQueueMap.emplace(distance, renderQueue[i]);
 		}
 
 		//TODO: Make wireframe only affect scene window
@@ -231,27 +242,42 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
+
+	skybox.DrawAsSkybox(&App->moduleCamera->editorCamera);
+
 	DebugLine(pickingDebug);
 	App->moduleCamera->editorCamera.EndDraw();
+#endif // !STANDALONE
 
-	//Test new camera render here?
-	//Start test draw
+	//Draw game camera
 	if (gameCamera != nullptr) 
 	{
 		gameCamera->StartDraw();
 
+		lights[0].SetPos(5, 5, 5);
+
 		for (uint i = 0; i < MAX_LIGHTS; ++i)
 			lights[i].Render();
 
-		p.Render();
-		RenderWithOrdering(true);
+		if (!renderQueue.empty())
+		{
+			for (size_t i = 0; i < renderQueue.size(); i++)
+			{
+				float distance = gameCamera->camFrustrum.pos.DistanceSq(renderQueue[i]->globalOBB.pos);
+				renderQueueMap.emplace(distance, renderQueue[i]);
+			}
 
+			RenderWithOrdering(true);
+		}
+
+		skybox.DrawAsSkybox(gameCamera);
 		gameCamera->EndDraw();
 	}
 
-	glClearColor(0.08f, 0.08f, 0.08f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+#ifndef STANDALONE
 	App->moduleEditor->Draw();
+#endif // !STANDALONE
 	
 	//TEMPORAL: Delete here so you can call mouse picking from scene window, should not be here in the future
 	ClearAllRenderData();
@@ -265,6 +291,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 bool ModuleRenderer3D::CleanUp()
 {
 	LOG(LogType::L_NORMAL, "Destroying 3D Renderer");
+	skybox.ClearMemory();
+
 	SDL_GL_DeleteContext(context);
 	ClearAllRenderData();
 
@@ -280,13 +308,17 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	App->moduleWindow->s_width = width;
 	App->moduleWindow->s_height = height;
 
+#ifndef STANDALONE
 	App->moduleCamera->editorCamera.ReGenerateBuffer(width, height);
+#endif // !STANDALONE
 
-	W_Game* gameWindow = dynamic_cast<W_Game*>(App->moduleEditor->GetEditorWindow(EditorWindow::GAME));
-	if(gameWindow->GetTargetCamera())
-		gameWindow->GetTargetCamera()->ReGenerateBuffer(width, height);
+
+	if (gameCamera != nullptr) 
+		gameCamera->ReGenerateBuffer(width, height);
+
 }
 
+#ifndef STANDALONE
 void ModuleRenderer3D::OnGUI()
 {
 	if (ImGui::CollapsingHeader("Rendering", ImGuiTreeNodeFlags_DefaultOpen))
@@ -356,6 +388,7 @@ void ModuleRenderer3D::OnGUI()
 
 	}
 }
+#endif // !STANDALONE
 
 void ModuleRenderer3D::DrawBox(float3* points, float3 color)
 {
@@ -441,16 +474,20 @@ void ModuleRenderer3D::RayToMeshQueueIntersection(LineSegment& ray)
 		}
 	}
 	canSelect.clear();
+
+#ifndef STANDALONE
 	if (distMap.begin() != distMap.end())
 	{
 		App->moduleEditor->SetSelectedGO((*distMap.begin()).second->GetGO());
 		selected = true;
 	}
-	distMap.clear();
+
 
 	//If nothing is selected, set selected GO to null
 	if(!selected)
 		App->moduleEditor->SetSelectedGO(nullptr);
+#endif // !STANDALONE
+	distMap.clear();
 }
 
 void ModuleRenderer3D::RenderWithOrdering(bool rTex)
@@ -467,6 +504,8 @@ void ModuleRenderer3D::RenderWithOrdering(bool rTex)
 		for (auto d = range.first; d != range.second; ++d)
 			d->second->RenderMesh(rTex);
 	}
+
+	renderQueueMap.clear();
 }
 
 void ModuleRenderer3D::DebugLine(LineSegment& line)
@@ -506,12 +545,12 @@ void ModuleRenderer3D::SetGameRenderTarget(C_Camera* cam)
 {
 	gameCamera = cam;
 
+#ifndef STANDALONE
 	W_Game* gWindow = dynamic_cast<W_Game*>(App->moduleEditor->GetEditorWindow(EditorWindow::GAME));
 	if (gWindow != nullptr && gameCamera != nullptr)
 		gWindow->SetTargetCamera(gameCamera);
+#endif // !STANDALONE
 
-	//BUG TODO: If you remove and add cameras the culling will break at some point even if there is still
-	//active cameras around the scene
 	if (gameCamera != nullptr)
 		gameCamera->ReGenerateBuffer(App->moduleWindow->s_width, App->moduleWindow->s_height);
 }

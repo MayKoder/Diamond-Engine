@@ -23,8 +23,10 @@
 
 #include"RE_Texture.h"
 #include"DETime.h"
+#include"RE_Shader.h"
 
-M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr)
+M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr),
+defaultShader(nullptr)
 {
 }
 
@@ -43,21 +45,14 @@ bool M_Scene::Start()
 {
 	CreateGameCamera("Main Camera");
 
-	LoadScene(App->moduleResources->LibraryFromMeta(App->moduleResources->GetMetaPath("Assets/Scene1.des").c_str()).c_str());
+	LoadScene("Library/Scenes/323737769.des");
 
+#ifndef STANDALONE
 	//TODO IMPORTANT: This is why we should save icons .meta, or we could generate them every time
 	//But this will introduce some randomized problems with ID duplications
 	// TODO: Maybe this should be handled on the editor module? texture #include is stupid
-	App->moduleEditor->editorIcons = std::vector<ResourceTexture*>(static_cast<unsigned int>(Icons::I_Max), nullptr);
-	App->moduleEditor->editorIcons[(int)Icons::I_Play] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/PlayButton.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Stop] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/StopButton.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Pause] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/PauseButton.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Step] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/StepButton.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Warning] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Warning.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Error] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Error.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Info] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Info.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Folder] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Folder.dds"));
-	App->moduleEditor->editorIcons[(int)Icons::I_Models] = dynamic_cast<ResourceTexture*>(App->moduleResources->RequestResource(App->moduleResources->GenerateNewUID(), "EngineIcons/Models.dds"));
+	App->moduleEditor->editorIcons.LoadPreDefinedIcons();
+#endif // !STANDALONE
 
 	return true;
 }
@@ -78,8 +73,77 @@ update_status M_Scene::PreUpdate(float dt)
 
 update_status M_Scene::Update(float dt)
 {
+#ifndef STANDALONE
+
+	//TODO: Only do c/v when the hier or scene widows are focused?
+	if (App->moduleInput->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->moduleInput->GetKey(SDL_SCANCODE_C) == KEY_DOWN && App->moduleEditor->GetSelectedGO() != nullptr)
+	{
+		JSON_Value* file = json_value_init_object();
+		DEConfig root_object(json_value_get_object(file));
+
+		JSON_Value* goArray = json_value_init_array();
+		App->moduleEditor->GetSelectedGO()->SaveToJson(json_value_get_array(goArray));
+		json_object_set_value(root_object.nObj, "Game Objects", goArray);
+
+		//Save file 
+		json_serialize_to_file_pretty(file, "EngineIcons/cntlC.json");
+
+		//Free memory
+		json_value_free(file);
+	}
+	if (App->moduleInput->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->moduleInput->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+	{
+		if (FileSystem::Exists("EngineIcons/cntlC.json") == true) 
+		{
+			JSON_Value* scene = json_parse_file("EngineIcons/cntlC.json");
+
+			//TODO: Duplicated code from scene loading, move to method
+			if (scene != NULL) 
+			{
+
+				JSON_Object* sceneObj = json_value_get_object(scene);
+				JSON_Array* sceneGO = json_object_get_array(sceneObj, "Game Objects");
+				JSON_Object* goJsonObj = json_array_get_object(sceneGO, 0);
+
+				GameObject* parent = (App->moduleEditor->GetSelectedGO() == nullptr) ? root : App->moduleEditor->GetSelectedGO();
+				for (size_t i = 0; i < json_array_get_count(sceneGO); i++)
+				{
+					parent = LoadGOData(json_array_get_object(sceneGO, i), parent);
+				}
+
+				//TODO: Duplicated code from scene loading C#, move to method
+				for (auto i = referenceMap.begin(); i != referenceMap.end(); ++i)
+				{
+					// Get the range of the current key
+					auto range = referenceMap.equal_range(i->first);
+
+					// Now render out that whole range
+					for (auto d = range.first; d != range.second; ++d)
+					{
+						d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
+
+						if (d->second->fiValue.goValue)
+						{
+							if (std::find(d->second->fiValue.goValue->csReferences.begin(), d->second->fiValue.goValue->csReferences.end(), d->second) == d->second->fiValue.goValue->csReferences.end())
+								d->second->fiValue.goValue->csReferences.push_back(d->second);
+
+							d->second->parentSC->SetField(d->second->field, d->second->fiValue.goValue);
+						}
+					}
+				}
+
+				referenceMap.clear();
+
+				//Free memory
+				json_value_free(scene);
+			}
+		}
+	}
+
 	if (App->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && App->moduleEditor->GetSelectedGO() != nullptr && App->moduleEditor->GetSelectedAsset() == nullptr)
 		App->moduleEditor->GetSelectedGO()->Destroy();
+#endif // !STANDALONE
+
 
 	UpdateGameObjects();
 
@@ -89,6 +153,9 @@ update_status M_Scene::Update(float dt)
 bool M_Scene::CleanUp()
 {
 	//This will delete all the gameObjects
+	if (defaultShader != nullptr)
+		EngineExternal->moduleResources->UnloadResource(defaultShader->GetUID());
+
 	delete root;
 	return true;
 }
@@ -119,14 +186,18 @@ GameObject* M_Scene::CreateGameObject(const char* name, GameObject* parent, int 
 void M_Scene::SetGameCamera(C_Camera* cam)
 {
 	App->moduleRenderer3D->SetGameRenderTarget(cam);
+
+#ifndef STANDALONE
 	dynamic_cast<W_Game*>(App->moduleEditor->GetEditorWindow(EditorWindow::GAME))->SetTargetCamera(cam);
+#endif // !STANDALONE
 }
 
 void M_Scene::CreateGameCamera(const char* name)
 {
 	GameObject* cam = CreateGameObject(name, root);
 	C_Camera* c_comp = dynamic_cast<C_Camera*>(cam->AddComponent(Component::Type::Camera));
-	SetGameCamera(c_comp);
+
+	//SetGameCamera(c_comp);
 }
 
 void M_Scene::Destroy(GameObject* gm)
@@ -169,6 +240,7 @@ void M_Scene::RecursiveUpdate(GameObject* parent)
 	}
 }
 
+#ifndef STANDALONE
 void M_Scene::OnGUI()
 {
 	if (ImGui::CollapsingHeader("Scene info", ImGuiTreeNodeFlags_DefaultOpen))
@@ -183,6 +255,7 @@ void M_Scene::OnGUI()
 		ImGui::Text("Game state %s", DETime::GetStateString());
 	}
 }
+#endif // !STANDALONE
 
 void M_Scene::SaveScene(const char* name)
 {
@@ -243,8 +316,11 @@ void M_Scene::LoadScene(const char* name)
 		{
 			d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
 
-			if (d->second->fiValue.goValue) {
-				d->second->fiValue.goValue->csReferences.push_back(d->second);
+			if (d->second->fiValue.goValue) 
+			{
+				if (std::find(d->second->fiValue.goValue->csReferences.begin(), d->second->fiValue.goValue->csReferences.end(), d->second) == d->second->fiValue.goValue->csReferences.end())
+					d->second->fiValue.goValue->csReferences.push_back(d->second);
+
 				d->second->parentSC->SetField(d->second->field, d->second->fiValue.goValue);
 			}
 		}
@@ -291,8 +367,12 @@ void M_Scene::CleanScene()
 		return;
 	delete root;
 	root = nullptr;
+
+#ifndef STANDALONE
 	App->moduleEditor->SetSelectedGO(nullptr);
 	SetGameCamera(nullptr);
+#endif
+
 	root = CreateGameObject("Scene root", nullptr);
 }
 

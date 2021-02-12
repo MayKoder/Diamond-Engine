@@ -14,10 +14,17 @@ public:
 	virtual ~M_ResourceManager();
 
 	bool Init() override;
+
+#ifndef STANDALONE
 	bool Start() override;
 	update_status PreUpdate(float dt) override;
+#endif // !STANDALONE
+
 	bool CleanUp() override;
+
+#ifndef STANDALONE
 	void OnGUI() override;
+#endif // !STANDALONE
 
 
 	int GenerateNewUID();
@@ -34,6 +41,7 @@ public:
 	Resource* RequestResource(int uid, const char* libraryPath = nullptr);
 	Resource* CreateNewResource(const char* assetsFile, uint uid, Resource::Type type);
 	Resource* LoadFromLibrary(const char* libraryFile, Resource::Type type, uint _uid);
+	Resource* GetResourceFromUID(int uid);
 	
 	Resource::Type GetMetaType(const char* metaFile) const;
 	Resource::Type GetTypeFromAssetExtension(const char* assetFile) const;

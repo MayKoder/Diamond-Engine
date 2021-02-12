@@ -7,17 +7,18 @@
 #include"IM_TextureImporter.h"
 #include"IM_MeshLoader.h"
 #include"IM_ModelImporter.h"
+#include"IM_ShaderImporter.h"
 
 #include"MO_Scene.h"
-
 #include"Globals.h"
 
 #include"RE_Texture.h"
 #include"RE_Mesh.h"
+#include"RE_Shader.h"
+
 #include"DEJsonSupport.h"
 #include"MO_Window.h"
 #include"MO_MonoManager.h"
-//#include"DEResource.h"
 
 M_ResourceManager::M_ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled), assetsRoot("Assets", "Assets", 0, true),
 fileCheckTime(0.f), fileUpdateDelay(2.f), meshesLibraryRoot("Meshes", "Library/Meshes", 0, true)
@@ -33,6 +34,7 @@ bool M_ResourceManager::Init()
 	return true;
 }
 
+#ifndef STANDALONE
 bool M_ResourceManager::Start()
 {
 	assetsRoot.lastModTime = App->moduleFileSystem->GetLastModTime(assetsRoot.importPath.c_str());
@@ -49,12 +51,14 @@ update_status M_ResourceManager::PreUpdate(float dt)
 	}
 	return update_status::UPDATE_CONTINUE;
 }
+#endif // !STANDALONE
 
 bool M_ResourceManager::CleanUp()
 {
 	return true;
 }
 
+#ifndef STANDALONE
 void M_ResourceManager::OnGUI()
 {
 	//TODO: Move this to a new editor window
@@ -67,6 +71,7 @@ void M_ResourceManager::OnGUI()
 		}
 	}
 }
+#endif // !STANDALONE
 
 void M_ResourceManager::PopulateFileArray()
 {
@@ -89,7 +94,6 @@ int M_ResourceManager::ExistsOnLibrary(const char* file_in_assets) const
 
 	if (FileSystem::Exists(metaFile.c_str())) 
 	{
-		//TODO: Move all json usage to own structure ASAP
 		JSON_Value* metaJSON = json_parse_file(metaFile.c_str());
 		DEConfig rObj(json_value_get_object(metaJSON));
 
@@ -183,6 +187,9 @@ void M_ResourceManager::UpdateMeshesDisplay()
 Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 {
 	//Find if the resource is already loaded
+	if (uid <= -1)
+		return nullptr;
+
 	std::map<int, Resource*>::iterator it = resources.find(uid);
 	if (it != resources.end())
 	{
@@ -195,16 +202,18 @@ Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 	{
 		Resource* ret = nullptr;
 
-		static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 5, "Update all switches with new type");
+		static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 6, "Update all switches with new type");
 
 		//Save check
 		if (FileSystem::Exists(libraryPath))
 		{
+			//uid = 0; //This should be the uid from library
 			switch (GetTypeFromLibraryExtension(libraryPath))
 			{
 				case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
 				//case Resource::Type::MODEL: ret = (Resource*) new ResourceMesh(uid); break;
 				case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
+				case Resource::Type::SHADER: ret = dynamic_cast<Resource*>(new ResourceShader(uid)); break;
 				//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
 			}
 
@@ -253,7 +262,13 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 	std::string meta = M_ResourceManager::GetMetaPath(assetsFile);
 	uint resUID = GetMetaUID(meta.c_str());
 
-	Resource* resource = CreateNewResource(assetsFile, resUID, type);
+	Resource* resource = GetResourceFromUID(resUID);
+
+	bool isCreated = false;
+	if (resource == nullptr) {
+		resource = CreateNewResource(assetsFile, resUID, type);
+		isCreated = true;
+	}
 
 	if (resource == nullptr)
 		return 0;
@@ -269,13 +284,16 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 		case Resource::Type::MODEL: ModelImporter::Import(fileBuffer, size, resource); break;
 		//case Resource::Type::MESH: MeshLoader::BufferToMeshes(fileBuffer, size, resource); break;
 		case Resource::Type::SCENE: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
+		case Resource::Type::SHADER: ShaderImporter::Import(fileBuffer, size, dynamic_cast<ResourceShader*>(resource), assetsFile); break;
 	}
 
 	//Save the resource to custom format
 	ret = resource->GetUID();
 
 	RELEASE_ARRAY(fileBuffer);
-	UnloadResource(ret);
+
+	if(resource->GetReferenceCount() <= 1 && isCreated == true)
+		UnloadResource(ret);
 
 	return ret;
 }
@@ -317,7 +335,7 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid,
 {
 	Resource* ret = nullptr;
 
-	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 5, "Update all switches with new type");
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 6, "Update all switches with new type");
 	switch (type) 
 	{
 		case Resource::Type::SCENE : ret = new Resource(uid, Resource::Type::SCENE); break;
@@ -325,6 +343,7 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid,
 		case Resource::Type::MODEL: ret = new Resource(uid, Resource::Type::MODEL); break;
 		case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
 		case Resource::Type::SCRIPT: App->moduleMono->ReCompileCS(); break;
+		case Resource::Type::SHADER: ret = (Resource*) new ResourceShader(uid); break;
 	}
 
 	if (ret != nullptr)
@@ -342,7 +361,7 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 {
 	Resource* ret = nullptr;
 
-	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 5, "Update all switches with new type");
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 6, "Update all switches with new type");
 
 	int uid = _uid;
 	switch (type)
@@ -350,6 +369,7 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 		case Resource::Type::TEXTURE: ret = (Resource*) new ResourceTexture(uid); break;
 		case Resource::Type::MODEL: ret = (Resource*) new ResourceMesh(uid); break;
 		case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
+		case Resource::Type::SHADER: ret = (Resource*) new ResourceShader(uid); break;
 		//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
 	}
 
@@ -362,6 +382,21 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 	}
 
 	return ret;
+}
+
+Resource* M_ResourceManager::GetResourceFromUID(int uid)
+{
+	//Find if the resource is already loaded
+	if (uid <= -1)
+		return nullptr;
+
+	std::map<int, Resource*>::iterator it = resources.find(uid);
+	if (it != resources.end())
+	{
+		return it->second;
+	}
+
+	return nullptr;
 }
 
 int M_ResourceManager::GetMetaUID(const char* metaFile) const
@@ -390,6 +425,7 @@ std::string M_ResourceManager::GenLibraryPath(uint _uid, Resource::Type _type)
 		case Resource::Type::MODEL: ret = MODELS_PATH; ret += nameNoExt; ret += ".model"; break;
 		case Resource::Type::MESH: ret = MESHES_PATH; ret += nameNoExt; ret += ".mmh"; break;
 		case Resource::Type::SCENE : ret = SCENES_PATH; ret += nameNoExt; ret += ".des"; break;
+		case Resource::Type::SHADER : ret = SHADERS_PATH; ret += nameNoExt; ret += ".shdr"; break;
 	}
 
 	return ret;
@@ -407,8 +443,7 @@ Resource::Type M_ResourceManager::GetMetaType(const char* metaFile) const
 	JSON_Value* metaJSON = json_parse_file(metaFile);
 	DEConfig rObj(json_value_get_object(metaJSON));
 
-	//TODO: Change this casts with xxx_cast<>
-	Resource::Type mUID = (Resource::Type)rObj.ReadInt("Type");
+	Resource::Type mUID = static_cast<Resource::Type>(rObj.ReadInt("Type"));
 
 	//Free memory
 	json_value_free(metaJSON);
@@ -503,6 +538,9 @@ Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFil
 	if (ext == "cs")
 		return Resource::Type::SCRIPT;
 
+	if (ext == "glsl")
+		return Resource::Type::SHADER;
+
 
 	return Resource::Type::UNKNOWN;
 }
@@ -525,17 +563,22 @@ Resource::Type M_ResourceManager::GetTypeFromLibraryExtension(const char* librar
 		return Resource::Type::MESH;
 	if (ext == "des")
 		return Resource::Type::SCENE;
+	if (ext == "shdr")
+		return Resource::Type::SHADER;
+	
 
 	return Resource::Type::UNKNOWN;
 }
 
 void M_ResourceManager::GenerateMeta(const char* aPath, const char* lPath, unsigned int uid, Resource::Type type)
 {
-	//TODO: Move all json usage to own structure ASAP
+
 	JSON_Value* file = json_value_init_object();
 	DEConfig rObj(json_value_get_object(file));
 
 	rObj.WriteString("Assets Path", aPath);
+
+	rObj.WriteInt("modTime", App->moduleFileSystem->GetLastModTime(aPath));
 	rObj.WriteString("Library Path", lPath);
 
 	rObj.WriteInt("UID", uid);

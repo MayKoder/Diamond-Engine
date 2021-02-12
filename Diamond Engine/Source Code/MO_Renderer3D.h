@@ -9,6 +9,8 @@
 #include"MathGeoLib/include/Math/float3.h"
 #include"MathGeoLib/include/Geometry/LineSegment.h"
 
+#include"DE_Cubemap.h"
+
 #include<map>
 
 class ResourceMesh;
@@ -33,7 +35,10 @@ public:
 	bool CleanUp() override;
 
 	void OnResize(int width, int height);
+
+#ifndef STANDALONE
 	void OnGUI() override;
+#endif // !STANDALONE
 
 	static void DrawBox(float3* points, float3 color = float3::one);
 	
@@ -61,8 +66,9 @@ public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	mat3x3 NormalMatrix;
-	mat4x4 ModelMatrix;
+
+	C_Camera* activeRenderCamera = nullptr; //TODO: This is temporal
+	DE_Cubemap skybox;
 
 private:
 	C_Camera* gameCamera;

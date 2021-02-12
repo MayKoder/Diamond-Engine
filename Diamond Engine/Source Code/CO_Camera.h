@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include"DE_FrameBuffer.h"
 
 #include"MathGeoLib/include/Geometry/Frustum.h"
 
@@ -10,8 +11,9 @@ public:
 	C_Camera(GameObject* _gm);
 	virtual ~C_Camera();
 
-	/*void Update() override;*/
+#ifndef STANDALONE
 	bool OnEditor() override;
+#endif // !STANDALONE
 
 	void Update() override;
 
@@ -28,9 +30,10 @@ public:
 
 	void ReGenerateBuffer(int w, int h);
 
-	unsigned int framebuffer;
-	unsigned int texColorBuffer;
-	unsigned int rbo;
+	void PushCameraMatrix();
+
+	DE_FrameBuffer resolvedFBO;
+	DE_FrameBuffer msaaFBO;
 
 	Frustum camFrustrum;
 	float fov;
@@ -39,7 +42,8 @@ public:
 //Movement logic
 public: 
 	void LookAt(const float3& Spot);
-
-	//void Look(const float3 &Position, const float3&Reference, bool RotateAroundReference = false);
 	void Move(const float3& Movement);
+
+private:
+	int msaaSamples;
 };

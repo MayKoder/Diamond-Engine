@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #ifndef __WINDOW_H__
 #define __WINDOW_H__
 
@@ -18,6 +20,6 @@ public:
 
 };
 
-
-
 #endif //__WINDOW_H__
+
+#endif // !STANDALONE

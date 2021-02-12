@@ -54,9 +54,11 @@ public:
 		return true; 
 	}
 
+#ifndef STANDALONE
 	virtual void OnGUI() 
 	{
 
 	}
+#endif // !STANDALONE
 
 };

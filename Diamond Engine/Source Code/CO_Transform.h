@@ -19,7 +19,9 @@ public:
 
 	void Update() override;
 
+#ifndef STANDALONE
 	bool OnEditor() override;
+#endif // !STANDALONE
 
 	float4x4 globalTransform;
 	float4x4 localTransform;

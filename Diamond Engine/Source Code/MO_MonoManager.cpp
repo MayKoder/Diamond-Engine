@@ -40,7 +40,10 @@ bool M_MonoManager::Init()
 	LOG(LogType::L_NORMAL, "Setting up the camera");
 	bool ret = true;
 
+#ifndef STANDALONE
 	CMDCompileCS();
+#endif // !STANDALONE
+
 
 	//mono_jit_set_aot_mode(MonoAotMode::MONO_AOT_MODE_HYBRID);
 	mono_set_dirs("mono-runtime/lib", "mono-runtime/etc");
@@ -90,6 +93,7 @@ bool M_MonoManager::CleanUp()
 	return true;
 }
 
+#ifndef STANDALONE
 void M_MonoManager::OnGUI()
 {
 	if (ImGui::CollapsingHeader("Mono Settings", ImGuiTreeNodeFlags_DefaultOpen))
@@ -98,6 +102,7 @@ void M_MonoManager::OnGUI()
 		
 	}
 }
+#endif // !STANDALONE
 
 void M_MonoManager::ReCompileCS() 
 {
@@ -121,11 +126,14 @@ void M_MonoManager::ReCompileCS()
 	InitMono();
 
 	App->moduleScene->LoadScene("Library/Scenes/tmp.des");
-	App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code, mmove to method
+	App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code from editor, mmove to method
 
+#ifndef STANDALONE
 	W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(App->moduleEditor->GetEditorWindow(EditorWindow::TEXTEDITOR));
 	if (txtEditor != nullptr)
 		txtEditor->SetTextFromFile(txtEditor->txtName.c_str());
+#endif // !STANDALONE
+
 }
 
 //ASK: Is this the worst idea ever? TOO SLOW

@@ -49,6 +49,7 @@ void C_Transform::Update()
 		UpdateTransform();
 }
 
+#ifndef STANDALONE
 bool C_Transform::OnEditor()
 {
 	if (Component::OnEditor() == true)
@@ -106,6 +107,7 @@ bool C_Transform::OnEditor()
 	}
 	return false;
 }
+#endif // !STANDALONE
 
 //TODO: This should be recursive
 void C_Transform::UpdateTransform()

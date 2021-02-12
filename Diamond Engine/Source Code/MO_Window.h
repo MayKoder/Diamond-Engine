@@ -18,7 +18,9 @@ public:
 	bool Init() override;
 	bool CleanUp() override;
 
+#ifndef STANDALONE
 	void OnGUI() override;
+#endif // !STANDALONE
 
 	void SetTitle(const char* title);
 

@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #ifndef __W_CONSOLE_H__
 #define __W_CONSOLE_H__
 
@@ -41,3 +43,4 @@ private:
 
 #endif //__W_CONSOLE_H__
 
+#endif // !STANDALONE

@@ -12,8 +12,10 @@
 #include"GameObject.h"
 #include"CO_Transform.h"
 #include"OpenGL.h"
+#include"MO_Window.h"
 
-C_Camera::C_Camera() : Component(nullptr), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f), cullingState(true)
+C_Camera::C_Camera() : Component(nullptr), fov(60.0f), cullingState(true),
+msaaSamples(4)
 {
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
@@ -28,8 +30,10 @@ C_Camera::C_Camera() : Component(nullptr), framebuffer(0), texColorBuffer(0), rb
 	camFrustrum.pos = float3::zero;
 }
 
-C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(0), texColorBuffer(0), rbo(0), fov(60.0f), cullingState(true)
+C_Camera::C_Camera(GameObject* _gm) : Component(_gm), fov(60.0f), cullingState(true),
+msaaSamples(4)
 {
+
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
 	camFrustrum.nearPlaneDistance = 1;
@@ -45,26 +49,21 @@ C_Camera::C_Camera(GameObject* _gm) : Component(_gm), framebuffer(0), texColorBu
 
 C_Camera::~C_Camera()
 {
-	if (framebuffer != 0)
-		glDeleteFramebuffers(1, (GLuint*)&framebuffer);
-
-	if (texColorBuffer != 0)
-		glDeleteTextures(1, (GLuint*)&texColorBuffer);
-
-	if (rbo != 0)
-		glDeleteRenderbuffers(1, (GLuint*)&rbo);
+	msaaFBO.ClearBuffer();
+	resolvedFBO.ClearBuffer();
 
 	if (EngineExternal && EngineExternal->moduleRenderer3D->GetGameRenderTarget() == this)
 		EngineExternal->moduleRenderer3D->SetGameRenderTarget(nullptr);
 }
 
+#ifndef STANDALONE
 bool C_Camera::OnEditor()
 {
 	if (Component::OnEditor() == true)
 	{
 		ImGui::Separator();
 
-		ImGui::Text("FB %i, TB %i, RBO %i", framebuffer, texColorBuffer, rbo);
+		//ImGui::Text("FB %i, TB %i, RBO %i", framebuffer, texColorBuffer, rbo);
 
 		ImGui::DragFloat("Near Distance: ", &camFrustrum.nearPlaneDistance, 0.1f, 0.01f, camFrustrum.farPlaneDistance);
 		ImGui::DragFloat("Far Distance: ", &camFrustrum.farPlaneDistance, 0.1f, camFrustrum.nearPlaneDistance, 10000.f);
@@ -94,6 +93,13 @@ bool C_Camera::OnEditor()
 		ImGui::Text("Camera Culling: "); ImGui::SameLine();
 		ImGui::Checkbox("##cameraCulling", &cullingState);
 
+		ImGui::Text("MSAA Samples: "); ImGui::SameLine(); 
+		if (ImGui::SliderInt("##msaasamp", &msaaSamples, 1, 4)) 
+		{
+			msaaFBO.ReGenerateBuffer(msaaFBO.texBufferSize.x, msaaFBO.texBufferSize.y, true, msaaSamples);
+			resolvedFBO.ReGenerateBuffer(resolvedFBO.texBufferSize.x, resolvedFBO.texBufferSize.y, false, 0);
+		}
+
 		if(ImGui::Button("Set as Game Camera")) 
 		{
 			EngineExternal->moduleRenderer3D->SetGameRenderTarget(this);
@@ -103,6 +109,7 @@ bool C_Camera::OnEditor()
 	}
 	return false;
 }
+#endif // !STANDALONE
 
 void C_Camera::Update()
 {
@@ -112,13 +119,13 @@ void C_Camera::Update()
 	camFrustrum.front = gameObject->transform->GetForward();
 	camFrustrum.up = gameObject->transform->GetUp();
 
-	
-	//glVertex3f(gameObject->transform->position.x, gameObject->transform->position.y, gameObject->transform->position.z);
-	//glVertex3f(gameObject->transform->position.x + forward.x, gameObject->transform->position.y + forward.y, gameObject->transform->position.z + forward.z);
+#ifndef STANDALONE
 	float3 points[8];
 	camFrustrum.GetCornerPoints(points);
 
 	ModuleRenderer3D::DrawBox(points, float3(0.180f, 1.f, 0.937f));
+#endif // !STANDALONE
+
 }
 
 
@@ -133,6 +140,7 @@ void C_Camera::SaveData(JSON_Object* nObj)
 
 	DEJson::WriteFloat(nObj, "vFOV", camFrustrum.verticalFov);
 	DEJson::WriteFloat(nObj, "hFOV", camFrustrum.horizontalFov);
+	DEJson::WriteBool(nObj, "culling", cullingState);
 }
 
 void C_Camera::LoadData(DEConfig& nObj)
@@ -146,25 +154,23 @@ void C_Camera::LoadData(DEConfig& nObj)
 
 	camFrustrum.verticalFov = nObj.ReadFloat("vFOV");
 	camFrustrum.horizontalFov = nObj.ReadFloat("hFOV");
+	cullingState = nObj.ReadBool("culling");
 
-	//Need to reset W_Game target canera
 	EngineExternal->moduleScene->SetGameCamera(this);
-
 }
 
 void C_Camera::StartDraw()
 {
+	EngineExternal->moduleRenderer3D->activeRenderCamera = this;
+
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-	glLoadIdentity();
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf((GLfloat*)ProjectionMatrixOpenGL().v);
+	PushCameraMatrix();
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf((GLfloat*)ViewMatrixOpenGL().v);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, msaaFBO.GetFrameBuffer());
 
 	glClearColor(0.08f, 0.08f, 0.08f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -179,50 +185,54 @@ void C_Camera::StartDraw()
 
 void C_Camera::EndDraw()
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glDisable(GL_DEPTH_TEST);
+	//Is this important?
 
-	//glClearColor(0.05f, 0.05f, 0.05f, 1.f);
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glBindTexture(GL_TEXTURE_2D, msaaFBO.GetTextureBuffer());
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+
+	/*TODO: IMPORTANT This is the MSAA resolving to screen, to resolve a MSAA FBO to a Normal FBO we need to do the same but
+	add the normal fbo as the GL_DRAW_FRAMEBUFFER*/
+#ifdef STANDALONE 
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, msaaFBO.GetFrameBuffer());
+	glBlitFramebuffer(0, 0, msaaFBO.texBufferSize.x, msaaFBO.texBufferSize.y, 0, 0, msaaFBO.texBufferSize.x, msaaFBO.texBufferSize.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+
+#else
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, msaaFBO.GetFrameBuffer());
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, resolvedFBO.GetFrameBuffer());
+	glBlitFramebuffer(0, 0, msaaFBO.texBufferSize.x, msaaFBO.texBufferSize.y, 0, 0, resolvedFBO.texBufferSize.x, resolvedFBO.texBufferSize.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+#endif // !STANDALONE
+
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
+	glDisable(GL_DEPTH_TEST);
 }
 
 void C_Camera::ReGenerateBuffer(int w, int h)
 {
 	SetAspectRatio((float)w / (float)h);
+	
+	msaaFBO.ReGenerateBuffer(w, h, true, 4);
+	resolvedFBO.ReGenerateBuffer(w, h, false, 0);
+}
 
-	if (framebuffer != 0)
-		glDeleteFramebuffers(1, (GLuint*)&framebuffer);
+void C_Camera::PushCameraMatrix()
+{
+	glLoadIdentity();
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf((GLfloat*)ProjectionMatrixOpenGL().v);
 
-	if (texColorBuffer != 0)
-		glDeleteTextures(1, (GLuint*)&texColorBuffer);
-
-	if (rbo != 0)
-		glDeleteRenderbuffers(1, (GLuint*)&rbo);
-
-
-	glGenFramebuffers(1, (GLuint*)&framebuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-
-	glGenTextures(1, (GLuint*)&texColorBuffer);
-	glBindTexture(GL_TEXTURE_2D, texColorBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	// attach it to currently bound framebuffer object
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColorBuffer, 0);
-
-	glGenRenderbuffers(1, (GLuint*)&rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, w, h);
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		LOG(LogType::L_ERROR, "ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf((GLfloat*)ViewMatrixOpenGL().v);
 }
 
 void C_Camera::LookAt(const float3& Spot)

@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include"WI_About.h"
 #include"OpenGL.h"
 #include "SDL/include/SDL.h"
@@ -91,3 +93,5 @@ void W_About::Draw()
 	}
 	ImGui::End();
 }
+
+#endif // !STANDALONE

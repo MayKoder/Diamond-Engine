@@ -9,6 +9,7 @@ class GameObject;
 class C_Camera;
 typedef unsigned int uint;
 struct SerializedField;
+class ResourceShader;
 
 class M_Scene : public Module
 {
@@ -29,18 +30,27 @@ public:
 	GameObject* GetGOFromUID(GameObject* n, uint sUID);
 	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
 
+#ifndef STANDALONE
 	void OnGUI() override;
+#endif // !STANDALONE
+
 	void SaveScene(const char* name);
 	void LoadScene(const char* name);
+
 	void SetGameCamera(C_Camera* cam);
+	
 	void CreateGameCamera(const char* name);
 	void LoadModelTree(const char* modelPath);
 
 	void CleanScene();
 
+
 	GameObject* root;
 	std::vector<GameObject*> destroyList;
 	std::multimap<uint, SerializedField*> referenceMap;
+
+	ResourceShader* defaultShader;
+
 private:
 	void Destroy(GameObject* gm);
 

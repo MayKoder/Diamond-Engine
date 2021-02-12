@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include "Application.h"
 
 #include "MMGui.h"
@@ -10,7 +12,6 @@
 
 #include"DETime.h"
 #include"AssetDir.h"
-#include"RE_Texture.h"
 
 #include "MO_Window.h"
 #include "MO_Renderer3D.h"
@@ -113,15 +114,17 @@ bool M_Editor::Init()
 
 bool M_Editor::Start()
 {
-	W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(GetEditorWindow(EditorWindow::TEXTEDITOR));
-	if(txtEditor != nullptr)
-		txtEditor->SetTextFromFile("Assets/Scripts/Core.cs");
+	//W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(GetEditorWindow(EditorWindow::TEXTEDITOR));
+	//if(txtEditor != nullptr)
+	//	txtEditor->SetTextFromFile("Assets/Scripts/Core.cs");
 
 	return true;
 }
 
 void M_Editor::Draw()
 {
+	glClearColor(0.08f, 0.08f, 0.08f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
@@ -141,7 +144,7 @@ void M_Editor::Draw()
 
 	for (unsigned int i = 0; i < windows.size(); i++)
 	{
-		if (windows[i]->active) 
+		if (windows[i]->active)
 		{
 			windows[i]->Draw();
 		}
@@ -192,12 +195,11 @@ bool M_Editor::CleanUp()
 	}
 	windows.clear();
 
-	for (unsigned int i = 0; i < editorIcons.size(); ++i)
-	{
-		if(editorIcons[i] != nullptr)
-			App->moduleResources->UnloadResource(editorIcons[i]->GetUID());
-	}
-	editorIcons.clear();
+#ifndef STANDALONE
+	//Must manual cleanup to avoid leaks and crashed with the resource manager
+	editorIcons.CleanUp(); 
+#endif // !STANDALONE
+
 
 	LOG(LogType::L_NORMAL, "ImGui Shutdown");
 	return true;
@@ -374,11 +376,11 @@ void M_Editor::DrawTopBar()
 		ImGui::PopItemWidth();
 
 		ImGui::SameLine((ImGui::GetContentRegionMax().x / 2.f) - 100);
-		if (ImGui::BeginChild("##playBTS", ImVec2(200, ImGui::GetWindowContentRegionMax().y - style.FramePadding.y), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoDecoration)) 
+		if (ImGui::BeginChild("##playBTS", ImVec2(130, ImGui::GetWindowContentRegionMax().y - style.FramePadding.y), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoDecoration)) 
 		{
 			
 			//Play game maybe if its clicked while game is playing, stop game?
-			if (ImGui::ImageButton((ImTextureID)editorIcons[(int)Icons::I_Play]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), (DETime::state == GameState::PLAY) ? playingTint : ImVec4(0, 0, 0, 1)))
+			if (ImGui::ImageButton((ImTextureID)editorIcons.GetIconTextureID("PLAY"), ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), (DETime::state == GameState::PLAY) ? playingTint : ImVec4(0, 0, 0, 1)))
 			{
 				if (DETime::state == GameState::STOP) 
 				{
@@ -395,7 +397,7 @@ void M_Editor::DrawTopBar()
 			ImGui::SameLine();
 
 			//Stop game if playing
-			if (ImGui::ImageButton((ImTextureID)editorIcons[(int)Icons::I_Stop]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+			if (ImGui::ImageButton((ImTextureID)editorIcons.GetIconTextureID("STOP"), ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
 			{
 				if (DETime::state == GameState::PLAY || DETime::state == GameState::PAUSE)
 				{
@@ -407,12 +409,12 @@ void M_Editor::DrawTopBar()
 			ImGui::SameLine();
 
 			//Step one frame forward
-			if (ImGui::ImageButton((ImTextureID)editorIcons[(int)Icons::I_Pause]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+			if (ImGui::ImageButton((ImTextureID)editorIcons.GetIconTextureID("PAUSE"), ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
 				DETime::Pause();
 
 			ImGui::SameLine();
 			//Step one frame forward
-			if (ImGui::ImageButton((ImTextureID)editorIcons[(int)Icons::I_Step]->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+			if (ImGui::ImageButton((ImTextureID)editorIcons.GetIconTextureID("STEP"), ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
 				DETime::Step();
 		}
 		ImGui::EndChild();
@@ -421,7 +423,7 @@ void M_Editor::DrawTopBar()
 		ImGui::SameLine(ImGui::GetContentRegionMax().x - (ImGui::GetButtonSize("Take Screenshoot").x + style.FramePadding.x));
 		if (ImGui::Button("Take Screenshoot")) 
 		{
-			TextureImporter::TakeScreenshot(App->moduleCamera->editorCamera.framebuffer);
+			TextureImporter::TakeScreenshot(App->moduleCamera->editorCamera.resolvedFBO.GetFrameBuffer());
 		}
 	}
 	ImGui::End();
@@ -645,3 +647,5 @@ void M_Editor::LogToConsole(const char* msg, LogType _type)
 		if (consoleWindow != nullptr)
 			consoleWindow->AddLog(msg, _type);
 }
+
+#endif

@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include "WI_Hierarchy.h"
 
 #include "Globals.h"
@@ -18,6 +20,7 @@ W_Hierarchy::~W_Hierarchy()
 {
 	cSceneReference = nullptr;
 }
+
 
 void W_Hierarchy::Draw()
 {
@@ -127,3 +130,5 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 		ImGui::TreePop();
 	}
 }
+
+#endif // !STANDALONE
