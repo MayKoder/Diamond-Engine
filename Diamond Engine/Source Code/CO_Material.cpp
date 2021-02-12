@@ -15,7 +15,7 @@ C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false
 shader(nullptr)
 {
 	name = "Material";
-	shader = NULL;
+	shader = (EngineExternal->moduleScene->defaultShader != nullptr) ? dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleScene->defaultShader->GetUID())) : NULL;
 }
 
 C_Material::~C_Material()
@@ -95,7 +95,9 @@ bool C_Material::OnEditor()
 				std::string* metaFileDrop = (std::string*)payload->Data;
 				std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
 
-				EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+				if(shader != nullptr)
+					EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+
 				shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
 			}
 			ImGui::EndDragDropTarget();
@@ -143,8 +145,8 @@ void C_Material::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
 
-	if (nObj.ReadBool("IsEmpty") == true)
-		return;
+	//if (nObj.ReadBool("IsEmpty") == true)
+	//	return;
 
 
 	int w, h;
@@ -152,12 +154,9 @@ void C_Material::LoadData(DEConfig& nObj)
 	std::string texPath = nObj.ReadString("AssetPath");
 	std::string texName = nObj.ReadString("LibraryPath");
 
-	if (texName == "" && texPath == "") {
-		LOG(LogType::L_WARNING, "Empty");
-		return;
-	}
+	if (texName != "") 
+		matTexture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), texName.c_str()));
 
-	matTexture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), texName.c_str()));
 
 	if (shader != nullptr) 
 	{
