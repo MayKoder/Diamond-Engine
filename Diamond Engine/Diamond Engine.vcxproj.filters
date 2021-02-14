@@ -91,6 +91,21 @@
     <Filter Include="Externals\PugiXML">
       <UniqueIdentifier>{8d7a61ce-5fc5-4d64-a398-1e455f4ea9b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Commands">
+      <UniqueIdentifier>{c2a39506-19b0-42b8-9081-920a3adeed9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commands\Base">
+      <UniqueIdentifier>{3c6f8db3-c791-4498-8524-6611da93e2c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commands\Derived">
+      <UniqueIdentifier>{7c46a2e1-f72f-47ad-9a56-e420f77583d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commands\Derived\MoveCommands">
+      <UniqueIdentifier>{e53a9171-5489-441f-8df3-39da9d505a13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Editor\ShortcutManager">
+      <UniqueIdentifier>{89dc24bc-c4c2-453a-8e7d-b339a3d5f2b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -529,6 +544,21 @@
     <ClInclude Include="Source Code\MA_IconSystem.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\Command.h">
+      <Filter>Sources\Commands\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\COMM_Rotate.h">
+      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\COMM_Scale.h">
+      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\COMM_Translate.h">
+      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="ShortcutManager.h">
+      <Filter>Sources\Editor\ShortcutManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -827,6 +857,21 @@
     </ClCompile>
     <ClCompile Include="Source Code\MA_IconSystem.cpp">
       <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Command.cpp">
+      <Filter>Sources\Commands\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\COMM_Rotate.cpp">
+      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\COMM_Scale.cpp">
+      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\COMM_Translate.cpp">
+      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="ShortcutManager.cpp">
+      <Filter>Sources\Editor\ShortcutManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
