@@ -16,17 +16,11 @@ enum ShaderType
 	SH_Frag,
 	SH_Max
 };
-union ShdrValue {
-	int intValue = 0;
-	float floatValue;
-	GLuint textureValue;
-	float4x4* matrixValue;
-	float3 vector3Value;
-};
 
 struct ShaderVariable
 {
 	ShaderVariable();
+	~ShaderVariable();
 
 	GLuint vIndex;
 	GLenum vType;
@@ -34,7 +28,15 @@ struct ShaderVariable
 
 	GLsizei nameLength;
 	char name[25];
-	ShdrValue data;
+
+	union ShdrValue {
+		ShdrValue();
+		int intValue;
+		float floatValue;
+		GLuint textureValue;
+		float4x4* matrixValue;
+		float3 vector3Value;
+	} data;
 };
 
 class ResourceShader : public Resource

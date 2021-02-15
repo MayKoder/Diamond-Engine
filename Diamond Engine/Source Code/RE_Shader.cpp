@@ -193,7 +193,7 @@ void ResourceShader::FillVariables()
 	GLint attCount = 0, uniCount = 0;
 	glGetProgramiv(shaderProgramID, GL_ACTIVE_ATTRIBUTES, &attCount);
 
-	for (size_t a = 0; a < attCount; a++)
+	for (GLint a = 0; a < attCount; a++)
 	{
 		ShaderVariable shdrVar;
 		glGetActiveAttrib(shaderProgramID, (GLuint)a, 25, &shdrVar.nameLength, &shdrVar.vSize, &shdrVar.vType, shdrVar.name);
@@ -202,7 +202,7 @@ void ResourceShader::FillVariables()
 	}
 
 	glGetProgramiv(shaderProgramID, GL_ACTIVE_UNIFORMS, &uniCount);
-	for (size_t b = 0; b < uniCount; b++)
+	for (GLint b = 0; b < uniCount; b++)
 	{
 		ShaderVariable shdrVar;
 		glGetActiveUniform(shaderProgramID, (GLuint)b, 25, &shdrVar.nameLength, &shdrVar.vSize, &shdrVar.vType, shdrVar.name);
@@ -277,6 +277,15 @@ void ResourceShader::LoadShaderCustomFormat(const char* libraryPath)
 ShaderVariable::ShaderVariable() : vIndex(0), vType(GL_INT), nameLength(0),
 name(""), vSize(0)
 {
-	data.vector3Value = float3(0, 0, 0);
+	//data.vector3Value = float3(0, 0, 0);
 	//data.intValue = 0;
+}
+
+ShaderVariable::~ShaderVariable()
+{
+}
+
+ShaderVariable::ShdrValue::ShdrValue() : floatValue(0.0f), intValue(0),
+textureValue(0), matrixValue(nullptr), vector3Value(0, 0, 0)
+{
 }
