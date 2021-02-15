@@ -43,16 +43,16 @@ bool ResourceMesh::LoadToMemory()
 	glEnableVertexAttribArray(0);
 
 	//texcoords attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(3 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
 
 	//normals attribute
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(5 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(5 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(2);
 
 	//tangents attribute
-	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(8 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(8 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(3);
 
 
 	return true;
@@ -76,6 +76,9 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 	if(textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
+	//EngineExternal->moduleScene->defaultShader->Bind();
+
+	
 	if (shader) 
 	{
 		shader->Bind();
@@ -93,11 +96,15 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 		glUniform1f(modelLoc, DETime::realTimeSinceStartup);
 	}
 	
+
+	//EngineExternal->moduleScene->defaultShader->Unbind();
+
 	//vertices
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
 	glBindVertexArray(0);
 	glUseProgram(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)

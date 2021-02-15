@@ -151,15 +151,37 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 	for (size_t i = 0; i < _mesh->vertices_count; i++)
 	{
 		_mesh->vertices[i * VERTEX_ATTRIBUTES] = importedMesh->mVertices[i].x;
-		_mesh->vertices[i * VERTEX_ATTRIBUTES] = importedMesh->mVertices[i].y;
-		_mesh->vertices[i * VERTEX_ATTRIBUTES] = importedMesh->mVertices[i].z;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + 1] = importedMesh->mVertices[i].y;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + 2] = importedMesh->mVertices[i].z;
 
 		if (importedMesh->HasTextureCoords(0))
-		{}
+		{
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 3] = importedMesh->mTextureCoords[0][i].x;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 4] = importedMesh->mTextureCoords[0][i].y;
+
+			if (importedMesh->mTangents != nullptr)
+			{
+				_mesh->vertices[i * VERTEX_ATTRIBUTES + 8] = importedMesh->mTangents[i].x;
+				_mesh->vertices[i * VERTEX_ATTRIBUTES + 9] = importedMesh->mTangents[i].y;
+				_mesh->vertices[i * VERTEX_ATTRIBUTES + 10] = importedMesh->mTangents[i].z;
+			}
+		}
+		else
+		{
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 3] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 4] = 0.0f;
+
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 8] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 9] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 10] = 0.0f;
+		}
 			
 
 		if (importedMesh->HasNormals())
 		{
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 5] = importedMesh->mNormals[i].x;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 6] = importedMesh->mNormals[i].y;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 7] = importedMesh->mNormals[i].z;
 			//LOG(LogType::L_NORMAL, "New mesh with %d normals", _mesh->normals_count);
 		}
 	}
