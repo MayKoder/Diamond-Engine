@@ -76,7 +76,7 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 	if(textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
-	//EngineExternal->moduleScene->defaultShader->Bind();
+	shader = EngineExternal->moduleScene->defaultShader;
 
 	
 	if (shader) 
