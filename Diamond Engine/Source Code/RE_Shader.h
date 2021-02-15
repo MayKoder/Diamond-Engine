@@ -3,6 +3,7 @@
 #include"DEResource.h"
 #include<vector>
 #include"MathGeoLib/include/Math/float4x4.h"
+#include"MathGeoLib/include/Math/float3.h"
 
 typedef unsigned int GLuint;
 typedef unsigned int GLenum;
@@ -20,6 +21,7 @@ union ShdrValue {
 	float floatValue;
 	GLuint textureValue;
 	float4x4* matrixValue;
+	float3 vector3Value;
 };
 
 struct ShaderVariable

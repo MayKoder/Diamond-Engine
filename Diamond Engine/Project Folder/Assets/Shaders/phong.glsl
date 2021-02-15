@@ -40,6 +40,8 @@ uniform sampler2D ourTexture;
 in vec3 fPosition;
 in vec3 Normal;
 
+uniform vec3 lights;
+
 uniform float time;
 
 vec2 blinnPhongDir(vec3 lightDir, float lightInt, float Ka, float Kd, float Ks, float shininess)
@@ -56,10 +58,16 @@ return vec2(diffuse, spec);
 void main()
 {
 vec3 lcolor = vec3(1.0,1.0,1.0);
-vec2 inten = blinnPhongDir(vec3(0.8,1,0.2), 0.5, 0.2, 0.8, 0.3, 80.0);
+vec2 inten = blinnPhongDir(lights, 0.5, 0.2, 0.8, 0.3, 80.0);
 gl_FragColor = vec4(lcolor * inten.x + vec3(1.0) * inten.y, 1.0) * texture(ourTexture, TexCoord);
 }
 #endif
+
+
+
+
+
+
 
 
 

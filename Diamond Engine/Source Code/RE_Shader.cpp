@@ -16,6 +16,8 @@ ResourceShader::ResourceShader(unsigned int _uid) : Resource(_uid, Resource::Typ
 
 ResourceShader::~ResourceShader()
 {
+	uniforms.clear();
+	attributes.clear();
 	if (shaderProgramID != 0) 
 	{
 		glDeleteShader(shaderProgramID);
@@ -25,6 +27,9 @@ ResourceShader::~ResourceShader()
 
 void ResourceShader::LinkToProgram()
 {
+	uniforms.clear();
+	attributes.clear();
+
 	shaderProgramID = glCreateProgram();
 
 	for (size_t i = 0; i < ShaderType::SH_Max; i++)
@@ -61,6 +66,8 @@ void ResourceShader::LinkToProgram()
 		glDeleteShader(shaderObjects[i]);
 		shaderObjects[i] = 0;
 	}
+
+	FillVariables();
 }
 
 bool ResourceShader::LoadToMemory()
@@ -91,7 +98,31 @@ void ResourceShader::Bind()
 	glUseProgram(shaderProgramID);
 
 	//Push all uniforms
+	for (size_t i = 0; i < uniforms.size(); ++i)
+	{
+		//ImGui::SameLine();
+		switch (uniforms[i].vType)
+		{
 
+		case GL_SAMPLER_2D:
+
+			break;
+
+		case GL_FLOAT_VEC3: 
+			glUniform3fv(glGetUniformLocation(shaderProgramID, uniforms[i].name), 1, &uniforms[i].data.vector3Value.x);
+			break;
+
+		case GL_FLOAT_VEC4:
+			break;
+
+
+		case GL_FLOAT_MAT4:
+			break;
+
+		default:
+			break;
+		}
+	}
 
 }
 
@@ -132,9 +163,8 @@ void ResourceShader::DrawEditor()
 		case GL_FLOAT_VEC3: 
 		{
 			ImGui::SameLine();
-			ImVec4 ret = ImVec4(0, 0, 0, 0);
-			glGetUniformfv(shaderProgramID, uniforms[i].vIndex, &ret.x);
-			ImGui::ColorEdit4("##test", &ret.x);
+			//glGetUniformfv(shaderProgramID, uniforms[i].vIndex, &ret.x);
+			ImGui::DragFloat3(uniforms[i].name, &uniforms[i].data.vector3Value.x, 0.005f);
 			break;
 		}
 
@@ -237,7 +267,6 @@ void ResourceShader::LoadShaderCustomFormat(const char* libraryPath)
 	shaderObjects[(int)ShaderType::SH_Frag] = ShaderImporter::Compile(fragment, ShaderType::SH_Frag, variables[(int)ShaderType::SH_Frag]);
 
 	this->LinkToProgram();
-	FillVariables();
 
 
 	RELEASE_ARRAY(vertex);
@@ -248,5 +277,6 @@ void ResourceShader::LoadShaderCustomFormat(const char* libraryPath)
 ShaderVariable::ShaderVariable() : vIndex(0), vType(GL_INT), nameLength(0),
 name(""), vSize(0)
 {
+	data.vector3Value = float3(0, 0, 0);
 	//data.intValue = 0;
 }
