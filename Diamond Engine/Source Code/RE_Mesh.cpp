@@ -11,7 +11,8 @@
 #include"CO_Transform.h"
 #include"DETime.h"
 
-ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH), indices_id(0), vertices_id(0), generalWireframe(nullptr)
+ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH), indices_id(0), vertices_id(0), generalWireframe(nullptr),
+EBO(0), VAO(0), VBO(0)
 {
 
 }
@@ -67,21 +68,36 @@ bool ResourceMesh::UnloadFromMemory()
 	glDeleteBuffers(1, &EBO);
 	EBO = 0u;
 
+	//Clear buffers
+	if (indices != nullptr)
+		delete[] indices;
+
+	if (vertices != nullptr)
+		delete[] vertices;
+
+	//Restart to nullptr
+	indices = nullptr;
+	vertices = nullptr;
+
 	return true;
 }
 
 void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShader* shader, C_Transform* _transform)
 {
 	//ASK: glDrawElementsInstanced()?
-	if(textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
+	if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
-	shader = EngineExternal->moduleScene->defaultShader;
-
+	shader = EngineExternal->moduleScene->defaultShader; //TODO: This is temporal needs to be removed
 	
 	if (shader) 
 	{
 		shader->Bind();
+
+		if(textureID != 0)
+			glUniform1i(glGetUniformLocation(shader->shaderProgramID, "hasTexture"), 1);
+		else
+			glUniform1i(glGetUniformLocation(shader->shaderProgramID, "hasTexture"), 0);
 
 		GLint modelLoc = glGetUniformLocation(shader->shaderProgramID, "model_matrix");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, _transform->GetGlobalTransposed());
@@ -95,16 +111,18 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 		modelLoc = glGetUniformLocation(shader->shaderProgramID, "time");
 		glUniform1f(modelLoc, DETime::realTimeSinceStartup);
 	}
-	
 
-	//EngineExternal->moduleScene->defaultShader->Unbind();
 
 	//vertices
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
 	glBindVertexArray(0);
-	glUseProgram(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
+
+	if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+	if (shader)
+		shader->Unbind();
 }
 
 void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)
