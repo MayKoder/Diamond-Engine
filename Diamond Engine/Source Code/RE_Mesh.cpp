@@ -81,7 +81,7 @@ bool ResourceMesh::UnloadFromMemory()
 	return true;
 }
 
-void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShader* shader, C_Transform* _transform)
+void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture, ResourceShader* shader, C_Transform* _transform)
 {
 	//ASK: glDrawElementsInstanced()?
 	if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
@@ -109,6 +109,9 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 
 		modelLoc = glGetUniformLocation(shader->shaderProgramID, "time");
 		glUniform1f(modelLoc, DETime::realTimeSinceStartup);
+
+		modelLoc = glGetUniformLocation(shader->shaderProgramID, "altColor");
+		glUniform3fv(modelLoc, 1, &color.x);
 	}
 
 
@@ -124,8 +127,10 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 		shader->Unbind();
 }
 
-void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)
+void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals, const float* globalTransform)
 {
+	glPushMatrix();
+	glMultMatrixf(globalTransform);
 	
 	if (*vertexNormals == true)
 	{
@@ -183,7 +188,8 @@ void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)
 		glPointSize(1.f);
 		glColor3f(1, 1, 1);
 	}
-	
+
+	glPopMatrix();
 }
 
 vec3 ResourceMesh::GetVectorFromIndex(float* startValue)

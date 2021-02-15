@@ -80,14 +80,10 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 	if (material != nullptr && material->IsActive())
 		id = material->GetTextureID();
 
-	glColor3fv(&alternColor.x);
-
-	_mesh->RenderMesh(id, rTex, (material && material->material != nullptr) ? material->material->shader : nullptr, transform);
-
-	glColor3f(1.f, 1.f, 1.f);
+	_mesh->RenderMesh(id, alternColor, rTex, (material && material->material != nullptr) ? material->material->shader : nullptr, transform);
 
 	if (vertexNormals || faceNormals)
-		_mesh->RenderMeshDebug(&vertexNormals, &faceNormals);
+		_mesh->RenderMeshDebug(&vertexNormals, &faceNormals, transform->GetGlobalTransposed());
 
 }
 
