@@ -12,6 +12,8 @@ typedef unsigned int uint;
 class ResourceShader;
 class C_Transform;
 
+#define VERTEX_ATTRIBUTES 11
+
 class ResourceMesh  : public Resource
 {
 
@@ -39,14 +41,6 @@ public:
 	uint vertices_count = 0;
 	float* vertices = nullptr;
 
-	uint normalbuffer_id = 0;
-	uint normals_count = 0;
-	float* normals = nullptr;
-
-	uint texCoords_id = 0;
-	uint texCoords_count = 0;
-	float* texCoords = nullptr;
-
 	AABB localAABB;
 
 	//TODO: Delete this, wireframe mode should be different
@@ -54,7 +48,9 @@ public:
 	bool* generalWireframe;
 	// ----------- ------------------------------- ---------------//
 
-	void GenerateSphere(float radius, float sectorCount, float stackCount);
+	uint VBO;
+	uint VAO;
+	uint EBO;
 
 	//TODO: Move this to file system
 	const char* SaveCustomFormat(uint& retSize);
