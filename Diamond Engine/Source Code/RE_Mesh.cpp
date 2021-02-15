@@ -18,8 +18,7 @@ EBO(0), VAO(0), VBO(0)
 }
 
 ResourceMesh::~ResourceMesh()
-{
-}
+{}
 
 bool ResourceMesh::LoadToMemory()
 {
@@ -127,16 +126,16 @@ void ResourceMesh::RenderMesh(GLuint textureID, bool renderTexture, ResourceShad
 
 void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)
 {
-	/*
+	
 	if (*vertexNormals == true)
 	{
-		float normalLenght = 0.05f;
+		float normalLenght = 0.25f;
 		glPointSize(3.0f);
 		glColor3f(1, 0, 0);
 		glBegin(GL_POINTS);
-		for (unsigned int i = 0; i < vertices_count * 3; i += 3)
+		for (unsigned int i = 0; i < vertices_count; i ++)
 		{
-			glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
+			glVertex3f(vertices[i * VERTEX_ATTRIBUTES], vertices[i * VERTEX_ATTRIBUTES + 1], vertices[i * VERTEX_ATTRIBUTES + 2]);
 		}
 		glEnd();
 		glColor3f(0, 1, 0);
@@ -145,10 +144,12 @@ void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)
 		//Vertex normals
 		glColor3f(0, 1, 0);
 		glBegin(GL_LINES);
-		for (unsigned int i = 0; i < normals_count * 3; i += 3)
+		for (unsigned int i = 0; i < vertices_count; i++)
 		{
-			glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
-			glVertex3f(vertices[i] + normals[i] * normalLenght, vertices[i + 1] + normals[i + 1] * normalLenght, vertices[i + 2] + normals[i + 2] * normalLenght);
+			glVertex3f(vertices[i * VERTEX_ATTRIBUTES], vertices[i * VERTEX_ATTRIBUTES + 1], vertices[i * VERTEX_ATTRIBUTES + 2]);
+			glVertex3f(vertices[i * VERTEX_ATTRIBUTES] + vertices[i * VERTEX_ATTRIBUTES + 5] * normalLenght,
+					   vertices[i * VERTEX_ATTRIBUTES + 1] + vertices[i * VERTEX_ATTRIBUTES + 6] * normalLenght,
+					   vertices[i * VERTEX_ATTRIBUTES + 2] + vertices[i * VERTEX_ATTRIBUTES + 7] * normalLenght);
 		}
 		glEnd();
 		glColor3f(1, 1, 1);
@@ -156,15 +157,19 @@ void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)
 
 	if (*faceNormals == true)
 	{
-		float normalLenght = 0.05f;
+		float normalLenght = 0.25f;
 		//Face normals
 		glColor3f(1, 0, 0);
 		glBegin(GL_LINES);
 		for (int i = 0; i < indices_count; i += 3)
 		{
-			vec3 A = GetVectorFromIndex(&vertices[indices[i] * 3]);
+			/*vec3 A = GetVectorFromIndex(&vertices[indices[i] * 3]);
 			vec3 B = GetVectorFromIndex(&vertices[indices[i + 1] * 3]);
-			vec3 C = GetVectorFromIndex(&vertices[indices[i + 2] * 3]);
+			vec3 C = GetVectorFromIndex(&vertices[indices[i + 2] * 3]);*/
+
+			vec3 A = GetVectorFromIndex(&vertices[indices[i] * VERTEX_ATTRIBUTES]);
+			vec3 B = GetVectorFromIndex(&vertices[indices[i + 1] * VERTEX_ATTRIBUTES]);
+			vec3 C = GetVectorFromIndex(&vertices[indices[i + 2] * VERTEX_ATTRIBUTES]);
 
 			vec3 middle((A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z) / 3.f);
 
@@ -178,7 +183,7 @@ void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)
 		glPointSize(1.f);
 		glColor3f(1, 1, 1);
 	}
-	*/
+	
 }
 
 vec3 ResourceMesh::GetVectorFromIndex(float* startValue)
