@@ -547,17 +547,11 @@
     <ClInclude Include="Source Code\Command.h">
       <Filter>Sources\Commands\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\COMM_Rotate.h">
-      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\COMM_Scale.h">
-      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\COMM_Translate.h">
-      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
-    </ClInclude>
     <ClInclude Include="ShortcutManager.h">
       <Filter>Sources\Editor\ShortcutManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\COMM_Transform.h">
+      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -861,17 +855,11 @@
     <ClCompile Include="Source Code\Command.cpp">
       <Filter>Sources\Commands\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\COMM_Rotate.cpp">
-      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\COMM_Scale.cpp">
-      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\COMM_Translate.cpp">
-      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
-    </ClCompile>
     <ClCompile Include="ShortcutManager.cpp">
       <Filter>Sources\Editor\ShortcutManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\COMM_Transform.cpp">
+      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
