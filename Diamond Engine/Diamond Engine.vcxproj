@@ -175,7 +175,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="ShortcutManager.h" />
     <ClInclude Include="Source Code\Application.h" />
     <ClInclude Include="Source Code\AssetDir.h" />
     <ClInclude Include="Source Code\Color.h" />
@@ -312,6 +311,7 @@
     <ClInclude Include="Source Code\DEResource.h" />
     <ClInclude Include="Source Code\RE_Shader.h" />
     <ClInclude Include="Source Code\RE_Texture.h" />
+    <ClInclude Include="Source Code\ShortcutManager.h" />
     <ClInclude Include="Source Code\Timer.h" />
     <ClInclude Include="Source Code\Window.h" />
     <ClInclude Include="Source Code\WI_About.h" />
@@ -325,7 +325,6 @@
     <ClInclude Include="Source Code\WI_TextEditor.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ShortcutManager.cpp" />
     <ClCompile Include="Source Code\Application.cpp" />
     <ClCompile Include="Source Code\AssetDir.cpp" />
     <ClCompile Include="Source Code\Color.cpp" />
@@ -406,6 +405,7 @@
     <ClCompile Include="Source Code\MO_Scene.cpp" />
     <ClCompile Include="Source Code\RE_Shader.cpp" />
     <ClCompile Include="Source Code\RE_Texture.cpp" />
+    <ClCompile Include="Source Code\ShortcutManager.cpp" />
     <ClCompile Include="Source Code\WI_Assets.cpp" />
     <ClCompile Include="Source Code\WI_Game.cpp" />
     <ClCompile Include="Source Code\WI_Hierarchy.cpp" />
