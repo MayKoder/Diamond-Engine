@@ -45,7 +45,7 @@ bool M_Scene::Start()
 {
 	CreateGameCamera("Main Camera");
 
-	LoadScene("Library/Scenes/323737769.des");
+	//LoadScene("Library/Scenes/323737769.des");
 
 #ifndef STANDALONE
 	//TODO IMPORTANT: This is why we should save icons .meta, or we could generate them every time

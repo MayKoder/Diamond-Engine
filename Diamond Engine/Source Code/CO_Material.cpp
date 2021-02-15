@@ -6,16 +6,15 @@
 #include"RE_Texture.h"
 #include"RE_Shader.h"
 #include"MO_ResourceManager.h"
-#include"MO_Scene.h"
 
 #include"DEJsonSupport.h"
 #include"IM_TextureImporter.h"
+#include"RE_Material.h"
 
 C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false), matTexture(nullptr),
-shader(nullptr)
+material(nullptr)
 {
 	name = "Material";
-	shader = (EngineExternal->moduleScene->defaultShader != nullptr) ? dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleScene->defaultShader->GetUID())) : NULL;
 }
 
 C_Material::~C_Material()
@@ -23,8 +22,8 @@ C_Material::~C_Material()
 	if(matTexture != nullptr)
 		EngineExternal->moduleResources->UnloadResource(matTexture->GetUID());
 
-	if (shader != nullptr)
-		EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+	if (material != nullptr)
+		EngineExternal->moduleResources->UnloadResource(material->GetUID());
 }
 
 #ifndef STANDALONE
@@ -87,27 +86,27 @@ bool C_Material::OnEditor()
 			}
 		}
 
-		ImGui::Text("Drop here to change shader");
-		if (ImGui::BeginDragDropTarget())
-		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_SHADER"))
-			{
-				std::string* metaFileDrop = (std::string*)payload->Data;
-				std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
+		//ImGui::Text("Drop here to change shader");
+		//if (ImGui::BeginDragDropTarget())
+		//{
+		//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_SHADER"))
+		//	{
+		//		std::string* metaFileDrop = (std::string*)payload->Data;
+		//		std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
 
-				if(shader != nullptr)
-					EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+		//		if(shader != nullptr)
+		//			EngineExternal->moduleResources->UnloadResource(shader->GetUID());
 
-				shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
-			}
-			ImGui::EndDragDropTarget();
-		}
+		//		shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
+		//	}
+		//	ImGui::EndDragDropTarget();
+		//}
 
-		if (shader) 
+		if (material) 
 		{
 			ImGui::Dummy(ImVec2(0, 15));
-			ImGui::Text("Using shader %s", shader->GetAssetPath());
-			shader->DrawEditor();
+			ImGui::Text("Using shader %s", material->GetAssetPath());
+			material->DrawEditor();
 		}
 		return true;
 	}
@@ -132,11 +131,11 @@ void C_Material::SaveData(JSON_Object* nObj)
 		DEJson::WriteString(nObj, "LibraryPath", matTexture->GetLibraryPath());
 		DEJson::WriteInt(nObj, "UID", matTexture->GetUID());
 	}
-	if (shader != nullptr) 
+	if (material != nullptr) 
 	{
-		DEJson::WriteString(nObj, "ShaderAssetPath", shader->GetAssetPath());
-		DEJson::WriteString(nObj, "ShaderLibraryPath", shader->GetLibraryPath());
-		DEJson::WriteInt(nObj, "ShaderUID", shader->GetUID());
+		DEJson::WriteString(nObj, "MaterialAssetPath", material->GetAssetPath());
+		DEJson::WriteString(nObj, "MaterialLibraryPath", material->GetLibraryPath());
+		DEJson::WriteInt(nObj, "MaterialUID", material->GetUID());
 	}
 	//TODO: Call texture importer and load data
 }
@@ -158,11 +157,12 @@ void C_Material::LoadData(DEConfig& nObj)
 		matTexture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), texName.c_str()));
 
 
-	if (shader != nullptr) 
+	if (material != nullptr) 
 	{
-		EngineExternal->moduleResources->UnloadResource(shader->GetUID());
-		shader = nullptr;
+		EngineExternal->moduleResources->UnloadResource(material->GetUID());
+		material = nullptr;
 	}
 
-	shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("ShaderUID")));
+	if(nObj.ReadInt("MaterialUID") != 0)
+		material = dynamic_cast<ResourceMaterial*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("MaterialUID")));
 }

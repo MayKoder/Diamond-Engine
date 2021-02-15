@@ -1,9 +1,10 @@
 {
     "Assets Path": "Assets\/Primitives\/Plane.fbx",
-    "Library Path": "Library\/Models\/833392143.model",
-    "UID": 833392143,
+    "modTime": 1613402753,
+    "Library Path": "Library\/Models\/708348800.model",
+    "UID": 708348800,
     "Type": 1,
     "Meshes Inside": [
-        1658323125
+        1342727876
     ]
 }

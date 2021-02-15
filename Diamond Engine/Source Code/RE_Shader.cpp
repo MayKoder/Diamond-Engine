@@ -10,14 +10,10 @@ ResourceShader::ResourceShader(unsigned int _uid) : Resource(_uid, Resource::Typ
 {
 	for (GLuint i = 0; i < static_cast<GLuint>(ShaderType::SH_Max); i++)
 		shaderObjects[i] = 0;
-
-
 }
 
 ResourceShader::~ResourceShader()
 {
-	uniforms.clear();
-	attributes.clear();
 	if (shaderProgramID != 0) 
 	{
 		glDeleteShader(shaderProgramID);
@@ -27,9 +23,6 @@ ResourceShader::~ResourceShader()
 
 void ResourceShader::LinkToProgram()
 {
-	uniforms.clear();
-	attributes.clear();
-
 	shaderProgramID = glCreateProgram();
 
 	for (size_t i = 0; i < ShaderType::SH_Max; i++)
@@ -47,14 +40,6 @@ void ResourceShader::LinkToProgram()
 		glGetProgramInfoLog(shaderProgramID, 512, NULL, infoLog);
 		LOG(LogType::L_ERROR, "Error linking shader program: %s", infoLog);
 	}
-	//else
-	//{
-	//	shader->program_id = shaderProgram;
-
-	//	SetUniforms(shaderProgram, shader);
-
-	//	LOG("Shader program created porperly");
-	//}
 
 	for (size_t i = 0; i < ShaderType::SH_Max; i++)
 	{
@@ -66,8 +51,6 @@ void ResourceShader::LinkToProgram()
 		glDeleteShader(shaderObjects[i]);
 		shaderObjects[i] = 0;
 	}
-
-	FillVariables();
 }
 
 bool ResourceShader::LoadToMemory()
@@ -86,10 +69,6 @@ bool ResourceShader::UnloadFromMemory()
 
 	glDeleteShader(shaderProgramID);
 	shaderProgramID = 0;
-
-	uniforms.clear();
-	attributes.clear();
-
 	return true;
 }
 
@@ -97,118 +76,38 @@ void ResourceShader::Bind()
 {
 	glUseProgram(shaderProgramID);
 
-	//Push all uniforms
-	for (size_t i = 0; i < uniforms.size(); ++i)
-	{
-		//ImGui::SameLine();
-		switch (uniforms[i].vType)
-		{
+	////Push all uniforms
+	//for (size_t i = 0; i < uniforms.size(); ++i)
+	//{
+	//	//ImGui::SameLine();
+	//	switch (uniforms[i].vType)
+	//	{
 
-		case GL_SAMPLER_2D:
+	//	case GL_SAMPLER_2D:
 
-			break;
+	//		break;
 
-		case GL_FLOAT_VEC3: 
-			glUniform3fv(glGetUniformLocation(shaderProgramID, uniforms[i].name), 1, &uniforms[i].data.vector3Value.x);
-			break;
+	//	case GL_FLOAT_VEC3: 
+	//		glUniform3fv(glGetUniformLocation(shaderProgramID, uniforms[i].name), 1, &uniforms[i].data.vector3Value.x);
+	//		break;
 
-		case GL_FLOAT_VEC4:
-			break;
+	//	case GL_FLOAT_VEC4:
+	//		break;
 
 
-		case GL_FLOAT_MAT4:
-			break;
+	//	case GL_FLOAT_MAT4:
+	//		break;
 
-		default:
-			break;
-		}
-	}
+	//	default:
+	//		break;
+	//	}
+	//}
 
 }
 
 void ResourceShader::Unbind()
 {
 	glUseProgram(0);
-}
-
-#ifndef STANDALONE
-void ResourceShader::DrawEditor()
-{
-	ImGui::Dummy(ImVec2(0, 5));
-	ImGui::Text("Attributes");
-	for (size_t i = 0; i < attributes.size(); i++)
-	{
-		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s: ", attributes[i].name);
-	}
-
-	ImGui::Dummy(ImVec2(0, 5));
-	ImGui::Text("Uniforms");
-	for (size_t i = 0; i < uniforms.size(); i++)
-	{
-		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s: ", uniforms[i].name);
-
-		//ImGui::SameLine();
-		switch (uniforms[i].vType)
-		{
-
-		case GL_SAMPLER_2D: 
-		{
-			//ImGui::SameLine();
-			//GLuint test = 0;
-			//glGetUniformuiv(shaderProgramID, uniforms[i].vIndex, &test);
-			//ImGui::Image((ImTextureID)test, ImVec2(50, 50));
-			break;
-		}
-
-		case GL_FLOAT_VEC3: 
-		{
-			ImGui::SameLine();
-			//glGetUniformfv(shaderProgramID, uniforms[i].vIndex, &ret.x);
-			ImGui::DragFloat3(uniforms[i].name, &uniforms[i].data.vector3Value.x, 0.005f);
-			break;
-		}
-
-		case GL_FLOAT_VEC4: 
-		{
-			ImGui::SameLine();
-			ImVec4 ret = ImVec4(0, 0, 0, 0);
-			ImGui::ColorEdit4("##test", &ret.x);
-			break;
-		}
-
-		case GL_FLOAT_MAT4:
-			ImGui::SameLine();
-			ImGui::Text("Matrix here");
-			break;
-
-		default:
-			break;
-		}
-	}
-}
-#endif // !STANDALONE
-
-void ResourceShader::FillVariables()
-{
-	GLint attCount = 0, uniCount = 0;
-	glGetProgramiv(shaderProgramID, GL_ACTIVE_ATTRIBUTES, &attCount);
-
-	for (GLint a = 0; a < attCount; a++)
-	{
-		ShaderVariable shdrVar;
-		glGetActiveAttrib(shaderProgramID, (GLuint)a, 25, &shdrVar.nameLength, &shdrVar.vSize, &shdrVar.vType, shdrVar.name);
-
-		attributes.push_back(shdrVar);
-	}
-
-	glGetProgramiv(shaderProgramID, GL_ACTIVE_UNIFORMS, &uniCount);
-	for (GLint b = 0; b < uniCount; b++)
-	{
-		ShaderVariable shdrVar;
-		glGetActiveUniform(shaderProgramID, (GLuint)b, 25, &shdrVar.nameLength, &shdrVar.vSize, &shdrVar.vType, shdrVar.name);
-
-		uniforms.push_back(shdrVar);
-	}
 }
 
 char* ResourceShader::SaveShaderCustomFormat(char* vertexObjectBuffer, int vofSize, char* fragObjectBuffer, int fobSize)
@@ -272,20 +171,4 @@ void ResourceShader::LoadShaderCustomFormat(const char* libraryPath)
 	RELEASE_ARRAY(vertex);
 	RELEASE_ARRAY(fragment);
 	RELEASE_ARRAY(fileBuffer);
-}
-
-ShaderVariable::ShaderVariable() : vIndex(0), vType(GL_INT), nameLength(0),
-name(""), vSize(0)
-{
-	//data.vector3Value = float3(0, 0, 0);
-	//data.intValue = 0;
-}
-
-ShaderVariable::~ShaderVariable()
-{
-}
-
-ShaderVariable::ShdrValue::ShdrValue() : floatValue(0.0f), intValue(0),
-textureValue(0), matrixValue(nullptr), vector3Value(0, 0, 0)
-{
 }

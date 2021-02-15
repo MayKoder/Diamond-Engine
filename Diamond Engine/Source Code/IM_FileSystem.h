@@ -17,7 +17,7 @@ namespace StringLogic {
 
 #define LIBRARY_PATH "Library/"
 #define MESHES_PATH "Library/Meshes/"
-#define MATERIALS_PATH "Library/Materials/"
+#define TEXTURES_PATH "Library/Textures/"
 #define MODELS_PATH "Library/Models/"
 #define SCENES_PATH "Library/Scenes/"
 #define SCRIPTS_PATH "Library/ScriptsAssembly/"

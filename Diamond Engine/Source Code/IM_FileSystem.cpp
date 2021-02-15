@@ -127,7 +127,7 @@ void FileSystem::CreateLibraryFolders()
 	CreateDir(LIBRARY_PATH);
 	CreateDir(MESHES_PATH);
 	CreateDir(MODELS_PATH);
-	CreateDir(MATERIALS_PATH);
+	CreateDir(TEXTURES_PATH);
 	CreateDir(SCENES_PATH);
 	CreateDir(SCRIPTS_PATH);
 	CreateDir(SHADERS_PATH);
