@@ -7,16 +7,15 @@
 class COMM_Transform : public Command
 {
 public:
-	COMM_Transform(GameObject* agent, float* posChange, float* rotChange, float* sclChange);
+	COMM_Transform(GameObject* agent, float* nextMatrix, float* previousMatrix);
 	~COMM_Transform() override;
 
 	void Execute() override;
 	void Undo() override;
 
 private:
-	float positionChange[3];
-	float rotationChange[3];
-	float scaleChange[3];
+	float nextMatrix[16];
+	float previousMatrix[16];
 };
 
 #endif // !__COMM_TRANSFORM_H__

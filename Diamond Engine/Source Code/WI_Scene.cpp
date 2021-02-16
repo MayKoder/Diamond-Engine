@@ -13,16 +13,21 @@
 #include"CO_Transform.h"
 #include"GameObject.h"
 
+#include "COMM_Transform.h"
+
 #include"MathGeoLib/include/Math/float4x4.h"
 #include"MathGeoLib/include/Geometry/LineSegment.h"
 
-W_Scene::W_Scene(Application* _app) : Window() /*: texColorBuffer(-1)*/
+W_Scene::W_Scene(Application* _app) : Window() /*: texColorBuffer(-1)*/, manipulatingGuizmo(false)
 {
 	name = "Scene";
 	App = _app;
 
 	operation = ImGuizmo::OPERATION::TRANSLATE;
 	mode = ImGuizmo::MODE::WORLD;
+
+	oldMat = float4x4::zero;
+	newMat = float4x4::zero;
 }
 
 W_Scene::~W_Scene()
@@ -85,56 +90,7 @@ void W_Scene::Draw()
 
 
 		//Draw gizmo
-		if (App->moduleEditor->GetSelectedGO())
-		{
-			if (!ImGuizmo::IsUsing() && ImGui::IsWindowHovered()) 
-			{
-				if (App->moduleInput->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-					operation = ImGuizmo::OPERATION::TRANSLATE;
-				if (App->moduleInput->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
-					operation = ImGuizmo::OPERATION::ROTATE;
-				if (App->moduleInput->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-					operation = ImGuizmo::OPERATION::SCALE;
-				if (App->moduleInput->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-					operation = ImGuizmo::OPERATION::BOUNDS;
-
-				if (operation == ImGuizmo::OPERATION::SCALE && mode != ImGuizmo::MODE::LOCAL)
-					mode = ImGuizmo::MODE::LOCAL;
-			}
-
-			ImVec2 cornerPos = ImGui::GetWindowPos();
-			ImVec2 _size = ImGui::GetContentRegionMax();
-
-			//The small offset is due to some error margin in the rect height
-			ImGuiContext& g = *ImGui::GetCurrentContext();
-			int offset = ImGui::GetFrameHeight() / 2;
-			ImGuizmo::SetRect(cornerPos.x, cornerPos.y + offset, _size.x, _size.y);
-
-			ImGuizmo::SetDrawlist();
-			//ImGui::PushClipRect(ImGui::GetWindowSize(), ImGui::GetWindowSize(), true);
-			C_Transform* trans = App->moduleEditor->GetSelectedGO()->transform;
-			float4x4 mat = trans->globalTransform.Transposed();
-
-			//ERROR: World mode makes rotations go byebye
-			if (ImGuizmo::Manipulate(App->moduleCamera->editorCamera.ViewMatrixOpenGL().v[0], App->moduleCamera->editorCamera.ProjectionMatrixOpenGL().v[0], operation, mode, mat.ptr()) && ImGui::IsWindowHovered())
-			{
-				mat.Transpose();
-				//mat.Decompose(trans->position, trans->rotation, trans->localScale);
-				trans->SetTransformWithGlobal(mat);
-				trans->updateTransform = true;
-			}
-
-
-			//ImGui::PopClipRect();
-
-			//if (ImGuizmo::IsUsing())
-			//{
-			//	float4x4 newMatrix;
-			//	newMatrix.Set(modelPtr);
-			//	modelProjection = newMatrix.Transposed();
-			//	gameObject->GetComponent<C_Transform>()->SetGlobalTransform(modelProjection);
-			//}
-		}
+		DrawGuizmo();
 
 		if (ImGui::IsMouseClicked(0) && !ImGuizmo::IsUsing() && !App->moduleInput->GetKey(SDL_SCANCODE_LALT) == KEY_DOWN)
 		{
@@ -167,6 +123,82 @@ ImVec2 W_Scene::NormalizeOnWindow(float x, float y, float w, float h, ImVec2 poi
 	normalizedPoint.y = (point.y - y) / ((y + h) - y);
 
 	return normalizedPoint;
+}
+
+
+void W_Scene::DrawGuizmo()
+{
+	if (App->moduleEditor->GetSelectedGO())
+	{
+		if (!ImGuizmo::IsUsing() && ImGui::IsWindowHovered())
+		{
+			if (App->moduleInput->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+				operation = ImGuizmo::OPERATION::TRANSLATE;
+			if (App->moduleInput->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+				operation = ImGuizmo::OPERATION::ROTATE;
+			if (App->moduleInput->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+				operation = ImGuizmo::OPERATION::SCALE;
+			if (App->moduleInput->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				operation = ImGuizmo::OPERATION::BOUNDS;
+
+			if (operation == ImGuizmo::OPERATION::SCALE && mode != ImGuizmo::MODE::LOCAL)
+				mode = ImGuizmo::MODE::LOCAL;
+		}
+
+		ImVec2 cornerPos = ImGui::GetWindowPos();
+		ImVec2 _size = ImGui::GetContentRegionMax();
+
+		//The small offset is due to some error margin in the rect height
+		ImGuiContext& g = *ImGui::GetCurrentContext();
+		int offset = ImGui::GetFrameHeight() / 2;
+		ImGuizmo::SetRect(cornerPos.x, cornerPos.y + offset, _size.x, _size.y);
+
+		ImGuizmo::SetDrawlist();
+		//ImGui::PushClipRect(ImGui::GetWindowSize(), ImGui::GetWindowSize(), true);
+		C_Transform* trans = App->moduleEditor->GetSelectedGO()->transform;
+		float4x4 mat = trans->globalTransform.Transposed();
+
+		//ERROR: World mode makes rotations go byebye
+		if (ImGuizmo::Manipulate(App->moduleCamera->editorCamera.ViewMatrixOpenGL().v[0], App->moduleCamera->editorCamera.ProjectionMatrixOpenGL().v[0], operation, mode, mat.ptr()) && ImGui::IsWindowHovered())
+		{
+			mat.Transpose();
+			//mat.Decompose(trans->position, trans->rotation, trans->localScale);
+			trans->SetTransformWithGlobal(mat);
+			trans->updateTransform = true;
+
+			newMat = mat;
+			manipulatingGuizmo = true;
+		}
+
+		else if (ImGuizmo::IsUsing() == false && manipulatingGuizmo == true)
+		{
+			//create command
+			LOG(LogType::L_NORMAL, "released guizmo");
+
+			App->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(App->moduleEditor->GetSelectedGO(), newMat.ptr(), oldMat.ptr()));
+
+			manipulatingGuizmo = false;
+		}
+
+		else if (ImGuizmo::IsUsing() == false && manipulatingGuizmo == false)
+		{
+			mat.Transpose();
+
+			oldMat = mat;
+			LOG(LogType::L_NORMAL, "save transform");
+		}
+
+
+		//ImGui::PopClipRect();
+
+		//if (ImGuizmo::IsUsing())
+		//{
+		//	float4x4 newMatrix;
+		//	newMatrix.Set(modelPtr);
+		//	modelProjection = newMatrix.Transposed();
+		//	gameObject->GetComponent<C_Transform>()->SetGlobalTransform(modelProjection);
+		//}
+	}
 }
 
 #endif // !STANDALONE

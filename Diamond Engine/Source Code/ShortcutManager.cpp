@@ -36,7 +36,7 @@ void ShortcutManager::HandleInput()
 
 void ShortcutManager::PushCommand(Command* command)
 {
-	if (index < commandHistory.size() - 1)
+	if (index < (int)(commandHistory.size() - 1))
 	{
 		for (int i = commandHistory.size() - 1; i > index; --i)
 		{
@@ -46,8 +46,8 @@ void ShortcutManager::PushCommand(Command* command)
 	}
 
 	//check for changes size
-	index = commandHistory.size() - 1;
 	commandHistory.push_back(command);
+	index = commandHistory.size() - 1;
 }
 
 
@@ -77,10 +77,10 @@ void ShortcutManager::UndoCommand()
 
 void ShortcutManager::RedoCommand()
 {
-	if (index < commandHistory.size() - 1)
+	if (index < (int)(commandHistory.size() - 1))
 	{
-		commandHistory[index]->Execute();
 		++index;
+		commandHistory[index]->Execute();
 	}
 
 	else

@@ -6,10 +6,12 @@
 #include "Window.h"
 #include"ImGuizmo/ImGuizmo.h"
 
+#include "MathGeoLib/include/Math/float4x4.h"
+
 class Application;
+
 class W_Scene : public Window
 {
-
 public:
 	W_Scene(Application* _app);
 	virtual ~W_Scene();
@@ -25,6 +27,14 @@ public:
 
 	Application* App;
 
+private:
+	void DrawGuizmo();
+
+private:
+	bool manipulatingGuizmo = false;
+
+	float4x4 oldMat;
+	float4x4 newMat;
 };
 
 #endif //__W_SCENE_H__

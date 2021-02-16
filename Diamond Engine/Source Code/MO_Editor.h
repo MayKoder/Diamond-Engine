@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "Globals.h"
 #include "MA_IconSystem.h"
+#include "ShortcutManager.h"
 
 #define STYLES_PATH "Settings/styles.json"
 #define MAX_STY_INPUT 15
@@ -45,6 +46,8 @@ public:
 	bool Init() override;
 	bool Start() override;
 
+	update_status Update(float dt) override;
+
 	void Draw();
 	void DrawMenuBar();
 	void DrawTopBar();
@@ -70,6 +73,7 @@ public:
 	void LogToConsole(const char* msg, LogType _type = LogType::L_NORMAL);
 
 	IconManager editorIcons;
+	ShortcutManager shortcutManager;
 
 private:
 	std::vector<Window*> windows;
