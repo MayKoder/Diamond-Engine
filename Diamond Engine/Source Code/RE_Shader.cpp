@@ -55,6 +55,7 @@ void ResourceShader::LinkToProgram()
 	}
 
 	//TODO: Find all the active materials using this shader and update their uniforms with material->FillVariables()
+	//TODO: What if the shader changes on some materials?
 	for (std::vector<ResourceMaterial*>::iterator i = references.begin(); i != references.end(); ++i)
 	{
 		(*i)->FillVariables();
