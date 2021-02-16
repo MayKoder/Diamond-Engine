@@ -22,41 +22,45 @@ void W_TextEditor::Draw()
 {
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*//*, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse*/))
 	{
-		if(textType != Resource::Type::UNKNOWN)
+		if (textType != Resource::Type::UNKNOWN)
 			(textType == Resource::Type::SHADER) ? DrawShaderEditor() : DrawScriptEditor(); //Move to switch in a future
 
-		if(!txtName.empty())
+		if (!txtName.empty())
 			txtEditor.Render(txtName.c_str());
 	}
 	ImGui::End();
 }
 
-void W_TextEditor::DrawShaderEditor() 
+void W_TextEditor::DrawShaderEditor()
 {
 	ImGui::Dummy(ImVec2(10, 10));
 	if (ImGui::Button("Save and compile shader"))
 	{
 		//Check for errors
 		TempShader vertexShaderPair, fragmentShaderPair;
-		if (ShaderImporter::CheckForErrors(txtEditor.GetText(), vertexShaderPair, fragmentShaderPair) == false)
-			return;
 
-		//Save glsl
-		FileSystem::Save(txtName.c_str(), &txtEditor.GetText()[0], txtEditor.GetText().length(), false);
+		TextEditor::ErrorMarkers markers;
+		txtEditor.SetErrorMarkers(markers);
 
-		//Find resource
-		uint uid = EngineExternal->moduleResources->GetMetaUID(EngineExternal->moduleResources->GetMetaPath(txtName.c_str()).c_str());
-		Resource* res = EngineExternal->moduleResources->GetResourceFromUID(uid);
+		if (ShaderImporter::CheckForErrors(txtEditor.GetText(), vertexShaderPair, fragmentShaderPair) == true)
+		{
+			//Save glsl
+			FileSystem::Save(txtName.c_str(), &txtEditor.GetText()[0], txtEditor.GetText().length(), false);
 
-		//Clear resource
-		if (res != nullptr)
-			res->UnloadFromMemory();
+			//Find resource
+			uint uid = EngineExternal->moduleResources->GetMetaUID(EngineExternal->moduleResources->GetMetaPath(txtName.c_str()).c_str());
+			Resource* res = EngineExternal->moduleResources->GetResourceFromUID(uid);
 
-		//Save .shdr and reimport data
-		ShaderImporter::Import(&txtEditor.GetText()[0], txtEditor.GetText().length(), dynamic_cast<ResourceShader*>(res), txtName.c_str());
+			//Clear resource
+			if (res != nullptr)
+				res->UnloadFromMemory();
+
+			//Save .shdr and reimport data
+			ShaderImporter::Import(&txtEditor.GetText()[0], txtEditor.GetText().length(), dynamic_cast<ResourceShader*>(res), txtName.c_str());
+		}
 	}
 }
-void W_TextEditor::DrawScriptEditor() 
+void W_TextEditor::DrawScriptEditor()
 {
 	ImGui::Dummy(ImVec2(10, 10));
 	if (ImGui::Button("Open Visual Studio Project"))
@@ -79,6 +83,53 @@ void W_TextEditor::DrawScriptEditor()
 	ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), (!txtName.empty()) ? txtName.c_str() : "No script loaded");
 }
 
+void W_TextEditor::SetErrorsOnScreen(const char* infoLog)
+{
+	TextEditor::ErrorMarkers markers;
+
+	std::vector<std::pair<int, std::string>> errors;
+	SplitErrors(infoLog, errors);
+
+	for (size_t i = 0; i < errors.size(); i++)
+	{
+		markers.insert(errors[i]);
+	}
+
+	if (textType == Resource::Type::SHADER) {
+		txtEditor.SetErrorMarkers(markers);}
+}
+
+void W_TextEditor::SplitErrors(const char* infoLog, std::vector<std::pair<int, std::string>>& error_list)
+{
+	std::string tmp = infoLog;
+
+	while (tmp.find("0(") != std::string::npos)
+	{
+		size_t error_line_pos = tmp.find("0(");
+		std::string error_line = tmp.substr(error_line_pos + 2, 2);
+
+		std::pair<int, std::string> error;
+		error.first = std::stoi(error_line);
+
+		size_t found = tmp.find("\n");
+		if (found != std::string::npos)
+		{
+			std::string error_text = tmp.substr(7, found - 7);
+
+			error.second = error_text;
+
+			tmp.erase(tmp.begin(), tmp.begin() + found + 1);
+		}
+		else
+		{
+			error.second = tmp.substr(0);
+			tmp.erase(tmp.begin(), tmp.begin() + found + 1);
+		}
+
+		error_list.push_back(error);
+	}
+}
+
 void W_TextEditor::SetTextFromFile(const char* path)
 {
 	txtEditor.Delete();
@@ -91,7 +142,7 @@ void W_TextEditor::SetTextFromFile(const char* path)
 	txtEditor.SetLanguageDefinition(lng);
 	//std::string test = FileSystem::FileToText(path); //Can't use physFS because it's
 
-	if (buffer != nullptr) 
+	if (buffer != nullptr)
 	{
 		txtName = path;
 		txtEditor.SetText(buffer);

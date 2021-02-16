@@ -3,6 +3,8 @@
 #include<string>
 #include"Globals.h"
 #include"IM_FileSystem.h"
+#include "WI_TextEditor.h"
+#include "MO_Editor.h"
 
 void ShaderImporter::Import(char* buffer, int bSize, ResourceShader* res, const char* assetsPath)
 {
@@ -138,6 +140,10 @@ GLuint ShaderImporter::Compile(char* fileBuffer, ShaderType type, const GLint si
 			LOG(LogType::L_ERROR, "Error compilating fragment shader: %s", infoLog);
 		}
 		glDeleteShader(compileShader);
+
+		W_TextEditor* textEditorWindow = static_cast<W_TextEditor*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::TEXTEDITOR));
+		textEditorWindow->SetErrorsOnScreen(infoLog);
+
 		return 0;
 	}
 

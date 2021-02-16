@@ -107,3 +107,5 @@ gl_FragColor = (hasTexture == 1) ? vec4(lcolor * inten.x + vec3(1.0) * inten.y, 
 
 
 
+
+
