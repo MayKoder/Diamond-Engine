@@ -15,7 +15,6 @@
 
 #include "COMM_Transform.h"
 
-#include"MathGeoLib/include/Math/float4x4.h"
 #include"MathGeoLib/include/Geometry/LineSegment.h"
 
 W_Scene::W_Scene(Application* _app) : Window() /*: texColorBuffer(-1)*/, manipulatingGuizmo(false)
@@ -172,7 +171,7 @@ void W_Scene::DrawGuizmo()
 
 		else if (ImGuizmo::IsUsing() == false && manipulatingGuizmo == true)
 		{
-			App->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(App->moduleEditor->GetSelectedGO(), newMat.ptr(), oldMat.ptr()));
+			App->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(App->moduleEditor->GetSelectedGO()->UID, newMat.ptr(), oldMat.ptr()));
 
 			manipulatingGuizmo = false;
 		}

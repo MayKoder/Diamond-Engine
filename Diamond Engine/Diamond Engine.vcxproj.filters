@@ -553,6 +553,9 @@
     <ClInclude Include="Source Code\ShortcutManager.h">
       <Filter>Sources\Editor\ShortcutManager</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\COMM_DeleteGO.h">
+      <Filter>Sources\Commands\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -860,6 +863,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\ShortcutManager.cpp">
       <Filter>Sources\Editor\ShortcutManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\COMM_DeleteGO.cpp">
+      <Filter>Sources\Commands\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

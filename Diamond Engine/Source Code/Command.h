@@ -3,19 +3,17 @@
 #ifndef __COMMAND_H__
 #define __COMMAND_H__
 
-class GameObject;
-
 class Command
 {
 public:
-	Command(GameObject* agent);
+	Command(int agentUid);
 	virtual ~Command();
 
 	virtual void Execute() = 0;
 	virtual void Undo() = 0;
 
 protected:
-	GameObject* agent = nullptr;
+	int agentUid;
 };
 
 #endif // !__COMMAND_H__

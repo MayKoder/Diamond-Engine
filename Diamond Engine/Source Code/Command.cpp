@@ -1,11 +1,10 @@
 #include "Command.h"
 
-Command::Command(GameObject* agent) : agent(agent)
+Command::Command(int agentUid) : agentUid(agentUid)
 {
 }
 
 
 Command::~Command()
 {
-	agent = nullptr;
 }

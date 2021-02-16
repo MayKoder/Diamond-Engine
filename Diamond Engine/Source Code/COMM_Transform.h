@@ -7,7 +7,7 @@
 class COMM_Transform : public Command
 {
 public:
-	COMM_Transform(GameObject* agent, float* nextMatrix, float* previousMatrix);
+	COMM_Transform(int agentUid, float* nextMatrix, float* previousMatrix);
 	~COMM_Transform() override;
 
 	void Execute() override;
