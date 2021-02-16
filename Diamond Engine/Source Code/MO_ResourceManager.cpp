@@ -288,6 +288,7 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 		//case Resource::Type::MESH: MeshLoader::BufferToMeshes(fileBuffer, size, resource); break;
 		case Resource::Type::SCENE: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 		case Resource::Type::SHADER: ShaderImporter::Import(fileBuffer, size, dynamic_cast<ResourceShader*>(resource), assetsFile); break;
+		case Resource::Type::MATERIAL: 	FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 	}
 
 	//Save the resource to custom format
@@ -431,6 +432,7 @@ std::string M_ResourceManager::GenLibraryPath(uint _uid, Resource::Type _type)
 		case Resource::Type::MESH: ret = MESHES_PATH; ret += nameNoExt; ret += ".mmh"; break;
 		case Resource::Type::SCENE : ret = SCENES_PATH; ret += nameNoExt; ret += ".des"; break;
 		case Resource::Type::SHADER : ret = SHADERS_PATH; ret += nameNoExt; ret += ".shdr"; break;
+		case Resource::Type::MATERIAL : ret = MATERIALS_PATH; ret += nameNoExt; ret += ".mat"; break;
 	}
 
 	return ret;
@@ -545,6 +547,8 @@ Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFil
 
 	if (ext == "glsl")
 		return Resource::Type::SHADER;
+	if (ext == "mat")
+		return Resource::Type::MATERIAL;
 
 
 	return Resource::Type::UNKNOWN;
@@ -570,6 +574,8 @@ Resource::Type M_ResourceManager::GetTypeFromLibraryExtension(const char* librar
 		return Resource::Type::SCENE;
 	if (ext == "shdr")
 		return Resource::Type::SHADER;
+	if (ext == "mat")
+		return Resource::Type::MATERIAL;
 	
 
 	return Resource::Type::UNKNOWN;

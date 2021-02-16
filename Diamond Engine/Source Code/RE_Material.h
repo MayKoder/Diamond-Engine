@@ -45,6 +45,8 @@ public:
 
 	void FillVariables();
 
+	void PushUniforms();
+
 #ifndef STANDALONE
 	void DrawEditor();
 #endif // !STANDALONE

@@ -167,8 +167,8 @@ void W_Assets::DrawFileTree(AssetDir& file)
 			case  Resource::Type::MESH:
 				ImGui::SetDragDropPayload("_MESH", &file.importPath, file.importPath.length());
 				break;
-			case  Resource::Type::SHADER:
-				ImGui::SetDragDropPayload("_SHADER", &file.metaFileDir, file.metaFileDir.length());
+			case  Resource::Type::MATERIAL:
+				ImGui::SetDragDropPayload("_MATERIAL", &file.metaFileDir, file.metaFileDir.length());
 				break;
 
 			default:

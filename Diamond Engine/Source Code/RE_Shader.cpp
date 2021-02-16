@@ -25,7 +25,7 @@ void ResourceShader::LinkToProgram()
 {
 	shaderProgramID = glCreateProgram();
 
-	for (size_t i = 0; i < ShaderType::SH_Max; i++)
+	for (size_t i = 0; i < static_cast<int>(ShaderType::SH_Max); i++)
 	{
 		glAttachShader(shaderProgramID,  shaderObjects[i]);
 	}
@@ -41,12 +41,12 @@ void ResourceShader::LinkToProgram()
 		LOG(LogType::L_ERROR, "Error linking shader program: %s", infoLog);
 	}
 
-	for (size_t i = 0; i < ShaderType::SH_Max; i++)
+	for (size_t i = 0; i < static_cast<int>(ShaderType::SH_Max); i++)
 	{
 		glDetachShader(shaderProgramID, shaderObjects[i]);
 	}
 
-	for (size_t i = 0; i < ShaderType::SH_Max; i++)
+	for (size_t i = 0; i < static_cast<int>(ShaderType::SH_Max); i++)
 	{
 		glDeleteShader(shaderObjects[i]);
 		shaderObjects[i] = 0;
@@ -75,34 +75,6 @@ bool ResourceShader::UnloadFromMemory()
 void ResourceShader::Bind()
 {
 	glUseProgram(shaderProgramID);
-
-	////Push all uniforms
-	//for (size_t i = 0; i < uniforms.size(); ++i)
-	//{
-	//	//ImGui::SameLine();
-	//	switch (uniforms[i].vType)
-	//	{
-
-	//	case GL_SAMPLER_2D:
-
-	//		break;
-
-	//	case GL_FLOAT_VEC3: 
-	//		glUniform3fv(glGetUniformLocation(shaderProgramID, uniforms[i].name), 1, &uniforms[i].data.vector3Value.x);
-	//		break;
-
-	//	case GL_FLOAT_VEC4:
-	//		break;
-
-
-	//	case GL_FLOAT_MAT4:
-	//		break;
-
-	//	default:
-	//		break;
-	//	}
-	//}
-
 }
 
 void ResourceShader::Unbind()

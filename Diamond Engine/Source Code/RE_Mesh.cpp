@@ -4,6 +4,7 @@
 #include "IM_FileSystem.h"
 #include"Globals.h"
 #include"RE_Shader.h"
+#include"RE_Material.h"
 
 #include"Application.h"
 #include"MO_Scene.h" //This can be removed
@@ -81,39 +82,39 @@ bool ResourceMesh::UnloadFromMemory()
 	return true;
 }
 
-void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture, ResourceShader* shader, C_Transform* _transform)
+void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture, ResourceMaterial* material, C_Transform* _transform)
 {
 	//ASK: glDrawElementsInstanced()?
 	if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
 		glBindTexture(GL_TEXTURE_2D, textureID);
-
-	shader = EngineExternal->moduleScene->defaultShader; //TODO: This is temporal needs to be removed
 	
-	if (shader) 
+	if (material->shader)
 	{
-		shader->Bind();
+		material->shader->Bind();
+		material->PushUniforms();
+
+		
 
 		if(textureID != 0)
-			glUniform1i(glGetUniformLocation(shader->shaderProgramID, "hasTexture"), 1);
+			glUniform1i(glGetUniformLocation(material->shader->shaderProgramID, "hasTexture"), 1);
 		else
-			glUniform1i(glGetUniformLocation(shader->shaderProgramID, "hasTexture"), 0);
+			glUniform1i(glGetUniformLocation(material->shader->shaderProgramID, "hasTexture"), 0);
 
-		GLint modelLoc = glGetUniformLocation(shader->shaderProgramID, "model_matrix");
+		GLint modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "model_matrix");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, _transform->GetGlobalTransposed());
 
-		modelLoc = glGetUniformLocation(shader->shaderProgramID, "view");
+		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "view");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ViewMatrixOpenGL().ptr());
 
-		modelLoc = glGetUniformLocation(shader->shaderProgramID, "projection");
+		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "projection");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
 
-		modelLoc = glGetUniformLocation(shader->shaderProgramID, "time");
+		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "time");
 		glUniform1f(modelLoc, DETime::realTimeSinceStartup);
 
-		modelLoc = glGetUniformLocation(shader->shaderProgramID, "altColor");
+		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "altColor");
 		glUniform3fv(modelLoc, 1, &color.x);
 	}
-
 
 	//vertices
 	glBindVertexArray(VAO);
@@ -123,8 +124,8 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 	if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-	if (shader)
-		shader->Unbind();
+	if (material->shader)
+		material->shader->Unbind();
 }
 
 void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals, const float* globalTransform)

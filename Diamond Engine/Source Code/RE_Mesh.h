@@ -9,7 +9,7 @@
 
 typedef unsigned int GLuint;
 typedef unsigned int uint;
-class ResourceShader;
+class ResourceMaterial;
 class C_Transform;
 
 #define VERTEX_ATTRIBUTES 11
@@ -24,7 +24,7 @@ public:
 	bool LoadToMemory() override;
 	bool UnloadFromMemory() override;
 
-	void RenderMesh(GLuint textureID, float3 color, bool renderTexture = false, ResourceShader* shader = nullptr, C_Transform* _transform = nullptr);
+	void RenderMesh(GLuint textureID, float3 color, bool renderTexture = false, ResourceMaterial* shader = nullptr, C_Transform* _transform = nullptr);
 	void RenderMeshDebug(bool* vertexNormals, bool* faceNormals, const float*);
 
 	vec3 GetVectorFromIndex(float* startValue);

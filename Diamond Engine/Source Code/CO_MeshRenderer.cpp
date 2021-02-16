@@ -80,7 +80,7 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 	if (material != nullptr && material->IsActive())
 		id = material->GetTextureID();
 
-	_mesh->RenderMesh(id, alternColor, rTex, (material && material->material != nullptr) ? material->material->shader : nullptr, transform);
+	_mesh->RenderMesh(id, alternColor, rTex, (material && material->material != nullptr) ? material->material : EngineExternal->moduleScene->defaultMaterial, transform);
 
 	if (vertexNormals || faceNormals)
 		_mesh->RenderMeshDebug(&vertexNormals, &faceNormals, transform->GetGlobalTransposed());

@@ -6,10 +6,11 @@
 #include"MO_ResourceManager.h"
 #include"MO_Scene.h"
 #include"RE_Shader.h"
+#include"DEJsonSupport.h"
+#include"IM_FileSystem.h"
 
 ResourceMaterial::ResourceMaterial(unsigned int _uid) : Resource(_uid, Resource::Type::MATERIAL), shader(nullptr)
 {
-	shader = (EngineExternal->moduleScene->defaultShader != nullptr) ? dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleScene->defaultShader->GetUID())) : NULL;
 }
 
 ResourceMaterial::~ResourceMaterial()
@@ -20,8 +21,21 @@ ResourceMaterial::~ResourceMaterial()
 
 bool ResourceMaterial::LoadToMemory()
 {
-	//Request shader
-	//Get uniforms and attributes from shader
+	//Load file to buffer [DONE]
+	JSON_Value* file = json_parse_file(this->libraryFile.c_str());
+	DEConfig base(json_value_get_object(file));
+
+	int shUID = base.ReadInt("ShaderUID");
+	json_value_free(file);
+
+	//Request shader [DONE]
+	std::string shaderPath = SHADERS_PATH + std::to_string(shUID);
+	shaderPath += ".shdr";
+	shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(shUID, shaderPath.c_str()));
+
+	//Get uniforms and attributes from shader [DONE]
+	FillVariables();
+
 	//Load required resources from uniforms
 
 	return false;
@@ -29,9 +43,11 @@ bool ResourceMaterial::LoadToMemory()
 
 bool ResourceMaterial::UnloadFromMemory()
 {
-	//Unload shader by reference count 
-	EngineExternal->moduleResources->UnloadResource(shader->GetUID());
-	//Unload resources (uniform and attributes) by reference count 
+	//Unload shader by reference count [DONE]
+	if(shader != NULL)
+		EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+
+	//TODO: Unload resources (uniform and attributes) by reference count 
 
 	uniforms.clear();
 	attributes.clear();
@@ -41,6 +57,9 @@ bool ResourceMaterial::UnloadFromMemory()
 
 void ResourceMaterial::FillVariables()
 {
+	uniforms.clear();
+	attributes.clear();
+
 	GLint attCount = 0, uniCount = 0;
 	glGetProgramiv(shader->shaderProgramID, GL_ACTIVE_ATTRIBUTES, &attCount);
 
@@ -59,6 +78,36 @@ void ResourceMaterial::FillVariables()
 		glGetActiveUniform(shader->shaderProgramID, (GLuint)b, 25, &shdrVar.nameLength, &shdrVar.vSize, &shdrVar.vType, shdrVar.name);
 
 		uniforms.push_back(shdrVar);
+	}
+}
+
+void ResourceMaterial::PushUniforms()
+{
+	//Push all uniforms
+	for (size_t i = 0; i < uniforms.size(); ++i)
+	{
+		//ImGui::SameLine();
+		switch (uniforms[i].vType)
+		{
+
+		case GL_SAMPLER_2D:
+
+			break;
+
+		case GL_FLOAT_VEC3: 
+			glUniform3fv(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), 1, &uniforms[i].data.vector3Value.x);
+			break;
+
+		case GL_FLOAT_VEC4:
+			break;
+
+
+		case GL_FLOAT_MAT4:
+			break;
+
+		default:
+			break;
+		}
 	}
 }
 

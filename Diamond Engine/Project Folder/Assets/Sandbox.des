@@ -5,14 +5,14 @@
         6.8721933364868164
     ],
     "EditorCameraZ": [
-        -0.75912934541702271,
-        -0.24176572263240814,
-        -0.60437732934951782
+        -0.73032569885253906,
+        -0.38662764430046082,
+        -0.56315487623214722
     ],
     "EditorCameraY": [
-        -0.18914124369621277,
-        0.97033464908599854,
-        -0.15058635175228119
+        -0.30617338418960571,
+        0.92223590612411499,
+        -0.23609063029289246
     ],
     "Game Objects": [
         {
@@ -124,7 +124,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.7053406238555908,
+                    "hFOV": 1.6117955446243286,
                     "culling": false
                 }
             ]
@@ -197,7 +197,10 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "IsEmpty": true
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1452971041.mat",
+                    "MaterialUID": 1452971041
                 }
             ]
         },
@@ -241,7 +244,10 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "IsEmpty": true
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1452971041.mat",
+                    "MaterialUID": 1452971041
                 }
             ]
         },

@@ -2,6 +2,7 @@
 #include "ImGui/imgui.h"
 #include "Application.h"
 #include"MO_Renderer3D.h"
+#include"MO_Scene.h"
 
 #include"RE_Texture.h"
 #include"RE_Shader.h"
@@ -15,6 +16,7 @@ C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false
 material(nullptr)
 {
 	name = "Material";
+	material = (EngineExternal->moduleScene->defaultMaterial != nullptr) ? dynamic_cast<ResourceMaterial*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleScene->defaultMaterial->GetUID())) : NULL;
 }
 
 C_Material::~C_Material()
@@ -86,21 +88,21 @@ bool C_Material::OnEditor()
 			}
 		}
 
-		//ImGui::Text("Drop here to change shader");
-		//if (ImGui::BeginDragDropTarget())
-		//{
-		//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_SHADER"))
-		//	{
-		//		std::string* metaFileDrop = (std::string*)payload->Data;
-		//		std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
+		ImGui::Text("Drop here to change material");
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_MATERIAL"))
+			{
+				std::string* metaFileDrop = (std::string*)payload->Data;
+				std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
 
-		//		if(shader != nullptr)
-		//			EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+				if(material != nullptr)
+					EngineExternal->moduleResources->UnloadResource(material->GetUID());
 
-		//		shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
-		//	}
-		//	ImGui::EndDragDropTarget();
-		//}
+				material = dynamic_cast<ResourceMaterial*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
+			}
+			ImGui::EndDragDropTarget();
+		}
 
 		if (material) 
 		{

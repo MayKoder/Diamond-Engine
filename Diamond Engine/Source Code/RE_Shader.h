@@ -3,7 +3,7 @@
 #include"DEResource.h"
 typedef unsigned int GLuint;
 
-enum ShaderType
+enum class ShaderType
 {
 	SH_Vertex,
 	SH_Frag,
@@ -28,7 +28,7 @@ public:
 	char* SaveShaderCustomFormat(char* vertexObjectBuffer, int vofSize, char* fragObjectBuffer, int fobSize);
 	void LoadShaderCustomFormat(const char*);
 
-	GLuint shaderObjects[SH_Max];
+	GLuint shaderObjects[static_cast<int>(ShaderType::SH_Max)];
 
 	GLuint shaderProgramID;
 };

@@ -149,13 +149,13 @@ int ShaderImporter::GetTypeMacro(ShaderType type)
 	int ret = 0;
 	switch (type)
 	{
-	case SH_Vertex:
+	case ShaderType::SH_Vertex:
 		ret = GL_VERTEX_SHADER;
 		break;
-	case SH_Frag:
+	case ShaderType::SH_Frag:
 		ret = GL_FRAGMENT_SHADER;
 		break;
-	case SH_Max:
+	case ShaderType::SH_Max:
 		ret = 0;
 		break;
 	default:
