@@ -35,6 +35,8 @@ struct ShaderVariable
 	} data;
 };
 
+static const char* defaultUniforms[] = { "model_matrix", "altColor"};
+
 class ResourceMaterial : public Resource {
 public:
 	ResourceMaterial(unsigned int _uid);

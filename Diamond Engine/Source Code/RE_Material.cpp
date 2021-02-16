@@ -32,11 +32,13 @@ bool ResourceMaterial::LoadToMemory()
 	std::string shaderPath = SHADERS_PATH + std::to_string(shUID);
 	shaderPath += ".shdr";
 	shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(shUID, shaderPath.c_str()));
+	shader->references.push_back(this);
 
 	//Get uniforms and attributes from shader [DONE]
 	FillVariables();
 
 	//Load required resources from uniforms
+
 
 	return false;
 }

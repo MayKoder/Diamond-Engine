@@ -5,6 +5,7 @@
 #include"IM_ShaderImporter.h"
 
 #include"ImGui/imgui.h"
+#include"RE_Material.h"
 
 ResourceShader::ResourceShader(unsigned int _uid) : Resource(_uid, Resource::Type::SHADER), shaderProgramID(0)
 {
@@ -14,6 +15,7 @@ ResourceShader::ResourceShader(unsigned int _uid) : Resource(_uid, Resource::Typ
 
 ResourceShader::~ResourceShader()
 {
+	references.clear();
 	if (shaderProgramID != 0) 
 	{
 		glDeleteShader(shaderProgramID);
@@ -50,6 +52,12 @@ void ResourceShader::LinkToProgram()
 	{
 		glDeleteShader(shaderObjects[i]);
 		shaderObjects[i] = 0;
+	}
+
+	//TODO: Find all the active materials using this shader and update their uniforms with material->FillVariables()
+	for (std::vector<ResourceMaterial*>::iterator i = references.begin(); i != references.end(); ++i)
+	{
+		(*i)->FillVariables();
 	}
 }
 

@@ -1,7 +1,9 @@
 #pragma once
 
 #include"DEResource.h"
+#include<vector>
 typedef unsigned int GLuint;
+class ResourceMaterial;
 
 enum class ShaderType
 {
@@ -31,4 +33,6 @@ public:
 	GLuint shaderObjects[static_cast<int>(ShaderType::SH_Max)];
 
 	GLuint shaderProgramID;
+
+	std::vector<ResourceMaterial*> references;
 };
