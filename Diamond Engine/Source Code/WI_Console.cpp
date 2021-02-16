@@ -11,17 +11,30 @@
 W_Console::W_Console() : Window(), collapseMode(true), scrollToBottom(false)
 {
 	name = "Console";
+
+	showMessage[0] = showMessage[1] = showMessage[2] = true;
 }
 
 W_Console::~W_Console()
 {
 	logs.clear();
+	visibleLogs.clear();
 }
 
 void W_Console::Draw()
 {
 	if (ImGui::Begin(name.c_str(), NULL, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse /*| ImGuiWindowFlags_NoResize*/ | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar)) 
 	{
+		if(ImGui::Checkbox("Info", &showMessage[0]))
+			FilterLogs();
+		ImGui::SameLine();
+		if(ImGui::Checkbox("Warnings", &showMessage[1]))
+			FilterLogs();
+		ImGui::SameLine();
+		if(ImGui::Checkbox("Errors", &showMessage[2]))
+			FilterLogs();
+		ImGui::SameLine();
+
 		float offset = ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Clear").x - 7;
 		ImGui::SetCursorPosX(offset);
 		if (ImGui::Button("Clear"/*, ImGuiDir_Right*/))
@@ -52,9 +65,9 @@ void W_Console::Draw()
 			LogMessage* cLog = nullptr;
 			ImVec4 labelColor(0.f, 0.f, 0.f, 0.f);
 
-			for (unsigned int i = 0; i < logs.size(); ++i) //Rendering all logs is dumb, need to find a way to ignore out-of-view logs
+			for (unsigned int i = 0; i < visibleLogs.size(); ++i) //Rendering all logs is dumb, need to find a way to ignore out-of-view logs
 			{
-				cLog = &logs[i];
+				cLog = &visibleLogs[i];
 
 				ImGui::Image(GetMsgType(cLog->lType), ImVec2(20, 20), ImVec2(0, 1), ImVec2(1, 0));
 
@@ -84,6 +97,8 @@ void W_Console::Draw()
 
 void W_Console::AddLog(const char* s_msg, LogType _type)
 {
+	LogMessage message(std::string(s_msg), _type);
+
 	if (collapseMode && logs.size() >= 1)
 	{
 		if (logs[logs.size() - 1].msg == s_msg)
@@ -93,9 +108,27 @@ void W_Console::AddLog(const char* s_msg, LogType _type)
 		}
 	}
 
-	logs.push_back(LogMessage(std::string(s_msg), _type));
-	scrollToBottom = true;
+	logs.push_back(message);
 
+	if (showMessage[(int)_type])
+	{
+		visibleLogs.push_back(message);
+	}
+
+	scrollToBottom = true;
+}
+
+void W_Console::FilterLogs()
+{
+	visibleLogs.clear();
+
+	for (size_t i = 0; i < logs.size(); i++)
+	{
+		if (showMessage[(int)logs[i].lType])
+		{
+			visibleLogs.push_back(logs[i]);
+		}
+	}
 }
 
 ImTextureID W_Console::GetMsgType(LogType type)
