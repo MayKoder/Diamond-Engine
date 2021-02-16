@@ -172,9 +172,6 @@ void W_Scene::DrawGuizmo()
 
 		else if (ImGuizmo::IsUsing() == false && manipulatingGuizmo == true)
 		{
-			//create command
-			LOG(LogType::L_NORMAL, "released guizmo");
-
 			App->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(App->moduleEditor->GetSelectedGO(), newMat.ptr(), oldMat.ptr()));
 
 			manipulatingGuizmo = false;
@@ -185,7 +182,6 @@ void W_Scene::DrawGuizmo()
 			mat.Transpose();
 
 			oldMat = mat;
-			LOG(LogType::L_NORMAL, "save transform");
 		}
 
 

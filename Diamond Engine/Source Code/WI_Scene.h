@@ -20,15 +20,16 @@ public:
 
 	void Draw() override;
 
-	ImGuizmo::OPERATION operation;
-	ImGuizmo::MODE mode;
-
 	ImVec2 NormalizeOnWindow(float x, float y, float w, float h, ImVec2 point);
-
-	Application* App;
 
 private:
 	void DrawGuizmo();
+
+public:
+	ImGuizmo::OPERATION operation;
+	ImGuizmo::MODE mode;
+
+	Application* App;
 
 private:
 	bool manipulatingGuizmo = false;
