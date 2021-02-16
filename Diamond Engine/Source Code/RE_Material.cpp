@@ -122,6 +122,19 @@ void ResourceMaterial::PushUniforms()
 	}
 }
 
+bool ResourceMaterial::IsDefaultUniform(const char* uniform_name)
+{
+	for (size_t df = 0; df < sizeof(defaultUniforms) / sizeof(defaultUniforms[0]); df++)
+	{
+		if (strcmp(uniform_name, defaultUniforms[df]) == 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 #ifndef STANDALONE
 void ResourceMaterial::DrawEditor()
 {
@@ -136,18 +149,7 @@ void ResourceMaterial::DrawEditor()
 	ImGui::Text("Uniforms");
 	for (size_t i = 0; i < uniforms.size(); i++)
 	{
-		//Check it is not a default uniform, if it is, hide it 
-		bool defaultUniform = false;
-		for (size_t df = 0; df < sizeof(defaultUniforms) / sizeof(defaultUniforms[0]); df++)
-		{
-			if (strcmp(uniforms[i].name, defaultUniforms[df]) == 0)
-			{
-				defaultUniform = true;
-				break;
-			}
-		}
-
-		if (defaultUniform)
+		if (IsDefaultUniform(uniforms[i].name))
 			continue;
 
 		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s: ", uniforms[i].name);
@@ -205,10 +207,13 @@ void ResourceMaterial::DrawEditor()
 		}
 	}
 }
-void ResourceMaterial::SaveToJson(JSON_Array* json)
+void ResourceMaterial::SaveToJson(JSON_Array* uniformsArray)
 {
 	for (size_t i = 0; i < uniforms.size(); i++)
 	{
+		if (IsDefaultUniform(uniforms[i].name))
+			continue;
+
 		JSON_Value* uniformValue = json_value_init_object();
 		DEConfig uniformObject(json_value_get_object(uniformValue));
 
@@ -246,6 +251,8 @@ void ResourceMaterial::SaveToJson(JSON_Array* json)
 		default:
 			break;
 		}
+
+		json_array_append_value(uniformsArray, uniformValue);
 	}
 
 }

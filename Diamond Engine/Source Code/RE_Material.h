@@ -55,6 +55,7 @@ public:
 	void FillVariables();
 
 	void PushUniforms();
+	bool IsDefaultUniform(const char* uniform_name);
 
 #ifndef STANDALONE
 	void DrawEditor();

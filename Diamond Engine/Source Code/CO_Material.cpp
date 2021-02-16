@@ -13,6 +13,7 @@
 #include"RE_Material.h"
 
 #include "IM_FileSystem.h"
+#include "IM_MaterialImporter.h"
 
 C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false), matTexture(nullptr),
 material(nullptr)
@@ -115,6 +116,8 @@ bool C_Material::OnEditor()
 
 		if (ImGui::Button("Save"))
 		{
+			char* fileBuffer;
+			MaterialImporter::Save(material, &fileBuffer);
 		}
 
 		return true;
