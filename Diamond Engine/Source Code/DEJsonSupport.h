@@ -1,7 +1,9 @@
 #pragma once
 
 #include"parson/parson.h"
+#include"MathGeoLib/include/Math/float2.h"
 #include"MathGeoLib/include/Math/float3.h"
+#include"MathGeoLib/include/Math/float4.h"
 #include"MathGeoLib/include/Math/Quat.h"
 
 //DE means Diamond Engine :)
@@ -23,8 +25,14 @@ namespace DEJson
 	void WriteInt(JSON_Object* obj, const char* name, int value);
 	int ReadInt(JSON_Object* obj, const char* name);
 
+	void WriteVector2(JSON_Object* obj, const char* name, float* value);
+	float2 ReadVector2(JSON_Object* obj, const char* name);
+
 	void WriteVector3(JSON_Object* obj, const char* name, float* value);
 	float3 ReadVector3(JSON_Object* obj, const char* name);
+
+	void WriteVector4(JSON_Object* obj, const char* name, float* value);
+	float4 ReadVector4(JSON_Object* obj, const char* name);
 
 	void WriteQuat(JSON_Object* obj, const char* name, float* value);
 	Quat ReadQuat(JSON_Object* obj, const char* name);

@@ -532,6 +532,9 @@
     <ClInclude Include="Source Code\RE_Material.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\IM_MaterialImporter.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -833,6 +836,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\RE_Material.cpp">
       <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\IM_MaterialImporter.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

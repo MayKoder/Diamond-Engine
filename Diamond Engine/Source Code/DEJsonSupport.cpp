@@ -8,7 +8,6 @@ void DEJson::PopulateArray(JSON_Value* _array, float* value, unsigned int size)
 	{
 		json_array_append_number(jsArray, value[i]);
 	}
-
 }
 
 void DEJson::WriteFloat(JSON_Object* obj, const char* name, float value)
@@ -47,6 +46,18 @@ int DEJson::ReadInt(JSON_Object* obj, const char* name)
 {
 	return json_object_get_number(obj, name);
 }
+void DEJson::WriteVector2(JSON_Object* obj, const char* name, float* value)
+{
+	JSON_Value* goArray = json_value_init_array();
+	PopulateArray(goArray, value, 2);
+	json_object_set_value(obj, name, goArray);
+}
+
+float2 DEJson::ReadVector2(JSON_Object* obj, const char* name)
+{
+	JSON_Array* vecArray = json_object_dotget_array(obj, name);
+	return float2(json_array_get_number(vecArray, 0), json_array_get_number(vecArray, 1));
+}
 void DEJson::WriteVector3(JSON_Object* obj, const char* name, float* value)
 {
 	JSON_Value* goArray = json_value_init_array();
@@ -57,6 +68,18 @@ float3 DEJson::ReadVector3(JSON_Object* obj, const char* name)
 {
 	JSON_Array* vecArray = json_object_dotget_array(obj, name);
 	return float3(json_array_get_number(vecArray, 0), json_array_get_number(vecArray, 1), json_array_get_number(vecArray, 2));
+}
+void DEJson::WriteVector4(JSON_Object* obj, const char* name, float* value)
+{
+	JSON_Value* goArray = json_value_init_array();
+	PopulateArray(goArray, value, 4);
+	json_object_set_value(obj, name, goArray);
+}
+
+float4 DEJson::ReadVector4(JSON_Object* obj, const char* name)
+{
+	JSON_Array* vecArray = json_object_dotget_array(obj, name);
+	return float4(json_array_get_number(vecArray, 0), json_array_get_number(vecArray, 1), json_array_get_number(vecArray, 2), json_array_get_number(vecArray, 3));
 }
 void DEJson::WriteQuat(JSON_Object* obj, const char* name, float* value)
 {

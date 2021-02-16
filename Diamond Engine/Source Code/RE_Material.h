@@ -8,6 +8,8 @@
 #include"MathGeoLib/include/Math/float3.h"
 #include"MathGeoLib/include/Math/float4.h"
 
+#include "parson/parson.h"
+
 typedef unsigned int GLuint;
 typedef unsigned int GLenum;
 typedef int GLint;
@@ -55,6 +57,7 @@ public:
 
 #ifndef STANDALONE
 	void DrawEditor();
+	void SaveToJson(JSON_Array* json);
 #endif // !STANDALONE
 
 public:

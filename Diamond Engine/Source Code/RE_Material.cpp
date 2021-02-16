@@ -8,6 +8,7 @@
 #include"RE_Shader.h"
 #include"DEJsonSupport.h"
 #include"IM_FileSystem.h"
+#include"DEJsonSupport.h"
 
 ResourceMaterial::ResourceMaterial(unsigned int _uid) : Resource(_uid, Resource::Type::MATERIAL), shader(nullptr) {}
 
@@ -35,7 +36,7 @@ bool ResourceMaterial::LoadToMemory()
 	FillVariables();
 
 	//Load required resources from uniforms
-	
+
 	json_value_free(file);
 
 	return false;
@@ -44,7 +45,7 @@ bool ResourceMaterial::LoadToMemory()
 bool ResourceMaterial::UnloadFromMemory()
 {
 	//Unload shader by reference count [DONE]
-	if(shader != NULL)
+	if (shader != NULL)
 		EngineExternal->moduleResources->UnloadResource(shader->GetUID());
 
 	//TODO: Unload resources (uniform and attributes) by reference count 
@@ -104,14 +105,14 @@ void ResourceMaterial::PushUniforms()
 			glUniform2f(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), uniforms[i].data.vector2Value.x, uniforms[i].data.vector2Value.y);
 			break;
 
-		case GL_FLOAT_VEC3: 
-			glUniform3f(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), uniforms[i].data.vector3Value.x, 
-											 uniforms[i].data.vector3Value.y, uniforms[i].data.vector3Value.z);
+		case GL_FLOAT_VEC3:
+			glUniform3f(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), uniforms[i].data.vector3Value.x,
+				uniforms[i].data.vector3Value.y, uniforms[i].data.vector3Value.z);
 			break;
 
 		case GL_FLOAT_VEC4:
 			glUniform4f(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), uniforms[i].data.vector4Value.x,
-											 uniforms[i].data.vector4Value.y, uniforms[i].data.vector4Value.z, uniforms[i].data.vector4Value.w);
+				uniforms[i].data.vector4Value.y, uniforms[i].data.vector4Value.z, uniforms[i].data.vector4Value.w);
 			break;
 
 		default:
@@ -163,6 +164,15 @@ void ResourceMaterial::DrawEditor()
 			break;
 		}
 
+		case GL_INT:
+			ImGui::SameLine();
+			ImGui::DragInt(uniforms[i].name, &uniforms[i].data.intValue, 1);
+			break;
+
+		case GL_FLOAT:
+			ImGui::SameLine();
+			ImGui::DragFloat(uniforms[i].name, &uniforms[i].data.floatValue, 0.005f);
+			break;
 
 		case GL_FLOAT_VEC2:
 			ImGui::SameLine();
@@ -194,6 +204,53 @@ void ResourceMaterial::DrawEditor()
 			break;
 		}
 	}
+}
+void ResourceMaterial::SaveToJson(JSON_Array* json)
+{
+	for (size_t i = 0; i < uniforms.size(); i++)
+	{
+		JSON_Value* uniformValue = json_value_init_object();
+		JSON_Object* uniformData = json_value_get_object(uniformValue);
+
+		json_object_set_string(uniformData, "name", uniforms[i].name);
+		json_object_set_number(uniformData, "type", uniforms[i].vType);
+
+		switch (uniforms[i].vType)
+		{
+		case GL_SAMPLER_2D:
+		{
+			//ImGui::SameLine();
+			//GLuint test = 0;
+			//glGetUniformuiv(shaderProgramID, uniforms[i].vIndex, &test);
+			//ImGui::Image((ImTextureID)test, ImVec2(50, 50));
+			break;
+		}
+
+		case GL_INT:
+			DEJson::WriteInt(uniformData, "value", uniforms[i].data.intValue);
+			break;
+
+		case GL_FLOAT:
+			DEJson::WriteFloat(uniformData, "value", uniforms[i].data.floatValue);
+			break;
+
+		case GL_FLOAT_VEC2:
+			DEJson::WriteVector2(uniformData, "value", &uniforms[i].data.vector2Value.x);
+			break;
+
+		case GL_FLOAT_VEC3:
+			DEJson::WriteVector3(uniformData, "value", &uniforms[i].data.vector3Value.x);
+			break;
+	
+		case GL_FLOAT_VEC4:
+			DEJson::WriteVector4(uniformData, "value", &uniforms[i].data.vector4Value.x);
+			break;
+		
+		default:
+			break;
+		}
+	}
+
 }
 #endif // !STANDALONE
 
