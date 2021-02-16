@@ -44,6 +44,12 @@ void W_Console::Draw()
 				logs[i].msg.clear();
 			}
 			logs.clear();
+
+			for (size_t i = 0; i < visibleLogs.size(); i++)
+			{
+				visibleLogs[i].msg.clear();
+			}
+			visibleLogs.clear();
 		}
 		ImGui::SameLine();
 

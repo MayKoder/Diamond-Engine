@@ -9,9 +9,7 @@
 #include"DEJsonSupport.h"
 #include"IM_FileSystem.h"
 
-ResourceMaterial::ResourceMaterial(unsigned int _uid) : Resource(_uid, Resource::Type::MATERIAL), shader(nullptr)
-{
-}
+ResourceMaterial::ResourceMaterial(unsigned int _uid) : Resource(_uid, Resource::Type::MATERIAL), shader(nullptr) {}
 
 ResourceMaterial::~ResourceMaterial()
 {
@@ -26,7 +24,6 @@ bool ResourceMaterial::LoadToMemory()
 	DEConfig base(json_value_get_object(file));
 
 	int shUID = base.ReadInt("ShaderUID");
-	json_value_free(file);
 
 	//Request shader [DONE]
 	std::string shaderPath = SHADERS_PATH + std::to_string(shUID);
@@ -38,7 +35,8 @@ bool ResourceMaterial::LoadToMemory()
 	FillVariables();
 
 	//Load required resources from uniforms
-
+	
+	json_value_free(file);
 
 	return false;
 }
@@ -91,20 +89,29 @@ void ResourceMaterial::PushUniforms()
 		//ImGui::SameLine();
 		switch (uniforms[i].vType)
 		{
-
 		case GL_SAMPLER_2D:
+			break;
 
+		case GL_INT:
+			glUniform1i(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), uniforms[i].data.intValue);
+			break;
+
+		case GL_FLOAT:
+			glUniform1f(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), uniforms[i].data.floatValue);
+			break;
+
+		case GL_FLOAT_VEC2:
+			glUniform2f(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), uniforms[i].data.vector2Value.x, uniforms[i].data.vector2Value.y);
 			break;
 
 		case GL_FLOAT_VEC3: 
-			glUniform3fv(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), 1, &uniforms[i].data.vector3Value.x);
+			glUniform3f(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), uniforms[i].data.vector3Value.x, 
+											 uniforms[i].data.vector3Value.y, uniforms[i].data.vector3Value.z);
 			break;
 
 		case GL_FLOAT_VEC4:
-			break;
-
-
-		case GL_FLOAT_MAT4:
+			glUniform4f(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), uniforms[i].data.vector4Value.x,
+											 uniforms[i].data.vector4Value.y, uniforms[i].data.vector4Value.z, uniforms[i].data.vector4Value.w);
 			break;
 
 		default:
@@ -127,6 +134,20 @@ void ResourceMaterial::DrawEditor()
 	ImGui::Text("Uniforms");
 	for (size_t i = 0; i < uniforms.size(); i++)
 	{
+		//Check it is not a default uniform, if it is, hide it 
+		bool defaultUniform = false;
+		for (size_t df = 0; df < sizeof(defaultUniforms) / sizeof(defaultUniforms[0]); df++)
+		{
+			if (strcmp(uniforms[i].name, defaultUniforms[df]) == 0)
+			{
+				defaultUniform = true;
+				break;
+			}
+		}
+
+		if (defaultUniform)
+			continue;
+
 		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s: ", uniforms[i].name);
 
 		//ImGui::SameLine();
@@ -141,6 +162,12 @@ void ResourceMaterial::DrawEditor()
 			//ImGui::Image((ImTextureID)test, ImVec2(50, 50));
 			break;
 		}
+
+
+		case GL_FLOAT_VEC2:
+			ImGui::SameLine();
+			ImGui::DragFloat2(uniforms[i].name, &uniforms[i].data.vector2Value.x, 0.005f);
+			break;
 
 		case GL_FLOAT_VEC3:
 		{

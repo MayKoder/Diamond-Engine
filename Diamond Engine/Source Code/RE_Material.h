@@ -4,7 +4,9 @@
 #include<vector>
 
 #include"MathGeoLib/include/Math/float4x4.h"
+#include"MathGeoLib/include/Math/float2.h"
 #include"MathGeoLib/include/Math/float3.h"
+#include"MathGeoLib/include/Math/float4.h"
 
 typedef unsigned int GLuint;
 typedef unsigned int GLenum;
@@ -29,13 +31,15 @@ struct ShaderVariable
 		ShdrValue();
 		int intValue;
 		float floatValue;
+		float2 vector2Value;
+		float3 vector3Value;
+		float4 vector4Value;
 		GLuint textureValue;
 		float4x4* matrixValue;
-		float3 vector3Value;
 	} data;
 };
 
-static const char* defaultUniforms[] = { "model_matrix", "altColor"};
+static const char* defaultUniforms[] = { "model_matrix", "view", "projection", "normalMatrix", "time", "ourTexture","altColor"};
 
 class ResourceMaterial : public Resource {
 public:

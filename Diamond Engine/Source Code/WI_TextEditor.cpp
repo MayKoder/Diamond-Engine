@@ -20,7 +20,6 @@ W_TextEditor::~W_TextEditor()
 
 void W_TextEditor::Draw()
 {
-
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*//*, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse*/))
 	{
 		if(textType != Resource::Type::UNKNOWN)

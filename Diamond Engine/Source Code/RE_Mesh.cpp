@@ -93,8 +93,6 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 		material->shader->Bind();
 		material->PushUniforms();
 
-		
-
 		if(textureID != 0)
 			glUniform1i(glGetUniformLocation(material->shader->shaderProgramID, "hasTexture"), 1);
 		else
@@ -108,6 +106,12 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 
 		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "projection");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
+
+		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "normalMatrix");
+		float3x3 normalMatrix = _transform->globalTransform.Float3x3Part();
+		normalMatrix.Inverse();
+		normalMatrix.Transpose();
+		glUniformMatrix3fv(modelLoc, 1, GL_FALSE, normalMatrix.ptr());
 
 		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "time");
 		glUniform1f(modelLoc, DETime::realTimeSinceStartup);
