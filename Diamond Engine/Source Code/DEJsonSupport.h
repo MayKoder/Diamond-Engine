@@ -58,8 +58,14 @@ struct DEConfig
 	void WriteInt(const char* name, int value);
 	int ReadInt(const char* name);
 
+	void WriteVector2(const char* name, float* value);
+	float2 ReadVector2(const char* name);
+
 	void WriteVector3(const char* name, float* value);
 	float3 ReadVector3(const char* name);
+
+	void WriteVector4(const char* name, float* value);
+	float4 ReadVector4(const char* name);
 
 	void WriteQuat(const char* name, float* value);
 	Quat ReadQuat(const char* name);

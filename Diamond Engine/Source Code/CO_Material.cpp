@@ -12,6 +12,8 @@
 #include"IM_TextureImporter.h"
 #include"RE_Material.h"
 
+#include "IM_FileSystem.h"
+
 C_Material::C_Material(GameObject* _gm) : Component(_gm), viewWithCheckers(false), matTexture(nullptr),
 material(nullptr)
 {
@@ -110,6 +112,11 @@ bool C_Material::OnEditor()
 			ImGui::Text("Using shader %s", material->GetAssetPath());
 			material->DrawEditor();
 		}
+
+		if (ImGui::Button("Save"))
+		{
+		}
+
 		return true;
 	}
 	return false;

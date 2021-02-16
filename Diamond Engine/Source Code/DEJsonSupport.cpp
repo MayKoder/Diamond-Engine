@@ -147,6 +147,23 @@ int DEConfig::ReadInt(const char* name)
 	return json_object_get_number(nObj, name);
 }
 
+void DEConfig::WriteVector2(const char* name, float* value)
+{
+	JSON_Value* goArray = json_value_init_array();
+	PopulateArray(goArray, value, 2);
+	json_object_set_value(nObj, name, goArray);
+}
+
+float2 DEConfig::ReadVector2(const char* name)
+{
+	JSON_Array* vecArray = json_object_dotget_array(nObj, name);
+
+	if (vecArray == nullptr)
+		return float2::one;
+
+	return float2(json_array_get_number(vecArray, 0), json_array_get_number(vecArray, 1));
+}
+
 void DEConfig::WriteVector3(const char* name, float* value)
 {
 	JSON_Value* goArray = json_value_init_array();
@@ -161,6 +178,22 @@ float3 DEConfig::ReadVector3(const char* name)
 		return float3::one;
 
 	return float3(json_array_get_number(vecArray, 0), json_array_get_number(vecArray, 1), json_array_get_number(vecArray, 2));
+}
+void DEConfig::WriteVector4(const char* name, float* value)
+{
+	JSON_Value* goArray = json_value_init_array();
+	PopulateArray(goArray, value, 4);
+	json_object_set_value(nObj, name, goArray);
+}
+
+float4 DEConfig::ReadVector4(const char* name)
+{
+	JSON_Array* vecArray = json_object_dotget_array(nObj, name);
+
+	if (vecArray == nullptr)
+		return float4::one;
+
+	return float4(json_array_get_number(vecArray, 0), json_array_get_number(vecArray, 1), json_array_get_number(vecArray, 2), json_array_get_number(vecArray, 3));
 }
 void DEConfig::WriteQuat(const char* name, float* value)
 {

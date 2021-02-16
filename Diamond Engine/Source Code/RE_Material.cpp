@@ -36,6 +36,7 @@ bool ResourceMaterial::LoadToMemory()
 	FillVariables();
 
 	//Load required resources from uniforms
+	JSON_Array* uniformsArray = base.ReadArray("uniforms");
 
 	json_value_free(file);
 
@@ -157,10 +158,8 @@ void ResourceMaterial::DrawEditor()
 
 		case GL_SAMPLER_2D:
 		{
-			//ImGui::SameLine();
-			//GLuint test = 0;
-			//glGetUniformuiv(shaderProgramID, uniforms[i].vIndex, &test);
-			//ImGui::Image((ImTextureID)test, ImVec2(50, 50));
+			ImGui::Text(uniforms[i].name);
+			//DragDrop texture
 			break;
 		}
 
@@ -190,8 +189,9 @@ void ResourceMaterial::DrawEditor()
 		case GL_FLOAT_VEC4:
 		{
 			ImGui::SameLine();
-			ImVec4 ret = ImVec4(0, 0, 0, 0);
-			ImGui::ColorEdit4("##test", &ret.x);
+			ImGui::DragFloat4(uniforms[i].name, &uniforms[i].data.vector4Value.x, 0.005f);
+			//ImVec4 ret = ImVec4(0, 0, 0, 0);
+			//ImGui::ColorEdit4("##test", &ret.x);
 			break;
 		}
 
@@ -210,40 +210,37 @@ void ResourceMaterial::SaveToJson(JSON_Array* json)
 	for (size_t i = 0; i < uniforms.size(); i++)
 	{
 		JSON_Value* uniformValue = json_value_init_object();
-		JSON_Object* uniformData = json_value_get_object(uniformValue);
+		DEConfig uniformObject(json_value_get_object(uniformValue));
 
-		json_object_set_string(uniformData, "name", uniforms[i].name);
-		json_object_set_number(uniformData, "type", uniforms[i].vType);
+		uniformObject.WriteString("name", uniforms[i].name);
+		uniformObject.WriteInt("type", uniforms[i].vType);
 
 		switch (uniforms[i].vType)
 		{
 		case GL_SAMPLER_2D:
 		{
-			//ImGui::SameLine();
-			//GLuint test = 0;
-			//glGetUniformuiv(shaderProgramID, uniforms[i].vIndex, &test);
-			//ImGui::Image((ImTextureID)test, ImVec2(50, 50));
+			uniformObject.WriteInt("value", uniforms[i].data.textureValue);
 			break;
 		}
 
 		case GL_INT:
-			DEJson::WriteInt(uniformData, "value", uniforms[i].data.intValue);
+			uniformObject.WriteInt("value", uniforms[i].data.intValue);
 			break;
 
 		case GL_FLOAT:
-			DEJson::WriteFloat(uniformData, "value", uniforms[i].data.floatValue);
+			uniformObject.WriteFloat("value", uniforms[i].data.floatValue);
 			break;
 
 		case GL_FLOAT_VEC2:
-			DEJson::WriteVector2(uniformData, "value", &uniforms[i].data.vector2Value.x);
+			uniformObject.WriteVector2("value", &uniforms[i].data.vector2Value.x);
 			break;
 
 		case GL_FLOAT_VEC3:
-			DEJson::WriteVector3(uniformData, "value", &uniforms[i].data.vector3Value.x);
+			uniformObject.WriteVector3("value", &uniforms[i].data.vector3Value.x);
 			break;
 	
 		case GL_FLOAT_VEC4:
-			DEJson::WriteVector4(uniformData, "value", &uniforms[i].data.vector4Value.x);
+			uniformObject.WriteVector4("value", &uniforms[i].data.vector4Value.x);
 			break;
 		
 		default:
@@ -263,10 +260,8 @@ name(""), vSize(0)
 }
 
 ShaderVariable::~ShaderVariable()
-{
-}
+{}
 
 ShaderVariable::ShdrValue::ShdrValue() : floatValue(0.0f), intValue(0),
 textureValue(0), matrixValue(nullptr), vector3Value(0, 0, 0)
-{
-}
+{}
