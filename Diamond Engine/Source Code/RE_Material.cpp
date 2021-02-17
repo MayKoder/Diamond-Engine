@@ -51,6 +51,11 @@ bool ResourceMaterial::UnloadFromMemory()
 		EngineExternal->moduleResources->UnloadResource(shader->GetUID());
 
 	//TODO: Unload resources (uniform and attributes) by reference count 
+	for (size_t i = 0; i < uniforms.size(); i++)
+	{
+		if(uniforms[i].vType == GL_SAMPLER_2D && uniforms[i].data.textureValue != nullptr)
+			EngineExternal->moduleResources->UnloadResource(uniforms[i].data.textureValue->GetUID());
+	}
 
 	uniforms.clear();
 	attributes.clear();
