@@ -58,6 +58,9 @@ bool C_Material::OnEditor()
 
 					EngineExternal->moduleResources->UnloadResource(matTexture->GetUID());
 					std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
+
+					if (matTexture)
+						EngineExternal->moduleResources->UnloadResource(matTexture->GetUID());
 					
 					matTexture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
 					LOG(LogType::L_WARNING, "File %s loaded to scene", (*metaFileDrop).c_str());
@@ -83,6 +86,9 @@ bool C_Material::OnEditor()
 					//Drop asset from Asset window to scene window
 					std::string* metaFileDrop = (std::string*)payload->Data;
 					std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
+
+					if (matTexture)
+						EngineExternal->moduleResources->UnloadResource(matTexture->GetUID());
 
 					matTexture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
 					LOG(LogType::L_WARNING, "File %s loaded to scene", (*metaFileDrop).c_str());

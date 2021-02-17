@@ -179,9 +179,8 @@ void ResourceMaterial::DrawEditor()
 					std::string* metaFileDrop = (std::string*)payload->Data;
 
 					if (uniforms[i].data.textureValue != nullptr)
-					{
 						EngineExternal->moduleResources->UnloadResource(uniforms[i].data.textureValue->GetUID());
-					}
+
 					std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
 
 					uniforms[i].data.textureValue = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
