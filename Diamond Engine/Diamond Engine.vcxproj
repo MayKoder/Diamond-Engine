@@ -291,6 +291,8 @@
     <ClInclude Include="Source Code\DEModelNode.h" />
     <ClInclude Include="Source Code\MA_IconSystem.h" />
     <ClInclude Include="Source Code\MO_MonoManager.h" />
+    <ClInclude Include="Source Code\MO_Physics.h" />
+    <ClInclude Include="Source Code\MO_Physics\Header.h" />
     <ClInclude Include="Source Code\RE_Mesh.h" />
     <ClInclude Include="Source Code\MeshArrays.h" />
     <ClInclude Include="Source Code\IM_MeshLoader.h" />
@@ -393,6 +395,7 @@
     <ClCompile Include="Source Code\MA_IconSystem.cpp" />
     <ClCompile Include="Source Code\MMGui.cpp" />
     <ClCompile Include="Source Code\MO_MonoManager.cpp" />
+    <ClCompile Include="Source Code\MO_Physics.cpp" />
     <ClCompile Include="Source Code\RE_Mesh.cpp" />
     <ClCompile Include="Source Code\IM_MeshLoader.cpp" />
     <ClCompile Include="Source Code\MO_FileSystem.cpp" />

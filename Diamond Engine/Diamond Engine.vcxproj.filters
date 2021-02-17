@@ -529,6 +529,12 @@
     <ClInclude Include="Source Code\MA_IconSystem.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\MO_Physics\Header.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MO_Physics.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -827,6 +833,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\MA_IconSystem.cpp">
       <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_Physics.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
