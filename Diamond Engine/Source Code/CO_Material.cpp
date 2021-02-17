@@ -120,7 +120,7 @@ bool C_Material::OnEditor()
 			material->DrawEditor();
 		}
 
-		if (ImGui::Button("Save"))
+		if (ImGui::Button("Save") && material)
 		{
 			char* fileBuffer;
 			MaterialImporter::Save(material, &fileBuffer);
