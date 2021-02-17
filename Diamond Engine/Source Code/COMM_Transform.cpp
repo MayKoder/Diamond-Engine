@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include "COMM_Transform.h"
 
 #include "Application.h"
@@ -50,3 +52,5 @@ void COMM_Transform::Undo()
 	else
 		LOG(LogType::L_ERROR, "Couldn't undo transform, game object not found");
 }
+
+#endif // !STANDALONE

@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include "ShortcutManager.h"
 #include "Command.h"
 
@@ -92,3 +94,5 @@ void ShortcutManager::RedoCommand()
 	else
 		LOG(LogType::L_WARNING, "No more changes to REDO");
 }
+
+#endif // !STANDALONE

@@ -1,3 +1,5 @@
+#ifndef STANDALONE
+
 #include "COMM_DeleteGO.h"
 
 #include "Application.h"
@@ -63,3 +65,6 @@ void COMM_DeleteGO::Undo()
 		parent = EngineExternal->moduleScene->LoadGOData(json_array_get_object(arrayGO, i), parent);
 	}
 }
+
+
+#endif // !STANDALONE
