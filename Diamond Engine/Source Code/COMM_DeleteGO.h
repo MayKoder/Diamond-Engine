@@ -3,7 +3,10 @@
 #define __COMM_DELETE_GO_H__
 
 #include "Command.h"
-#include "GameObject.h"
+
+#include"DEJsonSupport.h"
+
+class GameObject;
 
 class COMM_DeleteGO : public Command
 {
@@ -15,7 +18,10 @@ public:
 	void Undo() override;
 
 private:
-	GameObject copy;
+	DEConfig* copy = nullptr;
+	JSON_Value* value = nullptr;
+	std::string agentName;
+
 	int copyParentUid;
 };
 

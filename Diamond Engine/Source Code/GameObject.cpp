@@ -16,6 +16,7 @@
 #include"Application.h"
 #include"MO_Editor.h"
 
+
 GameObject::GameObject(const char* _name, GameObject* parent, int _uid) : parent(parent), name(_name), showChildren(false),
 active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr)
 {
@@ -32,6 +33,7 @@ active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), d
 	}
 		//UID = MaykMath::Random(0, INT_MAX);
 }
+
 
 GameObject::~GameObject()
 {
@@ -63,6 +65,7 @@ GameObject::~GameObject()
 	csReferences.clear();
 }
 
+
 void GameObject::Update()
 {
 	if (dumpComponent != nullptr) 
@@ -78,6 +81,7 @@ void GameObject::Update()
 			components[i]->Update();
 	}
 }
+
 
 Component* GameObject::AddComponent(Component::Type _type, const char* params)
 {
@@ -117,6 +121,7 @@ Component* GameObject::AddComponent(Component::Type _type, const char* params)
 	return ret;
 }
 
+
 Component* GameObject::GetComponent(Component::Type _type)
 {
 	for (size_t i = 0; i < components.size(); i++)
@@ -127,6 +132,7 @@ Component* GameObject::GetComponent(Component::Type _type)
 
 	return nullptr;
 }
+
 
 //When we load models from model trees the UID should get regenerated
 //because the .model UID are not unique.
@@ -140,15 +146,18 @@ void GameObject::RecursiveUIDRegeneration()
 	}
 }
 
+
 bool GameObject::isActive() const
 {
 	return active;
 }
 
+
 //void GameObject::ChangeActiveState()
 //{
 //	(active == true) ? Disable() : Enable();
 //}
+
 
 void GameObject::Enable()
 {
@@ -157,6 +166,7 @@ void GameObject::Enable()
 	if (parent != nullptr)
 		parent->Enable();
 }
+
 
 void GameObject::Disable()
 {
@@ -167,15 +177,18 @@ void GameObject::Disable()
 	//}
 }
 
+
 bool GameObject::IsRoot()
 {
 	return (parent == nullptr) ? true : false;
 }
 
+
 void GameObject::Destroy()
 {
 	toDelete = true;
 }
+
 
 void GameObject::SaveToJson(JSON_Array* _goArray)
 {
@@ -219,6 +232,7 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 	}
 }
 
+
 void GameObject::LoadFromJson(JSON_Object* _obj)
 {
 
@@ -226,6 +240,7 @@ void GameObject::LoadFromJson(JSON_Object* _obj)
 	transform->SetTransformMatrix(DEJson::ReadVector3(_obj, "Position"), DEJson::ReadQuat(_obj, "Rotation"), DEJson::ReadVector3(_obj, "Scale"));
 	LoadComponents(json_object_get_array(_obj, "Components"));
 }
+
 
 void GameObject::LoadComponents(JSON_Array* componentArray)
 {
@@ -244,10 +259,12 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 
 }
 
+
 void GameObject::RemoveComponent(Component* ptr)
 {
 	dumpComponent = ptr;
 }
+
 
 //TODO: WTF IS GOING ON WITH THE ARNAU BUG FFS
 //Deparenting objects with deformations grows transforms
@@ -271,8 +288,8 @@ void GameObject::ChangeParent(GameObject* newParent)
 
 	transform->SetTransformMatrix(transform->localTransform.TranslatePart(), _rot, scale);
 	transform->updateTransform = true;
-
 }
+
 
 bool GameObject::IsChild(GameObject* _toFind)
 {
@@ -288,6 +305,7 @@ bool GameObject::IsChild(GameObject* _toFind)
 		return IsChild(_toFind->parent);
 	}
 }
+
 
 void GameObject::RemoveChild(GameObject* child)
 {

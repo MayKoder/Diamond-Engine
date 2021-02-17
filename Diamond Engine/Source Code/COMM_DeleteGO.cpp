@@ -3,10 +3,22 @@
 #include "Application.h"
 #include "MO_Scene.h"
 
+#include "GameObject.h"
+
 COMM_DeleteGO::COMM_DeleteGO(GameObject* agent) : Command(agent->UID),
-	copy(*agent),
-	copyParentUid(-1)
+	copy(nullptr),
+	value(nullptr),
+	copyParentUid(-1),
+	agentName(agent->name)
 {
+	value = json_value_init_object();
+	copy = new DEConfig(json_value_get_object(value));
+
+	JSON_Value* arrayGO = json_value_init_array();
+	agent->SaveToJson(json_value_get_array(arrayGO));
+
+	json_object_set_value(copy->nObj, "Game Objects", arrayGO);
+
 	if (agent->parent != nullptr)
 		copyParentUid = agent->parent->UID;
 }
@@ -14,21 +26,34 @@ COMM_DeleteGO::COMM_DeleteGO(GameObject* agent) : Command(agent->UID),
 
 COMM_DeleteGO::~COMM_DeleteGO()
 {
+	json_value_free(value);
+
+	delete copy;
+	copy = nullptr;
 }
 
 
 
 void COMM_DeleteGO::Execute()
 {
-	EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, copy.UID)->Destroy();
+	EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, agentUid)->Destroy();
 }
 
 
 void COMM_DeleteGO::Undo()
 {
+	JSON_Array* arrayGO = copy->ReadArray("Game Objects");
+
+	GameObject* parent = nullptr;
+	
 	if (copyParentUid != -1)
-		EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, copyParentUid)->children.push_back(new GameObject(copy));
+		parent = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, copyParentUid);
 
 	else
-		EngineExternal->moduleScene->root->children.push_back(new GameObject(copy));
+		parent = EngineExternal->moduleScene->root;
+
+	for (size_t i = 0; i < json_array_get_count(arrayGO); i++)
+	{
+		parent = EngineExternal->moduleScene->LoadGOData(json_array_get_object(arrayGO, i), parent);
+	}
 }

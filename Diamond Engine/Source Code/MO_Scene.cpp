@@ -381,7 +381,7 @@ void M_Scene::CleanScene()
 	root = CreateGameObject("Scene root", nullptr);
 }
 
-GameObject* M_Scene::LoadGOData(JSON_Object* goJsonObj,  GameObject* parent)
+GameObject* M_Scene::LoadGOData(JSON_Object* goJsonObj, GameObject* parent)
 {
 	//goJsonObj = json_array_get_object(sceneGO, i);
 	GameObject* originalParent = parent;

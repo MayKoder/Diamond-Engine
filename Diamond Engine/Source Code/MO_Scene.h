@@ -43,7 +43,7 @@ public:
 	void LoadModelTree(const char* modelPath);
 
 	void CleanScene();
-
+	GameObject* LoadGOData(JSON_Object* goJsonObj, GameObject* parent);
 
 	GameObject* root;
 	std::vector<GameObject*> destroyList;
@@ -56,5 +56,4 @@ private:
 
 	void UpdateGameObjects();
 	void RecursiveUpdate(GameObject* parent);
-	GameObject* LoadGOData(JSON_Object* goJsonObj, GameObject* parent);
 };
