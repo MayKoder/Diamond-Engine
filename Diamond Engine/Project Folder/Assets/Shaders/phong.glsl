@@ -5,11 +5,6 @@ layout (location = 1) in vec2 texCoord;
 layout (location = 2) in vec3 normals;
 layout (location = 3) in vec3 tangents;
 
-out vec3 ourColor;
-out vec2 TexCoord;
-out vec3 Normal;
-out vec3 fPosition;
-
 uniform mat4 model_matrix;
 uniform mat4 view;
 uniform mat4 projection;
@@ -33,21 +28,17 @@ void main()
  vs_out.FragPos = vec3(model_matrix * vec4(position, 1.0));
  vs_out.TexCoords = texCoord;
  
- //mat3 normalMatrix = transpose(inverse(mat3(model_matrix)));
- vec3 T = normalize(normalMatrix * tangents);
- vec3 N = normalize(normalMatrix * normals);
+ vec3 T = normalize(vec3(model_matrix * vec4(tangents, 0.0)));
+ vec3 N = normalize(vec3(model_matrix * vec4(normals, 0.0)));
  T = normalize(T - dot(T, N) * N);
  vec3 B = cross(N,T);
  
-  mat3 TBN = transpose(mat3(T,B,N));
+ mat3 TBN = mat3(T,B,N);
  vs_out.TangentLightPos = TBN * lightPos;
  vs_out.TangentViewPos  = TBN * cameraPosition;
  vs_out.TangentFragPos  = TBN * vs_out.FragPos;
  
- //vs_out.clipSpace = projection * view * model_matrix * vec4(fPosition, 1.0);
- //gl_Position = vs_out.clipSpace;
  gl_Position = projection * view * model_matrix * vec4(position, 1.0f);
- vs_out.FragPos = vec3(model_matrix * vec4(position, 1.0));
 }
 #endif
 
@@ -65,6 +56,7 @@ uniform vec2 normalMapTiling;
 uniform vec3 altColor;
 
 uniform float time;
+uniform vec3 lightPos;
 
 in VS_OUT {
 	vec4 clipSpace;
@@ -80,10 +72,10 @@ void main()
     vec3 normal = texture(normalMap, fs_in.TexCoords).rgb;
     normal = normalize(normal * 2.0 - 1.0);
    
+   //diffuseColor
     vec3 color = texture(diffuseTexture, fs_in.TexCoords).rgb;
     //ambient 
     vec3 ambient = 0.1 * color;
-  	
     // diffuse 
     vec3 lightDir = normalize(fs_in.TangentLightPos - fs_in.TangentFragPos);
     float diff = max(dot(lightDir, normal), 0.0);
@@ -100,6 +92,8 @@ void main()
      FragColor =  vec4(ambient + diffuse + specular, opacity);
 }
 #endif
+
+
 
 
 

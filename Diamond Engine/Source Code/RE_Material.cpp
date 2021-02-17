@@ -103,15 +103,15 @@ void ResourceMaterial::PushUniforms()
 		switch (uniforms[i].vType)
 		{
 		case GL_SAMPLER_2D:
+
 			glActiveTexture(GL_TEXTURE0 + used_textures);
-			if (uniforms[i].data.textureValue != nullptr)
-			{
-				glBindTexture(GL_TEXTURE_2D, uniforms[i].data.textureValue->textureID);
-			}
-			else
-			{
-				glBindTexture(GL_TEXTURE_2D, EngineExternal->moduleRenderer3D->checkersTexture);
-			}
+			glUniform1i(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), used_textures);
+
+			if (uniforms[i].data.textureValue != nullptr) {
+				glBindTexture(GL_TEXTURE_2D, uniforms[i].data.textureValue->textureID);}
+			else {
+				glBindTexture(GL_TEXTURE_2D, EngineExternal->moduleRenderer3D->checkersTexture);}
+
 			used_textures++;
 			break;
 

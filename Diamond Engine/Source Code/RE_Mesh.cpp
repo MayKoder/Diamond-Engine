@@ -132,8 +132,8 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 
 	//if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
 	//{
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	//}
 
 	if (material->shader)
