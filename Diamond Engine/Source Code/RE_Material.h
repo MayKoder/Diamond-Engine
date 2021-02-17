@@ -42,8 +42,10 @@ struct ShaderVariable
 	} data;
 };
 
-static const char* defaultUniforms[] = { "position", "tangents", "texCoord","normals",
-										 "model_matrix", "view", "projection", "normalMatrix", "time", "ourTexture","altColor", "hasTexture"};
+static const char* defaultUniforms[] = { "position", "tangents", "texCoord", "normals",
+										 "model_matrix", "view", "projection", "normalMatrix", 
+										 "cameraPosition",
+										 "time", "ourTexture","altColor", "hasTexture"};
 
 class ResourceMaterial : public Resource {
 public:

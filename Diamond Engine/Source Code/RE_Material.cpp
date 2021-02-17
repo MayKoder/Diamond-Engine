@@ -31,10 +31,14 @@ bool ResourceMaterial::LoadToMemory()
 	std::string shaderPath = SHADERS_PATH + std::to_string(shUID);
 	shaderPath += ".shdr";
 	shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(shUID, shaderPath.c_str()));
-	shader->references.push_back(this);
 
-	//Get uniforms and attributes from shader [DONE]
-	FillVariables();
+	if (shader != nullptr)
+	{
+		shader->references.push_back(this);
+
+		//Get uniforms and attributes from shader [DONE]
+		FillVariables();
+	}
 
 	//Load required resources from uniforms
 	JSON_Array* uniformsArray = base.ReadArray("uniforms");
@@ -86,6 +90,7 @@ void ResourceMaterial::FillVariables()
 
 void ResourceMaterial::PushUniforms()
 {
+	int used_textures = 0;
 	//Push all uniforms
 	for (size_t i = 0; i < uniforms.size(); ++i)
 	{
@@ -93,6 +98,16 @@ void ResourceMaterial::PushUniforms()
 		switch (uniforms[i].vType)
 		{
 		case GL_SAMPLER_2D:
+			glActiveTexture(GL_TEXTURE0 + used_textures);
+			if (uniforms[i].data.textureValue != nullptr)
+			{
+				glBindTexture(GL_TEXTURE_2D, uniforms[i].data.textureValue->textureID);
+			}
+			else
+			{
+				glBindTexture(GL_TEXTURE_2D, EngineExternal->moduleRenderer3D->checkersTexture);
+			}
+			used_textures++;
 			break;
 
 		case GL_INT:

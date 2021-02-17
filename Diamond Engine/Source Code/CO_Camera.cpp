@@ -248,6 +248,11 @@ void C_Camera::Move(const float3& Movement)
 	camFrustrum.pos += Movement;
 }
 
+float3 C_Camera::GetPosition()
+{
+	return camFrustrum.pos;
+}
+
 float4x4 C_Camera::ViewMatrixOpenGL() const
 {
 	math::float4x4 mat = camFrustrum.ViewMatrix();

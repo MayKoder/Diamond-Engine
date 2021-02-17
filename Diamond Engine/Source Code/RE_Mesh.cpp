@@ -11,6 +11,7 @@
 #include"MO_Camera3D.h" //This can be deleted
 #include"CO_Transform.h"
 #include"DETime.h"
+#include "GameObject.h"
 
 ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH), indices_id(0), vertices_id(0), generalWireframe(nullptr),
 EBO(0), VAO(0), VBO(0)
@@ -85,8 +86,8 @@ bool ResourceMesh::UnloadFromMemory()
 void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture, ResourceMaterial* material, C_Transform* _transform)
 {
 	//ASK: glDrawElementsInstanced()?
-	if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
-		glBindTexture(GL_TEXTURE_2D, textureID);
+	//if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
+		//glBindTexture(GL_TEXTURE_2D, textureID);
 	
 	if (material->shader)
 	{
@@ -108,13 +109,17 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
 
 		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "normalMatrix");
-		float3x3 normalMatrix = _transform->globalTransform.Float3x3Part();
+		float3x3 normalMatrix = _transform->globalTransform.Float3x3Part().Transposed();
 		normalMatrix.Inverse();
 		normalMatrix.Transpose();
 		glUniformMatrix3fv(modelLoc, 1, GL_FALSE, normalMatrix.ptr());
 
 		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "time");
 		glUniform1f(modelLoc, DETime::realTimeSinceStartup);
+
+		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "cameraPosition");
+		float3 cameraPosition = EngineExternal->moduleRenderer3D->activeRenderCamera->GetPosition();
+		glUniform3fv(modelLoc, 1, &cameraPosition.x);
 
 		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "altColor");
 		glUniform3fv(modelLoc, 1, &color.x);
@@ -125,8 +130,11 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
 	glBindVertexArray(0);
 
-	if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
+	//if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
+	//{
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, 0);
+	//}
 
 	if (material->shader)
 		material->shader->Unbind();
