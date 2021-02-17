@@ -2,7 +2,7 @@
 #ifndef __SHORTCUT_MANAGER_H__
 #define __SHORTCUT_MANAGER_H__
 
-#define MAX_HISTORY_LENGHT 60
+#define MAX_HISTORY_LENGHT 100
 
 #include <vector>
 

@@ -36,7 +36,13 @@ void ShortcutManager::HandleInput()
 
 void ShortcutManager::PushCommand(Command* command)
 {
-	if (index < (int)(commandHistory.size() - 1))
+	if (index == MAX_HISTORY_LENGHT)
+	{
+		delete commandHistory[0];
+		commandHistory.erase(commandHistory.begin());
+	}
+
+	else if (index < (int)(commandHistory.size() - 1))
 	{
 		for (int i = commandHistory.size() - 1; i > index; --i)
 		{
