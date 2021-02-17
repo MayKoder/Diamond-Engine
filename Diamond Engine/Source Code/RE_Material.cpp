@@ -9,6 +9,7 @@
 #include"DEJsonSupport.h"
 #include"IM_FileSystem.h"
 #include"DEJsonSupport.h"
+#include "RE_Texture.h"
 
 ResourceMaterial::ResourceMaterial(unsigned int _uid) : Resource(_uid, Resource::Type::MATERIAL), shader(nullptr) {}
 
@@ -160,8 +161,46 @@ void ResourceMaterial::DrawEditor()
 
 		case GL_SAMPLER_2D:
 		{
-			ImGui::Text(uniforms[i].name);
 			//DragDrop texture
+			if (uniforms[i].data.textureValue != nullptr)
+			{
+				ImGui::Image((ImTextureID)uniforms[i].data.textureValue->textureID, ImVec2(64, 64), ImVec2(0, 1), ImVec2(1, 0));
+			}
+			else
+			{
+				ImGui::Image((ImTextureID)0, ImVec2(64, 64), ImVec2(0, 1), ImVec2(1, 0));
+			}
+
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
+				{
+					//Drop asset from Asset window to scene window
+					std::string* metaFileDrop = (std::string*)payload->Data;
+
+					if (uniforms[i].data.textureValue != nullptr)
+					{
+						EngineExternal->moduleResources->UnloadResource(uniforms[i].data.textureValue->GetUID());
+					}
+					std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
+
+					uniforms[i].data.textureValue = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
+					LOG(LogType::L_WARNING, "File %s loaded to scene", (*metaFileDrop).c_str());
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+			if (uniforms[i].data.textureValue != nullptr)
+			{
+				char name[32];
+				sprintf_s(name, "Remove Texture: %d", uniforms[i].data.textureValue->GetUID());
+				if (ImGui::Button(name))
+				{
+					EngineExternal->moduleResources->UnloadResource(uniforms[i].data.textureValue->GetUID());
+					uniforms[i].data.textureValue = nullptr;
+				}
+			}
+
 			break;
 		}
 
@@ -222,34 +261,40 @@ void ResourceMaterial::SaveToJson(JSON_Array* uniformsArray)
 
 		switch (uniforms[i].vType)
 		{
-		case GL_SAMPLER_2D:
-		{
-			uniformObject.WriteInt("value", uniforms[i].data.textureValue);
-			break;
-		}
-
-		case GL_INT:
-			uniformObject.WriteInt("value", uniforms[i].data.intValue);
-			break;
-
-		case GL_FLOAT:
-			uniformObject.WriteFloat("value", uniforms[i].data.floatValue);
-			break;
-
-		case GL_FLOAT_VEC2:
-			uniformObject.WriteVector2("value", &uniforms[i].data.vector2Value.x);
-			break;
-
-		case GL_FLOAT_VEC3:
-			uniformObject.WriteVector3("value", &uniforms[i].data.vector3Value.x);
-			break;
-	
-		case GL_FLOAT_VEC4:
-			uniformObject.WriteVector4("value", &uniforms[i].data.vector4Value.x);
-			break;
+			case GL_SAMPLER_2D:
+				if (uniforms[i].data.textureValue != nullptr)
+				{
+					uniformObject.WriteInt("value", uniforms[i].data.textureValue->GetUID());
+				}
+				else
+				{
+					uniformObject.WriteInt("value", 0);
+				}
+				break;
 		
-		default:
-			break;
+
+			case GL_INT:
+				uniformObject.WriteInt("value", uniforms[i].data.intValue);
+				break;
+
+			case GL_FLOAT:
+				uniformObject.WriteFloat("value", uniforms[i].data.floatValue);
+				break;
+
+			case GL_FLOAT_VEC2:
+				uniformObject.WriteVector2("value", &uniforms[i].data.vector2Value.x);
+				break;
+
+			case GL_FLOAT_VEC3:
+				uniformObject.WriteVector3("value", &uniforms[i].data.vector3Value.x);
+				break;
+	
+			case GL_FLOAT_VEC4:
+				uniformObject.WriteVector4("value", &uniforms[i].data.vector4Value.x);
+				break;
+		
+			default:
+				break;
 		}
 
 		json_array_append_value(uniformsArray, uniformValue);
@@ -269,6 +314,6 @@ name(""), vSize(0)
 ShaderVariable::~ShaderVariable()
 {}
 
-ShaderVariable::ShdrValue::ShdrValue() : floatValue(0.0f), intValue(0),
-textureValue(0), matrixValue(nullptr), vector3Value(0, 0, 0)
+ShaderVariable::ShdrValue::ShdrValue() : intValue(0), floatValue(0.0f), vector2Value(0,0), vector3Value(0, 0, 0), vector4Value(0,0,0,0),
+textureValue(nullptr), matrixValue(nullptr)
 {}

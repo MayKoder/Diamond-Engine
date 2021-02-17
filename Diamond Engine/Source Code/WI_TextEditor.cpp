@@ -85,18 +85,20 @@ void W_TextEditor::DrawScriptEditor()
 
 void W_TextEditor::SetErrorsOnScreen(const char* infoLog)
 {
-	TextEditor::ErrorMarkers markers;
-
-	std::vector<std::pair<int, std::string>> errors;
-	SplitErrors(infoLog, errors);
-
-	for (size_t i = 0; i < errors.size(); i++)
+	if (textType == Resource::Type::SHADER) 
 	{
-		markers.insert(errors[i]);
-	}
+		TextEditor::ErrorMarkers markers;
 
-	if (textType == Resource::Type::SHADER) {
-		txtEditor.SetErrorMarkers(markers);}
+		std::vector<std::pair<int, std::string>> errors;
+		SplitErrors(infoLog, errors);
+
+		for (size_t i = 0; i < errors.size(); i++)
+		{
+			markers.insert(errors[i]);
+		}
+
+		txtEditor.SetErrorMarkers(markers);
+	}
 }
 
 void W_TextEditor::SplitErrors(const char* infoLog, std::vector<std::pair<int, std::string>>& error_list)

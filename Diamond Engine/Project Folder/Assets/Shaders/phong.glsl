@@ -35,11 +35,12 @@ TexCoord = texCoord;
 in vec3 ourColor;
 in vec2 TexCoord;
 out vec4 color;
-uniform sampler2D ourTexture;
 
 in vec3 fPosition;
 in vec3 Normal;
 
+uniform sampler2D diffuseTexture;
+uniform sampler2D normalMap;
 uniform vec3 light;
 uniform int hasTexture;
 uniform vec3 altColor;
@@ -61,9 +62,13 @@ void main()
 {
 vec3 lcolor = vec3(1.0,1.0,1.0);
 vec2 inten = blinnPhongDir(light, 0.5, 0.2, 0.8, 0.3, 80.0);
-gl_FragColor = (hasTexture == 1) ? vec4(lcolor * inten.x + vec3(1.0) * inten.y, 1.0) * texture(ourTexture, TexCoord) * vec4(altColor, 1.0) : vec4(altColor, 1.0);
+color = (hasTexture == 1) ? vec4(lcolor * inten.x + vec3(1.0) * inten.y, 1.0) * texture(diffuseTexture, TexCoord) * vec4(altColor, 1.0) : vec4(altColor, 1.0);
+color.g = texture(normalMap, TexCoord).r;
 }
 #endif
+
+
+
 
 
 

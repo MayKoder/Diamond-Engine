@@ -48,7 +48,7 @@ bool C_Material::OnEditor()
 			ImGui::Separator();
 
 			ImGui::Text("Drop any texture here to change it:");
-			ImGui::Image((ImTextureID)matTexture->textureID, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
+			ImGui::Image((ImTextureID)matTexture->textureID, ImVec2(64, 64), ImVec2(0, 1), ImVec2(1, 0));
 			if (ImGui::BeginDragDropTarget())
 			{
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
@@ -75,7 +75,7 @@ bool C_Material::OnEditor()
 		{
 			//BUG: FBX LOADED HAVE TEXTURE BUT IT'S EMPTY, FIND A BETTER WAY TO IMPORT NO TEXTURE MESHES
 			ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "No texture loaded, using default checkers");
-			ImGui::Image((ImTextureID)EngineExternal->moduleRenderer3D->checkersTexture, ImVec2(128, 128));
+			ImGui::Image((ImTextureID)EngineExternal->moduleRenderer3D->checkersTexture, ImVec2(64, 64));
 			if (ImGui::BeginDragDropTarget())
 			{
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))

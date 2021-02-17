@@ -16,6 +16,7 @@ typedef int GLint;
 typedef int GLsizei;
 
 class ResourceShader;
+class ResourceTexture;
 
 struct ShaderVariable
 {
@@ -36,7 +37,7 @@ struct ShaderVariable
 		float2 vector2Value;
 		float3 vector3Value;
 		float4 vector4Value;
-		GLuint textureValue;
+		ResourceTexture* textureValue;
 		float4x4* matrixValue;
 	} data;
 };
