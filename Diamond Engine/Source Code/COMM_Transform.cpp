@@ -29,7 +29,12 @@ void COMM_Transform::Execute()
 	mat.Set(nextMatrix);
 
 	GameObject* agent = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, agentUid);
-	agent->transform->SetTransformWithGlobal(mat);
+
+	if (agent != nullptr)
+		agent->transform->SetTransformWithGlobal(mat);
+
+	else
+		LOG(LogType::L_ERROR, "Couldn't redo transform, game object not found");
 }
 
 
@@ -38,5 +43,10 @@ void COMM_Transform::Undo()
 	float4x4 mat;
 	mat.Set(previousMatrix);
 	GameObject* agent = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, agentUid);
-	agent->transform->SetTransformWithGlobal(mat);
+
+	if (agent != nullptr)
+		agent->transform->SetTransformWithGlobal(mat);
+
+	else
+		LOG(LogType::L_ERROR, "Couldn't undo transform, game object not found");
 }

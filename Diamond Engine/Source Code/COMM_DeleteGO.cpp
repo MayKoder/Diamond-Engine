@@ -36,7 +36,13 @@ COMM_DeleteGO::~COMM_DeleteGO()
 
 void COMM_DeleteGO::Execute()
 {
-	EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, agentUid)->Destroy();
+	GameObject* agent = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, agentUid);
+
+	if (agent != nullptr)
+		agent->Destroy();
+
+	else
+		LOG(LogType::L_ERROR, "Couldn't redo delete, game object not found");
 }
 
 
@@ -49,7 +55,7 @@ void COMM_DeleteGO::Undo()
 	if (copyParentUid != -1)
 		parent = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, copyParentUid);
 
-	else
+	else if (parent == nullptr)		//Just in case the parent cant be found
 		parent = EngineExternal->moduleScene->root;
 
 	for (size_t i = 0; i < json_array_get_count(arrayGO); i++)
