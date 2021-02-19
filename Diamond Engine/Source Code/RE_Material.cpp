@@ -55,11 +55,7 @@ bool ResourceMaterial::UnloadFromMemory()
 		EngineExternal->moduleResources->UnloadResource(shader->GetUID());
 
 	//TODO: Unload resources (uniform and attributes) by reference count 
-	for (size_t i = 0; i < uniforms.size(); i++)
-	{
-		if(uniforms[i].vType == GL_SAMPLER_2D && uniforms[i].data.textureValue != nullptr)
-			EngineExternal->moduleResources->UnloadResource(uniforms[i].data.textureValue->GetUID());
-	}
+	UnloadTexures();
 
 	uniforms.clear();
 	attributes.clear();
@@ -69,6 +65,7 @@ bool ResourceMaterial::UnloadFromMemory()
 
 void ResourceMaterial::FillVariables()
 {
+	UnloadTexures();
 	uniforms.clear();
 	attributes.clear();
 
@@ -90,6 +87,15 @@ void ResourceMaterial::FillVariables()
 		glGetActiveUniform(shader->shaderProgramID, (GLuint)b, 25, &shdrVar.nameLength, &shdrVar.vSize, &shdrVar.vType, shdrVar.name);
 
 		uniforms.push_back(shdrVar);
+	}
+}
+
+void ResourceMaterial::UnloadTexures()
+{
+	for (size_t i = 0; i < uniforms.size(); i++)
+	{
+		if (uniforms[i].vType == GL_SAMPLER_2D && uniforms[i].data.textureValue != nullptr)
+			EngineExternal->moduleResources->UnloadResource(uniforms[i].data.textureValue->GetUID());
 	}
 }
 

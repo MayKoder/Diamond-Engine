@@ -56,6 +56,7 @@ public:
 	bool UnloadFromMemory() override;
 
 	void FillVariables();
+	void UnloadTexures();
 
 	void PushUniforms();
 	bool IsDefaultUniform(const char* uniform_name);

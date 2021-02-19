@@ -17,6 +17,7 @@ void MaterialImporter::Save(ResourceMaterial* material, char** fileBuffer)
 	material->SaveToJson(json_value_get_array(uniformsArray));
 	json_object_set_value(root_object.nObj, "Uniforms", uniformsArray);
   
+	//Default shader does not have a library path
 	//json_serialize_to_file_pretty(file, material->GetAssetPath());
 	json_serialize_to_file_pretty(file, material->GetLibraryPath());
 
