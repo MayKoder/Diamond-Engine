@@ -107,10 +107,19 @@ void ResourceMaterial::PushUniforms()
 			glActiveTexture(GL_TEXTURE0 + used_textures);
 			glUniform1i(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), used_textures);
 
-			if (uniforms[i].data.textureValue != nullptr) {
-				glBindTexture(GL_TEXTURE_2D, uniforms[i].data.textureValue->textureID);}
-			else {
-				glBindTexture(GL_TEXTURE_2D, EngineExternal->moduleRenderer3D->checkersTexture);}
+			if (uniforms[i].data.textureValue != nullptr) 
+			{
+				//char activeTexture[32];
+				//sprintf_s(activeTexture, "activeTexture[%d]", used_textures);
+				glBindTexture(GL_TEXTURE_2D, uniforms[i].data.textureValue->textureID);
+				//glUniform1i(glGetUniformLocation(shader->shaderProgramID, activeTexture), true);
+			}
+
+			else if(used_textures == 0)
+			{
+				glBindTexture(GL_TEXTURE_2D, EngineExternal->moduleRenderer3D->checkersTexture);
+				//glUniform1i(glGetUniformLocation(shader->shaderProgramID, uniforms[i].name), false);
+			}
 
 			used_textures++;
 			break;

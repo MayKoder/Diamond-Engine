@@ -57,6 +57,7 @@ uniform vec3 altColor;
 
 uniform float time;
 uniform vec3 lightPos;
+uniform bool activeTextures[];
 
 in VS_OUT {
 	vec4 clipSpace;
@@ -92,6 +93,7 @@ void main()
      FragColor =  vec4(ambient + diffuse + specular, opacity);
 }
 #endif
+
 
 
 
