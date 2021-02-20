@@ -290,6 +290,10 @@ void M_Scene::LoadScene(const char* name)
 	if (scene == NULL)
 		return;
 
+#ifndef STANDALONE
+	App->moduleEditor->shortcutManager.DeleteCommandHistory();
+#endif // !STANDALONE
+
 	//Clear all current scene memory
 	destroyList.clear();
 	CleanScene();

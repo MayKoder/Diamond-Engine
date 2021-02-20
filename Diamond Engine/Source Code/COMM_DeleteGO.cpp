@@ -31,7 +31,6 @@ COMM_DeleteGO::~COMM_DeleteGO()
 }
 
 
-
 void COMM_DeleteGO::Execute()
 {
 	GameObject* agent = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, agentUid);
