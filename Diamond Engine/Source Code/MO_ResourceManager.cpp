@@ -184,6 +184,11 @@ void M_ResourceManager::UpdateMeshesDisplay()
 	LOG(LogType::L_WARNING, "Mesh display updated");
 }
 
+Resource* M_ResourceManager::RequestResource(int uid, Resource::Type type)
+{
+	return RequestResource(uid, GenLibraryPath(uid, type).c_str());
+}
+
 //Returns a resource* if the resource is loaded or creates a new resource from the library file
 Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 {
