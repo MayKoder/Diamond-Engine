@@ -18,7 +18,6 @@ public:
 	void Undo() override;
 
 private:
-	DEConfig* copy = nullptr;
 	JSON_Value* value = nullptr;
 	std::string agentName;
 

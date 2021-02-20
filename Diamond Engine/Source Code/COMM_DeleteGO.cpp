@@ -8,18 +8,17 @@
 #include "GameObject.h"
 
 COMM_DeleteGO::COMM_DeleteGO(GameObject* agent) : Command(agent->UID),
-	copy(nullptr),
 	value(nullptr),
 	copyParentUid(-1),
 	agentName(agent->name)
 {
 	value = json_value_init_object();
-	copy = new DEConfig(json_value_get_object(value));
+	DEConfig copy(json_value_get_object(value));
 
 	JSON_Value* arrayGO = json_value_init_array();
 	agent->SaveToJson(json_value_get_array(arrayGO));
 
-	json_object_set_value(copy->nObj, "Game Objects", arrayGO);
+	json_object_set_value(copy.nObj, "Game Objects", arrayGO);
 
 	if (agent->parent != nullptr)
 		copyParentUid = agent->parent->UID;
@@ -29,9 +28,6 @@ COMM_DeleteGO::COMM_DeleteGO(GameObject* agent) : Command(agent->UID),
 COMM_DeleteGO::~COMM_DeleteGO()
 {
 	json_value_free(value);
-
-	delete copy;
-	copy = nullptr;
 }
 
 
@@ -50,7 +46,9 @@ void COMM_DeleteGO::Execute()
 
 void COMM_DeleteGO::Undo()
 {
-	JSON_Array* arrayGO = copy->ReadArray("Game Objects");
+	DEConfig copy(json_value_get_object(value));
+
+	JSON_Array* arrayGO = copy.ReadArray("Game Objects");
 
 	GameObject* parent = nullptr;
 	
