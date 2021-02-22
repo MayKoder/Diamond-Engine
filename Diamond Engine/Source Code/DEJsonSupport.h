@@ -42,7 +42,7 @@ namespace DEJson
 struct DEConfig
 {
 	DEConfig();
-	DEConfig(const char* buffer);
+	//DEConfig(const char* buffer);
 	DEConfig(JSON_Object* _nObj);
 
 	uint Save(char** buffer);

@@ -101,6 +101,7 @@ DEConfig::DEConfig()
 	nObj = json_value_get_object(root);
 }
 
+/*
 DEConfig::DEConfig(const char* buffer) : root(nullptr), nObj(nullptr)
 {
 	root = json_parse_string(buffer);
@@ -114,6 +115,7 @@ DEConfig::DEConfig(const char* buffer) : root(nullptr), nObj(nullptr)
 		LOG(LogType::L_WARNING, "Could not parse json file",);
 	}
 }
+*/
 
 DEConfig::DEConfig(JSON_Object* _nObj) : root(nullptr)
 {

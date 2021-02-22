@@ -51,12 +51,22 @@ void W_TextEditor::DrawShaderEditor()
 			uint uid = EngineExternal->moduleResources->GetMetaUID(EngineExternal->moduleResources->GetMetaPath(txtName.c_str()).c_str());
 			Resource* res = EngineExternal->moduleResources->GetResourceFromUID(uid);
 
+			bool new_resource = false;
+
 			//Clear resource
 			if (res != nullptr)
 				res->UnloadFromMemory();
+			else
+			{
+				new_resource = true;
+				res = EngineExternal->moduleResources->RequestResource(uid, Resource::Type::SHADER);
+			}
 
 			//Save .shdr and reimport data
 			ShaderImporter::Import(&txtEditor.GetText()[0], txtEditor.GetText().length(), dynamic_cast<ResourceShader*>(res), txtName.c_str());
+
+			if (new_resource)
+				EngineExternal->moduleResources->UnloadResource(uid);
 		}
 	}
 }
