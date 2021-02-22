@@ -90,7 +90,8 @@ void main()
     
     vec3 specular = vec3(0.2) * spec; 
     
-     FragColor =  vec4(ambient + diffuse + specular, opacity);
+     FragColor =  vec4(ambient + diffuse + specular, opacity) * vec4(altColor, 1.0);
 }
 #endif
+
 

@@ -95,9 +95,37 @@ Quat DEJson::ReadQuat(JSON_Object* obj, const char* name)
 	return Quat(json_array_get_number(vecArray, 0), json_array_get_number(vecArray, 1), json_array_get_number(vecArray, 2), json_array_get_number(vecArray, 3));
 }
 
-DEConfig::DEConfig(JSON_Object* _nObj)
+DEConfig::DEConfig()
+{
+	root = json_value_init_object();
+	nObj = json_value_get_object(root);
+}
+
+DEConfig::DEConfig(const char* buffer) : root(nullptr), nObj(nullptr)
+{
+	root = json_parse_string(buffer);
+
+	if (root != NULL)
+	{
+		nObj = json_value_get_object(root);
+	}
+	else
+	{
+		LOG(LogType::L_WARNING, "Could not parse json file",);
+	}
+}
+
+DEConfig::DEConfig(JSON_Object* _nObj) : root(nullptr)
 {
 	nObj = _nObj;
+}
+
+uint DEConfig::Save(char** buffer)
+{
+	uint size = json_serialization_size_pretty(root);
+	*buffer = new char[size];
+	json_serialize_to_buffer_pretty(root, *buffer, size);
+	return size;
 }
 
 // ---------------------------------------------------------------------------------- //
@@ -109,7 +137,6 @@ void DEConfig::PopulateArray(JSON_Value* _array, float* value, unsigned int size
 	{
 		json_array_append_number(jsArray, value[i]);
 	}
-
 }
 
 
@@ -222,4 +249,20 @@ JSON_Object* DEConfig::ReadObject(const char* name)
 JSON_Value* DEConfig::ReadValue(const char* name)
 {
 	return json_object_get_value(nObj, name);
+}
+
+DEConfigArray::DEConfigArray() : _array(nullptr)
+{
+	_value = json_value_init_array();
+	json_value_get_array(_value);
+}
+
+void DEConfigArray::AddObject(DEConfig& object)
+{
+	json_array_append_value(_array, object.root);
+}
+
+int DEConfigArray::Size()
+{
+	return json_array_get_count(_array);
 }

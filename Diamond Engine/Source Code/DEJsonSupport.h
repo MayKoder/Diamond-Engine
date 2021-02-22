@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Globals.h"
 #include"parson/parson.h"
 #include"MathGeoLib/include/Math/float2.h"
 #include"MathGeoLib/include/Math/float3.h"
@@ -40,11 +41,14 @@ namespace DEJson
 
 struct DEConfig
 {
-
+	DEConfig();
+	DEConfig(const char* buffer);
 	DEConfig(JSON_Object* _nObj);
+
+	uint Save(char** buffer);
+
 	//Internal use only
 	void PopulateArray(JSON_Value* _array, float* value, unsigned int size);
-
 
 	void WriteFloat(const char* name, float value);
 	float ReadFloat(const char* name);
@@ -75,4 +79,16 @@ struct DEConfig
 	JSON_Value* ReadValue(const char* name);
 
 	JSON_Object* nObj;
+	JSON_Value* root;
+};
+
+struct DEConfigArray
+{
+	DEConfigArray();
+
+	void AddObject(DEConfig& object);
+	int Size();
+
+	JSON_Array* _array;
+	JSON_Value* _value;
 };

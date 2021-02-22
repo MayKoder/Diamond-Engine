@@ -116,7 +116,7 @@ bool C_Material::OnEditor()
 		if (material) 
 		{
 			ImGui::Dummy(ImVec2(0, 15));
-			ImGui::Text("Using shader %s", material->GetAssetPath());
+			ImGui::Text("Using shader: %s", material->shader->GetAssetPath());
 			material->DrawEditor();
 		}
 
