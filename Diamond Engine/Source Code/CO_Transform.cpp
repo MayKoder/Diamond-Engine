@@ -8,6 +8,10 @@
 #include"CO_MeshRenderer.h"
 #include"RE_Mesh.h"
 
+#include "Application.h"
+#include "MO_Editor.h"
+#include "COMM_Transform.h"
+
 C_Transform::C_Transform() : Component(nullptr), updateTransform(false)
 {
 	globalTransform.SetIdentity();
@@ -58,22 +62,45 @@ bool C_Transform::OnEditor()
 		int offset = ImGui::CalcTextSize("Local Position: ").x + 16;
 		ImGui::Text("Local Position: "); 
 		ImGui::SameLine(); 
-		if (ImGui::DragFloat3("##lPos", &position[0], 0.1f))
-			updateTransform = true;
+		if (ImGui::InputFloat3("##lPos", &position[0], 0.1f))
+		{
+			Quat rot = Quat::FromEulerXYZ(eulerRotation.x * DEGTORAD, eulerRotation.y * DEGTORAD, eulerRotation.z * DEGTORAD);
+			rot.Normalize();
+			float4x4 newMat = gameObject->parent->transform->globalTransform * float4x4::FromTRS(position, rot, localScale);
 
+			EngineExternal->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(gameObject->UID, newMat.ptr(), globalTransform.ptr()));
+
+			updateTransform = true;
+		}
 
 		ImGui::Text("Rotation: ");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(offset);
-		if (ImGui::DragFloat3("##lRot", &eulerRotation[0], 0.1f))
+		if (ImGui::InputFloat3("##lRot", &eulerRotation[0], 0.1f))
+		{
+			Quat rot = Quat::FromEulerXYZ(eulerRotation.x * DEGTORAD, eulerRotation.y * DEGTORAD, eulerRotation.z * DEGTORAD);
+			rot.Normalize();
+			float4x4 newMat = gameObject->parent->transform->globalTransform * float4x4::FromTRS(position, rot, localScale);
+
+			EngineExternal->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(gameObject->UID, newMat.ptr(), globalTransform.ptr()));
+
 			updateTransform = true;
+		}
 
 
 		ImGui::Text("Scale: ");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(offset);
-		if (ImGui::DragFloat3("##lScale", &localScale[0], 0.1f))
+		if (ImGui::InputFloat3("##lScale", &localScale[0], 0.1f))
+		{
+			Quat rot = Quat::FromEulerXYZ(eulerRotation.x * DEGTORAD, eulerRotation.y * DEGTORAD, eulerRotation.z * DEGTORAD);
+			rot.Normalize();
+			float4x4 newMat = gameObject->parent->transform->globalTransform * float4x4::FromTRS(position, rot, localScale);
+
+			EngineExternal->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(gameObject->UID, newMat.ptr(), globalTransform.ptr()));
+
 			updateTransform = true;
+		}
 
 		if (ImGui::Button("Reset Transform"))
 			ResetTransform();
