@@ -21,7 +21,7 @@
 #        pragma comment(lib, "Physx/libx86/_debug/PhysXCharacterKinematic_static_32.lib")
 #        pragma comment(lib, "Physx/libx86/_debug/SceneQuery_static_32.lib")
 #        pragma comment(lib, "Physx/libx86/_debug/PhysXCooking_32.lib")
-#		 pragma comment(lib, "Physx/libx86/_release/PhysXVehicle_static_32.lib")
+#		 pragma comment(lib, "Physx/libx86/_debug/PhysXVehicle_static_32.lib")
 #    endif // _DEBUG
 
 using namespace physx;
@@ -189,7 +189,7 @@ void ModulePhysics::RenderGeometry() {
 	{
 		std::vector<PxRigidActor*> actors(nbActors);
 		mScene->getActors(PxActorTypeFlag::eRIGID_DYNAMIC | PxActorTypeFlag::eRIGID_STATIC, reinterpret_cast<PxActor**>(&actors[0]), nbActors);
-		renderActors(&actors[0], static_cast<PxU32>(actors.size()), false);
+		//renderActors(&actors[0], static_cast<PxU32>(actors.size()), false);
 	}
 
 }
@@ -234,7 +234,7 @@ void ModulePhysics::RenderGeometry() {
 //}
 
 void ModulePhysics::renderGeometryHolder(const PxGeometryHolder& h) {
-	renderGeometry(h.any());
+	//renderGeometry(h.any());
 };
 //
 //void ModulePhysics::renderGeometry(const PxGeometry& geom)

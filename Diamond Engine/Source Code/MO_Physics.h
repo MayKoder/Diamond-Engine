@@ -82,8 +82,8 @@ public:
     void SceneSimulation(float gameTimesetp, bool fetchResults = true);
     void RenderGeometry();
 
-    void renderActors(physx::PxRigidActor** actors, const physx::PxU32 numActors, bool shadows);
-    void renderGeometry(const physx::PxGeometry& geom);
+   // void renderActors(physx::PxRigidActor** actors, const physx::PxU32 numActors, bool shadows);
+   // void renderGeometry(const physx::PxGeometry& geom);
     void renderGeometryHolder(const physx::PxGeometryHolder& h);
 
    // void DrawGeometry(GeometryType type, float3 pos = { 0.0f, 0.0f, 0.0f }, float radius = 3.0f, float3 size = { 1.0f, 1.0f, 1.0f });
