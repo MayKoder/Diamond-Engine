@@ -4,5 +4,7 @@ class ResourceMaterial;
 
 namespace MaterialImporter
 {
+
+	void CreateBaseMaterialFile(const char* path);
 	void Save(ResourceMaterial* material, char**fileBuffer);
 }

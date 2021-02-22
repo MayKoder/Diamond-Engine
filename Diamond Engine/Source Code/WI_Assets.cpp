@@ -1,15 +1,17 @@
 #ifndef STANDALONE
 
 #include"WI_Assets.h"
+#include"WI_TextEditor.h"
 
 #include"IM_FileSystem.h"
+#include"IM_ShaderImporter.h"
+#include"IM_MaterialImporter.h"
+
 #include"MO_ResourceManager.h"
 #include"MO_Input.h"
 #include"MO_Editor.h"
 #include"MO_MonoManager.h"
 #include"RE_Texture.h"
-#include"WI_TextEditor.h"
-#include"IM_ShaderImporter.h"
 
 W_Assets::W_Assets() : Window(), selectedFile(nullptr)
 {
@@ -104,6 +106,12 @@ void W_Assets::Draw()
 			if (ImGui::BeginMenu("Create GLSL Shader"))
 			{
 				DrawCreationPopup("Shader path: ", ".glsl",  ShaderImporter::CreateBaseShaderFile);
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("Create Material"))
+			{
+				DrawCreationPopup("Material path: ", ".mat", MaterialImporter::CreateBaseMaterialFile);
 				ImGui::EndMenu();
 			}
 
@@ -210,7 +218,7 @@ void W_Assets::DrawCreationPopup(const char* popDisplay, const char* dotExtensio
 		//TODO: Check if the extension is correct, to avoid a .cs.glsl file
 		if (path.find(dotExtension) != path.npos) 
 		{ 
-			f(name);
+			f(path.c_str());
 			name[0] = '\0';
 		}
 
