@@ -283,6 +283,7 @@
     <ClInclude Include="Source Code\GameObject.h" />
     <ClInclude Include="Source Code\glmath.h" />
     <ClInclude Include="Source Code\Globals.h" />
+    <ClInclude Include="Source Code\IM_MaterialImporter.h" />
     <ClInclude Include="Source Code\IM_ModelImporter.h" />
     <ClInclude Include="Source Code\IM_ShaderImporter.h" />
     <ClInclude Include="Source Code\IM_TextureImporter.h" />
@@ -291,6 +292,7 @@
     <ClInclude Include="Source Code\DEModelNode.h" />
     <ClInclude Include="Source Code\MA_IconSystem.h" />
     <ClInclude Include="Source Code\MO_MonoManager.h" />
+    <ClInclude Include="Source Code\RE_Material.h" />
     <ClInclude Include="Source Code\RE_Mesh.h" />
     <ClInclude Include="Source Code\MeshArrays.h" />
     <ClInclude Include="Source Code\IM_MeshLoader.h" />
@@ -387,12 +389,14 @@
     <ClCompile Include="Source Code\IM_FileSystem.cpp" />
     <ClCompile Include="Source Code\GameObject.cpp" />
     <ClCompile Include="Source Code\glmath.cpp" />
+    <ClCompile Include="Source Code\IM_MaterialImporter.cpp" />
     <ClCompile Include="Source Code\IM_ModelImporter.cpp" />
     <ClCompile Include="Source Code\IM_ShaderImporter.cpp" />
     <ClCompile Include="Source Code\IM_TextureImporter.cpp" />
     <ClCompile Include="Source Code\MA_IconSystem.cpp" />
     <ClCompile Include="Source Code\MMGui.cpp" />
     <ClCompile Include="Source Code\MO_MonoManager.cpp" />
+    <ClCompile Include="Source Code\RE_Material.cpp" />
     <ClCompile Include="Source Code\RE_Mesh.cpp" />
     <ClCompile Include="Source Code\IM_MeshLoader.cpp" />
     <ClCompile Include="Source Code\MO_FileSystem.cpp" />

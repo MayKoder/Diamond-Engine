@@ -37,12 +37,14 @@ public:
 
 	Frustum camFrustrum;
 	float fov;
+	float orthoSize;
 	bool cullingState;
 
 //Movement logic
 public: 
 	void LookAt(const float3& Spot);
 	void Move(const float3& Movement);
+	float3 GetPosition();
 
 private:
 	int msaaSamples;

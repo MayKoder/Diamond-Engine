@@ -2,37 +2,14 @@
 
 #include"DEResource.h"
 #include<vector>
-#include"MathGeoLib/include/Math/float4x4.h"
-
 typedef unsigned int GLuint;
-typedef unsigned int GLenum;
-typedef int GLint;
-typedef int GLsizei;
+class ResourceMaterial;
 
-enum ShaderType
+enum class ShaderType
 {
 	SH_Vertex,
 	SH_Frag,
 	SH_Max
-};
-union ShdrValue {
-	int intValue = 0;
-	float floatValue;
-	GLuint textureValue;
-	float4x4* matrixValue;
-};
-
-struct ShaderVariable
-{
-	ShaderVariable();
-
-	GLuint vIndex;
-	GLenum vType;
-	GLint vSize;
-
-	GLsizei nameLength;
-	char name[25];
-	ShdrValue data;
 };
 
 class ResourceShader : public Resource
@@ -50,19 +27,12 @@ public:
 	void Bind();
 	void Unbind();
 
-#ifndef STANDALONE
-	void DrawEditor();
-#endif // !STANDALONE
-
-
-	void FillVariables();
 	char* SaveShaderCustomFormat(char* vertexObjectBuffer, int vofSize, char* fragObjectBuffer, int fobSize);
 	void LoadShaderCustomFormat(const char*);
 
-	GLuint shaderObjects[SH_Max];
+	GLuint shaderObjects[static_cast<int>(ShaderType::SH_Max)];
 
 	GLuint shaderProgramID;
 
-	std::vector<ShaderVariable> attributes;
-	std::vector<ShaderVariable> uniforms;
+	std::vector<ResourceMaterial*> references;
 };

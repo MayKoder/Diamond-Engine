@@ -625,7 +625,10 @@ GameObject* M_Editor::GetDraggingGO()
 
 void M_Editor::SetSelectedGO(GameObject* _obj)
 {
-	dynamic_cast<W_Inspector*>(GetEditorWindow(EditorWindow::INSPECTOR))->selectedGO = _obj;
+	W_Inspector* inspector = dynamic_cast<W_Inspector*>(GetEditorWindow(EditorWindow::INSPECTOR));
+
+	inspector->selectedGO = _obj;
+	inspector->SetEditingResource(nullptr);
 	//SetSelectedAsset(nullptr);
 }
 
