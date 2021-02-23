@@ -10,6 +10,7 @@
 #include"IM_FileSystem.h"
 #include"DEJsonSupport.h"
 #include "RE_Texture.h"
+#include"IM_MaterialImporter.h"
 
 ResourceMaterial::ResourceMaterial(unsigned int _uid) : Resource(_uid, Resource::Type::MATERIAL), shader(nullptr) {}
 
@@ -28,20 +29,25 @@ bool ResourceMaterial::LoadToMemory()
 	int shUID = base.ReadInt("ShaderUID");
 
 	//Request shader [DONE]
-	std::string shaderPath = SHADERS_PATH + std::to_string(shUID);
-	shaderPath += ".shdr";
-	shader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(shUID, shaderPath.c_str()));
+	SetShader(dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(shUID, Resource::Type::SHADER)));
 
-	if (shader != nullptr)
+	//TODO: Load required resources from uniforms
+	JSON_Array* uniformsArray = base.ReadArray("Uniforms");
+	DEConfig val;
+	for (size_t i = 0; i < json_array_get_count(uniformsArray); i++)
 	{
-		shader->references.push_back(this);
+		val.nObj = json_array_get_object(uniformsArray, i);
 
-		//Get uniforms and attributes from shader [DONE]
-		FillVariables();
+		if (val.ReadInt("type") == GL_SAMPLER_2D) 
+		{
+			for (size_t k = 0; k < uniforms.size(); ++k)
+			{	
+				if(strcmp(val.ReadString("name"), uniforms[k].name) == 0)
+					uniforms[k].data.textureValue = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(val.ReadInt("value"), Resource::Type::TEXTURE));
+			}
+		}
+
 	}
-
-	//Load required resources from uniforms
-	JSON_Array* uniformsArray = base.ReadArray("uniforms");
 
 	json_value_free(file);
 
@@ -50,9 +56,7 @@ bool ResourceMaterial::LoadToMemory()
 
 bool ResourceMaterial::UnloadFromMemory()
 {
-	//Unload shader by reference count [DONE]
-	if (shader != NULL)
-		EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+	SetShader(nullptr);
 
 	//TODO: Unload resources (uniform and attributes) by reference count 
 	UnloadTexures();
@@ -171,9 +175,47 @@ bool ResourceMaterial::IsDefaultUniform(const char* uniform_name)
 	return false;
 }
 
+/*Set to nullptr to cleanup*/
+void ResourceMaterial::SetShader(ResourceShader* res)
+{
+	if (shader != nullptr) 
+	{
+		auto it = std::find(shader->references.begin(), shader->references.end(), this);
+		if (shader != nullptr && it != shader->references.end())
+			shader->references.erase(it);
+
+		//Unload shader by reference count [DONE]
+		if (shader != NULL)
+			EngineExternal->moduleResources->UnloadResource(shader->GetUID());
+	}
+
+	shader = res;
+
+	if (shader != nullptr)
+	{
+		shader->references.push_back(this);
+		//Get uniforms and attributes from shader [DONE]
+		FillVariables();
+	}
+}
+
 #ifndef STANDALONE
 void ResourceMaterial::DrawEditor()
 {
+	ImGui::Text("Drop here to change shader");
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_SHADER"))
+		{
+			std::string* metaFileDrop = (std::string*)payload->Data;
+			uint mUID = EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str());
+
+			SetShader(dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(mUID, Resource::Type::SHADER)));
+			//MaterialImporter::Save(this, nullptr);
+		}
+		ImGui::EndDragDropTarget();
+	}
+
 	ImGui::Dummy(ImVec2(0, 5));
 	ImGui::Text("Attributes");
 	for (size_t i = 0; i < attributes.size(); i++)
@@ -278,6 +320,12 @@ void ResourceMaterial::DrawEditor()
 		default:
 			break;
 		}
+	}
+
+	if (ImGui::Button("Save"))
+	{
+		char* fileBuffer = nullptr;
+		MaterialImporter::Save(this, &fileBuffer);
 	}
 }
 void ResourceMaterial::SaveToJson(JSON_Array* uniformsArray)

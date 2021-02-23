@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        8.9121837615966797,
-        4.7180271148681641,
-        6.8721933364868164
+        17.297677993774414,
+        10.252769470214844,
+        17.738853454589844
     ],
     "EditorCameraZ": [
-        -0.73032569885253906,
-        -0.38662764430046082,
-        -0.56315487623214722
+        -0.66908836364746094,
+        -0.31685283780097961,
+        -0.67225372791290283
     ],
     "EditorCameraY": [
-        -0.30617338418960571,
-        0.92223590612411499,
-        -0.23609063029289246
+        -0.22351881861686707,
+        0.9484747052192688,
+        -0.22457751631736755
     ],
     "Game Objects": [
         {
@@ -75,8 +75,8 @@
                     "UID": 1313575480,
                     "alternColor": [
                         1,
-                        1,
-                        1
+                        0.99998998641967773,
+                        0.99998998641967773
                     ]
                 },
                 {
@@ -88,6 +88,14 @@
                     "rotationSpeed": 2,
                     "movementSpeed": 35,
                     "mouseSens": 1
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
                 }
             ]
         },
@@ -124,7 +132,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6117955446243286,
+                    "hFOV": 0.96812385320663452,
                     "culling": false
                 }
             ]
@@ -197,10 +205,7 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/1452971041.mat",
-                    "MaterialUID": 1452971041
+                    "IsEmpty": true
                 }
             ]
         },
@@ -244,10 +249,7 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/1452971041.mat",
-                    "MaterialUID": 1452971041
+                    "IsEmpty": true
                 }
             ]
         },

@@ -16,6 +16,7 @@
 #include "DevIL\include\ilu.h"
 #include "DevIL\include\ilut.h"
 #include"RE_Shader.h"
+#include"RE_Material.h"
 
 
 M_FileSystem::M_FileSystem(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -56,7 +57,9 @@ bool M_FileSystem::Start()
 	//TODO: Should be updated kinda like assetsRoot;
 	//TODO: Add Library/ to gitignore?
 	GetAllFilesRecursive(App->moduleResources->meshesLibraryRoot);
-	App->moduleScene->defaultMaterial = (ResourceMaterial*)App->moduleResources->RequestResource(715565838, "Library/Materials/715565838.mat");
+	App->moduleScene->defaultMaterial = (ResourceMaterial*)App->moduleResources->RequestResource(715565838, Resource::Type::MATERIAL);
+	App->moduleScene->defaultMaterial->SetAssetsPath("Assets/Materials/default.mat");
+
 	App->moduleRenderer3D->skybox.shaderRes = dynamic_cast<ResourceShader*>(App->moduleResources->RequestResource(28971592, "Library/Shaders/28971592.shdr"));
 
 	return true;

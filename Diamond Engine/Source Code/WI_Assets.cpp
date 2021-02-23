@@ -2,6 +2,7 @@
 
 #include"WI_Assets.h"
 #include"WI_TextEditor.h"
+#include"WI_Inspector.h"
 
 #include"IM_FileSystem.h"
 #include"IM_ShaderImporter.h"
@@ -156,6 +157,11 @@ void W_Assets::DrawFileTree(AssetDir& file)
 				txtEditor->SetTextFromFile(file.importPath.c_str());
 				//Load script text and open visual studio?
 			}
+			else if(type == Resource::Type::MATERIAL)
+			{
+				W_Inspector* inspector = dynamic_cast<W_Inspector*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR));
+				inspector->SetEditingResource(EngineExternal->moduleResources->RequestResource(selectedFile->metaUID, selectedFile->resourceType));
+			}
 		}
 	}
 
@@ -177,6 +183,9 @@ void W_Assets::DrawFileTree(AssetDir& file)
 				break;
 			case  Resource::Type::MATERIAL:
 				ImGui::SetDragDropPayload("_MATERIAL", &file.metaFileDir, file.metaFileDir.length());
+				break;
+			case  Resource::Type::SHADER:
+				ImGui::SetDragDropPayload("_SHADER", &file.metaFileDir, file.metaFileDir.length());
 				break;
 
 			default:

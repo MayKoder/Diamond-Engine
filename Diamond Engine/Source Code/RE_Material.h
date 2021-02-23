@@ -61,6 +61,8 @@ public:
 	void PushUniforms();
 	bool IsDefaultUniform(const char* uniform_name);
 
+	void SetShader(ResourceShader* res);
+
 #ifndef STANDALONE
 	void DrawEditor();
 	void SaveToJson(JSON_Array* json);

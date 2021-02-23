@@ -120,12 +120,6 @@ bool C_Material::OnEditor()
 			material->DrawEditor();
 		}
 
-		if (ImGui::Button("Save") && material)
-		{
-			char* fileBuffer;
-			MaterialImporter::Save(material, &fileBuffer);
-		}
-
 		return true;
 	}
 	return false;
@@ -182,5 +176,5 @@ void C_Material::LoadData(DEConfig& nObj)
 	}
 
 	if(nObj.ReadInt("MaterialUID") != 0)
-		material = dynamic_cast<ResourceMaterial*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("MaterialUID")));
+		material = dynamic_cast<ResourceMaterial*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("MaterialUID"), Resource::Type::MATERIAL));
 }
