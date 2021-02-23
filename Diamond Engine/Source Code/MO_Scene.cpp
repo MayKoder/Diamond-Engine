@@ -120,6 +120,7 @@ update_status M_Scene::Update(float dt)
 		}
 	}
 
+	App->moduleEditor->shortcutManager.HandleInput();
 	if (App->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && App->moduleEditor->GetSelectedGO() != nullptr && App->moduleEditor->GetSelectedAsset() == nullptr)
 	{
 		App->moduleEditor->shortcutManager.PushCommand(new COMM_DeleteGO(App->moduleEditor->GetSelectedGO()));

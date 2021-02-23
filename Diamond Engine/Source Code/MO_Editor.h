@@ -46,8 +46,6 @@ public:
 	bool Init() override;
 	bool Start() override;
 
-	update_status Update(float dt) override;
-
 	void Draw();
 	void DrawMenuBar();
 	void DrawTopBar();

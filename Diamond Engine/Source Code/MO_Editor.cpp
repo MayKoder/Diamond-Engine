@@ -121,16 +121,6 @@ bool M_Editor::Start()
 	return true;
 }
 
-
-update_status M_Editor::Update(float dt)
-{
-	shortcutManager.HandleInput();
-
-	return update_status::UPDATE_CONTINUE;
-}
-
-
-
 void M_Editor::Draw()
 {
 	glClearColor(0.08f, 0.08f, 0.08f, 1.f);
