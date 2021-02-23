@@ -325,15 +325,8 @@ Resource* M_ResourceManager::RequestFromAssets(const char* assets_path)
 		if (scene != NULL) 
 		{
 			DEConfig sceneObj(json_value_get_object(scene));
+			ret = RequestResource(sceneObj.ReadInt("UID"), (Resource::Type)sceneObj.ReadInt("Type")); 
 
-			switch ((Resource::Type)sceneObj.ReadInt("Type"))
-			{
-				//case Resource::Type::TEXTURE: RequestResource(sceneObj.ReadInt("UID"), sceneObj.ReadString("Library Path")); break;
-				//case Resource::Type::MODEL: ModelImporter::LoadModelCustom(sceneObj.ReadString("Library Path")); break;
-			case Resource::Type::MATERIAL: 
-				ret = RequestResource(sceneObj.ReadInt("UID"), Resource::Type::MATERIAL); 
-				break;
-			}
 			//Free memory
 			json_value_free(scene);
 
