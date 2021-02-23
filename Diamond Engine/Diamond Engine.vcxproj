@@ -314,7 +314,7 @@
     <ClInclude Include="Source Code\DEResource.h" />
     <ClInclude Include="Source Code\RE_Shader.h" />
     <ClInclude Include="Source Code\RE_Texture.h" />
-    <ClInclude Include="Source Code\ShortcutManager.h" />
+    <ClInclude Include="Source Code\MA_ShortcutManager.h" />
     <ClInclude Include="Source Code\Timer.h" />
     <ClInclude Include="Source Code\Window.h" />
     <ClInclude Include="Source Code\WI_About.h" />
@@ -411,7 +411,7 @@
     <ClCompile Include="Source Code\MO_Scene.cpp" />
     <ClCompile Include="Source Code\RE_Shader.cpp" />
     <ClCompile Include="Source Code\RE_Texture.cpp" />
-    <ClCompile Include="Source Code\ShortcutManager.cpp" />
+    <ClCompile Include="Source Code\MA_ShortcutManager.cpp" />
     <ClCompile Include="Source Code\WI_Assets.cpp" />
     <ClCompile Include="Source Code\WI_Game.cpp" />
     <ClCompile Include="Source Code\WI_Hierarchy.cpp" />

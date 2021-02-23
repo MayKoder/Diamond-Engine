@@ -91,20 +91,14 @@
     <Filter Include="Externals\PugiXML">
       <UniqueIdentifier>{8d7a61ce-5fc5-4d64-a398-1e455f4ea9b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Commands">
-      <UniqueIdentifier>{c2a39506-19b0-42b8-9081-920a3adeed9f}</UniqueIdentifier>
+    <Filter Include="Sources\Editor\Commands">
+      <UniqueIdentifier>{1d5af797-4186-4643-8d93-2e85833ea05c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Commands\Base">
-      <UniqueIdentifier>{3c6f8db3-c791-4498-8524-6611da93e2c6}</UniqueIdentifier>
+    <Filter Include="Sources\Editor\Commands\Base">
+      <UniqueIdentifier>{83f489fd-bf58-4c85-a4c1-7d2483bf9cb7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Commands\Derived">
-      <UniqueIdentifier>{7c46a2e1-f72f-47ad-9a56-e420f77583d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Commands\Derived\MoveCommands">
-      <UniqueIdentifier>{e53a9171-5489-441f-8df3-39da9d505a13}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Editor\ShortcutManager">
-      <UniqueIdentifier>{89dc24bc-c4c2-453a-8e7d-b339a3d5f2b7}</UniqueIdentifier>
+    <Filter Include="Sources\Editor\Commands\Derived">
+      <UniqueIdentifier>{12e4d68c-af1f-4fd1-b95b-d8f9b218305b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -544,23 +538,23 @@
     <ClInclude Include="Source Code\MA_IconSystem.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\Command.h">
-      <Filter>Sources\Commands\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\COMM_Transform.h">
-      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\ShortcutManager.h">
-      <Filter>Sources\Editor\ShortcutManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\COMM_DeleteGO.h">
-      <Filter>Sources\Commands\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\RE_Material.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\IM_MaterialImporter.h">
       <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Command.h">
+      <Filter>Sources\Editor\Commands\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\COMM_Transform.h">
+      <Filter>Sources\Editor\Commands\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\COMM_DeleteGO.h">
+      <Filter>Sources\Editor\Commands\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MA_ShortcutManager.h">
+      <Filter>Sources\Editor\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -861,23 +855,23 @@
     <ClCompile Include="Source Code\MA_IconSystem.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\Command.cpp">
-      <Filter>Sources\Commands\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\COMM_Transform.cpp">
-      <Filter>Sources\Commands\Derived\MoveCommands</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\ShortcutManager.cpp">
-      <Filter>Sources\Editor\ShortcutManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\COMM_DeleteGO.cpp">
-      <Filter>Sources\Commands\Derived</Filter>
-    </ClInclude>
     <ClCompile Include="Source Code\RE_Material.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\IM_MaterialImporter.cpp">
       <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Command.cpp">
+      <Filter>Sources\Editor\Commands\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\COMM_DeleteGO.cpp">
+      <Filter>Sources\Editor\Commands\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\COMM_Transform.cpp">
+      <Filter>Sources\Editor\Commands\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MA_ShortcutManager.cpp">
+      <Filter>Sources\Editor\Commands</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
