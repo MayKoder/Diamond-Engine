@@ -1,24 +1,4 @@
 {
-    "ShaderUID": 544062099,
-    "Uniforms": [
-        {
-            "name": "diffuseTexture",
-            "type": 35678,
-            "value": 0
-        },
-        {
-            "name": "lightPos",
-            "type": 35665,
-            "value": [
-                0,
-                0,
-                0
-            ]
-        },
-        {
-            "name": "normalMap",
-            "type": 35678,
-            "value": 0
-        }
-    ]
+    "ShaderUID": 1741187670,
+    "Uniforms": []
 }

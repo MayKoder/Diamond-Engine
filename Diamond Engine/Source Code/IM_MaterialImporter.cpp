@@ -44,12 +44,12 @@ void MaterialImporter::Save(ResourceMaterial* material, char** fileBuffer)
 	//TODO: Should be saving Assets material and not library but there is no assets path in the resource :(
 	//Default shader does not have a library path
 	//json_serialize_to_file_pretty(file, material->GetAssetPath());
-	json_serialize_to_file_pretty(file, material->GetLibraryPath());
+	json_serialize_to_file_pretty(file, material->GetAssetPath());
 
 	json_value_free(file);
 
 	//LOG(LogType::L_NORMAL, "File saved at: %s", material->GetAssetPath());
-	LOG(LogType::L_NORMAL, "File saved at: %s", material->GetLibraryPath());
+	LOG(LogType::L_NORMAL, "File saved at: %s", material->GetAssetPath());
 }
 
 //void MaterialImporter::Save(uint uid, const char* path)

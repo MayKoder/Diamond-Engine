@@ -160,7 +160,7 @@ void W_Assets::DrawFileTree(AssetDir& file)
 			else if(type == Resource::Type::MATERIAL)
 			{
 				W_Inspector* inspector = dynamic_cast<W_Inspector*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR));
-				inspector->SetEditingResource(EngineExternal->moduleResources->RequestResource(selectedFile->metaUID, selectedFile->resourceType));
+				inspector->SetEditingResource(EngineExternal->moduleResources->RequestFromAssets(selectedFile->importPath.c_str()));
 			}
 		}
 	}
@@ -182,7 +182,7 @@ void W_Assets::DrawFileTree(AssetDir& file)
 				ImGui::SetDragDropPayload("_MESH", &file.importPath, file.importPath.length());
 				break;
 			case  Resource::Type::MATERIAL:
-				ImGui::SetDragDropPayload("_MATERIAL", &file.metaFileDir, file.metaFileDir.length());
+				ImGui::SetDragDropPayload("_MATERIAL", &file.importPath, file.importPath.length());
 				break;
 			case  Resource::Type::SHADER:
 				ImGui::SetDragDropPayload("_SHADER", &file.metaFileDir, file.metaFileDir.length());

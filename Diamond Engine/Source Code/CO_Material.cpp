@@ -102,13 +102,12 @@ bool C_Material::OnEditor()
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_MATERIAL"))
 			{
-				std::string* metaFileDrop = (std::string*)payload->Data;
-				std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
+				std::string* assetsPath = (std::string*)payload->Data;
 
 				if(material != nullptr)
 					EngineExternal->moduleResources->UnloadResource(material->GetUID());
 
-				material = dynamic_cast<ResourceMaterial*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
+				material = dynamic_cast<ResourceMaterial*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath->c_str()));
 			}
 			ImGui::EndDragDropTarget();
 		}

@@ -314,8 +314,9 @@ int M_ResourceManager::CreateLibraryFromAssets(const char* assetsFile)
 	return resID;
 }
 
-void M_ResourceManager::RequestFromAssets(const char* assets_path)
+Resource* M_ResourceManager::RequestFromAssets(const char* assets_path)
 {
+	Resource* ret = nullptr;
 	if (ExistsOnLibrary(assets_path) != 0)
 	{
 		std::string meta = GetMetaPath(assets_path);
@@ -327,17 +328,23 @@ void M_ResourceManager::RequestFromAssets(const char* assets_path)
 
 			switch ((Resource::Type)sceneObj.ReadInt("Type"))
 			{
-				case Resource::Type::TEXTURE: RequestResource(sceneObj.ReadInt("UID"), sceneObj.ReadString("Library Path")); break;
-				case Resource::Type::MODEL: ModelImporter::LoadModelCustom(sceneObj.ReadString("Library Path")); break;
+				//case Resource::Type::TEXTURE: RequestResource(sceneObj.ReadInt("UID"), sceneObj.ReadString("Library Path")); break;
+				//case Resource::Type::MODEL: ModelImporter::LoadModelCustom(sceneObj.ReadString("Library Path")); break;
+			case Resource::Type::MATERIAL: 
+				ret = RequestResource(sceneObj.ReadInt("UID"), Resource::Type::MATERIAL); 
+				break;
 			}
 			//Free memory
 			json_value_free(scene);
+
+			if(ret != nullptr)
+				ret->SetAssetsPath(assets_path);
 		}
 	}
 	else
-	{
 		LOG(LogType::L_ERROR, "ASSET META OR LIBRARY NOT CREATED");
-	}
+
+	return ret;
 }
 
 Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid, Resource::Type type)
