@@ -9,7 +9,7 @@ class GameObject;
 class C_Camera;
 typedef unsigned int uint;
 struct SerializedField;
-class ResourceShader;
+class ResourceMaterial;
 
 class M_Scene : public Module
 {
@@ -49,7 +49,7 @@ public:
 	std::vector<GameObject*> destroyList;
 	std::multimap<uint, SerializedField*> referenceMap;
 
-	ResourceShader* defaultShader;
+	ResourceMaterial* defaultMaterial;
 
 private:
 	void Destroy(GameObject* gm);

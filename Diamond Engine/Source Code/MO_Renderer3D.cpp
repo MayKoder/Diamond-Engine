@@ -459,9 +459,9 @@ void ModuleRenderer3D::RayToMeshQueueIntersection(LineSegment& ray)
 			{
 				for (uint index = 0; index < _mesh->indices_count; index += 3)
 				{
-					float3 pA(&_mesh->vertices[_mesh->indices[index] * 3]);
-					float3 pB(&_mesh->vertices[_mesh->indices[index + 1] * 3]);
-					float3 pC(&_mesh->vertices[_mesh->indices[index + 2] * 3]);
+					float3 pA(&_mesh->vertices[_mesh->indices[index] * VERTEX_ATTRIBUTES]);
+					float3 pB(&_mesh->vertices[_mesh->indices[index + 1] * VERTEX_ATTRIBUTES]);
+					float3 pC(&_mesh->vertices[_mesh->indices[index + 2] * VERTEX_ATTRIBUTES]);
 
 					Triangle triangle(pA, pB, pC);
 

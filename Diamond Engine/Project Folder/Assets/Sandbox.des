@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        294.86187744140625,
-        110.82242584228516,
-        191.67092895507813
+        17.297677993774414,
+        10.252769470214844,
+        17.738853454589844
     ],
     "EditorCameraZ": [
-        -0.79966568946838379,
-        -0.30055052042007446,
-        -0.51981174945831299
+        -0.66908836364746094,
+        -0.31685283780097961,
+        -0.67225372791290283
     ],
     "EditorCameraY": [
-        -0.25199046730995178,
-        0.953765869140625,
-        -0.16380295157432556
+        -0.22351881861686707,
+        0.9484747052192688,
+        -0.22457751631736755
     ],
     "Game Objects": [
         {
@@ -39,159 +39,6 @@
                 {
                     "Type": 1,
                     "Active": true
-                }
-            ]
-        },
-        {
-            "name": "TestSandbox",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                0.36000001430511475,
-                0.36000001430511475,
-                0.36000001430511475
-            ],
-            "UID": 1413441994,
-            "ParentUID": 143570472,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                }
-            ]
-        },
-        {
-            "name": "Plane",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                -0.7071068286895752,
-                0,
-                0,
-                0.70710670948028564
-            ],
-            "Scale": [
-                500,
-                500,
-                500
-            ],
-            "UID": 1101907793,
-            "ParentUID": 1413441994,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/560742633.mmh",
-                    "UID": 560742633,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/54042063.shdr",
-                    "ShaderUID": 54042063
-                }
-            ]
-        },
-        {
-            "name": "Cube",
-            "Active": true,
-            "Position": [
-                -300,
-                0,
-                -300
-            ],
-            "Rotation": [
-                -0.68301278352737427,
-                -0.1830126941204071,
-                -0.1830127090215683,
-                0.68301266431808472
-            ],
-            "Scale": [
-                17.39555549621582,
-                17.39555549621582,
-                17.39555549621582
-            ],
-            "UID": 1364134672,
-            "ParentUID": 1413441994,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/357633280.mmh",
-                    "UID": 357633280,
-                    "alternColor": [
-                        1,
-                        0.99998998641967773,
-                        0.99998998641967773
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "Sphere",
-            "Active": true,
-            "Position": [
-                -287.66519165039063,
-                65.438919067382813,
-                -303.3785400390625
-            ],
-            "Rotation": [
-                -0.7071068286895752,
-                0,
-                0,
-                0.70710670948028564
-            ],
-            "Scale": [
-                18.083625793457031,
-                18.083625793457031,
-                18.083625793457031
-            ],
-            "UID": 2103194384,
-            "ParentUID": 1413441994,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/861183562.mmh",
-                    "UID": 861183562,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
                 }
             ]
         },
@@ -224,12 +71,12 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/796231171.mmh",
-                    "UID": 796231171,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
                     "alternColor": [
                         1,
-                        1,
-                        1
+                        0.99998998641967773,
+                        0.99998998641967773
                     ]
                 },
                 {
@@ -241,6 +88,14 @@
                     "rotationSpeed": 2,
                     "movementSpeed": 35,
                     "mouseSens": 1
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
                 }
             ]
         },
@@ -277,8 +132,163 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.7053406238555908,
+                    "hFOV": 0.96812385320663452,
                     "culling": false
+                }
+            ]
+        },
+        {
+            "name": "TestSandbox",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                0.24000000953674316,
+                0.24000000953674316,
+                0.24000000953674316
+            ],
+            "UID": 1716888692,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Plane",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                500,
+                500,
+                500
+            ],
+            "UID": 420350065,
+            "ParentUID": 1716888692,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/296489994.mmh",
+                    "UID": 296489994,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true
+                }
+            ]
+        },
+        {
+            "name": "Cube",
+            "Active": true,
+            "Position": [
+                -300,
+                0,
+                -300
+            ],
+            "Rotation": [
+                -0.68301278352737427,
+                -0.1830126941204071,
+                -0.1830127090215683,
+                0.68301266431808472
+            ],
+            "Scale": [
+                17.39555549621582,
+                17.39555549621582,
+                17.39555549621582
+            ],
+            "UID": 1432217696,
+            "ParentUID": 1716888692,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/317057310.mmh",
+                    "UID": 317057310,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true
+                }
+            ]
+        },
+        {
+            "name": "Sphere",
+            "Active": true,
+            "Position": [
+                -287.66519165039063,
+                65.438919067382813,
+                -303.3785400390625
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                18.083625793457031,
+                18.083625793457031,
+                18.083625793457031
+            ],
+            "UID": 467515712,
+            "ParentUID": 1716888692,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/2010055644.mmh",
+                    "UID": 2010055644,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         }

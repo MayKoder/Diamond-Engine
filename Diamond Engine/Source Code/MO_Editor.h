@@ -13,7 +13,7 @@ typedef unsigned int ImGuiID;
 enum class LogType;
 class GameObject;
 class ResourceTexture;
-class AssetDir;
+struct AssetDir;
 
 enum class EditorWindow {
 

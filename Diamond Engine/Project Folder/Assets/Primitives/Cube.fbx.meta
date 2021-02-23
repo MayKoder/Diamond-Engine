@@ -1,9 +1,10 @@
 {
     "Assets Path": "Assets\/Primitives\/Cube.fbx",
-    "Library Path": "Library\/Models\/444791186.model",
-    "UID": 444791186,
+    "modTime": 1613402753,
+    "Library Path": "Library\/Models\/1912840798.model",
+    "UID": 1912840798,
     "Type": 1,
     "Meshes Inside": [
-        796231171
+        1313575480
     ]
 }

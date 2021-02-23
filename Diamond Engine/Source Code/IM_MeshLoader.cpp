@@ -146,37 +146,47 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 
 	// copy vertices
 	_mesh->vertices_count = importedMesh->mNumVertices;
-	_mesh->vertices = new float[_mesh->vertices_count * 3];
+	_mesh->vertices = new float[_mesh->vertices_count * VERTEX_ATTRIBUTES];
 
-	memcpy(_mesh->vertices, importedMesh->mVertices, sizeof(float) * _mesh->vertices_count * 3);
-
-	LOG(LogType::L_NORMAL, "New mesh with %d vertices", _mesh->vertices_count);
-
-	if (importedMesh->HasNormals())
+	for (size_t i = 0; i < _mesh->vertices_count; i++)
 	{
-		_mesh->normals_count = _mesh->vertices_count;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES] = importedMesh->mVertices[i].x;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + 1] = importedMesh->mVertices[i].y;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + 2] = importedMesh->mVertices[i].z;
 
-		_mesh->normals = new float[_mesh->normals_count * 3];
-		memcpy(_mesh->normals, importedMesh->mNormals, sizeof(float) * _mesh->normals_count * 3);
+		if (importedMesh->HasTextureCoords(0))
+		{
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 3] = importedMesh->mTextureCoords[0][i].x;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 4] = importedMesh->mTextureCoords[0][i].y;
 
-		LOG(LogType::L_NORMAL, "New mesh with %d normals", _mesh->normals_count);
+			if (importedMesh->mTangents != nullptr)
+			{
+				_mesh->vertices[i * VERTEX_ATTRIBUTES + 8] = importedMesh->mTangents[i].x;
+				_mesh->vertices[i * VERTEX_ATTRIBUTES + 9] = importedMesh->mTangents[i].y;
+				_mesh->vertices[i * VERTEX_ATTRIBUTES + 10] = importedMesh->mTangents[i].z;
+			}
+		}
+		else
+		{
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 3] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 4] = 0.0f;
+
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 8] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 9] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 10] = 0.0f;
+		}
+			
+
+		if (importedMesh->HasNormals())
+		{
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 5] = importedMesh->mNormals[i].x;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 6] = importedMesh->mNormals[i].y;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 7] = importedMesh->mNormals[i].z;
+			//LOG(LogType::L_NORMAL, "New mesh with %d normals", _mesh->normals_count);
+		}
 	}
 
 	//So are we really only supporting 1 channel uv and colors?
-	if (importedMesh->HasTextureCoords(0))
-	{
-		_mesh->texCoords_count = importedMesh->mNumVertices;
-		_mesh->texCoords = new float[importedMesh->mNumVertices * 2];
-
-		for (unsigned int k = 0; k < _mesh->texCoords_count; k++)
-		{
-			_mesh->texCoords[k * 2] = importedMesh->mTextureCoords[0][k].x;
-			_mesh->texCoords[k * 2 + 1] = importedMesh->mTextureCoords[0][k].y;
-		}
-		//_mesh->textureID = temporalTexID;
-
-		LOG(LogType::L_NORMAL, "New mesh with %d texture coords", _mesh->texCoords_count);
-	}
 
 	//TODO: Load vertex colors
 	if (importedMesh->HasVertexColors(0)) 

@@ -23,10 +23,10 @@
 
 #include"RE_Texture.h"
 #include"DETime.h"
-#include"RE_Shader.h"
+#include"RE_Material.h"
 
 M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr),
-defaultShader(nullptr)
+defaultMaterial(nullptr)
 {
 }
 
@@ -45,7 +45,7 @@ bool M_Scene::Start()
 {
 	CreateGameCamera("Main Camera");
 
-	LoadScene("Library/Scenes/323737769.des");
+	LoadScene("Library/Scenes/884741631.des");
 
 #ifndef STANDALONE
 	//TODO IMPORTANT: This is why we should save icons .meta, or we could generate them every time
@@ -153,8 +153,8 @@ update_status M_Scene::Update(float dt)
 bool M_Scene::CleanUp()
 {
 	//This will delete all the gameObjects
-	if (defaultShader != nullptr)
-		EngineExternal->moduleResources->UnloadResource(defaultShader->GetUID());
+	if (defaultMaterial != nullptr)
+		EngineExternal->moduleResources->UnloadResource(defaultMaterial->GetUID());
 
 	delete root;
 	return true;
