@@ -1,9 +1,10 @@
 {
     "Assets Path": "Assets\/Pilot\/Pilot_LP_Animated.fbx",
-    "Library Path": "Library\/Models\/394116734.model",
-    "UID": 394116734,
+    "modTime": 1613402753,
+    "Library Path": "Library\/Models\/1722400727.model",
+    "UID": 1722400727,
     "Type": 1,
     "Meshes Inside": [
-        402580095
+        508469376
     ]
 }

@@ -244,7 +244,6 @@ void GameObject::LoadFromJson(JSON_Object* _obj)
 
 void GameObject::LoadComponents(JSON_Array* componentArray)
 {
-
 	DEConfig conf(nullptr);
 	for (size_t i = 1; i < json_array_get_count(componentArray); i++)
 	{
@@ -256,7 +255,6 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 		comp->LoadData(conf);
 
 	}
-
 }
 
 

@@ -15,6 +15,7 @@ public:
 		SCENE,
 		SCRIPT,
 		SHADER,
+		MATERIAL,
 		UNKNOWN
 	};
 

@@ -9,8 +9,10 @@
 
 typedef unsigned int GLuint;
 typedef unsigned int uint;
-class ResourceShader;
+class ResourceMaterial;
 class C_Transform;
+
+#define VERTEX_ATTRIBUTES 11
 
 class ResourceMesh  : public Resource
 {
@@ -22,8 +24,8 @@ public:
 	bool LoadToMemory() override;
 	bool UnloadFromMemory() override;
 
-	void RenderMesh(GLuint textureID, bool renderTexture = false, ResourceShader* shader = nullptr, C_Transform* _transform = nullptr);
-	void RenderMeshDebug(bool* vertexNormals, bool* faceNormals);
+	void RenderMesh(GLuint textureID, float3 color, bool renderTexture = false, ResourceMaterial* shader = nullptr, C_Transform* _transform = nullptr);
+	void RenderMeshDebug(bool* vertexNormals, bool* faceNormals, const float*);
 
 	vec3 GetVectorFromIndex(float* startValue);
 
@@ -39,14 +41,6 @@ public:
 	uint vertices_count = 0;
 	float* vertices = nullptr;
 
-	uint normalbuffer_id = 0;
-	uint normals_count = 0;
-	float* normals = nullptr;
-
-	uint texCoords_id = 0;
-	uint texCoords_count = 0;
-	float* texCoords = nullptr;
-
 	AABB localAABB;
 
 	//TODO: Delete this, wireframe mode should be different
@@ -54,7 +48,9 @@ public:
 	bool* generalWireframe;
 	// ----------- ------------------------------- ---------------//
 
-	void GenerateSphere(float radius, float sectorCount, float stackCount);
+	uint VBO;
+	uint VAO;
+	uint EBO;
 
 	//TODO: Move this to file system
 	const char* SaveCustomFormat(uint& retSize);

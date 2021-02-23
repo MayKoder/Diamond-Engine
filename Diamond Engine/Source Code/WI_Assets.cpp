@@ -1,15 +1,18 @@
 #ifndef STANDALONE
 
 #include"WI_Assets.h"
+#include"WI_TextEditor.h"
+#include"WI_Inspector.h"
 
 #include"IM_FileSystem.h"
+#include"IM_ShaderImporter.h"
+#include"IM_MaterialImporter.h"
+
 #include"MO_ResourceManager.h"
 #include"MO_Input.h"
 #include"MO_Editor.h"
 #include"MO_MonoManager.h"
 #include"RE_Texture.h"
-#include"WI_TextEditor.h"
-#include"IM_ShaderImporter.h"
 
 W_Assets::W_Assets() : Window(), selectedFile(nullptr)
 {
@@ -107,6 +110,12 @@ void W_Assets::Draw()
 				ImGui::EndMenu();
 			}
 
+			if (ImGui::BeginMenu("Create Material"))
+			{
+				DrawCreationPopup("Material path: ", ".mat", MaterialImporter::CreateBaseMaterialFile);
+				ImGui::EndMenu();
+			}
+
 			ImGui::EndPopup();
 		}
 	}
@@ -148,6 +157,11 @@ void W_Assets::DrawFileTree(AssetDir& file)
 				txtEditor->SetTextFromFile(file.importPath.c_str());
 				//Load script text and open visual studio?
 			}
+			else if(type == Resource::Type::MATERIAL)
+			{
+				W_Inspector* inspector = dynamic_cast<W_Inspector*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::INSPECTOR));
+				inspector->SetEditingResource(EngineExternal->moduleResources->RequestFromAssets(selectedFile->importPath.c_str()));
+			}
 		}
 	}
 
@@ -166,6 +180,9 @@ void W_Assets::DrawFileTree(AssetDir& file)
 				break;
 			case  Resource::Type::MESH:
 				ImGui::SetDragDropPayload("_MESH", &file.importPath, file.importPath.length());
+				break;
+			case  Resource::Type::MATERIAL:
+				ImGui::SetDragDropPayload("_MATERIAL", &file.importPath, file.importPath.length());
 				break;
 			case  Resource::Type::SHADER:
 				ImGui::SetDragDropPayload("_SHADER", &file.metaFileDir, file.metaFileDir.length());
@@ -210,7 +227,7 @@ void W_Assets::DrawCreationPopup(const char* popDisplay, const char* dotExtensio
 		//TODO: Check if the extension is correct, to avoid a .cs.glsl file
 		if (path.find(dotExtension) != path.npos) 
 		{ 
-			f(name);
+			f(path.c_str());
 			name[0] = '\0';
 		}
 

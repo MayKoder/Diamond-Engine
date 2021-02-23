@@ -1,9 +1,10 @@
 {
     "Assets Path": "Assets\/Primitives\/Icosphere.fbx",
-    "Library Path": "Library\/Models\/201987628.model",
-    "UID": 201987628,
+    "modTime": 1613402753,
+    "Library Path": "Library\/Models\/263840074.model",
+    "UID": 263840074,
     "Type": 1,
     "Meshes Inside": [
-        514132551
+        1528379279
     ]
 }

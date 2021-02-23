@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 class ResourceTexture;
-class ResourceShader;
+class ResourceMaterial;
 
 class C_Material : public Component
 {
@@ -20,7 +20,8 @@ public:
 	void LoadData(DEConfig& nObj) override;
 
 	bool viewWithCheckers;
+
 	ResourceTexture* matTexture;
-	ResourceShader* shader;
+	ResourceMaterial* material;
 
 };

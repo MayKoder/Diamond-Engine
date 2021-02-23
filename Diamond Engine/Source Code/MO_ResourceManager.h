@@ -35,9 +35,10 @@ public:
 
 	void PopulateFileArray();
 	void UnloadResource(int uid);
-	void RequestFromAssets(const char* assets_path);
+	Resource* RequestFromAssets(const char* assets_path);
 	void GenerateMeta(const char* aPath, const char* lPath, unsigned int uid, Resource::Type type);
 
+	Resource* RequestResource(int uid, Resource::Type type);
 	Resource* RequestResource(int uid, const char* libraryPath = nullptr);
 	Resource* CreateNewResource(const char* assetsFile, uint uid, Resource::Type type);
 	Resource* LoadFromLibrary(const char* libraryFile, Resource::Type type, uint _uid);
