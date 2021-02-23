@@ -1,25 +1,25 @@
 {
     "Game Objects": [
         {
-            "name": "Cube",
+            "name": "Player",
             "Active": true,
             "Position": [
-                -1.560367226600647,
-                1.3270139694213867,
-                -0.32808405160903931
+                0,
+                2,
+                -2.2426132773034624e-07
             ],
             "Rotation": [
-                -0.7071068286895752,
                 0,
                 0,
-                0.70710670948028564
+                0,
+                1
             ],
             "Scale": [
                 1,
-                0.99974519014358521,
-                0.99974519014358521
+                2,
+                0.9999280571937561
             ],
-            "UID": 1875191472,
+            "UID": 1661764735,
             "ParentUID": 143570472,
             "Components": [
                 {
@@ -29,8 +29,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1313575480.mmh",
-                    "UID": 1313575480,
+                    "Path": "Library\/Meshes\/796231171.mmh",
+                    "UID": 796231171,
                     "alternColor": [
                         1,
                         1,
@@ -38,12 +38,52 @@
                     ]
                 },
                 {
-                    "Type": 3,
+                    "Type": 5,
                     "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/1452971041.mat",
-                    "MaterialUID": 1452971041
+                    "ScriptName": "FPS_Controller",
+                    "reference": 1661764735,
+                    "turret": 1661764735,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 35,
+                    "mouseSens": 1
+                }
+            ]
+        },
+        {
+            "name": "Game Camera",
+            "Active": true,
+            "Position": [
+                0,
+                0.70512247085571289,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 188616957,
+            "ParentUID": 1661764735,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 4,
+                    "Active": true,
+                    "fType": 2,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 5000,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.7053406238555908,
+                    "culling": false
                 }
             ]
         }
