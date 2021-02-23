@@ -26,7 +26,6 @@ W_Scene::W_Scene(Application* _app) : Window() /*: texColorBuffer(-1)*/, manipul
 	mode = ImGuizmo::MODE::WORLD;
 
 	oldMat = float4x4::zero;
-	newMat = float4x4::zero;
 }
 
 W_Scene::~W_Scene()
@@ -164,14 +163,13 @@ void W_Scene::DrawGuizmo()
 			//mat.Decompose(trans->position, trans->rotation, trans->localScale);
 			trans->SetTransformWithGlobal(mat);
 			trans->updateTransform = true;
-
-			newMat = mat;
 			manipulatingGuizmo = true;
 		}
 
 		else if (ImGuizmo::IsUsing() == false && manipulatingGuizmo == true)
 		{
-			App->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(App->moduleEditor->GetSelectedGO()->UID, newMat.ptr(), oldMat.ptr()));
+			mat.Transpose();
+			App->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(App->moduleEditor->GetSelectedGO()->UID, mat.ptr(), oldMat.ptr()));
 
 			manipulatingGuizmo = false;
 		}
@@ -179,7 +177,6 @@ void W_Scene::DrawGuizmo()
 		else if (ImGuizmo::IsUsing() == false && manipulatingGuizmo == false)
 		{
 			mat.Transpose();
-
 			oldMat = mat;
 		}
 
