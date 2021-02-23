@@ -29,6 +29,7 @@ public:
 
 	GameObject* GetGOFromUID(GameObject* n, uint sUID);
 	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
+	void LoadScriptsData();
 
 #ifndef STANDALONE
 	void OnGUI() override;

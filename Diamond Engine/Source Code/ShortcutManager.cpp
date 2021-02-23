@@ -67,6 +67,7 @@ void ShortcutManager::DeleteCommandHistory()
 		delete commandHistory[i];
 
 	commandHistory.clear();
+	index = -1;
 }
 
 

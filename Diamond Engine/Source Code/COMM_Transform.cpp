@@ -12,11 +12,8 @@
 
 COMM_Transform::COMM_Transform(int agentUid, float* nextMat, float* previousMat) : Command(agentUid)
 {
-	for (int i = 0; i < 16; i++)
-	{
-		nextMatrix[i] = nextMat[i];
-		previousMatrix[i] = previousMat[i];
-	}
+	memcpy(nextMatrix, nextMat, sizeof(float) * 16);
+	memcpy(previousMatrix, previousMat, sizeof(float) * 16);
 }
 
 

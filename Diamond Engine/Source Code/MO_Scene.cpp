@@ -99,13 +99,12 @@ update_status M_Scene::Update(float dt)
 		{
 			JSON_Value* scene = json_parse_file("EngineIcons/cntlC.json");
 
-			//TODO: Duplicated code from scene loading, move to method
+			//TODO: Duplicated code from scene loading && delete command, move to method
 			if (scene != NULL) 
 			{
 
 				JSON_Object* sceneObj = json_value_get_object(scene);
 				JSON_Array* sceneGO = json_object_get_array(sceneObj, "Game Objects");
-				JSON_Object* goJsonObj = json_array_get_object(sceneGO, 0);
 
 				GameObject* parent = (App->moduleEditor->GetSelectedGO() == nullptr) ? root : App->moduleEditor->GetSelectedGO();
 				for (size_t i = 0; i < json_array_get_count(sceneGO); i++)
@@ -113,28 +112,7 @@ update_status M_Scene::Update(float dt)
 					parent = LoadGOData(json_array_get_object(sceneGO, i), parent);
 				}
 
-				//TODO: Duplicated code from scene loading C#, move to method
-				for (auto i = referenceMap.begin(); i != referenceMap.end(); ++i)
-				{
-					// Get the range of the current key
-					auto range = referenceMap.equal_range(i->first);
-
-					// Now render out that whole range
-					for (auto d = range.first; d != range.second; ++d)
-					{
-						d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
-
-						if (d->second->fiValue.goValue)
-						{
-							if (std::find(d->second->fiValue.goValue->csReferences.begin(), d->second->fiValue.goValue->csReferences.end(), d->second) == d->second->fiValue.goValue->csReferences.end())
-								d->second->fiValue.goValue->csReferences.push_back(d->second);
-
-							d->second->parentSC->SetField(d->second->field, d->second->fiValue.goValue);
-						}
-					}
-				}
-
-				referenceMap.clear();
+				LoadScriptsData();
 
 				//Free memory
 				json_value_free(scene);
@@ -186,6 +164,31 @@ GameObject* M_Scene::CreateGameObject(const char* name, GameObject* parent, int 
 {
 	GameObject* gm = new GameObject(name, parent, _uid);
 	return gm;
+}
+
+void M_Scene::LoadScriptsData()
+{
+	for (auto i = referenceMap.begin(); i != referenceMap.end(); ++i)
+	{
+		// Get the range of the current key
+		auto range = referenceMap.equal_range(i->first);
+
+		// Now render out that whole range
+		for (auto d = range.first; d != range.second; ++d)
+		{
+			d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
+
+			if (d->second->fiValue.goValue)
+			{
+				if (std::find(d->second->fiValue.goValue->csReferences.begin(), d->second->fiValue.goValue->csReferences.end(), d->second) == d->second->fiValue.goValue->csReferences.end())
+					d->second->fiValue.goValue->csReferences.push_back(d->second);
+
+				d->second->parentSC->SetField(d->second->field, d->second->fiValue.goValue);
+			}
+		}
+	}
+
+	referenceMap.clear();
 }
 
 void M_Scene::SetGameCamera(C_Camera* cam)
@@ -315,27 +318,7 @@ void M_Scene::LoadScene(const char* name)
 		parent = LoadGOData(json_array_get_object(sceneGO, i), parent);
 	}
 
-	for (auto i = referenceMap.begin(); i != referenceMap.end(); ++i)
-	{
-		// Get the range of the current key
-		auto range = referenceMap.equal_range(i->first);
-
-		// Now render out that whole range
-		for (auto d = range.first; d != range.second; ++d) 
-		{
-			d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
-
-			if (d->second->fiValue.goValue) 
-			{
-				if (std::find(d->second->fiValue.goValue->csReferences.begin(), d->second->fiValue.goValue->csReferences.end(), d->second) == d->second->fiValue.goValue->csReferences.end())
-					d->second->fiValue.goValue->csReferences.push_back(d->second);
-
-				d->second->parentSC->SetField(d->second->field, d->second->fiValue.goValue);
-			}
-		}
-	}
-
-	referenceMap.clear();
+	LoadScriptsData();
 
 	//Free memory
 	json_value_free(scene);
