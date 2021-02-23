@@ -12,7 +12,10 @@
 #include "RE_Texture.h"
 #include"IM_MaterialImporter.h"
 
-ResourceMaterial::ResourceMaterial(unsigned int _uid) : Resource(_uid, Resource::Type::MATERIAL), shader(nullptr) {}
+ResourceMaterial::ResourceMaterial(unsigned int _uid) : Resource(_uid, Resource::Type::MATERIAL), shader(nullptr) 
+{
+
+}
 
 ResourceMaterial::~ResourceMaterial()
 {
@@ -38,7 +41,7 @@ bool ResourceMaterial::LoadToMemory()
 	{
 		val.nObj = json_array_get_object(uniformsArray, i);
 
-		if (val.ReadInt("type") == GL_SAMPLER_2D) 
+		if (val.ReadInt("type") == GL_SAMPLER_2D && val.ReadInt("value") != 0)
 		{
 			for (size_t k = 0; k < uniforms.size(); ++k)
 			{	
