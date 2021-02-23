@@ -180,8 +180,10 @@
     <ClInclude Include="Source Code\Color.h" />
     <ClInclude Include="Source Code\Component.h" />
     <ClInclude Include="Source Code\CO_Camera.h" />
+    <ClInclude Include="Source Code\CO_Collider.h" />
     <ClInclude Include="Source Code\CO_MeshRenderer.h" />
     <ClInclude Include="Source Code\CO_Material.h" />
+    <ClInclude Include="Source Code\CO_RigidBody.h" />
     <ClInclude Include="Source Code\CO_Script.h" />
     <ClInclude Include="Source Code\CO_Transform.h" />
     <ClInclude Include="Source Code\CS_Transform_Bindings.h" />
@@ -329,8 +331,10 @@
     <ClCompile Include="Source Code\Color.cpp" />
     <ClCompile Include="Source Code\Component.cpp" />
     <ClCompile Include="Source Code\CO_Camera.cpp" />
+    <ClCompile Include="Source Code\CO_Collider.cpp" />
     <ClCompile Include="Source Code\CO_Material.cpp" />
     <ClCompile Include="Source Code\CO_MeshRenderer.cpp" />
+    <ClCompile Include="Source Code\CO_RigidBody.cpp" />
     <ClCompile Include="Source Code\CO_Script.cpp" />
     <ClCompile Include="Source Code\CO_Transform.cpp" />
     <ClCompile Include="Source Code\DEJsonSupport.cpp" />

@@ -8,6 +8,7 @@
 #include "MO_Renderer3D.h"
 #include "MO_Camera3D.h"
 #include "MO_Scene.h"
+#include "MO_Physics.h"
 
 #ifndef STANDALONE
 #include "MO_Editor.h"
@@ -32,7 +33,7 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	moduleScene = new M_Scene(this);
 	moduleRenderer3D = new ModuleRenderer3D(this);
 	moduleCamera = new ModuleCamera3D(this);
-
+	modulePhysics = new ModulePhysics(this);
 	moduleMono = new M_MonoManager(this);
 
 	moduleResources = new M_ResourceManager(this);
