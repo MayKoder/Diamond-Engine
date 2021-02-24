@@ -20,6 +20,7 @@ public:
 		Script,
 		Count,
 		RigidBody,
+		Collider,
 	};
 
 	Component(GameObject* _gm);

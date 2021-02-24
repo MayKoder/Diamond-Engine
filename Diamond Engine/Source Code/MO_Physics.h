@@ -8,6 +8,7 @@
 #include "GameObject.h"
 #include "Globals.h"
 class ComponentCollider;
+class C_Collider;
 
 namespace physx
 {
@@ -87,7 +88,8 @@ public:
     void renderGeometryHolder(const physx::PxGeometryHolder& h);
 
    // void DrawGeometry(GeometryType type, float3 pos = { 0.0f, 0.0f, 0.0f }, float radius = 3.0f, float3 size = { 1.0f, 1.0f, 1.0f });
-    void DrawCollider(ComponentCollider* collider);
+    void DrawCollider(C_Collider* collider);
+    float4x4 PhysXTransformToF4F(physx::PxTransform transform);
 
     void WakeUpGeometry(GameObject* gameObject);
     // SPACE - M - N testing geometries
@@ -95,13 +97,12 @@ public:
 
     physx::PxRigidStatic* CreateRigidStatic(float3 pos);
     physx::PxRigidDynamic* CreateRigidDynamic(float3 pos);
-  //  physx::PxShape* CreateCollider(GeometryType colliderType, float3 size, physx::PxMaterial* material = nullptr);
+    physx::PxShape* CreateCollider(float3 size, physx::PxMaterial* material = nullptr);
     physx::PxMaterial* CreateMaterial(float staticFriction = 0.5f, float dynamicFriction = 0.5f, float restitution = 0.1f);
 
     //Release rigid Static/Dynamic actors and detach collider shapes if needed.
     void ReleaseActor(physx::PxRigidActor* actor);
 
-    float4x4 PhysXTransformToF4F(physx::PxTransform transform);
     physx::PxTransform TRStoPxTransform(float3 pos, float3 rot);
 
 public:

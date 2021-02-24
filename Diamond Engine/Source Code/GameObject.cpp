@@ -7,6 +7,7 @@
 #include "CO_Camera.h"
 #include "CO_Script.h"
 #include "CO_RigidBody.h"
+#include "CO_Collider.h"
 
 #include"MO_Scene.h"
 
@@ -109,6 +110,9 @@ Component* GameObject::AddComponent(Component::Type _type, const char* params)
 		break;
 	case Component::Type::RigidBody:
 		ret = new C_RigidBody(this);
+		break;
+	case Component::Type::Collider:
+		ret = new C_Collider(this);
 		break;
 	}
 

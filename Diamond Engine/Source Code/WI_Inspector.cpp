@@ -128,6 +128,11 @@ void W_Inspector::Draw()
 					if (selectedGO->GetComponent(Component::Type::RigidBody) == nullptr)
 						selectedGO->AddComponent(Component::Type::RigidBody);
 				}
+				if (ImGui::Selectable("Collider"))
+				{
+					if (selectedGO->GetComponent(Component::Type::Collider) == nullptr)
+						selectedGO->AddComponent(Component::Type::Collider);
+				}
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)
 				{
 					if (ImGui::Selectable(mono_class_get_name(EngineExternal->moduleMono->userScripts[i]))) 

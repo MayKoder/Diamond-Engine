@@ -22,9 +22,8 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 
 {
 	goTransform = dynamic_cast<C_Transform*>(_gm->GetComponent(Component::Type::Transform));
-	//collider_info = _gm->GetCollider();
+	collider_info = dynamic_cast<C_Collider*>(_gm->GetComponent(Component::Type::Collider));
 
-	collider_info = nullptr;
 	rigid_dynamic = EngineExternal->modulePhysics->CreateRigidDynamic(goTransform->position);
 
 	if (collider_info != nullptr)
@@ -78,16 +77,17 @@ void C_RigidBody::Update()
 
 		if (collider_info != nullptr) {
 
-		/*	goTransform->SetPosition({ rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z });
+			float3 pos = { rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z };
 			Quat rot = { rigid_dynamic->getGlobalPose().q.x, rigid_dynamic->getGlobalPose().q.y, rigid_dynamic->getGlobalPose().q.z,  rigid_dynamic->getGlobalPose().q.w };
 			float3 new_rot = rot.ToEulerXYZ() * RADTODEG;
+			float3 scale = goTransform->localScale;
 
-			goTransform->SetRotation({ new_rot.x,new_rot.y, new_rot.z, });*/
+			goTransform->SetTransformMatrix(pos, rot, scale);
 		}
 		else
 		{
 			float3 pos = { rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z };
-			float3 scale = { 1, 1, 1 };
+			float3 scale = goTransform->localScale;
 			goTransform->SetTransformMatrix(pos, Quat::identity, scale);
 		}
 			

@@ -1,4 +1,6 @@
 #include "MO_Physics.h"
+#include "CO_Collider.h"
+
 #include "Application.h"
 
 
@@ -118,8 +120,8 @@ bool ModulePhysics::Init() {
 	//Initialize Material with default values staticFric 0.5  DynamicFric 0.5  restitution 0.1
 	mMaterial = CreateMaterial();
 
-	//PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
-	//mScene->addActor(*groundPlane);
+//	PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
+//	mScene->addActor(*groundPlane);
 
 	//Init vehicle after foundation and physics
 	PxInitVehicleSDK(*mPhysics);
@@ -552,32 +554,32 @@ physx::PxRigidDynamic* ModulePhysics::CreateRigidDynamic(float3 pos) {
 
 	PxRigidDynamic* dynamicBody = nullptr;
 	dynamicBody = mPhysics->createRigidDynamic(position);
-
 	mScene->addActor(*dynamicBody);
 	return dynamicBody;
 }
 //
-//physx::PxShape* ModulePhysics::CreateCollider(GeometryType colliderType, float3 size, PxMaterial* material) {
-//
-//	PxShape* colliderShape = nullptr;
-//
-//	if (material == nullptr)
-//		material = mMaterial;
-//
-//	switch (colliderType) {
-//	case GeometryType::BOX:
-//		colliderShape = mPhysics->createShape(PxBoxGeometry(size.x, size.y, size.z), *material, true);
-//		break;
-//	case GeometryType::SPHERE:
-//		colliderShape = mPhysics->createShape(PxSphereGeometry(size.MaxElement()), *material, true);
-//		break;
-//	case GeometryType::CAPSULE:
-//		colliderShape = mPhysics->createShape(PxCapsuleGeometry(size.x, size.y), *material, true);
-//		break;
-//	}
-//
-//	return colliderShape;
-//}
+physx::PxShape* ModulePhysics::CreateCollider(float3 size, PxMaterial* material) {
+
+	PxShape* colliderShape = nullptr;
+
+	if (material == nullptr)
+		material = mMaterial;
+
+	/*switch (colliderType) {
+	case GeometryType::BOX:
+		colliderShape = mPhysics->createShape(PxBoxGeometry(size.x, size.y, size.z), *material, true);
+		break;
+	case GeometryType::SPHERE:
+		colliderShape = mPhysics->createShape(PxSphereGeometry(size.MaxElement()), *material, true);
+		break;
+	case GeometryType::CAPSULE:
+		colliderShape = mPhysics->createShape(PxCapsuleGeometry(size.x, size.y), *material, true);
+		break;
+	}*/
+	colliderShape = mPhysics->createShape(PxBoxGeometry(size.x, size.y, size.z), *material, true);
+
+	return colliderShape;
+}
 
 physx::PxMaterial* ModulePhysics::CreateMaterial(float staticFriction, float dynamicFriction, float restitution) {
 
@@ -600,12 +602,23 @@ void ModulePhysics::ReleaseActor(PxRigidActor* actor) {
 	actor->release();
 	actor = nullptr;
 }
-//
-//void ModulePhysics::DrawCollider(ComponentCollider* collider)
+
+
+float4x4 ModulePhysics::PhysXTransformToF4F(PxTransform transform) {
+
+	float3 pos = { transform.p.x, transform.p.y, transform.p.z };
+	Quat rot = { transform.q.x, transform.q.y, transform.q.z, transform.q.w };
+
+	float4x4 matrix = float4x4(rot, pos);
+
+	return matrix;
+}
+
+//void ModulePhysics::DrawCollider(C_Collider* collider)
 //{
 //
 //
-//	float4x4 transform = collider->transform->GetGlobalMatrix().Transposed() * PhysXTransformToF4F(collider->colliderShape->getLocalPose());
+//	float4x4 transform = collider->transform->GetGlobalTransposed() * PhysXTransformToF4F(collider->colliderShape->getLocalPose());
 //
 //	switch (collider->type)
 //	{
@@ -639,15 +652,6 @@ void ModulePhysics::ReleaseActor(PxRigidActor* actor) {
 //	gameObject->GetRigidbody()->rigid_dynamic->wakeUp();
 //}
 
-float4x4 ModulePhysics::PhysXTransformToF4F(PxTransform transform) {
-
-	float3 pos = { transform.p.x, transform.p.y, transform.p.z };
-	Quat rot = { transform.q.x, transform.q.y, transform.q.z, transform.q.w };
-
-	float4x4 matrix = float4x4(rot, pos);
-
-	return matrix;
-}
 
 PxTransform ModulePhysics::TRStoPxTransform(float3 pos, float3 rot) {
 
