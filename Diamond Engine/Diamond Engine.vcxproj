@@ -310,6 +310,18 @@
     <ClInclude Include="Source Code\External Libraries\Wwise\AK\SoundEngine\Common\IAkProcessorFeatures.h" />
     <ClInclude Include="Source Code\External Libraries\Wwise\AK\SoundEngine\Common\IAkRTPCSubscriber.h" />
     <ClInclude Include="Source Code\External Libraries\Wwise\AK\SoundEngine\Common\IAkStreamMgr.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkDefaultLowLevelIODispatcher.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFileLocationBase.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackage.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackageLowLevelIO.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackageLUT.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkMultipleFileLocation.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkDefaultIOHookBlocking.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkDefaultIOHookDeferred.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkFileHelpers.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkFilePackageLowLevelIOBlocking.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkFilePackageLowLevelIODeferred.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\stdafx.h" />
     <ClInclude Include="Source Code\IM_FileSystem.h" />
     <ClInclude Include="Source Code\GameObject.h" />
     <ClInclude Include="Source Code\glmath.h" />
@@ -422,6 +434,14 @@
     <ClCompile Include="Source Code\External Libraries\mmgr\mmgr.cpp" />
     <ClCompile Include="Source Code\External Libraries\parson\parson.c" />
     <ClCompile Include="Source Code\External Libraries\PugiXML\pugixml.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkDefaultLowLevelIODispatcher.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFileLocationBase.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackage.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackageLUT.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkMultipleFileLocation.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkDefaultIOHookBlocking.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkDefaultIOHookDeferred.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\stdafx.cpp" />
     <ClCompile Include="Source Code\IM_FileSystem.cpp" />
     <ClCompile Include="Source Code\GameObject.cpp" />
     <ClCompile Include="Source Code\glmath.cpp" />
@@ -472,6 +492,7 @@
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_CPP.inl" />
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl" />
     <None Include="Source Code\External Libraries\MathGeoLib\include\Math\Matrix.inl" />
+    <None Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackageLowLevelIO.inl" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Diamond Engine.rc" />

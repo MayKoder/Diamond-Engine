@@ -35,6 +35,6 @@ namespace AK
 
 }
 
-void InitSoundEngine();
+bool InitSoundEngine();
 
 #endif // !__WWISE_INCLUDES_H__

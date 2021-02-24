@@ -1,4 +1,5 @@
 #include "Wwise_Includes.h"
+#include <assert.h>
 
 namespace AK
 {
@@ -31,8 +32,28 @@ namespace AK
     }
 }
 
-void InitSoundEngine()
+bool InitSoundEngine()
 {
 	AkMemSettings memSettings;
 	AK::MemoryMgr::GetDefaultSettings(memSettings);
+    if (AK::MemoryMgr::Init(&memSettings) != AK_Success)
+    {
+        assert(!"Could not create the memory manager.");
+        return false;
+    }
+
+    AkStreamMgrSettings stmSettings;
+    AK::StreamMgr::GetDefaultSettings(stmSettings);
+    if (!AK::StreamMgr::Create(stmSettings))
+    {
+        assert(!"Could not create the Streaming Manager");
+        return false;
+    }
+
+    AkDeviceSettings deviceSettings;
+    AK::StreamMgr::GetDefaultDeviceSettings(deviceSettings);        /// Add low level I/O
+
+
+
+    return true;
 }

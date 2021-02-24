@@ -103,6 +103,9 @@
     <Filter Include="Externals\AK">
       <UniqueIdentifier>{da294add-da4b-439d-964d-5247e15b029d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Externals\AK\LowLevelIO">
+      <UniqueIdentifier>{dabae39a-3e64-4aa8-b0f1-127c4822ce97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -646,6 +649,42 @@
     <ClInclude Include="Source Code\External Libraries\Wwise\AK\SoundEngine\Common\IAkStreamMgr.h">
       <Filter>Externals\AK</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkDefaultLowLevelIODispatcher.h">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFileLocationBase.h">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackage.h">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackageLowLevelIO.h">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackageLUT.h">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkMultipleFileLocation.h">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkDefaultIOHookBlocking.h">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkDefaultIOHookDeferred.h">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkFileHelpers.h">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkFilePackageLowLevelIOBlocking.h">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkFilePackageLowLevelIODeferred.h">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\stdafx.h">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -966,6 +1005,30 @@
     <ClCompile Include="Source Code\Wwise_Includes.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkDefaultLowLevelIODispatcher.cpp">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFileLocationBase.cpp">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackage.cpp">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackageLUT.cpp">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkMultipleFileLocation.cpp">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkDefaultIOHookBlocking.cpp">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkDefaultIOHookDeferred.cpp">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\stdafx.cpp">
+      <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source Code\External Libraries\MathGeoLib\include\Math\Matrix.inl">
@@ -988,6 +1051,9 @@
     </None>
     <None Include="Source Code\External Libraries\DevIL\include\config.h.win">
       <Filter>Externals\DevIL</Filter>
+    </None>
+    <None Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackageLowLevelIO.inl">
+      <Filter>Externals\AK\LowLevelIO</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

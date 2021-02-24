@@ -30,7 +30,7 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AKLISTBARELIGHT_H
 #define _AKLISTBARELIGHT_H
 
-#include <AK/Tools/Common/AkListBare.h>
+#include "Wwise/AK/Tools/Common/AkListBare.h"
 
 // this one lets you define the structure
 // only requirement is that T must have member pNextLightItem,
