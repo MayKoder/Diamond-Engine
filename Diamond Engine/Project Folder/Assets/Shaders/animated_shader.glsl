@@ -8,7 +8,7 @@ layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 color;
 layout (location = 2) in vec2 texCoord;
 layout (location = 3) in vec3 normals;
-layout (location = 4) in vec4 boneIDs;
+layout (location = 4) in ivec4 boneIDs;
 layout (location = 5) in vec4 weights;
 
 out vec3 ourColor;
@@ -32,11 +32,11 @@ vec4 totalLocalPos = vec4(0.0);
 vec4 totalNormal = vec4(0.0);
 
 for (int i=0; i < MAX_JOINTS; i++){
-	//vec4 localPosition = vec4(position, 1.0);
-	//totalLocalPos += localPosition * weights[i];
+	vec4 localPosition = jointTransforms[boneIDs[i]] * vec4(position, 1.0);
+	totalLocalPos += localPosition * weights[i];
 	
-	//vec4 worldNormal = jointTransforms[boneIDs[i]] * vec4(normals, 0.0);
-	//totalNormal += worldNormal * weights[i];
+	vec4 worldNormal = jointTransforms[boneIDs[i]] * vec4(normals, 0.0);
+	totalNormal += worldNormal * weights[i];
 }
 
 vec4 pos = model_matrix * vec4(position, 1.0);
@@ -46,6 +46,7 @@ gl_Position = projection * view * model_matrix * vec4(position, 1.0f);
 
 ourColor = vec3(weights.x, weights.x, weights.x);
 TexCoord = texCoord;
+Normal = totalNormal.xyz;
 }
 #endif
 
@@ -80,6 +81,8 @@ vec2 inten = blinnPhongDir(vec3(0.8,1,0.2), 0.5, 0.2, 0.8, 0.3, 80.0);
 gl_FragColor = vec4(lcolor * inten.x + vec3(1.0) * inten.y, 1.0) * vec4(ourColor, 1.0);
 }
 #endif
+
+
 
 
 
