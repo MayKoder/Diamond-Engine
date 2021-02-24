@@ -175,7 +175,7 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 			_mesh->vertices[i * VERTEX_ATTRIBUTES + 9] = 0.0f;
 			_mesh->vertices[i * VERTEX_ATTRIBUTES + 10] = 0.0f;
 		}
-			
+
 
 		if (importedMesh->HasNormals())
 		{
@@ -184,46 +184,87 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 			_mesh->vertices[i * VERTEX_ATTRIBUTES + 7] = importedMesh->mNormals[i].z;
 			//LOG(LogType::L_NORMAL, "New mesh with %d normals", _mesh->normals_count);
 		}
-	}
 
-	//So are we really only supporting 1 channel uv and colors?
-
-	//TODO: Load vertex colors
-	if (importedMesh->HasVertexColors(0)) 
-	{
-		LOG(LogType::L_ERROR, "ADD VERTEX COLORS");
-	}
-
-
-	// Generate indices
-	if (importedMesh->HasFaces())
-	{
-		_mesh->indices_count = importedMesh->mNumFaces * 3;
-		_mesh->indices = new uint[_mesh->indices_count]; // assume each face is a triangle
-		for (uint j = 0; j < importedMesh->mNumFaces; ++j)
+		else
 		{
-			if (importedMesh->mFaces[j].mNumIndices != 3)
-			{
-				LOG(LogType::L_WARNING, "WARNING, geometry face with != 3 indices!");
-			}
-			else
-			{
-				memcpy(&_mesh->indices[j * 3], importedMesh->mFaces[j].mIndices, 3 * sizeof(uint));
-			}
+			//boneIDs
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 11] = -1.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 12] = -1.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 13] = -1.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 14] = -1.0f;
+
+			//weights
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 15] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 16] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 17] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + 18] = 0.0f;
 		}
 	}
 
+	if (importedMesh->HasBones())
+	{
+		for (size_t b = 0; b < importedMesh->mNumBones; b++)
+		{
+			for (int weights = 0; weights < importedMesh->mBones[b]->mNumWeights; weights++) {
 
-	_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
+				int vertexId = importedMesh->mBones[b]->mWeights[weights].mVertexId * 4;
 
-	//TODO: Save on own file format
-	uint size = 0;
-	char* buffer = (char*)_mesh->SaveCustomFormat(size);
+				for (int w = 0; w < 4; w++)
+				{
+					if (_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + w] == -1)
+					{
+						_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + w] = b;
+					}
+					/*
+					if (mesh->boneIDs[vertexId + it] == -1) {
 
-	FileSystem::Save(file.c_str(), buffer, size, false);
-	RELEASE_ARRAY(buffer);
+						mesh->boneIDs[vertexId + it] = j;
+						mesh->boneWeights[vertexId + it] = paiMesh->mBones[j]->mWeights[weights].mWeight;
+						it = 4;
 
-	return _mesh;
+					}
+					*/
+				}
+			}
+		}
+
+		//So are we really only supporting 1 channel uv and colors?
+
+		//TODO: Load vertex colors
+		if (importedMesh->HasVertexColors(0))
+		{
+			LOG(LogType::L_ERROR, "ADD VERTEX COLORS");
+		}
+
+		// Generate indices
+		if (importedMesh->HasFaces())
+		{
+			_mesh->indices_count = importedMesh->mNumFaces * 3;
+			_mesh->indices = new uint[_mesh->indices_count]; // assume each face is a triangle
+			for (uint j = 0; j < importedMesh->mNumFaces; ++j)
+			{
+				if (importedMesh->mFaces[j].mNumIndices != 3)
+				{
+					LOG(LogType::L_WARNING, "WARNING, geometry face with != 3 indices!");
+				}
+				else
+				{
+					memcpy(&_mesh->indices[j * 3], importedMesh->mFaces[j].mIndices, 3 * sizeof(uint));
+				}
+			}
+		}
+
+		_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
+
+		//TODO: Save on own file format
+		uint size = 0;
+		char* buffer = (char*)_mesh->SaveCustomFormat(size);
+
+		FileSystem::Save(file.c_str(), buffer, size, false);
+		RELEASE_ARRAY(buffer);
+
+		return _mesh;
+	}
 }
 
 void MeshLoader::PopulateTransform(GameObject* child, float3 position, Quat rotationQuat, float3 size)

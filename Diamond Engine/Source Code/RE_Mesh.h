@@ -12,7 +12,7 @@ typedef unsigned int uint;
 class ResourceMaterial;
 class C_Transform;
 
-#define VERTEX_ATTRIBUTES 11
+#define VERTEX_ATTRIBUTES 19 // 3 vertex + 2 texcoords + 3 normals + 3 tangents + 4 joint indices + 4 weights
 
 class ResourceMesh  : public Resource
 {

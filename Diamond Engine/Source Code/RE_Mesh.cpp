@@ -56,6 +56,14 @@ bool ResourceMesh::LoadToMemory()
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(8 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(3);
 
+	//joint indices
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(11 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(4);
+
+	//weights
+	glVertexAttribPointer(4, 5, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(15 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(5);
+
 
 	return true;
 }
