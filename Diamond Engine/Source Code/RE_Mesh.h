@@ -12,7 +12,14 @@ typedef unsigned int uint;
 class ResourceMaterial;
 class C_Transform;
 
-#define VERTEX_ATTRIBUTES 19 // 3 vertex + 2 texcoords + 3 normals + 3 tangents + 4 joint indices + 4 weights
+static const int VERTEX_ATTRIBUTES     = 19; // 3 vertex + 2 texcoords + 3 normals + 3 tangents + 4 joint indices + 4 weights
+static const int VERTEX_POSITION_OFFSET = 0;
+static const int TEXCOORD_OFFSET	    = 3;
+static const int NORMALS_OFFSET			= 5;
+static const int TANGENTS_OFFSET		= 8;
+static const int BONES_ID_OFFSET		= 11;
+static const int WEIGHTS_OFFSET			= 15;
+
 
 class ResourceMesh  : public Resource
 {
