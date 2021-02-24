@@ -19,6 +19,7 @@ public:
 		Camera,
 		Script,
 		Count,
+		RigidBody,
 	};
 
 	Component(GameObject* _gm);

@@ -53,7 +53,7 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 
 	//Should scene be here?
 	AddModule(moduleScene);
-
+	AddModule(modulePhysics);
 	// Renderer last!
 	AddModule(moduleCamera);
 

@@ -25,7 +25,7 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 	//collider_info = _gm->GetCollider();
 
 	collider_info = nullptr;
-	EngineExternal->modulePhysics->CreateRigidDynamic(goTransform->position);
+	rigid_dynamic = EngineExternal->modulePhysics->CreateRigidDynamic(goTransform->position);
 
 	if (collider_info != nullptr)
 		rigid_dynamic->attachShape(*collider_info->colliderShape);
@@ -76,26 +76,31 @@ void C_RigidBody::Update()
 	//Just update transform if we have rigidbody simulation
 	//if (App->timeManager->started) {
 
-		//if (collider_info != nullptr) {
+		if (collider_info != nullptr) {
 
-		//	goTransform->SetPosition({ rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z });
-		//	Quat rot = { rigid_dynamic->getGlobalPose().q.x, rigid_dynamic->getGlobalPose().q.y, rigid_dynamic->getGlobalPose().q.z,  rigid_dynamic->getGlobalPose().q.w };
-		//	float3 new_rot = rot.ToEulerXYZ() * RADTODEG;
+		/*	goTransform->SetPosition({ rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z });
+			Quat rot = { rigid_dynamic->getGlobalPose().q.x, rigid_dynamic->getGlobalPose().q.y, rigid_dynamic->getGlobalPose().q.z,  rigid_dynamic->getGlobalPose().q.w };
+			float3 new_rot = rot.ToEulerXYZ() * RADTODEG;
 
-		//	goTransform->SetRotation({ new_rot.x,new_rot.y, new_rot.z, });
-		//}
-		//else
-		//	goTransform->SetPosition({ rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z });
+			goTransform->SetRotation({ new_rot.x,new_rot.y, new_rot.z, });*/
+		}
+		else
+		{
+			float3 pos = { rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z };
+			float3 scale = { 1, 1, 1 };
+			goTransform->SetTransformMatrix(pos, Quat::identity, scale);
+		}
+			
+		
+	
 
-		//goTransform->UpdateNodeTransforms();
-
-	//}
-	//else {
-	//	if (collider_info != nullptr)
-	//		rigid_dynamic->setGlobalPose(PxTransform({ collider_info->transform->position.x, collider_info->transform->position.y, collider_info->transform->position.z }));
-	//	else
-	//		goTransform->SetPosition({ rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z });
-	//}
+	/*}
+	else {
+		if (collider_info != nullptr)
+			rigid_dynamic->setGlobalPose(PxTransform({ collider_info->transform->position.x, collider_info->transform->position.y, collider_info->transform->position.z }));
+		else
+			goTransform->SetPosition({ rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z });
+	}*/
 
 	//TODO: MOVE RIGID BODY IF GLOBAL POSITION CHANGED
 }
