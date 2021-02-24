@@ -32,6 +32,8 @@ namespace AK
     }
 }
 
+CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
+
 bool InitSoundEngine()
 {
 	AkMemSettings memSettings;

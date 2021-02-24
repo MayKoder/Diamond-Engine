@@ -36,7 +36,6 @@ namespace AK
 #endif // WIN32
 
 }
-CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 
 bool InitSoundEngine();
 

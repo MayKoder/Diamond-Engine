@@ -38,16 +38,33 @@ M_Scene::~M_Scene()
 
 bool M_Scene::Init()
 {
+	InitSoundEngine();
 	root = CreateGameObject("Scene root", nullptr);
+	AkBankID id;
+	AK::SoundEngine::LoadBank("Engine_Banks", id);
 
 	return true;
 }
 
 bool M_Scene::Start()
 {
+	AkListenerPosition listener;
+	AkSoundPosition source;
 	CreateGameCamera("Main Camera");
 
 	LoadScene("Library/Scenes/884741631.des");
+	AkVector zero;
+
+	zero.Zero();
+	AK::SoundEngine::RegisterGameObj(lis, "listener");
+	AK::SoundEngine::SetDefaultListeners(&lis, 1);
+	AK::SoundEngine::RegisterGameObj(sou, "source");
+	listener.SetPosition(zero);
+	source.SetPosition(zero);
+	AK::SoundEngine::SetPosition(lis, listener);
+	AK::SoundEngine::SetPosition(sou, source);
+
+	AK::SoundEngine::PostEvent("Play_Legends", sou);
 
 #ifndef STANDALONE
 	//TODO IMPORTANT: This is why we should save icons .meta, or we could generate them every time
@@ -131,6 +148,8 @@ update_status M_Scene::Update(float dt)
 
 	UpdateGameObjects();
 
+	AK::SoundEngine::RenderAudio();
+
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -139,6 +158,7 @@ bool M_Scene::CleanUp()
 	//This will delete all the gameObjects
 	if (defaultMaterial != nullptr)
 		EngineExternal->moduleResources->UnloadResource(defaultMaterial->GetUID());
+	TermSoundEngine();
 
 	delete root;
 	return true;
