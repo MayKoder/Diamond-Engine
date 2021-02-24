@@ -1,26 +1,26 @@
 {
     "Game Objects": [
         {
-            "name": "Cube",
+            "name": "Pilot Avatar",
             "Active": true,
             "Position": [
-                -1.560367226600647,
-                1.3270139694213867,
-                -0.32808405160903931
+                0.59531307220458984,
+                0.43442243337631226,
+                -0.16696521639823914
             ],
             "Rotation": [
-                -0.7071068286895752,
                 0,
                 0,
-                0.70710670948028564
+                0,
+                1
             ],
             "Scale": [
-                1,
-                0.99974519014358521,
-                0.99974519014358521
+                0.3600003719329834,
+                0.3600003719329834,
+                0.3600003719329834
             ],
-            "UID": 1875191472,
-            "ParentUID": 143570472,
+            "UID": 1708463907,
+            "ParentUID": 1995988269,
             "Components": [
                 {
                     "Type": 1,
@@ -29,8 +29,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1313575480.mmh",
-                    "UID": 1313575480,
+                    "Path": "Library\/Meshes\/508469376.mmh",
+                    "UID": 508469376,
                     "alternColor": [
                         1,
                         1,
@@ -41,9 +41,9 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/1452971041.mat",
-                    "MaterialUID": 1452971041
+                    "MaterialAssetPath": "Assets\/Materials\/animated_material.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1948688504.mat",
+                    "MaterialUID": 1948688504
                 }
             ]
         }

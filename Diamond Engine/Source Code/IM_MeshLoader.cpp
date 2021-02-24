@@ -184,21 +184,25 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 			_mesh->vertices[i * VERTEX_ATTRIBUTES + NORMALS_OFFSET + 2] = importedMesh->mNormals[i].z;
 			//LOG(LogType::L_NORMAL, "New mesh with %d normals", _mesh->normals_count);
 		}
-
 		else
 		{
-			//boneIDs
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + BONES_ID_OFFSET]     = -1.0f;
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + 1] = -1.0f;
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + 2] = -1.0f;
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + 3] = -1.0f;
-
-			//weights
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET]     = 0.0f;
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + 1] = 0.0f;
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + 2] = 0.0f;
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + 3] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + NORMALS_OFFSET]		= 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + NORMALS_OFFSET + 1] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + NORMALS_OFFSET + 2] = 0.0f;
 		}
+
+
+		//boneIDs
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + BONES_ID_OFFSET]     = -1.0f;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + 1] = -1.0f;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + 2] = -1.0f;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + 3] = -1.0f;
+
+		//weights
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET]     = 0.0f;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + 1] = 0.0f;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + 2] = 0.0f;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + 3] = 0.0f;
 	}
 
 	
@@ -214,12 +218,13 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 
 				for (int w = 0; w < 4; w++)
 				{
-					if (_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + w] == -1)
+					if (_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + w] == -1.0f)
 					{
 						//bone ids
 						_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + w] = b;
 						//weights
 						_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + w] = importedMesh->mBones[b]->mWeights[weights].mWeight;
+						break;
 					}
 				}
 			}
