@@ -28,7 +28,7 @@ the specific language governing permissions and limitations under the License.
 #ifndef __AK_PLATFORM_CONTEXT_WINDOWS_H__
 #define __AK_PLATFORM_CONTEXT_WINDOWS_H__
 
-#include <AK/SoundEngine/Common/IAkPlatformContext.h>
+#include "Wwise/AK/SoundEngine/Common/IAkPlatformContext.h"
 
 namespace AK
 {

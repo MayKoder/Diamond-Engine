@@ -29,12 +29,12 @@ the specific language governing permissions and limitations under the License.
 // Handling code for triple buffering processing on position independent code platforms is provided
 // This is not a delay line implementation, but rather just some services for memory managment related 
 // to specific delay line execution needs as detailed by clients
-#include <AK/AkPlatforms.h>
+#include "Wwise/AK/AkPlatforms.h"
 
 #ifndef _AKDSP_DELAYLINEMEMORYSTREAM_
 #define _AKDSP_DELAYLINEMEMORYSTREAM_
 
-#include <AK/DSP/AkDelayLineMemory.h>
+#include "Wwise/AK/DSP/AkDelayLineMemory.h"
 
 namespace AK
 {

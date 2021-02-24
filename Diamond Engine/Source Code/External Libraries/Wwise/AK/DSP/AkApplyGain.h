@@ -31,12 +31,12 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AKAPPLYGAIN_H_
 #define _AKAPPLYGAIN_H_
 
-#include <AK/SoundEngine/Common/AkTypes.h>
-#include <AK/SoundEngine/Common/AkCommonDefs.h>
-#include <AK/SoundEngine/Common/AkSimd.h>
+#include "Wwise/AK/SoundEngine/Common/AkTypes.h"
+#include "Wwise/AK/SoundEngine/Common/AkCommonDefs.h"
+#include "Wwise/AK/SoundEngine/Common/AkSimd.h"
 
 #if defined (AKSIMD_V4F32_SUPPORTED) || defined (AKSIMD_V2F32_SUPPORTED)
-#include <AK/Plugin/PluginServices/AkVectorValueRamp.h>
+#include "Wwise/AK/Plugin/PluginServices/AkVectorValueRamp.h"
 // Otherwise, it is preferrable not to use a generic implementation of a vector type.
 #endif
 

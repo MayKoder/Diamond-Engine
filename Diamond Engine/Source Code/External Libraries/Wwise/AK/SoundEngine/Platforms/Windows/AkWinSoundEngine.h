@@ -33,8 +33,8 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AK_WIN_SOUND_ENGINE_H_
 #define _AK_WIN_SOUND_ENGINE_H_
 
-#include <AK/SoundEngine/Common/AkTypes.h>
-#include <AK/Tools/Common/AkPlatformFuncs.h>
+#include "Wwise/AK/SoundEngine/Common/AkTypes.h"
+#include "Wwise/AK/Tools/Common/AkPlatformFuncs.h"
 
 ///< API used for audio output
 ///< Use with AkPlatformInitSettings to select the API used for audio output.  

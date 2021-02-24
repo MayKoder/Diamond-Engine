@@ -31,7 +31,7 @@ the specific language governing permissions and limitations under the License.
 #ifndef _IAK_STREAM_MGR_H_
 #define _IAK_STREAM_MGR_H_
 
-#include <AK/SoundEngine/Common/AkMemoryMgr.h>
+#include "Wwise/AK/SoundEngine/Common/AkMemoryMgr.h"
 
 //-----------------------------------------------------------------------------
 // Defines. 

@@ -35,9 +35,9 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AK_COMMUNICATION_H
 #define _AK_COMMUNICATION_H
 
-#include <AK/SoundEngine/Common/AkTypes.h>
-#include <AK/SoundEngine/Common/AkMemoryMgr.h>
-#include <AK/Tools/Common/AkPlatformFuncs.h>
+#include "Wwise/AK/SoundEngine/Common/AkTypes.h"
+#include "Wwise/AK/SoundEngine/Common/AkMemoryMgr.h"
+#include "Wwise/AK/Tools/Common/AkPlatformFuncs.h"
 
 #define AK_COMM_SETTINGS_MAX_STRING_SIZE 64
 

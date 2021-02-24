@@ -46,7 +46,7 @@ the specific language governing permissions and limitations under the License.
 
 #elif defined( _WIN32 ) || defined ( _WIN64 ) || defined( WINAPI_FAMILY )
 
-	#include <AK/SoundEngine/Platforms/Windows/AkTypes.h>
+	#include "Wwise/AK/SoundEngine/Platforms/Windows/AkTypes.h"
 
 #elif defined( __APPLE__ )
 

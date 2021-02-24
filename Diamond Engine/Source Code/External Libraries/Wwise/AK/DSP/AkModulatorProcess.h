@@ -28,7 +28,7 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AK_MODULATOR_PROCESS_H_
 #define _AK_MODULATOR_PROCESS_H_
 
-#include <AK/SoundEngine/Common/AkSimd.h>
+#include "Wwise/AK/SoundEngine/Common/AkSimd.h"
 #include "AkModulatorParams.h"
 
 class CAkEnvelopeProcess

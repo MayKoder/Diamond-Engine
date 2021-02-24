@@ -33,7 +33,7 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AK_SOUNDENGINE_EXPORT_H_
 #define _AK_SOUNDENGINE_EXPORT_H_
 
-#include <AK/AkPlatforms.h>
+#include "Wwise/AK/AkPlatforms.h"
 
 #ifndef AK_DLLEXPORT
 #define AK_DLLEXPORT

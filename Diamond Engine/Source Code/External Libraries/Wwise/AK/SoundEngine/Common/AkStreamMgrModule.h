@@ -36,8 +36,8 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AK_STREAM_MGR_MODULE_H_
 #define _AK_STREAM_MGR_MODULE_H_
 
-#include <AK/SoundEngine/Common/IAkStreamMgr.h>
-#include <AK/Tools/Common/AkPlatformFuncs.h>
+#include "Wwise/AK/SoundEngine/Common/IAkStreamMgr.h"
+#include "Wwise/AK/Tools/Common/AkPlatformFuncs.h"
 
 class CAkFilePackage;
 

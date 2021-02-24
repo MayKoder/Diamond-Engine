@@ -30,7 +30,7 @@ the specific language governing permissions and limitations under the License.
 #pragma once
 
 #if defined( _MSC_VER )
-	#include <AK/SoundEngine/Platforms/Windows/AkAtomic.h>
+	#include "Wwise/AK/SoundEngine/Platforms/Windows/AkAtomic.h"
 #elif defined( __EMSCRIPTEN__ )
 	#include <AK/SoundEngine/Platforms/Emscripten/AkAtomic.h>
 #elif defined( __ggp__ )

@@ -31,8 +31,8 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AKMEMORYMGR_H_
 #define _AKMEMORYMGR_H_
 
-#include <AK/SoundEngine/Common/AkTypes.h>
-#include <AK/SoundEngine/Common/AkSoundEngineExport.h>
+#include "Wwise/AK/SoundEngine/Common/AkTypes.h"
+#include "Wwise/AK/SoundEngine/Common/AkSoundEngineExport.h"
 
 //#define AK_MEMDEBUG
 

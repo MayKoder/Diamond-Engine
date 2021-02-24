@@ -28,7 +28,7 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AKLOCK_H_
 #define _AKLOCK_H_
 
-#include <AK/SoundEngine/Common/AkTypes.h>
+#include "Wwise/AK/SoundEngine/Common/AkTypes.h"
 #include <windows.h>	//For CRITICAL_SECTION
 
 //-----------------------------------------------------------------------------

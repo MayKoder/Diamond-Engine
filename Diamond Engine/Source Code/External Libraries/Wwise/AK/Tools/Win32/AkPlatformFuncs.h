@@ -29,8 +29,8 @@ the specific language governing permissions and limitations under the License.
 #define _AK_PLATFORM_FUNCS_H_
 
 #include "malloc.h"
-#include <AK/Tools/Common/AkAssert.h>
-#include <AK/SoundEngine/Common/AkAtomic.h>
+#include "Wwise/AK/Tools/Common/AkAssert.h"
+#include "Wwise/AK/SoundEngine/Common/AkAtomic.h"
 #include <windows.h>
 //#define AK_ENABLE_PERF_RECORDING
 #if defined(AK_ENABLE_PERF_RECORDING)

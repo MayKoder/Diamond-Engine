@@ -32,7 +32,7 @@ Copyright (c) 2006-2020 Audiokinetic Inc.
 #define _AK_IBYTES_H
 
 #include <wchar.h>
-#include <AK/Tools/Common/AkPlatformFuncs.h> 
+#include "Wwise/AK/Tools/Common/AkPlatformFuncs.h"
 
 namespace AK
 {
