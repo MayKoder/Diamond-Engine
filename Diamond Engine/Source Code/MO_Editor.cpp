@@ -12,6 +12,7 @@
 
 #include"DETime.h"
 #include"AssetDir.h"
+#include"parson/parson.h"
 
 #include "MO_Window.h"
 #include "MO_Renderer3D.h"
@@ -19,7 +20,16 @@
 #include "MO_Scene.h"
 #include "MO_ResourceManager.h"
 
-#include"INC_EditorWindows.h"
+//Window types
+#include "WI_Configuration.h"
+#include "WI_Console.h"
+#include "WI_About.h"
+#include "WI_Inspector.h"
+#include "WI_Hierarchy.h"
+#include "WI_Scene.h"
+#include "WI_Assets.h"
+#include "WI_Game.h"
+#include "WI_TextEditor.h"
 
 #include"GameObject.h"
 #include"IM_TextureImporter.h"
