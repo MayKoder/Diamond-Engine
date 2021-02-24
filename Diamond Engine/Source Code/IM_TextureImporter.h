@@ -8,6 +8,7 @@ class DE_Cubemap;
 
 namespace TextureImporter
 {
+	void Init();
 
 	GLuint LoadToMemory(char* buffer, int size, int* w = nullptr, int* h = nullptr);
 	void SaveDDS(char* buffer, int size, const char* fileName);

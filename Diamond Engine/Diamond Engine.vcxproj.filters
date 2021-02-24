@@ -100,6 +100,9 @@
     <Filter Include="Sources\Editor\Commands\Derived">
       <UniqueIdentifier>{12e4d68c-af1f-4fd1-b95b-d8f9b218305b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Externals\FreeType">
+      <UniqueIdentifier>{871ded72-b3dd-46d4-b4a0-b9cbcd397c00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -556,6 +559,21 @@
     <ClInclude Include="Source Code\MA_ShortcutManager.h">
       <Filter>Sources\Editor\Commands</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\IM_FontImporter.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\ft2build.h">
+      <Filter>Externals\FreeType</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\freetype\config\ftheader.h">
+      <Filter>Externals\FreeType</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\freetype\freetype.h">
+      <Filter>Externals\FreeType</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\freetype\config\ftconfig.h">
+      <Filter>Externals\FreeType</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -872,6 +890,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\MA_ShortcutManager.cpp">
       <Filter>Sources\Editor\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\IM_FontImporter.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
