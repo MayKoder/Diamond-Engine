@@ -3,7 +3,7 @@
 #include "Application.h"
 
 #include "MMGui.h"
-#include "parson/parson.h"
+#include"IM_FileSystem.h"
 
 //ImGui Includes
 #include "ImGui/imgui.h"
@@ -19,16 +19,7 @@
 #include "MO_Scene.h"
 #include "MO_ResourceManager.h"
 
-//Window types
-#include "WI_Configuration.h"
-#include "WI_Console.h"
-#include "WI_About.h"
-#include "WI_Inspector.h"
-#include "WI_Hierarchy.h"
-#include "WI_Scene.h"
-#include "WI_Assets.h"
-#include "WI_Game.h"
-#include "WI_TextEditor.h"
+#include"INC_EditorWindows.h"
 
 #include"GameObject.h"
 #include"IM_TextureImporter.h"
@@ -244,6 +235,14 @@ void M_Editor::DrawMenuBar()
 					App->moduleScene->LoadScene(test.c_str());
 				}
 			}
+			ImGui::GreySeparator();
+			if (ImGui::MenuItem("Build Game"))
+			{
+				//std::string buildDir = M_FileSystem::OpenSaveAsDialog();
+				//FileSystem::CreateDir("Standalone Build");
+				
+			}
+			ImGui::GreySeparator();
 			if (ImGui::MenuItem("Quit", "Esc"))
 			{
 				App->ExitApplication();

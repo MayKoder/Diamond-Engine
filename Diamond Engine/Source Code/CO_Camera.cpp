@@ -84,10 +84,10 @@ bool C_Camera::OnEditor()
 		}
 		else
 		{
-			if (ImGui::DragFloat("Size: ", &orthoSize, 0.1f, 1.0f, 180.f)) 
+			if (ImGui::DragFloat("Size: ", &orthoSize, 0.01f, 0.01f, 100.0f)) 
 			{
-				//camFrustrum.orthographicHeight = 1080;
-				//camFrustrum.orthographicWidth = 1920;
+				//camFrustrum.orthographicWidth = 1920 / orthoSize;
+				//camFrustrum.orthographicHeight = 1080 / orthoSize;
 			}
 		}
 		
