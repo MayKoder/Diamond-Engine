@@ -51,10 +51,10 @@ written agreement between you and Audiokinetic Inc.
 #ifndef _AK_FILE_PACKAGE_LOW_LEVEL_IO_H_
 #define _AK_FILE_PACKAGE_LOW_LEVEL_IO_H_
 
-#include <AK/SoundEngine/Common/AkStreamMgrModule.h>
+#include "Wwise/AK/SoundEngine/Common/AkStreamMgrModule.h"
 #include "AkFilePackage.h"
-#include <AK/Tools/Common/AkAutoLock.h>
-#include <AK/Tools/Common/AkLock.h>
+#include "Wwise/AK/Tools/Common/AkAutoLock.h"
+#include "Wwise/AK/Tools/Common/AkLock.h"
 
 //-----------------------------------------------------------------------------
 // Name: AkFilePackageReader 

@@ -28,7 +28,7 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AUTO_LOCK_H_
 #define _AUTO_LOCK_H_
 
-#include <AK/SoundEngine/Common/AkTypes.h>
+#include "Wwise/AK/SoundEngine/Common/AkTypes.h"
 
 template< class TLock >
 class AkAutoLock

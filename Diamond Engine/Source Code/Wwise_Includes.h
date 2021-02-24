@@ -12,6 +12,8 @@
 #include "Wwise/AK/SoundEngine/Common/AkStreamMgrModule.h"
 #include "Wwise/AK/Tools/Common/AkPlatformFuncs.h"
 
+#include "Wwise/low_level_IO/Win32/AkFilePackageLowLevelIOBlocking.h"
+
 // Libs
 #pragma comment(lib, "Wwise/Release(StaticCRT)/lib/AkSoundEngine.lib")
 #pragma comment(lib, "Wwise/Release(StaticCRT)/lib/AkMusicEngine.lib")
@@ -19,9 +21,9 @@
 #pragma comment(lib, "Wwise/Release(StaticCRT)/lib/AkStreamMgr.lib")
 
 //DirectX external libs							CHECK
-//#pragma comment(lib,"Wwise/dinput8.lib")
-//#pragma comment(lib,"Wwise/dsound.lib")
-//#pragma comment(lib,"Wwise/dxguid.lib")
+#pragma comment(lib,"Wwise/dinput8.lib")
+#pragma comment(lib,"Wwise/dsound.lib")
+#pragma comment(lib,"Wwise/dxguid.lib")
 
 namespace AK
 {
@@ -34,7 +36,10 @@ namespace AK
 #endif // WIN32
 
 }
+CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 
 bool InitSoundEngine();
+
+void TermSoundEngine();
 
 #endif // !__WWISE_INCLUDES_H__

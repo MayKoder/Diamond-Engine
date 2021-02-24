@@ -685,6 +685,9 @@
     <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\stdafx.h">
       <Filter>Externals\AK\LowLevelIO</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Wwise\AK\Tools\Common\AkPlatformFuncs.h">
+      <Filter>Externals\AK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">

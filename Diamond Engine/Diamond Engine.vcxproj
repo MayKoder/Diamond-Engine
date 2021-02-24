@@ -310,6 +310,7 @@
     <ClInclude Include="Source Code\External Libraries\Wwise\AK\SoundEngine\Common\IAkProcessorFeatures.h" />
     <ClInclude Include="Source Code\External Libraries\Wwise\AK\SoundEngine\Common\IAkRTPCSubscriber.h" />
     <ClInclude Include="Source Code\External Libraries\Wwise\AK\SoundEngine\Common\IAkStreamMgr.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\AK\Tools\Common\AkPlatformFuncs.h" />
     <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkDefaultLowLevelIODispatcher.h" />
     <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFileLocationBase.h" />
     <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackage.h" />
