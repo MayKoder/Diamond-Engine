@@ -1,5 +1,7 @@
 #pragma once
+
 #include "PhysX/include/PxPhysicsAPI.h"
+#include"MathGeoLib/include/Math/float4x4.h"
 
 #include "Component.h"
 
@@ -86,4 +88,5 @@ public:
 	float linear_damping = 0.0f;
 	float angular_damping = 0.0f;
 	
+	float4x4 global_to_pivot;
 };

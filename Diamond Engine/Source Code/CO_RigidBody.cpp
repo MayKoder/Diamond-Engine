@@ -34,7 +34,15 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 	pos = mesh->globalOBB.pos;
 
 
+
+	
+
 	rigid_dynamic = EngineExternal->modulePhysics->CreateRigidDynamic(pos, rot);
+
+	float4x4 worldtrans = goTransform->globalTransform;
+	float4x4 pivotrans = float4x4::FromTRS(pos, rot, scale);	
+	//	pivotrans = global_to_pivot * worldtrans;
+	global_to_pivot =  worldtrans.Inverted() * pivotrans;
 
 	if (collider_info != nullptr)
 	{
@@ -97,8 +105,15 @@ void C_RigidBody::Update()
 		pos = { rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z };
 		rot = { rigid_dynamic->getGlobalPose().q.x, rigid_dynamic->getGlobalPose().q.y, rigid_dynamic->getGlobalPose().q.z,  rigid_dynamic->getGlobalPose().q.w };
 
+		
 		worldtrans = float4x4::FromTRS(pos, rot, scale);
-		goTransform->SetTransformWithGlobal(worldtrans);
+
+	//	float4x4 pivotrans =  global_to_pivot.Inverted() * worldtrans;
+		float4x4 pivotrans =  worldtrans * global_to_pivot.Inverted();
+
+		goTransform->SetTransformWithGlobal(pivotrans);
+
+
 	}
 	else {
 		
