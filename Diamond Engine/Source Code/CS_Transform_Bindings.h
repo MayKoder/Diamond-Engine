@@ -3,20 +3,20 @@
 #include "Globals.h"
 #include "Application.h"
 
-#include"GameObject.h"
-#include"DETime.h"
-#include"RE_Mesh.h"
+#include "GameObject.h"
+#include "DETime.h"
+#include "RE_Mesh.h"
 
-#include"CO_MeshRenderer.h"
-#include"CO_Script.h"
-#include"CO_Transform.h"
+#include "CO_MeshRenderer.h"
+#include "CO_Script.h"
+#include "CO_Transform.h"
 
-#include"MO_Input.h"
-#include"MO_Scene.h"
-#include"MO_ResourceManager.h"
+#include "MO_Input.h"
+#include "MO_Scene.h"
+#include "MO_ResourceManager.h"
 
-#include"GameObject.h"
-#include"MathGeoLib/include/Math/float3.h"
+#include "GameObject.h"
+#include "MathGeoLib/include/Math/float3.h"
 
 //------//
 MonoObject* DE_Box_Vector(MonoObject* obj, const char* type, bool global)

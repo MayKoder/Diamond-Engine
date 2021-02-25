@@ -14,7 +14,12 @@ ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, sta
 {
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
-	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
+	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_BUTTONS);
+	for (size_t i = 0; i < MAX_BUTTONS; ++i) {
+		for (int j = 0; j < 2; ++j) {
+			game_pad[i] = KEY_IDLE;
+		}
+	}
 }
 
 // Destructor
@@ -68,6 +73,54 @@ update_status ModuleInput::PreUpdate(float dt)
 				keyboard[i] = KEY_UP;
 			else
 				keyboard[i] = KEY_IDLE;
+		}
+	}
+
+	for (int i = 0; i < MAX_BUTTONS; ++i) {
+		game_pad[i] = SDL_GameControllerGetButton(controller_player, (SDL_GameControllerButton)i);
+	}
+
+	for (int i = 0; i < MAX_BUTTONS; ++i) {
+		if (game_pad[i] == KEY_IDLE) {
+			game_pad[i] = KEY_DOWN;
+			break;
+		}
+		else {
+			game_pad[i] = KEY_REPEAT;
+			break;
+		}
+
+		if (game_pad[i] == KEY_REPEAT || game_pad[i] == KEY_DOWN) {
+			game_pad[i] = KEY_UP;
+			break;
+		}
+		else {
+			game_pad[i] = KEY_IDLE;
+			break;
+		}		
+	}
+
+	while (SDL_PollEvent(&Events) == 1) {
+
+		switch (Events.type) {
+		case SDL_CONTROLLERDEVICEADDED: {
+			int num_joystincks = SDL_NumJoysticks();
+			for (int i = 0; i < num_joystincks; ++i) {
+				if (i == 0) {
+					if (SDL_GameControllerGetAttached(controller_player) == SDL_FALSE) {
+						controller_player = SDL_GameControllerOpen(i);
+						continue;
+					}
+				}
+			}
+
+			break; }
+		case SDL_CONTROLLERDEVICEREMOVED:
+			if (SDL_GameControllerGetAttached(controller_player) == SDL_FALSE) {
+				SDL_GameControllerClose(controller_player);
+				controller_player = nullptr;
+			}
+			break;
 		}
 	}
 
@@ -150,6 +203,9 @@ update_status ModuleInput::PreUpdate(float dt)
 	if (keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
 		SDL_SetRelativeMouseMode(SDL_FALSE);
 
+	//if (keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP || Events.type == SDL_QUIT)
+	//	SDL_SetRelativeMouseMode(SDL_FALSE);
+
 	if(quit == true)
 		return UPDATE_STOP;
 
@@ -171,6 +227,9 @@ void ModuleInput::OnGUI()
 	{
 		ImGui::Text("Mouse: X = %d, Y = %d, Z = %d", mouse_x, mouse_y, mouse_z);
 		ImGui::Text("Mouse motion: %d, %d", mouse_x_motion, mouse_y_motion);
+
+
+		ImGui::Text("GamePad: Pressing A: %d", game_pad[SDL_CONTROLLER_BUTTON_A] == KEY_REPEAT);
 	}
 }
 #endif // !STANDALONE
