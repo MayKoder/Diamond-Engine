@@ -12,7 +12,7 @@ typedef unsigned int uint;
 class ResourceMaterial;
 class C_Transform;
 
-static const int VERTEX_ATTRIBUTES     = 19; // 3 vertex + 2 texcoords + 3 normals + 3 tangents + 4 joint indices + 4 weights
+static const int VERTEX_ATTRIBUTES      = 19;  // 3 vertex + 2 texcoords + 3 normals + 3 tangents + 4 joint indices + 4 weights
 static const int VERTEX_POSITION_OFFSET = 0;
 static const int TEXCOORD_OFFSET	    = 3;
 static const int NORMALS_OFFSET			= 5;
