@@ -100,7 +100,6 @@ bool ModuleAudioManager::Init()
 
 bool ModuleAudioManager::Start()
 {
-	Testing();
 	return true;
 }
 
@@ -185,18 +184,4 @@ bool ModuleAudioManager::LoadBank(std::string& name)
 		return false;
 	}
 
-}
-
-void ModuleAudioManager::Testing()
-{
-	LoadBank(std::string("Test.bnk"));
-
-	AkGameObjectID sou = 24;
-	AkGameObjectID lis = 25;
-
-	RegisterNewAudioObject(sou);
-	RegisterNewAudioObject(lis);
-
-	AK::SoundEngine::SetDefaultListeners(&lis, 1);
-	AK::SoundEngine::PostEvent("Play", sou);
 }

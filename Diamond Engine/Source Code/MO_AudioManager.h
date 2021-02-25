@@ -38,11 +38,7 @@ public:
 
 	bool LoadBank(std::string& name);
 
-	void Testing();
-
 public:
-
-	// TODO add default listener
 
 };
 
