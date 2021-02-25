@@ -24,18 +24,18 @@ written agreement between you and Audiokinetic Inc.
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
+#include "Wwise/low_level_IO/Win32/stdafx.h"
 #include "AkFileLocationBase.h"
 
-#include <AK/SoundEngine/Common/AkStreamMgrModule.h>
-#include <AK/Tools/Common/AkPlatformFuncs.h>
+#include "Wwise/AK/SoundEngine/Common/AkStreamMgrModule.h"
+#include "Wwise/AK/Tools/Common/AkPlatformFuncs.h"
 #ifdef AK_SUPPORT_WCHAR
 #include <wchar.h>
 #endif //AK_SUPPORT_WCHAR
 #include <stdio.h>
-#include <AK/Tools/Common/AkAssert.h>
+#include "Wwise/AK/Tools/Common/AkAssert.h"
 
-#include "AkFileHelpers.h"
+#include "Wwise/low_level_IO/Win32/AkFileHelpers.h"
 
 
 #define MAX_NUMBER_STRING_SIZE      (10)    // 4G
