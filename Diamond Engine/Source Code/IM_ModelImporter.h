@@ -4,6 +4,7 @@
 class GameObject;
 class Resource;
 class ResourceMesh;
+class ResourceAnimation;
 typedef unsigned int uint;
 
 namespace ModelImporter
@@ -15,4 +16,7 @@ namespace ModelImporter
 
 	void SaveMeshesToMeta(const char* assetFile, std::vector<ResourceMesh*>& meshes);
 	void GetMeshesFromMeta(const char* assetFile, std::vector<uint>& uids);
+
+	void SaveAnimationsToMeta(const char* assetFile, std::vector<ResourceAnimation*>& animation);
+	void GetAnimationsFromMeta(const char* assetFile, std::vector<uint>& uids);
 }

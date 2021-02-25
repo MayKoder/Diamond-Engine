@@ -23,7 +23,7 @@
 #include"MO_MonoManager.h"
 
 M_ResourceManager::M_ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled), assetsRoot("Assets", "Assets", 0, true),
-fileCheckTime(0.f), fileUpdateDelay(2.f), meshesLibraryRoot("Meshes", "Library/Meshes", 0, true)
+fileCheckTime(0.f), fileUpdateDelay(2.f), meshesLibraryRoot("Meshes", "Library/Meshes", 0, true), animationsLibraryRoot("Animations", "Library/Animations", 0, true)
 {
 }
 
@@ -41,6 +41,7 @@ bool M_ResourceManager::Start()
 {
 	assetsRoot.lastModTime = App->moduleFileSystem->GetLastModTime(assetsRoot.importPath.c_str());
 	meshesLibraryRoot.lastModTime = App->moduleFileSystem->GetLastModTime(meshesLibraryRoot.importPath.c_str());
+	animationsLibraryRoot.lastModTime = App->moduleFileSystem->GetLastModTime(animationsLibraryRoot.importPath.c_str());
 	return true;
 }
 
@@ -128,7 +129,6 @@ void M_ResourceManager::NeedsDirsUpdate(AssetDir& dir)
 	}
 	else
 	{
-
 		//If its a dir, recalculate all the new folders
 		if (dir.isDir) 
 		{
@@ -185,6 +185,13 @@ void M_ResourceManager::UpdateMeshesDisplay()
 	LOG(LogType::L_WARNING, "Mesh display updated");
 }
 
+void M_ResourceManager::UpdateAnimationsDisplay()
+{
+	animationsLibraryRoot.childDirs.clear();
+	App->moduleFileSystem->GetAllFilesRecursive(animationsLibraryRoot);
+	LOG(LogType::L_WARNING, "Animations display updated");
+}
+
 Resource* M_ResourceManager::RequestResource(int uid, Resource::Type type)
 {
 	return RequestResource(uid, GenLibraryPath(uid, type).c_str());
@@ -223,7 +230,7 @@ Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 				case Resource::Type::SHADER: ret = dynamic_cast<Resource*>(new ResourceShader(uid)); break;
 				case Resource::Type::MATERIAL: ret = dynamic_cast<Resource*>(new ResourceMaterial(uid)); break;
 				//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
-				//case Resource::Type::ANIMATION : ret = (Resource*) new ResourceScene(uid); break;
+				case Resource::Type::ANIMATION : ret = (Resource*) new ResourceAnimation(uid); break;
 			}
 
 			if (ret != nullptr)
@@ -296,9 +303,6 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 		case Resource::Type::SCENE: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 		case Resource::Type::SHADER: ShaderImporter::Import(fileBuffer, size, dynamic_cast<ResourceShader*>(resource), assetsFile); break;
 		case Resource::Type::MATERIAL: 	FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
-		case Resource::Type::ANIMATION: 	
-			//FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false);
-			break;
 	}
 
 	//Save the resource to custom format
@@ -445,6 +449,7 @@ std::string M_ResourceManager::GenLibraryPath(uint _uid, Resource::Type _type)
 		case Resource::Type::SCENE : ret = SCENES_PATH; ret += nameNoExt; ret += ".des"; break;
 		case Resource::Type::SHADER : ret = SHADERS_PATH; ret += nameNoExt; ret += ".shdr"; break;
 		case Resource::Type::MATERIAL : ret = MATERIALS_PATH; ret += nameNoExt; ret += ".mat"; break;
+		case Resource::Type::ANIMATION : ret = ANIMATIONS_PATH; ret += nameNoExt; ret += ".anim"; break;
 	}
 
 	return ret;

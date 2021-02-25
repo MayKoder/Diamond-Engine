@@ -20,6 +20,16 @@ static const int TANGENTS_OFFSET		= 8;
 static const int BONES_ID_OFFSET		= 11;
 static const int WEIGHTS_OFFSET			= 15;
 
+struct Bone
+{
+	Bone();
+	~Bone();
+
+	//const char* name;
+	std::vector<Bone*> children;
+	int id;
+	float4x4* transform;
+};
 
 class ResourceMesh  : public Resource
 {
@@ -49,6 +59,8 @@ public:
 	float* vertices = nullptr;
 
 	AABB localAABB;
+
+	std::vector<Bone*> bones;
 
 	//TODO: Delete this, wireframe mode should be different
 	// ----------- TEMPORAL LOGIC, MUST BE DELETED ---------------//

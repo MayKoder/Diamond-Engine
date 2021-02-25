@@ -283,3 +283,22 @@ void ResourceMesh::LoadCustomFormat(const char* path)
 	delete[] fileBuffer;
 	fileBuffer = nullptr;
 }
+
+Bone::Bone() : id(-1) ,transform(nullptr)
+{}
+
+Bone::~Bone()
+{
+	if (transform != nullptr)
+	{
+		delete transform;
+		transform = nullptr;
+	}
+
+	for (size_t i = 0; i < children.size(); i++)
+	{
+		delete children[i];
+		children[i] = nullptr;
+	}
+	children.clear();
+}

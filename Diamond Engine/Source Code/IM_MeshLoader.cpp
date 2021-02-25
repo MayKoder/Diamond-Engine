@@ -211,6 +211,10 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 		//iterate all bones
 		for (size_t b = 0; b < importedMesh->mNumBones; b++)
 		{
+			Bone bone;
+			//bone.name = importedMesh->mName.C_Str();
+			
+
 			//iterate all bone weights
 			for (int weights = 0; weights < importedMesh->mBones[b]->mNumWeights; weights++) {
 
