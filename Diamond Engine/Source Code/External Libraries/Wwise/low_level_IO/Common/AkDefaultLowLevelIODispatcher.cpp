@@ -35,9 +35,9 @@ written agreement between you and Audiokinetic Inc.
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "Wwise/low_level_IO/Win32/stdafx.h"
+#include "stdafx.h"
 #include "AkDefaultLowLevelIODispatcher.h"
-#include "Wwise/AK/Tools/Common/AkAssert.h"
+#include <AK/Tools/Common/AkAssert.h>
 
 
 CAkDefaultLowLevelIODispatcher::CAkDefaultLowLevelIODispatcher()

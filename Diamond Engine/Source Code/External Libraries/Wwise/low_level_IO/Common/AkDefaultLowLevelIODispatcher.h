@@ -37,7 +37,7 @@ written agreement between you and Audiokinetic Inc.
 #ifndef _AK_DEFAULT_LOW_LEVEL_IO_DISPATCHER_H_
 #define _AK_DEFAULT_LOW_LEVEL_IO_DISPATCHER_H_
 
-#include "Wwise/AK/SoundEngine/Common/AkStreamMgrModule.h"
+#include <AK/SoundEngine/Common/AkStreamMgrModule.h>
 
 #define AK_MAX_IO_DEVICES	(3)
 

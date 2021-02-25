@@ -21,8 +21,8 @@ under the Apache License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
 OR CONDITIONS OF ANY KIND, either express or implied. See the Apache License for
 the specific language governing permissions and limitations under the License.
 
-  Version: v2019.2.8  Build: 7432
-  Copyright (c) 2006-2020 Audiokinetic Inc.
+  Version: v2019.2.9  Build: 7459
+  Copyright (c) 2006-2021 Audiokinetic Inc.
 *******************************************************************************/
 
 // AkSoundEngineExport.h
@@ -60,27 +60,27 @@ the specific language governing permissions and limitations under the License.
 #endif
 
 /// Declare a function
-/// \param __TYPE__	Return type of the function
-/// \param __NAME__ Name of the function
+/// \param _type Return type of the function
+/// \param _name Name of the function
 /// \remarks This must be followed by the parentheses containing the function arguments declaration
-#define AK_FUNC( __TYPE__, __NAME__ ) __TYPE__ AKSOUNDENGINE_CALL __NAME__
+#define AK_FUNC( _type, _name ) _type AKSOUNDENGINE_CALL _name
 
 /// Declare an extern function
-/// \param __TYPE__	Return type of the function
-/// \param __NAME__ Name of the function
+/// \param _type Return type of the function
+/// \param _name Name of the function
 /// \remarks This must be followed by the parentheses containing the function arguments declaration
-#define AK_EXTERNFUNC( __TYPE__, __NAME__ ) extern __TYPE__ AKSOUNDENGINE_CALL __NAME__
+#define AK_EXTERNFUNC( _type, _name ) extern _type AKSOUNDENGINE_CALL _name
 
 /// Declare an extern function that is exported/imported
-/// \param __TYPE__	Return type of the function
-/// \param __NAME__ Name of the function
+/// \param _type Return type of the function
+/// \param _name Name of the function
 /// \remarks This must be followed by the parentheses containing the function arguments declaration
-#define AK_EXTERNAPIFUNC( __TYPE__, __NAME__ ) extern AKSOUNDENGINE_API __TYPE__ AKSOUNDENGINE_CALL __NAME__
+#define AK_EXTERNAPIFUNC( _type, _name ) extern AKSOUNDENGINE_API _type AKSOUNDENGINE_CALL _name
 
 /// Declare a callback function type
-/// \param __TYPE__	Return type of the function
-/// \param __NAME__ Name of the function
+/// \param _type Return type of the function
+/// \param _name Name of the function
 /// \remarks This must be followed by the parentheses containing the function arguments declaration
-#define AK_CALLBACK( __TYPE__, __NAME__ ) typedef __TYPE__ ( AKSOUNDENGINE_CALL *__NAME__ )
+#define AK_CALLBACK( _type, _name ) typedef _type ( AKSOUNDENGINE_CALL *_name )
 
 #endif  //_AK_SOUNDENGINE_EXPORT_H_

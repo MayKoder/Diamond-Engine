@@ -21,15 +21,15 @@ under the Apache License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
 OR CONDITIONS OF ANY KIND, either express or implied. See the Apache License for
 the specific language governing permissions and limitations under the License.
 
-  Version: v2019.2.8  Build: 7432
-  Copyright (c) 2006-2020 Audiokinetic Inc.
+  Version: v2019.2.9  Build: 7459
+  Copyright (c) 2006-2021 Audiokinetic Inc.
 *******************************************************************************/
 
 // Length of delay line is mapped on 4 frames boundary (i.e. may not be suited for reverberation for example)
 // This is not a delay line implementation, but rather just some services for memory managment related 
 // to specific delay line execution needs as detailed by clients
-#include "Wwise/AK/AkPlatforms.h"
-#include "Wwise/AK/SoundEngine/Common/AkSpeakerConfig.h"
+#include <AK/AkPlatforms.h>
+#include <AK/SoundEngine/Common/AkSpeakerConfig.h>
 
 #ifdef AK_VOICE_MAX_NUM_CHANNELS
 #include "Generic/AkDelayLineMemory.h"
@@ -39,9 +39,9 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AKDSP_DELAYLINEMEMORY_
 #define _AKDSP_DELAYLINEMEMORY_
 
-#include "Wwise/AK/SoundEngine/Common/AkTypes.h"
-#include "Wwise/AK/SoundEngine/Common/IAkPluginMemAlloc.h"
-#include "Wwise/AK/Tools/Common/AkPlatformFuncs.h"
+#include <AK/SoundEngine/Common/AkTypes.h>
+#include <AK/SoundEngine/Common/IAkPluginMemAlloc.h>
+#include <AK/Tools/Common/AkPlatformFuncs.h>
 
 #define AK_ALIGN_TO_NEXT_BOUNDARY( __num__, __boundary__ ) (((__num__) + ((__boundary__)-1)) & ~((__boundary__)-1))
 

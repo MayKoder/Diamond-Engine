@@ -36,7 +36,7 @@ written agreement between you and Audiokinetic Inc.
 #include "Wwise/low_level_IO/Win32/stdafx.h"
 #include "AkFilePackageLUT.h"
 #include "Wwise/AK/SoundEngine/Common/AkMemoryMgr.h"
-#include "Wwise/AK/SoundEngine/Common/AkSoundEngine.h"	// For string hash.
+#include "Wwise/AK/SoundEngine/Common/AkSoundEngine.h" // For string hash.
 #include "Wwise/AK/Tools/Common/AkPlatformFuncs.h"
 #include "Wwise/AK/Tools/Common/AkFNVHash.h"
 

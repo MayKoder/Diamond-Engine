@@ -21,14 +21,14 @@ under the Apache License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
 OR CONDITIONS OF ANY KIND, either express or implied. See the Apache License for
 the specific language governing permissions and limitations under the License.
 
-  Version: v2019.2.8  Build: 7432
-  Copyright (c) 2006-2020 Audiokinetic Inc.
+  Version: v2019.2.9  Build: 7459
+  Copyright (c) 2006-2021 Audiokinetic Inc.
 *******************************************************************************/
 
 #ifndef _AK_MODULATOR_PROCESS_H_
 #define _AK_MODULATOR_PROCESS_H_
 
-#include "Wwise/AK/SoundEngine/Common/AkSimd.h"
+#include <AK/SoundEngine/Common/AkSimd.h>
 #include "AkModulatorParams.h"
 
 class CAkEnvelopeProcess

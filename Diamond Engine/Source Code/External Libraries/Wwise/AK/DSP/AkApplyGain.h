@@ -21,8 +21,8 @@ under the Apache License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
 OR CONDITIONS OF ANY KIND, either express or implied. See the Apache License for
 the specific language governing permissions and limitations under the License.
 
-  Version: v2019.2.8  Build: 7432
-  Copyright (c) 2006-2020 Audiokinetic Inc.
+  Version: v2019.2.9  Build: 7459
+  Copyright (c) 2006-2021 Audiokinetic Inc.
 *******************************************************************************/
 
 // Accumulate (+=) signal into output buffer
@@ -31,12 +31,12 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AKAPPLYGAIN_H_
 #define _AKAPPLYGAIN_H_
 
-#include "Wwise/AK/SoundEngine/Common/AkTypes.h"
-#include "Wwise/AK/SoundEngine/Common/AkCommonDefs.h"
-#include "Wwise/AK/SoundEngine/Common/AkSimd.h"
+#include <AK/SoundEngine/Common/AkTypes.h>
+#include <AK/SoundEngine/Common/AkCommonDefs.h>
+#include <AK/SoundEngine/Common/AkSimd.h>
 
 #if defined (AKSIMD_V4F32_SUPPORTED) || defined (AKSIMD_V2F32_SUPPORTED)
-#include "Wwise/AK/Plugin/PluginServices/AkVectorValueRamp.h"
+#include <AK/Plugin/PluginServices/AkVectorValueRamp.h>
 // Otherwise, it is preferrable not to use a generic implementation of a vector type.
 #endif
 

@@ -21,8 +21,8 @@ under the Apache License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
 OR CONDITIONS OF ANY KIND, either express or implied. See the Apache License for
 the specific language governing permissions and limitations under the License.
 
-  Version: v2019.2.8  Build: 7432
-  Copyright (c) 2006-2020 Audiokinetic Inc.
+  Version: v2019.2.9  Build: 7459
+  Copyright (c) 2006-2021 Audiokinetic Inc.
 *******************************************************************************/
 
 #ifndef _AKMONITORERROR_H
@@ -176,13 +176,15 @@ namespace AK
 			ErrorCode_HwVoiceLimitReached, // Cannot create any more hardware-accelerated voices
 			ErrorCode_HwVoiceInitFailed, // A hardware-accelerated voice fails to be created, but not because the max number of voices was reached
 
+			ErrorCode_SpatialAudio_ReflectionBusError,
+
 			// ALWAYS ADD NEW CODES AT THE END !!!!!!!
 			// Otherwise it may break comm compatibility in a patch
 			
 			Num_ErrorCodes // THIS STAYS AT END OF ENUM
 		};
 
-		static_assert(Num_ErrorCodes == 96,
+		static_assert(Num_ErrorCodes == 97,
 			"Please document your new ErrorCode "
 			"in 'Documentation/Help/source_en/reference/common_errors_capture_log.xml', "
 			"then you can increment this value."
@@ -403,6 +405,7 @@ AKTEXT("The hardware-accelerated voice subsystem failed to initialize."), // Err
 AKTEXT("Hardware accelerated audio decoding failed."), // ErrorCode_HwVoicesDecodeBatchFailed
 AKTEXT("Maximum number of hardware-accelerated voices reached. Voice will not play."), // ErrorCode_HwVoiceLimitReached
 AKTEXT("Failed creating hardware-accelerated voice."), // ErrorCode_HwVoiceInitFailed
+AKTEXT("The playing sound is assigned the same early reflection bus in the Authoring Tool that has been set via AK::SpatialAudio::SetImageSource. Use a unique bus to avoid image source conflicts."), //ErrorCode_SpatialAudio_ReflectionBusError
 		};
 
 		static_assert((sizeof(s_aszErrorCodes) / sizeof(s_aszErrorCodes[0])) == AK::Monitor::Num_ErrorCodes, "ARRAYSIZE(AK::Monitor::s_aszErrorCodes) is not matching AK::Monitor::Num_ErrorCodes, make sure they are maintained at the same time.");

@@ -21,20 +21,20 @@ under the Apache License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
 OR CONDITIONS OF ANY KIND, either express or implied. See the Apache License for
 the specific language governing permissions and limitations under the License.
 
-  Version: v2019.2.8  Build: 7432
-  Copyright (c) 2006-2020 Audiokinetic Inc.
+  Version: v2019.2.9  Build: 7459
+  Copyright (c) 2006-2021 Audiokinetic Inc.
 *******************************************************************************/
 
 // Length of delay line is mapped on 4 frames boundary (i.e. may not be suited for reverberation for example)
 // Handling code for triple buffering processing on position independent code platforms is provided
 // This is not a delay line implementation, but rather just some services for memory managment related 
 // to specific delay line execution needs as detailed by clients
-#include "Wwise/AK/AkPlatforms.h"
+#include <AK/AkPlatforms.h>
 
 #ifndef _AKDSP_DELAYLINEMEMORYSTREAM_
 #define _AKDSP_DELAYLINEMEMORYSTREAM_
 
-#include "Wwise/AK/DSP/AkDelayLineMemory.h"
+#include <AK/DSP/AkDelayLineMemory.h>
 
 namespace AK
 {

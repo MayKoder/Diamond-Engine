@@ -21,8 +21,8 @@ under the Apache License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
 OR CONDITIONS OF ANY KIND, either express or implied. See the Apache License for
 the specific language governing permissions and limitations under the License.
 
-  Version: v2019.2.8  Build: 7432
-  Copyright (c) 2006-2020 Audiokinetic Inc.
+  Version: v2019.2.9  Build: 7459
+  Copyright (c) 2006-2021 Audiokinetic Inc.
 *******************************************************************************/
 
 /// \file 
@@ -35,9 +35,9 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AK_COMMUNICATION_H
 #define _AK_COMMUNICATION_H
 
-#include "Wwise/AK/SoundEngine/Common/AkTypes.h"
-#include "Wwise/AK/SoundEngine/Common/AkMemoryMgr.h"
-#include "Wwise/AK/Tools/Common/AkPlatformFuncs.h"
+#include <AK/SoundEngine/Common/AkTypes.h>
+#include <AK/SoundEngine/Common/AkMemoryMgr.h>
+#include <AK/Tools/Common/AkPlatformFuncs.h>
 
 #define AK_COMM_SETTINGS_MAX_STRING_SIZE 64
 
