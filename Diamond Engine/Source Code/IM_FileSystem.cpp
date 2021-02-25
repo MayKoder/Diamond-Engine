@@ -132,6 +132,7 @@ void FileSystem::CreateLibraryFolders()
 	CreateDir(SCRIPTS_PATH);
 	CreateDir(SHADERS_PATH);
 	CreateDir(MATERIALS_PATH);
+	CreateDir(ANIMATIONS_PATH);
 }
 
 // Add a new zip file or folder

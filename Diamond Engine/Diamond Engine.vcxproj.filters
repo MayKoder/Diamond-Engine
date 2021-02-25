@@ -535,6 +535,15 @@
     <ClInclude Include="Source Code\IM_MaterialImporter.h">
       <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CO_Animator.h">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\RE_Animation.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\IM_AnimationImporter.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -838,6 +847,15 @@
       <Filter>Sources\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\IM_MaterialImporter.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Animator.cpp">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\RE_Animation.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\IM_AnimationImporter.cpp">
       <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
   </ItemGroup>

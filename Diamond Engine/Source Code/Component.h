@@ -18,6 +18,7 @@ public:
 		Material,
 		Camera,
 		Script,
+		Animator,
 		Count,
 	};
 

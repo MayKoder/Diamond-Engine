@@ -23,6 +23,7 @@ namespace StringLogic {
 #define SCRIPTS_PATH "Library/ScriptsAssembly/"
 #define SHADERS_PATH "Library/Shaders/"
 #define MATERIALS_PATH "Library/Materials/"
+#define ANIMATIONS_PATH "Library/Animations/"
 
 namespace FileSystem
 {
