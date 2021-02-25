@@ -12,8 +12,12 @@ public:
 	~M_Gui() override;
 
 	bool SetSceneCanvas(GameObject* object);
-	void AddUIElement(GameObject* uiElement);
 	void DrawCanvas3D(); //need to think about this one
+
+	void CreateCanvas();
+	void CreateImage();
+
+	void EraseCanvas();
 
 private:
 

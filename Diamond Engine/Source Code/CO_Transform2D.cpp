@@ -3,9 +3,17 @@
 #include "GameObject.h"
 
 
-C_Transform2D::C_Transform2D(GameObject* gameObject) : Component(gameObject)
+C_Transform2D::C_Transform2D(GameObject* gameObject) : Component(gameObject),
+	posX(0.0f),
+	posY(0.0f),
+	localPosX(0.0f),
+	localPosY(0.0f),
+	rotation(0.0f),
+	localRotation(0.0f),
+	sizeX(10.0f),
+	sizeY(10.0f),
+	updateTransform(false)
 {
-
 }
 
 

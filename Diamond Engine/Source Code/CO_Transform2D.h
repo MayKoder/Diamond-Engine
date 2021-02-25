@@ -25,8 +25,8 @@ public:
 	float localPosX;
 	float localPosY;
 	
-	float localRotation;
 	float rotation;
+	float localRotation;
 
 	float sizeX;
 	float sizeY;
