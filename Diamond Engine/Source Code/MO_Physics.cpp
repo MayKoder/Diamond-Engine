@@ -548,12 +548,14 @@ physx::PxRigidStatic* ModulePhysics::CreateRigidStatic(float3 pos) {
 	return staticBody;
 }
 
-physx::PxRigidDynamic* ModulePhysics::CreateRigidDynamic(float3 pos) {
+physx::PxRigidDynamic* ModulePhysics::CreateRigidDynamic(float3 pos, Quat rot) {
+	
+	physx::PxQuat rotation = { rot.x,  rot.y, rot.z, rot.w };
 
-	PxTransform position(pos.x, pos.y, pos.z);
+	PxTransform transform(pos.x, pos.y, pos.z, rotation);
 
 	PxRigidDynamic* dynamicBody = nullptr;
-	dynamicBody = mPhysics->createRigidDynamic(position);
+	dynamicBody = mPhysics->createRigidDynamic(transform);
 	mScene->addActor(*dynamicBody);
 	return dynamicBody;
 }

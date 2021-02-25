@@ -167,7 +167,8 @@ void C_Collider::Update()
 		
 
 	if (rigidStatic != nullptr) {
-		rigidStatic->setGlobalPose(physx::PxTransform({ transform->position.x, transform->position.y, transform->position.z }));
+		physx::PxQuat rot = { transform->rotation.x,  transform->rotation.y, transform->rotation.z, transform->rotation.w };
+		rigidStatic->setGlobalPose(physx::PxTransform({ transform->position.x, transform->position.y, transform->position.z,  rot }));
 		
 		float4x4 trans = transform->globalTransform;
 		trans = EngineExternal->modulePhysics->PhysXTransformToF4F(rigidStatic->getGlobalPose());

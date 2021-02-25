@@ -96,7 +96,7 @@ public:
   //  physx::PxRigidDynamic* CreateGeometry(GeometryType type = GeometryType::NONE, float3 pos = { 0.0f, 0.0f, 0.0f }, float mass = 10.0f, float radius = 3.0f, float3 size = { 1.0f, 1.0f, 1.0f });
 
     physx::PxRigidStatic* CreateRigidStatic(float3 pos);
-    physx::PxRigidDynamic* CreateRigidDynamic(float3 pos);
+    physx::PxRigidDynamic* CreateRigidDynamic(float3 pos, Quat rot);
     physx::PxShape* CreateCollider(float3 size, physx::PxMaterial* material = nullptr);
     physx::PxMaterial* CreateMaterial(float staticFriction = 0.5f, float dynamicFriction = 0.5f, float restitution = 0.1f);
 
