@@ -688,6 +688,9 @@
     <ClInclude Include="Source Code\External Libraries\Wwise\AK\Tools\Common\AkPlatformFuncs.h">
       <Filter>Externals\AK</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\MO_AudioManager.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -1031,6 +1034,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\stdafx.cpp">
       <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_AudioManager.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

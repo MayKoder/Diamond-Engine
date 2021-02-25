@@ -335,6 +335,7 @@
     <ClInclude Include="Source Code\MaykMath.h" />
     <ClInclude Include="Source Code\DEModelNode.h" />
     <ClInclude Include="Source Code\MA_IconSystem.h" />
+    <ClInclude Include="Source Code\MO_AudioManager.h" />
     <ClInclude Include="Source Code\MO_MonoManager.h" />
     <ClInclude Include="Source Code\RE_Material.h" />
     <ClInclude Include="Source Code\RE_Mesh.h" />
@@ -452,6 +453,7 @@
     <ClCompile Include="Source Code\IM_TextureImporter.cpp" />
     <ClCompile Include="Source Code\MA_IconSystem.cpp" />
     <ClCompile Include="Source Code\MMGui.cpp" />
+    <ClCompile Include="Source Code\MO_AudioManager.cpp" />
     <ClCompile Include="Source Code\MO_MonoManager.cpp" />
     <ClCompile Include="Source Code\RE_Material.cpp" />
     <ClCompile Include="Source Code\RE_Mesh.cpp" />
