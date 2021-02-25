@@ -36,6 +36,8 @@ public:
 	void PauseAllSounds() const;
 	void ResumeAllSounds() const;
 
+	bool LoadBank(std::string& name);
+
 public:
 
 	// TODO add default listener

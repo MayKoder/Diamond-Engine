@@ -58,7 +58,7 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	// Renderer last!
 	AddModule(moduleCamera);
 
-	//AddModule(moduleAudio);  TODO: Uncomment
+	AddModule(moduleAudio); 
 
 	AddModule(moduleMono);
 

@@ -12,8 +12,6 @@
 #include "Wwise/AK/SoundEngine/Common/AkStreamMgrModule.h"
 #include "Wwise/AK/Tools/Common/AkPlatformFuncs.h"
 
-#include "Wwise/low_level_IO/Win32/AkFilePackageLowLevelIOBlocking.h"
-
 // Libs
 #pragma comment(lib, "Wwise/Release(StaticCRT)/lib/AkSoundEngine.lib")
 #pragma comment(lib, "Wwise/Release(StaticCRT)/lib/AkMusicEngine.lib")
@@ -36,9 +34,4 @@ namespace AK
 #endif // WIN32
 
 }
-
-bool InitSoundEngine();
-
-void TermSoundEngine();
-
 #endif // !__WWISE_INCLUDES_H__
