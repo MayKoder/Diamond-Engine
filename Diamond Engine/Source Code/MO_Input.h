@@ -75,4 +75,9 @@ private:
 	int mouse_x_motion;
 	int mouse_y_motion;
 	//int mouse_z_motion;
+
+	float gamepad_left_stick_x_motion;
+	float gamepad_left_stick_y_motion;
+	float gamepad_right_stick_x_motion;
+	float gamepad_right_stick_y_motion;
 };

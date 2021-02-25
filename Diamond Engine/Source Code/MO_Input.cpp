@@ -118,32 +118,6 @@ update_status ModuleInput::PreUpdate(float dt)
 			}
 		}
 	}
-	
-	/*
-	while (SDL_PollEvent(&Events) == 1) {
-
-		switch (Events.type) {
-		case SDL_CONTROLLERDEVICEADDED: {
-			int num_joystincks = SDL_NumJoysticks();
-			for (int i = 0; i < num_joystincks; ++i) {
-				if (i == 0) {
-					if (SDL_GameControllerGetAttached(controller_player) == SDL_FALSE) {
-						controller_player = SDL_GameControllerOpen(i);
-						continue;
-					}
-				}
-			}
-
-			break; }
-		case SDL_CONTROLLERDEVICEREMOVED:
-			if (SDL_GameControllerGetAttached(controller_player) == SDL_FALSE) {
-				SDL_GameControllerClose(controller_player);
-				controller_player = nullptr;
-			}
-			break;
-		}
-	}
-	*/
 
 	Uint32 buttons = SDL_GetMouseState(&mouse_x, &mouse_y);
 
@@ -170,6 +144,8 @@ update_status ModuleInput::PreUpdate(float dt)
 	}
 
 	mouse_x_motion = mouse_y_motion = 0;
+	gamepad_left_stick_x_motion = gamepad_left_stick_y_motion = 0.0f;
+	gamepad_right_stick_x_motion = gamepad_right_stick_y_motion = 0.0f;
 
 	bool quit = false;
 	SDL_Event e;
