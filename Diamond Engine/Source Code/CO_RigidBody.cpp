@@ -1,3 +1,5 @@
+#include"DETime.h"
+
 #include "CO_RigidBody.h"
 #include "CO_Collider.h"
 #include "CO_Transform.h"
@@ -35,7 +37,10 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 	rigid_dynamic = EngineExternal->modulePhysics->CreateRigidDynamic(pos, rot);
 
 	if (collider_info != nullptr)
+	{
 		rigid_dynamic->attachShape(*collider_info->colliderShape);
+		collider_info->rigidbody = this;
+	}
 
 	name = "Rigidbody";
 
@@ -82,16 +87,30 @@ void C_RigidBody::Update()
 {
 	//Just update transform if we have rigidbody simulation
 	//if (App->timeManager->started) {
-	float4x4 worldtrans = goTransform->globalTransform;
+	if (DETime::state == GameState::PLAY)
+	{
+		float4x4 worldtrans = goTransform->globalTransform;
 
-	float3 pos, scale;
-	Quat rot;
-	worldtrans.Decompose(pos, rot, scale);
-			pos = { rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z };
-			rot = { rigid_dynamic->getGlobalPose().q.x, rigid_dynamic->getGlobalPose().q.y, rigid_dynamic->getGlobalPose().q.z,  rigid_dynamic->getGlobalPose().q.w };
-			
-			worldtrans= float4x4::FromTRS(pos, rot, scale);
-			goTransform->SetTransformWithGlobal(worldtrans);
+		float3 pos, scale;
+		Quat rot;
+		worldtrans.Decompose(pos, rot, scale);
+		pos = { rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z };
+		rot = { rigid_dynamic->getGlobalPose().q.x, rigid_dynamic->getGlobalPose().q.y, rigid_dynamic->getGlobalPose().q.z,  rigid_dynamic->getGlobalPose().q.w };
+
+		worldtrans = float4x4::FromTRS(pos, rot, scale);
+		goTransform->SetTransformWithGlobal(worldtrans);
+	}
+	else {
+		
+		Quat rot;
+		float3 pos, scale;
+		goTransform->globalTransform.Decompose(pos, rot, scale);
+		pos = mesh->globalOBB.pos;
+
+		physx::PxQuat rotation = { rot.x,  rot.y, rot.z, rot.w };
+		rigid_dynamic->setGlobalPose(physx::PxTransform({ pos.x, pos.y, pos.z }, rotation));
+	
+	}
 		
 		
 	
@@ -113,7 +132,12 @@ bool C_RigidBody::OnEditor()
 	if (Component::OnEditor() == true)
 	{
 
-	
+		bool temp = use_kinematic;
+
+		ImGui::Checkbox("Is Static", &use_kinematic);
+		if (temp != use_kinematic)
+			EnableKinematic(use_kinematic);
+		
 		return true;
 	}
 	return false;

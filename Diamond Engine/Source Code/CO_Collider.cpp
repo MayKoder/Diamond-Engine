@@ -87,7 +87,8 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 		else {
 			_gm->AddComponent(Component::Type::RigidBody);
 			rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::Type::RigidBody));
-			rigidbody->EnableKinematic(true);
+			rigidbody->use_kinematic = true;
+			rigidbody->EnableKinematic(rigidbody->use_kinematic);
 			rigidbody->rigid_dynamic->attachShape(*colliderShape);
 
 			
@@ -116,10 +117,12 @@ C_Collider::~C_Collider()
 
 void C_Collider::Update()
 {
+#ifndef STANDALONE
+
 	if (colliderShape != nullptr && rigidbody != nullptr)
 	{
 		//EngineExternal->modulePhysics->DrawCollider(this);
-		
+
 		float4x4 trans = transform->globalTransform;
 		trans = EngineExternal->modulePhysics->PhysXTransformToF4F(rigidbody->rigid_dynamic->getGlobalPose());
 	
@@ -168,8 +171,9 @@ void C_Collider::Update()
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glPopMatrix();
 	}
-		
-
+	#endif // !STANDALONE
+	
+/*
 	if (rigidStatic != nullptr) {
 		float3 pos, scale;
 		Quat rot;
@@ -226,7 +230,7 @@ void C_Collider::Update()
 
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glPopMatrix();
-	}
+	}*/
 }
 
 void C_Collider::SetPosition(float3 position) {
