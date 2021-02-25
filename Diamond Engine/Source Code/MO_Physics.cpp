@@ -1,8 +1,10 @@
-#include "MO_Physics.h"
-#include "CO_Collider.h"
-
 #include "Application.h"
 
+#include"DETime.h"
+
+#include "MO_Physics.h"
+
+#include "CO_Collider.h"
 
 #ifndef _DEBUG
 #        pragma comment(lib, "Physx/libx86/_release/PhysX_32.lib")
@@ -132,7 +134,7 @@ bool ModulePhysics::Init() {
 update_status ModulePhysics::Update(float gameTimestep) {
 
 
-	/*if (App->timeManager->started)*/
+	if(DETime::state == GameState::PLAY)
 		SceneSimulation(gameTimestep);
 
 	//TODO: REMOVE OR REPLACE

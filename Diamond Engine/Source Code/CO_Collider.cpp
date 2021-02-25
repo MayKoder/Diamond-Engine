@@ -85,8 +85,12 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 			rigidbody->rigid_dynamic->attachShape(*colliderShape);
 		}
 		else {
-			rigidStatic = EngineExternal->modulePhysics->CreateRigidStatic(colliderPos);
-			rigidStatic->attachShape(*colliderShape);
+			_gm->AddComponent(Component::Type::RigidBody);
+			rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::Type::RigidBody));
+			rigidbody->EnableKinematic(true);
+			rigidbody->rigid_dynamic->attachShape(*colliderShape);
+
+			
 			//	rigidbody = dynamic_cast<C_RigidBody*>(_gm->AddComponent(Component::Type::RigidBody));
 
 		//	rigidbody->rigid_dynamic->attachShape(*colliderShape);
