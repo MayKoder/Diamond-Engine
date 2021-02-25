@@ -14,8 +14,8 @@ ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, sta
 {
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
-	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_BUTTONS);
-	for (size_t i = 0; i < MAX_BUTTONS; ++i) {
+	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
+	for (size_t i = 0; i < MAX_MOUSE_BUTTONS; ++i) {
 		for (int j = 0; j < 2; ++j) {
 			game_pad[i] = KEY_IDLE;
 		}
@@ -79,29 +79,46 @@ update_status ModuleInput::PreUpdate(float dt)
 		}
 	}
 
+	/*
 	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i) {
-		game_pad[i] = SDL_GameControllerGetButton(controller_player, (SDL_GameControllerButton)i);
-	}
+		bool key_pressed = SDL_GameControllerGetButton(controller_player, (SDL_GameControllerButton)i);
 
-	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i) {
-		if (game_pad[i] == KEY_IDLE) {
-			game_pad[i] == KEY_DOWN;
-			break;
+		if (key_pressed)
+		{
+			switch (game_pad[i])
+			{
+			case KEY_IDLE: 
+				game_pad[i] = KEY_DOWN;
+				break;
+			case KEY_DOWN:
+				game_pad[i] = KEY_REPEAT; 
+				break;
+			case KEY_UP: 
+				game_pad[i] = KEY_DOWN; 
+				break;
+			default:
+				break;
+			}
 		}
-		else {
-			game_pad[i] == KEY_REPEAT;
-			break;
+		else
+		{
+			switch (game_pad[i])
+			{
+				case KEY_DOWN: 
+					game_pad[i] = KEY_UP; 
+					break;
+				case KEY_REPEAT:
+					game_pad[i] = KEY_UP;
+					break;
+				case KEY_UP:
+					game_pad[i] = KEY_IDLE;
+					break;
+				default: 
+					break;
+			}
 		}
-
-		if (game_pad[i] == KEY_REPEAT || game_pad[i] == KEY_DOWN) {
-			game_pad[i] == KEY_UP;
-			break;
-		}
-		else {
-			game_pad[i] == KEY_IDLE;
-			break;
-		}		
 	}
+	*/
 
 	while (SDL_PollEvent(&Events) == 1) {
 

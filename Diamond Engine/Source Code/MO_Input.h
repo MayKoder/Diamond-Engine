@@ -1,7 +1,7 @@
 #pragma once
 #include "Module.h"
 
-#define MAX_BUTTONS 5
+#define MAX_MOUSE_BUTTONS 5
 
 enum KEY_STATE
 {
@@ -63,7 +63,7 @@ public:
 
 private:
 	KEY_STATE* keyboard;
-	KEY_STATE mouse_buttons[MAX_BUTTONS];
+	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
 
 	//Gamepad control
 	SDL_Event Events;
