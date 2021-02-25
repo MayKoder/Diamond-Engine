@@ -79,7 +79,7 @@ update_status ModuleInput::PreUpdate(float dt)
 		}
 	}
 
-	/*
+	
 	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i) {
 		bool key_pressed = SDL_GameControllerGetButton(controller_player, (SDL_GameControllerButton)i);
 
@@ -118,8 +118,8 @@ update_status ModuleInput::PreUpdate(float dt)
 			}
 		}
 	}
-	*/
-
+	
+	/*
 	while (SDL_PollEvent(&Events) == 1) {
 
 		switch (Events.type) {
@@ -143,6 +143,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 		}
 	}
+	*/
 
 	Uint32 buttons = SDL_GetMouseState(&mouse_x, &mouse_y);
 
@@ -217,6 +218,25 @@ update_status ModuleInput::PreUpdate(float dt)
 					quit = true;
 				}
 			}
+
+			case SDL_CONTROLLERDEVICEADDED: {
+				int num_joystincks = SDL_NumJoysticks();
+				for (int i = 0; i < num_joystincks; ++i) {
+					if (i == 0) {
+						if (SDL_GameControllerGetAttached(controller_player) == SDL_FALSE) {
+							controller_player = SDL_GameControllerOpen(i);
+							continue;
+						}
+					}
+				}
+
+				break; }
+			case SDL_CONTROLLERDEVICEREMOVED:
+				if (SDL_GameControllerGetAttached(controller_player) == SDL_FALSE) {
+					SDL_GameControllerClose(controller_player);
+					controller_player = nullptr;
+				}
+				break;
 		}
 	}
 
@@ -252,6 +272,18 @@ void ModuleInput::OnGUI()
 		ImGui::Text("GamePad: Pressing B: %d", game_pad[SDL_CONTROLLER_BUTTON_B] == KEY_REPEAT);
 		ImGui::Text("GamePad: Pressing X: %d", game_pad[SDL_CONTROLLER_BUTTON_X] == KEY_REPEAT);
 		ImGui::Text("GamePad: Pressing Y: %d", game_pad[SDL_CONTROLLER_BUTTON_Y] == KEY_REPEAT);
+
+		ImGui::Text("GamePad: Pressing Left Shoulder: %d", game_pad[SDL_CONTROLLER_BUTTON_LEFTSHOULDER] == KEY_REPEAT);
+		ImGui::Text("GamePad: Pressing Right Shoulder: %d", game_pad[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_REPEAT);
+
+		ImGui::Text("GamePad: Pressing Start: %d", game_pad[SDL_CONTROLLER_BUTTON_START] == KEY_REPEAT);
+		ImGui::Text("GamePad: Pressing DPad Up: %d", game_pad[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_REPEAT);
+		ImGui::Text("GamePad: Pressing DPad Down: %d", game_pad[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_REPEAT);
+		ImGui::Text("GamePad: Pressing DPad Left: %d", game_pad[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_REPEAT);
+		ImGui::Text("GamePad: Pressing DPad Right: %d", game_pad[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_REPEAT);
+
+		ImGui::Text("GamePad: Pressing Back: %d", game_pad[SDL_CONTROLLER_BUTTON_BACK] == KEY_REPEAT);
+		ImGui::Text("GamePad: Pressing Guide: %d", game_pad[SDL_CONTROLLER_BUTTON_GUIDE] == KEY_REPEAT);
 	}
 }
 #endif // !STANDALONE
