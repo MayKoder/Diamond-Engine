@@ -24,7 +24,7 @@ active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), d
 	if(parent != nullptr)
 		parent->children.push_back(this);
 
-	transform = dynamic_cast<C_Transform*>(AddComponent(Component::Type::Transform));
+	transform = dynamic_cast<C_Transform*>(AddComponent(Component::TYPE::TRANSFORM));
 
 	//TODO: Should make sure there are not duplicated ID's
 	if (UID == -1) 
@@ -83,30 +83,30 @@ void GameObject::Update()
 }
 
 
-Component* GameObject::AddComponent(Component::Type _type, const char* params)
+Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 {
 
-	assert(_type != Component::Type::None, "Can't create a NONE component");
+	assert(_type != Component::TYPE::NONE, "Can't create a NONE component");
 	Component* ret = nullptr;
 
 	//TODO: Make a way to add only 1 instance components like transform and camera
 	switch (_type)
 	{
-	case Component::Type::Transform:
+	case Component::TYPE::TRANSFORM:
 		if(transform == nullptr)
 			ret = new C_Transform(this);
 		break;
-	case Component::Type::MeshRenderer:
+	case Component::TYPE::MESH_RENDERER:
 		ret = new C_MeshRenderer(this);
 		break;
-	case Component::Type::Material:
+	case Component::TYPE::MATERIAL:
 		ret = new C_Material(this);
 		break;
-	case Component::Type::Script:
+	case Component::TYPE::SCRIPT:
 		assert(params != nullptr, "Script without name can't be created");
 		ret = new C_Script(this, params);
 		break;
-	case Component::Type::Camera:
+	case Component::TYPE::CAMERA:
 		ret = new C_Camera(this);
 		EngineExternal->moduleScene->SetGameCamera(dynamic_cast<C_Camera*>(ret));
 		break;
@@ -122,7 +122,7 @@ Component* GameObject::AddComponent(Component::Type _type, const char* params)
 }
 
 
-Component* GameObject::GetComponent(Component::Type _type)
+Component* GameObject::GetComponent(Component::TYPE _type)
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
@@ -250,7 +250,7 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 		conf.nObj = json_array_get_object(componentArray, i);
 
 		const char* scName = conf.ReadString("ScriptName");
-		Component* comp = AddComponent((Component::Type)conf.ReadInt("Type"), scName);
+		Component* comp = AddComponent((Component::TYPE)conf.ReadInt("Type"), scName);
 
 		comp->LoadData(conf);
 

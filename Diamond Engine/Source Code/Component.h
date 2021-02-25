@@ -10,15 +10,17 @@ class Component
 {
 public:
 
-	enum class Type
+	enum class TYPE
 	{
-		None,
-		Transform,
-		MeshRenderer,
-		Material,
-		Camera,
-		Script,
-		Count,
+		NONE,
+		TRANSFORM,
+		MESH_RENDERER,
+		MATERIAL,
+		CAMERA,
+		SCRIPT,
+		CANVAS,
+		TRANSFORM_2D,
+		COUNT
 	};
 
 	Component(GameObject* _gm);
@@ -45,7 +47,7 @@ public:
 		return gameObject;
 	}
 
-	Type type;
+	TYPE type;
 
 protected:
 	//const char* name;

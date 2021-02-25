@@ -74,7 +74,7 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 	C_Transform* transform = gameObject->transform;
 
 	//TODO IMPORTANT: Optimize this, save this pointer or something
-	C_Material* material = dynamic_cast<C_Material*>(gameObject->GetComponent(Component::Type::Material));
+	C_Material* material = dynamic_cast<C_Material*>(gameObject->GetComponent(Component::TYPE::MATERIAL));
 	GLuint id = 0;
 
 	if (material != nullptr && material->IsActive())

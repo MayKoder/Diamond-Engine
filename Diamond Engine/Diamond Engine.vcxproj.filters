@@ -100,6 +100,9 @@
     <Filter Include="Sources\Editor\Commands\Derived">
       <UniqueIdentifier>{12e4d68c-af1f-4fd1-b95b-d8f9b218305b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Components\Derived\UI">
+      <UniqueIdentifier>{56cdc8d7-06f2-4c96-a910-b224a496a1b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -556,6 +559,15 @@
     <ClInclude Include="Source Code\MA_ShortcutManager.h">
       <Filter>Sources\Editor\Commands</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\MO_GUI.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Canvas.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Transform2D.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -872,6 +884,15 @@
     </ClCompile>
     <ClCompile Include="Source Code\MA_ShortcutManager.cpp">
       <Filter>Sources\Editor\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_GUI.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Canvas.cpp">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Transform2D.cpp">
+      <Filter>Sources\Components\Derived\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

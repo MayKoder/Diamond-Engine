@@ -197,7 +197,7 @@ C_Transform* C_Transform::GetRecursiveTransforms(C_Transform* node, std::vector<
 void C_Transform::UpdateBoxes()
 {
 	C_MeshRenderer* mesh = nullptr;
-	mesh = dynamic_cast<C_MeshRenderer*>(gameObject->GetComponent(Component::Type::MeshRenderer));
+	mesh = dynamic_cast<C_MeshRenderer*>(gameObject->GetComponent(Component::TYPE::MESH_RENDERER));
 	if (mesh != nullptr)
 	{
 		mesh->globalOBB = mesh->GetRenderMesh()->localAABB;
