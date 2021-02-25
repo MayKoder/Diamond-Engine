@@ -1,6 +1,7 @@
 #include "CO_RigidBody.h"
 #include "CO_Collider.h"
 #include "CO_Transform.h"
+#include "CO_MeshRenderer.h"
 
 #include "MO_Physics.h"
 #include "Globals.h"
@@ -23,8 +24,14 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 {
 	goTransform = dynamic_cast<C_Transform*>(_gm->GetComponent(Component::Type::Transform));
 	collider_info = dynamic_cast<C_Collider*>(_gm->GetComponent(Component::Type::Collider));
+	mesh = dynamic_cast<C_MeshRenderer*>(_gm->GetComponent(Component::Type::MeshRenderer));
 
-	rigid_dynamic = EngineExternal->modulePhysics->CreateRigidDynamic(goTransform->position, goTransform->rotation);
+	Quat rot;
+	float3 pos, scale;
+	goTransform->globalTransform.Decompose(pos, rot, scale);
+//	pos = mesh->globalOBB.pos;
+
+	rigid_dynamic = EngineExternal->modulePhysics->CreateRigidDynamic(pos, rot);
 
 	if (collider_info != nullptr)
 		rigid_dynamic->attachShape(*collider_info->colliderShape);
@@ -74,13 +81,16 @@ void C_RigidBody::Update()
 {
 	//Just update transform if we have rigidbody simulation
 	//if (App->timeManager->started) {
+	float4x4 worldtrans = goTransform->globalTransform;
 
-
-			float3 pos = { rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z };
-			Quat rot = { rigid_dynamic->getGlobalPose().q.x, rigid_dynamic->getGlobalPose().q.y, rigid_dynamic->getGlobalPose().q.z,  rigid_dynamic->getGlobalPose().q.w };
-			float3 scale = goTransform->localScale;
-
-			goTransform->SetTransformMatrix(pos, rot, scale);
+	float3 pos, scale;
+	Quat rot;
+	worldtrans.Decompose(pos, rot, scale);
+			pos = { rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z };
+			rot = { rigid_dynamic->getGlobalPose().q.x, rigid_dynamic->getGlobalPose().q.y, rigid_dynamic->getGlobalPose().q.z,  rigid_dynamic->getGlobalPose().q.w };
+			
+			worldtrans= float4x4::FromTRS(pos, rot, scale);
+			goTransform->SetTransformWithGlobal(worldtrans);
 		
 		
 	

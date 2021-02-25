@@ -167,11 +167,16 @@ void C_Collider::Update()
 		
 
 	if (rigidStatic != nullptr) {
-		physx::PxQuat rot = { transform->rotation.x,  transform->rotation.y, transform->rotation.z, transform->rotation.w };
-		rigidStatic->setGlobalPose(physx::PxTransform({ transform->position.x, transform->position.y, transform->position.z,  rot }));
+		float3 pos, scale;
+		Quat rot;
+		transform->globalTransform.Decompose(pos, rot, scale);
+
+		physx::PxQuat rotation = { rot.x,  rot.y, rot.z, rot.w };
+		pos = mesh->globalOBB.pos;
+		rigidStatic->setGlobalPose(physx::PxTransform({ pos.x, pos.y, pos.z,  rotation }));
 		
-		float4x4 trans = transform->globalTransform;
-		trans = EngineExternal->modulePhysics->PhysXTransformToF4F(rigidStatic->getGlobalPose());
+
+		float4x4 trans = EngineExternal->modulePhysics->PhysXTransformToF4F(rigidStatic->getGlobalPose());
 
 
 		//SetPosition(pos);

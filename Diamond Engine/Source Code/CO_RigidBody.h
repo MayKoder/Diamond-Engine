@@ -7,6 +7,7 @@
 class GameObject;
 class C_Collider;
 class C_Transform;
+class C_MeshRenderer;
 
 class C_RigidBody : public Component
 {
@@ -63,6 +64,7 @@ public:
 
 	C_Transform* goTransform;
 	C_Collider* collider_info;
+	C_MeshRenderer* mesh;
 
 	physx::PxRigidDynamic* rigid_dynamic;
 
