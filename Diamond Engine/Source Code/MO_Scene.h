@@ -60,8 +60,4 @@ private:
 
 	void UpdateGameObjects();
 	void RecursiveUpdate(GameObject* parent);
-
-private:
-	AkGameObjectID lis;
-	AkGameObjectID sou;
 };

@@ -80,7 +80,7 @@ bool InitSoundEngine()
     }
 
     // TODO: Check BasePath for different versions. What if there are banks in library as resources? Use assets or library
-    g_lowLevelIO.SetBasePath(AKTEXT("Project Folder/Assets/SoundBanks/"));
+    g_lowLevelIO.SetBasePath(AKTEXT("../Project Folder/Assets/SoundBanks/"));
 
     AK::StreamMgr::SetCurrentLanguage(AKTEXT("English(US)"));
 

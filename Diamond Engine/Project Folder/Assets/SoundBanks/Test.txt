@@ -1,0 +1,6 @@
+Event	ID	Name			Wwise Object Path	Notes
+	1256202815	Play			\Default Work Unit\Play	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	589915161	LegendsNeverDie	E:\Wwise\Test\.cache\Windows\SFX\LegendsNeverDie_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\LegendsNeverDie		40332096
+
