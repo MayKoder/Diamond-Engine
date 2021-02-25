@@ -67,7 +67,7 @@ private:
 
 	//Gamepad control
 	SDL_Event Events;
-	Uint8 game_pad[MAX_BUTTONS];
+	Uint8 game_pad[SDL_CONTROLLER_BUTTON_MAX];
 	SDL_GameController* controller_player = nullptr;
 
 	int mouse_x;

@@ -43,6 +43,9 @@ bool ModuleInput::Init()
 
 	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
 
+	//Gamepad init
+	SDL_Init(SDL_INIT_GAMECONTROLLER);
+
 #ifdef STANDALONE
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 #endif // STANDALONE
@@ -76,26 +79,26 @@ update_status ModuleInput::PreUpdate(float dt)
 		}
 	}
 
-	for (int i = 0; i < MAX_BUTTONS; ++i) {
+	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i) {
 		game_pad[i] = SDL_GameControllerGetButton(controller_player, (SDL_GameControllerButton)i);
 	}
 
-	for (int i = 0; i < MAX_BUTTONS; ++i) {
+	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i) {
 		if (game_pad[i] == KEY_IDLE) {
-			game_pad[i] = KEY_DOWN;
+			game_pad[i] == KEY_DOWN;
 			break;
 		}
 		else {
-			game_pad[i] = KEY_REPEAT;
+			game_pad[i] == KEY_REPEAT;
 			break;
 		}
 
 		if (game_pad[i] == KEY_REPEAT || game_pad[i] == KEY_DOWN) {
-			game_pad[i] = KEY_UP;
+			game_pad[i] == KEY_UP;
 			break;
 		}
 		else {
-			game_pad[i] = KEY_IDLE;
+			game_pad[i] == KEY_IDLE;
 			break;
 		}		
 	}
@@ -228,8 +231,10 @@ void ModuleInput::OnGUI()
 		ImGui::Text("Mouse: X = %d, Y = %d, Z = %d", mouse_x, mouse_y, mouse_z);
 		ImGui::Text("Mouse motion: %d, %d", mouse_x_motion, mouse_y_motion);
 
-
 		ImGui::Text("GamePad: Pressing A: %d", game_pad[SDL_CONTROLLER_BUTTON_A] == KEY_REPEAT);
+		ImGui::Text("GamePad: Pressing B: %d", game_pad[SDL_CONTROLLER_BUTTON_B] == KEY_REPEAT);
+		ImGui::Text("GamePad: Pressing X: %d", game_pad[SDL_CONTROLLER_BUTTON_X] == KEY_REPEAT);
+		ImGui::Text("GamePad: Pressing Y: %d", game_pad[SDL_CONTROLLER_BUTTON_Y] == KEY_REPEAT);
 	}
 }
 #endif // !STANDALONE
