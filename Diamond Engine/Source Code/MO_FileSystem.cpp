@@ -10,11 +10,12 @@
 #include "MO_ResourceManager.h"
 #include"MO_Scene.h"
 
+#include "IM_TextureImporter.h"
+#include "IM_FontImporter.h"
+
 #include "PhysFS/include/physfs.h"
 #include"DEJsonSupport.h"
 
-#include "DevIL\include\ilu.h"
-#include "DevIL\include\ilut.h"
 #include"RE_Shader.h"
 #include"RE_Material.h"
 
@@ -31,10 +32,11 @@ bool M_FileSystem::Init()
 {
 	//Devil init
 	LOG(LogType::L_NORMAL, "DevIL Init");
-	ilInit();
-	iluInit();
-	ilutInit();
-	ilutRenderer(ILUT_OPENGL);
+	TextureImporter::Init();
+
+	//FreeType init
+	LOG(LogType::L_NORMAL, "FreeType Init");
+	free_type_library=new FreeType_Library();
 
 	FileSystem::FSInit();
 
@@ -65,6 +67,7 @@ bool M_FileSystem::Start()
 
 bool M_FileSystem::CleanUp()
 {
+	delete free_type_library;
 
 	FileSystem::FSDeInit();
 

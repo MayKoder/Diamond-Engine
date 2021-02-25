@@ -203,6 +203,10 @@
     <ClInclude Include="Source Code\External Libraries\DevIL\include\ilut_config.h" />
     <ClInclude Include="Source Code\External Libraries\DevIL\include\ilu_region.h" />
     <ClInclude Include="Source Code\External Libraries\DevIL\include\il_wrap.h" />
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\freetype\config\ftconfig.h" />
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\freetype\config\ftheader.h" />
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\freetype\freetype.h" />
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\ft2build.h" />
     <ClInclude Include="Source Code\External Libraries\ImGuizmo\ImCurveEdit.h" />
     <ClInclude Include="Source Code\External Libraries\ImGuizmo\ImGradient.h" />
     <ClInclude Include="Source Code\External Libraries\ImGuizmo\ImGuizmo.h" />
@@ -287,6 +291,7 @@
     <ClInclude Include="Source Code\GameObject.h" />
     <ClInclude Include="Source Code\glmath.h" />
     <ClInclude Include="Source Code\Globals.h" />
+    <ClInclude Include="Source Code\IM_FontImporter.h" />
     <ClInclude Include="Source Code\IM_MaterialImporter.h" />
     <ClInclude Include="Source Code\IM_ModelImporter.h" />
     <ClInclude Include="Source Code\IM_ShaderImporter.h" />
@@ -400,6 +405,7 @@
     <ClCompile Include="Source Code\IM_FileSystem.cpp" />
     <ClCompile Include="Source Code\GameObject.cpp" />
     <ClCompile Include="Source Code\glmath.cpp" />
+    <ClCompile Include="Source Code\IM_FontImporter.cpp" />
     <ClCompile Include="Source Code\IM_MaterialImporter.cpp" />
     <ClCompile Include="Source Code\IM_ModelImporter.cpp" />
     <ClCompile Include="Source Code\IM_ShaderImporter.cpp" />
