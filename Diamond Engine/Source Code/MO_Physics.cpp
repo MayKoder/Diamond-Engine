@@ -164,23 +164,23 @@ bool ModulePhysics::CleanUp() {
 	//PX_RELEASE(App->vehicle->gFrictionPairs);
 	//PxCloseVehicleSDK(); //->Close vehicle sdk before close physics and foundation
 
-	//PX_RELEASE(mScene);
-	//PX_RELEASE(mMaterial);
-	//PX_RELEASE(mPhysics);
+	PX_RELEASE(mScene);
+	PX_RELEASE(mMaterial);
+	PX_RELEASE(mPhysics);
 
-	//if (mPvd)
-	//{
-	//	PxPvdTransport* transport = mPvd->getTransport();
-	//	mPvd->release(); mPvd = NULL;
-	//	PX_RELEASE(transport);
-	//}
+	if (mPvd)
+	{
+		PxPvdTransport* transport = mPvd->getTransport();
+		mPvd->release(); mPvd = NULL;
+		PX_RELEASE(transport);
+	}
 
-	//PX_RELEASE(mCooking);
-	//PxCloseExtensions(); // Needed to close extensions we inited before
-	//PX_RELEASE(mDispatcher);
+	PX_RELEASE(mCooking);
+	PxCloseExtensions(); // Needed to close extensions we inited before
+	PX_RELEASE(mDispatcher);
 
-	////Remember to release the last
-	//PX_RELEASE(mFoundation);
+	//Remember to release the last
+	PX_RELEASE(mFoundation);
 
 	return true;
 }

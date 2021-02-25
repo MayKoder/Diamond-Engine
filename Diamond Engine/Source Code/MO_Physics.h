@@ -7,6 +7,9 @@
 #include "PhysX/include/extensions/PxDefaultAllocator.h"
 #include "GameObject.h"
 #include "Globals.h"
+
+#define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
+
 class ComponentCollider;
 class C_Collider;
 
