@@ -45,3 +45,9 @@ int GetGamepadAxis(MonoObject* x)
 	return 0;
 }
 
+int GetGamePadTrigger(MonoObject* x)
+{
+	//Input.GetTrigger
+	return 0;
+}
+

@@ -57,6 +57,10 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateGameObject", CSCreateGameObject);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseX", MouseX);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseY", MouseY);
+	
+	mono_add_internal_call("DiamondEngine.Input::GetGamepadButton", GetGamepadButton);
+	mono_add_internal_call("DiamondEngine.Input::GamepadAxis", GetGamepadAxis);
+	mono_add_internal_call("DiamondEngine.Input::GamepadTrigger", GetGamePadTrigger);
 
 	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateBullet", CreateBullet);
