@@ -40,9 +40,8 @@ C_Animator::~C_Animator()
 
 void C_Animator::Start()
 {
-	//hard coded first bone
-	rootBone = gameObject->children[1]->children[0];
-	dynamic_cast<C_MeshRenderer*>(gameObject->children[0]->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
+	rootBone = gameObject->children[0]->children[0];
+	dynamic_cast<C_MeshRenderer*>(gameObject->children[2]->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
 
 	if (rootBone == nullptr) return;
 
@@ -56,7 +55,9 @@ void C_Animator::Start()
 		boneMapping[bones[i]->name] = bones[i];
 	}
 
-	currentAnimation = animations[0];
+	if(animations.size() > 0)
+		currentAnimation = animations[0];
+
 	started = true;
 }
 
@@ -85,6 +86,10 @@ void C_Animator::Update()
 		}
 
 
+		if (currentAnimation == nullptr)
+			return;
+
+			
 		//Updating animation blend
 		float blendRatio = 0.0f;
 		if (blendTimeDuration > 0.0f)
@@ -167,7 +172,7 @@ bool C_Animator::OnEditor()
 	{
 		ImGui::Separator();
 
-		if (_anim != nullptr)
+		if (_anim != nullptr && currentAnimation != nullptr)
 		{
 			if (currentAnimation == nullptr) {
 			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "None");
@@ -179,31 +184,6 @@ bool C_Animator::OnEditor()
 			ImGui::Text("Current Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", currentTimeAnimation);
 			ImGui::Text("blendTime: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", blendTime);
 
-			ImGui::Text("Idle Animation");
-			ImGui::InputInt("##Idle Start Frame", (int*)&animations[0]->initTimeAnim, 1, 1);
-			ImGui::InputFloat("##Idle End Frame", &animations[0]->duration, 1, 1);
-
-			ImGui::Text("Run Animation");
-			ImGui::InputInt("##Run Start Frame", (int*)&animations[1]->initTimeAnim, 1, 1);
-			ImGui::InputFloat("##Run End Frame", &animations[1]->duration, 1, 1);
-
-			ImGui::Text("Attack Animation");
-			ImGui::InputInt("##Attack Start Frame", (int*)&animations[2]->initTimeAnim, 1, 1);
-			ImGui::InputFloat("##Attack End Frame", &animations[2]->duration, 1, 1);
-
-
-			if (ImGui::Button("Idle animation")) {
-				currentAnimation = animations[0];
-				time = 0.f;
-			}
-			if (ImGui::Button("Run animation")) {
-				currentAnimation = animations[1];
-				time = 0.f;
-			}
-			if (ImGui::Button("Attack animation")) {
-				currentAnimation = animations[2];
-				time = 0.f;
-			}
 			ImGui::Spacing();
 			if (playing)
 			{
@@ -213,7 +193,6 @@ bool C_Animator::OnEditor()
 			{
 				ImGui::Text("Playing: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "false");
 			}
-
 
 			ImGui::Spacing();
 

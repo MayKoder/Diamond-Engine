@@ -242,7 +242,6 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 		Component* comp = AddComponent((Component::Type)conf.ReadInt("Type"), scName);
 
 		comp->LoadData(conf);
-
 	}
 }
 

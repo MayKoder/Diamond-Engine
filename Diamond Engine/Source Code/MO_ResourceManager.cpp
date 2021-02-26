@@ -392,7 +392,8 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 		case Resource::Type::SHADER: ret = (Resource*) new ResourceShader(uid); break;
 		case Resource::Type::MATERIAL: ret = (Resource*) new ResourceMaterial(uid); break;
 		//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
-		case Resource::Type::ANIMATION : ret = (Resource*) new ResourceAnimation(uid); break;
+		case Resource::Type::ANIMATION : 
+			ret = (Resource*) new ResourceAnimation(uid); break;
 	}
 
 	if (ret != nullptr)

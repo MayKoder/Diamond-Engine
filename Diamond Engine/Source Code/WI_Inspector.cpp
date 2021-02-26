@@ -136,6 +136,11 @@ void W_Inspector::Draw()
 					if(selectedGO->GetComponent(Component::Type::Camera) == nullptr)
 						selectedGO->AddComponent(Component::Type::Camera);
 				}
+				if (ImGui::Selectable("Animator"))
+				{
+					if (selectedGO->GetComponent(Component::Type::Animator) == nullptr)
+						selectedGO->AddComponent(Component::Type::Animator);
+				}
 
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)
 				{
