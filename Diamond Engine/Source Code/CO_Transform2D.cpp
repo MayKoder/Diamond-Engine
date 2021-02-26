@@ -45,10 +45,10 @@ float4x4 C_Transform2D::GetGlobal2DTransform(int winWidth, int winHeight)
 	float positionX = posX * winWidth / 100.f;
 	float positionY = posY * winHeight / 100.f;
 
-	float sizeX = sizeX * winWidth / 100.f;
-	float sizeY = sizeY * winHeight / 100.f;
+	float scaleX = sizeX * winWidth / 100.f;
+	float scaleY = sizeY * winHeight / 100.f;
 
-	return float4x4::FromTRS(float3(positionX, positionY, 0), Quat::FromEulerXYZ(0, 0, rotation), float3(sizeX, sizeY, 0));
+	return float4x4::FromTRS(float3(positionX, positionY, 0), Quat::FromEulerXYZ(0, 0, rotation), float3(scaleX, scaleY, 0));
 }
 
 

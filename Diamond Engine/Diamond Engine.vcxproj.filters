@@ -568,6 +568,13 @@
     <ClInclude Include="Source Code\CO_Transform2D.h">
       <Filter>Sources\Components\Derived\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\freetype\config\ftconfig.h" />
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\freetype\config\ftheader.h" />
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\freetype\freetype.h" />
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\ft2build.h" />
+    <ClInclude Include="Source Code\IM_FontImporter.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -893,6 +900,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\CO_Transform2D.cpp">
       <Filter>Sources\Components\Derived\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\IM_FontImporter.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
