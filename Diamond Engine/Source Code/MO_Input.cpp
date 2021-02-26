@@ -240,9 +240,11 @@ void ModuleInput::OnGUI()
 {
 	if (ImGui::CollapsingHeader("Input", ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		ImGui::Text("----------Mouse Inputs----------");
 		ImGui::Text("Mouse: X = %d, Y = %d, Z = %d", mouse_x, mouse_y, mouse_z);
 		ImGui::Text("Mouse motion: %d, %d", mouse_x_motion, mouse_y_motion);
-
+		
+		ImGui::Text("----------GamePad Inputs----------");
 		ImGui::Text("-----BUTTONS-----");
 		ImGui::Text("GamePad: Pressing A: %d", game_pad[SDL_CONTROLLER_BUTTON_A] == KEY_REPEAT);
 		ImGui::Text("GamePad: Pressing B: %d", game_pad[SDL_CONTROLLER_BUTTON_B] == KEY_REPEAT);

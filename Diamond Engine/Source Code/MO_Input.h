@@ -68,22 +68,22 @@ public:
 		return game_pad[id];
 	}
 
-	//Return values between -32768 (joystick up) and 32767 (joystick down)
+	//Return values between -32768 (joystick up) and 32767 (joystick down). Value by default is -1 (idle)
 	int GetLeftAxisY() {
 		return SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_LEFTY);
 	}
 
-	//Return values between -32768 (joystick left) and 32767 (joystick right)
+	//Return values between -32768 (joystick left) and 32767 (joystick right). Value by default is 0 (idle)
 	int GetLeftAxisX (){
 		return SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_LEFTX);
 	}
 	
-	//Return values between -32768 (joystick up) and 32767 (joystick down)
+	//Return values between -32768 (joystick up) and 32767 (joystick down). Value by default is -1 (idle)
 	int GetRightAxisY() {
 		return SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_RIGHTY);
 	}
 
-	//Return values between -32768 (joystick left) and 32767 (joystick right)
+	//Return values between -32768 (joystick left) and 32767 (joystick right). Value by default is 0 (idle)
 	int GetRightAxisX() {
 		return SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_RIGHTX);
 	}
