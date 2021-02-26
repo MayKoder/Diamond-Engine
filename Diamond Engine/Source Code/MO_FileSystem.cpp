@@ -9,6 +9,7 @@
 #include "MO_Editor.h"
 #include "MO_ResourceManager.h"
 #include"MO_Scene.h"
+#include "MO_GUI.h"
 
 #include "IM_TextureImporter.h"
 #include "IM_FontImporter.h"
@@ -61,7 +62,7 @@ bool M_FileSystem::Start()
 	GetAllFilesRecursive(App->moduleResources->meshesLibraryRoot);
 	App->moduleScene->defaultMaterial = (ResourceMaterial*)App->moduleResources->RequestFromAssets("Assets/Materials/default.mat");
 	App->moduleRenderer3D->skybox.shaderRes = dynamic_cast<ResourceShader*>(App->moduleResources->RequestResource(28971592, "Library/Shaders/28971592.shdr"));
-	free_type_library->ImportNewFont("Assets/Fonts/arial.ttf");
+	App->moduleGui->index_font=free_type_library->ImportNewFont("Assets/Fonts/arial.ttf");
 
 	return true;
 }

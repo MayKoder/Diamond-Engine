@@ -16,7 +16,7 @@
 #include "OpenGL.h"
 
 M_Gui::M_Gui(Application* app, bool startEnabled) : Module(app, startEnabled),
-	canvas(nullptr)
+	canvas(nullptr), index_font(-1)
 {
 }
 

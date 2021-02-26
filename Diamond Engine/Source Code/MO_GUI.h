@@ -21,6 +21,9 @@ public:
 
 	void EraseCanvas();
 
+public:
+	int index_font;
+
 private:
 
 	GameObject* canvas = nullptr;
