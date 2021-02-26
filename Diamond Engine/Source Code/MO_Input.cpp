@@ -258,10 +258,12 @@ void ModuleInput::OnGUI()
 		ImGui::Text("GamePad: Moving Left Stick Up/Down: %d", SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_LEFTY));	
 		ImGui::Text("GamePad: Moving Right Stick Left/Right: %d", SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_RIGHTX));
 		ImGui::Text("GamePad: Moving Right Stick Up/Down: %d", SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_RIGHTY));
-
+		
 		ImGui::Text("-----SHOULDERS-----");
 		ImGui::Text("GamePad: Pressing Left Shoulder: %d", game_pad[SDL_CONTROLLER_BUTTON_LEFTSHOULDER] == KEY_REPEAT);
 		ImGui::Text("GamePad: Pressing Right Shoulder: %d", game_pad[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_REPEAT);
+		ImGui::Text("GamePad: Pressing LT: %d", SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_TRIGGERLEFT));
+		ImGui::Text("GamePad: Pressing RT: %d", SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_TRIGGERRIGHT));
 
 		ImGui::Text("-----MIDDLE BUTTONS-----");
 		ImGui::Text("GamePad: Pressing Start: %d", game_pad[SDL_CONTROLLER_BUTTON_START] == KEY_REPEAT);
