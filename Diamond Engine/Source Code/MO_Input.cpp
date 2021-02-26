@@ -268,7 +268,6 @@ void ModuleInput::OnGUI()
 		ImGui::Text("-----MIDDLE BUTTONS-----");
 		ImGui::Text("GamePad: Pressing Start: %d", game_pad[SDL_CONTROLLER_BUTTON_START] == KEY_REPEAT);
 		ImGui::Text("GamePad: Pressing Back: %d", game_pad[SDL_CONTROLLER_BUTTON_BACK] == KEY_REPEAT);
-		ImGui::Text("GamePad: Pressing Guide: %d", game_pad[SDL_CONTROLLER_BUTTON_GUIDE] == KEY_REPEAT);
 
 		ImGui::Text("-----DPad Buttons-----");
 		ImGui::Text("GamePad: Pressing DPad Up: %d", game_pad[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_REPEAT);
