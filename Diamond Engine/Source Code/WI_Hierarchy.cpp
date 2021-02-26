@@ -29,6 +29,11 @@ void W_Hierarchy::Draw()
 		//if (ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left)) {
 		//	dropTarget = nullptr;
 		//}
+		if (EngineExternal->moduleScene->current_scene[0] == '\0') {
+			ImGui::Button("untitled scene");}
+		else {
+			ImGui::Button(EngineExternal->moduleScene->current_scene); }
+
 		if (cSceneReference != nullptr && cSceneReference->root != nullptr)
 		{
 			DrawGameObjectsTree(cSceneReference->root, false);

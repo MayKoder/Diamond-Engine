@@ -30,6 +30,7 @@
 M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr),
 defaultMaterial(nullptr)
 {
+	current_scene[0] = '\0';
 }
 
 M_Scene::~M_Scene()
@@ -117,6 +118,25 @@ update_status M_Scene::Update(float dt)
 				//Free memory
 				json_value_free(scene);
 			}
+		}
+	}
+
+	if (App->moduleInput->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->moduleInput->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	{
+		if (current_scene[0] == '\0')
+		{
+			std::string sceneDir = M_FileSystem::OpenSaveAsDialog();
+			App->moduleFileSystem->ToLocalAssetsPath(sceneDir);
+			if (!sceneDir.empty())
+			{
+				App->moduleScene->SaveScene(sceneDir.c_str());
+				App->moduleResources->NeedsDirsUpdate(App->moduleResources->assetsRoot);
+			}
+		}
+		else
+		{
+			App->moduleScene->SaveScene(current_scene);
+			App->moduleResources->NeedsDirsUpdate(App->moduleResources->assetsRoot);
 		}
 	}
 
@@ -284,6 +304,7 @@ void M_Scene::SaveScene(const char* name)
 
 	//Free memory
 	json_value_free(file);
+	LOG(LogType::L_NORMAL, "Scene saved at: %s", name);
 }
 
 void M_Scene::LoadScene(const char* name)
@@ -323,6 +344,7 @@ void M_Scene::LoadScene(const char* name)
 
 	//Free memory
 	json_value_free(scene);
+	strcpy(current_scene, name);
 }
 
 void M_Scene::LoadModelTree(const char* modelPath)
@@ -367,6 +389,7 @@ void M_Scene::CleanScene()
 #endif
 
 	root = CreateGameObject("Scene root", nullptr);
+	current_scene[0] = '\0';
 }
 
 GameObject* M_Scene::LoadGOData(JSON_Object* goJsonObj, GameObject* parent)
