@@ -84,6 +84,8 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 
 	SetLinearDamping(linear_damping);
 	SetAngularDamping(angular_damping);
+
+	rigid_dynamic->userData = this->gameObject;
 }
 
 C_RigidBody::~C_RigidBody()

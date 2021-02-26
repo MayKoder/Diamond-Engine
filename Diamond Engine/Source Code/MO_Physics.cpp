@@ -4,6 +4,9 @@
 
 #include "MO_Physics.h"
 
+#include"CO_Script.h"
+#include"GameObject.h"
+
 #include "CO_Collider.h"
 
 #ifndef _DEBUG
@@ -712,6 +715,15 @@ void CollisionDetector::onContact(const PxContactPairHeader& pairHeader,
 
 		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
+
+			for (size_t k= 0; k < 2; ++k)
+			{
+				GameObject* contact = static_cast<GameObject*>(pairHeader.actors[k]->userData);
+				C_Script* script =  dynamic_cast<C_Script*>(contact->GetComponent(Component::Type::Script));
+				if (script)
+					script->CollisionCallback();
+			}
+
 			/*if ((pairHeader.actors[0] == mSubmarineActor) ||
 				(pairHeader.actors[1] == mSubmarineActor))*/
 		}

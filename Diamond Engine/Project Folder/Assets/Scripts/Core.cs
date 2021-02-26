@@ -19,7 +19,8 @@ public class Core : DiamondComponent
 
     //public Vector3 testOtherClass; //Should find a way to tell if the class is a gameobject or not
 
-	public void Update(/*int x*/)
+
+    public void Update(/*int x*/)
 	{
 		if (this.reference == null)
 			return;

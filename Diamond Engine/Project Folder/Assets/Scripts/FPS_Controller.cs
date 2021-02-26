@@ -10,6 +10,12 @@ public class FPS_Controller : DiamondComponent
     public float movementSpeed = 35.0f;
     public float mouseSens = 1.0f;
 
+    public void OnCollisionEnter()
+    {
+        Debug.Log("Ayo i've been called.");
+        InternalCalls.Destroy(reference);
+    }
+
     public void Update()
 	{
         if (this.reference == null)
