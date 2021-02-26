@@ -20,7 +20,7 @@ FreeType_Library::FreeType_Library() : total_fonts(0)
 
 FreeType_Library::~FreeType_Library()
 {
-	for (int i = total_fonts-1; i < 0; i++) {
+	for (int i = total_fonts-1; i >= 0; i--) {
 		FT_Done_Face(faces[i]);
 	}
 	FT_Done_FreeType(library);
@@ -28,6 +28,10 @@ FreeType_Library::~FreeType_Library()
 
 bool FreeType_Library::ImportNewFont(const char* path)
 {
+	if (total_fonts == 10) {
+		LOG(LogType::L_WARNING, "There is not enough space for more fonts");
+		return false;
+	}
 	FT_Error error = FT_New_Face(library, path, 0, &faces[total_fonts]);
 	if (error == FT_Err_Unknown_File_Format)
 	{

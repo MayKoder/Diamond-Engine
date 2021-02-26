@@ -19,6 +19,7 @@ public:
 
 private:
 	FT_Library library;
+	
 	FT_Face faces[10];
 	int total_fonts;
 
