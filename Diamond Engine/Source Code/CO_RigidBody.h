@@ -20,6 +20,8 @@ public:
 	virtual ~C_RigidBody();
 
 	void Update() override;
+	void SaveData(JSON_Object* nObj) override;
+	void LoadData(DEConfig& nObj) override;
 
 #ifndef STANDALONE
 	bool OnEditor() override;
@@ -61,6 +63,7 @@ public:
 	inline void LockAngularX(bool enable) { rigid_dynamic->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X, enable); };
 	inline void LockAngularY(bool enable) { rigid_dynamic->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y, enable); };
 	inline void LockAngularZ(bool enable) { rigid_dynamic->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, enable); };
+
 
 public:
 

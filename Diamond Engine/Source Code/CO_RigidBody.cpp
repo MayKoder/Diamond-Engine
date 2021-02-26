@@ -127,9 +127,6 @@ void C_RigidBody::Update()
 		rigid_dynamic->setGlobalPose(physx::PxTransform({ pos.x, pos.y, pos.z }, rotation));
 	
 	}
-		
-		
-	
 
 	/*}
 	else {
@@ -140,6 +137,27 @@ void C_RigidBody::Update()
 	}*/
 
 	//TODO: MOVE RIGID BODY IF GLOBAL POSITION CHANGED
+}
+
+void C_RigidBody::SaveData(JSON_Object* nObj)
+{
+	Component::SaveData(nObj);
+
+	DEJson::WriteBool(nObj, "kinematic", use_kinematic);
+	
+}
+
+void C_RigidBody::LoadData(DEConfig& nObj)
+{
+	Component::LoadData(nObj);
+
+	//if (nObj.ReadBool("IsEmpty") == true)
+	//	return;
+
+	bool temp = use_kinematic;
+	use_kinematic = nObj.ReadBool("kinematic");
+	if (temp != use_kinematic)
+		EnableKinematic(use_kinematic);
 }
 
 #ifndef STANDALONE

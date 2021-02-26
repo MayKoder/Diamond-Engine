@@ -704,7 +704,7 @@ CollisionDetector::~CollisionDetector()
 void CollisionDetector::onContact(const PxContactPairHeader& pairHeader,
 	const PxContactPair* pairs, PxU32 nbPairs)
 {
-	//LOG(LogType::L_NORMAL, "Collision detected");
+	LOG(LogType::L_NORMAL, "Collision detected");
 
 	for (PxU32 i = 0; i < nbPairs; i++)
 	{
