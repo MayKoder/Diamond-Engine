@@ -32,7 +32,7 @@ public:
 	void LinkChannelBones(GameObject* gameObject);
 	void StoreBoneMapping(GameObject* gameObject);
 
-	void SetAnimation(ResourceAnimation* anim);
+	void AddAnimation(ResourceAnimation* anim);
 	//void DrawLinkedBones() const;
 
 	void Start();

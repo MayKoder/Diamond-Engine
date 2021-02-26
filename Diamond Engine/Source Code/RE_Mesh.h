@@ -30,6 +30,7 @@ struct Bone
 	std::vector<Bone*> children;
 	int id;
 	float4x4* offset;
+	float4x4* transform;
 };
 
 class ResourceMesh  : public Resource

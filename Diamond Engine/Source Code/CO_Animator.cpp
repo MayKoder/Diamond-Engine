@@ -31,11 +31,11 @@ C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject)
 
 C_Animator::~C_Animator()
 {
-	if (_anim != nullptr)
+	/*if (_anim != nullptr)
 	{
 		EngineExternal->moduleResources->UnloadResource(_anim->GetUID());
 		_anim = nullptr;
-	}
+	}*/
 }
 
 void C_Animator::Start()
@@ -85,10 +85,8 @@ void C_Animator::Update()
 			currentAnimation = animations[2];
 		}
 
-
 		if (currentAnimation == nullptr)
 			return;
-
 			
 		//Updating animation blend
 		float blendRatio = 0.0f;
@@ -131,7 +129,7 @@ void C_Animator::Update()
 			}
 		}
 
-		UpdateChannelsTransform(currentAnimation, blendRatio > 0.0f ?previousAnimation : nullptr, blendRatio);
+		UpdateChannelsTransform(currentAnimation, blendRatio > 0.0f ? previousAnimation : nullptr, blendRatio);
 		UpdateMeshAnimation(gameObject->children[0]);
 		std::vector<GameObject*> bones;
 		//rootBone->CollectChilds(bones);
@@ -149,20 +147,41 @@ void C_Animator::SetResource(ResourceAnimation* re_anim)
 void C_Animator::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
-	DEJson::WriteString(nObj, "Path", _anim->GetLibraryPath());
-	DEJson::WriteInt(nObj, "UID", _anim->GetUID());
+	//DEJson::WriteString(nObj, "Path", _anim->GetLibraryPath());
+	//DEJson::WriteInt(nObj, "UID", _anim->GetUID());
+
+	JSON_Value* animationsValue = json_value_init_array();
+	JSON_Array* animationsArray = json_value_get_array(animationsValue);
+
+	for (size_t i = 0; i < animations.size(); i++)
+	{
+		json_array_append_number(animationsArray, animations[i]->GetUID());
+	}
+	json_object_set_value(nObj, "Animations", animationsValue);
 }
 
 void C_Animator::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
 
-	SetAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), nObj.ReadString("Path"))));
+	AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), nObj.ReadString("Path"))));
 	if (_anim == nullptr)
 		return;
 	else
 	{
 		//LinkChannelBones(gameObject);
+	}
+
+	JSON_Array* animations_array = nObj.ReadArray("Animations");
+
+	for (size_t i = 0; i < json_array_get_count(animations_array); i++)
+	{
+		ResourceAnimation* animation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(json_array_get_number(animations_array, i), Resource::Type::ANIMATION));
+
+		if (animation != nullptr)
+		{
+			AddAnimation(animation);
+		}
 	}
 }
 
@@ -172,7 +191,7 @@ bool C_Animator::OnEditor()
 	{
 		ImGui::Separator();
 
-		if (_anim != nullptr && currentAnimation != nullptr)
+		if (_anim != nullptr)
 		{
 			if (currentAnimation == nullptr) {
 			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "None");
@@ -196,7 +215,10 @@ bool C_Animator::OnEditor()
 
 			ImGui::Spacing();
 
-			ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _anim->GetLibraryPath());
+			if (_anim != nullptr)
+			{
+				//ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _anim->GetLibraryPath());
+			}
 		}
 		return true;
 	}
@@ -236,8 +258,9 @@ void C_Animator::Resume()
 	active = true;
 }
 
-void C_Animator::SetAnimation(ResourceAnimation* anim)
+void C_Animator::AddAnimation(ResourceAnimation* animation)
 {
+	/*
 	_anim = anim;
 	_anim->animationName = "Idle";
 	_anim->initTimeAnim = 0;
@@ -257,6 +280,12 @@ void C_Animator::SetAnimation(ResourceAnimation* anim)
 	attack->duration = 120;
 	attack->loopable = false;
 	animations.push_back(attack);
+	*/
+
+	animations.push_back(animation);
+
+	//TODO: Delete this, just for debbuging purposes
+	currentAnimation = animation;
 }
 
 void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, const ResourceAnimation* blend, float blendRatio)
@@ -343,6 +372,7 @@ Quat C_Animator::GetChannelRotation(const Channel& channel, float currentKey, Qu
 	}
 	return rotation;
 }
+
 float3 C_Animator::GetChannelPosition(const Channel& channel, float currentKey, float3 default) const
 {
 	float3 position = default;
@@ -370,7 +400,6 @@ float3 C_Animator::GetChannelPosition(const Channel& channel, float currentKey, 
 
 	return position;
 }
-
 
 float3 C_Animator::GetChannelScale(const Channel & channel, float currentKey, float3 default) const
 {
