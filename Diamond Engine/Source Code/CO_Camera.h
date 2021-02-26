@@ -40,6 +40,9 @@ public:
 	float orthoSize;
 	bool cullingState;
 
+	int windowWidth;
+	int windowHeight;
+
 //Movement logic
 public: 
 	void LookAt(const float3& Spot);

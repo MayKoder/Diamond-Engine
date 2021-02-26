@@ -2,11 +2,18 @@
 
 #include "Application.h"
 #include "MO_Scene.h"
-
+#include "MO_Window.h"
+#include "MO_Renderer3D.h"
 
 #include "GameObject.h"
 #include "CO_Canvas.h"
 #include "CO_Transform2D.h"
+#include "CO_Material.h"
+#include "CO_Camera.h"
+
+#include <stack>
+
+#include "OpenGL.h"
 
 M_Gui::M_Gui(Application* app, bool startEnabled) : Module(app, startEnabled),
 	canvas(nullptr)
@@ -20,18 +27,41 @@ M_Gui::~M_Gui()
 }
 
 
-bool M_Gui::SetSceneCanvas(GameObject* object)
+void M_Gui::RenderCanvas2D()
 {
-	//TODO check the object has the canvas component
-	canvas = object;
+	std::stack<GameObject*> stack;
+	GameObject* node = nullptr;
+	
+	int elementsCount = canvas->children.size();
+	for (int i = 0; i < elementsCount; ++i)
+	{
+		stack.push(canvas->children[i]);
 
-	return true;
+		while (stack.empty() == false)
+		{
+			node = stack.top();
+			stack.pop();
+
+			RenderUiElement(node);
+
+			int childNumber = node->children.size();
+			for (int i = 0; i < childNumber; ++i)
+				stack.push(node->children[i]);
+		}
+	}
 }
 
 
-void M_Gui::DrawCanvas3D() 
+void M_Gui::RenderCanvas3D() 
 {
-} //need to think about this one
+
+}
+
+
+void M_Gui::RenderUiElement(GameObject* uiElement)
+{
+	
+}
 
 
 void M_Gui::CreateCanvas()

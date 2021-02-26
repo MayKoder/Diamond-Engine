@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 
+#include "MathGeoLib/include/Math/float4x4.h"
 
 C_Transform2D::C_Transform2D(GameObject* gameObject) : Component(gameObject),
 	posX(0.0f),
@@ -37,6 +38,18 @@ bool C_Transform2D::OnEditor()
 	return true;
 }
 #endif // !STANDALONE
+
+
+float4x4 C_Transform2D::GetGlobal2DTransform(int winWidth, int winHeight)
+{
+	float positionX = posX * winWidth / 100.f;
+	float positionY = posY * winHeight / 100.f;
+
+	float sizeX = sizeX * winWidth / 100.f;
+	float sizeY = sizeY * winHeight / 100.f;
+
+	return float4x4::FromTRS(float3(positionX, positionY, 0), Quat::FromEulerXYZ(0, 0, rotation), float3(sizeX, sizeY, 0));
+}
 
 
 void C_Transform2D::UpdateTransform()

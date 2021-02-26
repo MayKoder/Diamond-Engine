@@ -11,8 +11,10 @@ public:
 	M_Gui(Application* App, bool startEnabled = true);
 	~M_Gui() override;
 
-	bool SetSceneCanvas(GameObject* object);
-	void DrawCanvas3D(); //need to think about this one
+	void RenderCanvas2D();
+	void RenderCanvas3D(); //need to think about this one
+
+	void RenderUiElement(GameObject* uiElement);
 
 	void CreateCanvas();
 	void CreateImage();

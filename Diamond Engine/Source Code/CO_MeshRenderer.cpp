@@ -99,6 +99,8 @@ void C_MeshRenderer::SaveData(JSON_Object* nObj)
 
 	DEJson::WriteVector3(nObj, "alternColor", &alternColor.x);
 }
+
+
 void C_MeshRenderer::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);

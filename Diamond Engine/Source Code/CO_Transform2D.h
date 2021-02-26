@@ -15,6 +15,8 @@ public:
 	bool OnEditor() override;
 #endif // !STANDALONE
 
+	float4x4 GetGlobal2DTransform(int winWidth, int winHeight);
+
 private:
 	void UpdateTransform();
 	void SetTransform(float locPosX, float locPosY, float locRotation);
