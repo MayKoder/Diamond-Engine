@@ -110,7 +110,9 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 		FileSystem::GetFileName(res->GetAssetPath(), name, false);
 
 		MeshLoader::NodeToGameObject(scene->mMeshes, texturesOnModelUIDs, meshesOnModelUIDs, scene->mRootNode, root, name.c_str());
-		
+		 
+		AnimationLoader::SetAnimationOnGameObjectRoot(scene->mAnimations, animationsOnModelUIDs, root->children[0]);
+
 		SaveModelCustom(root->children[0], res->GetLibraryPath());
 		delete root;
 

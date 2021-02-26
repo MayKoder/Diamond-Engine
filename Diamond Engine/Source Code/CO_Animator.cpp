@@ -26,6 +26,7 @@ C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject)
 {
 	gameObject = gameobject;
 	name = "Animator Component";
+	playing = true;
 }
 
 C_Animator::~C_Animator()
@@ -41,14 +42,14 @@ void C_Animator::Start()
 {
 	//hard coded first bone
 	rootBone = gameObject->children[1]->children[0];
-	//dynamic_cast<C_MeshRenderer*>(gameObject->children[0]->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
+	dynamic_cast<C_MeshRenderer*>(gameObject->children[0]->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
 
 	if (rootBone == nullptr) return;
 
 	boneMapping.clear();
 
 	std::vector<GameObject*> bones;
-	//rootBone->CollectChilds(bones);
+	rootBone->CollectChilds(bones);
 
 	for (uint i = 0; i < bones.size(); ++i)
 	{

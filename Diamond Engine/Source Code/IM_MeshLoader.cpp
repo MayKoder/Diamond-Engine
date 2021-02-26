@@ -211,8 +211,19 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 		//iterate all bones
 		for (size_t b = 0; b < importedMesh->mNumBones; b++)
 		{
-			Bone bone;
-			//bone.name = importedMesh->mName.C_Str();
+			//Bone* bone = new Bone;
+			//bone->name = aiBone->mName.C_Str();
+			//bone->id = 
+			aiBone* aiBone = importedMesh->mBones[b];
+			_mesh->bonesMap[aiBone->mName.C_Str()] = b;
+
+			//Load offsets
+			float4x4 offset = float4x4(aiBone->mOffsetMatrix.a1, aiBone->mOffsetMatrix.a2, aiBone->mOffsetMatrix.a3, aiBone->mOffsetMatrix.a4,
+				aiBone->mOffsetMatrix.b1, aiBone->mOffsetMatrix.b2, aiBone->mOffsetMatrix.b3, aiBone->mOffsetMatrix.b4,
+				aiBone->mOffsetMatrix.c1, aiBone->mOffsetMatrix.c2, aiBone->mOffsetMatrix.c3, aiBone->mOffsetMatrix.c4,
+				aiBone->mOffsetMatrix.d1, aiBone->mOffsetMatrix.d2, aiBone->mOffsetMatrix.d3, aiBone->mOffsetMatrix.d4);
+
+			_mesh->bonesOffsets.push_back(offset);
 
 			//iterate all bone weights
 			for (int weights = 0; weights < importedMesh->mBones[b]->mNumWeights; weights++) {
@@ -231,7 +242,10 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 					}
 				}
 			}
+		
+			//_mesh->bones.push_back(bone);
 		}
+
 		
 	}
 		

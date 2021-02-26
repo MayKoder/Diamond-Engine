@@ -3,6 +3,7 @@
 #include "glmath.h" //Move to MathGeoLib
 #include <vector>
 #include<string>
+#include <map>
 
 #include"MathGeoLib/include/Geometry/AABB.h"
 #include"DEResource.h"
@@ -25,10 +26,10 @@ struct Bone
 	Bone();
 	~Bone();
 
-	//const char* name;
+	const char* name;
 	std::vector<Bone*> children;
 	int id;
-	float4x4* transform;
+	float4x4* offset;
 };
 
 class ResourceMesh  : public Resource
@@ -61,6 +62,10 @@ public:
 	AABB localAABB;
 
 	std::vector<Bone*> bones;
+
+	std::map<std::string, uint> bonesMap;
+	std::vector<float4x4> bonesOffsets;
+	std::vector<float4x4> bonesTransforms;
 
 	//TODO: Delete this, wireframe mode should be different
 	// ----------- TEMPORAL LOGIC, MUST BE DELETED ---------------//

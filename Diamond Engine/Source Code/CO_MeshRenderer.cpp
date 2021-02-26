@@ -80,6 +80,33 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 	if (material != nullptr && material->IsActive())
 		id = material->GetTextureID();
 
+	//Mesh array with transform matrix of each bone
+	if (rootBone != nullptr) {
+		//Get all the bones
+		std::map<std::string, GameObject*> bonesMap;
+		GetBoneMapping(bonesMap);
+
+		//Set bone Transforms array size using original bones transform array size
+		std::vector<float4x4> boneTransforms;
+		boneTransforms.resize(_mesh->bones.size());
+
+		//Get each bone
+		for (std::map<std::string, uint>::iterator it = _mesh->bonesMap.begin(); it != _mesh->bonesMap.end(); ++it)
+		{
+			GameObject* bone = bonesMap[it->first];
+
+			if (bone != nullptr)
+			{
+				//Calcule of Delta Matrix
+				float4x4 Delta = CalculateDeltaMatrix(dynamic_cast<C_Transform*>(bone->GetComponent(Component::Type::Transform))->globalTransform, dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::Type::Transform))->globalTransform.Inverted());
+				Delta = Delta * _mesh->bonesOffsets[it->second];
+
+				//Storage of Delta Matrix (Transformation applied to each bone)
+				boneTransforms[it->second] = Delta;
+			}
+		}
+	}
+
 	_mesh->RenderMesh(id, alternColor, rTex, (material && material->material != nullptr) ? material->material : EngineExternal->moduleScene->defaultMaterial, transform);
 
 	if (vertexNormals || faceNormals)
@@ -232,4 +259,31 @@ void C_MeshRenderer::SetRenderMesh(ResourceMesh* mesh)
 ResourceMesh* C_MeshRenderer::GetRenderMesh()
 {
 	return _mesh;
+}
+
+
+float4x4 C_MeshRenderer::CalculateDeltaMatrix(float4x4 globalMat, float4x4 invertMat)
+{
+	float3 position;
+	Quat rotation;
+	float3 scale;
+
+	float4x4 mat = globalMat;
+	mat.Decompose(position, rotation, scale);
+	mat = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::Type::Transform))->globalTransform.Inverted() * mat;
+	mat.Decompose(position, rotation, scale);
+
+	return mat;
+}
+
+void C_MeshRenderer::GetBoneMapping(std::map<std::string, GameObject*>& boneMapping)
+{
+	boneMapping.clear();
+	std::vector<GameObject*> gameObjects;
+	rootBone->CollectChilds(gameObjects);
+
+	for (uint i = 0; i < gameObjects.size(); ++i)
+	{
+		boneMapping[gameObjects[i]->name] = gameObjects[i];
+	}
 }
