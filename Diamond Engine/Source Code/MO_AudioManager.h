@@ -4,21 +4,12 @@
 
 #include <string>
 #include <vector>
-#include <map>
 
 #include "Wwise/AK/SoundEngine/Common/AkTypes.h"
 
 #include "Module.h"
 #include "Globals.h"
-
-typedef struct 
-{
-	std::string						bank_name;
-	bool							loaded_in_heap;
-	std::map<uint64, std::string>	events;
-	std::map<uint64, std::string>	actions;
-
-}AudioBank;
+#include "AudioBank.h"
 
 class ModuleAudioManager :public Module
 {
@@ -49,6 +40,7 @@ public:
 	bool LoadBank(std::string& name);
 
 public:
+	std::vector<AudioBank>		banks;
 
 };
 

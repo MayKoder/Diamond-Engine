@@ -205,6 +205,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source Code\Application.h" />
     <ClInclude Include="Source Code\AssetDir.h" />
+    <ClInclude Include="Source Code\AudioBank.h" />
     <ClInclude Include="Source Code\Color.h" />
     <ClInclude Include="Source Code\Command.h" />
     <ClInclude Include="Source Code\COMM_DeleteGO.h" />
