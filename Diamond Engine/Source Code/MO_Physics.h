@@ -3,6 +3,7 @@
 #include "Module.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "PhysX/include/common/PxCoreUtilityTypes.h"
+#include "Physx/include/PxSimulationEventCallback.h"
 #include "PhysX/include/PxPhysicsAPI.h"
 #include "PhysX/include/extensions/PxDefaultAllocator.h"
 #include "GameObject.h"
@@ -61,6 +62,8 @@ namespace physx
     typedef uint32_t PxU32;
     typedef float PxF32;
 
+    struct PxContactPairHeader;
+    struct PxContactPair;
 };
 
 enum class JointType {
@@ -108,6 +111,25 @@ public:
 
     physx::PxTransform TRStoPxTransform(float3 pos, float3 rot);
 
+    //physx::PxFilterFlags contactReportFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+    //    physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+    //    physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
+    //{
+    //    PX_UNUSED(attributes0);
+    //    PX_UNUSED(attributes1);
+    //    PX_UNUSED(filterData0);
+    //    PX_UNUSED(filterData1);
+    //    PX_UNUSED(constantBlockSize);
+    //    PX_UNUSED(constantBlock);
+
+    //    // all initial and persisting reports for everything, with per-point data
+    //    pairFlags = PxPairFlag::eSOLVE_CONTACT | PxPairFlag::eDETECT_DISCRETE_CONTACT
+    //        | PxPairFlag::eNOTIFY_TOUCH_FOUND
+    //        | PxPairFlag::eNOTIFY_TOUCH_PERSISTS
+    //        | PxPairFlag::eNOTIFY_CONTACT_POINTS;
+    //    return PxFilterFlag::eDEFAULT;
+    //}
+
 public:
     physx::PxFoundation* mFoundation;
     physx::PxPhysics* mPhysics;
@@ -120,3 +142,27 @@ public:
 
     float3 gravity;
 };
+
+
+class CollisionDetector : public physx::PxSimulationEventCallback {
+public:         
+    CollisionDetector();
+    ~CollisionDetector();
+
+     void onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)override;
+     void onWake(physx::PxActor** actors, physx::PxU32 count)override
+     {}
+     void onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count)override
+     {}
+     void onSleep(physx::PxActor** actors, physx::PxU32 count) override
+     {}
+     void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count) override
+     {}
+     void onAdvance(const physx::PxRigidBody* const* bodyBuffer, const physx::PxTransform* poseBuffer, const physx::PxU32 count) override
+     {}
+
+     physx::PxFilterFlags CollisionDetector::CollisionDetectorFilterShader	(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+         physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+         physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize);
+}; // end class
+

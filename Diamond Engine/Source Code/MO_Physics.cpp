@@ -52,7 +52,28 @@ ModulePhysics::~ModulePhysics() {
 
 }
 
+physx::PxFilterFlags contactReportFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+	physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+	physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
+{
+	PX_UNUSED(attributes0);
+	PX_UNUSED(attributes1);
+	PX_UNUSED(filterData0);
+	PX_UNUSED(filterData1);
+	PX_UNUSED(constantBlockSize);
+	PX_UNUSED(constantBlock);
+
+	// all initial and persisting reports for everything, with per-point data
+	pairFlags = PxPairFlag::eSOLVE_CONTACT | PxPairFlag::eDETECT_DISCRETE_CONTACT
+		| PxPairFlag::eNOTIFY_TOUCH_FOUND
+		| PxPairFlag::eNOTIFY_TOUCH_PERSISTS
+		| PxPairFlag::eNOTIFY_CONTACT_POINTS;
+	return PxFilterFlag::eDEFAULT;
+}
+
 bool ModulePhysics::Init() {
+
+	CollisionDetector* detector = new CollisionDetector();
 
 	//Initialize PhysX mFoundation
 #pragma region Foundation_Initialize
@@ -104,7 +125,8 @@ bool ModulePhysics::Init() {
 	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
 	mDispatcher = PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = mDispatcher;
-	sceneDesc.filterShader = PxDefaultSimulationFilterShader;
+	sceneDesc.filterShader = contactReportFilterShader;
+
 	mScene = mPhysics->createScene(sceneDesc);
 #pragma endregion Scene_Initialize
 
@@ -128,6 +150,9 @@ bool ModulePhysics::Init() {
 	//Init vehicle after foundation and physics
 	PxInitVehicleSDK(*mPhysics);
 
+	mScene->setSimulationEventCallback(detector);
+
+	
 	return true;
 }
 
@@ -164,23 +189,23 @@ bool ModulePhysics::CleanUp() {
 	//PX_RELEASE(App->vehicle->gFrictionPairs);
 	//PxCloseVehicleSDK(); //->Close vehicle sdk before close physics and foundation
 
-	PX_RELEASE(mScene);
-	PX_RELEASE(mMaterial);
-	PX_RELEASE(mPhysics);
+	//PX_RELEASE(mScene);
+	//PX_RELEASE(mMaterial);
+	//PX_RELEASE(mPhysics);
 
-	if (mPvd)
-	{
-		PxPvdTransport* transport = mPvd->getTransport();
-		mPvd->release(); mPvd = NULL;
-		PX_RELEASE(transport);
-	}
+	//if (mPvd)
+	//{
+	//	PxPvdTransport* transport = mPvd->getTransport();
+	//	mPvd->release(); mPvd = NULL;
+	//	PX_RELEASE(transport);
+	//}
 
-	PX_RELEASE(mCooking);
-	PxCloseExtensions(); // Needed to close extensions we inited before
-	PX_RELEASE(mDispatcher);
+	//PX_RELEASE(mCooking);
+	//PxCloseExtensions(); // Needed to close extensions we inited before
+	//PX_RELEASE(mDispatcher);
 
-	//Remember to release the last
-	PX_RELEASE(mFoundation);
+	////Remember to release the last
+	//PX_RELEASE(mFoundation);
 
 	return true;
 }
@@ -665,4 +690,52 @@ PxTransform ModulePhysics::TRStoPxTransform(float3 pos, float3 rot) {
 	PxQuat PxRotation(rotation.x, rotation.y, rotation.z, rotation.w);
 
 	return PxTransform(Pxposition, PxRotation);
+}
+
+CollisionDetector::CollisionDetector()
+{
+
+}
+CollisionDetector::~CollisionDetector()
+{
+
+}
+
+void CollisionDetector::onContact(const PxContactPairHeader& pairHeader,
+	const PxContactPair* pairs, PxU32 nbPairs)
+{
+	//LOG(LogType::L_NORMAL, "Collision detected");
+
+	for (PxU32 i = 0; i < nbPairs; i++)
+	{
+		const PxContactPair& cp = pairs[i];
+
+		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND)
+		{
+			/*if ((pairHeader.actors[0] == mSubmarineActor) ||
+				(pairHeader.actors[1] == mSubmarineActor))*/
+		}
+	}
+}
+
+physx::PxFilterFlags CollisionDetector::CollisionDetectorFilterShader(
+	PxFilterObjectAttributes attributes0, PxFilterData filterData0,
+	PxFilterObjectAttributes attributes1, PxFilterData filterData1,
+	PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize)
+{
+	// let triggers through
+	if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
+	{
+		pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
+		return PxFilterFlag::eDEFAULT;
+	}
+	// generate contacts for all that were not filtered above
+	pairFlags = PxPairFlag::eCONTACT_DEFAULT;
+
+	// trigger the contact callback for pairs (A,B) where
+	// the filtermask of A contains the ID of B and vice versa.
+	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+		pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+
+	return PxFilterFlag::eDEFAULT;
 }
