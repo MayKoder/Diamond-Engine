@@ -29,14 +29,21 @@ void W_Hierarchy::Draw()
 		//if (ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left)) {
 		//	dropTarget = nullptr;
 		//}
-		if (EngineExternal->moduleScene->current_scene[0] == '\0') {
-			ImGui::Button("untitled scene");}
-		else {
-			ImGui::Button(EngineExternal->moduleScene->current_scene); }
+		bool tree_open = false;
+		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Selected;
 
-		if (cSceneReference != nullptr && cSceneReference->root != nullptr)
+		if (EngineExternal->moduleScene->current_scene_name[0] == '\0') {
+			tree_open = ImGui::TreeNodeEx("untitled scene", flags);}
+		else {
+			tree_open = ImGui::TreeNodeEx(EngineExternal->moduleScene->current_scene_name, flags); }
+
+		if (tree_open)
 		{
-			DrawGameObjectsTree(cSceneReference->root, false);
+			if (cSceneReference != nullptr && cSceneReference->root != nullptr)
+			{
+				DrawGameObjectsTree(cSceneReference->root, false);
+			}
+			ImGui::TreePop();
 		}
 
 		if (ImGui::BeginPopupContextWindow())
