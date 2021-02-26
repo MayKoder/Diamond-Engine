@@ -688,6 +688,9 @@
     <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkCommonDefs.h">
       <Filter>Externals\AK</Filter>
     </ClInclude>
+    <ClInclude Include="CO_AudioSource.h">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -1034,6 +1037,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkMultipleFileLocation.cpp">
       <Filter>Externals\AK\LowLevelIO</Filter>
+    </ClCompile>
+    <ClCompile Include="CO_AudioSource.cpp">
+      <Filter>Sources\Components\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

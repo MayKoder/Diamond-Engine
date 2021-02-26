@@ -202,6 +202,7 @@
     <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\IAkProcessorFeatures.h" />
     <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\IAkRTPCSubscriber.h" />
     <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\IAkStreamMgr.h" />
+    <ClInclude Include="CO_AudioSource.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source Code\Application.h" />
     <ClInclude Include="Source Code\AssetDir.h" />
@@ -370,6 +371,7 @@
     <ClInclude Include="Source Code\Wwise_Includes.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CO_AudioSource.cpp" />
     <ClCompile Include="Source Code\Application.cpp" />
     <ClCompile Include="Source Code\AssetDir.cpp" />
     <ClCompile Include="Source Code\Color.cpp" />
