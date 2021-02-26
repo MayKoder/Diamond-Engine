@@ -25,7 +25,7 @@ public class Core : DiamondComponent
 			return;
 
  
-        if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
+        if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT) // || Input.GetGamepadButton(DEControllerButton.a) == KeyState.KEY_REPEAT)
             reference.localPosition += reference.GetForward() * movementSpeed * Time.deltaTime;
         if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT)
             reference.localPosition += reference.GetForward() * -movementSpeed * Time.deltaTime;
@@ -41,7 +41,7 @@ public class Core : DiamondComponent
         //if (Input.GetMouseY() != 0 && turret != null)
         //    turret.localRotation = turret.localRotation * Quaternion.RotateAroundAxis(Vector3.right, -Input.GetMouseY() * Time.deltaTime);
 
-        if (Input.GetMouseClick(MouseButton.LEFT) == KeyState.KEY_REPEAT)
+        if (Input.GetMouseClick(MouseButton.LEFT) == KeyState.KEY_REPEAT || Input.GetRightTrigger() > 0)
         {
             InternalCalls.CreateBullet(shootPoint.globalPosition, shootPoint.globalRotation, shootPoint.globalScale);
         }
