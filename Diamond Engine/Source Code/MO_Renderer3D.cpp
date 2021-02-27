@@ -268,10 +268,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 				renderQueueMap.emplace(distance, renderQueue[i]);
 			}
 
-			//RenderWithOrdering(true);
+			RenderWithOrdering(true);
 		}
 
-		//skybox.DrawAsSkybox(gameCamera);
+		skybox.DrawAsSkybox(gameCamera);
 		App->moduleGui->RenderCanvas2D();
 		gameCamera->EndDraw();
 	}

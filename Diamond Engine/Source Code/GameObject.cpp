@@ -8,6 +8,7 @@
 #include "CO_Script.h"
 #include "CO_Transform2D.h"
 #include "CO_Canvas.h"
+#include "CO_Button.h"
 
 #include"MO_Scene.h"
 
@@ -119,6 +120,10 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 
 	case Component::TYPE::TRANSFORM_2D:
 		ret = new C_Transform2D(this);
+		break;
+
+	case Component::TYPE::BUTTON:
+		ret = new C_Button(this);
 		break;
 	}
 

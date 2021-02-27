@@ -36,13 +36,12 @@ M_Gui::~M_Gui()
 
 bool M_Gui::Start()
 {
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
+	glGenBuffers(1, &VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VAO);
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 8, uiVAO, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (GLvoid*)0);
-	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	return true;
 }
@@ -100,10 +99,11 @@ void M_Gui::RenderUiElement(GameObject* uiElement)
 
 			GLint modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "model_matrix");
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, transform->GetGlobalTransposed());
-			glBindVertexArray(VAO);
-			glEnableVertexAttribArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, VAO);
+			glVertexPointer(2, GL_FLOAT, 0, NULL);
+
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-			glBindVertexArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, 0);
