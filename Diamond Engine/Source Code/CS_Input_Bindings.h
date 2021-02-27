@@ -35,7 +35,9 @@ int MouseY()
 
 int GetGamepadButton(MonoObject* x)
 {
-	//Input.GetGamePadKey
+	if (EngineExternal != nullptr)
+		return EngineExternal->moduleInput->GetGamePadKey(*(int*)mono_object_unbox(x));
+
 	return 0;
 }
 
@@ -45,9 +47,19 @@ int GetGamepadAxis(MonoObject* x)
 	return 0;
 }
 
-int GetGamePadTrigger(MonoObject* x)
+int GetGamepadLeftTrigger()
 {
-	//Input.GetTrigger
+	if (EngineExternal != nullptr)
+		return EngineExternal->moduleInput->GetLeftTrigger();
+
+	return 0;
+}
+
+int GetGamepadRightTrigger()
+{
+	if (EngineExternal != nullptr)
+		return EngineExternal->moduleInput->GetRightTrigger();
+
 	return 0;
 }
 

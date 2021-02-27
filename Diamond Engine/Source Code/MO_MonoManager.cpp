@@ -60,7 +60,8 @@ bool M_MonoManager::Init()
 	
 	mono_add_internal_call("DiamondEngine.Input::GetGamepadButton", GetGamepadButton);
 	mono_add_internal_call("DiamondEngine.Input::GamepadAxis", GetGamepadAxis);
-	mono_add_internal_call("DiamondEngine.Input::GamepadTrigger", GetGamePadTrigger);
+	mono_add_internal_call("DiamondEngine.Input::GetLeftTrigger", GetGamepadLeftTrigger);
+	mono_add_internal_call("DiamondEngine.Input::GetRightTrigger", GetGamepadRightTrigger);
 
 	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateBullet", CreateBullet);
