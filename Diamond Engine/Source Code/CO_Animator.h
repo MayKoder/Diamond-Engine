@@ -84,7 +84,7 @@ private:
 	uint previousTimeAnimation = 0;
 
 private:
-	ResourceAnimation* _anim;
+	ResourceAnimation* _anim; 
 	ResourceAnimation* currentAnimation = nullptr;
 	ResourceAnimation* previousAnimation = nullptr;
 	std::vector<ResourceAnimation*> animations;

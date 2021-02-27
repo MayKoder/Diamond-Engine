@@ -585,17 +585,18 @@ Resource::Type M_ResourceManager::GetTypeFromLibraryExtension(const char* librar
 
 	if (ext == "dds")
 		return Resource::Type::TEXTURE;
-	if (ext == "model")
+	else if (ext == "model")
 		return Resource::Type::MODEL;
-	if (ext == "mmh")
+	else if (ext == "mmh")
 		return Resource::Type::MESH;
-	if (ext == "des")
+	else if (ext == "des")
 		return Resource::Type::SCENE;
-	if (ext == "shdr")
+	else if (ext == "shdr")
 		return Resource::Type::SHADER;
-	if (ext == "mat")
+	else if (ext == "mat")
 		return Resource::Type::MATERIAL;
-	
+	else if (ext == "anim")
+		return Resource::Type::ANIMATION;	
 
 	return Resource::Type::UNKNOWN;
 }

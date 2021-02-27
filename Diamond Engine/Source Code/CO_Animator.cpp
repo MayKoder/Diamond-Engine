@@ -27,6 +27,10 @@ C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject)
 	gameObject = gameobject;
 	name = "Animator Component";
 	playing = true;
+
+	ResourceAnimation* resAnim = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION));
+	AddAnimation(resAnim);
+	currentAnimation = resAnim;
 }
 
 C_Animator::~C_Animator()
@@ -55,8 +59,8 @@ void C_Animator::Start()
 		boneMapping[bones[i]->name] = bones[i];
 	}
 
-	if(animations.size() > 0)
-		currentAnimation = animations[0];
+	//if(animations.size() > 0)
+		//currentAnimation = animations[0];
 
 	started = true;
 }
@@ -120,36 +124,36 @@ bool C_Animator::OnEditor()
 	if (Component::OnEditor() == true)
 	{
 		ImGui::Separator();
+		
+		if (currentAnimation == nullptr) {
+			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "None");
+		}
+		else {
+			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", currentAnimation->animationName.c_str());
+			ImGui::Text("Duration: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->duration);
+			ImGui::Text("Ticks per second: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->ticksPerSecond);
+		}
+		ImGui::Text("Previous Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", prevAnimTime);
+		ImGui::Text("Current Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", currentTimeAnimation);
+		ImGui::Text("blendTime: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", blendTime);
+
+		ImGui::Spacing();
+		if (playing)
+		{
+			ImGui::Text("Playing: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "true");
+		}
+		else
+		{
+			ImGui::Text("Playing: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "false");
+		}
+
+		ImGui::Spacing();
 
 		if (_anim != nullptr)
 		{
-			if (currentAnimation == nullptr) {
-			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "None");
-			}
-			else {
-				ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", currentAnimation->animationName.c_str());
-			}
-			ImGui::Text("Previous Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%f", prevAnimTime);
-			ImGui::Text("Current Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", currentTimeAnimation);
-			ImGui::Text("blendTime: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", blendTime);
-
-			ImGui::Spacing();
-			if (playing)
-			{
-				ImGui::Text("Playing: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "true");
-			}
-			else
-			{
-				ImGui::Text("Playing: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "false");
-			}
-
-			ImGui::Spacing();
-
-			if (_anim != nullptr)
-			{
-				//ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _anim->GetLibraryPath());
-			}
+			//ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _anim->GetLibraryPath());
 		}
+		
 		return true;
 	}
 	return false;
@@ -213,9 +217,6 @@ void C_Animator::AddAnimation(ResourceAnimation* animation)
 	*/
 
 	animations.push_back(animation);
-
-	//TODO: Delete this, just for debbuging purposes
-	currentAnimation = animation;
 }
 
 void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, const ResourceAnimation* blend, float blendRatio)
