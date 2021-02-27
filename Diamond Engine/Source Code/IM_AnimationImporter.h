@@ -2,8 +2,8 @@
 #include <vector>
 #include <map>
 #include "RE_Animation.h"
-#include"MathGeoLib/include/Math/Quat.h"
-#include"MathGeoLib/include/Math/float3.h"
+#include "MathGeoLib/include/Math/Quat.h"
+#include "MathGeoLib/include/Math/float3.h"
 
 class ResourceAnimation;
 class aiNode;

@@ -6,21 +6,21 @@
 #include "Application.h"
 #include "MO_Renderer3D.h"
 #include "IM_FileSystem.h"
-#include"MO_ResourceManager.h"
+#include "MO_ResourceManager.h"
 
 #include "GameObject.h"
 #include "CO_Material.h"
 #include "CO_Transform.h"
-#include"CO_Camera.h"
+#include "CO_Camera.h"
 #include "CO_MeshRenderer.h"
 
 #include "ImGui/imgui.h"
-#include"DEJsonSupport.h"
+#include "DEJsonSupport.h"
 
-#include"MathGeoLib/include/Geometry/Frustum.h"
-#include"MathGeoLib/include/Geometry/Plane.h"
+#include "MathGeoLib/include/Geometry/Frustum.h"
+#include "MathGeoLib/include/Geometry/Plane.h"
 
-#include"DETime.h"
+#include "DETime.h"
 
 C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject)
 {
@@ -63,82 +63,7 @@ void C_Animator::Start()
 
 void C_Animator::Update()
 {
-	/*
-	if (playing == true) {
-		if (started == false) {
-			Start();
-		}
-		
-		if (EngineExternal->moduleInput->GetKey(SDL_SCANCODE_2) == KEY_STATE::KEY_DOWN) {
-			time = 0.f;
-			currentAnimation = animations[1];
-		}
-		else if (EngineExternal->moduleInput->GetKey(SDL_SCANCODE_2) == KEY_STATE::KEY_REPEAT) {
-			currentAnimation = animations[1];
-		}
-		else if (EngineExternal->moduleInput->GetKey(SDL_SCANCODE_2) == KEY_STATE::KEY_UP) {
-			time = 0.f;
-			currentAnimation = animations[0];
-		}
-
-		if (EngineExternal->moduleInput->GetKey(SDL_SCANCODE_1) == KEY_STATE::KEY_DOWN) {
-			time = 0.f;
-			currentAnimation = animations[2];
-		}
-
-		if (currentAnimation == nullptr)
-			return;
-			
-		//Updating animation blend
-		float blendRatio = 0.0f;
-		if (blendTimeDuration > 0.0f)
-		{
-			prevAnimTime += DETime::deltaTime;
-			previousTimeAnimation = time * previousAnimation->ticksPerSecond;
-			previousTimeAnimation += previousAnimation->initTimeAnim;
-			blendTime += DETime::deltaTime;
-
-			if (blendTime >= blendTimeDuration)
-			{
-				blendTimeDuration = 0.0f;
-			}
-			else if (previousAnimation && prevAnimTime >= previousAnimation->duration)
-			{
-				if (previousAnimation->loopable == true)
-				{
-					prevAnimTime = 0.0f;
-					// + (currentFrame - endFrame);
-				}
-			}
-
-			if (blendTimeDuration > 0.0f)
-				blendRatio = blendTime / blendTimeDuration;
-		}
-		//Endof Updating animation blend
-
-		time += DETime::deltaTime;
-		currentTimeAnimation = time * currentAnimation->ticksPerSecond;
-		currentTimeAnimation += currentAnimation->initTimeAnim;
-		if (currentAnimation && currentTimeAnimation >= currentAnimation->duration) {
-			if (currentAnimation->loopable == true) {
-				time = 0.f;
-			}
-			else {
-				currentAnimation = animations[0];
-				time = 0.f;
-				return;
-			}
-		}
-
-		UpdateChannelsTransform(currentAnimation, blendRatio > 0.0f ? previousAnimation : nullptr, blendRatio);
-		UpdateMeshAnimation(gameObject->children[0]);
-		std::vector<GameObject*> bones;
-		//rootBone->CollectChilds(bones);
-		DrawBones(bones[0]);
-
-		//gameObject->GetBoneChildTransforms();
-	}
-	*/
+	
 }
 
 void C_Animator::SetResource(ResourceAnimation* re_anim)
@@ -462,4 +387,3 @@ void C_Animator::DrawBones(GameObject* gameObject)
 	glLineWidth(1.f);
 	glColor3f(1.f, 1.f, 1.f);
 }
-
