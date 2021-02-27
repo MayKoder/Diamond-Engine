@@ -147,7 +147,10 @@ void C_Camera::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
 
-	DEJson::WriteInt(nObj, "fType", (int)FrustumType::PerspectiveFrustum);
+	DEJson::WriteInt(nObj, "fType", camFrustrum.type);
+
+	if (camFrustrum.type == FrustumType::OrthographicFrustum)
+		DEJson::WriteFloat(nObj, "fSize", orthoSize);
 
 	DEJson::WriteFloat(nObj, "nearPlaneDist", camFrustrum.nearPlaneDistance);
 	DEJson::WriteFloat(nObj, "farPlaneDist", camFrustrum.farPlaneDistance);
@@ -162,6 +165,9 @@ void C_Camera::LoadData(DEConfig& nObj)
 	Component::LoadData(nObj);
 
 	camFrustrum.type = (FrustumType)nObj.ReadInt("fType");
+
+	if (camFrustrum.type == FrustumType::OrthographicFrustum)
+		orthoSize = nObj.ReadFloat("fSize");
 
 	camFrustrum.nearPlaneDistance = nObj.ReadFloat("nearPlaneDist");
 	camFrustrum.farPlaneDistance = nObj.ReadFloat("farPlaneDist");

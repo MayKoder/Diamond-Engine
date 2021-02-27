@@ -87,6 +87,11 @@ namespace DiamondEngine
                 return zero;
         }
 
+        public static Vector3 Lerp(Vector3 a, Vector3 b, float t)
+        {
+            return (a * (1 - t) + b * t);
+        }
+
         //public void Normalize()
         //{
         //    float mag = Magnitude(this);
@@ -103,5 +108,7 @@ namespace DiamondEngine
         {
             return (this.x.ToString() + ", " + this.y.ToString() + ", " + this.z.ToString());
         }
+
+
     }
 }
