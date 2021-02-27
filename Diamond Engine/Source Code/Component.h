@@ -19,6 +19,7 @@ public:
 		Camera,
 		Script,
 		AudioListener,
+		AudioSource,
 		Count,
 	};
 

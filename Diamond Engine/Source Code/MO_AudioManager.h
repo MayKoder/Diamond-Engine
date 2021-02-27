@@ -12,6 +12,7 @@
 #include "AudioBank.h"
 
 class C_AudioListener;
+class C_AudioSource;
 
 class ModuleAudioManager :public Module
 {
@@ -39,15 +40,26 @@ public:
 	void PauseAllSounds() const;
 	void ResumeAllSounds() const;
 
+	void PlayEvent(unsigned int id, std::string& eventName);
+	void StopEvent(unsigned int id) const;
+	void PauseEvent(unsigned int id) const;
+	void ResumeEvent(unsigned int id) const;
+
+	void ChangeRTPCValue(unsigned int id, std::string& RTPCname, float value);
+
 	bool LoadBank(std::string& name);
 
 	void WwiseListnerHasToUpdate();
+
+	void AddAudioSource(C_AudioSource* new_source);
+	void RemoveAudioSource(C_AudioSource* source);
 
 private:
 	void UpdateWwiseListener();
 
 public:
 	std::vector<AudioBank> banks;
+	std::vector<C_AudioSource*> audio_sources;
 	C_AudioListener* defaultListener;
 
 private:

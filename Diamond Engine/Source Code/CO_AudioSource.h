@@ -22,6 +22,7 @@ public:
 
 	std::string& GetEventName(AudioBank* reference = nullptr);
 	void SetEventName(std::string& newEventName);
+	void SetBankReference(AudioBank* ref);
 
 	float GetVolume();
 	void SetVolume(float newVol);

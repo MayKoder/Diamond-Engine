@@ -2,20 +2,21 @@
 #include "Wwise_Includes.h"
 #include "Wwise/low_level_IO/Win32/AkFilePackageLowLevelIOBlocking.h"
 #include "CO_AudioListener.h"
+#include "CO_AudioSource.h"
 
 #include <assert.h>
 
 CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 
 
-ModuleAudioManager::ModuleAudioManager(Application* app, bool start_enabled): Module(app,start_enabled),wwiseListenerHasToUpdate(false)
+ModuleAudioManager::ModuleAudioManager(Application* app, bool start_enabled): Module(app,start_enabled),wwiseListenerHasToUpdate(false), defaultListener(nullptr)
 {
 	//TODO listener code here
 }
 
 ModuleAudioManager::~ModuleAudioManager()
 {	
-	//TODO listener code here
+
 }
 
 bool ModuleAudioManager::Init()
@@ -124,7 +125,7 @@ update_status ModuleAudioManager::PostUpdate(float dt)
 
 bool ModuleAudioManager::CleanUp()
 {
-
+	AK::SoundEngine::UnregisterAllGameObj();
 	AK::SoundEngine::ClearBanks();
 
 	// Terminate the music engine
@@ -142,7 +143,7 @@ bool ModuleAudioManager::CleanUp()
 	// Terminate the Memory Manager
 	AK::MemoryMgr::Term();
 
-
+	audio_sources.clear();
 
 	return true;
 }
@@ -164,12 +165,45 @@ void ModuleAudioManager::StopAllSounds() const
 
 void ModuleAudioManager::PauseAllSounds() const
 {
-	//TODO I did this from wise
+	std::vector<C_AudioSource*>::const_iterator it;
+	for (it = audio_sources.begin(); it != audio_sources.end(); ++it)
+	{
+		(*it)->PauseEvent();
+	}
 }
 
 void ModuleAudioManager::ResumeAllSounds() const
 {
-	//TODO I did this from wise
+	std::vector<C_AudioSource*>::const_iterator it;
+	for (it = audio_sources.begin(); it != audio_sources.end(); ++it)
+	{
+		(*it)->ResumeEvent();
+	}
+}
+
+void ModuleAudioManager::PlayEvent(unsigned int id, std::string& eventName)
+{
+	AK::SoundEngine::PostEvent(eventName.c_str() , id);
+}
+
+void ModuleAudioManager::StopEvent(unsigned int id) const
+{
+	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType_Stop, id);
+}
+
+void ModuleAudioManager::PauseEvent(unsigned int id) const
+{
+	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType_Pause, id);
+}
+
+void ModuleAudioManager::ResumeEvent(unsigned int id) const
+{
+	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType_Resume, id);
+}
+
+void ModuleAudioManager::ChangeRTPCValue(unsigned int id, std::string& RTPCname, float value)
+{
+	AK::SoundEngine::SetRTPCValue(RTPCname.c_str(), value, id);
 }
 
 bool ModuleAudioManager::LoadBank(std::string& name)
@@ -194,6 +228,24 @@ bool ModuleAudioManager::LoadBank(std::string& name)
 void ModuleAudioManager::WwiseListnerHasToUpdate()
 {
 	wwiseListenerHasToUpdate = true;
+}
+
+void ModuleAudioManager::AddAudioSource(C_AudioSource* new_source)
+{
+	audio_sources.push_back(new_source);
+}
+
+void ModuleAudioManager::RemoveAudioSource(C_AudioSource* source)
+{
+	std::vector<C_AudioSource*>::const_iterator it;
+	for (it = audio_sources.begin(); it != audio_sources.end(); ++it)
+	{
+		if ((*it) == source)
+		{
+			audio_sources.erase(it);
+			return;
+		}
+	}
 }
 
 //this updates the listener that Wwise uses to be the Module Audio default listener

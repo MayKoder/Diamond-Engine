@@ -52,13 +52,14 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	AddModule(moduleWindow);
 	AddModule(moduleInput);
 
+	//Should go before the scene
+	AddModule(moduleAudio);
+
 	//Should scene be here?
 	AddModule(moduleScene);
 
 	// Renderer last!
 	AddModule(moduleCamera);
-
-	AddModule(moduleAudio); 
 
 	AddModule(moduleMono);
 
