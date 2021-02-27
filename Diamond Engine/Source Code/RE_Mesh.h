@@ -52,6 +52,7 @@ public:
 	AABB localAABB;
 
 	std::vector<Joint*> joints;
+	float4x4* jointTransforms;
 
 	std::map<std::string, uint> bonesMap;
 	std::vector<float4x4> bonesOffsets;

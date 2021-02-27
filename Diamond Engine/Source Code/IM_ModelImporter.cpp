@@ -69,7 +69,6 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 		if (FileSystem::Exists(EngineExternal->moduleResources->GetMetaPath(res->GetAssetPath()).c_str()))
 			GetMeshesFromMeta(res->GetAssetPath(), uids);
 
-
 		if (scene->HasMeshes())
 		{
 			for (unsigned int i = 0; i < scene->mNumMeshes; i++)
@@ -115,7 +114,6 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 
 		SaveModelCustom(root->children[0], res->GetLibraryPath());
 		delete root;
-
 
 		meshesOnModelUIDs.clear();
 		texturesOnModelUIDs.clear();
