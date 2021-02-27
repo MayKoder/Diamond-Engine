@@ -575,6 +575,9 @@
     <ClInclude Include="Source Code\IM_FontImporter.h">
       <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CO_Button.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -903,6 +906,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\IM_FontImporter.cpp">
       <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Button.cpp">
+      <Filter>Sources\Components\Derived\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

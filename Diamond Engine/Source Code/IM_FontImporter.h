@@ -14,7 +14,7 @@ namespace FontImporter{
 class FreeType_Library {
 public:
 	FreeType_Library();
-	virtual ~FreeType_Library();
+	~FreeType_Library();
 
 	int ImportNewFont(const char* path);
 

@@ -20,6 +20,7 @@ public:
 		SCRIPT,
 		CANVAS,
 		TRANSFORM_2D,
+		BUTTON,
 		COUNT
 	};
 
@@ -38,6 +39,7 @@ public:
 	//Maybe return JSON_Value*?
 	virtual void SaveData(JSON_Object* nObj);
 	virtual void LoadData(DEConfig& nObj);
+
 
 	inline bool IsActive() {
 		return active;

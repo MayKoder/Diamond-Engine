@@ -18,6 +18,7 @@ public:
 
 	void CreateCanvas();
 	void CreateImage();
+	void CreateButton();
 
 	void EraseCanvas();
 

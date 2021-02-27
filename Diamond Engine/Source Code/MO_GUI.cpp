@@ -10,6 +10,7 @@
 #include "CO_Transform2D.h"
 #include "CO_Material.h"
 #include "CO_Camera.h"
+#include "CO_Button.h"
 
 #include <stack>
 
@@ -82,6 +83,18 @@ void M_Gui::CreateImage()
 	GameObject* image = new GameObject("Image", canvas);
 	image->AddComponent(Component::TYPE::TRANSFORM_2D);
 	image->AddComponent(Component::TYPE::MATERIAL);
+
+}
+
+void M_Gui::CreateButton()
+{
+	if (canvas == nullptr)	//TODO Create a GO with a component canvas
+		CreateCanvas();
+
+	GameObject* image = new GameObject("Button", canvas);
+	image->AddComponent(Component::TYPE::TRANSFORM_2D);
+	image->AddComponent(Component::TYPE::MATERIAL);
+	image->AddComponent(Component::TYPE::BUTTON);
 }
 
 

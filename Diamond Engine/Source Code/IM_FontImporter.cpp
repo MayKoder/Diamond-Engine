@@ -11,6 +11,7 @@
 
 FreeType_Library::FreeType_Library() : total_fonts(0)
 {
+	memset(faces, 0, sizeof(FT_Face) * TOTAL_NUM_OF_FONTS);
 	FT_Error error = FT_Init_FreeType(&library);
 	if (error)
 	{
