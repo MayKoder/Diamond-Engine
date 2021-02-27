@@ -22,13 +22,13 @@ public class Core : DiamondComponent
         if (this.reference == null)
             return;
 
-        if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
+        if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT || Input.GetLeftAxisY() < -30000)
             reference.localPosition += reference.GetForward() * movementSpeed * Time.deltaTime;
-        if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT)
+        if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT || Input.GetLeftAxisY() > 30000)
             reference.localPosition += reference.GetForward() * -movementSpeed * Time.deltaTime;
-        if (Input.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT)
+        if (Input.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT || Input.GetLeftAxisX() < -30000)
             reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, rotationSpeed * Time.deltaTime);
-        if (Input.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
+        if (Input.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT || Input.GetLeftAxisX() > 30000)
             reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -rotationSpeed * Time.deltaTime);
 
 
@@ -39,8 +39,6 @@ public class Core : DiamondComponent
         //    turret.localRotation = turret.localRotation * Quaternion.RotateAroundAxis(Vector3.right, -Input.GetMouseY() * Time.deltaTime);
 
         timePassed += Time.deltaTime;
-
-        Debug.Log(Input.GetRightTrigger().ToString());
 
         if ((Input.GetMouseClick(MouseButton.LEFT) == KeyState.KEY_REPEAT || Input.GetRightTrigger() > 0) && timePassed >= delayTime)
         {

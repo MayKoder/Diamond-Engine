@@ -58,10 +58,16 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Input::GetMouseX", MouseX);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseY", MouseY);
 	
+	// --- Controller gamepad start --- //
 	mono_add_internal_call("DiamondEngine.Input::GetGamepadButton", GetGamepadButton);
-	mono_add_internal_call("DiamondEngine.Input::GamepadAxis", GetGamepadAxis);
+	//mono_add_internal_call("DiamondEngine.Input::GamepadAxis", GetGamepadAxis);
 	mono_add_internal_call("DiamondEngine.Input::GetLeftTrigger", GetGamepadLeftTrigger);
 	mono_add_internal_call("DiamondEngine.Input::GetRightTrigger", GetGamepadRightTrigger);
+	mono_add_internal_call("DiamondEngine.Input::GetLeftAxisX", GetLeftAxisX);
+	mono_add_internal_call("DiamondEngine.Input::GetLeftAxisY", GetLeftAxisY);
+	mono_add_internal_call("DiamondEngine.Input::GetRightAxisY", GetRightAxisY);
+	mono_add_internal_call("DiamondEngine.Input::GetRightAxisX", GetRightAxisX);
+	// --- Controller gamepad end --- //
 
 	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateBullet", CreateBullet);

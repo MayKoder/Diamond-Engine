@@ -90,7 +90,7 @@ public:
 
 	//Return values between 0 (trigger idle) and 32767 (trigger pressed)
 	int GetRightTrigger() {
-		return SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
+		return SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
 	}
 
 	//Return values between 0 (trigger idle) and 32767 (trigger pressed)

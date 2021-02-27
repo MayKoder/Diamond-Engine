@@ -41,10 +41,21 @@ int GetGamepadButton(MonoObject* x)
 	return 0;
 }
 
-int GetGamepadAxis(MonoObject* x)
+int GetLeftAxisY()
 {
-	//Input.GetAxis
-	return 0;
+	return EngineExternal->moduleInput->GetLeftAxisY();
+}
+int GetLeftAxisX()
+{
+	return EngineExternal->moduleInput->GetLeftAxisX();
+}
+int GetRightAxisY()
+{
+	return EngineExternal->moduleInput->GetRightAxisY();
+}
+int GetRightAxisX()
+{
+	return EngineExternal->moduleInput->GetRightAxisX();
 }
 
 int GetGamepadLeftTrigger()

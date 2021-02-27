@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        17.297677993774414,
-        10.252769470214844,
-        17.738853454589844
+        34.2913818359375,
+        17.08984375,
+        12.315319061279297
     ],
     "EditorCameraZ": [
-        -0.66908836364746094,
-        -0.31685283780097961,
-        -0.67225372791290283
+        -0.77795934677124023,
+        -0.36853122711181641,
+        0.50888514518737793
     ],
     "EditorCameraY": [
-        -0.22351881861686707,
-        0.9484747052192688,
-        -0.22457751631736755
+        -0.30841100215911865,
+        0.92961537837982178,
+        0.20173722505569458
     ],
     "Game Objects": [
         {
@@ -80,22 +80,24 @@
                     ]
                 },
                 {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "FPS_Controller",
-                    "reference": 1661764735,
-                    "turret": 1661764735,
-                    "rotationSpeed": 2,
-                    "movementSpeed": 35,
-                    "mouseSens": 1
-                },
-                {
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
                     "MaterialUID": 1051418604
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "Core",
+                    "reference": 1661764735,
+                    "shootPoint": 673747422,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 35,
+                    "mouseSens": 1,
+                    "delayTime": 0.20000000298023224,
+                    "timePassed": 0
                 }
             ]
         },
@@ -104,8 +106,8 @@
             "Active": true,
             "Position": [
                 0,
-                0.70512247085571289,
-                0
+                2.2497389316558838,
+                -14.833107948303223
             ],
             "Rotation": [
                 0,
@@ -132,8 +134,36 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 0.96812385320663452,
+                    "hFOV": 1.5449087619781494,
                     "culling": false
+                }
+            ]
+        },
+        {
+            "name": "Empty",
+            "Active": true,
+            "Position": [
+                0,
+                0.04156804084777832,
+                1.2363076210021973
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 673747422,
+            "ParentUID": 1661764735,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
                 }
             ]
         },

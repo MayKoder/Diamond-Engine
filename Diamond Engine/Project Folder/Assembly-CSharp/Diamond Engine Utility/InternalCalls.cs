@@ -39,16 +39,16 @@ namespace DiamondEngine
         public static extern KeyState GetGamepadButton(object keyPressed);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern int GetLeftAxisX(object keyPressed);
+        public static extern int GetLeftAxisX();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern int GetLeftAxisY(object keyPressed);
+        public static extern int GetLeftAxisY();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern int GetRightAxisX(object keyPressed);
+        public static extern int GetRightAxisX();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern int GetRightAxisY(object keyPressed);
+        public static extern int GetRightAxisY();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern int GetLeftTrigger();
