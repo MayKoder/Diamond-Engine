@@ -40,6 +40,8 @@ public class Core : DiamondComponent
 
         timePassed += Time.deltaTime;
 
+        Debug.Log(Input.GetRightTrigger().ToString());
+
         if ((Input.GetMouseClick(MouseButton.LEFT) == KeyState.KEY_REPEAT || Input.GetRightTrigger() > 0) && timePassed >= delayTime)
         {
             InternalCalls.CreateBullet(shootPoint.globalPosition, shootPoint.globalRotation, shootPoint.globalScale);
