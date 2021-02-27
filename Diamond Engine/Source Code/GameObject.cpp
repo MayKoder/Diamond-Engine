@@ -7,7 +7,6 @@
 #include "CO_Camera.h"
 #include "CO_Script.h"
 #include "CO_Transform2D.h"
-#include "CO_Canvas.h"
 #include "CO_Button.h"
 
 #include"MO_Scene.h"
@@ -112,10 +111,6 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 	case Component::TYPE::CAMERA:
 		ret = new C_Camera(this);
 		EngineExternal->moduleScene->SetGameCamera(dynamic_cast<C_Camera*>(ret));
-		break;
-
-	case Component::TYPE::CANVAS:
-		ret = new C_Canvas(this);
 		break;
 
 	case Component::TYPE::TRANSFORM_2D:
@@ -268,7 +263,6 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 		Component* comp = AddComponent((Component::TYPE)conf.ReadInt("Type"), scName);
 
 		comp->LoadData(conf);
-
 	}
 }
 

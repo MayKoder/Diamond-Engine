@@ -18,7 +18,6 @@ public:
 		MATERIAL,
 		CAMERA,
 		SCRIPT,
-		CANVAS,
 		TRANSFORM_2D,
 		BUTTON,
 		COUNT

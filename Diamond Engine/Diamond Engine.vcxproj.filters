@@ -562,9 +562,6 @@
     <ClInclude Include="Source Code\MO_GUI.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CO_Canvas.h">
-      <Filter>Sources\Components\Derived\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\CO_Transform2D.h">
       <Filter>Sources\Components\Derived\UI</Filter>
     </ClInclude>
@@ -897,9 +894,6 @@
     </ClCompile>
     <ClCompile Include="Source Code\MO_GUI.cpp">
       <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\CO_Canvas.cpp">
-      <Filter>Sources\Components\Derived\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\CO_Transform2D.cpp">
       <Filter>Sources\Components\Derived\UI</Filter>

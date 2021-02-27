@@ -6,7 +6,6 @@
 #include "MO_Renderer3D.h"
 
 #include "GameObject.h"
-#include "CO_Canvas.h"
 #include "CO_Transform2D.h"
 #include "CO_Transform.h"
 #include "CO_Material.h"
@@ -30,6 +29,9 @@ M_Gui::M_Gui(Application* app, bool startEnabled) : Module(app, startEnabled),
 
 M_Gui::~M_Gui()
 {
+	glDeleteBuffers(1, &VAO);
+	VAO = 0;
+
 	canvas = nullptr;
 }
 
@@ -122,7 +124,6 @@ void M_Gui::CreateCanvas()
 	if (canvas == nullptr)
 	{
 		canvas = new GameObject("Canvas", App->moduleScene->root);
-		canvas->AddComponent(Component::TYPE::CANVAS);
 	}
 }
 

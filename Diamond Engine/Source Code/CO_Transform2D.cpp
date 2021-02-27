@@ -2,13 +2,16 @@
 
 #include "GameObject.h"
 
+#include "Application.h"
+#include "MO_GUI.h"
+
 #include "MathGeoLib/include/Math/float4x4.h"
 #include "ImGui/imgui.h"
 
 C_Transform2D::C_Transform2D(GameObject* gameObject) : Component(gameObject),
-	rotation(0.0f),
-	localRotation(0.0f),
-	updateTransform(false)
+rotation(0.0f),
+localRotation(0.0f),
+updateTransform(false)
 {
 	name = "Transform 2D";
 
@@ -123,17 +126,14 @@ void C_Transform2D::SetTransform(float locPosX, float locPosY, float locRotation
 
 	if (gameObject->parent != nullptr)
 	{
-		if (gameObject->parent->GetComponent(Component::TYPE::CANVAS) == nullptr)
+		Component* parentTransformComp = gameObject->parent->GetComponent(Component::TYPE::TRANSFORM_2D);
+		if (parentTransformComp != nullptr)
 		{
-			Component* parentTransformComp = gameObject->parent->GetComponent(Component::TYPE::TRANSFORM_2D);
-			if (parentTransformComp != nullptr)
-			{
-				C_Transform2D* parentTransform = (C_Transform2D*)parentTransformComp;
+			C_Transform2D* parentTransform = (C_Transform2D*)parentTransformComp;
 
-				position[0] = localPos[0] + parentTransform->position[0];
-				position[1] = localPos[1] + parentTransform->position[1];
-				rotation = localRotation + parentTransform->rotation;
-			}
+			position[0] = localPos[0] + parentTransform->position[0];
+			position[1] = localPos[1] + parentTransform->position[1];
+			rotation = localRotation + parentTransform->rotation;
 		}
 	}
 }
