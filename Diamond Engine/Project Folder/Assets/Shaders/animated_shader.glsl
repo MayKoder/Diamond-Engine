@@ -44,7 +44,7 @@ fPosition = pos.xyz;
 
 gl_Position = projection * view * model_matrix * vec4(position, 1.0f);
 
-ourColor = vec3(weights.x, weights.x, weights.x);
+ourColor = vec3(weights.x, weights.x,  weights.x);
 TexCoord = texCoord;
 Normal = totalNormal.xyz;
 }
@@ -81,6 +81,7 @@ vec2 inten = blinnPhongDir(vec3(0.8,1,0.2), 0.5, 0.2, 0.8, 0.3, 80.0);
 gl_FragColor = vec4(lcolor * inten.x + vec3(1.0) * inten.y, 1.0) * vec4(ourColor, 1.0);
 }
 #endif
+
 
 
 

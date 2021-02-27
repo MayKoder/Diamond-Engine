@@ -12,10 +12,12 @@
 #include"CO_Transform.h"
 #include"DETime.h"
 #include "GameObject.h"
+#include "Joint.h"
 
 ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH), indices_id(0), vertices_id(0), generalWireframe(nullptr),
-EBO(0), VAO(0), VBO(0)
-{}
+EBO(0), VAO(0), VBO(0), jointTransforms(nullptr)
+{
+}
 
 ResourceMesh::~ResourceMesh()
 {}
@@ -95,6 +97,16 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 	//if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
 		//glBindTexture(GL_TEXTURE_2D, textureID);
 	
+	if (joints.size() > 0)
+	{
+		jointTransforms = new float4x4[joints.size()];
+		
+		for (size_t i = 0; i < joints.size(); i++)
+		{
+			jointTransforms = joints[i]->m_transform;
+		}
+	}
+
 	if (material->shader)
 	{
 		material->shader->Bind();
@@ -129,6 +141,12 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 
 		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "altColor");
 		glUniform3fv(modelLoc, 1, &color.x);
+
+		if (jointTransforms != nullptr)
+		{
+			modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "jointTransforms");
+			glUniformMatrix4fv(modelLoc, sizeof(jointTransforms), GL_FALSE, jointTransforms->ptr());
+		}		
 	}
 
 	//vertices

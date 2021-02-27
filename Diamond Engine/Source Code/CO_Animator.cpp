@@ -40,10 +40,8 @@ C_Animator::~C_Animator()
 
 void C_Animator::Start()
 {
-	rootBone = gameObject->children[0]->children[0];
-	dynamic_cast<C_MeshRenderer*>(gameObject->children[2]->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
-
-	if (rootBone == nullptr) return;
+	if (rootBone == nullptr) 
+		return;
 
 	boneMapping.clear();
 
@@ -63,6 +61,15 @@ void C_Animator::Start()
 
 void C_Animator::Update()
 {
+	if (rootBone == nullptr)
+	{
+		if (gameObject->children.size() > 0)
+		{
+			rootBone = gameObject->children[1]->children[0];
+			dynamic_cast<C_MeshRenderer*>(gameObject->children[0]->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
+		}
+	}
+
 	/*
 	if (playing == true) {
 		if (started == false) {

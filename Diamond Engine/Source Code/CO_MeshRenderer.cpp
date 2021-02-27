@@ -48,7 +48,6 @@ void C_MeshRenderer::Update()
 #ifndef STANDALONE
 	if (showAABB ==true) 
 	{
-
 		float3 points[8];
 		globalAABB.GetCornerPoints(points);
 		ModuleRenderer3D::DrawBox(points, float3(0.2f, 1.f, 0.101f));
