@@ -1,10 +1,12 @@
 #include "CO_AudioListener.h"
+#include "ImGui/imgui.h"
 #include "Application.h"
 #include "MO_AudioManager.h"
 
-C_AudioListener::C_AudioListener(GameObject* _gm, bool defaultListener) :Component(_gm), isDefaultListener(false)
+
+C_AudioListener::C_AudioListener(GameObject* _gm, bool defaultListener) :Component(_gm), isDefaultListener(false),masterVolume(50)
 {
-	id = 69; //TODO assign this a real id
+	id = unsigned int(EngineExternal->GetRandomInt());
 	EngineExternal->moduleAudio->RegisterNewAudioObject(id);
 	SetAsDefaultListener(defaultListener);
 }
@@ -15,10 +17,29 @@ C_AudioListener::~C_AudioListener()
 	EngineExternal->moduleAudio->UnRegisterAudioObject(id);
 }
 
+#ifndef STANDALONE
 bool C_AudioListener::OnEditor()
 {
-	return true;
+	if (Component::OnEditor() == true)
+	{
+		ImGui::Separator();
+
+		bool listenerAux = isDefaultListener;
+		if (ImGui::Checkbox("Default Listener", &listenerAux))
+		{
+			SetAsDefaultListener(listenerAux);
+		}
+
+		if (ImGui::SliderFloat("Master Audio Volume", &masterVolume, 0.0f, 100.0f))
+		{
+			//TODO change master volume here
+		}
+
+		return true;
+	}
+	return false;
 }
+#endif // !STANDALONE
 
 void C_AudioListener::Update()
 {
@@ -35,11 +56,12 @@ void C_AudioListener::LoadData(DEConfig& nObj)
 
 float C_AudioListener::GetVolume()
 {
-	return 0.0f;
+	return masterVolume;
 }
 
 void C_AudioListener::SetVolume(float newVol)
 {
+	masterVolume = newVol;
 }
 
 uint C_AudioListener::GetID()
@@ -58,24 +80,26 @@ void C_AudioListener::SetAsDefaultListener(bool setDefault)
 {
 	if (setDefault)
 	{
-		if (EngineExternal->moduleAudio->defaultListener != this)
+		if (EngineExternal->moduleAudio->defaultListener != nullptr)
 		{
-
-			if (EngineExternal->moduleAudio->defaultListener != nullptr)
+			if (EngineExternal->moduleAudio->defaultListener != this)
 			{
 				EngineExternal->moduleAudio->defaultListener->SetAsDefaultListener(false);
 			}
 
-			EngineExternal->moduleAudio->defaultListener = this;
-			EngineExternal->moduleAudio->WwiseListnerHasToUpdate();
 		}
+		EngineExternal->moduleAudio->defaultListener = this;
+		EngineExternal->moduleAudio->WwiseListnerHasToUpdate();
 
 
 	}
-	else if (EngineExternal->moduleAudio->defaultListener == this)
+	else if (EngineExternal->moduleAudio->defaultListener != nullptr)
 	{
-		EngineExternal->moduleAudio->defaultListener = nullptr;
-		EngineExternal->moduleAudio->WwiseListnerHasToUpdate();
+		if (EngineExternal->moduleAudio->defaultListener == this)
+		{
+			EngineExternal->moduleAudio->defaultListener = nullptr;
+			EngineExternal->moduleAudio->WwiseListnerHasToUpdate();
+		}
 	}
 
 	isDefaultListener = setDefault;

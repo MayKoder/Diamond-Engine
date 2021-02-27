@@ -28,5 +28,6 @@ public:
 private:
 
 	bool isDefaultListener;
-	uint id;
+	unsigned int id;
+	float masterVolume;
 };
