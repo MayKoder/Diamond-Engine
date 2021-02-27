@@ -70,7 +70,6 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 	if (_mesh == nullptr)
 		return;
 
-
 	C_Transform* transform = gameObject->transform;
 
 	//TODO IMPORTANT: Optimize this, save this pointer or something
@@ -88,7 +87,7 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 
 		//Set bone Transforms array size using original bones transform array size
 		std::vector<float4x4> boneTransforms;
-		boneTransforms.resize(_mesh->bones.size());
+		boneTransforms.resize(_mesh->joints.size());
 
 		//Get each bone
 		for (std::map<std::string, uint>::iterator it = _mesh->bonesMap.begin(); it != _mesh->bonesMap.end(); ++it)

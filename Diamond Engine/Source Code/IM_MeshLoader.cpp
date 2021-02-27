@@ -10,6 +10,8 @@
 #include "RE_Mesh.h"
 #include "RE_Texture.h"
 
+#include "Joint.h"
+
 #include "IM_FileSystem.h"
 #include "IM_TextureImporter.h"
 #include "IM_ModelImporter.h"
@@ -214,16 +216,18 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 			//Bone* bone = new Bone;
 			//bone->name = aiBone->mName.C_Str();
 			//bone->id = 
-			aiBone* aiBone = importedMesh->mBones[b];
-			_mesh->bonesMap[aiBone->mName.C_Str()] = b;
+			aiBone* aibone = importedMesh->mBones[b];
+			_mesh->bonesMap[aibone->mName.C_Str()] = b;
 
 			//Load offsets
-			float4x4 offset = float4x4(aiBone->mOffsetMatrix.a1, aiBone->mOffsetMatrix.a2, aiBone->mOffsetMatrix.a3, aiBone->mOffsetMatrix.a4,
-				aiBone->mOffsetMatrix.b1, aiBone->mOffsetMatrix.b2, aiBone->mOffsetMatrix.b3, aiBone->mOffsetMatrix.b4,
-				aiBone->mOffsetMatrix.c1, aiBone->mOffsetMatrix.c2, aiBone->mOffsetMatrix.c3, aiBone->mOffsetMatrix.c4,
-				aiBone->mOffsetMatrix.d1, aiBone->mOffsetMatrix.d2, aiBone->mOffsetMatrix.d3, aiBone->mOffsetMatrix.d4);
+			float4x4* offset = new float4x4(aibone->mOffsetMatrix.a1, aibone->mOffsetMatrix.a2, aibone->mOffsetMatrix.a3, aibone->mOffsetMatrix.a4,
+				                            aibone->mOffsetMatrix.b1, aibone->mOffsetMatrix.b2, aibone->mOffsetMatrix.b3, aibone->mOffsetMatrix.b4,
+				                            aibone->mOffsetMatrix.c1, aibone->mOffsetMatrix.c2, aibone->mOffsetMatrix.c3, aibone->mOffsetMatrix.c4,
+				                            aibone->mOffsetMatrix.d1, aibone->mOffsetMatrix.d2, aibone->mOffsetMatrix.d3, aibone->mOffsetMatrix.d4);
 
-			_mesh->bonesOffsets.push_back(offset);
+			
+			//_mesh->bonesOffsets.push_back(offset);
+			Joint* joint = new Joint(aibone->mName.C_Str(), b, offset);
 
 			//iterate all bone weights
 			for (int weights = 0; weights < importedMesh->mBones[b]->mNumWeights; weights++) {
@@ -243,7 +247,7 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 				}
 			}
 		
-			//_mesh->bones.push_back(bone);
+			_mesh->joints.push_back(joint);
 		}
 
 		

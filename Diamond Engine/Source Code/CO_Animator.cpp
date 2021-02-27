@@ -63,6 +63,7 @@ void C_Animator::Start()
 
 void C_Animator::Update()
 {
+	/*
 	if (playing == true) {
 		if (started == false) {
 			Start();
@@ -137,6 +138,7 @@ void C_Animator::Update()
 
 		//gameObject->GetBoneChildTransforms();
 	}
+	*/
 }
 
 void C_Animator::SetResource(ResourceAnimation* re_anim)
@@ -146,10 +148,12 @@ void C_Animator::SetResource(ResourceAnimation* re_anim)
 
 void C_Animator::SaveData(JSON_Object* nObj)
 {
+	
 	Component::SaveData(nObj);
 	//DEJson::WriteString(nObj, "Path", _anim->GetLibraryPath());
 	//DEJson::WriteInt(nObj, "UID", _anim->GetUID());
 
+	/*
 	JSON_Value* animationsValue = json_value_init_array();
 	JSON_Array* animationsArray = json_value_get_array(animationsValue);
 
@@ -158,6 +162,7 @@ void C_Animator::SaveData(JSON_Object* nObj)
 		json_array_append_number(animationsArray, animations[i]->GetUID());
 	}
 	json_object_set_value(nObj, "Animations", animationsValue);
+	*/
 }
 
 void C_Animator::LoadData(DEConfig& nObj)

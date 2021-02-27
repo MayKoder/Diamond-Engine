@@ -12,6 +12,7 @@ typedef unsigned int GLuint;
 typedef unsigned int uint;
 class ResourceMaterial;
 class C_Transform;
+class Joint;
 
 static const int VERTEX_ATTRIBUTES      = 19;  // 3 vertex + 2 texcoords + 3 normals + 3 tangents + 4 joint indices + 4 weights
 static const int VERTEX_POSITION_OFFSET = 0;
@@ -20,18 +21,6 @@ static const int NORMALS_OFFSET			= 5;
 static const int TANGENTS_OFFSET		= 8;
 static const int BONES_ID_OFFSET		= 11;
 static const int WEIGHTS_OFFSET			= 15;
-
-struct Bone
-{
-	Bone();
-	~Bone();
-
-	const char* name;
-	std::vector<Bone*> children;
-	int id;
-	float4x4* offset;
-	float4x4* transform;
-};
 
 class ResourceMesh  : public Resource
 {
@@ -62,7 +51,7 @@ public:
 
 	AABB localAABB;
 
-	std::vector<Bone*> bones;
+	std::vector<Joint*> joints;
 
 	std::map<std::string, uint> bonesMap;
 	std::vector<float4x4> bonesOffsets;

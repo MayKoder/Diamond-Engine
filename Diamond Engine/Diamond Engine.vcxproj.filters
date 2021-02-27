@@ -544,6 +544,9 @@
     <ClInclude Include="Source Code\IM_AnimationImporter.h">
       <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\Joint.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -857,6 +860,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\IM_AnimationImporter.cpp">
       <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Joint.cpp">
+      <Filter>Sources\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

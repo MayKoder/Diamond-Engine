@@ -170,8 +170,8 @@ void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals, const
 		glBegin(GL_LINES);
 		for (unsigned int i = 0; i < vertices_count; i++)
 		{
-			glVertex3f(vertices[i * VERTEX_ATTRIBUTES], vertices[i * VERTEX_ATTRIBUTES + 1], vertices[i * VERTEX_ATTRIBUTES + 2]);
-			glVertex3f(vertices[i * VERTEX_ATTRIBUTES] + vertices[i * VERTEX_ATTRIBUTES + 5] * normalLenght,
+			glVertex3f(vertices[i * VERTEX_ATTRIBUTES],      vertices[i * VERTEX_ATTRIBUTES + 1],  vertices[i * VERTEX_ATTRIBUTES + 2]);
+			glVertex3f(vertices[i * VERTEX_ATTRIBUTES]     + vertices[i * VERTEX_ATTRIBUTES + 5] * normalLenght,
 					   vertices[i * VERTEX_ATTRIBUTES + 1] + vertices[i * VERTEX_ATTRIBUTES + 6] * normalLenght,
 					   vertices[i * VERTEX_ATTRIBUTES + 2] + vertices[i * VERTEX_ATTRIBUTES + 7] * normalLenght);
 		}
@@ -280,23 +280,4 @@ void ResourceMesh::LoadCustomFormat(const char* path)
 
 	delete[] fileBuffer;
 	fileBuffer = nullptr;
-}
-
-Bone::Bone() : id(-1) ,offset(nullptr)
-{}
-
-Bone::~Bone()
-{
-	if (offset != nullptr)
-	{
-		delete offset;
-		offset = nullptr;
-	}
-
-	for (size_t i = 0; i < children.size(); i++)
-	{
-		delete children[i];
-		children[i] = nullptr;
-	}
-	children.clear();
 }

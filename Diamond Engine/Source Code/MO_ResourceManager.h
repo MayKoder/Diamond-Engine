@@ -24,6 +24,7 @@ public:
 
 #ifndef STANDALONE
 	void OnGUI() override;
+	Resource* RequestFromAssets(const char* assets_path);
 #endif // !STANDALONE
 
 
@@ -35,7 +36,6 @@ public:
 
 	void PopulateFileArray();
 	void UnloadResource(int uid);
-	Resource* RequestFromAssets(const char* assets_path);
 	void GenerateMeta(const char* aPath, const char* lPath, unsigned int uid, Resource::Type type);
 
 	Resource* RequestResource(int uid, Resource::Type type);

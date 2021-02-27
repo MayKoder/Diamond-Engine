@@ -82,7 +82,6 @@ void GameObject::Update()
 
 Component* GameObject::AddComponent(Component::Type _type, const char* params)
 {
-
 	assert(_type != Component::Type::None, "Can't create a NONE component");
 	Component* ret = nullptr;
 

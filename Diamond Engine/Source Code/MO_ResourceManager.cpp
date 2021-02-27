@@ -74,6 +74,33 @@ void M_ResourceManager::OnGUI()
 		}
 	}
 }
+
+Resource* M_ResourceManager::RequestFromAssets(const char* assets_path)
+{
+	Resource* ret = nullptr;
+	if (ExistsOnLibrary(assets_path) != 0)
+	{
+		std::string meta = GetMetaPath(assets_path);
+		JSON_Value* scene = json_parse_file(meta.c_str());
+
+		if (scene != NULL)
+		{
+			DEConfig sceneObj(json_value_get_object(scene));
+			ret = RequestResource(sceneObj.ReadInt("UID"), (Resource::Type)sceneObj.ReadInt("Type"));
+
+			//Free memory
+			json_value_free(scene);
+
+			if (ret != nullptr)
+				ret->SetAssetsPath(assets_path);
+		}
+	}
+	else
+		LOG(LogType::L_ERROR, "ASSET META OR LIBRARY NOT CREATED");
+
+	return ret;
+}
+
 #endif // !STANDALONE
 
 void M_ResourceManager::PopulateFileArray()
@@ -321,32 +348,6 @@ int M_ResourceManager::CreateLibraryFromAssets(const char* assetsFile)
 	LOG(LogType::L_WARNING, "File created from assets");
 	uint resID = ImportFile(assetsFile, GetTypeFromAssetExtension(assetsFile));
 	return resID;
-}
-
-Resource* M_ResourceManager::RequestFromAssets(const char* assets_path)
-{
-	Resource* ret = nullptr;
-	if (ExistsOnLibrary(assets_path) != 0)
-	{
-		std::string meta = GetMetaPath(assets_path);
-		JSON_Value* scene = json_parse_file(meta.c_str());
-
-		if (scene != NULL) 
-		{
-			DEConfig sceneObj(json_value_get_object(scene));
-			ret = RequestResource(sceneObj.ReadInt("UID"), (Resource::Type)sceneObj.ReadInt("Type")); 
-
-			//Free memory
-			json_value_free(scene);
-
-			if(ret != nullptr)
-				ret->SetAssetsPath(assets_path);
-		}
-	}
-	else
-		LOG(LogType::L_ERROR, "ASSET META OR LIBRARY NOT CREATED");
-
-	return ret;
 }
 
 Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid, Resource::Type type)

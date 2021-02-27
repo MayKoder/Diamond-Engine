@@ -289,6 +289,7 @@
     <ClInclude Include="Source Code\IM_ModelImporter.h" />
     <ClInclude Include="Source Code\IM_ShaderImporter.h" />
     <ClInclude Include="Source Code\IM_TextureImporter.h" />
+    <ClInclude Include="Source Code\Joint.h" />
     <ClInclude Include="Source Code\Light.h" />
     <ClInclude Include="Source Code\MaykMath.h" />
     <ClInclude Include="Source Code\DEModelNode.h" />
@@ -398,6 +399,7 @@
     <ClCompile Include="Source Code\IM_ModelImporter.cpp" />
     <ClCompile Include="Source Code\IM_ShaderImporter.cpp" />
     <ClCompile Include="Source Code\IM_TextureImporter.cpp" />
+    <ClCompile Include="Source Code\Joint.cpp" />
     <ClCompile Include="Source Code\MA_IconSystem.cpp" />
     <ClCompile Include="Source Code\MMGui.cpp" />
     <ClCompile Include="Source Code\MO_MonoManager.cpp" />
