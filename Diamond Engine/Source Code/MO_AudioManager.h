@@ -11,6 +11,8 @@
 #include "Globals.h"
 #include "AudioBank.h"
 
+class C_AudioListener;
+
 class ModuleAudioManager :public Module
 {
 public:
@@ -22,7 +24,7 @@ public:
 	// Application
 	bool Init();
 	bool Start();
-	
+
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 
@@ -39,9 +41,17 @@ public:
 
 	bool LoadBank(std::string& name);
 
-public:
-	std::vector<AudioBank>		banks;
+	void WwiseListnerHasToUpdate();
 
+private:
+	void UpdateWwiseListener();
+
+public:
+	std::vector<AudioBank> banks;
+	C_AudioListener* defaultListener;
+
+private:
+	bool wwiseListenerHasToUpdate;
 };
 
 

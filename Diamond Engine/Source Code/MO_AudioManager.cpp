@@ -1,14 +1,14 @@
 #include "MO_AudioManager.h"
 #include "Wwise_Includes.h"
 #include "Wwise/low_level_IO/Win32/AkFilePackageLowLevelIOBlocking.h"
-
+#include "CO_AudioListener.h"
 
 #include <assert.h>
 
 CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 
 
-ModuleAudioManager::ModuleAudioManager(Application* app, bool start_enabled): Module(app,start_enabled)
+ModuleAudioManager::ModuleAudioManager(Application* app, bool start_enabled): Module(app,start_enabled),wwiseListenerHasToUpdate(false)
 {
 	//TODO listener code here
 }
@@ -105,6 +105,11 @@ bool ModuleAudioManager::Start()
 
 update_status ModuleAudioManager::Update(float dt)
 {
+	if (wwiseListenerHasToUpdate)
+	{
+		UpdateWwiseListener();
+		wwiseListenerHasToUpdate = false;
+	}
 	return UPDATE_CONTINUE;
 }
 
@@ -184,4 +189,27 @@ bool ModuleAudioManager::LoadBank(std::string& name)
 		return false;
 	}
 
+}
+
+void ModuleAudioManager::WwiseListnerHasToUpdate()
+{
+	wwiseListenerHasToUpdate = true;
+}
+
+//this updates the listener that Wwise uses to be the Module Audio default listener
+void ModuleAudioManager::UpdateWwiseListener()
+{
+	AkGameObjectID id = 0;
+
+	if (defaultListener != nullptr)
+	{
+		id = defaultListener->GetID();
+	}
+	else
+	{
+		LOG(LogType::L_WARNING,"There is no audio listener component active. Sounds won't be heard");
+	}
+
+	// Set one listener as the default.
+	AK::SoundEngine::SetDefaultListeners(&id, 1);
 }

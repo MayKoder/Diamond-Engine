@@ -6,6 +6,7 @@
 #include "CO_Material.h"
 #include "CO_Camera.h"
 #include "CO_Script.h"
+#include "CO_AudioListener.h"
 
 #include"MO_Scene.h"
 
@@ -110,7 +111,11 @@ Component* GameObject::AddComponent(Component::Type _type, const char* params)
 		ret = new C_Camera(this);
 		EngineExternal->moduleScene->SetGameCamera(dynamic_cast<C_Camera*>(ret));
 		break;
+	case Component::Type::AudioListener:
+		ret = new C_AudioListener(this);
+		break;
 	}
+
 
 	if (ret != nullptr)
 	{		
