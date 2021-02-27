@@ -15,23 +15,20 @@ public:
 	bool OnEditor() override;
 #endif // !STANDALONE
 
-	float4x4 GetGlobal2DTransform(int winWidth, int winHeight);
+	float4x4 GetGlobal2DTransform();
 
 private:
 	void UpdateTransform();
 	void SetTransform(float locPosX, float locPosY, float locRotation);
 
 public:
-	float posX;
-	float posY;
-	float localPosX;
-	float localPosY;
+	float position[2];
+	float localPos[2];
 	
 	float rotation;
 	float localRotation;
 
-	float sizeX;
-	float sizeY;
+	float size[2];
 
 private:
 	bool updateTransform = false;

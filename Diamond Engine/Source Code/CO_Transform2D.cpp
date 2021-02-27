@@ -3,18 +3,20 @@
 #include "GameObject.h"
 
 #include "MathGeoLib/include/Math/float4x4.h"
+#include "ImGui/imgui.h"
 
 C_Transform2D::C_Transform2D(GameObject* gameObject) : Component(gameObject),
-	posX(10.0f),
-	posY(10.0f),
-	localPosX(0.0f),
-	localPosY(0.0f),
 	rotation(0.0f),
 	localRotation(0.0f),
-	sizeX(50.0f),
-	sizeY(50.0f),
 	updateTransform(false)
 {
+	name = "Transform 2D";
+
+	memset(position, 0.f, sizeof(float) * 2);
+	memset(localPos, 0.f, sizeof(float) * 2);
+
+	size[0] = 20.f;
+	size[1] = 20.f;
 }
 
 
@@ -35,18 +37,42 @@ void C_Transform2D::Update()
 bool C_Transform2D::OnEditor()
 {
 	//TODO Add modify pos logic
+	if (Component::OnEditor() == true)
+	{
+
+		int offset = ImGui::CalcTextSize("Position: ").x + 16;
+		ImGui::Text("Position: ");
+		ImGui::SameLine();
+		if (ImGui::DragFloat2("##lPosition", &localPos[0], 0.1f))
+			updateTransform = true;
+
+
+		ImGui::Text("Size: ");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(offset);
+		if (ImGui::DragFloat2("##lSize", &size[0], 0.1f))
+			updateTransform = true;
+
+		ImGui::Text("2D Rotation: ");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(offset);
+		if (ImGui::DragFloat("##lRotation", &localRotation, 0.1f))
+			updateTransform = true;
+	}
+
+
 	return true;
 }
 #endif // !STANDALONE
 
 
-float4x4 C_Transform2D::GetGlobal2DTransform(int winWidth, int winHeight)
+float4x4 C_Transform2D::GetGlobal2DTransform()
 {
-	float positionX = posX / 100.f;
-	float positionY = posY / 100.f;
+	float positionX = position[0] / 100.f;
+	float positionY = position[1] / 100.f;
 
-	float scaleX = sizeX / 100.f;
-	float scaleY = sizeY / 100.f;
+	float scaleX = size[0] / 100.f;
+	float scaleY = size[1] / 100.f;
 
 	return float4x4::FromTRS(float3(positionX, positionY, 0), Quat::FromEulerXYZ(0, 0, rotation), float3(scaleX, scaleY, 1)).Transposed();
 }
@@ -61,16 +87,16 @@ void C_Transform2D::UpdateTransform()
 		Component* parentTrans = gameObject->parent->GetComponent(Component::TYPE::TRANSFORM_2D);
 		if (parentTrans != nullptr)
 		{
-			C_Transform2D* parentTransform = (C_Transform2D*)parentTrans;
-			posX = localPosX + parentTransform->posX;
-			posY = localPosY + parentTransform->posY;
+			C_Transform2D* parentTransform = static_cast<C_Transform2D*>(parentTrans);
+			position[0] = localPos[0] + parentTransform->position[0];
+			position[1] = localPos[1] + parentTransform->position[1];
 			rotation = localRotation + parentTransform->rotation;
 		}
 
 		else
 		{
-			posX = localPosX;
-			posY = localPosY;
+			position[0] = localPos[0];
+			position[1] = localPos[1];
 			rotation = localRotation;
 		}
 	}
@@ -91,8 +117,8 @@ void C_Transform2D::UpdateTransform()
 
 void C_Transform2D::SetTransform(float locPosX, float locPosY, float locRotation)
 {
-	localPosX = locPosX;
-	localPosY = locPosY;
+	localPos[0] = locPosX;
+	localPos[1] = locPosY;
 	localRotation = locRotation;
 
 	if (gameObject->parent != nullptr)
@@ -104,8 +130,8 @@ void C_Transform2D::SetTransform(float locPosX, float locPosY, float locRotation
 			{
 				C_Transform2D* parentTransform = (C_Transform2D*)parentTransformComp;
 
-				posX = localPosX + parentTransform->posX;
-				posY = localPosY + parentTransform->posY;
+				position[0] = localPos[0] + parentTransform->position[0];
+				position[1] = localPos[1] + parentTransform->position[1];
 				rotation = localRotation + parentTransform->rotation;
 			}
 		}

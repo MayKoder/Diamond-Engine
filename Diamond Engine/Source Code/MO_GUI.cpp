@@ -84,11 +84,11 @@ void M_Gui::RenderCanvas3D()
 void M_Gui::RenderUiElement(GameObject* uiElement)
 {
 	Component* mat = uiElement->GetComponent(Component::TYPE::MATERIAL);
-	Component* trans2D = uiElement->GetComponent(Component::TYPE::TRANSFORM);
+	Component* trans2D = uiElement->GetComponent(Component::TYPE::TRANSFORM_2D);
 
 	if (mat != nullptr && trans2D != nullptr)
 	{
-		C_Transform* transform = static_cast<C_Transform*>(trans2D);
+		C_Transform2D* transform = static_cast<C_Transform2D*>(trans2D);
 		ResourceMaterial* material = static_cast<C_Material*>(mat)->material;
 
 		if (material->shader)
@@ -98,7 +98,7 @@ void M_Gui::RenderUiElement(GameObject* uiElement)
 			material->PushUniforms();
 
 			GLint modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "model_matrix");
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, transform->GetGlobalTransposed());
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, transform->GetGlobal2DTransform().ptr());
 			glBindBuffer(GL_ARRAY_BUFFER, VAO);
 			glVertexPointer(2, GL_FLOAT, 0, NULL);
 
