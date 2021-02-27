@@ -11,6 +11,8 @@ public:
 	M_Gui(Application* App, bool startEnabled = true);
 	~M_Gui() override;
 
+	bool Start() override;
+
 	void RenderCanvas2D();
 	void RenderCanvas3D(); //need to think about this one
 
@@ -25,8 +27,15 @@ public:
 	int index_font;
 
 private:
-
 	GameObject* canvas = nullptr;
+	unsigned int VAO = 0;
+};
+
+const float uiVAO[] = {
+	-1,	 1,
+	-1, -1,
+	 1,	 1,
+	 1,	-1
 };
 
 

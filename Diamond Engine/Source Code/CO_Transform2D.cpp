@@ -5,14 +5,14 @@
 #include "MathGeoLib/include/Math/float4x4.h"
 
 C_Transform2D::C_Transform2D(GameObject* gameObject) : Component(gameObject),
-	posX(0.0f),
-	posY(0.0f),
+	posX(10.0f),
+	posY(10.0f),
 	localPosX(0.0f),
 	localPosY(0.0f),
 	rotation(0.0f),
 	localRotation(0.0f),
-	sizeX(10.0f),
-	sizeY(10.0f),
+	sizeX(50.0f),
+	sizeY(50.0f),
 	updateTransform(false)
 {
 }
@@ -42,13 +42,13 @@ bool C_Transform2D::OnEditor()
 
 float4x4 C_Transform2D::GetGlobal2DTransform(int winWidth, int winHeight)
 {
-	float positionX = posX * winWidth / 100.f;
-	float positionY = posY * winHeight / 100.f;
+	float positionX = posX / 100.f;
+	float positionY = posY / 100.f;
 
-	float scaleX = sizeX * winWidth / 100.f;
-	float scaleY = sizeY * winHeight / 100.f;
+	float scaleX = sizeX / 100.f;
+	float scaleY = sizeY / 100.f;
 
-	return float4x4::FromTRS(float3(positionX, positionY, 0), Quat::FromEulerXYZ(0, 0, rotation), float3(scaleX, scaleY, 0));
+	return float4x4::FromTRS(float3(positionX, positionY, 0), Quat::FromEulerXYZ(0, 0, rotation), float3(scaleX, scaleY, 1)).Transposed();
 }
 
 

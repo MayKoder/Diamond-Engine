@@ -116,6 +116,10 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 	case Component::TYPE::CANVAS:
 		ret = new C_Canvas(this);
 		break;
+
+	case Component::TYPE::TRANSFORM_2D:
+		ret = new C_Transform2D(this);
+		break;
 	}
 
 	if (ret != nullptr)
