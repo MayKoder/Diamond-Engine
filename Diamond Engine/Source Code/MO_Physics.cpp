@@ -8,6 +8,7 @@
 #include"GameObject.h"
 
 #include "CO_Collider.h"
+#include "CO_RigidBody.h"
 
 #ifndef _DEBUG
 #        pragma comment(lib, "Physx/libx86/_release/PhysX_32.lib")
@@ -178,6 +179,21 @@ void ModulePhysics::SceneSimulation(float gameTimestep, bool fetchResults) {
 	mScene->simulate(gameTimestep);
 	mScene->fetchResults(fetchResults);
 
+	PxU32 nbActors = mScene->getNbActors(PxActorTypeFlag::eRIGID_DYNAMIC | PxActorTypeFlag::eRIGID_STATIC);
+	if (nbActors)
+	{
+		std::vector<PxRigidActor*> actors(nbActors);
+		mScene->getActors(PxActorTypeFlag::eRIGID_DYNAMIC | PxActorTypeFlag::eRIGID_STATIC, reinterpret_cast<PxActor**>(&actors[0]), nbActors);
+		for (int i = 0; i < actors.size(); i++)
+		{
+			GameObject* contact = static_cast<GameObject*>(actors[i]->userData);
+			C_RigidBody* body = dynamic_cast<C_RigidBody*>(contact->GetComponent(Component::Type::RigidBody));
+			body->Step();
+		}
+	}
+	
+
+
 }
 
 bool ModulePhysics::CleanUp() {
@@ -226,346 +242,6 @@ void ModulePhysics::RenderGeometry() {
 
 }
 
-//void ModulePhysics::renderActors(PxRigidActor** actors, const PxU32 numActors, bool shadows)
-//{
-//	const PxVec3 color = PxVec3(0.0f, 0.75f, 0.0f);
-//
-//	PxShape* shapes[MAX_NUM_ACTOR_SHAPES];
-//	for (PxU32 i = 0; i < numActors; i++)
-//	{
-//		const PxU32 nbShapes = actors[i]->getNbShapes();
-//		PX_ASSERT(nbShapes <= MAX_NUM_ACTOR_SHAPES);
-//		actors[i]->getShapes(shapes, nbShapes);
-//		const bool sleeping = actors[i]->is<PxRigidDynamic>() ? actors[i]->is<PxRigidDynamic>()->isSleeping() : false;
-//
-//		for (PxU32 j = 0; j < nbShapes; j++)
-//		{
-//			const PxMat44 shapePose(PxShapeExt::getGlobalPose(*shapes[j], *actors[i]));
-//			const PxGeometryHolder h = shapes[j]->getGeometry();
-//
-//			if (shapes[j]->getFlags() & PxShapeFlag::eTRIGGER_SHAPE)
-//				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-//
-//			// render object
-//			glPushMatrix();
-//			glMultMatrixf(&shapePose.column0.x);
-//			if (sleeping)
-//			{
-//				const PxVec3 darkColor = color * 0.25f;
-//				glColor4f(darkColor.x, darkColor.y, darkColor.z, 1.0f);
-//			}
-//			else
-//				glColor4f(color.x, color.y, color.z, 1.0f);
-//
-//			renderGeometryHolder(h);
-//			glPopMatrix();
-//			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-//
-//		}
-//	}
-//}
-
-void ModulePhysics::renderGeometryHolder(const PxGeometryHolder& h) {
-	//renderGeometry(h.any());
-};
-//
-//void ModulePhysics::renderGeometry(const PxGeometry& geom)
-//{
-//	switch (geom.getType())
-//	{
-//	case PxGeometryType::eCONVEXMESH:
-//	{
-//		const PxConvexMeshGeometry& convexGeom = static_cast<const PxConvexMeshGeometry&>(geom);
-//
-//		//Compute triangles for each polygon.
-//		const PxVec3& scale = convexGeom.scale.scale;
-//		PxConvexMesh* mesh = convexGeom.convexMesh;
-//		const PxU32 nbPolys = mesh->getNbPolygons();
-//		const PxU8* polygons = mesh->getIndexBuffer();
-//		const PxVec3* verts = mesh->getVertices();
-//		PxU32 nbVerts = mesh->getNbVertices();
-//		PX_UNUSED(nbVerts);
-//
-//		PxU32 numTotalTriangles = 0;
-//		for (PxU32 i = 0; i < nbPolys; i++)
-//		{
-//			PxHullPolygon data;
-//			mesh->getPolygonData(i, data);
-//
-//			const PxU32 nbTris = PxU32(data.mNbVerts - 2);
-//			const PxU8 vref0 = polygons[data.mIndexBase + 0];
-//			PX_ASSERT(vref0 < nbVerts);
-//			for (PxU32 j = 0; j < nbTris; j++)
-//			{
-//				const PxU32 vref1 = polygons[data.mIndexBase + 0 + j + 1];
-//				const PxU32 vref2 = polygons[data.mIndexBase + 0 + j + 2];
-//
-//				//generate face normal:
-//				PxVec3 e0 = verts[vref1] - verts[vref0];
-//				PxVec3 e1 = verts[vref2] - verts[vref0];
-//
-//				PX_ASSERT(vref1 < nbVerts);
-//				PX_ASSERT(vref2 < nbVerts);
-//
-//				PxVec3 fnormal = e0.cross(e1);
-//				fnormal.normalize();
-//
-//				if (numTotalTriangles * 6 < MAX_NUM_MESH_VEC3S)
-//				{
-//					gVertexBuffer[numTotalTriangles * 6 + 0] = fnormal;
-//					gVertexBuffer[numTotalTriangles * 6 + 1] = verts[vref0];
-//					gVertexBuffer[numTotalTriangles * 6 + 2] = fnormal;
-//					gVertexBuffer[numTotalTriangles * 6 + 3] = verts[vref1];
-//					gVertexBuffer[numTotalTriangles * 6 + 4] = fnormal;
-//					gVertexBuffer[numTotalTriangles * 6 + 5] = verts[vref2];
-//					numTotalTriangles++;
-//				}
-//			}
-//		}
-//		glPushMatrix();
-//		glScalef(scale.x, scale.y, scale.z);
-//		glEnableClientState(GL_NORMAL_ARRAY);
-//		glEnableClientState(GL_VERTEX_ARRAY);
-//		glNormalPointer(GL_FLOAT, 2 * 3 * sizeof(float), gVertexBuffer);
-//		glVertexPointer(3, GL_FLOAT, 2 * 3 * sizeof(float), gVertexBuffer + 1);
-//		glDrawArrays(GL_TRIANGLES, 0, int(numTotalTriangles * 3));
-//		glPopMatrix();
-//	}
-//	break;
-//
-//	case PxGeometryType::eTRIANGLEMESH:
-//	{
-//		const PxTriangleMeshGeometry& triGeom = static_cast<const PxTriangleMeshGeometry&>(geom);
-//
-//		const PxTriangleMesh& mesh = *triGeom.triangleMesh;
-//		const PxVec3 scale = triGeom.scale.scale;
-//
-//		const PxU32 triangleCount = mesh.getNbTriangles();
-//		const PxU32 has16BitIndices = mesh.getTriangleMeshFlags() & PxTriangleMeshFlag::e16_BIT_INDICES;
-//		const void* indexBuffer = mesh.getTriangles();
-//
-//		const PxVec3* vertexBuffer = mesh.getVertices();
-//
-//		const PxU32* intIndices = reinterpret_cast<const PxU32*>(indexBuffer);
-//		const PxU16* shortIndices = reinterpret_cast<const PxU16*>(indexBuffer);
-//		PxU32 numTotalTriangles = 0;
-//		for (PxU32 i = 0; i < triangleCount; ++i)
-//		{
-//			PxVec3 triVert[3];
-//
-//			if (has16BitIndices)
-//			{
-//				triVert[0] = vertexBuffer[*shortIndices++];
-//				triVert[1] = vertexBuffer[*shortIndices++];
-//				triVert[2] = vertexBuffer[*shortIndices++];
-//			}
-//			else
-//			{
-//				triVert[0] = vertexBuffer[*intIndices++];
-//				triVert[1] = vertexBuffer[*intIndices++];
-//				triVert[2] = vertexBuffer[*intIndices++];
-//			}
-//
-//			PxVec3 fnormal = (triVert[1] - triVert[0]).cross(triVert[2] - triVert[0]);
-//			fnormal.normalize();
-//
-//			if (numTotalTriangles * 6 < MAX_NUM_MESH_VEC3S)
-//			{
-//				gVertexBuffer[numTotalTriangles * 6 + 0] = fnormal;
-//				gVertexBuffer[numTotalTriangles * 6 + 1] = triVert[0];
-//				gVertexBuffer[numTotalTriangles * 6 + 2] = fnormal;
-//				gVertexBuffer[numTotalTriangles * 6 + 3] = triVert[1];
-//				gVertexBuffer[numTotalTriangles * 6 + 4] = fnormal;
-//				gVertexBuffer[numTotalTriangles * 6 + 5] = triVert[2];
-//				numTotalTriangles++;
-//			}
-//		}
-//		glPushMatrix();
-//		glScalef(scale.x, scale.y, scale.z);
-//		glEnableClientState(GL_NORMAL_ARRAY);
-//		glEnableClientState(GL_VERTEX_ARRAY);
-//		glNormalPointer(GL_FLOAT, 2 * 3 * sizeof(float), gVertexBuffer);
-//		glVertexPointer(3, GL_FLOAT, 2 * 3 * sizeof(float), gVertexBuffer + 1);
-//		glDrawArrays(GL_TRIANGLES, 0, int(numTotalTriangles * 3));
-//		glDisableClientState(GL_VERTEX_ARRAY);
-//		glDisableClientState(GL_NORMAL_ARRAY);
-//		glPopMatrix();
-//	}
-//	break;
-//
-//	case PxGeometryType::ePLANE:
-//		break;
-//	}
-//
-//}
-
-//--------------CREATE A NEW GEOMETRY--------------//
-//
-//physx::PxRigidDynamic* ModulePhysics::CreateGeometry(GeometryType type, float3 pos, float mass, float radius, float3 size) {
-//
-//	physx::PxRigidDynamic* geometry = nullptr;
-//	PxTransform position = PxTransform(pos.x, pos.y, pos.z);
-//
-//	switch (type)
-//	{
-//	case GeometryType::BOX:
-//	{
-//		PxShape* shape = mPhysics->createShape(PxBoxGeometry(size.x, size.y, size.z), *mMaterial);
-//
-//		geometry = mPhysics->createRigidDynamic(position);
-//		geometry->attachShape(*shape);
-//
-//		geometry->setAngularDamping(0.5f);
-//		geometry->setLinearVelocity(PxVec3(0));
-//
-//		//LOG("CREATED BOX");
-//	}
-//	break;
-//	case GeometryType::SPHERE:
-//	{
-//		PxShape* shape = mPhysics->createShape(PxSphereGeometry(radius), *mMaterial);
-//
-//		geometry = PxCreateDynamic(*mPhysics, position, PxSphereGeometry(radius), *mMaterial, mass);
-//		geometry->attachShape(*shape);
-//
-//		geometry->setAngularDamping(0.05f);
-//
-//		//LOG("CREATED SPHERE");
-//
-//	}
-//	break;
-//	case GeometryType::CAPSULE:
-//	{
-//		PxReal halfHeight = size.y / 2;
-//
-//		geometry = mPhysics->createRigidDynamic(PxTransform(position));
-//
-//		PxShape* shape = PxRigidActorExt::createExclusiveShape(*geometry, PxCapsuleGeometry(radius, halfHeight), *mMaterial);
-//		geometry->attachShape(*shape);
-//
-//		geometry->setAngularDamping(0.05f);
-//
-//		//LOG("CREATED CAPSULE");
-//	}
-//	break;
-//	case GeometryType::NONE:
-//		break;
-//	}
-//
-//	geometry->setMass(mass);
-//	mScene->addActor(*geometry);
-//
-//	return geometry;
-//
-//}
-
-////--------------DRAW THE GEOMETRY--------------//
-//void ModulePhysics::DrawGeometry(GeometryType type, float3 pos, float radius, float3 size) {
-//
-//	switch (type)
-//	{
-//	case GeometryType::BOX:
-//	{
-//		glBegin(GL_QUADS);
-//		glPushMatrix();
-//
-//		glNormal3f(-1.0f, 0.0f, 0.0f); //FRONT
-//		glVertex3f(0.0f, 0.0f, 0.0f);
-//		glVertex3f(0.0f, 0.0f, 1.0f);
-//		glVertex3f(1.0f, 0.0f, 1.0f);
-//		glVertex3f(1.0f, 0.0f, 0.0f);
-//
-//		glNormal3f(0.0f, 0.0f, -1.0f); //BOTTOM
-//		glVertex3f(0.0f, 0.0f, 0.0f);
-//		glVertex3f(1.0f, 0.0f, 0.0f);
-//		glVertex3f(1.0f, 1.0f, 0.0f);
-//		glVertex3f(0.0f, 1.0f, 0.0f);
-//
-//		glNormal3f(1.0f, 0.0f, 0.0f); //BACK
-//		glVertex3f(1.0f, 1.0f, 0.0f);
-//		glVertex3f(1.0f, 1.0f, 1.0f);
-//		glVertex3f(0.0f, 1.0f, 1.0f);
-//		glVertex3f(0.0f, 1.0f, 0.0f);
-//
-//		glNormal3f(0.0f, 0.0f, 1.0f); //TOP
-//		glVertex3f(1.0f, 1.0f, 1.0f);
-//		glVertex3f(1.0f, 0.0f, 1.0f);
-//		glVertex3f(0.0f, 0.0f, 1.0f);
-//		glVertex3f(0.0f, 1.0f, 1.0f);
-//
-//		glNormal3f(0.0f, 1.0f, 0.0f); //LEFT
-//		glVertex3f(0.0f, 0.0f, 0.0f);
-//		glVertex3f(0.0f, 1.0f, 0.0f);
-//		glVertex3f(0.0f, 1.0f, 1.0f);
-//		glVertex3f(0.0f, 0.0f, 1.0f);
-//
-//		glNormal3f(0.0f, -1.0f, 0.0f); //RIGHT
-//		glVertex3f(1.0f, 0.0f, 0.0f);
-//		glVertex3f(1.0f, 0.0f, 1.0f);
-//		glVertex3f(1.0f, 1.0f, 1.0f);
-//		glVertex3f(1.0f, 1.0f, 0.0f);
-//
-//		glScalef(size.x, size.y, size.z);
-//		glTranslatef(pos.x, pos.y, pos.z);
-//
-//		glPopMatrix();
-//		glEnd();
-//
-//	}
-//	break;
-//	case GeometryType::SPHERE:
-//	{
-//		GLfloat x, y, z, alpha, beta; // Storage for coordinates and angles        
-//		int gradation = 10;
-//
-//		for (alpha = 0.0; alpha < PI; alpha += PI / gradation)
-//		{
-//			glBegin(GL_TRIANGLE_STRIP);
-//			glPushMatrix();
-//
-//			for (beta = 0.0; beta < 2.01 * PI; beta += PI / gradation)
-//			{
-//				x = cos(beta) * sin(alpha);
-//				y = sin(beta) * sin(alpha);
-//				z = cos(alpha);
-//				glVertex3f(x, y, z);
-//				x = cos(beta) * sin(alpha + PI / gradation);
-//				y = sin(beta) * sin(alpha + PI / gradation);
-//				z = cos(alpha + PI / gradation);
-//				glVertex3f(x, y, z);
-//			}
-//
-//			glTranslatef(pos.x, 0.0f, 0.0f);
-//			glScalef(radius, radius, radius);
-//
-//			glPopMatrix();
-//			glEnd();
-//		}
-//	}
-//	break;
-//	case GeometryType::CAPSULE:
-//	{
-//		glBegin(GL_QUAD_STRIP);
-//		glPushMatrix();
-//		glTranslatef(-pos.x, 0.0f, 0.0f);
-//		//glScalef(2.0f * pos.x, radius, radius);
-//
-//		for (int i = 0; i < 480; i += (360 / 16)) {
-//			float a = i * M_PI / 180; // degrees to radians
-//			glVertex3f(2 * cos(a), 2 * sin(a), 0.0);
-//			glVertex3f(2 * cos(a), 2 * sin(a), 4);
-//		}
-//		glEnd();
-//
-//		glPopMatrix();
-//		glEnd();
-//	}
-//	break;
-//	case GeometryType::NONE:
-//		break;
-//	}
-//
-//}
 
 physx::PxRigidStatic* ModulePhysics::CreateRigidStatic(float3 pos) {
 
@@ -597,17 +273,7 @@ physx::PxShape* ModulePhysics::CreateCollider(float3 size, PxMaterial* material)
 	if (material == nullptr)
 		material = mMaterial;
 
-	/*switch (colliderType) {
-	case GeometryType::BOX:
-		colliderShape = mPhysics->createShape(PxBoxGeometry(size.x, size.y, size.z), *material, true);
-		break;
-	case GeometryType::SPHERE:
-		colliderShape = mPhysics->createShape(PxSphereGeometry(size.MaxElement()), *material, true);
-		break;
-	case GeometryType::CAPSULE:
-		colliderShape = mPhysics->createShape(PxCapsuleGeometry(size.x, size.y), *material, true);
-		break;
-	}*/
+	
 	colliderShape = mPhysics->createShape(PxBoxGeometry(size.x, size.y, size.z), *material, true);
 
 	return colliderShape;
@@ -646,44 +312,6 @@ float4x4 ModulePhysics::PhysXTransformToF4F(PxTransform transform) {
 	return matrix;
 }
 
-//void ModulePhysics::DrawCollider(C_Collider* collider)
-//{
-//
-//
-//	float4x4 transform = collider->transform->GetGlobalTransposed() * PhysXTransformToF4F(collider->colliderShape->getLocalPose());
-//
-//	switch (collider->type)
-//	{
-//	case GeometryType::BOX:
-//	{
-//		PxBoxGeometry boxCollider;
-//		collider->colliderShape->getBoxGeometry(boxCollider);
-//		float3 size = { boxCollider.halfExtents.x, boxCollider.halfExtents.y, boxCollider.halfExtents.z };
-//		App->renderer3D->DrawBoxCollider(transform, size);
-//	}
-//	break;
-//	case GeometryType::SPHERE:
-//	{
-//		PxSphereGeometry sphereCollider;
-//		collider->colliderShape->getSphereGeometry(sphereCollider);
-//		App->renderer3D->DrawSphereCollider(transform, sphereCollider.radius);
-//	}
-//	break;
-//	case GeometryType::CAPSULE:
-//	{
-//		PxCapsuleGeometry capsuleCollider;
-//		collider->colliderShape->getCapsuleGeometry(capsuleCollider);
-//		App->renderer3D->DrawCapsuleCollider(transform, capsuleCollider.halfHeight, capsuleCollider.radius);
-//	}
-//	break;
-//
-//	}
-//}
-//
-//void ModulePhysics::WakeUpGeometry(GameObject* gameObject) {
-//	gameObject->GetRigidbody()->rigid_dynamic->wakeUp();
-//}
-
 
 PxTransform ModulePhysics::TRStoPxTransform(float3 pos, float3 rot) {
 
@@ -716,13 +344,13 @@ void CollisionDetector::onContact(const PxContactPairHeader& pairHeader,
 		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
 
-			for (size_t k= 0; k < 2; ++k)
+			/*for (size_t k= 0; k < 2; ++k)
 			{
 				GameObject* contact = static_cast<GameObject*>(pairHeader.actors[k]->userData);
 				C_Script* script =  dynamic_cast<C_Script*>(contact->GetComponent(Component::Type::Script));
 				if (script)
 					script->CollisionCallback();
-			}
+			}*/
 
 			/*if ((pairHeader.actors[0] == mSubmarineActor) ||
 				(pairHeader.actors[1] == mSubmarineActor))*/

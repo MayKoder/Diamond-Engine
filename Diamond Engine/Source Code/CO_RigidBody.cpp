@@ -98,38 +98,25 @@ void C_RigidBody::Update()
 {
 	//Just update transform if we have rigidbody simulation
 	//if (App->timeManager->started) {
-	if (DETime::state == GameState::PLAY)
-	{
-		float4x4 worldtrans = goTransform->globalTransform;
-
-		float3 pos, scale;
-		Quat rot;
-		worldtrans.Decompose(pos, rot, scale);
-		pos = { rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z };
-		rot = { rigid_dynamic->getGlobalPose().q.x, rigid_dynamic->getGlobalPose().q.y, rigid_dynamic->getGlobalPose().q.z,  rigid_dynamic->getGlobalPose().q.w };
-
-		
-		worldtrans = float4x4::FromTRS(pos, rot, scale);
-
-	//	float4x4 pivotrans =  global_to_pivot.Inverted() * worldtrans;
-		float4x4 pivotrans =  worldtrans * global_to_pivot.Inverted();
-
-		goTransform->SetTransformWithGlobal(pivotrans);
-
-
-	}
-	else {
+	
+	
 		
 		Quat rot;
 		float3 pos, scale;
 		goTransform->globalTransform.Decompose(pos, rot, scale);
-		pos = mesh->globalOBB.pos;
+		//pos = mesh->globalOBB.pos;
+		
 
+		float4x4 pivotrans = float4x4::FromTRS(pos, rot, scale);
+
+		float4x4 worldtrans = pivotrans * global_to_pivot;
+		worldtrans.Decompose(pos, rot, scale);
 		physx::PxQuat rotation = { rot.x,  rot.y, rot.z, rot.w };
 		rigid_dynamic->setGlobalPose(physx::PxTransform({ pos.x, pos.y, pos.z }, rotation));
-	
-	}
 
+	LOG(LogType::L_NORMAL, "")
+	
+		
 	/*}
 	else {
 		if (collider_info != nullptr)
@@ -141,6 +128,29 @@ void C_RigidBody::Update()
 	//TODO: MOVE RIGID BODY IF GLOBAL POSITION CHANGED
 }
 
+void C_RigidBody::Step()
+{
+	if (DETime::state == GameState::PLAY)
+	{
+		float4x4 worldtrans = goTransform->globalTransform;
+
+		float3 pos, scale;
+		Quat rot;
+		worldtrans.Decompose(pos, rot, scale);
+		pos = { rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z };
+		rot = { rigid_dynamic->getGlobalPose().q.x, rigid_dynamic->getGlobalPose().q.y, rigid_dynamic->getGlobalPose().q.z,  rigid_dynamic->getGlobalPose().q.w };
+
+
+		worldtrans = float4x4::FromTRS(pos, rot, scale);
+
+		//	float4x4 pivotrans =  global_to_pivot.Inverted() * worldtrans;
+		float4x4 pivotrans = worldtrans * global_to_pivot.Inverted();
+
+		goTransform->SetTransformWithGlobal(pivotrans);
+
+
+	}
+}
 void C_RigidBody::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);

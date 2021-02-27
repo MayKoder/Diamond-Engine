@@ -20,6 +20,8 @@ public:
 	virtual ~C_RigidBody();
 
 	void Update() override;
+	void Step();
+
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
 

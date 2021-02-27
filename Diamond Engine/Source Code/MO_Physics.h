@@ -89,46 +89,21 @@ public:
     void SceneSimulation(float gameTimesetp, bool fetchResults = true);
     void RenderGeometry();
 
-   // void renderActors(physx::PxRigidActor** actors, const physx::PxU32 numActors, bool shadows);
-   // void renderGeometry(const physx::PxGeometry& geom);
-    void renderGeometryHolder(const physx::PxGeometryHolder& h);
 
-   // void DrawGeometry(GeometryType type, float3 pos = { 0.0f, 0.0f, 0.0f }, float radius = 3.0f, float3 size = { 1.0f, 1.0f, 1.0f });
-    void DrawCollider(C_Collider* collider);
     float4x4 PhysXTransformToF4F(physx::PxTransform transform);
 
-    void WakeUpGeometry(GameObject* gameObject);
-    // SPACE - M - N testing geometries
-  //  physx::PxRigidDynamic* CreateGeometry(GeometryType type = GeometryType::NONE, float3 pos = { 0.0f, 0.0f, 0.0f }, float mass = 10.0f, float radius = 3.0f, float3 size = { 1.0f, 1.0f, 1.0f });
+ 
 
     physx::PxRigidStatic* CreateRigidStatic(float3 pos);
     physx::PxRigidDynamic* CreateRigidDynamic(float3 pos, Quat rot);
     physx::PxShape* CreateCollider(float3 size, physx::PxMaterial* material = nullptr);
     physx::PxMaterial* CreateMaterial(float staticFriction = 0.5f, float dynamicFriction = 0.5f, float restitution = 0.1f);
 
-    //Release rigid Static/Dynamic actors and detach collider shapes if needed.
     void ReleaseActor(physx::PxRigidActor* actor);
 
     physx::PxTransform TRStoPxTransform(float3 pos, float3 rot);
 
-    //physx::PxFilterFlags contactReportFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
-    //    physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
-    //    physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
-    //{
-    //    PX_UNUSED(attributes0);
-    //    PX_UNUSED(attributes1);
-    //    PX_UNUSED(filterData0);
-    //    PX_UNUSED(filterData1);
-    //    PX_UNUSED(constantBlockSize);
-    //    PX_UNUSED(constantBlock);
-
-    //    // all initial and persisting reports for everything, with per-point data
-    //    pairFlags = PxPairFlag::eSOLVE_CONTACT | PxPairFlag::eDETECT_DISCRETE_CONTACT
-    //        | PxPairFlag::eNOTIFY_TOUCH_FOUND
-    //        | PxPairFlag::eNOTIFY_TOUCH_PERSISTS
-    //        | PxPairFlag::eNOTIFY_CONTACT_POINTS;
-    //    return PxFilterFlag::eDEFAULT;
-    //}
+  
 
 public:
     physx::PxFoundation* mFoundation;

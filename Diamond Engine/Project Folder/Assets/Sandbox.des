@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        -27.362030029296875,
-        22.18250846862793,
-        -48.016841888427734
+        134.9287109375,
+        50.712310791015625,
+        87.708587646484375
     ],
     "EditorCameraZ": [
-        -0.78350228071212769,
-        -0.21553200483322144,
-        -0.58281230926513672
+        -0.79966562986373901,
+        -0.30055052042007446,
+        -0.51981168985366821
     ],
     "EditorCameraY": [
-        -0.17293430864810944,
-        0.97649669647216797,
-        -0.12863810360431671
+        -0.25199049711227417,
+        0.953765869140625,
+        -0.16380295157432556
     ],
     "Game Objects": [
         {
@@ -114,6 +114,15 @@
                     "ShaderAssetPath": "Empty",
                     "ShaderLibraryPath": "Library\/Shaders\/54042063.shdr",
                     "ShaderUID": 54042063
+                },
+                {
+                    "Type": 7,
+                    "Active": true,
+                    "kinematic": true
+                },
+                {
+                    "Type": 8,
+                    "Active": true
                 }
             ]
         },
@@ -153,15 +162,6 @@
                         0.99998998641967773,
                         0.99998998641967773
                     ]
-                },
-                {
-                    "Type": 7,
-                    "Active": true,
-                    "kinematic": true
-                },
-                {
-                    "Type": 8,
-                    "Active": true
                 }
             ]
         },
@@ -201,15 +201,6 @@
                         1,
                         1
                     ]
-                },
-                {
-                    "Type": 7,
-                    "Active": true,
-                    "kinematic": false
-                },
-                {
-                    "Type": 8,
-                    "Active": true
                 }
             ]
         },
@@ -218,7 +209,7 @@
             "Active": true,
             "Position": [
                 0,
-                2,
+                73.246856689453125,
                 -2.2426132773034624e-07
             ],
             "Rotation": [
@@ -259,6 +250,15 @@
                     "rotationSpeed": 2,
                     "movementSpeed": 35,
                     "mouseSens": 1
+                },
+                {
+                    "Type": 7,
+                    "Active": true,
+                    "kinematic": false
+                },
+                {
+                    "Type": 8,
+                    "Active": true
                 }
             ]
         },
@@ -295,7 +295,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.9240491390228271,
+                    "hFOV": 1.6568517684936523,
                     "culling": false
                 }
             ]
