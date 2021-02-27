@@ -182,6 +182,7 @@
     <ClInclude Include="Source Code\COMM_DeleteGO.h" />
     <ClInclude Include="Source Code\COMM_Transform.h" />
     <ClInclude Include="Source Code\Component.h" />
+    <ClInclude Include="Source Code\CO_Button.h" />
     <ClInclude Include="Source Code\CO_Camera.h" />
     <ClInclude Include="Source Code\CO_Canvas.h" />
     <ClInclude Include="Source Code\CO_MeshRenderer.h" />
@@ -343,6 +344,7 @@
     <ClCompile Include="Source Code\COMM_DeleteGO.cpp" />
     <ClCompile Include="Source Code\COMM_Transform.cpp" />
     <ClCompile Include="Source Code\Component.cpp" />
+    <ClCompile Include="Source Code\CO_Button.cpp" />
     <ClCompile Include="Source Code\CO_Camera.cpp" />
     <ClCompile Include="Source Code\CO_Canvas.cpp" />
     <ClCompile Include="Source Code\CO_Material.cpp" />
