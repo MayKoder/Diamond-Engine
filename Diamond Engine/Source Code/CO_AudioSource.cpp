@@ -6,7 +6,7 @@
 
 #include "ImGui/imgui.h"
 
-C_AudioSource::C_AudioSource(GameObject* _gm) : Component(_gm), audBankReference(nullptr), evName(""), isMuted(false), pitch(1.0f), playOnAwake(false), volume(50.0f), audBankName("")
+C_AudioSource::C_AudioSource(GameObject* _gm) : Component(_gm), audBankReference(nullptr), evName(""), isMuted(false), pitch(50.0f), playOnAwake(false), volume(50.0f), audBankName("")
 {
 	name = "Audio Source";
 	this->id = static_cast<unsigned int>(EngineExternal->GetRandomInt());
@@ -87,7 +87,7 @@ bool C_AudioSource::OnEditor()
 			SetMuted(isMuted);
 		}
 
-		if (ImGui::SliderFloat("Pitch", &pitch, 0.0f, 2.0f))
+		if (ImGui::SliderFloat("Pitch", &pitch, 0.0f, 100.0f))
 		{
 			SetPitch(pitch);
 		}
@@ -121,10 +121,10 @@ void C_AudioSource::LoadData(DEConfig& nObj)
 
 	this->evName = nObj.ReadString("evName");
 	std::string bankName = nObj.ReadString("audBankReference");
+	SetMuted(nObj.ReadBool("isMuted"));
 	SetVolume(nObj.ReadFloat("volume"));
 	SetPitch(nObj.ReadFloat("pitch"));
 	this->playOnAwake = nObj.ReadBool("playOnAwake");
-	SetMuted(nObj.ReadBool("isMuted"));
 
 	// Iterate and assign audio bank. If not loaded, load
 	std::vector<AudioBank*>::iterator it;
@@ -229,4 +229,5 @@ void C_AudioSource::SetMuted(bool muted)
 		EngineExternal->moduleAudio->ChangeRTPCValue(this->id, std::string("SourceVolume"), this->volume);
 		EngineExternal->moduleAudio->ChangeRTPCValue(this->id, std::string("SourcePitch"), this->pitch);
 	}
+	isMuted = muted;
 }
