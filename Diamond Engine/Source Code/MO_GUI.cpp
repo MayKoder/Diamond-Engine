@@ -101,6 +101,11 @@ void M_Gui::RenderUiElement(GameObject* uiElement)
 			material->shader->Bind();
 			material->PushUniforms();
 
+			//TOD: Change this with the C_Image resource id
+			glBindTexture(GL_TEXTURE_2D, App->moduleRenderer3D->checkersTexture);
+
+
+
 			GLint modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "model_matrix");
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, transform->GetGlobal2DTransform().ptr());
 			glBindBuffer(GL_ARRAY_BUFFER, VAO);
