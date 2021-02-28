@@ -8,7 +8,7 @@
 
 C_AudioListener::C_AudioListener(GameObject* _gm, bool defaultListener) :Component(_gm), isDefaultListener(false), masterVolume(50), myTransform(nullptr)
 {
-
+	name = "Audio Listener";
 	myTransform = (C_Transform*)gameObject->GetComponent(Component::Type::Transform);
 
 	id = unsigned int(EngineExternal->GetRandomInt());

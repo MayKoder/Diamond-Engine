@@ -8,6 +8,7 @@
 
 C_AudioSource::C_AudioSource(GameObject* _gm) : Component(_gm), audBankReference(nullptr), evName(""), isMuted(false), pitch(1.0f), playOnAwake(false), volume(50.0f), audBankName("")
 {
+	name = "Audio Source";
 	this->id = unsigned int(EngineExternal->GetRandomInt());
 	gameObjectTransform = (C_Transform*)gameObject->GetComponent(Component::Type::Transform);
 	EngineExternal->moduleAudio->RegisterNewAudioObject(id);
