@@ -75,12 +75,20 @@ void C_Animator::Start()
 
 void C_Animator::Update()
 {
+	if (DETime::state == GameState::PLAY)
+	{
+		if (!started) {
+			Start();
+		}
+	}
+
 	if (rootBone == nullptr)
 	{
 		if (gameObject->children.size() > 0)
 		{
 			rootBone = gameObject->children[1]->children[0];
 			dynamic_cast<C_MeshRenderer*>(gameObject->children[0]->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
+
 		}
 	}
 	else
@@ -160,8 +168,8 @@ void C_Animator::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
 
-	AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION)));
-	//AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), Resource::Type::ANIMATION));
+	//AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION)));
+	AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), Resource::Type::ANIMATION)));
 	if (_anim == nullptr)
 		return;
 	else
