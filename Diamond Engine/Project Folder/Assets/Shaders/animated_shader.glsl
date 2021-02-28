@@ -31,7 +31,7 @@ Normal = mat3(transpose(inverse(model_matrix))) * normals;
 vec4 totalLocalPos = vec4(0.0);
 vec4 totalNormal = vec4(0.0);
 
-for (int i=0; i < MAX_JOINTS; i++)
+for (int i=0; i < MAX_WEIGHTS; i++)
 {
 	if(boneIDs[i] == -1) {
 		continue;
@@ -49,11 +49,23 @@ fPosition = pos.xyz;
 
 //totalLocalPos = vec4(position, 1.0);
 
-gl_Position = projection * view * model_matrix * totalLocalPos;
-
+//influence debug
 ourColor = vec3(weights.x, weights.x,  weights.x);
+
+//IDs Debug -----------------------
+float colorReduction = 17.0;
+vec3 id; 
+id.x = intBitsToFloat(boneIDs.x);
+id.y = intBitsToFloat(boneIDs.y); 
+id.z = intBitsToFloat(boneIDs.z); 
+ourColor = vec3(id.x / colorReduction, id.x / colorReduction,  id.x / colorReduction);
+
+//----------------------------------
+
+gl_Position = projection * view * model_matrix * totalLocalPos;
 TexCoord = texCoord;
 Normal = totalNormal.xyz;
+
 }
 #endif
 
@@ -88,6 +100,11 @@ vec2 inten = blinnPhongDir(vec3(0.8,1,0.2), 0.5, 0.2, 0.8, 0.3, 80.0);
 gl_FragColor = vec4(lcolor * inten.x + vec3(1.0) * inten.y, 1.0) * vec4(ourColor, 1.0);
 }
 #endif
+
+
+
+
+
 
 
 

@@ -211,12 +211,10 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 	if (importedMesh->HasBones())
 	{
 		//iterate all bones
-		for (size_t b = 0; b < importedMesh->mNumBones; b++)
+		for (size_t boneId = 0; boneId < importedMesh->mNumBones; boneId++)
 		{
-			aiBone* aibone = importedMesh->mBones[b];
-
-			aiBone* bone = importedMesh->mBones[b];
-			_mesh->bonesMap[bone->mName.C_Str()] = b;
+			aiBone* aibone = importedMesh->mBones[boneId];
+			_mesh->bonesMap[aibone->mName.C_Str()] = boneId;
 
 			//Load offsets
 			float4x4 offset = float4x4(aibone->mOffsetMatrix.a1, aibone->mOffsetMatrix.a2, aibone->mOffsetMatrix.a3, aibone->mOffsetMatrix.a4,
@@ -229,23 +227,22 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 			_mesh->bonesOffsets.push_back(offset);
 
 			//iterate all bone weights
-			for (int weights = 0; weights < importedMesh->mBones[b]->mNumWeights; weights++) {
+			for (int weights = 0; weights < importedMesh->mBones[boneId]->mNumWeights; weights++) {
 
-				int vertexId = importedMesh->mBones[b]->mWeights[weights].mVertexId; // *4;
+				int vertexId = importedMesh->mBones[boneId]->mWeights[weights].mVertexId; // *4;
 
 				for (int w = 0; w < 4; w++)
 				{
 					if (_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + w] == -1.0f)
 					{
 						//bone ids
-						_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + w] = b;
+						_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + w] = boneId;
 						//weights
-						_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + w] = importedMesh->mBones[b]->mWeights[weights].mWeight;
+						_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET  + w] = aibone->mWeights[weights].mWeight;
 						break;
 					}
 				}
 			}
-		
 			//_mesh->joints.push_back(joint);
 		}		
 	}

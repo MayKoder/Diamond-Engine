@@ -73,6 +73,54 @@ void C_Animator::Update()
 			dynamic_cast<C_MeshRenderer*>(gameObject->children[0]->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
 		}
 	}
+	else
+	{
+		float blendRatio = 0.0f;
+		if (blendTimeDuration > 0.0f)
+		{
+			prevAnimTime += DETime::deltaTime;
+			previousTimeAnimation = time * previousAnimation->ticksPerSecond;
+			previousTimeAnimation += previousAnimation->initTimeAnim;
+			blendTime += DETime::deltaTime;
+
+			if (blendTime >= blendTimeDuration)
+			{
+				blendTimeDuration = 0.0f;
+			}
+			else if (previousAnimation && prevAnimTime >= previousAnimation->duration)
+			{
+				if (previousAnimation->loopable == true)
+				{
+					prevAnimTime = 0.0f;
+					// + (currentFrame - endFrame);
+				}
+			}
+
+			if (blendTimeDuration > 0.0f)
+				blendRatio = blendTime / blendTimeDuration;
+		}
+		//Endof Updating animation blend
+
+		time += DETime::deltaTime;
+		currentTimeAnimation = time * currentAnimation->ticksPerSecond;
+		currentTimeAnimation += currentAnimation->initTimeAnim;
+		if (currentAnimation && currentTimeAnimation >= currentAnimation->duration) {
+			if (currentAnimation->loopable == true) {
+				time = 0.f;
+			}
+			else {
+				currentAnimation = animations[0];
+				time = 0.f;
+				return;
+			}
+		}
+
+		UpdateChannelsTransform(currentAnimation, blendRatio > 0.0f ? previousAnimation : nullptr, blendRatio);
+		UpdateMeshAnimation(gameObject->children[0]);
+		std::vector<GameObject*> bones;
+		rootBone->CollectChilds(bones);
+		DrawBones(bones[0]);
+	}
 }
 
 void C_Animator::SetResource(ResourceAnimation* re_anim)
@@ -82,7 +130,6 @@ void C_Animator::SetResource(ResourceAnimation* re_anim)
 
 void C_Animator::SaveData(JSON_Object* nObj)
 {
-	
 	Component::SaveData(nObj);
 	//DEJson::WriteString(nObj, "Path", _anim->GetLibraryPath());
 	//DEJson::WriteInt(nObj, "UID", _anim->GetUID());
@@ -233,7 +280,7 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, cons
 	{
 		prevBlendFrame = blend->ticksPerSecond * prevAnimTime;
 	}
-	LOG(LogType::L_NORMAL, "%i", currentFrame);
+	//LOG(LogType::L_NORMAL, "%i", currentFrame);
 	std::map<std::string, GameObject*>::iterator boneIt;
 	for (boneIt = boneMapping.begin(); boneIt != boneMapping.end(); ++boneIt)
 	{
@@ -371,7 +418,6 @@ void C_Animator::DrawBones(GameObject* gameObject)
 	glBegin(GL_LINES);
 
 	//Draw lines
-	std::map<std::string, GameObject*>::iterator bones;
 	float3 position;
 	Quat rotation;
 	float3 scale;
@@ -380,9 +426,11 @@ void C_Animator::DrawBones(GameObject* gameObject)
 		gameObject->parent->transform->globalTransform.Decompose(position, rotation, scale);
 		glVertex3f(position.x, position.y, position.z);
 	}
+
 	gameObject->transform->globalTransform.Decompose(position, rotation, scale);
 	glVertex3f(position.x, position.y, position.z);
 	//LOG(LogType::L_NORMAL, "Name: %s  %f,%f,%f",bones->first.c_str(), position.x, position.y, position.z);
+
 	if (gameObject->children.size() > 0) {
 		for (uint i = 0; i < gameObject->children.size(); i++)
 		{
