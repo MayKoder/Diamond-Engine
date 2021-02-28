@@ -161,7 +161,7 @@ void M_Gui::CreateButton()
 		canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
 	}
 
-	GameObject* button = new GameObject("Button", canvas);
+	GameObject* button = new GameObject("Button", canvasGO);
 	button->AddComponent(Component::TYPE::TRANSFORM_2D);
 	button->AddComponent(Component::TYPE::MATERIAL);
 	button->AddComponent(Component::TYPE::BUTTON);
@@ -169,10 +169,14 @@ void M_Gui::CreateButton()
 
 void M_Gui::CreateText()
 {
-	if (canvas == nullptr)	//TODO Create a GO with a component canvas
+	GameObject* canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	if (canvasGO == nullptr)
+	{
 		CreateCanvas();
+		canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	}
 
-	GameObject* text = new GameObject("Text", canvas);
+	GameObject* text = new GameObject("Text", canvasGO);
 	text->AddComponent(Component::TYPE::TRANSFORM_2D);
 	text->AddComponent(Component::TYPE::MATERIAL);
 	text->AddComponent(Component::TYPE::TEXT_UI);
