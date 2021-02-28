@@ -14,7 +14,7 @@
 
 #include <assert.h>
 
-C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite1(nullptr), sprite2(nullptr), sprite3(nullptr), script(nullptr), num_sprite_used(0)
+C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite1(nullptr), sprite2(nullptr), sprite3(nullptr), script(nullptr), num_sprite_used(1)
 {
 	name = "Button";
 
@@ -38,13 +38,16 @@ void C_Button::Update()
 	switch (num_sprite_used)
 	{
 	case 1:
-		static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL))->material = sprite1;
+		if(sprite1!=nullptr)
+			static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL))->material = sprite1;
 		break;
 	case 2:
-		static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL))->material = sprite2;
+		if(sprite2!=nullptr)
+			static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL))->material = sprite2;
 		break;
 	case 3:
-		static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL))->material = sprite3;
+		if(sprite3!=nullptr)
+			static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL))->material = sprite3;
 		break;
 	}
 }
@@ -102,6 +105,7 @@ bool C_Button::OnEditor()
 		if (sprite1 != nullptr) {
 			ImGui::Text("%s", sprite1->GetAssetPath());
 		}
+		ImGui::Columns(2);
 		ImGui::Text("Drop here to change sprite 1");
 		if (ImGui::BeginDragDropTarget())
 		{
@@ -113,17 +117,27 @@ bool C_Button::OnEditor()
 					EngineExternal->moduleResources->UnloadResource(sprite1->GetUID());
 
 				sprite1 = dynamic_cast<ResourceMaterial*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath->c_str()));
-				if (num_sprite_used == 0) {
-					num_sprite_used = 1;
-				}
 			}
 			ImGui::EndDragDropTarget();
 		}
+		ImGui::NextColumn();
+		if (ImGui::Button("Edit Sprite 1")) {
+			if (sprite1 == nullptr) {
+				LOG(LogType::L_WARNING, "The sprite1 is nullptr");
+			}
+			else {
+				num_sprite_used = 1;
+			}
+		}
+		ImGui::Columns(1);
 		ImGui::Separator();
 
 		if (sprite2 != nullptr) {
 			ImGui::Text("%s", sprite2->GetAssetPath());
 		}
+
+		ImGui::Columns(2);
+
 		ImGui::Text("Drop here to change sprite 2");
 		if (ImGui::BeginDragDropTarget())
 		{
@@ -138,11 +152,25 @@ bool C_Button::OnEditor()
 			}
 			ImGui::EndDragDropTarget();
 		}
+		ImGui::NextColumn();
+
+		if (ImGui::Button("Edit Sprite 2")) {
+			if (sprite2 == nullptr) {
+				LOG(LogType::L_WARNING, "The sprite2 is nullptr");
+			}
+			else {
+				num_sprite_used = 2;
+			}
+		}
+		ImGui::Columns(1);
 		ImGui::Separator();
 
 		if (sprite3 != nullptr) {
 			ImGui::Text("%s", sprite3->GetAssetPath());
 		}
+
+		ImGui::Columns(2);
+
 		ImGui::Text("Drop here to change sprite 3");
 		if (ImGui::BeginDragDropTarget())
 		{
@@ -157,7 +185,17 @@ bool C_Button::OnEditor()
 			}
 			ImGui::EndDragDropTarget();
 		}
+		ImGui::NextColumn();
 
+		if (ImGui::Button("Edit Sprite 3")) {
+			if (sprite3 == nullptr) {
+				LOG(LogType::L_WARNING, "The sprite3 is nullptr");
+			}
+			else{
+				num_sprite_used = 3;
+			}
+		}
+		ImGui::Columns(1);
 		ImGui::Separator();
 
 		ImGui::Text("Drop here to change the script");
