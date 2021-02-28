@@ -65,8 +65,8 @@ public:
 
 #ifndef STANDALONE
 	void DrawEditor();
-	void SaveToJson(JSON_Array* json);
 #endif // !STANDALONE
+	void SaveToJson(JSON_Array* json);
 
 public:
 
