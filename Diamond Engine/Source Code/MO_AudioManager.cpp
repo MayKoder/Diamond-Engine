@@ -84,7 +84,11 @@ bool ModuleAudioManager::Init()
 
 	//Load Soundbanks
 	// TODO: Check BasePath for different versions. What if there are banks in library as resources? Use assets or library
+#ifndef STANDALONE
 	g_lowLevelIO.SetBasePath(AKTEXT("Assets/SoundBanks/"));
+#else
+	g_lowLevelIO.SetBasePath(AKTEXT("Library/SoundBanks/"));
+#endif
 
 	AK::StreamMgr::SetCurrentLanguage(AKTEXT("English(US)"));
 
@@ -266,7 +270,7 @@ bool ModuleAudioManager::LoadBanksInfo()
 			for (unsigned int ec = 0; ec < json_array_get_count(tmpEvents); ++ec)
 			{
 				DEConfig aux(json_array_get_object(tmpEvents, ec));
-				if (!((std::string)aux.ReadString("Name")).find("Play"))
+				if (!((std::string)aux.ReadString("Name")).find("Play_"))
 				{
 					tmpBank->events[std::stoull(aux.ReadString("Id"))] = aux.ReadString("Name");
 				}

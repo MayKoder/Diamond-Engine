@@ -170,8 +170,9 @@ float C_AudioSource::GetVolume()
 
 void C_AudioSource::SetVolume(float newVol)
 {
-	this->volume = newVol;
-	// TODO: change audio rtpc
+	this->volume = MIN(newVol, 100);
+	this->volume = MAX(newVol, 0);
+	EngineExternal->moduleAudio->ChangeRTPCValue(this->id, std::string("SourceVolume"), this->volume);
 }
 
 float C_AudioSource::GetPitch()
@@ -181,8 +182,9 @@ float C_AudioSource::GetPitch()
 
 void C_AudioSource::SetPitch(float newPitch)
 {
-	this->pitch = newPitch;
-	// TODO: change audio rtpc
+	this->pitch = MIN(newPitch, 100);
+	this->pitch = MAX(newPitch, 0);
+	EngineExternal->moduleAudio->ChangeRTPCValue(this->id, std::string("SourcePitch"), this->pitch);
 }
 
 bool C_AudioSource::GetPlayOnAwake() const
@@ -218,5 +220,8 @@ bool C_AudioSource::IsMuted()
 
 void C_AudioSource::SetMuted(bool muted)
 {
-	// TODO: change audio rtpc (set volume to 0 or saved volume level)
+	if (muted)
+		EngineExternal->moduleAudio->ChangeRTPCValue(this->id, std::string("SourceVolume"), 0.0f);
+	else
+		EngineExternal->moduleAudio->ChangeRTPCValue(this->id, std::string("SourceVolume"), this->volume);
 }
