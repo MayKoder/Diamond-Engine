@@ -1,49 +1,52 @@
 {
     "Game Objects": [
         {
-            "name": "Cube",
+            "name": "Game Camera",
             "Active": true,
             "Position": [
-                -1.560367226600647,
-                1.3270139694213867,
-                -0.32808405160903931
+                0,
+                42.965000152587891,
+                -107.01200103759766
             ],
             "Rotation": [
-                -0.7071068286895752,
+                0.45399057865142822,
                 0,
                 0,
-                0.70710670948028564
+                0.8910064697265625
             ],
             "Scale": [
                 1,
-                0.99974519014358521,
-                0.99974519014358521
+                1,
+                1
             ],
-            "UID": 1875191472,
-            "ParentUID": 143570472,
+            "UID": 188616957,
+            "ParentUID": 1661764735,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
                 },
                 {
-                    "Type": 2,
+                    "Type": 4,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1313575480.mmh",
-                    "UID": 1313575480,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
+                    "fType": 1,
+                    "fSize": 10,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 5000,
+                    "vFOV": 61.400001525878906,
+                    "hFOV": 75.800003051757813,
+                    "culling": false
                 },
                 {
-                    "Type": 3,
+                    "Type": 5,
                     "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/1452971041.mat",
-                    "MaterialUID": 1452971041
+                    "ScriptName": "CameraController",
+                    "reference": 188616957,
+                    "target": 1661764735,
+                    "x": 0,
+                    "y": 42.965000152587891,
+                    "z": 0,
+                    "smoothSpeed": 0.125
                 }
             ]
         }
