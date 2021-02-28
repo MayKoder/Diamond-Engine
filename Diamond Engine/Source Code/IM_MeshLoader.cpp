@@ -227,9 +227,9 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 			_mesh->bonesOffsets.push_back(offset);
 
 			//iterate all bone weights
-			for (int weights = 0; weights < importedMesh->mBones[boneId]->mNumWeights; weights++) {
+			for (int weights = 0; weights < aibone->mNumWeights; weights++) {
 
-				int vertexId = importedMesh->mBones[boneId]->mWeights[weights].mVertexId; // *4;
+				int vertexId = aibone->mWeights[weights].mVertexId; // *4;
 
 				for (int w = 0; w < 4; w++)
 				{

@@ -94,15 +94,12 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 
 			if (bone != nullptr)
 			{
-				//Calculate the Delta Matrix
-				float4x4 worldTransform = dynamic_cast<C_Transform*>(bone->GetComponent(Component::Type::Transform))->globalTransform;
-				float4x4 Delta = gameObject->transform->globalTransform.Inverted() * worldTransform;
+				//Calcule of Delta Matrix
+				float4x4 Delta = CalculateDeltaMatrix(dynamic_cast<C_Transform*>(bone->GetComponent(Component::Type::Transform))->globalTransform, dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::Type::Transform))->globalTransform.Inverted());
 				Delta = Delta * _mesh->bonesOffsets[it->second];
 
 				//Storage of Delta Matrix (Transformation applied to each bone)
-				_mesh->boneTransforms[it->second] = Delta;
-				//Delta = Delta.Transposed();
-				float3 translatePart = Delta.TranslatePart();
+				_mesh->boneTransforms[it->second] = Delta.Transposed();
 			}
 		}
 	}
@@ -110,6 +107,7 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 	/*
 	if (_mesh->boneTransforms.size() > 0)
 	{
+		_mesh->vertices_test.clear();
 		for (uint v = 0; v < _mesh->vertices_count; ++v)
 		{
 			float3 vertex;
@@ -122,7 +120,7 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 			{
 				//Get bone identificator and weights from arrays
 				int bone_ID		 = _mesh->vertices[v * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + b];
-				float boneWeight = _mesh->vertices[v * VERTEX_ATTRIBUTES * WEIGHTS_OFFSET + b];
+				float boneWeight = _mesh->vertices[v * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + b];
 
 				//Meaning boneWeight will be 0
 				if (bone_ID == -1)
@@ -133,21 +131,30 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 				vertexTransform.x = _mesh->vertices[v * VERTEX_ATTRIBUTES];
 				vertexTransform.y = _mesh->vertices[v * VERTEX_ATTRIBUTES + 1];
 				vertexTransform.z = _mesh->vertices[v * VERTEX_ATTRIBUTES + 2];
-				float3 Inc = _mesh->boneTransforms[bone_ID].TransformPos(vertexTransform);
+				//float3 Inc = _mesh->boneTransforms[bone_ID].TransformPos(vertexTransform);
+
+				float4 Inc = _mesh->boneTransforms[bone_ID].Mul(float4(vertexTransform, 1.0));
 
 				vertex.x += Inc.x * boneWeight;
 				vertex.y += Inc.y * boneWeight;
 				vertex.z += Inc.z * boneWeight;
 			}
 
+			
+			_mesh->vertices_test.push_back(vertex);
+
+			glPushMatrix();
+			glMultMatrixf(gameObject->transform->globalTransform.Transposed().ptr());
 			glPointSize(10.0f);
 			glBegin(GL_POINTS);
 			glVertex3fv(vertex.ptr());
 			glEnd();
 			glPointSize(1.0f);
+			glPopMatrix();
 		}
 	}
 	*/
+
 
 	_mesh->RenderMesh(id, alternColor, rTex, (material && material->material != nullptr) ? material->material : EngineExternal->moduleScene->defaultMaterial, transform);
 

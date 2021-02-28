@@ -61,6 +61,8 @@ public:
 	std::map<std::string, uint> bonesMap;
 	std::vector<float4x4> bonesOffsets;
 
+	std::vector<float3>vertices_test;
+
 	//TODO: Delete this, wireframe mode should be different
 	// ----------- TEMPORAL LOGIC, MUST BE DELETED ---------------//
 	bool* generalWireframe;

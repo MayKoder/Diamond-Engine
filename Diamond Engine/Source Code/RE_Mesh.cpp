@@ -41,28 +41,28 @@ bool ResourceMesh::LoadToMemory()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indices_count, indices, GL_STATIC_DRAW);
 
 	//position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)0);
 
 	//texcoords attribute
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(TEXCOORD_OFFSET * sizeof(GLfloat)));
 	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(TEXCOORD_OFFSET * sizeof(GLfloat)));
 
 	//normals attribute
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(NORMALS_OFFSET * sizeof(GLfloat)));
 	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(NORMALS_OFFSET * sizeof(GLfloat)));
 
 	//tangents attribute
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(TANGENTS_OFFSET * sizeof(GLfloat)));
 	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(TANGENTS_OFFSET * sizeof(GLfloat)));
 
 	//joint indices
-	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(BONES_ID_OFFSET * sizeof(GLfloat)));
 	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(BONES_ID_OFFSET * sizeof(GLfloat)));
 
 	//weights
-	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(WEIGHTS_OFFSET * sizeof(GLfloat)));
 	glEnableVertexAttribArray(5);
+	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(WEIGHTS_OFFSET * sizeof(GLfloat)));
 
 
 	return true;
@@ -132,13 +132,18 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "altColor");
 		glUniform3fv(modelLoc, 1, &color.x);
 
-		for (size_t i = 0; i < boneTransforms.size(); i++)
-		{
-			char uniformName[32];
-			sprintf_s(uniformName,"jointTransforms[%i]", i);
-			modelLoc = glGetUniformLocation(material->shader->shaderProgramID, uniformName);
+		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "jointTransforms");
+		glUniformMatrix4fv(modelLoc, boneTransforms.size(), GL_FALSE, (GLfloat*)&boneTransforms[0]);
+
+		for (int i = 0; i < boneTransforms.size(); ++i) {
+			modelLoc = glGetUniformLocation(material->shader->shaderProgramID, std::string("jointTransforms[" + std::to_string(i) + "]").c_str());
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, boneTransforms[i].ptr());
-		}	
+		}
+
+		std::vector<float3> colors = { float3(0, 0, 0), float3(0, 1, 0), float3(0, 0, 1) };
+		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "colors");
+		glUniform3fv(modelLoc, colors.size(), colors[0].ptr());
+		
 
 		//glUniform4fv(modelLoc, bonesTransforms.size(), reinterpret_cast<GLfloat*>(bonesTransforms.data()));
 	}
