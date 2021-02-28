@@ -11,9 +11,6 @@ typedef unsigned int uint;
 struct SerializedField;
 class ResourceMaterial;
 
-//TODO Delete later
-#include "Wwise_Includes.h"
-
 class M_Scene : public Module
 {
 

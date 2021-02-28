@@ -1047,13 +1047,13 @@
     <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkMultipleFileLocation.cpp">
       <Filter>Externals\AK\LowLevelIO</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\CO_Script.cpp">
-      <Filter>Sources\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\CO_AudioListener.cpp">
       <Filter>Sources\Components\Derived</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\CO_AudioSource.cpp">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Script.cpp">
       <Filter>Sources\Components\Derived</Filter>
     </ClCompile>
   </ItemGroup>
