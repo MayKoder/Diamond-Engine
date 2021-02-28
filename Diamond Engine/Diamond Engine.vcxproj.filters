@@ -100,6 +100,9 @@
     <Filter Include="Sources\Editor\Commands\Derived">
       <UniqueIdentifier>{12e4d68c-af1f-4fd1-b95b-d8f9b218305b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\INC_Packs">
+      <UniqueIdentifier>{12122256-3bca-491b-ac7f-4c11604e8310}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Externals\AK">
       <UniqueIdentifier>{da294add-da4b-439d-964d-5247e15b029d}</UniqueIdentifier>
     </Filter>
@@ -561,6 +564,9 @@
     </ClInclude>
     <ClInclude Include="Source Code\MA_ShortcutManager.h">
       <Filter>Sources\Editor\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\INC_EditorWindows.h">
+      <Filter>Sources\INC_Packs</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\Wwise_Includes.h">
       <Filter>Sources\Tools</Filter>
