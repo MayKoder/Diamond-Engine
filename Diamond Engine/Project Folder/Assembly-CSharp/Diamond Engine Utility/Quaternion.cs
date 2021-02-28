@@ -106,6 +106,24 @@ namespace DiamondEngine
             w = norm.w;
         }
 
+        public static Quaternion ToQuaternion(double yaw, double pitch, double roll)
+        {
+            float cy = (float)Math.Cos(yaw * 0.5);
+            float sy = (float)Math.Sin(yaw * 0.5);
+            float cp = (float)Math.Cos(pitch * 0.5);
+            float sp = (float)Math.Sin(pitch * 0.5);
+            float cr = (float)Math.Cos(roll * 0.5);
+            float sr = (float)Math.Sin(roll * 0.5);
+
+            Quaternion q = new Quaternion(0,0,0,1);
+            q.w = cr * cp * cy + sr * sp * sy;
+            q.x = sr * cp * cy - cr * sp * sy;
+            q.y = cr * sp * cy + sr * cp * sy;
+            q.z = cr * cp * sy - sr * sp * cy;
+
+            return q;
+        }
+
         public Quaternion normalized
         {
             get 
