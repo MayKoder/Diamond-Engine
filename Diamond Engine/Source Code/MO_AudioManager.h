@@ -41,6 +41,8 @@ public:
 	void PauseAllSounds() const;
 	void ResumeAllSounds() const;
 
+	void PlayOnAwake();
+
 	void PlayEvent(unsigned int id, std::string& eventName);
 	void StopEvent(unsigned int id, std::string& eventName) const;
 	void PauseEvent(unsigned int id, std::string& eventName) const;

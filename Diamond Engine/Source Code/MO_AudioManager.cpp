@@ -117,6 +117,7 @@ update_status ModuleAudioManager::Update(float dt)
 		UpdateWwiseListener();
 		wwiseListenerHasToUpdate = false;
 	}
+
 	return UPDATE_CONTINUE;
 }
 
@@ -187,6 +188,17 @@ void ModuleAudioManager::ResumeAllSounds() const
 	}
 }
 
+void ModuleAudioManager::PlayOnAwake()
+{
+	std::vector<C_AudioSource*>::const_iterator it;
+
+	for (it = audio_sources.begin(); it != audio_sources.end(); ++it)
+	{
+		if ((*it)->GetPlayOnAwake())
+			(*it)->PlayEvent();
+	}
+}
+
 void ModuleAudioManager::PlayEvent(unsigned int id, std::string& eventName)
 {
 	AK::SoundEngine::PostEvent(eventName.c_str() , id);
@@ -230,6 +242,7 @@ bool ModuleAudioManager::LoadBanksInfo()
 		{
 			AudioBank* tmpBank = new AudioBank;
 			JSON_Array* tmpEvents;
+			tmpBank->loaded_in_heap = false;
 
 			tmpBank->bank_name = tmp.ReadString("ShortName");
 			

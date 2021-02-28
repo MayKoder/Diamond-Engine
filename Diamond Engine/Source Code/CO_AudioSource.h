@@ -32,6 +32,8 @@ public:
 	float GetPitch();
 	void SetPitch(float newPitch);
 
+	bool GetPlayOnAwake() const;
+
 	void PlayEvent();
 	void PauseEvent();
 	void ResumeEvent();

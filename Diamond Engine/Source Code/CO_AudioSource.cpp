@@ -38,7 +38,11 @@ bool C_AudioSource::OnEditor()
 				{
 					audBankReference = (*it);
 					audBankName = (*it)->bank_name;
-					EngineExternal->moduleAudio->LoadBank(audBankReference->bank_name);
+					if (!(*it)->loaded_in_heap) 
+					{
+						(*it)->loaded_in_heap = true;
+						EngineExternal->moduleAudio->LoadBank(audBankReference->bank_name);
+					}
 				}
 				if (isSelected)
 					ImGui::SetItemDefaultFocus();
@@ -72,6 +76,23 @@ bool C_AudioSource::OnEditor()
 			StopEvent();
 		}
 
+		ImGui::Checkbox("Play on Awake", &playOnAwake);
+
+		if (ImGui::SliderFloat("Volume", &volume, 0.0f, 100.0f))
+		{
+			SetVolume(volume);
+		}
+		ImGui::SameLine();
+		if (ImGui::Checkbox("Mute", &isMuted)) 
+		{
+			SetMuted(isMuted);
+		}
+
+		if (ImGui::SliderFloat("Pitch", &pitch, 0.0f, 2.0f))
+		{
+			SetPitch(pitch);
+		}
+
 		return true;
 	}
 	return false;
@@ -100,12 +121,11 @@ void C_AudioSource::LoadData(DEConfig& nObj)
 	Component::LoadData(nObj);
 
 	this->evName = nObj.ReadString("evName");
+	std::string bankName = nObj.ReadString("audBankReference");
 	SetVolume(nObj.ReadFloat("volume"));
 	SetPitch(nObj.ReadFloat("pitch"));
 	this->playOnAwake = nObj.ReadBool("playOnAwake");
 	SetMuted(nObj.ReadBool("isMuted"));
-
-	std::string bankName = nObj.ReadString("audBankReference");
 
 	// Iterate and assign audio bank. If not loaded, load
 	std::vector<AudioBank*>::iterator it;
@@ -164,6 +184,11 @@ void C_AudioSource::SetPitch(float newPitch)
 {
 	this->pitch = newPitch;
 	// TODO: change audio rtpc
+}
+
+bool C_AudioSource::GetPlayOnAwake() const
+{
+	return this->playOnAwake;
 }
 
 void C_AudioSource::PlayEvent()
