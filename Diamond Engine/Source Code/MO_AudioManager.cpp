@@ -11,13 +11,13 @@
 CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 
 
-ModuleAudioManager::ModuleAudioManager(Application* app, bool start_enabled): Module(app,start_enabled),wwiseListenerHasToUpdate(false), defaultListener(nullptr)
+ModuleAudioManager::ModuleAudioManager(Application* app, bool start_enabled) : Module(app, start_enabled), wwiseListenerHasToUpdate(false), defaultListener(nullptr)
 {
 	//TODO listener code here
 }
 
 ModuleAudioManager::~ModuleAudioManager()
-{	
+{
 
 }
 
@@ -112,6 +112,7 @@ bool ModuleAudioManager::Start()
 
 update_status ModuleAudioManager::Update(float dt)
 {
+
 	if (wwiseListenerHasToUpdate)
 	{
 		UpdateWwiseListener();
@@ -123,6 +124,10 @@ update_status ModuleAudioManager::Update(float dt)
 
 update_status ModuleAudioManager::PostUpdate(float dt)
 {
+	if (defaultListener != nullptr && defaultListener->IsActive())
+	{
+		//TODO when there is no sound listener or is deactivated all sound must be muted (but still rendering!)
+	}
 
 	// Process bank requests, events, positions, RTPC, etc.
 	AK::SoundEngine::RenderAudio();
@@ -211,7 +216,7 @@ void ModuleAudioManager::PlayOnAwake()
 
 void ModuleAudioManager::PlayEvent(unsigned int id, std::string& eventName)
 {
-	AK::SoundEngine::PostEvent(eventName.c_str() , id);
+	AK::SoundEngine::PostEvent(eventName.c_str(), id);
 }
 
 void ModuleAudioManager::StopEvent(unsigned int id, std::string& eventName) const
@@ -254,7 +259,7 @@ bool ModuleAudioManager::LoadBanksInfo()
 			JSON_Array* tmpEvents;
 			tmpBank->loaded_in_heap = false;
 			tmpBank->bank_name = tmp.ReadString("ShortName");
-			
+
 			tmpEvents = tmp.ReadArray("IncludedEvents");
 
 			// ec stands for event cursor
@@ -284,12 +289,12 @@ bool ModuleAudioManager::LoadBank(std::string& name)
 	eResult = AK::SoundEngine::LoadBank(name.c_str(), id);
 	if (eResult == AK_Success)
 	{
-		LOG(LogType::L_NORMAL,"Bank 'Main.bnk' has been loaded successfully");
+		LOG(LogType::L_NORMAL, "Bank 'Main.bnk' has been loaded successfully");
 		return true;
 	}
 	else
 	{
-		LOG(LogType::L_ERROR,"Error loading 'Main.bnk'");
+		LOG(LogType::L_ERROR, "Error loading 'Main.bnk'");
 		return false;
 	}
 
@@ -370,7 +375,7 @@ void ModuleAudioManager::UpdateWwiseListener()
 	}
 	else
 	{
-		LOG(LogType::L_WARNING,"There is no audio listener component active. Sounds won't be heard");
+		LOG(LogType::L_WARNING, "There is no audio listener component active. Sounds won't be heard");
 	}
 
 	// Set one listener as the default.
