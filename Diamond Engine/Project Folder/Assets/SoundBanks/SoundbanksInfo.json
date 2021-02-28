@@ -18,7 +18,7 @@
    {
     "Id": "1069811801",
     "Language": "SFX",
-    "Hash": "1997643486",
+    "Hash": "4112444286",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Audio",
     "ShortName": "Audio",
     "Path": "Audio.bnk",
@@ -102,6 +102,14 @@
       "Id": "2045397714",
       "Name": "Play_Weapon_Shoot",
       "ObjectPath": "\\Events\\Default Work Unit\\Play_Weapon_Shoot"
+     }
+    ],
+    "IncludedMemoryFiles": [
+     {
+      "Id": "575059296",
+      "Language": "SFX",
+      "ShortName": "blaster wav.wav",
+      "Path": "SFX\\blaster wav_10C4C929.wem"
      }
     ],
     "GameParameters": [

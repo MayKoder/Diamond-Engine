@@ -19,6 +19,7 @@ Game Parameter	ID	Name			Wwise Object Path	Notes
 	1547598200	SourcePitch			\Default Work Unit\SourcePitch	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	575059296	blaster wav	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\blaster wav_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Weapon_Shoot\blaster wav		56100
 	604011556	Footstep wood2	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Footstep wood2_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Footsteps wood\Footstep wood2		17270
 	654547234	Footstep snow	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Footstep snow_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Footstep snow		59952
 	675536826	Footstep wood1	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Footstep wood1_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Footsteps wood\Footstep wood1		17118
