@@ -132,11 +132,11 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "altColor");
 		glUniform3fv(modelLoc, 1, &color.x);
 
-		if (jointTransforms != nullptr)
-		{
-			modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "jointTransforms");
-			glUniformMatrix4fv(modelLoc, sizeof(jointTransforms), GL_FALSE, jointTransforms->ptr());
-		}		
+		//if (jointTransforms != nullptr)
+		//{
+		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "jointTransforms");
+		glUniformMatrix4fv(modelLoc, bonesTransforms.size(), GL_FALSE, bonesTransforms[0].ptr());
+		//}		
 	}
 
 	//vertices

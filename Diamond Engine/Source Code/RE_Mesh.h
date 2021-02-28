@@ -57,6 +57,7 @@ public:
 	std::vector<Joint*> joints;
 	float4x4* jointTransforms;
 
+	std::vector<float4x4> boneTransforms;
 	std::map<std::string, uint> bonesMap;
 	std::vector<float4x4> bonesTransforms;
 	std::vector<float4x4> bonesOffsets;

@@ -1,26 +1,26 @@
 {
     "Game Objects": [
         {
-            "name": "Pilot Avatar",
+            "name": "Object02",
             "Active": true,
             "Position": [
-                0.59531307220458984,
-                0.43442243337631226,
-                -0.16696521639823914
+                0,
+                0,
+                0
             ],
             "Rotation": [
+                -0.7071068286895752,
                 0,
                 0,
-                0,
-                1
+                0.70710670948028564
             ],
             "Scale": [
-                0.3600003719329834,
-                0.3600003719329834,
-                0.3600003719329834
+                2.5399999618530273,
+                2.5399999618530273,
+                2.5399999618530273
             ],
-            "UID": 1708463907,
-            "ParentUID": 1995988269,
+            "UID": 402367908,
+            "ParentUID": 1108032202,
             "Components": [
                 {
                     "Type": 1,
@@ -29,8 +29,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/508469376.mmh",
-                    "UID": 508469376,
+                    "Path": "Library\/Meshes\/1490558274.mmh",
+                    "UID": 1490558274,
                     "alternColor": [
                         1,
                         1,
@@ -40,8 +40,11 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/animated_material.mat",
+                    "IsEmpty": false,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/494557343.dds",
+                    "UID": 494557343,
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/1948688504.mat",
                     "MaterialUID": 1948688504
                 }
