@@ -1,6 +1,8 @@
 #include "CO_Button.h"
 #include "CO_Material.h"
 #include "RE_Material.h"
+#include "RE_Texture.h"
+
 
 #include "Application.h"
 #include "GameObject.h"
@@ -8,6 +10,8 @@
 #include "CO_Script.h"
 
 #include "MO_ResourceManager.h"
+
+#include "IM_FileSystem.h"
 
 #include "ImGui/imgui.h"
 
@@ -35,55 +39,38 @@ C_Button::~C_Button()
 
 void C_Button::Update()
 {
+#ifndef STANDALONE
 	switch (num_sprite_used)
 	{
-	case 1: {
-		if (sprite1 == nullptr)
-			return;
-		C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-		if (mat->material == sprite1)
-			return;
-		EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
-		mat->material = sprite1;
+	case 1:
+		ChangeTexture(1);
+		break;
+	case 2: 		
+		ChangeTexture(2);
+		break;
+	case 3: 
+		ChangeTexture(3);
 		break;
 	}
-	case 2: {
-		if (sprite2 == nullptr)
-			return;
-		C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-		if (mat->material == sprite2)
-			return;
-		EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
-		mat->material = sprite2;
-		break;
-	}
-	case 3: {
-		if (sprite3 == nullptr)
-			return;
-		C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-		if (mat->material == sprite3)
-			return;
-		EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
-		mat->material = sprite3;
-		break;
-	}
-	}
+
+#endif // !STANDALONE
+
 }
 
 void C_Button::ExecuteButton()
 {
 	C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-	ChangeMaterial(3);
+	ChangeTexture(3);
 	/// ARNAU: EXECUTE SCRIPT
 }
 
 void C_Button::ReleaseButton()
 {
 	C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-	ChangeMaterial(1);
+	ChangeTexture(1);
 }
 
-void C_Button::ChangeMaterial(int new_num_sprite)
+void C_Button::ChangeTexture(int new_num_sprite)
 {
 	assert(new_num_sprite >= 1 && new_num_sprite <= 3, "The number of the sprite is not available");
 	num_sprite_used = new_num_sprite;
@@ -95,10 +82,11 @@ void C_Button::ChangeMaterial(int new_num_sprite)
 			return;
 		}
 		C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-		if (mat->material == sprite1)
+		// JOSE: mat->material ------ cambiar por la parte del componente material que tenga la textura
+		/*if (mat->material == sprite1)
 			return;
 		EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
-		mat->material = sprite1;
+		mat->material = sprite1;*/
 		break;
 		}
 	case 2:{
@@ -107,10 +95,11 @@ void C_Button::ChangeMaterial(int new_num_sprite)
 			return;
 		}
 		C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-		if (mat->material == sprite2)
+		// JOSE: mat->material ------ cambiar por la parte del componente material que tenga la textura
+		/*if (mat->material == sprite2)
 			return;
 		EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
-		mat->material = sprite2;
+		mat->material = sprite2;*/
 		break;
 		}
 	case 3:{
@@ -119,10 +108,11 @@ void C_Button::ChangeMaterial(int new_num_sprite)
 			return;
 		}
 		C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-		if (mat->material == sprite3)
+		// JOSE: mat->material ------ cambiar por la parte del componente material que tenga la textura
+		/*if (mat->material == sprite3)
 			return;
 		EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
-		mat->material = sprite3;
+		mat->material = sprite3;*/
 		break;
 		}
 	}
@@ -131,7 +121,7 @@ void C_Button::ChangeMaterial(int new_num_sprite)
 
 #ifndef STANDALONE
 
-void C_Button::ChangeSprite(int num_sprite, ResourceMaterial* sprite)
+void C_Button::ChangeSprite(int num_sprite, ResourceTexture* sprite)
 {
 	assert(num_sprite >= 1 && num_sprite<=3, "The number of the sprite is not available");
 	switch (num_sprite)
@@ -174,14 +164,17 @@ bool C_Button::OnEditor()
 		ImGui::Text("Drop here to change sprite 1");
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_MATERIAL"))
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
 			{
 				std::string* assetsPath = (std::string*)payload->Data;
+				std::string str_name = "";
+				FileSystem::SplitFilePath(assetsPath->c_str(), assetsPath, &str_name);
+				*assetsPath += str_name;
 
 				if (sprite1 != nullptr)
 					EngineExternal->moduleResources->UnloadResource(sprite1->GetUID());
 
-				sprite1 = dynamic_cast<ResourceMaterial*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath->c_str()));
+				sprite1 = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath->c_str()));
 			}
 			ImGui::EndDragDropTarget();
 		}
@@ -191,7 +184,7 @@ bool C_Button::OnEditor()
 				LOG(LogType::L_WARNING, "The sprite1 is nullptr");
 			}
 			else {
-				ChangeMaterial(1);
+				ChangeTexture(1);
 			}
 		}
 		ImGui::Columns(1);
@@ -206,14 +199,16 @@ bool C_Button::OnEditor()
 		ImGui::Text("Drop here to change sprite 2");
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_MATERIAL"))
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
 			{
 				std::string* assetsPath = (std::string*)payload->Data;
-
+				std::string str_name="";
+				FileSystem::SplitFilePath(assetsPath->c_str(), assetsPath, &str_name);
+				*assetsPath += str_name;
 				if (sprite2 != nullptr)
 					EngineExternal->moduleResources->UnloadResource(sprite2->GetUID());
 
-				sprite2 = dynamic_cast<ResourceMaterial*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath->c_str()));
+				sprite2 = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath->c_str()));
 			}
 			ImGui::EndDragDropTarget();
 		}
@@ -224,7 +219,7 @@ bool C_Button::OnEditor()
 				LOG(LogType::L_WARNING, "The sprite2 is nullptr");
 			}
 			else {
-				ChangeMaterial(2);
+				ChangeTexture(2);
 			}
 		}
 		ImGui::Columns(1);
@@ -239,14 +234,17 @@ bool C_Button::OnEditor()
 		ImGui::Text("Drop here to change sprite 3");
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_MATERIAL"))
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
 			{
 				std::string* assetsPath = (std::string*)payload->Data;
+				std::string str_name = "";
+				FileSystem::SplitFilePath(assetsPath->c_str(), assetsPath, &str_name);
+				*assetsPath += str_name;
 
 				if (sprite3 != nullptr)
 					EngineExternal->moduleResources->UnloadResource(sprite3->GetUID());
 
-				sprite3 = dynamic_cast<ResourceMaterial*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath->c_str()));
+				sprite3 = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath->c_str()));
 			}
 			ImGui::EndDragDropTarget();
 		}
@@ -257,7 +255,7 @@ bool C_Button::OnEditor()
 				LOG(LogType::L_WARNING, "The sprite3 is nullptr");
 			}
 			else{
-				ChangeMaterial(3);
+				ChangeTexture(3);
 			}
 		}
 		ImGui::Columns(1);
