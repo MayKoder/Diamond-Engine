@@ -393,6 +393,7 @@ void M_Editor::DrawTopBar()
 				{
 					DETime::Stop();
 					EngineExternal->moduleAudio->StopAllSounds();
+					EngineExternal->moduleAudio->UnLoadAllBanks();
 					App->moduleScene->LoadScene("Library/Scenes/tmp.des");
 					App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code, mmove to method
 				}
@@ -406,6 +407,7 @@ void M_Editor::DrawTopBar()
 				{
 					DETime::Stop();
 					EngineExternal->moduleAudio->StopAllSounds();
+					EngineExternal->moduleAudio->UnLoadAllBanks();
 					App->moduleScene->LoadScene("Library/Scenes/tmp.des");
 					App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des");
 				}

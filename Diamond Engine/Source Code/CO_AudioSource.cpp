@@ -40,8 +40,7 @@ bool C_AudioSource::OnEditor()
 					audBankName = (*it)->bank_name;
 					if (!(*it)->loaded_in_heap) 
 					{
-						(*it)->loaded_in_heap = true;
-						EngineExternal->moduleAudio->LoadBank(audBankReference->bank_name);
+						(*it)->loaded_in_heap = EngineExternal->moduleAudio->LoadBank(audBankReference->bank_name);
 					}
 				}
 				if (isSelected)

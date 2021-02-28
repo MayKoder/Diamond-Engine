@@ -152,6 +152,16 @@ bool ModuleAudioManager::CleanUp()
 
 	audio_sources.clear();
 
+	std::vector<AudioBank*>::iterator it;
+	for (it = banks.begin(); it != banks.end(); ++it)
+	{
+		(*it)->events.clear();
+		(*it)->actions.clear();
+		delete (*it);
+		(*it) = nullptr;
+	}
+	banks.clear();
+
 	return true;
 }
 
@@ -243,7 +253,6 @@ bool ModuleAudioManager::LoadBanksInfo()
 			AudioBank* tmpBank = new AudioBank;
 			JSON_Array* tmpEvents;
 			tmpBank->loaded_in_heap = false;
-
 			tmpBank->bank_name = tmp.ReadString("ShortName");
 			
 			tmpEvents = tmp.ReadArray("IncludedEvents");
@@ -264,8 +273,6 @@ bool ModuleAudioManager::LoadBanksInfo()
 			banks.push_back(tmpBank);
 		}
 	}
-
-
 	return true;
 }
 
@@ -286,6 +293,26 @@ bool ModuleAudioManager::LoadBank(std::string& name)
 		return false;
 	}
 
+}
+
+bool ModuleAudioManager::UnLoadBank(std::string& name)
+{
+	AKRESULT res = AK::SoundEngine::UnloadBank(name.c_str(), NULL);
+	if (res != AK_Success)
+	{
+		LOG(LogType::L_NORMAL, "%s bank couldn't be unloaded", name);
+		return false;
+	}
+	return true;
+}
+
+void ModuleAudioManager::UnLoadAllBanks()
+{
+	std::vector<AudioBank*>::iterator it;
+	for (it = banks.begin(); it != banks.end(); ++it)
+	{
+		(*it)->loaded_in_heap = !UnLoadBank((*it)->bank_name);
+	}
 }
 
 void ModuleAudioManager::WwiseListnerHasToUpdate()

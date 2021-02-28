@@ -52,6 +52,9 @@ public:
 
 	bool LoadBanksInfo();
 	bool LoadBank(std::string& name);
+	bool UnLoadBank(std::string& name);
+
+	void UnLoadAllBanks();
 
 	void WwiseListnerHasToUpdate();
 
