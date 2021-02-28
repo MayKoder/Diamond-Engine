@@ -17,6 +17,9 @@ public:
 
 	float4x4 GetGlobal2DTransform();
 
+	void SaveData(JSON_Object* nObj) override;
+	void LoadData(DEConfig& nObj) override;
+
 private:
 	void UpdateTransform();
 	void SetTransform(float locPosX, float locPosY, float locRotation);

@@ -20,7 +20,7 @@
 #include "OpenGL.h"
 
 M_Gui::M_Gui(Application* app, bool startEnabled) : Module(app, startEnabled),
-	canvas(nullptr), 
+	canvas(-1),
 	VAO(0),
 	index_font(-1)
 {
@@ -32,7 +32,7 @@ M_Gui::~M_Gui()
 	glDeleteBuffers(1, &VAO);
 	VAO = 0;
 
-	canvas = nullptr;
+	canvas = -1;
 }
 
 
@@ -51,15 +51,17 @@ bool M_Gui::Start()
 
 void M_Gui::RenderCanvas2D()
 {
-	if (canvas != nullptr)
+	GameObject* canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+
+	if (canvasGO != nullptr)
 	{
 		std::stack<GameObject*> stack;
 		GameObject* node = nullptr;
 
-		int elementsCount = canvas->children.size();
+		int elementsCount = canvasGO->children.size();
 		for (int i = 0; i < elementsCount; ++i)
 		{
-			stack.push(canvas->children[i]);
+			stack.push(canvasGO->children[i]);
 
 			while (stack.empty() == false)
 			{
@@ -77,9 +79,9 @@ void M_Gui::RenderCanvas2D()
 }
 
 
-void M_Gui::RenderCanvas3D() 
+void M_Gui::RenderCanvas3D()
 {
-	
+
 }
 
 
@@ -121,19 +123,25 @@ void M_Gui::RenderUiElement(GameObject* uiElement)
 
 void M_Gui::CreateCanvas()
 {
-	if (canvas == nullptr)
+	GameObject* canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	if (canvasGO == nullptr)
 	{
-		canvas = new GameObject("Canvas", App->moduleScene->root);
+		canvasGO = new GameObject("Canvas", App->moduleScene->root);
+		canvasGO->AddComponent(Component::TYPE::CANVAS);
 	}
 }
 
 
 void M_Gui::CreateImage()
 {
-	if (canvas == nullptr)	//TODO Create a GO with a component canvas
+	GameObject* canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	if (canvasGO == nullptr)
+	{
 		CreateCanvas();
+		canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	}
 
-	GameObject* image = new GameObject("Image", canvas);
+	GameObject* image = new GameObject("Image", canvasGO);
 	image->AddComponent(Component::TYPE::TRANSFORM_2D);
 	image->AddComponent(Component::TYPE::MATERIAL);
 
@@ -141,17 +149,27 @@ void M_Gui::CreateImage()
 
 void M_Gui::CreateButton()
 {
-	if (canvas == nullptr)	//TODO Create a GO with a component canvas
+	GameObject* canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	if (canvasGO == nullptr)
+	{
 		CreateCanvas();
+		canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	}
 
-	GameObject* image = new GameObject("Button", canvas);
+	GameObject* image = new GameObject("Button", canvasGO);
 	image->AddComponent(Component::TYPE::TRANSFORM_2D);
 	image->AddComponent(Component::TYPE::MATERIAL);
 	image->AddComponent(Component::TYPE::BUTTON);
 }
 
 
+void M_Gui::SetCanvas(int uid)
+{
+	canvas = uid;
+}
+
+
 void M_Gui::EraseCanvas()
 {
-	canvas = nullptr;
+	canvas = -1;
 }

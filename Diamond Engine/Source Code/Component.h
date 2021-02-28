@@ -20,6 +20,7 @@ public:
 		SCRIPT,
 		TRANSFORM_2D,
 		BUTTON,
+		CANVAS,
 		COUNT
 	};
 

@@ -9,9 +9,9 @@
 #include "ImGui/imgui.h"
 
 C_Transform2D::C_Transform2D(GameObject* gameObject) : Component(gameObject),
-rotation(0.0f),
-localRotation(0.0f),
-updateTransform(false)
+	rotation(0.0f),
+	localRotation(0.0f),
+	updateTransform(false)
 {
 	name = "Transform 2D";
 
@@ -42,7 +42,6 @@ bool C_Transform2D::OnEditor()
 	//TODO Add modify pos logic
 	if (Component::OnEditor() == true)
 	{
-
 		int offset = ImGui::CalcTextSize("Position: ").x + 16;
 		ImGui::Text("Position: ");
 		ImGui::SameLine();
@@ -78,6 +77,18 @@ float4x4 C_Transform2D::GetGlobal2DTransform()
 	float scaleY = size[1] / 100.f;
 
 	return float4x4::FromTRS(float3(positionX, positionY, 0), Quat::FromEulerXYZ(0, 0, rotation), float3(scaleX, scaleY, 1)).Transposed();
+}
+
+
+void C_Transform2D::SaveData(JSON_Object* nObj)
+{
+
+}
+
+
+void C_Transform2D::LoadData(DEConfig& nObj)
+{
+
 }
 
 

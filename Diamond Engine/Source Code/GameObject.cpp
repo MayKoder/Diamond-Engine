@@ -8,6 +8,7 @@
 #include "CO_Script.h"
 #include "CO_Transform2D.h"
 #include "CO_Button.h"
+#include "CO_Canvas.h"
 
 #include"MO_Scene.h"
 
@@ -87,7 +88,6 @@ void GameObject::Update()
 
 Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 {
-
 	assert(_type != Component::TYPE::NONE, "Can't create a NONE component");
 	Component* ret = nullptr;
 
@@ -119,6 +119,10 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 
 	case Component::TYPE::BUTTON:
 		ret = new C_Button(this);
+		break;
+
+	case Component::TYPE::CANVAS:
+		ret = new C_Canvas(this);
 		break;
 	}
 
