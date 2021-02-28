@@ -10,11 +10,14 @@ C_AudioSource::C_AudioSource(GameObject* _gm) : Component(_gm), audBankReference
 {
 	this->id = unsigned int(EngineExternal->GetRandomInt());
 	gameObjectTransform = (C_Transform*)gameObject->GetComponent(Component::Type::Transform);
+	EngineExternal->moduleAudio->RegisterNewAudioObject(id);
+	EngineExternal->moduleAudio->AddAudioSource(this);
 }
 
 C_AudioSource::~C_AudioSource()
 {
 	EngineExternal->moduleAudio->RemoveAudioSource(this);
+	EngineExternal->moduleAudio->UnRegisterAudioObject(id);
 }
 
 #ifndef STANDALONE
@@ -56,6 +59,11 @@ bool C_AudioSource::OnEditor()
 					ImGui::SetItemDefaultFocus();
 			}
 			ImGui::EndCombo();
+		}
+
+		if (ImGui::Button("Play"))
+		{
+			PlayEvent();
 		}
 
 		return true;

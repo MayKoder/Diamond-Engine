@@ -239,7 +239,7 @@ bool ModuleAudioManager::LoadBanksInfo()
 			for (unsigned int ec = 0; ec < json_array_get_count(tmpEvents); ++ec)
 			{
 				DEConfig aux(json_array_get_object(tmpEvents, ec));
-				if (!((std::string)aux.ReadString("Name")).find("Play_"))
+				if (!((std::string)aux.ReadString("Name")).find("Play"))
 				{
 					tmpBank->events[std::stoull(aux.ReadString("Id"))] = aux.ReadString("Name");
 				}
