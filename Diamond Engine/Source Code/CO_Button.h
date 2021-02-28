@@ -9,6 +9,8 @@ public:
 	C_Button(GameObject* gameObject);
 	~C_Button() override;
 
+	void Update() override;
+
 	void ChangeSprite(int num_sprite, ResourceMaterial* sprite);
 	void ChangeScript(C_Script* script);
 
@@ -24,5 +26,6 @@ private:
 	ResourceMaterial* sprite1;
 	ResourceMaterial* sprite2;
 	ResourceMaterial* sprite3;
+	int num_sprite_used;
 	C_Script* script;
 };

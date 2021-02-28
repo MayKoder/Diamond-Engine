@@ -14,7 +14,7 @@
 
 #include <assert.h>
 
-C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite1(nullptr), sprite2(nullptr), sprite3(nullptr), script(nullptr)
+C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite1(nullptr), sprite2(nullptr), sprite3(nullptr), script(nullptr), num_sprite_used(0)
 {
 	name = "Button";
 
@@ -30,6 +30,22 @@ C_Button::~C_Button()
 	}
 	if (sprite3 != nullptr) {
 		EngineExternal->moduleResources->UnloadResource(sprite3->GetUID());
+	}
+}
+
+void C_Button::Update()
+{
+	switch (num_sprite_used)
+	{
+	case 1:
+		static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL))->material = sprite1;
+		break;
+	case 2:
+		static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL))->material = sprite2;
+		break;
+	case 3:
+		static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL))->material = sprite3;
+		break;
 	}
 }
 
@@ -67,14 +83,14 @@ void C_Button::ChangeScript(C_Script* script)
 void C_Button::ExecuteButton()
 {
 	C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-	mat->material = sprite3;
+	num_sprite_used = 3;
 	/// ARNAU: EXECUTE SCRIPT
 }
 
 void C_Button::ReleaseButton()
 {
 	C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-	mat->material = sprite1;
+	num_sprite_used = 1;
 }
 
 
@@ -97,6 +113,9 @@ bool C_Button::OnEditor()
 					EngineExternal->moduleResources->UnloadResource(sprite1->GetUID());
 
 				sprite1 = dynamic_cast<ResourceMaterial*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath->c_str()));
+				if (num_sprite_used == 0) {
+					num_sprite_used = 1;
+				}
 			}
 			ImGui::EndDragDropTarget();
 		}
