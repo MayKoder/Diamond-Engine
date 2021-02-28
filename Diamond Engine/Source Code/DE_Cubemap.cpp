@@ -57,7 +57,7 @@ void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 
 	GLint modelLoc = glGetUniformLocation(shaderRes->shaderProgramID, "view");
 	float4x4 test = _camera->ViewMatrixOpenGL().Float3x3Part();
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, _camera->ViewMatrixOpenGL().Float3x3Part().ptr());
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, test.ptr());
 
 	modelLoc = glGetUniformLocation(shaderRes->shaderProgramID, "projection");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, _camera->ProjectionMatrixOpenGL().ptr());
