@@ -575,6 +575,9 @@
     <ClInclude Include="Source Code\CO_Button.h">
       <Filter>Sources\Components\Derived\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CO_Text.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
     <ClInclude Include="Source Code\CO_Canvas.h">
       <Filter>Sources\Components\Derived\UI</Filter>
     </ClInclude>
@@ -907,6 +910,9 @@
     <ClCompile Include="Source Code\CO_Button.cpp">
       <Filter>Sources\Components\Derived\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Source Code\CO_Text.cpp">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
     <ClCompile Include="Source Code\CO_Canvas.cpp">
       <Filter>Sources\Components\Derived\UI</Filter>
     </ClCompile>

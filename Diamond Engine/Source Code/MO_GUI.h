@@ -21,6 +21,7 @@ public:
 	void CreateCanvas();
 	void CreateImage();
 	void CreateButton();
+	void CreateText();
 
 	void SetCanvas(int uid);
 	void EraseCanvas();

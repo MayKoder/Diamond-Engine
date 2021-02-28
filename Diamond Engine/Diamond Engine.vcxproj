@@ -188,6 +188,7 @@
     <ClInclude Include="Source Code\CO_MeshRenderer.h" />
     <ClInclude Include="Source Code\CO_Material.h" />
     <ClInclude Include="Source Code\CO_Script.h" />
+    <ClInclude Include="Source Code\CO_Text.h" />
     <ClInclude Include="Source Code\CO_Transform.h" />
     <ClInclude Include="Source Code\CS_Transform_Bindings.h" />
     <ClInclude Include="Source Code\DEJsonSupport.h" />
@@ -350,6 +351,7 @@
     <ClCompile Include="Source Code\CO_Material.cpp" />
     <ClCompile Include="Source Code\CO_MeshRenderer.cpp" />
     <ClCompile Include="Source Code\CO_Script.cpp" />
+    <ClCompile Include="Source Code\CO_Text.cpp" />
     <ClCompile Include="Source Code\CO_Transform.cpp" />
     <ClCompile Include="Source Code\DEJsonSupport.cpp" />
     <ClCompile Include="Source Code\DERect.cpp" />
