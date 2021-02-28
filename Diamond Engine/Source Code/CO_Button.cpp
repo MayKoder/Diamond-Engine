@@ -37,17 +37,71 @@ void C_Button::Update()
 {
 	switch (num_sprite_used)
 	{
+	case 1: {
+		if (sprite1 == nullptr)
+			return;
+		C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
+		if (mat->material == sprite1)
+			return;
+		EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
+		mat->material = sprite1;
+		break;
+	}
+	case 2: {
+		if (sprite2 == nullptr)
+			return;
+		C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
+		if (mat->material == sprite2)
+			return;
+		EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
+		mat->material = sprite2;
+		break;
+	}
+	case 3: {
+		if (sprite3 == nullptr)
+			return;
+		C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
+		if (mat->material == sprite3)
+			return;
+		EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
+		mat->material = sprite3;
+		break;
+	}
+	}
+}
+
+void C_Button::ChangeMaterial(int new_num_sprite)
+{
+	assert(new_num_sprite >= 1 && new_num_sprite <= 3, "The number of the sprite is not available");
+	num_sprite_used = new_num_sprite;
+	switch (new_num_sprite)
+	{
 	case 1:
-		if(sprite1!=nullptr)
-			static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL))->material = sprite1;
+		if (sprite1 != nullptr) {
+			C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
+			if (mat->material == sprite1)
+				return;
+			EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
+			mat->material = sprite1;
+		}
 		break;
 	case 2:
-		if(sprite2!=nullptr)
-			static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL))->material = sprite2;
+		if (sprite2 != nullptr) {
+			C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
+			if (mat->material == sprite2)
+				return;
+			EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
+			mat->material = sprite2;
+		}
 		break;
 	case 3:
-		if(sprite3!=nullptr)
-			static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL))->material = sprite3;
+		if (sprite3 != nullptr) {
+			C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
+			if (mat->material == sprite3)
+				return;
+			EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
+			mat->material = sprite3;
+		}
 		break;
 	}
 }
@@ -78,6 +132,7 @@ void C_Button::ChangeSprite(int num_sprite, ResourceMaterial* sprite)
 	}
 }
 
+
 void C_Button::ChangeScript(C_Script* script)
 {
 	if (script != nullptr);
@@ -86,14 +141,14 @@ void C_Button::ChangeScript(C_Script* script)
 void C_Button::ExecuteButton()
 {
 	C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-	num_sprite_used = 3;
+	ChangeMaterial(3);
 	/// ARNAU: EXECUTE SCRIPT
 }
 
 void C_Button::ReleaseButton()
 {
 	C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-	num_sprite_used = 1;
+	ChangeMaterial(1);
 }
 
 
@@ -126,7 +181,7 @@ bool C_Button::OnEditor()
 				LOG(LogType::L_WARNING, "The sprite1 is nullptr");
 			}
 			else {
-				num_sprite_used = 1;
+				ChangeMaterial(1);
 			}
 		}
 		ImGui::Columns(1);
@@ -159,7 +214,7 @@ bool C_Button::OnEditor()
 				LOG(LogType::L_WARNING, "The sprite2 is nullptr");
 			}
 			else {
-				num_sprite_used = 2;
+				ChangeMaterial(2);
 			}
 		}
 		ImGui::Columns(1);
@@ -192,7 +247,7 @@ bool C_Button::OnEditor()
 				LOG(LogType::L_WARNING, "The sprite3 is nullptr");
 			}
 			else{
-				num_sprite_used = 3;
+				ChangeMaterial(3);
 			}
 		}
 		ImGui::Columns(1);

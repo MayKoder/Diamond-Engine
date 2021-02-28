@@ -124,6 +124,7 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 
 	case Component::TYPE::TEXT_UI:
 		ret = new C_Text(this);
+		break;
 	case Component::TYPE::CANVAS:
 		ret = new C_Canvas(this);
 		break;

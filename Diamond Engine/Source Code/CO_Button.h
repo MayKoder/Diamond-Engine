@@ -12,6 +12,7 @@ public:
 	void Update() override;
 
 	void ChangeSprite(int num_sprite, ResourceMaterial* sprite);
+	void ChangeMaterial(int new_num_sprite);
 	void ChangeScript(C_Script* script);
 
 	void ExecuteButton();
