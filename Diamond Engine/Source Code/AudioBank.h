@@ -11,8 +11,8 @@ typedef struct
 {
 	std::string						bank_name;
 	bool							loaded_in_heap;
-	std::map<uint64, std::string>	events;
-	std::map<uint64, std::string>	actions;
+	std::map<uint64, std::string>	events;         // Sound and fxs
+	std::map<uint64, std::string>	actions;		// Other events
 
 }AudioBank;
 

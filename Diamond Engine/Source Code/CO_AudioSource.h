@@ -5,6 +5,8 @@
 #include "Component.h"
 #include "AudioBank.h"
 
+class C_Transform;
+
 class C_AudioSource : public Component
 {
 public:
@@ -46,7 +48,9 @@ private:
 	float			pitch;
 	bool			playOnAwake;
 	bool			isMuted;
-	uint			id;
+	unsigned int	id;
+
+	C_Transform*	gameObjectTransform;
 };
 
 #endif // !__CO_AUDIOSOURCE_H__

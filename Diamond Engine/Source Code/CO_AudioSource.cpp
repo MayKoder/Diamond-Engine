@@ -1,9 +1,13 @@
 #include "CO_AudioSource.h"
-#include "MO_AudioManager.h"
 #include "Application.h"
+#include "MO_AudioManager.h"
+#include "GameObject.h"
+#include "CO_Transform.h"
 
-C_AudioSource::C_AudioSource(GameObject* _gm): Component(_gm)
+C_AudioSource::C_AudioSource(GameObject* _gm) : Component(_gm), audBankReference(nullptr), evName(""), isMuted(false), pitch(1.0f), playOnAwake(false), volume(50.0f)
 {
+	this->id = unsigned int(EngineExternal->GetRandomInt());
+	gameObjectTransform = (C_Transform*)gameObject->GetComponent(Component::Type::Transform);
 }
 
 C_AudioSource::~C_AudioSource()
@@ -20,14 +24,50 @@ bool C_AudioSource::OnEditor()
 
 void C_AudioSource::Update()
 {
+	EngineExternal->moduleAudio->SetAudioObjTransform(this->id, gameObjectTransform->GetCurrentGlobalMatrix());
 }
 
 void C_AudioSource::SaveData(JSON_Object* nObj)
 {
+	Component::SaveData(nObj);
+
+	DEJson::WriteString(nObj, "evName", this->evName.c_str());
+	DEJson::WriteString(nObj, "audBankReference", this->audBankReference->bank_name.c_str());
+	DEJson::WriteFloat(nObj, "volume", this->volume);
+	DEJson::WriteFloat(nObj, "pitch", this->pitch);
+	DEJson::WriteBool(nObj, "playOnAwake", this->playOnAwake);
+	DEJson::WriteBool(nObj, "isMuted", this->isMuted);
 }
 
 void C_AudioSource::LoadData(DEConfig& nObj)
 {
+	Component::LoadData(nObj);
+
+	this->evName = nObj.ReadString("evName");
+	SetVolume(nObj.ReadFloat("volume"));
+	SetPitch(nObj.ReadFloat("pitch"));
+	this->playOnAwake = nObj.ReadBool("playOnAwake");
+	SetMuted(nObj.ReadBool("isMuted"));
+
+	std::string bankName = nObj.ReadString("audBankReference");
+
+	// Iterate and assign audio bank. If not loaded, load
+	std::vector<AudioBank*>::iterator it;
+	for (it = EngineExternal->moduleAudio->banks.begin(); it != EngineExternal->moduleAudio->banks.end(); ++it)
+	{
+		if ((*it)->bank_name == bankName)
+		{
+			audBankReference = (*it);
+			if (!(*it)->loaded_in_heap)
+			{
+				EngineExternal->moduleAudio->LoadBank(bankName);
+				(*it)->loaded_in_heap = true;
+			}
+			return;
+		}
+	}
+	audBankReference = nullptr;
+	LOG(LogType::L_WARNING, "Audio Bank called %s, has not been found during scene loading...", bankName);
 }
 
 std::string& C_AudioSource::GetEventName(AudioBank* reference)

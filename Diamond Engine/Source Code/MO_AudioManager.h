@@ -48,6 +48,7 @@ public:
 
 	void ChangeRTPCValue(unsigned int id, std::string& RTPCname, float value);
 
+	bool LoadBanksInfo();
 	bool LoadBank(std::string& name);
 
 	void WwiseListnerHasToUpdate();
@@ -61,7 +62,7 @@ private:
 	void UpdateWwiseListener();
 
 public:
-	std::vector<AudioBank> banks;
+	std::vector<AudioBank*> banks;
 	std::vector<C_AudioSource*> audio_sources;
 	C_AudioListener* defaultListener;
 

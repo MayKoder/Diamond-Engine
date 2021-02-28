@@ -4,7 +4,7 @@
 #include "CO_AudioListener.h"
 #include "CO_AudioSource.h"
 #include "MathGeoLib/include/MathGeoLib.h"
-
+#include "DEJsonSupport.h"
 
 #include <assert.h>
 
@@ -206,6 +206,50 @@ void ModuleAudioManager::ResumeEvent(unsigned int id) const
 void ModuleAudioManager::ChangeRTPCValue(unsigned int id, std::string& RTPCname, float value)
 {
 	AK::SoundEngine::SetRTPCValue(RTPCname.c_str(), value, id);
+}
+
+bool ModuleAudioManager::LoadBanksInfo()
+{
+	JSON_Value* banksInfo = json_parse_file("Assets/SoundBanks/SoundbanksInfo.json");
+
+	if (banksInfo == NULL)
+		return false;
+
+	DEConfig banksObject(json_value_get_object(banksInfo));
+	DEConfig banksData(banksObject.ReadObject("SoundBanksInfo"));
+	JSON_Array* banksArray = banksData.ReadArray("SoundBanks");
+
+	for (unsigned int cursor = 0; cursor < json_array_get_count(banksArray); ++cursor)
+	{
+		DEConfig tmp(json_array_get_object(banksArray, cursor));
+		if (strcmp(tmp.ReadString("ShortName"), "Init") != 0)
+		{
+			AudioBank* tmpBank = new AudioBank;
+			JSON_Array* tmpEvents;
+
+			tmpBank->bank_name = tmp.ReadString("ShortName");
+			
+			tmpEvents = tmp.ReadArray("IncludedEvents");
+
+			// ec stands for event cursor
+			for (unsigned int ec = 0; ec < json_array_get_count(tmpEvents); ++ec)
+			{
+				DEConfig aux(json_array_get_object(tmpEvents, ec));
+				if (!((std::string)aux.ReadString("Name")).find("Play_"))
+				{
+					tmpBank->events[std::stoull(aux.ReadString("Id"))] = aux.ReadString("Name");
+				}
+				else
+				{
+					tmpBank->actions[std::stoull(aux.ReadString("Id"))] = aux.ReadString("Name");
+				}
+			}
+			banks.push_back(tmpBank);
+		}
+	}
+
+
+	return true;
 }
 
 bool ModuleAudioManager::LoadBank(std::string& name)
