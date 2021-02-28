@@ -8,7 +8,7 @@
 
 #include "ImGui/imgui.h"
 
-C_Text::C_Text(GameObject* gameObject):Component(gameObject),font_id(-1),font_path("")
+C_Text::C_Text(GameObject* gameObject):Component(gameObject),font_id(-1),font_path(""),text_to_print("")
 {
 }
 
@@ -40,7 +40,7 @@ bool C_Text::OnEditor()
 			}
 			ImGui::EndDragDropTarget();
 		}
-
+		ImGui::InputText("Text to print", &text_to_print[0], sizeof(text_to_print));
 
 	}
 	return true;

@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 
+#define MAX_TEXT_CONTENT 200
 
 class C_Text :public Component {
 public:
@@ -15,4 +16,5 @@ public:
 private:
 	int font_id;
 	const char* font_path;
+	char text_to_print[MAX_TEXT_CONTENT];
 };
