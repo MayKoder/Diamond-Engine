@@ -20,6 +20,7 @@ C_AudioListener::C_AudioListener(GameObject* _gm, bool defaultListener) :Compone
 C_AudioListener::~C_AudioListener()
 {
 	EngineExternal->moduleAudio->UnRegisterAudioObject(id);
+	myTransform = nullptr;
 }
 
 #ifndef STANDALONE
@@ -54,10 +55,18 @@ void C_AudioListener::Update()
 
 void C_AudioListener::SaveData(JSON_Object* nObj)
 {
+	Component::SaveData(nObj);
+	DEJson::WriteBool(nObj, "isDefaultListener", isDefaultListener);
+	DEJson::WriteFloat(nObj, "masterVolume", masterVolume);
+
 }
 
 void C_AudioListener::LoadData(DEConfig& nObj)
 {
+	Component::LoadData(nObj);
+	SetAsDefaultListener(nObj.ReadBool("isDefaultListener"));
+	SetVolume(nObj.ReadFloat("masterVolume"));
+
 }
 
 float C_AudioListener::GetVolume()
@@ -68,6 +77,7 @@ float C_AudioListener::GetVolume()
 void C_AudioListener::SetVolume(float newVol)
 {
 	masterVolume = newVol;
+	//TODO set master volume here
 }
 
 uint C_AudioListener::GetID()

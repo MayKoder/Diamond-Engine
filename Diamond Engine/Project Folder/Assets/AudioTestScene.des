@@ -1,0 +1,80 @@
+{
+    "EditorCameraPosition": [
+        8.9121837615966797,
+        4.7180271148681641,
+        6.8721933364868164
+    ],
+    "EditorCameraZ": [
+        -0.73032569885253906,
+        -0.38662764430046082,
+        -0.56315487623214722
+    ],
+    "EditorCameraY": [
+        -0.30617338418960571,
+        0.92223590612411499,
+        -0.23609063029289246
+    ],
+    "Game Objects": [
+        {
+            "name": "Scene root",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 102174615,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Empty",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1033032051,
+            "ParentUID": 102174615,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "isDefaultListener": true,
+                    "masterVolume": 30.826999664306641
+                }
+            ]
+        }
+    ]
+}
