@@ -103,6 +103,10 @@ bool ModuleAudioManager::Init()
 
 bool ModuleAudioManager::Start()
 {
+	if (!LoadBanksInfo())
+	{
+		LOG(LogType::L_ERROR, "Audio Manager couldn't load data from SoundbanksInfo.json");
+	}
 	return true;
 }
 

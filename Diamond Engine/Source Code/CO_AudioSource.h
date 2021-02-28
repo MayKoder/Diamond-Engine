@@ -43,6 +43,7 @@ public:
 private:
 
 	std::string		evName;
+	std::string		audBankName;
 	AudioBank*		audBankReference;
 	float			volume;
 	float			pitch;

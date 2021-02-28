@@ -4,7 +4,9 @@
 #include "GameObject.h"
 #include "CO_Transform.h"
 
-C_AudioSource::C_AudioSource(GameObject* _gm) : Component(_gm), audBankReference(nullptr), evName(""), isMuted(false), pitch(1.0f), playOnAwake(false), volume(50.0f)
+#include "ImGui/imgui.h"
+
+C_AudioSource::C_AudioSource(GameObject* _gm) : Component(_gm), audBankReference(nullptr), evName(""), isMuted(false), pitch(1.0f), playOnAwake(false), volume(50.0f), audBankName("")
 {
 	this->id = unsigned int(EngineExternal->GetRandomInt());
 	gameObjectTransform = (C_Transform*)gameObject->GetComponent(Component::Type::Transform);
@@ -18,6 +20,46 @@ C_AudioSource::~C_AudioSource()
 #ifndef STANDALONE
 bool C_AudioSource::OnEditor()
 {
+	if (Component::OnEditor() == true)
+	{
+		ImGui::Separator();
+
+		if (ImGui::BeginCombo("Audio Bank", audBankName.c_str()))
+		{
+			std::vector<AudioBank*>::const_iterator it;
+			for (it = EngineExternal->moduleAudio->banks.begin(); it != EngineExternal->moduleAudio->banks.end(); ++it)
+			{
+				bool isSelected = (audBankName == (*it)->bank_name);
+				if (ImGui::Selectable((*it)->bank_name.c_str()))
+				{
+					audBankReference = (*it);
+					audBankName = (*it)->bank_name;
+					EngineExternal->moduleAudio->LoadBank(audBankReference->bank_name);
+				}
+				if (isSelected)
+					ImGui::SetItemDefaultFocus();
+			}
+			ImGui::EndCombo();
+		}
+
+		if (audBankReference !=nullptr && ImGui::BeginCombo("Audio to Play", evName.c_str()))
+		{
+			std::map<uint64, std::string>::const_iterator ev_it;
+			for (ev_it = audBankReference->events.begin(); ev_it != audBankReference->events.end(); ++ev_it)
+			{
+				bool isSelected = (evName == (*ev_it).second);
+				if (ImGui::Selectable((*ev_it).second.c_str()))
+				{
+					evName = (*ev_it).second;
+				}
+				if (isSelected)
+					ImGui::SetItemDefaultFocus();
+			}
+			ImGui::EndCombo();
+		}
+
+		return true;
+	}
 	return false;
 }
 #endif // !STANDALONE
