@@ -82,13 +82,29 @@ float4x4 C_Transform2D::GetGlobal2DTransform()
 
 void C_Transform2D::SaveData(JSON_Object* nObj)
 {
+	Component::SaveData(nObj);
 
+	DEJson::WriteVector2(nObj, "Position", &localPos[0]);
+	DEJson::WriteFloat(nObj, "Rotation", localRotation);
+	DEJson::WriteVector2(nObj, "Size", &size[0]);
 }
 
 
 void C_Transform2D::LoadData(DEConfig& nObj)
 {
+	Component::LoadData(nObj);
 
+	float2 pos = nObj.ReadVector2("Position");
+	localRotation = nObj.ReadFloat("Rotation");
+	float2 scl = nObj.ReadVector2("Size");
+
+	localPos[0] = pos.x;
+	localPos[1] = pos.y;
+
+	size[0] = scl.x;
+	size[1] = scl.y;
+
+	updateTransform = true;
 }
 
 

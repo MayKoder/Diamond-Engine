@@ -175,6 +175,7 @@ void M_Gui::CreateText()
 		CreateCanvas();
 		canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
 	}
+
 	GameObject* text = new GameObject("Text", canvasGO);
 	text->AddComponent(Component::TYPE::TRANSFORM_2D);
 	text->AddComponent(Component::TYPE::MATERIAL);
