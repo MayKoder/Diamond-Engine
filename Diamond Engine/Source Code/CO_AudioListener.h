@@ -1,6 +1,8 @@
 #pragma once	
 #include "Component.h"
 
+class C_Transform;
+
 class C_AudioListener : public Component
 {
 public:
@@ -27,6 +29,7 @@ public:
 
 private:
 
+	C_Transform* myTransform;
 	bool isDefaultListener;
 	unsigned int id;
 	float masterVolume;

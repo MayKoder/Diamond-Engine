@@ -3,6 +3,8 @@
 #include "Wwise/low_level_IO/Win32/AkFilePackageLowLevelIOBlocking.h"
 #include "CO_AudioListener.h"
 #include "CO_AudioSource.h"
+#include "MathGeoLib/include/MathGeoLib.h"
+
 
 #include <assert.h>
 
@@ -246,6 +248,27 @@ void ModuleAudioManager::RemoveAudioSource(C_AudioSource* source)
 			return;
 		}
 	}
+}
+
+void ModuleAudioManager::SetAudioObjTransform(unsigned int id, float4x4& transform)
+{
+	float3 pos;
+	float3 scale;
+	float3x3 rot;
+	float3 front(0.0f, 0.0f, 1.0f);
+	float3 up(0.0f, 1.0f, 0.0f);
+
+	transform.Decompose(pos, rot, scale);
+
+	//TODO take orientation too?
+	up = up * rot;
+	front = front * rot;
+
+	AkSoundPosition newPos;
+	newPos.SetPosition(pos.x, pos.y, pos.z);
+	newPos.SetOrientation(front.x, front.y, front.z, up.x, up.y, up.z);
+
+	AK::SoundEngine::SetPosition(id, newPos);
 }
 
 //this updates the listener that Wwise uses to be the Module Audio default listener

@@ -1,11 +1,16 @@
 #include "CO_AudioListener.h"
+#include "GameObject.h"
+#include "CO_Transform.h"
 #include "ImGui/imgui.h"
 #include "Application.h"
 #include "MO_AudioManager.h"
 
 
-C_AudioListener::C_AudioListener(GameObject* _gm, bool defaultListener) :Component(_gm), isDefaultListener(false),masterVolume(50)
+C_AudioListener::C_AudioListener(GameObject* _gm, bool defaultListener) :Component(_gm), isDefaultListener(false), masterVolume(50), myTransform(nullptr)
 {
+
+	myTransform = (C_Transform*)gameObject->GetComponent(Component::Type::Transform);
+
 	id = unsigned int(EngineExternal->GetRandomInt());
 	EngineExternal->moduleAudio->RegisterNewAudioObject(id);
 	SetAsDefaultListener(defaultListener);
@@ -43,7 +48,8 @@ bool C_AudioListener::OnEditor()
 
 void C_AudioListener::Update()
 {
-	//TODO update obj position here
+	float4x4 transform = myTransform->GetCurrentGlobalMatrix();
+	EngineExternal->moduleAudio->SetAudioObjTransform(id, transform);
 }
 
 void C_AudioListener::SaveData(JSON_Object* nObj)

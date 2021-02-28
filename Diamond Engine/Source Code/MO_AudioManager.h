@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "Wwise/AK/SoundEngine/Common/AkTypes.h"
+#include "MathGeoLib/include/MathGeoLibFwd.h"
 
 #include "Module.h"
 #include "Globals.h"
@@ -53,6 +54,8 @@ public:
 
 	void AddAudioSource(C_AudioSource* new_source);
 	void RemoveAudioSource(C_AudioSource* source);
+
+	void SetAudioObjTransform(unsigned int id,float4x4& transform);
 
 private:
 	void UpdateWwiseListener();
