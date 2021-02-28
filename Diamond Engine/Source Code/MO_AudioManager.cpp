@@ -192,19 +192,19 @@ void ModuleAudioManager::PlayEvent(unsigned int id, std::string& eventName)
 	AK::SoundEngine::PostEvent(eventName.c_str() , id);
 }
 
-void ModuleAudioManager::StopEvent(unsigned int id) const
+void ModuleAudioManager::StopEvent(unsigned int id, std::string& eventName) const
 {
-	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType_Stop, id);
+	AK::SoundEngine::ExecuteActionOnEvent(eventName.c_str(), AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Stop, id);
 }
 
-void ModuleAudioManager::PauseEvent(unsigned int id) const
+void ModuleAudioManager::PauseEvent(unsigned int id, std::string& eventName) const
 {
-	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType_Pause, id);
+	AK::SoundEngine::ExecuteActionOnEvent(eventName.c_str(), AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Pause, id);
 }
 
-void ModuleAudioManager::ResumeEvent(unsigned int id) const
+void ModuleAudioManager::ResumeEvent(unsigned int id, std::string& eventName) const
 {
-	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType_Resume, id);
+	AK::SoundEngine::ExecuteActionOnEvent(eventName.c_str(), AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Resume, id);
 }
 
 void ModuleAudioManager::ChangeRTPCValue(unsigned int id, std::string& RTPCname, float value)

@@ -42,9 +42,9 @@ public:
 	void ResumeAllSounds() const;
 
 	void PlayEvent(unsigned int id, std::string& eventName);
-	void StopEvent(unsigned int id) const;
-	void PauseEvent(unsigned int id) const;
-	void ResumeEvent(unsigned int id) const;
+	void StopEvent(unsigned int id, std::string& eventName) const;
+	void PauseEvent(unsigned int id, std::string& eventName) const;
+	void ResumeEvent(unsigned int id, std::string& eventName) const;
 
 	void ChangeRTPCValue(unsigned int id, std::string& RTPCname, float value);
 

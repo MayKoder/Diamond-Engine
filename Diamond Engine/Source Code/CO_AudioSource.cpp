@@ -65,6 +65,11 @@ bool C_AudioSource::OnEditor()
 		{
 			PlayEvent();
 		}
+		ImGui::SameLine();
+		if (ImGui::Button("Stop"))
+		{
+			StopEvent();
+		}
 
 		return true;
 	}
@@ -166,17 +171,17 @@ void C_AudioSource::PlayEvent()
 
 void C_AudioSource::PauseEvent()
 {
-	EngineExternal->moduleAudio->PauseEvent(this->id);
+	EngineExternal->moduleAudio->PauseEvent(this->id, this->evName);
 }
 
 void C_AudioSource::ResumeEvent()
 {
-	EngineExternal->moduleAudio->ResumeEvent(this->id);
+	EngineExternal->moduleAudio->ResumeEvent(this->id, this->evName);
 }
 
 void C_AudioSource::StopEvent()
 {
-	EngineExternal->moduleAudio->StopEvent(this->id);
+	EngineExternal->moduleAudio->StopEvent(this->id, this->evName);
 }
 
 bool C_AudioSource::IsMuted()
