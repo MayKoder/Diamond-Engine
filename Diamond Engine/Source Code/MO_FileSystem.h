@@ -37,6 +37,6 @@ private:
 	void GenerateAllMetaFiles();
 	void ImportAssetsToLibrary();
 
-private:
+public:
 	FreeType_Library* free_type_library;
 };

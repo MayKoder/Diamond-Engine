@@ -12,6 +12,9 @@
 FreeType_Library::FreeType_Library() : total_fonts(0)
 {
 	memset(faces, 0, sizeof(FT_Face) * TOTAL_NUM_OF_FONTS);
+	for (int i = 0; i < TOTAL_NUM_OF_FONTS; i++) {
+		path_to_index[i] = "";
+	}
 	FT_Error error = FT_Init_FreeType(&library);
 	if (error)
 	{
@@ -45,8 +48,19 @@ int FreeType_Library::ImportNewFont(const char* path)
 		return -1;
 	}
 	LOG(LogType::L_NORMAL, "The font was loaded correctly");
+	path_to_index[total_fonts] = path;
 	GetBitmapTextWithFont(total_fonts, 10, "HEHELOLO");
 	return total_fonts++;
+}
+
+int FreeType_Library::GetFont(const char* path)
+{
+	for (int i = 0; i < total_fonts; i++) {
+		if (strcmp(path, path_to_index[i]) == 0) {
+			return i;
+		}
+	}
+	return -1;
 }
 
 int FreeType_Library::GetTotalFonts()

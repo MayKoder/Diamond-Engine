@@ -494,6 +494,9 @@ void M_Editor::DrawCreateMenu()
 
 		if (ImGui::MenuItem("Button", nullptr))
 			EngineExternal->moduleGui->CreateButton();
+
+		if (ImGui::MenuItem("Text", nullptr))
+			EngineExternal->moduleGui->CreateText();
 		
 		ImGui::EndMenu();
 	}

@@ -144,10 +144,21 @@ void M_Gui::CreateButton()
 	if (canvas == nullptr)	//TODO Create a GO with a component canvas
 		CreateCanvas();
 
-	GameObject* image = new GameObject("Button", canvas);
-	image->AddComponent(Component::TYPE::TRANSFORM_2D);
-	image->AddComponent(Component::TYPE::MATERIAL);
-	image->AddComponent(Component::TYPE::BUTTON);
+	GameObject* button = new GameObject("Button", canvas);
+	button->AddComponent(Component::TYPE::TRANSFORM_2D);
+	button->AddComponent(Component::TYPE::MATERIAL);
+	button->AddComponent(Component::TYPE::BUTTON);
+}
+
+void M_Gui::CreateText()
+{
+	if (canvas == nullptr)	//TODO Create a GO with a component canvas
+		CreateCanvas();
+
+	GameObject* text = new GameObject("Text", canvas);
+	text->AddComponent(Component::TYPE::TRANSFORM_2D);
+	text->AddComponent(Component::TYPE::MATERIAL);
+	text->AddComponent(Component::TYPE::TEXT_UI);
 }
 
 

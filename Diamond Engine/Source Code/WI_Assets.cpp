@@ -189,6 +189,7 @@ void W_Assets::DrawFileTree(AssetDir& file)
 				break;
 
 			default:
+				ImGui::SetDragDropPayload("_OTHER", &file.importPath, file.importPath.length());
 				break;
 			}
 
