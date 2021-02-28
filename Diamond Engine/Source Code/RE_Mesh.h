@@ -59,7 +59,6 @@ public:
 
 	std::vector<float4x4> boneTransforms;
 	std::map<std::string, uint> bonesMap;
-	std::vector<float4x4> bonesTransforms;
 	std::vector<float4x4> bonesOffsets;
 
 	//TODO: Delete this, wireframe mode should be different

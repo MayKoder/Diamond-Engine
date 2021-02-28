@@ -85,7 +85,7 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 		GetBoneMapping(bonesMap);
 
 		//Set bone Transforms array size using original bones transform array size
-		_mesh->bonesTransforms.resize(_mesh->bonesOffsets.size());
+		_mesh->boneTransforms.resize(_mesh->bonesOffsets.size());
 
 		//Get each bone
 		for (std::map<std::string, uint>::iterator it = _mesh->bonesMap.begin(); it != _mesh->bonesMap.end(); ++it)
@@ -94,15 +94,60 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 
 			if (bone != nullptr)
 			{
-				//Calcule of Delta Matrix
-				float4x4 Delta = CalculateDeltaMatrix(dynamic_cast<C_Transform*>(bone->GetComponent(Component::Type::Transform))->globalTransform, dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::Type::Transform))->globalTransform.Inverted());
+				//Calculate the Delta Matrix
+				float4x4 worldTransform = dynamic_cast<C_Transform*>(bone->GetComponent(Component::Type::Transform))->globalTransform;
+				float4x4 Delta = gameObject->transform->globalTransform.Inverted() * worldTransform;
 				Delta = Delta * _mesh->bonesOffsets[it->second];
 
 				//Storage of Delta Matrix (Transformation applied to each bone)
-				_mesh->bonesTransforms[it->second] = Delta;
+				_mesh->boneTransforms[it->second] = Delta;
+				//Delta = Delta.Transposed();
+				float3 translatePart = Delta.TranslatePart();
 			}
 		}
 	}
+
+	/*
+	if (_mesh->boneTransforms.size() > 0)
+	{
+		for (uint v = 0; v < _mesh->vertices_count; ++v)
+		{
+			float3 vertex;
+			vertex.x = _mesh->vertices[v * VERTEX_ATTRIBUTES];
+			vertex.y = _mesh->vertices[v * VERTEX_ATTRIBUTES + 1];
+			vertex.z = _mesh->vertices[v * VERTEX_ATTRIBUTES + 2];
+
+			//For each set of 4 bones for bertex
+			for (uint b = 0; b < 4; ++b)
+			{
+				//Get bone identificator and weights from arrays
+				int bone_ID		 = _mesh->vertices[v * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + b];
+				float boneWeight = _mesh->vertices[v * VERTEX_ATTRIBUTES * WEIGHTS_OFFSET + b];
+
+				//Meaning boneWeight will be 0
+				if (bone_ID == -1)
+					continue;
+
+				//Transforming original mesh vertex with bone transformation matrix
+				float3 vertexTransform;
+				vertexTransform.x = _mesh->vertices[v * VERTEX_ATTRIBUTES];
+				vertexTransform.y = _mesh->vertices[v * VERTEX_ATTRIBUTES + 1];
+				vertexTransform.z = _mesh->vertices[v * VERTEX_ATTRIBUTES + 2];
+				float3 Inc = _mesh->boneTransforms[bone_ID].TransformPos(vertexTransform);
+
+				vertex.x += Inc.x * boneWeight;
+				vertex.y += Inc.y * boneWeight;
+				vertex.z += Inc.z * boneWeight;
+			}
+
+			glPointSize(10.0f);
+			glBegin(GL_POINTS);
+			glVertex3fv(vertex.ptr());
+			glEnd();
+			glPointSize(1.0f);
+		}
+	}
+	*/
 
 	_mesh->RenderMesh(id, alternColor, rTex, (material && material->material != nullptr) ? material->material : EngineExternal->moduleScene->defaultMaterial, transform);
 

@@ -132,11 +132,15 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "altColor");
 		glUniform3fv(modelLoc, 1, &color.x);
 
-		//if (jointTransforms != nullptr)
-		//{
-		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "jointTransforms");
-		glUniformMatrix4fv(modelLoc, bonesTransforms.size(), GL_FALSE, bonesTransforms[0].ptr());
-		//}		
+		for (size_t i = 0; i < boneTransforms.size(); i++)
+		{
+			char uniformName[32];
+			sprintf_s(uniformName,"jointTransforms[%i]", i);
+			modelLoc = glGetUniformLocation(material->shader->shaderProgramID, uniformName);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, boneTransforms[i].ptr());
+		}	
+
+		//glUniform4fv(modelLoc, bonesTransforms.size(), reinterpret_cast<GLfloat*>(bonesTransforms.data()));
 	}
 
 	//vertices
@@ -280,7 +284,7 @@ void ResourceMesh::LoadCustomFormat(const char* path)
 	uint bonesSize = variables[3];
 	cursor += bytes;
 
-	bonesTransforms.resize(bonesSize);
+	boneTransforms.resize(bonesSize);
 	bonesOffsets.resize(bonesSize);
 
 	bytes = sizeof(uint) * indices_count;
@@ -357,7 +361,7 @@ void ResourceMesh::LoadBones(char** cursor)
 
 	//Fills the mesh boneMap by getting the string size and using it to read the name stored and setting it on the map
 	char name[30];
-	for (uint i = 0; i < bonesTransforms.size(); ++i)
+	for (uint i = 0; i < boneTransforms.size(); ++i)
 	{
 		bytes = sizeof(uint);
 		uint nameSize = 0;

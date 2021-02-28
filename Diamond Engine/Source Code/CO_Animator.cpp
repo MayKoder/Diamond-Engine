@@ -131,8 +131,8 @@ void C_Animator::SetResource(ResourceAnimation* re_anim)
 void C_Animator::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
-	//DEJson::WriteString(nObj, "Path", _anim->GetLibraryPath());
-	//DEJson::WriteInt(nObj, "UID", _anim->GetUID());
+	DEJson::WriteString(nObj, "Path", _anim->GetLibraryPath());
+	DEJson::WriteInt(nObj, "UID", _anim->GetUID());
 
 	/*
 	JSON_Value* animationsValue = json_value_init_array();
@@ -150,7 +150,8 @@ void C_Animator::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
 
-	AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), nObj.ReadString("Path"))));
+	AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION)));
+	//AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), Resource::Type::ANIMATION));
 	if (_anim == nullptr)
 		return;
 	else
@@ -244,9 +245,8 @@ void C_Animator::Resume()
 	active = true;
 }
 
-void C_Animator::AddAnimation(ResourceAnimation* animation)
+void C_Animator::AddAnimation(ResourceAnimation* anim)
 {
-	/*
 	_anim = anim;
 	_anim->animationName = "Idle";
 	_anim->initTimeAnim = 0;
@@ -266,9 +266,8 @@ void C_Animator::AddAnimation(ResourceAnimation* animation)
 	attack->duration = 120;
 	attack->loopable = false;
 	animations.push_back(attack);
-	*/
 
-	animations.push_back(animation);
+	//animations.push_back(anim);
 }
 
 void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, const ResourceAnimation* blend, float blendRatio)

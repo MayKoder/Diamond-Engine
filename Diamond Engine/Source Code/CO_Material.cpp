@@ -112,7 +112,7 @@ bool C_Material::OnEditor()
 			ImGui::EndDragDropTarget();
 		}
 
-		if (material) 
+		if (material && material->shader) 
 		{
 			ImGui::Dummy(ImVec2(0, 15));
 			ImGui::Text("Using shader: %s", material->shader->GetAssetPath());
