@@ -28,10 +28,19 @@ C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject)
 	name = "Animator Component";
 	playing = true;
 
+	//TODO: Loading is hard coded for debugging purposes. We must change it
 	ResourceAnimation* resAnim = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION));
-	resAnim->animationName = "testName";
 	AddAnimation(resAnim);
 	currentAnimation = resAnim;
+
+	ResourceAnimation* resAnim2 = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(33771251, Resource::Type::ANIMATION));
+	AddAnimation(resAnim2);
+
+	ResourceAnimation* resAnim3 = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(292022315, Resource::Type::ANIMATION));
+	AddAnimation(resAnim3);
+
+	ResourceAnimation* resAnim4 = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(657906466, Resource::Type::ANIMATION));
+	AddAnimation(resAnim4);
 }
 
 C_Animator::~C_Animator()
@@ -174,13 +183,6 @@ void C_Animator::LoadData(DEConfig& nObj)
 
 bool C_Animator::OnEditor()
 {	
-	//Drag & Drop to select animation
-	ImGui::Text("Drop here to change animation");
-	for (int i = 0; i < animations.size(); ++i) {
-		std::string animName = animations[i]->animationName;
-		ImGui::Button(animName.c_str());
-	}
-
 	ImGui::Separator();
 		
 	if (currentAnimation == nullptr) {
@@ -191,6 +193,20 @@ bool C_Animator::OnEditor()
 		ImGui::Text("Duration: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->duration);
 		ImGui::Text("Ticks per second: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->ticksPerSecond);
 	}
+	//List of existing animations
+	ImGui::Text("Select a new animation");
+	for (int i = 0; i < animations.size(); ++i) {
+		std::string animName = animations[i]->animationName;
+
+		if (animations[i] == currentAnimation)
+			animName += " (Current)";
+
+		if (ImGui::Button(animName.c_str())) {
+			currentAnimation = animations[i];
+			time = 0.f;
+		}
+	}
+
 	ImGui::Text("Previous Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", prevAnimTime);
 	ImGui::Text("Current Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", currentTimeAnimation);
 	ImGui::Text("blendTime: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", blendTime);
@@ -250,8 +266,14 @@ void C_Animator::Resume()
 
 void C_Animator::AddAnimation(ResourceAnimation* animation)
 {
-	if(animation != nullptr)
-		animations.push_back(animation);
+	if (animation == nullptr)
+		return;
+
+	//Use its UID as name if name is empty
+	if (animation->animationName == "")
+		animation->animationName = std::to_string(animation->GetUID());
+
+	animations.push_back(animation);
 }
 
 void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, const ResourceAnimation* blend, float blendRatio)
