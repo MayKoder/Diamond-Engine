@@ -16,6 +16,7 @@ C_Text::~C_Text()
 {
 }
 
+#ifndef STANDALONE
 bool C_Text::OnEditor()
 {
 	if (Component::OnEditor() == true)
@@ -26,14 +27,16 @@ bool C_Text::OnEditor()
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_OTHER"))
 			{
-				font_path = ((std::string*)payload->Data)->c_str();
-				font_id = EngineExternal->moduleFileSystem->free_type_library->GetFont(font_path);
+				const char* possible_new_font_path = ((std::string*)payload->Data)->c_str();
+				int possible_new_font_id = EngineExternal->moduleFileSystem->free_type_library->GetFont(possible_new_font_path);
+				if (possible_new_font_id < 0) {
+					LOG(LogType::L_WARNING, "This file is not a font file");
+				}
+				else {
+					font_id = possible_new_font_id;
+					font_path = possible_new_font_path;
+				}
 
-				/*if (sprite3 != nullptr)
-					EngineExternal->moduleResources->UnloadResource(sprite3->GetUID());
-
-				sprite3 = dynamic_cast<ResourceMaterial*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath->c_str()));*/
-				
 			}
 			ImGui::EndDragDropTarget();
 		}
@@ -42,3 +45,6 @@ bool C_Text::OnEditor()
 	}
 	return true;
 }
+#endif // !STANDALONE
+
+

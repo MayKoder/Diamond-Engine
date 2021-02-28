@@ -11,15 +11,14 @@ public:
 
 	void Update() override;
 
-	void ChangeSprite(int num_sprite, ResourceMaterial* sprite);
-	void ChangeMaterial(int new_num_sprite);
-	void ChangeScript(C_Script* script);
-
 	void ExecuteButton();
 	void ReleaseButton();
 
+	void ChangeMaterial(int new_num_sprite);
 
 #ifndef STANDALONE
+	void ChangeSprite(int num_sprite, ResourceMaterial* sprite);
+	void ChangeScript(C_Script* script);
 	bool OnEditor() override;
 #endif // !STANDALONE
 
