@@ -5,8 +5,11 @@
 #include "Application.h"
 #include "MO_GUI.h"
 
+#include "ImGui/imgui.h"
+
 C_Canvas::C_Canvas(GameObject* gameObject) : Component(gameObject)
 {
+	name = "Canvas";
 	EngineExternal->moduleGui->SetCanvas(gameObject->UID);
 }
 
@@ -18,7 +21,9 @@ C_Canvas::~C_Canvas()
 #ifndef STANDALONE
 bool C_Canvas::OnEditor()
 {
-	//Draw vertex info and canvas options
+	if (Component::OnEditor() == true)
+		ImGui::Separator();
+
 	return true;
 }
 #endif // !STANDALONE
