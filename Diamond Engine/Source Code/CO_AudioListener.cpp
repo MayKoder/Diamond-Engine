@@ -49,8 +49,7 @@ bool C_AudioListener::OnEditor()
 
 void C_AudioListener::Update()
 {
-	float4x4 transform = myTransform->GetCurrentGlobalMatrix();
-	EngineExternal->moduleAudio->SetAudioObjTransform(id, transform);
+	EngineExternal->moduleAudio->SetAudioObjTransform(id, myTransform->GetCurrentGlobalMatrix());
 }
 
 void C_AudioListener::SaveData(JSON_Object* nObj)
