@@ -23,13 +23,14 @@ public:
 	void CreateButton();
 	void CreateText();
 
+	void SetCanvas(int uid);
 	void EraseCanvas();
 
 public:
 	int index_font;
 
 private:
-	GameObject* canvas = nullptr;
+	int canvas = -1;
 	unsigned int VAO = 0;
 };
 

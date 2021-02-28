@@ -20,7 +20,7 @@
 #include "OpenGL.h"
 
 M_Gui::M_Gui(Application* app, bool startEnabled) : Module(app, startEnabled),
-	canvas(nullptr), 
+	canvas(-1),
 	VAO(0),
 	index_font(-1)
 {
@@ -32,7 +32,7 @@ M_Gui::~M_Gui()
 	glDeleteBuffers(1, &VAO);
 	VAO = 0;
 
-	canvas = nullptr;
+	canvas = -1;
 }
 
 
@@ -51,15 +51,17 @@ bool M_Gui::Start()
 
 void M_Gui::RenderCanvas2D()
 {
-	if (canvas != nullptr)
+	GameObject* canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+
+	if (canvasGO != nullptr)
 	{
 		std::stack<GameObject*> stack;
 		GameObject* node = nullptr;
 
-		int elementsCount = canvas->children.size();
+		int elementsCount = canvasGO->children.size();
 		for (int i = 0; i < elementsCount; ++i)
 		{
-			stack.push(canvas->children[i]);
+			stack.push(canvasGO->children[i]);
 
 			while (stack.empty() == false)
 			{
@@ -77,9 +79,9 @@ void M_Gui::RenderCanvas2D()
 }
 
 
-void M_Gui::RenderCanvas3D() 
+void M_Gui::RenderCanvas3D()
 {
-	
+
 }
 
 
@@ -98,6 +100,11 @@ void M_Gui::RenderUiElement(GameObject* uiElement)
 			glEnableClientState(GL_VERTEX_ARRAY);
 			material->shader->Bind();
 			material->PushUniforms();
+
+			//TOD: Change this with the C_Image resource id
+			glBindTexture(GL_TEXTURE_2D, App->moduleRenderer3D->checkersTexture);
+
+
 
 			GLint modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "model_matrix");
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, transform->GetGlobal2DTransform().ptr());
@@ -121,19 +128,25 @@ void M_Gui::RenderUiElement(GameObject* uiElement)
 
 void M_Gui::CreateCanvas()
 {
-	if (canvas == nullptr)
+	GameObject* canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	if (canvasGO == nullptr)
 	{
-		canvas = new GameObject("Canvas", App->moduleScene->root);
+		canvasGO = new GameObject("Canvas", App->moduleScene->root);
+		canvasGO->AddComponent(Component::TYPE::CANVAS);
 	}
 }
 
 
 void M_Gui::CreateImage()
 {
-	if (canvas == nullptr)	//TODO Create a GO with a component canvas
+	GameObject* canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	if (canvasGO == nullptr)
+	{
 		CreateCanvas();
+		canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	}
 
-	GameObject* image = new GameObject("Image", canvas);
+	GameObject* image = new GameObject("Image", canvasGO);
 	image->AddComponent(Component::TYPE::TRANSFORM_2D);
 	image->AddComponent(Component::TYPE::MATERIAL);
 
@@ -141,8 +154,12 @@ void M_Gui::CreateImage()
 
 void M_Gui::CreateButton()
 {
-	if (canvas == nullptr)	//TODO Create a GO with a component canvas
+	GameObject* canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	if (canvasGO == nullptr)
+	{
 		CreateCanvas();
+		canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	}
 
 	GameObject* button = new GameObject("Button", canvas);
 	button->AddComponent(Component::TYPE::TRANSFORM_2D);
@@ -159,10 +176,17 @@ void M_Gui::CreateText()
 	text->AddComponent(Component::TYPE::TRANSFORM_2D);
 	text->AddComponent(Component::TYPE::MATERIAL);
 	text->AddComponent(Component::TYPE::TEXT_UI);
+
+}
+
+
+void M_Gui::SetCanvas(int uid)
+{
+	canvas = uid;
 }
 
 
 void M_Gui::EraseCanvas()
 {
-	canvas = nullptr;
+	canvas = -1;
 }

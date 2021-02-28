@@ -21,6 +21,7 @@ public:
 		TRANSFORM_2D,
 		BUTTON,
 		TEXT_UI,
+		CANVAS,
 		COUNT
 	};
 
