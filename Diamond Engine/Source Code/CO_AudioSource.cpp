@@ -9,8 +9,8 @@
 C_AudioSource::C_AudioSource(GameObject* _gm) : Component(_gm), audBankReference(nullptr), evName(""), isMuted(false), pitch(1.0f), playOnAwake(false), volume(50.0f), audBankName("")
 {
 	name = "Audio Source";
-	this->id = unsigned int(EngineExternal->GetRandomInt());
-	gameObjectTransform = (C_Transform*)gameObject->GetComponent(Component::Type::Transform);
+	this->id = static_cast<unsigned int>(EngineExternal->GetRandomInt());
+	gameObjectTransform = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::Type::Transform));
 	EngineExternal->moduleAudio->RegisterNewAudioObject(id);
 	EngineExternal->moduleAudio->AddAudioSource(this);
 }
@@ -114,6 +114,8 @@ void C_AudioSource::LoadData(DEConfig& nObj)
 		if ((*it)->bank_name == bankName)
 		{
 			audBankReference = (*it);
+			audBankName = bankName;
+
 			if (!(*it)->loaded_in_heap)
 			{
 				EngineExternal->moduleAudio->LoadBank(bankName);
