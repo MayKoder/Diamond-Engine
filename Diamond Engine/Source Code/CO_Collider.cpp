@@ -121,13 +121,16 @@ void C_Collider::Update()
 {
 #ifndef STANDALONE
 
-	if (colliderShape != nullptr && rigidbody != nullptr)
+	if (colliderShape != nullptr )
 	{
 		//EngineExternal->modulePhysics->DrawCollider(this);
 
-		float4x4 trans = transform->globalTransform;
+		float4x4 trans;
+		if (rigidbody != nullptr)
 		trans = EngineExternal->modulePhysics->PhysXTransformToF4F(rigidbody->rigid_dynamic->getGlobalPose());
-	
+		else
+			trans = transform->globalTransform;
+
 
 		//SetPosition(pos);
 		//trans = EngineExternal->modulePhysics->PhysXTransformToF4F(colliderShape->getLocalPose());

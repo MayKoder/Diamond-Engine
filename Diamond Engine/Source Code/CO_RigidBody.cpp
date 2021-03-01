@@ -90,6 +90,8 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 
 C_RigidBody::~C_RigidBody()
 {
+	if (collider_info != nullptr)
+		collider_info->rigidbody = nullptr;
 	rigid_dynamic->getGlobalPose();
 	EngineExternal->modulePhysics->ReleaseActor((physx::PxRigidActor*)rigid_dynamic);
 }
