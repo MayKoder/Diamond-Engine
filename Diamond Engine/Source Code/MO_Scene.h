@@ -29,6 +29,7 @@ public:
 
 	GameObject* GetGOFromUID(GameObject* n, uint sUID);
 	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
+	void LoadScriptsData();
 
 #ifndef STANDALONE
 	void OnGUI() override;
@@ -43,7 +44,7 @@ public:
 	void LoadModelTree(const char* modelPath);
 
 	void CleanScene();
-
+	GameObject* LoadGOData(JSON_Object* goJsonObj, GameObject* parent);
 
 	GameObject* root;
 	std::vector<GameObject*> destroyList;
@@ -56,5 +57,4 @@ private:
 
 	void UpdateGameObjects();
 	void RecursiveUpdate(GameObject* parent);
-	GameObject* LoadGOData(JSON_Object* goJsonObj, GameObject* parent);
 };

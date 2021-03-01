@@ -141,8 +141,11 @@ GLuint ShaderImporter::Compile(char* fileBuffer, ShaderType type, const GLint si
 		}
 		glDeleteShader(compileShader);
 
+#ifndef STANDALONE
 		W_TextEditor* textEditorWindow = static_cast<W_TextEditor*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::TEXTEDITOR));
 		textEditorWindow->SetErrorsOnScreen(infoLog);
+#endif // !STANDALONE
+
 
 		return 0;
 	}

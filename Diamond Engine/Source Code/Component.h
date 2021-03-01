@@ -18,6 +18,8 @@ public:
 		Material,
 		Camera,
 		Script,
+		AudioListener,
+		AudioSource,
 		Count,
 	};
 

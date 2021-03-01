@@ -24,6 +24,9 @@ void DE_Cubemap::CreateGLData()
 	// upload data to VBO
 	glBufferData(GL_ARRAY_BUFFER, 108 * sizeof(float), skyboxVertices, GL_STATIC_DRAW);
 
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -71,15 +74,11 @@ void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 
 	//glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
-
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
-	glDisableVertexAttribArray(0);
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 	glBindVertexArray(0);

@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "Globals.h"
 #include "MA_IconSystem.h"
+#include "MA_ShortcutManager.h"
 
 #define STYLES_PATH "Settings/styles.json"
 #define MAX_STY_INPUT 15
@@ -70,6 +71,7 @@ public:
 	void LogToConsole(const char* msg, LogType _type = LogType::L_NORMAL);
 
 	IconManager editorIcons;
+	ShortcutManager shortcutManager;
 
 private:
 	std::vector<Window*> windows;

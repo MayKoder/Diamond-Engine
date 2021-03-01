@@ -1,18 +1,67 @@
 {
     "Game Objects": [
         {
+            "name": "Player",
+            "Active": true,
+            "Position": [
+                0,
+                2,
+                -2.2426132773034624e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                2,
+                0.9999280571937561
+            ],
+            "UID": 1661764735,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/796231171.mmh",
+                    "UID": 796231171,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "FPS_Controller",
+                    "reference": 1661764735,
+                    "turret": 1661764735,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 35,
+                    "mouseSens": 1
+                }
+            ]
+        },
+        {
             "name": "Game Camera",
             "Active": true,
             "Position": [
                 0,
-                42.965000152587891,
-                -107.01200103759766
+                0.70512247085571289,
+                0
             ],
             "Rotation": [
-                0.45399057865142822,
                 0,
                 0,
-                0.8910064697265625
+                0,
+                1
             ],
             "Scale": [
                 1,
@@ -29,24 +78,12 @@
                 {
                     "Type": 4,
                     "Active": true,
-                    "fType": 1,
-                    "fSize": 10,
+                    "fType": 2,
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
-                    "vFOV": 61.400001525878906,
-                    "hFOV": 75.800003051757813,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.7053406238555908,
                     "culling": false
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "CameraController",
-                    "reference": 188616957,
-                    "target": 1661764735,
-                    "x": 0,
-                    "y": 42.965000152587891,
-                    "z": 0,
-                    "smoothSpeed": 0.125
                 }
             ]
         }
