@@ -5,7 +5,7 @@
 #include "RE_Animation.h"
 #include "IM_AnimationImporter.h"
 
-ResourceAnimation::ResourceAnimation(unsigned int _uid) : Resource(_uid, Resource::Type::ANIMATION),duration(0),ticksPerSecond(0),numChannels(0),loopable(true)
+ResourceAnimation::ResourceAnimation(unsigned int _uid) : Resource(_uid, Resource::Type::ANIMATION),duration(0),ticksPerSecond(0),loopable(true)
 {
 }
 
@@ -102,7 +102,11 @@ std::map<double, float3>::const_iterator Channel::GetPrevPosKey(double currentKe
 
 std::map<double, float3>::const_iterator Channel::GetNextPosKey(double currentKey) const
 {
-	return positionKeys.upper_bound(currentKey);
+	std::map<double, float3>::const_iterator ret = positionKeys.upper_bound(currentKey);
+	if (ret == positionKeys.end())
+		ret--;
+
+	return ret;
 }
 
 std::map<double, Quat>::const_iterator Channel::GetPrevRotKey(double currentKey) const
@@ -115,7 +119,11 @@ std::map<double, Quat>::const_iterator Channel::GetPrevRotKey(double currentKey)
 
 std::map<double, Quat>::const_iterator Channel::GetNextRotKey(double currentKey) const
 {
-	return rotationKeys.upper_bound(currentKey);
+	std::map<double, Quat>::const_iterator ret = rotationKeys.upper_bound(currentKey);
+	if (ret == rotationKeys.end())
+		ret--;
+
+	return ret;
 }
 
 std::map<double, float3>::const_iterator Channel::GetPrevScaleKey(double currentKey) const
@@ -128,5 +136,9 @@ std::map<double, float3>::const_iterator Channel::GetPrevScaleKey(double current
 
 std::map<double, float3>::const_iterator Channel::GetNextScaleKey(double currentKey) const
 {
-	return scaleKeys.upper_bound(currentKey);
+	std::map<double, float3>::const_iterator ret = scaleKeys.upper_bound(currentKey);
+	if (ret == scaleKeys.end())
+		ret--;
+
+	return ret;
 }

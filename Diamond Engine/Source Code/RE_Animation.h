@@ -52,8 +52,8 @@ public:
 	float duration;
 	float ticksPerSecond;
 	bool loopable = true;
-	uint numChannels;
 	uint initTimeAnim = 0;
+	float time;
 
 	std::map<std::string, Channel> channels;
 };

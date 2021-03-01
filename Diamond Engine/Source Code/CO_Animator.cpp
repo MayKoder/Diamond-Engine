@@ -68,18 +68,21 @@ void C_Animator::Start()
 	}
 
 	if (animations.size() > 0)
-		Play("Run");
+		Play("Idle");
 
 	started = true;
 }
 
 void C_Animator::Update()
 {
+
+	//float time = DETime::deltaTime;
 	if (DETime::state == GameState::PLAY)
 	{
 		if (!started) {
 			Start();
 		}
+	
 	}
 	else {
 		return;
@@ -326,7 +329,7 @@ void C_Animator::AddAnimation(ResourceAnimation* anim)
 
 	ResourceAnimation* run = new ResourceAnimation(*_anim);
 	run->animationName = "Run";
-	run->initTimeAnim = 50;
+	run->initTimeAnim = 49;
 	run->duration = 72;
 	animations[run->animationName] = run;
 
@@ -406,11 +409,7 @@ Quat C_Animator::GetChannelRotation(const Channel& channel, float currentKey, Qu
 
 		if (channel.rotationKeys.begin()->first == -1) return rotation;
 
-		if (next == channel.rotationKeys.end())
-			next = previous;
 
-		Quat quatLog = previous->second;
-		//LOG(LogType::L_NORMAL, "Frame: %2.f Quat(%f,%f,%f,%f)", previous->first,quatLog.x,quatLog.y,quatLog.z,quatLog.w);
 		//If both keys are the same, no need to blend
 		if (previous == next)
 			rotation = previous->second;
@@ -434,9 +433,6 @@ float3 C_Animator::GetChannelPosition(const Channel& channel, float currentKey, 
 		std::map<double, float3>::const_iterator next = channel.GetNextPosKey(currentKey);
 
 		if (channel.positionKeys.begin()->first == -1) return position;
-
-		if (next == channel.positionKeys.end())
-			next = previous;
 
 		//If both keys are the same, no need to blend
 		if (previous == next)
@@ -463,8 +459,6 @@ float3 C_Animator::GetChannelScale(const Channel & channel, float currentKey, fl
 
 		if (channel.scaleKeys.begin()->first == -1) return scale;
 
-		if (next == channel.scaleKeys.end())
-			next = previous;
 
 		//If both keys are the same, no need to blend
 		if (previous == next)
