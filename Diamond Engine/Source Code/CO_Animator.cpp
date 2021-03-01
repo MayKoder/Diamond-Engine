@@ -7,6 +7,7 @@
 #include "MO_Renderer3D.h"
 #include "IM_FileSystem.h"
 #include "MO_ResourceManager.h"
+#include "MO_Scene.h"
 
 #include "GameObject.h"
 #include "CO_Material.h"
@@ -88,8 +89,9 @@ void C_Animator::Update()
 	{
 		if (gameObject->children.size() > 0)
 		{
-			rootBone = gameObject->children[1]->children[0];
-			dynamic_cast<C_MeshRenderer*>(gameObject->children[0]->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
+			//rootBone = gameObject->children[1]->children[0];
+			//dynamic_cast<C_MeshRenderer*>(gameObject->children[0]->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
+
 		}
 	}
 	else
@@ -203,6 +205,9 @@ bool C_Animator::OnEditor()
 		ImGui::Text("Duration: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->duration);
 		ImGui::Text("Ticks per second: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->ticksPerSecond);
 	}
+
+
+
 	//List of existing animations
 	ImGui::Text("Select a new animation");
 	for (std::map<std::string,ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); ++it)
@@ -217,6 +222,36 @@ bool C_Animator::OnEditor()
 			Play(animName);
 			time = 0.f;
 		}
+	}
+
+	ImGui::Spacing();
+	ImGui::Text("Drop here to set root bone");
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT"))
+		{
+			int uid = *(int*)payload->Data;
+			
+			GameObject* dropGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root,uid);
+			rootBone = dropGO;
+
+		}
+		ImGui::EndDragDropTarget();
+	}
+	ImGui::Spacing();
+	ImGui::Text("Drop here to set mesh renderer object");
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT"))
+		{
+			int uid = *(int*)payload->Data;
+			
+			GameObject* dropGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root,uid);
+			if (rootBone != nullptr) {
+				dynamic_cast<C_MeshRenderer*>(dropGO->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
+			}
+		}
+		ImGui::EndDragDropTarget();
 	}
 
 	ImGui::Text("Previous Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", prevAnimTime);
