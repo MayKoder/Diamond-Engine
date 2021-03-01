@@ -132,6 +132,33 @@ void FileSystem::CreateLibraryFolders()
 	CreateDir(SCRIPTS_PATH);
 	CreateDir(SHADERS_PATH);
 	CreateDir(MATERIALS_PATH);
+	CreateDir(SOUNDS_PATH);
+
+	std::string dir = "Assets/SoundBanks";
+	std::vector<std::string> dirList;
+	std::vector<std::string> fileList;
+
+	char** rc = PHYSFS_enumerateFiles(dir.c_str());
+	char** iter;
+
+	std::string directory = dir;
+
+	for (iter = rc; *iter != nullptr; iter++)
+	{
+		if (PHYSFS_isDirectory((directory + *iter).c_str()))
+			dirList.push_back(*iter);
+		else
+			fileList.push_back(*iter);
+	}
+
+	PHYSFS_freeList(rc);
+
+	for (int i = 0; i < fileList.size(); i++)
+	{
+		std::string output;
+		std::string fileDir = "Assets\\SoundBanks\\" + fileList[i];
+		Copy(fileDir.c_str(), SOUNDS_PATH, output);
+	}
 }
 
 // Add a new zip file or folder

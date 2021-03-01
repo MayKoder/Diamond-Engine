@@ -73,6 +73,9 @@ public:
 
 private:
 	bool wwiseListenerHasToUpdate;
+#ifdef  STANDALONE
+	bool firstFrame;
+#endif //  STANDALONE
 };
 
 

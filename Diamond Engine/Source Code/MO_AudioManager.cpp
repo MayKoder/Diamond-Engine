@@ -14,6 +14,9 @@ CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 ModuleAudioManager::ModuleAudioManager(Application* app, bool start_enabled) : Module(app, start_enabled), wwiseListenerHasToUpdate(false), defaultListener(nullptr)
 {
 	//TODO listener code here
+#ifdef STANDALONE
+	firstFrame = true;
+#endif STANDALONE
 }
 
 ModuleAudioManager::~ModuleAudioManager()
@@ -86,11 +89,11 @@ bool ModuleAudioManager::Init()
 	// TODO CRASH: Check BasePath for different versions. What if there are banks in library as resources? Use assets or library
 	//AUDIO TODO: CRASH we are not creating nor adding data to Library/SoundBanks, this will crash the standalone build
 	//MAX PRIORITY 
-//#ifndef STANDALONE
+#ifndef STANDALONE
 	g_lowLevelIO.SetBasePath(AKTEXT("Assets/SoundBanks/"));
-//#else
-//	g_lowLevelIO.SetBasePath(AKTEXT("Library/SoundBanks/"));
-//#endif
+#else
+	g_lowLevelIO.SetBasePath(AKTEXT("Library/Sounds/"));
+#endif
 
 	AK::StreamMgr::SetCurrentLanguage(AKTEXT("English(US)"));
 
@@ -118,7 +121,13 @@ bool ModuleAudioManager::Start()
 
 update_status ModuleAudioManager::Update(float dt)
 {
-
+#ifdef STANDALONE
+	if (firstFrame)
+	{
+		PlayOnAwake();
+		firstFrame = false;
+	}
+#endif // !STANDALONE
 	if (wwiseListenerHasToUpdate)
 	{
 		UpdateWwiseListener();
