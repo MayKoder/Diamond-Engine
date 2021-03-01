@@ -132,12 +132,10 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "altColor");
 		glUniform3fv(modelLoc, 1, &color.x);
 
-		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "jointTransforms");
-		glUniformMatrix4fv(modelLoc, boneTransforms.size(), GL_FALSE, (GLfloat*)&boneTransforms[0]);
-
-		for (int i = 0; i < boneTransforms.size(); ++i) {
-			modelLoc = glGetUniformLocation(material->shader->shaderProgramID, std::string("jointTransforms[" + std::to_string(i) + "]").c_str());
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, boneTransforms[i].ptr());
+		if (boneTransforms.size() > 0)
+		{
+			modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "jointTransforms");
+			glUniformMatrix4fv(modelLoc, boneTransforms.size(), GL_FALSE, (GLfloat*)&boneTransforms[0]);
 		}
 
 		std::vector<float3> colors = { float3(0, 0, 0), float3(0, 1, 0), float3(0, 0, 1) };

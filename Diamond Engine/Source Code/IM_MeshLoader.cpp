@@ -130,6 +130,11 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTextur
 			NodeToGameObject(meshArray, sceneTextures, _sceneMeshes, node->mChildren[i], rootGO, node->mChildren[i]->mName.C_Str());
 		}
 	}
+	else if (node->mNumMeshes == 0)
+	{
+		GameObject* noChildrenGO = new GameObject(holderName, gmParent);
+		PopulateTransform(noChildrenGO, pos, rot, scale);
+	}
 
 }
 

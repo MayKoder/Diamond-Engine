@@ -106,10 +106,6 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 				//Storage of Delta Matrix (Transformation applied to each bone)
 				_mesh->boneTransforms[it->second] = Delta.Transposed();
 			}
-			else
-			{
-				int a = 5;
-			}
 		}
 
 		for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
@@ -118,6 +114,12 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 			{
 				_mesh->boneTransforms[i] = _mesh->boneTransforms[i - 1];
 			}
+		}
+	}
+	else
+	{
+		for (size_t i = 0; i < _mesh->boneTransforms.size(); i++) {
+			_mesh->boneTransforms[i] = float4x4::identity;
 		}
 	}
 

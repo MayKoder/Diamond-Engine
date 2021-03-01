@@ -90,7 +90,6 @@ void C_Animator::Update()
 		{
 			rootBone = gameObject->children[1]->children[0];
 			dynamic_cast<C_MeshRenderer*>(gameObject->children[0]->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
-
 		}
 	}
 	else
@@ -141,9 +140,6 @@ void C_Animator::Update()
 		rootBone->CollectChilds(bones);
 		DrawBones(bones[0]);
 	}
-
-
-	
 }
 
 void C_Animator::SetResource(ResourceAnimation* re_anim)
