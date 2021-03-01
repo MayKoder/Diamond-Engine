@@ -33,14 +33,14 @@ C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject)
 	AddAnimation(resAnim);
 	currentAnimation = resAnim;
 
-	ResourceAnimation* resAnim2 = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(33771251, Resource::Type::ANIMATION));
+	/*ResourceAnimation* resAnim2 = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(33771251, Resource::Type::ANIMATION));
 	AddAnimation(resAnim2);
 
 	ResourceAnimation* resAnim3 = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(292022315, Resource::Type::ANIMATION));
 	AddAnimation(resAnim3);
 
 	ResourceAnimation* resAnim4 = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(657906466, Resource::Type::ANIMATION));
-	AddAnimation(resAnim4);
+	AddAnimation(resAnim4);*/
 }
 
 C_Animator::~C_Animator()

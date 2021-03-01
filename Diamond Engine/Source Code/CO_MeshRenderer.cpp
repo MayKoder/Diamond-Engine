@@ -87,6 +87,11 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 		//Set bone Transforms array size using original bones transform array size
 		_mesh->boneTransforms.resize(_mesh->bonesOffsets.size());
 
+		for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
+		{
+			_mesh->boneTransforms[i] = float4x4::identity;
+		}
+
 		//Get each bone
 		for (std::map<std::string, uint>::iterator it = _mesh->bonesMap.begin(); it != _mesh->bonesMap.end(); ++it)
 		{
@@ -100,6 +105,18 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 
 				//Storage of Delta Matrix (Transformation applied to each bone)
 				_mesh->boneTransforms[it->second] = Delta.Transposed();
+			}
+			else
+			{
+				int a = 5;
+			}
+		}
+
+		for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
+		{
+			if (_mesh->boneTransforms[i].Equals(float4x4::identity))
+			{
+				_mesh->boneTransforms[i] = _mesh->boneTransforms[i - 1];
 			}
 		}
 	}

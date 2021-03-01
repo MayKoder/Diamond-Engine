@@ -30,7 +30,7 @@ void main()
 	
 	for(int i= 0; i < MAX_WEIGHTS; i++){
 	
-	  if(boneIDs[i] == -1)
+	  if(boneIDs[i] == -1 || weights[i] == 0)
 	   	continue;
 	   	
 	  if(boneIDs[i] >= MAX_JOINTS)
@@ -48,6 +48,8 @@ void main()
 	mat4 viewModel = view * model_matrix;
 	gl_Position = projection * viewModel * totalPosition;
 	TexCoord = texCoord;
+	ourColor = vec3(weights.x, weights.y, weights.z);
+	//ourColor = vec3(boneIDs.x / 30, boneIDs.y / 30, boneIDs.z / 30);
     
 }
 #endif
@@ -62,9 +64,10 @@ uniform vec3 colors[3];
 
 void main()
 {
- color = vec4(vec3(0.4, 0.75, 0.8), 1.0);
+ color = vec4(ourColor, 1.0);
 }
 #endif
+
 
 
 
