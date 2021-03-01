@@ -82,6 +82,21 @@ void C_Image2D::RenderImage(float* transform, unsigned int shaderId)
 }
 
 
+ResourceTexture* C_Image2D::GetTexture() const
+{
+	return texture;
+}
+
+
+void C_Image2D::SetTexture(ResourceTexture* tex, bool unloadTexture)
+{
+	if (texture != nullptr && unloadTexture == true)
+		EngineExternal->moduleResources->UnloadResource(texture->GetUID());
+
+	texture = tex;
+}
+
+
 void C_Image2D::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);

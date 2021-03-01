@@ -1,14 +1,14 @@
 #include "CO_Button.h"
 #include "CO_Material.h"
+#include "CO_Script.h"
+#include "CO_Image2D.h"
+
 #include "RE_Material.h"
 #include "RE_Texture.h"
 
-
-#include "Application.h"
 #include "GameObject.h"
 
-#include "CO_Script.h"
-
+#include "Application.h"
 #include "MO_ResourceManager.h"
 
 #include "IM_FileSystem.h"
@@ -76,43 +76,54 @@ void C_Button::ChangeTexture(int new_num_sprite)
 	num_sprite_used = new_num_sprite;
 	switch (new_num_sprite)
 	{
-	case 1:{
-		if (sprite1 == nullptr) {
+	case 1:
+	{
+		if (sprite1 == nullptr) 
+		{
 			LOG(LogType::L_WARNING, "The sprite1 is nullptr");
 			return;
 		}
-		C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-		// JOSE: mat->material ------ cambiar por la parte del componente material que tenga la textura
-		/*if (mat->material == sprite1)
-			return;
-		EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
-		mat->material = sprite1;*/
-		break;
+		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
+
+		if (img != nullptr)
+		{
+			ResourceTexture* tex = img->GetTexture();
+			img->SetTexture(sprite1, (tex != sprite1 && tex != sprite2 && tex != sprite3));
 		}
-	case 2:{
+			break;
+	}
+
+	case 2:
+	{
 		if (sprite2 == nullptr) {
 			LOG(LogType::L_WARNING, "The sprite2 is nullptr");
 			return;
 		}
-		C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-		// JOSE: mat->material ------ cambiar por la parte del componente material que tenga la textura
-		/*if (mat->material == sprite2)
-			return;
-		EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
-		mat->material = sprite2;*/
-		break;
+
+		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
+
+		if (img != nullptr)
+		{
+			ResourceTexture* tex = img->GetTexture();
+			img->SetTexture(sprite1, (tex != sprite1 && tex != sprite2 && tex != sprite3));
 		}
-	case 3:{
+		break;
+	}
+
+	case 3:
+	{
 		if (sprite3 == nullptr) {
 			LOG(LogType::L_WARNING, "The sprite3 is nullptr");
 			return;
 		}
-		C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-		// JOSE: mat->material ------ cambiar por la parte del componente material que tenga la textura
-		/*if (mat->material == sprite3)
-			return;
-		EngineExternal->moduleResources->UnloadResource(mat->material->GetUID());
-		mat->material = sprite3;*/
+		
+		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
+
+		if (img != nullptr)
+		{
+			ResourceTexture* tex = img->GetTexture();
+			img->SetTexture(sprite1, (tex != sprite1 && tex != sprite2 && tex != sprite3));
+		}
 		break;
 		}
 	}
@@ -157,6 +168,7 @@ bool C_Button::OnEditor()
 {
 	if (Component::OnEditor() == true)
 	{
+		ImGui::Separator();
 		if (sprite1 != nullptr) {
 			ImGui::Text("%s", sprite1->GetAssetPath());
 		}
