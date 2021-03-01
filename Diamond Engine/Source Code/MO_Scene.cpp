@@ -154,7 +154,6 @@ update_status M_Scene::Update(float dt)
 	}
 #endif // !STANDALONE
 
-
 	UpdateGameObjects();
 
 	return update_status::UPDATE_CONTINUE;

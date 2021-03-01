@@ -5,7 +5,7 @@
 #include "Window.h"
 #include "Globals.h"
 #include "MA_IconSystem.h"
-#include "ShortcutManager.h"
+#include "MA_ShortcutManager.h"
 
 #define STYLES_PATH "Settings/styles.json"
 #define MAX_STY_INPUT 15

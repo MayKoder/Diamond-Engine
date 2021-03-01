@@ -10,9 +10,10 @@
 
 #include "Application.h"
 #include "MO_Editor.h"
+#include"MO_Input.h"
 #include "COMM_Transform.h"
 
-C_Transform::C_Transform() : Component(nullptr), updateTransform(false)
+C_Transform::C_Transform() : Component(nullptr), updateTransform(false), sendCommand(false)
 {
 	globalTransform.SetIdentity();
 	localTransform.SetIdentity();
@@ -24,10 +25,12 @@ C_Transform::C_Transform() : Component(nullptr), updateTransform(false)
 
 	globalTransformTRANS = globalTransform.Transposed();
 
+	oldTransform.SetIdentity();
+
 	name = "Transform";
 }
 
-C_Transform::C_Transform(GameObject* _gm/*, float3 _position, Quat _rotation, float3 _localScale*/): Component(_gm), updateTransform(false)/*,
+C_Transform::C_Transform(GameObject* _gm/*, float3 _position, Quat _rotation, float3 _localScale*/): Component(_gm), updateTransform(false), sendCommand(false)/*,
 position(_position), rotation(_rotation), localScale(_localScale)*/
 {
 	globalTransform.SetIdentity();
@@ -39,6 +42,8 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 	eulerRotation = rotation.ToEulerXYZ();
 
 	globalTransformTRANS = globalTransform.Transposed();
+
+	oldTransform.SetIdentity();
 
 	name = "Transform";
 }
@@ -62,48 +67,40 @@ bool C_Transform::OnEditor()
 		int offset = ImGui::CalcTextSize("Local Position: ").x + 16;
 		ImGui::Text("Local Position: "); 
 		ImGui::SameLine(); 
-		if (ImGui::InputFloat3("##lPos", &position[0], 0.1f))
-		{
-			Quat rot = Quat::FromEulerXYZ(eulerRotation.x * DEGTORAD, eulerRotation.y * DEGTORAD, eulerRotation.z * DEGTORAD);
-			rot.Normalize();
-			float4x4 newMat = gameObject->parent->transform->globalTransform * float4x4::FromTRS(position, rot, localScale);
+		if (ImGui::DragFloat3("##lPos", &position[0], 0.1f))
+			updateTransform = sendCommand = true;
+		if (ImGui::IsItemClicked())
+			oldTransform = GetCurrentGlobalMatrix();
 
-			EngineExternal->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(gameObject->UID, newMat.ptr(), globalTransform.ptr()));
-
-			updateTransform = true;
-		}
 
 		ImGui::Text("Rotation: ");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(offset);
-		if (ImGui::InputFloat3("##lRot", &eulerRotation[0], 0.1f))
-		{
-			Quat rot = Quat::FromEulerXYZ(eulerRotation.x * DEGTORAD, eulerRotation.y * DEGTORAD, eulerRotation.z * DEGTORAD);
-			rot.Normalize();
-			float4x4 newMat = gameObject->parent->transform->globalTransform * float4x4::FromTRS(position, rot, localScale);
-
-			EngineExternal->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(gameObject->UID, newMat.ptr(), globalTransform.ptr()));
-
-			updateTransform = true;
-		}
+		if (ImGui::DragFloat3("##lRot", &eulerRotation[0], 0.1f))
+			updateTransform = sendCommand = true;
+		if (ImGui::IsItemClicked())
+			oldTransform = GetCurrentGlobalMatrix();
 
 
 		ImGui::Text("Scale: ");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(offset);
-		if (ImGui::InputFloat3("##lScale", &localScale[0], 0.1f))
-		{
-			Quat rot = Quat::FromEulerXYZ(eulerRotation.x * DEGTORAD, eulerRotation.y * DEGTORAD, eulerRotation.z * DEGTORAD);
-			rot.Normalize();
-			float4x4 newMat = gameObject->parent->transform->globalTransform * float4x4::FromTRS(position, rot, localScale);
-
-			EngineExternal->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(gameObject->UID, newMat.ptr(), globalTransform.ptr()));
-
-			updateTransform = true;
-		}
+		if (ImGui::DragFloat3("##lScale", &localScale[0], 0.1f))
+			updateTransform = sendCommand = true;
+		if (ImGui::IsItemClicked())
+			oldTransform = GetCurrentGlobalMatrix();
 
 		if (ImGui::Button("Reset Transform"))
 			ResetTransform();
+		if (ImGui::IsItemClicked())
+			oldTransform = GetCurrentGlobalMatrix();
+
+		//TODO: Doubli-click + enter input does not work as a command and won't we added to the shortcut manager
+		if (EngineExternal->moduleInput->GetMouseButton(1) == KEY_STATE::KEY_UP && sendCommand == true)
+		{
+			EngineExternal->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(gameObject->UID, GetCurrentGlobalMatrix().ptr(), oldTransform.ptr()));
+			sendCommand = false;
+		}
 
 		// GLOBAL MATRIX //
 		/*ImGui::Separator();
@@ -133,6 +130,12 @@ bool C_Transform::OnEditor()
 		return true;
 	}
 	return false;
+}
+float4x4 C_Transform::GetCurrentGlobalMatrix()
+{
+	Quat rot = Quat::FromEulerXYZ(eulerRotation.x * DEGTORAD, eulerRotation.y * DEGTORAD, eulerRotation.z * DEGTORAD);
+	rot.Normalize();
+	return gameObject->parent->transform->globalTransform * float4x4::FromTRS(position, rot, localScale);
 }
 #endif // !STANDALONE
 

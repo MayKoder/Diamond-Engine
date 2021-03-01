@@ -1,6 +1,6 @@
 #ifndef STANDALONE
 
-#include "ShortcutManager.h"
+#include "MA_ShortcutManager.h"
 #include "Command.h"
 
 #include "Application.h"

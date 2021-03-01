@@ -35,7 +35,6 @@ private:
 	bool manipulatingGuizmo = false;
 
 	float4x4 oldMat;
-	float4x4 newMat;
 };
 
 #endif //__W_SCENE_H__
