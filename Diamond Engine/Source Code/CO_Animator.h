@@ -61,6 +61,8 @@ private:
 
 public:
 	GameObject* rootBone = nullptr;
+	uint rootBoneUID;
+	uint meshRendererUID;
 	std::map<std::string, GameObject*> boneMapping;
 
 	//Used for blending

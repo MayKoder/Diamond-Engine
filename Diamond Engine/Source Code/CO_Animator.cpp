@@ -23,7 +23,7 @@
 
 #include "DETime.h"
 
-C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject)
+C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject), rootBoneUID(0u), meshRendererUID(0u)
 {
 	gameObject = gameobject;
 	name = "Animator Component";
@@ -75,7 +75,6 @@ void C_Animator::Start()
 
 void C_Animator::Update()
 {
-
 	//float time = DETime::deltaTime;
 	if (DETime::state == GameState::PLAY)
 	{
@@ -85,6 +84,24 @@ void C_Animator::Update()
 	
 	}
 	else {
+		if (rootBone == nullptr)
+		{
+			if (rootBoneUID != 0u)
+			{
+				rootBone = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, rootBoneUID);
+
+				if (meshRendererUID != 0u)
+				{
+					GameObject* meshRendererObject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, meshRendererUID);
+					if (meshRendererObject != nullptr)
+					{
+						dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
+					}
+				}
+				if (rootBone == nullptr)
+					rootBoneUID = 0u;
+			}
+		}
 		return;
 	}
 
@@ -157,6 +174,8 @@ void C_Animator::SaveData(JSON_Object* nObj)
 	Component::SaveData(nObj);
 	DEJson::WriteString(nObj, "Path", _anim->GetLibraryPath());
 	DEJson::WriteInt(nObj, "UID", _anim->GetUID());
+	DEJson::WriteInt(nObj, "RootBone UID", rootBone == nullptr ? 0 : rootBone->UID);
+	DEJson::WriteInt(nObj, "MeshRendererUID", meshRendererUID);
 
 	/*
 	JSON_Value* animationsValue = json_value_init_array();
@@ -173,6 +192,8 @@ void C_Animator::SaveData(JSON_Object* nObj)
 void C_Animator::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
+	rootBoneUID = nObj.ReadInt("RootBone UID");
+	meshRendererUID = nObj.ReadInt("MeshRendererUID");
 
 	//AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION)));
 	AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), Resource::Type::ANIMATION)));
@@ -198,86 +219,113 @@ void C_Animator::LoadData(DEConfig& nObj)
 
 bool C_Animator::OnEditor()
 {	
-	ImGui::Separator();
-		
-	if (currentAnimation == nullptr) {
-		ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "None");
-	}
-	else {
-		ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", currentAnimation->animationName.c_str());
-		ImGui::Text("Duration: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->duration);
-		ImGui::Text("Ticks per second: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->ticksPerSecond);
-	}
-
-
-
-	//List of existing animations
-	ImGui::Text("Select a new animation");
-	for (std::map<std::string,ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); ++it)
+	if (Component::OnEditor() == true)
 	{
-		std::string animName = it->first;
-
-		if (currentAnimation == it->second) {
-			animName += " (Current)";
+		if (currentAnimation == nullptr) {
+			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "None");
+		}
+		else {
+			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", currentAnimation->animationName.c_str());
+			ImGui::Text("Duration: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->duration);
+			ImGui::Text("Ticks per second: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->ticksPerSecond);
 		}
 
-		if (ImGui::Button(animName.c_str())) {
-			Play(animName);
-			time = 0.f;
-		}
-	}
-
-	ImGui::Spacing();
-	ImGui::Text("Drop here to set root bone");
-	if (ImGui::BeginDragDropTarget())
-	{
-		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT"))
+		//List of existing animations
+		ImGui::Text("Select a new animation");
+		for (std::map<std::string, ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); ++it)
 		{
-			int uid = *(int*)payload->Data;
-			
-			GameObject* dropGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root,uid);
-			rootBone = dropGO;
+			std::string animName = it->first;
 
-		}
-		ImGui::EndDragDropTarget();
-	}
-	ImGui::Spacing();
-	ImGui::Text("Drop here to set mesh renderer object");
-	if (ImGui::BeginDragDropTarget())
-	{
-		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT"))
-		{
-			int uid = *(int*)payload->Data;
-			
-			GameObject* dropGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root,uid);
-			if (rootBone != nullptr) {
-				dynamic_cast<C_MeshRenderer*>(dropGO->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
+			if (currentAnimation == it->second) {
+				animName += " (Current)";
+			}
+
+			if (ImGui::Button(animName.c_str())) {
+				Play(animName);
+				time = 0.f;
 			}
 		}
-		ImGui::EndDragDropTarget();
-	}
 
-	ImGui::Text("Previous Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", prevAnimTime);
-	ImGui::Text("Current Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", currentTimeAnimation);
-	ImGui::Text("blendTime: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", blendTime);
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
 
-	ImGui::Spacing();
-	if (playing)
-	{
-		ImGui::Text("Playing: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "true");
-	}
-	else
-	{
-		ImGui::Text("Playing: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "false");
-	}
+		if (rootBone == nullptr)
+		{
+			ImGui::Text("Drop a GameObject here to set the root bone:");
+			ImGui::Button("Root Bone not set");
+		}
+		else {
+			ImGui::Text("Root Bone: ");
+			ImGui::SameLine();
+			ImGui::Button(rootBone->name.c_str());
+		}
 
-	ImGui::Spacing();
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT"))
+			{
+				int uid = *(int*)payload->Data;
 
-	if (_anim != nullptr)
-	{
-		//ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _anim->GetLibraryPath());
-	}
+				GameObject* dropGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, uid);
+				rootBone = dropGO;
+
+			}
+			ImGui::EndDragDropTarget();
+		}
+		ImGui::Spacing();
+
 		
+		if (meshRendererUID == 0u) {
+			ImGui::Button("Drop here to set mesh renderer object");
+		}
+		else {
+			ImGui::Text("MeshRenderer Game Object UID: ");
+			char uidText[16];
+			sprintf_s(uidText, "%d", meshRendererUID);
+			ImGui::Button(uidText);
+		}
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT"))
+			{
+				int uid = *(int*)payload->Data;
+
+				GameObject* dropGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, uid);
+				if (rootBone != nullptr) {
+					C_MeshRenderer* meshRenderer = dynamic_cast<C_MeshRenderer*>(dropGO->GetComponent(Component::Type::MeshRenderer));
+					if (meshRenderer != nullptr) {
+						meshRenderer->rootBone = rootBone;
+						meshRendererUID = dropGO->UID;
+					}
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		ImGui::Text("Previous Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", prevAnimTime);
+		ImGui::Text("Current Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", currentTimeAnimation);
+		ImGui::Text("blendTime: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", blendTime);
+
+		ImGui::Spacing();
+		if (playing)
+		{
+			ImGui::Text("Playing: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "true");
+		}
+		else
+		{
+			ImGui::Text("Playing: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "false");
+		}
+
+		ImGui::Spacing();
+
+		if (_anim != nullptr)
+		{
+			//ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _anim->GetLibraryPath());
+		}
+	}
+
 	return true;	
 }
 
