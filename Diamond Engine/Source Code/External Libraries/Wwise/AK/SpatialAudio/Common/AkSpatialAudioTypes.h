@@ -30,10 +30,10 @@ Copyright (c) 2006-2021 Audiokinetic Inc.
 
 #pragma once
 
-#include <AK/Tools/Common/AkKeyArray.h>
-#include <AK/Tools/Common/AkSet.h>
-#include <AK/Tools/Common/AkString.h>
-#include <AK/Tools/Common/AkLock.h>
+#include "Wwise/AK/Tools/Common/AkKeyArray.h"
+#include "Wwise/AK/Tools/Common/AkSet.h"
+#include "Wwise/AK/Tools/Common/AkString.h"
+#include "Wwise/AK/Tools/Common/AkLock.h"
 
 class AkAcousticRoom;
 class AkAcousticPortal;

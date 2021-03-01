@@ -33,7 +33,7 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AKSET_H_
 #define _AKSET_H_
 
-#include <AK/Tools/Common/AkKeyArray.h>
+#include "Wwise/AK/Tools/Common/AkKeyArray.h"
 
 // AkSetType
 //	- An optional set type specifier which is passed into some set operations.  If it is not included, SetType_Inclusion is assumed.

@@ -85,6 +85,19 @@ bool ModuleAudioManager::Init()
 		return false;
 	}
 
+	// Init Spatial Audio
+
+	AkSpatialAudioInitSettings settings; // The constructor fills AkSpatialAudioInitSettings with the recommended default settings. 
+
+	if (AK::SpatialAudio::Init(settings) != AK_Success)
+	{
+
+		assert(!"Could not initialize the Spatial Audio.");
+
+		return false;
+
+	}
+
 	//Load Soundbanks
 	// TODO CRASH: Check BasePath for different versions. What if there are banks in library as resources? Use assets or library
 	//AUDIO TODO: CRASH we are not creating nor adding data to Library/SoundBanks, this will crash the standalone build
@@ -154,6 +167,8 @@ bool ModuleAudioManager::CleanUp()
 {
 	AK::SoundEngine::UnregisterAllGameObj();
 	AK::SoundEngine::ClearBanks();
+
+	//Spatial audio doesn't have a Term() method
 
 	// Terminate the music engine
 	AK::MusicEngine::Term();
