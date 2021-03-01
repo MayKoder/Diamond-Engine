@@ -46,6 +46,8 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 		if (mesh != nullptr) {
 
 			colliderSize = mesh->globalOBB.Size();
+			if (colliderSize.y <= 0.0f) //I do this for plane meshes, but maybe we can remove this once we use mesh shapes
+				colliderSize.y = 0.01f;
 		//	colliderShape = App->physX->CreateCollider(type, colliderSize / 2, colliderMaterial);
 			colliderShape = EngineExternal->modulePhysics->CreateCollider( colliderSize / 2, colliderMaterial);
 

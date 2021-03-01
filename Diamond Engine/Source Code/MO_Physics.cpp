@@ -176,7 +176,8 @@ update_status ModulePhysics::Update(float gameTimestep) {
 
 void ModulePhysics::SceneSimulation(float gameTimestep, bool fetchResults) {
 
-	mScene->simulate(gameTimestep);
+
+	mScene->simulate(DETime::deltaTime);
 	mScene->fetchResults(fetchResults);
 
 	PxU32 nbActors = mScene->getNbActors(PxActorTypeFlag::eRIGID_DYNAMIC | PxActorTypeFlag::eRIGID_STATIC);
