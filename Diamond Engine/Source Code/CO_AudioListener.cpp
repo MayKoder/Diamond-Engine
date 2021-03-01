@@ -1,4 +1,5 @@
 #include "CO_AudioListener.h"
+#include "MathGeoLib/include/Math/float4x4.h"
 #include "GameObject.h"
 #include "CO_Transform.h"
 #include "ImGui/imgui.h"
@@ -49,7 +50,7 @@ bool C_AudioListener::OnEditor()
 
 void C_AudioListener::Update()
 {
-	EngineExternal->moduleAudio->SetAudioObjTransform(id, myTransform->GetCurrentGlobalMatrix());
+	EngineExternal->moduleAudio->SetAudioObjTransform(id, myTransform->globalTransform);
 }
 
 void C_AudioListener::SaveData(JSON_Object* nObj)
