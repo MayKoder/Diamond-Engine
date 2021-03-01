@@ -30,8 +30,8 @@ C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject), rootBone
 	playing = true;
 
 	//TODO: Loading is hard coded for debugging purposes. We must change it
-	//ResourceAnimation* resAnim = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION));
-	//AddAnimation(resAnim);
+	ResourceAnimation* resAnim = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION));
+	AddAnimation(resAnim);
 
 	/*ResourceAnimation* resAnim2 = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(33771251, Resource::Type::ANIMATION));
 	AddAnimation(resAnim2);
@@ -68,7 +68,7 @@ void C_Animator::Start()
 	}
 
 	if (animations.size() > 0)
-		Play("Idle");
+		Play("Default");
 
 	started = true;
 }
@@ -145,7 +145,7 @@ void C_Animator::Update()
 		time += DETime::deltaTime;
 		currentTimeAnimation = time * currentAnimation->ticksPerSecond;
 		currentTimeAnimation += currentAnimation->initTimeAnim;
-		if (currentAnimation && currentTimeAnimation >= currentAnimation->duration) {
+		if (currentAnimation && currentTimeAnimation >= currentAnimation->duration -1) {
 			if (currentAnimation->loopable == true) {
 				time = 0.f;
 			}
@@ -354,6 +354,10 @@ void C_Animator::StoreBoneMapping(GameObject* gameObject)
 
 void C_Animator::Play(std::string animName)
 {
+	std::map<std::string, ResourceAnimation*>::iterator it = animations.find(animName);
+	if (it == animations.end())
+		return;
+
 	currentAnimation = animations[animName];
 }
 
@@ -369,25 +373,29 @@ void C_Animator::Resume()
 
 void C_Animator::AddAnimation(ResourceAnimation* anim)
 {
-	_anim = anim;
+	if (anim != nullptr) {
+		_anim = anim;
+		animations[anim->animationName] = anim;
+	}
+	/*
 	_anim->animationName = "Idle";
 	_anim->initTimeAnim = 0;
-	_anim->duration = 46;
-	animations[_anim->animationName] = _anim;
+	_anim->duration = 21;
+	animations[_anim->animationName] = _anim;*/
 
-	ResourceAnimation* run = new ResourceAnimation(*_anim);
-	run->animationName = "Run";
-	run->initTimeAnim = 49;
-	run->duration = 72;
-	animations[run->animationName] = run;
+	//ResourceAnimation* run = new ResourceAnimation(*_anim);
+	//run->animationName = "Run";
+	//run->initTimeAnim = 49;
+	//run->duration = 72;
+	//animations[run->animationName] = run;
 
 
-	ResourceAnimation* attack = new ResourceAnimation(*_anim);
-	attack->animationName = "Attack";
-	attack->initTimeAnim = 73;
-	attack->duration = 120;
-	attack->loopable = false;
-	animations[attack->animationName] = attack;
+	//ResourceAnimation* attack = new ResourceAnimation(*_anim);
+	//attack->animationName = "Attack";
+	//attack->initTimeAnim = 73;
+	//attack->duration = 120;
+	//attack->loopable = false;
+	//animations[attack->animationName] = attack;
 }
 
 void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, const ResourceAnimation* blend, float blendRatio)

@@ -110,7 +110,7 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 
 		for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
 		{
-			if (_mesh->boneTransforms[i].Equals(float4x4::identity))
+			if (_mesh->boneTransforms[i].Equals(float4x4::identity) && i > 0)
 			{
 				_mesh->boneTransforms[i] = _mesh->boneTransforms[i - 1];
 			}
