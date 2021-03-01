@@ -381,7 +381,7 @@ void ModuleAudioManager::SetAudioObjTransform(unsigned int id, float4x4& transfo
 	float3 scale;
 	float3x3 rot;
 	float3 front(0.0f, 0.0f, 1.0f);
-	float3 up(0.0f, 1.0f, 0.0f);
+	float3 up(0.0f, -1.0f, 0.0f);
 
 	transform.Decompose(pos, rot, scale);
 
