@@ -226,7 +226,7 @@ void FileSystem::SplitFilePath(const char* full_path, std::string* path, std::st
 		if (path != nullptr)
 		{
 			if (pos_separator < full.length())
-				*path = full.substr(0, pos_separator + 1);
+				* path = full.substr(0, pos_separator + 1);
 			else
 				path->clear();
 		}
@@ -234,7 +234,7 @@ void FileSystem::SplitFilePath(const char* full_path, std::string* path, std::st
 		if (file != nullptr)
 		{
 			if (pos_separator < full.length())
-				*file = full.substr(pos_separator + 1, pos_dot - pos_separator - 1);
+				* file = full.substr(pos_separator + 1, pos_dot - pos_separator - 1);
 			else
 				*file = full.substr(0, pos_dot);
 		}
@@ -242,7 +242,7 @@ void FileSystem::SplitFilePath(const char* full_path, std::string* path, std::st
 		if (extension != nullptr)
 		{
 			if (pos_dot < full.length())
-				*extension = full.substr(pos_dot + 1);
+				* extension = full.substr(pos_dot + 1);
 			else
 				extension->clear();
 		}
@@ -352,7 +352,6 @@ uint FileSystem::Copy(const char* file, const char* dir, std::string& outputFile
 void FileSystem::CreateLibrarySoundBanks()
 {
 	std::string dir = "Assets/SoundBanks";
-	std::vector<std::string> dirList;
 	std::vector<std::string> fileList;
 
 	char** rc = PHYSFS_enumerateFiles(dir.c_str());
@@ -362,9 +361,7 @@ void FileSystem::CreateLibrarySoundBanks()
 
 	for (iter = rc; *iter != nullptr; iter++)
 	{
-		if (PHYSFS_isDirectory((directory + *iter).c_str()))
-			dirList.push_back(*iter);
-		else
+		if (!PHYSFS_isDirectory((directory + *iter).c_str()))
 			fileList.push_back(*iter);
 	}
 
