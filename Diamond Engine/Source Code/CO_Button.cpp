@@ -1,9 +1,7 @@
 #include "CO_Button.h"
-#include "CO_Material.h"
 #include "CO_Script.h"
 #include "CO_Image2D.h"
 
-#include "RE_Material.h"
 #include "RE_Texture.h"
 
 #include "GameObject.h"
@@ -18,7 +16,7 @@
 
 #include <assert.h>
 
-C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite1(nullptr), sprite2(nullptr), sprite3(nullptr), script(nullptr), num_sprite_used(1)
+C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite_button_pressed(nullptr), sprite_button_hovered(nullptr), sprite_button_unhovered(nullptr), script(nullptr), num_sprite_used(BUTTONSTATE::BUTTONPRESSED)
 {
 	name = "Button";
 
@@ -26,61 +24,46 @@ C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite1(nullp
 
 C_Button::~C_Button()
 {
-	if (sprite1 != nullptr) {
-		EngineExternal->moduleResources->UnloadResource(sprite1->GetUID());
+	if (sprite_button_pressed != nullptr) {
+		EngineExternal->moduleResources->UnloadResource(sprite_button_pressed->GetUID());
 	}
-	if (sprite2 != nullptr) {
-		EngineExternal->moduleResources->UnloadResource(sprite2->GetUID());
+	if (sprite_button_hovered != nullptr) {
+		EngineExternal->moduleResources->UnloadResource(sprite_button_hovered->GetUID());
 	}
-	if (sprite3 != nullptr) {
-		EngineExternal->moduleResources->UnloadResource(sprite3->GetUID());
+	if (sprite_button_unhovered != nullptr) {
+		EngineExternal->moduleResources->UnloadResource(sprite_button_unhovered->GetUID());
 	}
 }
 
 void C_Button::Update()
 {
 #ifndef STANDALONE
-	switch (num_sprite_used)
-	{
-	case 1:
-		ChangeTexture(1);
-		break;
-	case 2: 		
-		ChangeTexture(2);
-		break;
-	case 3: 
-		ChangeTexture(3);
-		break;
-	}
-
+	ChangeTexture(num_sprite_used);
 #endif // !STANDALONE
 
 }
 
 void C_Button::ExecuteButton()
 {
-	C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-	ChangeTexture(3);
+	ChangeTexture(BUTTONSTATE::BUTTONPRESSED);
 	/// ARNAU: EXECUTE SCRIPT
 }
 
 void C_Button::ReleaseButton()
 {
-	C_Material* mat = static_cast<C_Material*>(gameObject->GetComponent(TYPE::MATERIAL));
-	ChangeTexture(1);
+	ChangeTexture(BUTTONSTATE::BUTTONHOVERED);
 }
 
-void C_Button::ChangeTexture(int new_num_sprite)
+void C_Button::ChangeTexture(BUTTONSTATE new_num_sprite)
 {
-	assert(new_num_sprite >= 1 && new_num_sprite <= 3, "The number of the sprite is not available");
 	num_sprite_used = new_num_sprite;
 	switch (new_num_sprite)
 	{
-	case 1:
+	case BUTTONSTATE::BUTTONPRESSED:
 	{
-		if (sprite1 == nullptr) 
+		if (sprite_button_pressed == nullptr) 
 		{
-			LOG(LogType::L_WARNING, "The sprite1 is nullptr");
+			LOG(LogType::L_WARNING, "The sprite 'P' is nullptr");
 			return;
 		}
 		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
@@ -88,15 +71,15 @@ void C_Button::ChangeTexture(int new_num_sprite)
 		if (img != nullptr)
 		{
 			ResourceTexture* tex = img->GetTexture();
-			img->SetTexture(sprite1, (tex != sprite1 && tex != sprite2 && tex != sprite3));
+			img->SetTexture(sprite_button_pressed, (tex != sprite_button_pressed && tex != sprite_button_hovered && tex != sprite_button_unhovered));
 		}
 			break;
 	}
 
-	case 2:
+	case BUTTONSTATE::BUTTONHOVERED:
 	{
-		if (sprite2 == nullptr) {
-			LOG(LogType::L_WARNING, "The sprite2 is nullptr");
+		if (sprite_button_hovered == nullptr) {
+			LOG(LogType::L_WARNING, "The sprite 'H' is nullptr");
 			return;
 		}
 
@@ -105,15 +88,15 @@ void C_Button::ChangeTexture(int new_num_sprite)
 		if (img != nullptr)
 		{
 			ResourceTexture* tex = img->GetTexture();
-			img->SetTexture(sprite1, (tex != sprite1 && tex != sprite2 && tex != sprite3));
+			img->SetTexture(sprite_button_hovered, (tex != sprite_button_pressed && tex != sprite_button_hovered && tex != sprite_button_unhovered));
 		}
 		break;
 	}
 
-	case 3:
+	case BUTTONSTATE::BUTTONUNHOVERED:
 	{
-		if (sprite3 == nullptr) {
-			LOG(LogType::L_WARNING, "The sprite3 is nullptr");
+		if (sprite_button_unhovered == nullptr) {
+			LOG(LogType::L_WARNING, "The sprite 'U' is nullptr");
 			return;
 		}
 		
@@ -122,7 +105,7 @@ void C_Button::ChangeTexture(int new_num_sprite)
 		if (img != nullptr)
 		{
 			ResourceTexture* tex = img->GetTexture();
-			img->SetTexture(sprite1, (tex != sprite1 && tex != sprite2 && tex != sprite3));
+			img->SetTexture(sprite_button_unhovered, (tex != sprite_button_pressed && tex != sprite_button_hovered && tex != sprite_button_unhovered));
 		}
 		break;
 		}
@@ -132,28 +115,27 @@ void C_Button::ChangeTexture(int new_num_sprite)
 
 #ifndef STANDALONE
 
-void C_Button::ChangeSprite(int num_sprite, ResourceTexture* sprite)
+void C_Button::ChangeSprite(BUTTONSTATE num_sprite, ResourceTexture* sprite)
 {
-	assert(num_sprite >= 1 && num_sprite<=3, "The number of the sprite is not available");
 	switch (num_sprite)
 	{
-	case 1:
-		if (sprite1 != nullptr) {
-			EngineExternal->moduleResources->UnloadResource(sprite1->GetUID());
+	case BUTTONSTATE::BUTTONPRESSED:
+		if (sprite_button_pressed != nullptr) {
+			EngineExternal->moduleResources->UnloadResource(sprite_button_pressed->GetUID());
 		}
-		sprite1 = sprite;
+		sprite_button_pressed = sprite;
 		break;
-	case 2:
-		if (sprite2 != nullptr) {
-			EngineExternal->moduleResources->UnloadResource(sprite2->GetUID());
+	case BUTTONSTATE::BUTTONHOVERED:
+		if (sprite_button_hovered != nullptr) {
+			EngineExternal->moduleResources->UnloadResource(sprite_button_hovered->GetUID());
 		}
-		sprite2 = sprite;
+		sprite_button_hovered = sprite;
 		break;
-	case 3:
-		if (sprite3 != nullptr) {
-			EngineExternal->moduleResources->UnloadResource(sprite3->GetUID());
+	case BUTTONSTATE::BUTTONUNHOVERED:
+		if (sprite_button_unhovered != nullptr) {
+			EngineExternal->moduleResources->UnloadResource(sprite_button_unhovered->GetUID());
 		}
-		sprite3 = sprite;
+		sprite_button_unhovered = sprite;
 		break;
 	}
 }
@@ -169,11 +151,11 @@ bool C_Button::OnEditor()
 	if (Component::OnEditor() == true)
 	{
 		ImGui::Separator();
-		if (sprite1 != nullptr) {
-			ImGui::Text("%s", sprite1->GetAssetPath());
+		if (sprite_button_pressed != nullptr) {
+			ImGui::Text("%s", sprite_button_pressed->GetAssetPath());
 		}
 		ImGui::Columns(2);
-		ImGui::Text("Drop here to change sprite 1");
+		ImGui::Text("Drop here to change sprite 'P'");
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
@@ -183,29 +165,29 @@ bool C_Button::OnEditor()
 				FileSystem::SplitFilePath(assetsPath.c_str(), &assetsPath, &str_name);
 				assetsPath += str_name;
 
-				ChangeSprite(1, dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath.c_str())));
+				ChangeSprite(BUTTONSTATE::BUTTONPRESSED, dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath.c_str())));
 			}
 			ImGui::EndDragDropTarget();
 		}
 		ImGui::NextColumn();
-		if (ImGui::Button("Edit Sprite 1")) {
-			if (sprite1 == nullptr) {
-				LOG(LogType::L_WARNING, "The sprite1 is nullptr");
+		if (ImGui::Button("Edit Sprite 'P'")) {
+			if (sprite_button_pressed == nullptr) {
+				LOG(LogType::L_WARNING, "The sprite 'P' is nullptr");
 			}
 			else {
-				ChangeTexture(1);
+				ChangeTexture(BUTTONSTATE::BUTTONPRESSED);
 			}
 		}
 		ImGui::Columns(1);
 		ImGui::Separator();
 
-		if (sprite2 != nullptr) {
-			ImGui::Text("%s", sprite2->GetAssetPath());
+		if (sprite_button_hovered != nullptr) {
+			ImGui::Text("%s", sprite_button_hovered->GetAssetPath());
 		}
 
 		ImGui::Columns(2);
 
-		ImGui::Text("Drop here to change sprite 2");
+		ImGui::Text("Drop here to change sprite 'H'");
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
@@ -215,30 +197,30 @@ bool C_Button::OnEditor()
 				FileSystem::SplitFilePath(assetsPath.c_str(), &assetsPath, &str_name);
 				assetsPath += str_name;
 
-				ChangeSprite(2, dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath.c_str())));
+				ChangeSprite(BUTTONSTATE::BUTTONHOVERED, dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath.c_str())));
 			}
 			ImGui::EndDragDropTarget();
 		}
 		ImGui::NextColumn();
 
-		if (ImGui::Button("Edit Sprite 2")) {
-			if (sprite2 == nullptr) {
-				LOG(LogType::L_WARNING, "The sprite2 is nullptr");
+		if (ImGui::Button("Edit Sprite 'H'")) {
+			if (sprite_button_hovered == nullptr) {
+				LOG(LogType::L_WARNING, "The sprite 'H' is nullptr");
 			}
 			else {
-				ChangeTexture(2);
+				ChangeTexture(BUTTONSTATE::BUTTONHOVERED);
 			}
 		}
 		ImGui::Columns(1);
 		ImGui::Separator();
 
-		if (sprite3 != nullptr) {
-			ImGui::Text("%s", sprite3->GetAssetPath());
+		if (sprite_button_unhovered != nullptr) {
+			ImGui::Text("%s", sprite_button_unhovered->GetAssetPath());
 		}
 
 		ImGui::Columns(2);
 
-		ImGui::Text("Drop here to change sprite 3");
+		ImGui::Text("Drop here to change sprite 'U'");
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
@@ -248,18 +230,18 @@ bool C_Button::OnEditor()
 				FileSystem::SplitFilePath(assetsPath.c_str(), &assetsPath, &str_name);
 				assetsPath += str_name;
 
-				ChangeSprite(3, dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath.c_str())));
+				ChangeSprite(BUTTONSTATE::BUTTONUNHOVERED, dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath.c_str())));
 			}
 			ImGui::EndDragDropTarget();
 		}
 		ImGui::NextColumn();
 
-		if (ImGui::Button("Edit Sprite 3")) {
-			if (sprite3 == nullptr) {
-				LOG(LogType::L_WARNING, "The sprite3 is nullptr");
+		if (ImGui::Button("Edit Sprite 'U'")) {
+			if (sprite_button_unhovered == nullptr) {
+				LOG(LogType::L_WARNING, "The sprite 'U' is nullptr");
 			}
 			else{
-				ChangeTexture(3);
+				ChangeTexture(BUTTONSTATE::BUTTONUNHOVERED);
 			}
 		}
 		ImGui::Columns(1);

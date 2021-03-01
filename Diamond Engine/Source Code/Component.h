@@ -20,6 +20,7 @@ public:
 		SCRIPT,
 		TRANSFORM_2D,
 		BUTTON,
+		CHECKBOX,
 		TEXT_UI,
 		CANVAS,
 		IMAGE_2D,

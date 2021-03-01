@@ -167,6 +167,22 @@ void M_Gui::CreateButton()
 	button->AddComponent(Component::TYPE::IMAGE_2D);
 }
 
+void M_Gui::CreateCheckbox()
+{
+	GameObject* canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	if (canvasGO == nullptr)
+	{
+		CreateCanvas();
+		canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
+	}
+
+	GameObject* button = new GameObject("Checkbox", canvasGO);
+	button->AddComponent(Component::TYPE::TRANSFORM_2D);
+	button->AddComponent(Component::TYPE::MATERIAL);
+	button->AddComponent(Component::TYPE::CHECKBOX);
+	button->AddComponent(Component::TYPE::IMAGE_2D);
+}
+
 void M_Gui::CreateText()
 {
 	GameObject* canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);

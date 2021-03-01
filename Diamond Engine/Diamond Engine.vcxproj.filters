@@ -595,6 +595,9 @@
     <ClInclude Include="Source Code\CO_Image2D.h">
       <Filter>Sources\Components\Derived\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CO_Checkbox.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -931,6 +934,9 @@
       <Filter>Sources\Components\Derived\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\CO_Image2D.cpp">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Checkbox.cpp">
       <Filter>Sources\Components\Derived\UI</Filter>
     </ClCompile>
   </ItemGroup>

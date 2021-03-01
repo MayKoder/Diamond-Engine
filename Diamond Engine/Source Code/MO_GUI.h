@@ -21,6 +21,7 @@ public:
 	void CreateCanvas();
 	void CreateImage();
 	void CreateButton();
+	void CreateCheckbox();
 	void CreateText();
 
 	void SetCanvas(int uid);

@@ -495,6 +495,9 @@ void M_Editor::DrawCreateMenu()
 		if (ImGui::MenuItem("Button", nullptr))
 			EngineExternal->moduleGui->CreateButton();
 
+		if (ImGui::MenuItem("Checkbox", nullptr))
+			EngineExternal->moduleGui->CreateCheckbox();
+
 		if (ImGui::MenuItem("Text", nullptr))
 			EngineExternal->moduleGui->CreateText();
 		
