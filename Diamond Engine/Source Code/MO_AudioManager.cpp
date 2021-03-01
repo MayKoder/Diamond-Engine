@@ -171,6 +171,8 @@ bool ModuleAudioManager::CleanUp()
 	}
 	banks.clear();
 
+	defaultListener = nullptr;
+
 	return true;
 }
 

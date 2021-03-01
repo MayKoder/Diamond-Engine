@@ -19,6 +19,9 @@ C_AudioSource::~C_AudioSource()
 {
 	EngineExternal->moduleAudio->RemoveAudioSource(this);
 	EngineExternal->moduleAudio->UnRegisterAudioObject(id);
+	gameObjectTransform = nullptr;
+	audBankReference = nullptr;
+
 }
 
 #ifndef STANDALONE
