@@ -103,7 +103,7 @@ bool C_AudioSource::OnEditor()
 
 void C_AudioSource::Update()
 {
-	EngineExternal->moduleAudio->SetAudioObjTransform(this->id, gameObjectTransform->GetCurrentGlobalMatrix());
+	EngineExternal->moduleAudio->SetAudioObjTransform(this->id, gameObjectTransform->globalTransform);
 }
 
 void C_AudioSource::SaveData(JSON_Object* nObj)
