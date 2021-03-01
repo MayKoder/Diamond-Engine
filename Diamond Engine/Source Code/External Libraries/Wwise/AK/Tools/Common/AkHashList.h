@@ -28,9 +28,9 @@ the specific language governing permissions and limitations under the License.
 #ifndef _AKHASHLIST_H
 #define _AKHASHLIST_H
 
-#include <AK/Tools/Common/AkKeyDef.h>// for MapStruct
-#include <AK/Tools/Common/AkObject.h>
-#include <AK/Tools/Common/AkArray.h>
+#include "Wwise/AK/Tools/Common/AkKeyDef.h"// for MapStruct
+#include "Wwise/AK/Tools/Common/AkObject.h"
+#include "Wwise/AK/Tools/Common/AkArray.h"
 
 // NOTE: when using this template, a hashing function of the following form must be available: 
 //

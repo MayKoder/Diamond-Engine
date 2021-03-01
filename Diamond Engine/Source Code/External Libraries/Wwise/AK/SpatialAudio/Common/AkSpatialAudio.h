@@ -30,9 +30,9 @@ Copyright (c) 2006-2021 Audiokinetic Inc.
 
 #pragma once
 
-#include <AK/SpatialAudio/Common/AkSpatialAudioTypes.h>
-#include <AK/Plugin/AkReflectGameData.h>
-#include <AK/SoundEngine/Common/AkSoundEngine.h>
+#include "Wwise/AK/SpatialAudio/Common/AkSpatialAudioTypes.h"
+#include "Wwise/AK/Plugin/AkReflectGameData.h"
+#include "Wwise/AK/SoundEngine/Common/AkSoundEngine.h"
 
 template<AkUInt32 TSize>
 struct AkGrowByPolicy_Legacy_SpatialAudio

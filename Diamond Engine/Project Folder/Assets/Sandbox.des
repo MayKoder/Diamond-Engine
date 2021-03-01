@@ -5,14 +5,14 @@
         17.738853454589844
     ],
     "EditorCameraZ": [
-        -0.66908836364746094,
-        -0.31685283780097961,
-        -0.67225372791290283
+        -0.64509636163711548,
+        -0.38236486911773682,
+        -0.66154950857162476
     ],
     "EditorCameraY": [
-        -0.22351881861686707,
-        0.9484747052192688,
-        -0.22457751631736755
+        -0.26694712042808533,
+        0.92401134967803955,
+        -0.27375558018684387
     ],
     "Game Objects": [
         {
@@ -132,8 +132,14 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 0.96812385320663452,
+                    "hFOV": 1.636405348777771,
                     "culling": false
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "isDefaultListener": true,
+                    "masterVolume": 50
                 }
             ]
         },
@@ -250,6 +256,16 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true
+                },
+                {
+                    "Type": 7,
+                    "Active": true,
+                    "evName": "Play_Weapon_Shoot",
+                    "audBankReference": "Audio",
+                    "volume": 50,
+                    "pitch": 50,
+                    "playOnAwake": true,
+                    "isMuted": false
                 }
             ]
         },
