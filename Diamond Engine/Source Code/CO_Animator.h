@@ -67,6 +67,7 @@ public:
 	uint previous_animation = 0;
 	uint current_animation = 0;
 	bool playing = false;
+	void Play(std::string animName);
 	void Pause();
 	void Resume();
 private:
@@ -87,6 +88,6 @@ private:
 	ResourceAnimation* _anim; 
 	ResourceAnimation* currentAnimation = nullptr;
 	ResourceAnimation* previousAnimation = nullptr;
-	std::vector<ResourceAnimation*> animations;
+	std::map<std::string,ResourceAnimation*> animations;
 };
 

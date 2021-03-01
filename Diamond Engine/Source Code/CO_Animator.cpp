@@ -29,9 +29,8 @@ C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject)
 	playing = true;
 
 	//TODO: Loading is hard coded for debugging purposes. We must change it
-	ResourceAnimation* resAnim = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION));
-	AddAnimation(resAnim);
-	currentAnimation = resAnim;
+	//ResourceAnimation* resAnim = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION));
+	//AddAnimation(resAnim);
 
 	/*ResourceAnimation* resAnim2 = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(33771251, Resource::Type::ANIMATION));
 	AddAnimation(resAnim2);
@@ -67,8 +66,8 @@ void C_Animator::Start()
 		boneMapping[bones[i]->name] = bones[i];
 	}
 
-	//if(animations.size() > 0)
-		//currentAnimation = animations[0];
+	if (animations.size() > 0)
+		Play("Run");
 
 	started = true;
 }
@@ -80,6 +79,9 @@ void C_Animator::Update()
 		if (!started) {
 			Start();
 		}
+	}
+	else {
+		return;
 	}
 
 	if (rootBone == nullptr)
@@ -127,7 +129,7 @@ void C_Animator::Update()
 				time = 0.f;
 			}
 			else {
-				currentAnimation = animations[0];
+				Play("Idle");
 				time = 0.f;
 				return;
 			}
@@ -139,6 +141,9 @@ void C_Animator::Update()
 		rootBone->CollectChilds(bones);
 		DrawBones(bones[0]);
 	}
+
+
+	
 }
 
 void C_Animator::SetResource(ResourceAnimation* re_anim)
@@ -204,14 +209,16 @@ bool C_Animator::OnEditor()
 	}
 	//List of existing animations
 	ImGui::Text("Select a new animation");
-	for (int i = 0; i < animations.size(); ++i) {
-		std::string animName = animations[i]->animationName;
+	for (std::map<std::string,ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); ++it)
+	{
+		std::string animName = it->first;
 
-		if (animations[i] == currentAnimation)
+		if (currentAnimation == it->second) {
 			animName += " (Current)";
+		}
 
 		if (ImGui::Button(animName.c_str())) {
-			currentAnimation = animations[i];
+			Play(animName);
 			time = 0.f;
 		}
 	}
@@ -263,6 +270,11 @@ void C_Animator::StoreBoneMapping(GameObject* gameObject)
 	}
 }
 
+void C_Animator::Play(std::string animName)
+{
+	currentAnimation = animations[animName];
+}
+
 void C_Animator::Pause()
 {
 	active = false;
@@ -279,13 +291,13 @@ void C_Animator::AddAnimation(ResourceAnimation* anim)
 	_anim->animationName = "Idle";
 	_anim->initTimeAnim = 0;
 	_anim->duration = 46;
-	animations.push_back(_anim);
+	animations[_anim->animationName] = _anim;
 
 	ResourceAnimation* run = new ResourceAnimation(*_anim);
 	run->animationName = "Run";
 	run->initTimeAnim = 50;
 	run->duration = 72;
-	animations.push_back(run);
+	animations[run->animationName] = run;
 
 
 	ResourceAnimation* attack = new ResourceAnimation(*_anim);
@@ -293,7 +305,7 @@ void C_Animator::AddAnimation(ResourceAnimation* anim)
 	attack->initTimeAnim = 73;
 	attack->duration = 120;
 	attack->loopable = false;
-	animations.push_back(attack);
+	animations[attack->animationName] = attack;
 }
 
 void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, const ResourceAnimation* blend, float blendRatio)
