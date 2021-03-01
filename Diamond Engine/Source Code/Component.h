@@ -22,6 +22,7 @@ public:
 		BUTTON,
 		TEXT_UI,
 		CANVAS,
+		IMAGE_2D,
 		COUNT
 	};
 

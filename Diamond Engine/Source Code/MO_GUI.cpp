@@ -11,6 +11,7 @@
 #include "CO_Material.h"
 #include "CO_Camera.h"
 #include "CO_Button.h"
+#include "CO_Image2D.h"
 
 #include "RE_Material.h"
 #include "RE_Shader.h"
@@ -89,8 +90,9 @@ void M_Gui::RenderUiElement(GameObject* uiElement)
 {
 	Component* mat = uiElement->GetComponent(Component::TYPE::MATERIAL);
 	Component* trans2D = uiElement->GetComponent(Component::TYPE::TRANSFORM_2D);
+	Component* img2D = uiElement->GetComponent(Component::TYPE::IMAGE_2D);
 
-	if (mat != nullptr && trans2D != nullptr)
+	if (mat != nullptr && trans2D != nullptr && img2D != nullptr)
 	{
 		C_Transform2D* transform = static_cast<C_Transform2D*>(trans2D);
 		ResourceMaterial* material = static_cast<C_Material*>(mat)->material;
@@ -102,12 +104,8 @@ void M_Gui::RenderUiElement(GameObject* uiElement)
 			material->PushUniforms();
 
 			//TOD: Change this with the C_Image resource id
-			glBindTexture(GL_TEXTURE_2D, App->moduleRenderer3D->checkersTexture);
+			static_cast<C_Image2D*>(img2D)->RenderImage(transform->GetGlobal2DTransform().ptr(), material->shader->shaderProgramID);
 
-
-
-			GLint modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "model_matrix");
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, transform->GetGlobal2DTransform().ptr());
 			glBindBuffer(GL_ARRAY_BUFFER, VAO);
 			glVertexPointer(2, GL_FLOAT, 0, NULL);
 
@@ -149,6 +147,7 @@ void M_Gui::CreateImage()
 	GameObject* image = new GameObject("Image", canvasGO);
 	image->AddComponent(Component::TYPE::TRANSFORM_2D);
 	image->AddComponent(Component::TYPE::MATERIAL);
+	image->AddComponent(Component::TYPE::IMAGE_2D);
 
 }
 
@@ -165,6 +164,7 @@ void M_Gui::CreateButton()
 	button->AddComponent(Component::TYPE::TRANSFORM_2D);
 	button->AddComponent(Component::TYPE::MATERIAL);
 	button->AddComponent(Component::TYPE::BUTTON);
+	button->AddComponent(Component::TYPE::IMAGE_2D);
 }
 
 void M_Gui::CreateText()
