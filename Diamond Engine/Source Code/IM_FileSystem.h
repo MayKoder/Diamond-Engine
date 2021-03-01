@@ -54,4 +54,7 @@ namespace FileSystem
 	uint Copy(const char* file, const char* dir, std::string& outputFile);
 
 	//std::string FileToText(const char* path);
+
+	//TEMPORAL FIX
+	void CreateLibrarySoundBanks();
 }

@@ -134,31 +134,7 @@ void FileSystem::CreateLibraryFolders()
 	CreateDir(MATERIALS_PATH);
 	CreateDir(SOUNDS_PATH);
 
-	std::string dir = "Assets/SoundBanks";
-	std::vector<std::string> dirList;
-	std::vector<std::string> fileList;
-
-	char** rc = PHYSFS_enumerateFiles(dir.c_str());
-	char** iter;
-
-	std::string directory = dir;
-
-	for (iter = rc; *iter != nullptr; iter++)
-	{
-		if (PHYSFS_isDirectory((directory + *iter).c_str()))
-			dirList.push_back(*iter);
-		else
-			fileList.push_back(*iter);
-	}
-
-	PHYSFS_freeList(rc);
-
-	for (int i = 0; i < fileList.size(); i++)
-	{
-		std::string output;
-		std::string fileDir = "Assets\\SoundBanks\\" + fileList[i];
-		Copy(fileDir.c_str(), SOUNDS_PATH, output);
-	}
+	CreateLibrarySoundBanks();//TODO move this somewhere else? ask myke
 }
 
 // Add a new zip file or folder
@@ -371,6 +347,35 @@ uint FileSystem::Copy(const char* file, const char* dir, std::string& outputFile
 		LOG(LogType::L_ERROR, "FILE SYSTEM: Could not open file '%s' to read", file);
 
 	return size;
+}
+
+void FileSystem::CreateLibrarySoundBanks()
+{
+	std::string dir = "Assets/SoundBanks";
+	std::vector<std::string> dirList;
+	std::vector<std::string> fileList;
+
+	char** rc = PHYSFS_enumerateFiles(dir.c_str());
+	char** iter;
+
+	std::string directory = dir;
+
+	for (iter = rc; *iter != nullptr; iter++)
+	{
+		if (PHYSFS_isDirectory((directory + *iter).c_str()))
+			dirList.push_back(*iter);
+		else
+			fileList.push_back(*iter);
+	}
+
+	PHYSFS_freeList(rc);
+
+	for (int i = 0; i < fileList.size(); i++)
+	{
+		std::string output;
+		std::string fileDir = "Assets\\SoundBanks\\" + fileList[i];
+		Copy(fileDir.c_str(), SOUNDS_PATH, output);
+	}
 }
 
 
