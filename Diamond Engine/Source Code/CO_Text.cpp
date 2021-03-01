@@ -25,7 +25,7 @@ bool C_Text::OnEditor()
 		ImGui::Text("Drop here to change the path");
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_OTHER"))
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_FONT"))
 			{
 				const char* possible_new_font_path = ((std::string*)payload->Data)->c_str();
 				int possible_new_font_id = EngineExternal->moduleFileSystem->free_type_library->GetFont(possible_new_font_path);

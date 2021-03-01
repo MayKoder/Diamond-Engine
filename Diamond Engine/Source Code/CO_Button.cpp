@@ -166,15 +166,12 @@ bool C_Button::OnEditor()
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
 			{
-				std::string* assetsPath = (std::string*)payload->Data;
+				std::string assetsPath = *(std::string*)payload->Data;
 				std::string str_name = "";
-				FileSystem::SplitFilePath(assetsPath->c_str(), assetsPath, &str_name);
-				*assetsPath += str_name;
+				FileSystem::SplitFilePath(assetsPath.c_str(), &assetsPath, &str_name);
+				assetsPath += str_name;
 
-				if (sprite1 != nullptr)
-					EngineExternal->moduleResources->UnloadResource(sprite1->GetUID());
-
-				sprite1 = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath->c_str()));
+				ChangeSprite(1, dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath.c_str())));
 			}
 			ImGui::EndDragDropTarget();
 		}
@@ -201,14 +198,12 @@ bool C_Button::OnEditor()
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
 			{
-				std::string* assetsPath = (std::string*)payload->Data;
-				std::string str_name="";
-				FileSystem::SplitFilePath(assetsPath->c_str(), assetsPath, &str_name);
-				*assetsPath += str_name;
-				if (sprite2 != nullptr)
-					EngineExternal->moduleResources->UnloadResource(sprite2->GetUID());
+				std::string assetsPath = *(std::string*)payload->Data;
+				std::string str_name = "";
+				FileSystem::SplitFilePath(assetsPath.c_str(), &assetsPath, &str_name);
+				assetsPath += str_name;
 
-				sprite2 = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath->c_str()));
+				ChangeSprite(2, dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath.c_str())));
 			}
 			ImGui::EndDragDropTarget();
 		}
@@ -236,15 +231,12 @@ bool C_Button::OnEditor()
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
 			{
-				std::string* assetsPath = (std::string*)payload->Data;
+				std::string assetsPath = *(std::string*)payload->Data;
 				std::string str_name = "";
-				FileSystem::SplitFilePath(assetsPath->c_str(), assetsPath, &str_name);
-				*assetsPath += str_name;
+				FileSystem::SplitFilePath(assetsPath.c_str(), &assetsPath, &str_name);
+				assetsPath += str_name;
 
-				if (sprite3 != nullptr)
-					EngineExternal->moduleResources->UnloadResource(sprite3->GetUID());
-
-				sprite3 = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath->c_str()));
+				ChangeSprite(3, dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestFromAssets(assetsPath.c_str())));
 			}
 			ImGui::EndDragDropTarget();
 		}
