@@ -18,7 +18,7 @@
    {
     "Id": "1069811801",
     "Language": "SFX",
-    "Hash": "562036426",
+    "Hash": "992469259",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Audio",
     "ShortName": "Audio",
     "Path": "Audio.bnk",
@@ -135,6 +135,19 @@
       ]
      },
      {
+      "Id": "4068124964",
+      "Name": "Play_Music_2",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Music_2",
+      "IncludedMemoryFiles": [
+       {
+        "Id": "739659711",
+        "Language": "SFX",
+        "ShortName": "Hud.wav",
+        "Path": "SFX\\Hud_10C4C929.wem"
+       }
+      ]
+     },
+     {
       "Id": "2045397714",
       "Name": "Play_Weapon_Shoot",
       "ObjectPath": "\\Events\\Default Work Unit\\Play_Weapon_Shoot",
@@ -231,7 +244,7 @@
    {
     "Id": "1355168291",
     "Language": "SFX",
-    "Hash": "924124415",
+    "Hash": "3789941178",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",

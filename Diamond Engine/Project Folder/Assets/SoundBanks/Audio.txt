@@ -2,6 +2,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	1602358412	Play_Footstep			\Default Work Unit\Play_Footstep	
 	2045397714	Play_Weapon_Shoot			\Default Work Unit\Play_Weapon_Shoot	
 	2932040671	Play_Music			\Default Work Unit\Play_Music	
+	4068124964	Play_Music_2			\Default Work Unit\Play_Music_2	
 
 Switch Group	ID	Name			Wwise Object Path	Notes
 	354267144	Terrain			\Default Work Unit\Terrain	
@@ -32,6 +33,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	604011556	Footstep wood2	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Footstep wood2_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Footsteps wood\Footstep wood2		17270
 	654547234	Footstep snow	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Footstep snow_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Footstep snow		59952
 	675536826	Footstep wood1	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Footstep wood1_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Footsteps wood\Footstep wood1		17118
+	739659711	Hud	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Hud_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Music\Hud		13893676
 	917854078	Footstep stone sandy	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Footstep stone sandy_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Footstep stone sandy		84856
 	938843669	Footstep sand	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Footstep sand_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Footstep sand		68672
 
