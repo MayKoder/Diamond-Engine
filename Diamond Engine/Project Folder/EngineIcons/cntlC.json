@@ -44,7 +44,7 @@
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Textures\/494557343.dds",
                     "UID": 494557343,
-                    "MaterialAssetPath": "Empty",
+                    "MaterialAssetPath": "Assets\/Materials\/animated_material.mat",
                     "MaterialLibraryPath": "Library\/Materials\/1948688504.mat",
                     "MaterialUID": 1948688504
                 }

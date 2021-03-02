@@ -40,7 +40,7 @@ uint ResourceAnimation::SaveCustomFormat(ResourceAnimation* animation, char** bu
 	*buffer = new char[size];
 	char* cursor = *buffer;
 
-	//Name
+	////Name
 	memcpy(cursor, &animation->animationName, sizeof(animationName));
 	cursor += sizeof(animationName);
 
@@ -73,7 +73,7 @@ void ResourceAnimation::LoadCustomFormat(const char* path)
 	const char* cursor = buffer;
 	uint bytes;
 
-	//Name
+	////Name
 	memcpy(&animationName, cursor, sizeof(animationName));
 	cursor += sizeof(animationName);
 

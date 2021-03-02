@@ -11,7 +11,7 @@ layout (location = 3) in vec3 tangents;
 layout (location = 4) in vec4 boneIDs;
 layout (location = 5) in vec4 weights;
 
-out vec3 ourColor;
+out vec3 influenceColor;
 out vec2 TexCoord;
 out vec3 Normal;
 out vec3 fPosition;
@@ -48,7 +48,7 @@ void main()
 	mat4 viewModel = view * model_matrix;
 	gl_Position = projection * viewModel * totalPosition;
 	TexCoord = texCoord;
-	ourColor = vec3(weights.x, weights.y, weights.z);
+	influenceColor = vec3(weights.x, weights.y, weights.z);
 	//ourColor = vec3(boneIDs.x / 30, boneIDs.y / 30, boneIDs.z / 30);
     
 }
@@ -56,17 +56,24 @@ void main()
 
 #ifdef fragment
 #version 330 core
-in vec3 ourColor;
+in vec3 influenceColor;
 in vec2 TexCoord;
 out vec4 color;
 
 uniform vec3 colors[3];
+uniform sampler2D diffuseTexture;
 
 void main()
 {
- color = vec4(ourColor, 1.0);
+	vec3 textureColor = texture(diffuseTexture, TexCoord).rgb;
+ 	color = vec4(textureColor, 1.0);
+ 	//color = vec4(influenceColor, 1.0);
 }
 #endif
+
+
+
+
 
 
 

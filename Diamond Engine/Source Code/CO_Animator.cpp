@@ -313,6 +313,20 @@ bool C_Animator::OnEditor()
 		}
 
 		ImGui::Button("Drop new animation here");
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ANIMATION"))
+			{
+				int uid = *(int*)payload->Data;
+
+				ResourceAnimation* droppedAnimation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(uid, Resource::Type::ANIMATION));
+				if (droppedAnimation != nullptr) {
+					AddAnimation(droppedAnimation);
+				}
+
+			}
+			ImGui::EndDragDropTarget();
+		}
 
 		ImGui::Spacing();
 		ImGui::Separator();

@@ -1,4 +1,14 @@
 {
     "ShaderUID": 141429211,
-    "Uniforms": []
+    "Uniforms": [
+        {
+            "name": "diffuseTexture",
+            "type": 35678,
+            "value": 494557343
+        },
+        {
+            "name": "jointTransforms[0]",
+            "type": 35676
+        }
+    ]
 }
