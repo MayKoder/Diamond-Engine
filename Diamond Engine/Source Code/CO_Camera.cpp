@@ -125,7 +125,7 @@ bool C_Camera::OnEditor()
 }
 #endif // !STANDALONE
 
-void C_Camera::Update()
+void C_Camera::PostUpdate()
 {
 
 	//Maybe dont update every frame?

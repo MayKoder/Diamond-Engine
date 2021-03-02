@@ -21,6 +21,8 @@ public:
 		AudioListener,
 		AudioSource,
 		Count,
+		RigidBody,
+		Collider,
 	};
 
 	Component(GameObject* _gm);
@@ -30,6 +32,7 @@ public:
 	virtual void Disable();
 
 	virtual void Update();
+	virtual void PostUpdate();
 
 #ifndef STANDALONE
 	virtual bool OnEditor();

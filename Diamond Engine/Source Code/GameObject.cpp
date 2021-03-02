@@ -6,6 +6,8 @@
 #include "CO_Material.h"
 #include "CO_Camera.h"
 #include "CO_Script.h"
+#include "CO_RigidBody.h"
+#include "CO_Collider.h"
 #include "CO_AudioListener.h"
 #include "CO_AudioSource.h"
 
@@ -85,6 +87,15 @@ void GameObject::Update()
 }
 
 
+void GameObject::PostUpdate()
+{
+	for (size_t i = 0; i < components.size(); i++)
+	{
+		if (components[i]->IsActive())
+			components[i]->PostUpdate();
+	}
+}
+
 Component* GameObject::AddComponent(Component::Type _type, const char* params)
 {
 
@@ -112,6 +123,12 @@ Component* GameObject::AddComponent(Component::Type _type, const char* params)
 		ret = new C_Camera(this);
 		EngineExternal->moduleScene->SetGameCamera(dynamic_cast<C_Camera*>(ret));
 		break;
+	case Component::Type::RigidBody:
+		ret = new C_RigidBody(this);
+		break;
+	case Component::Type::Collider:
+		ret = new C_Collider(this);
+      break;
 	case Component::Type::AudioListener:
 		ret = new C_AudioListener(this);
 		break;

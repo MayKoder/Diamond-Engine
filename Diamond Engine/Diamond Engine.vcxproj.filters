@@ -547,6 +547,18 @@
     <ClInclude Include="Source Code\MA_IconSystem.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\MO_Physics\Header.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MO_Physics.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Collider.h">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_RigidBody.h">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClInclude>
     <ClInclude Include="Source Code\RE_Material.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
@@ -1001,6 +1013,15 @@
     </ClCompile>
     <ClCompile Include="Source Code\MA_IconSystem.cpp">
       <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_Physics.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Collider.cpp">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_RigidBody.cpp">
+      <Filter>Sources\Components\Derived</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\RE_Material.cpp">
       <Filter>Sources\Resources</Filter>

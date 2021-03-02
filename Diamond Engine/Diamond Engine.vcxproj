@@ -214,8 +214,10 @@
     <ClInclude Include="Source Code\CO_AudioListener.h" />
     <ClInclude Include="Source Code\CO_AudioSource.h" />
     <ClInclude Include="Source Code\CO_Camera.h" />
+    <ClInclude Include="Source Code\CO_Collider.h" />
     <ClInclude Include="Source Code\CO_MeshRenderer.h" />
     <ClInclude Include="Source Code\CO_Material.h" />
+    <ClInclude Include="Source Code\CO_RigidBody.h" />
     <ClInclude Include="Source Code\CO_Script.h" />
     <ClInclude Include="Source Code\CO_Transform.h" />
     <ClInclude Include="Source Code\CS_Input_Bindings.h" />
@@ -341,6 +343,8 @@
     <ClInclude Include="Source Code\MA_IconSystem.h" />
     <ClInclude Include="Source Code\MO_AudioManager.h" />
     <ClInclude Include="Source Code\MO_MonoManager.h" />
+    <ClInclude Include="Source Code\MO_Physics.h" />
+    <ClInclude Include="Source Code\MO_Physics\Header.h" />
     <ClInclude Include="Source Code\RE_Material.h" />
     <ClInclude Include="Source Code\RE_Mesh.h" />
     <ClInclude Include="Source Code\MeshArrays.h" />
@@ -385,8 +389,10 @@
     <ClCompile Include="Source Code\CO_AudioListener.cpp" />
     <ClCompile Include="Source Code\CO_AudioSource.cpp" />
     <ClCompile Include="Source Code\CO_Camera.cpp" />
+    <ClCompile Include="Source Code\CO_Collider.cpp" />
     <ClCompile Include="Source Code\CO_Material.cpp" />
     <ClCompile Include="Source Code\CO_MeshRenderer.cpp" />
+    <ClCompile Include="Source Code\CO_RigidBody.cpp" />
     <ClCompile Include="Source Code\CO_Script.cpp" />
     <ClCompile Include="Source Code\CO_Transform.cpp" />
     <ClCompile Include="Source Code\DEJsonSupport.cpp" />
@@ -461,6 +467,7 @@
     <ClCompile Include="Source Code\MMGui.cpp" />
     <ClCompile Include="Source Code\MO_AudioManager.cpp" />
     <ClCompile Include="Source Code\MO_MonoManager.cpp" />
+    <ClCompile Include="Source Code\MO_Physics.cpp" />
     <ClCompile Include="Source Code\RE_Material.cpp" />
     <ClCompile Include="Source Code\RE_Mesh.cpp" />
     <ClCompile Include="Source Code\IM_MeshLoader.cpp" />
