@@ -157,7 +157,7 @@ void C_Animator::Update()
 			time += dt;
 			currentTimeAnimation = time * currentAnimation->ticksPerSecond;
 			currentTimeAnimation += currentAnimation->initTimeAnim;
-			if (currentAnimation && currentTimeAnimation >= currentAnimation->duration - 1) {
+			if (currentAnimation && currentTimeAnimation >= currentAnimation->duration) {
 				if (currentAnimation->loopable == true) {
 					time = 0.f;
 				}
@@ -167,7 +167,6 @@ void C_Animator::Update()
 					return;
 				}
 			}
-
 			UpdateChannelsTransform(currentAnimation, blendRatio > 0.0f ? previousAnimation : nullptr, blendRatio);
 			UpdateMeshAnimation(gameObject->children[0]);
 		}
@@ -537,6 +536,7 @@ void C_Animator::AddClip(ResourceAnimation* anim)
 void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, const ResourceAnimation* blend, float blendRatio)
 {
 	uint currentFrame = currentTimeAnimation;
+	//LOG(LogType::L_NORMAL,"%i", currentFrame);
 	//LOG(LogType::L_NORMAL, "%i", currentFrame);
 	uint prevBlendFrame = 0;
 	if (blend != nullptr)
@@ -571,6 +571,10 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, cons
 		
 		transform->position = position;
 		transform->eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
+		if (transform->eulerRotation.z == -19.41f) {
+			LOG(LogType::L_WARNING, "Current Frame: %i", currentFrame);
+		}
+		LOG(LogType::L_NORMAL, "%.2f Current frame: %i", transform->eulerRotation.z,currentFrame);
 		transform->localScale = scale;
 		transform->updateTransform = true;
 	}
