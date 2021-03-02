@@ -4,7 +4,7 @@ using DiamondEngine;
 public class RoomSwitch : DiamondComponent
 {
 
-	public static int[] rooms = { 1076838722,
+	static int[] rooms = { 1076838722,
 		1934547592,
 		1406013733,
 		1482507639};
