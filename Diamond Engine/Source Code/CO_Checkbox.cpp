@@ -89,11 +89,7 @@ void C_Checkbox::ChangeTexture(CHECKBOXSTATE new_num_sprite)
 		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
 
 		if (img != nullptr)
-		{
-			ResourceTexture* tex = img->GetTexture();
-			img->SetTexture(sprite_checkbox_active, (tex != sprite_checkbox_active && tex != sprite_checkbox_active_hovered && tex!= sprite_checkbox_active_pressed && tex != sprite_checkbox_unactive &&
-				tex != sprite_checkbox_unactive_hovered && tex != sprite_checkbox_unactive_pressed));
-		}
+			img->SetTexture(sprite_checkbox_active);
 		break;
 	}
 
@@ -107,11 +103,7 @@ void C_Checkbox::ChangeTexture(CHECKBOXSTATE new_num_sprite)
 		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
 
 		if (img != nullptr)
-		{
-			ResourceTexture* tex = img->GetTexture();
-			img->SetTexture(sprite_checkbox_active_hovered, (tex != sprite_checkbox_active && tex != sprite_checkbox_active_hovered && tex != sprite_checkbox_active_pressed && tex != sprite_checkbox_unactive &&
-				tex != sprite_checkbox_unactive_hovered && tex != sprite_checkbox_unactive_pressed));
-		}
+			img->SetTexture(sprite_checkbox_active_hovered);
 		break;
 	}
 	case CHECKBOXSTATE::CHECKBOXACTIVEPRESSED:
@@ -124,11 +116,7 @@ void C_Checkbox::ChangeTexture(CHECKBOXSTATE new_num_sprite)
 		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
 
 		if (img != nullptr)
-		{
-			ResourceTexture* tex = img->GetTexture();
-			img->SetTexture(sprite_checkbox_active_pressed, (tex != sprite_checkbox_active && tex != sprite_checkbox_active_hovered && tex != sprite_checkbox_active_pressed && tex != sprite_checkbox_unactive && 
-				tex != sprite_checkbox_unactive_hovered && tex != sprite_checkbox_unactive_pressed));
-		}
+			img->SetTexture(sprite_checkbox_active_pressed);
 		break;
 	}
 	case CHECKBOXSTATE::CHECKBOXUNACTIVE:
@@ -141,11 +129,8 @@ void C_Checkbox::ChangeTexture(CHECKBOXSTATE new_num_sprite)
 		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
 
 		if (img != nullptr)
-		{
-			ResourceTexture* tex = img->GetTexture();
-			img->SetTexture(sprite_checkbox_unactive, (tex != sprite_checkbox_active && tex != sprite_checkbox_active_hovered && tex != sprite_checkbox_active_pressed && tex != sprite_checkbox_unactive && 
-				tex != sprite_checkbox_unactive_hovered && tex != sprite_checkbox_unactive_pressed));
-		}
+			img->SetTexture(sprite_checkbox_unactive);
+		
 		break;
 	}
 	case CHECKBOXSTATE::CHECKBOXUNACTIVEHOVERED:
@@ -158,11 +143,8 @@ void C_Checkbox::ChangeTexture(CHECKBOXSTATE new_num_sprite)
 		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
 
 		if (img != nullptr)
-		{
-			ResourceTexture* tex = img->GetTexture();
-			img->SetTexture(sprite_checkbox_unactive_hovered, (tex != sprite_checkbox_active && tex != sprite_checkbox_active_hovered && tex != sprite_checkbox_active_pressed && tex != sprite_checkbox_unactive &&
-				tex != sprite_checkbox_unactive_hovered && tex != sprite_checkbox_unactive_pressed));
-		}
+			img->SetTexture(sprite_checkbox_unactive_hovered);
+
 		break;
 	}
 	case CHECKBOXSTATE::CHECKBOXUNACTIVEPRESSED:
@@ -175,11 +157,7 @@ void C_Checkbox::ChangeTexture(CHECKBOXSTATE new_num_sprite)
 		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
 
 		if (img != nullptr)
-		{
-			ResourceTexture* tex = img->GetTexture();
-			img->SetTexture(sprite_checkbox_unactive_pressed, (tex != sprite_checkbox_active && tex != sprite_checkbox_active_hovered && tex != sprite_checkbox_active_pressed && tex != sprite_checkbox_unactive &&
-				tex != sprite_checkbox_unactive_hovered && tex != sprite_checkbox_unactive_pressed));
-		}
+			img->SetTexture(sprite_checkbox_unactive_pressed);
 		break;
 	}
 	}
