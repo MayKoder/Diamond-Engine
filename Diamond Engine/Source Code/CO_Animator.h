@@ -56,17 +56,6 @@ public:
 	Quat GetChannelRotation(const Channel& channel, float currentKey, Quat default) const;
 	float3 GetChannelScale(const Channel& channel, float currentKey, float3 default) const;
 
-	//void SetAnimation(const char* name, float blendTime = 0.0f);
-	//void SetAnimation(uint index, float blendTime = 0.0f);
-
-	//ResourceAnimation* GetAnimation(uint index);
-
-	//void SetResource(Resource* resource);
-	//void SetResource(unsigned long long ID);
-
-	////uint64 GetResourceID() const;
-	//static inline Type GetType() { return Type::Animator; };
-
 private:
 	void DrawBones(GameObject*);
 	ResourceAnimation* ClipToAnimation(AnimationClip clip);
@@ -89,6 +78,7 @@ public:
 
 private:
 	bool started = false;
+	bool showBones = false;
 
 	float prevAnimTime = 0.0f;
 	float time = 0.0f;

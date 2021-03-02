@@ -20,6 +20,8 @@
 #include "Assimp/include/cfileio.h"
 #include "Assimp/include/vector3.h"
 
+#include "MathGeoLib/include/Math/float3.h"
+
 #pragma comment (lib, "Assimp/libx86/assimp-vc142-mt.lib")
 
 void  AnimationLoader::logCallback(const char* message, char* user)
@@ -178,7 +180,7 @@ void AnimationLoader::LoadChannels(Channel& channel, const char** cursor)
 	}
 
 	//Ranges
-	uint ranges[3];
+	uint ranges[3] = {0,0,0};
 	memcpy(&ranges, *cursor, sizeof(uint) * 3);
 	*cursor += sizeof(uint) * 3;
 
