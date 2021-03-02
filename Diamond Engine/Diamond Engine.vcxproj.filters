@@ -535,6 +535,9 @@
     <ClInclude Include="Source Code\IM_MaterialImporter.h">
       <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CS_Input_Bindings.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">

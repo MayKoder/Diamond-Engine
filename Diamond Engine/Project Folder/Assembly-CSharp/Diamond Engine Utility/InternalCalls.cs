@@ -21,6 +21,7 @@ namespace DiamondEngine
     }
     public class Input
     {
+        //Keyboard and mouse
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern KeyState GetKey(object keyPressed);
 
@@ -32,6 +33,28 @@ namespace DiamondEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern int GetMouseY();
+
+        //Gamepad
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern KeyState GetGamepadButton(object keyPressed);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetLeftAxisX();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetLeftAxisY();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetRightAxisX();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetRightAxisY();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetLeftTrigger();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetRightTrigger();
     }
 
     public partial class Debug
@@ -202,7 +225,7 @@ namespace DiamondEngine
             mat[8] = 2 * (x * z - y * w); mat[9] = 2 * (y * z + x * w); mat[10] = 1 - 2 * (x * x + y * y); mat[11] = 0;
             mat[12] = 0; mat[13] = 0; mat[14] = 0; mat[15] = 1;
 
-            Debug.Log("Rotation: " +mat.ToString());
+            Debug.Log("Rotation: " + mat.ToString());
 
             return mat;
         }
@@ -215,7 +238,7 @@ namespace DiamondEngine
             mat[8] = 0; mat[9] = 0; mat[10] = scale.z; mat[11] = 0;
             mat[12] = 0; mat[13] = 0; mat[14] = 0; mat[15] = 1;
 
-            Debug.Log("Scale: "+mat.ToString());
+            Debug.Log("Scale: " + mat.ToString());
 
 
             return mat;
@@ -262,7 +285,7 @@ namespace DiamondEngine
             string ret = "";
             for (int i = 0; i < 16; i += 4)
             {
-                ret += (this[i].ToString() + ", " + this[i + 1].ToString() + ", " + this[i + 2].ToString() + ", " + this[i+3].ToString()) + Environment.NewLine;
+                ret += (this[i].ToString() + ", " + this[i + 1].ToString() + ", " + this[i + 2].ToString() + ", " + this[i + 3].ToString()) + Environment.NewLine;
             }
 
             return ret;
@@ -610,4 +633,25 @@ public enum MouseButton
     LEFT = 1,
     MIDDLE,
     RIGHT,
+}
+
+public enum DEControllerButton
+{
+    INVALID = -1,
+    A,
+    B,
+    X,
+    Y,
+    BACK,
+    GUIDE,
+    START,
+    LEFTSTICK,
+    RIGHTSTICK,
+    LEFTSHOULDER,
+    RIGHTSHOULDER,
+    DPAD_UP,
+    DPAD_DOWN,
+    DPAD_LEFT,
+    DPAD_RIGHT,
+    MAX
 }
