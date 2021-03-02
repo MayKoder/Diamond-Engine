@@ -18,7 +18,7 @@
    {
     "Id": "1069811801",
     "Language": "SFX",
-    "Hash": "4285786921",
+    "Hash": "2627047551",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Audio",
     "ShortName": "Audio",
     "Path": "Audio.bnk",
@@ -101,20 +101,39 @@
      {
       "Id": "2932040671",
       "Name": "Play_Music",
-      "ObjectPath": "\\Events\\Default Work Unit\\Play_Music"
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Music",
+      "IncludedMemoryFiles": [
+       {
+        "Id": "209390670",
+        "Language": "SFX",
+        "ShortName": "Empire Music.wav",
+        "Path": "SFX\\Empire Music_10C4C929.wem"
+       }
+      ]
      },
      {
       "Id": "2045397714",
       "Name": "Play_Weapon_Shoot",
-      "ObjectPath": "\\Events\\Default Work Unit\\Play_Weapon_Shoot"
-     }
-    ],
-    "IncludedMemoryFiles": [
-     {
-      "Id": "575059296",
-      "Language": "SFX",
-      "ShortName": "blaster wav.wav",
-      "Path": "SFX\\blaster wav_10C4C929.wem"
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Weapon_Shoot",
+      "IncludedMemoryFiles": [
+       {
+        "Id": "575059296",
+        "Language": "SFX",
+        "ShortName": "blaster wav.wav",
+        "Path": "SFX\\blaster wav_10C4C929.wem"
+       }
+      ],
+      "DefaultSwitchValue": "{21D5D886-05F7-4F0D-AA11-6F543FC38106}",
+      "SwitchContainers": [
+       {
+        "SwitchValue": "{21D5D886-05F7-4F0D-AA11-6F543FC38106}",
+        "Media": [
+         {
+          "Id": "575059296"
+         }
+        ]
+       }
+      ]
      }
     ],
     "GameParameters": [
