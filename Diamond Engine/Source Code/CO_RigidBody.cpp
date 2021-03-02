@@ -96,7 +96,7 @@ C_RigidBody::~C_RigidBody()
 	EngineExternal->modulePhysics->ReleaseActor((physx::PxRigidActor*)rigid_dynamic);
 }
 
-void C_RigidBody::Update()
+void C_RigidBody::PostUpdate()
 {
 	//Just update transform if we have rigidbody simulation
 	//if (App->timeManager->started) {

@@ -19,7 +19,7 @@ public:
 	C_RigidBody(GameObject* _gm/*, float3 _position, Quat _rotation, float3 _localScale*/);
 	virtual ~C_RigidBody();
 
-	void Update() override;
+	void PostUpdate() override;
 	void Step();
 
 	void SaveData(JSON_Object* nObj) override;

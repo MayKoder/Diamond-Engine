@@ -30,6 +30,7 @@ public:
 	virtual void Disable();
 
 	virtual void Update();
+	virtual void PostUpdate();
 
 #ifndef STANDALONE
 	virtual bool OnEditor();

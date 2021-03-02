@@ -127,7 +127,8 @@ void RecievePosition(MonoObject* obj, MonoObject* secObj) //Allows to send float
 
 	if (workGO->transform)
 	{
-		workGO->transform->SetTransformMatrix(omgItWorks, workGO->transform->rotation, workGO->transform->localScale);
+		workGO->transform->position = omgItWorks;
+		//workGO->transform->SetTransformMatrix(omgItWorks, workGO->transform->rotation, workGO->transform->localScale);
 		workGO->transform->updateTransform = true;
 	}
 }

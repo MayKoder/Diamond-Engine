@@ -170,7 +170,7 @@ update_status ModulePhysics::PreUpdate(float dt)
 
 update_status ModulePhysics::Update(float gameTimestep) {
 
-	RenderGeometry();
+	//RenderGeometry();
 
 	return update_status::UPDATE_CONTINUE;
 }

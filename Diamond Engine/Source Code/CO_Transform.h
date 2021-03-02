@@ -17,7 +17,7 @@ public:
 	C_Transform(GameObject* _gm/*, float3 _position, Quat _rotation, float3 _localScale*/);
 	virtual ~C_Transform();
 
-	void Update() override;
+	void PostUpdate() override;
 
 #ifndef STANDALONE
 	bool OnEditor() override;

@@ -81,6 +81,15 @@ void GameObject::Update()
 	}
 }
 
+void GameObject::PostUpdate()
+{
+	for (size_t i = 0; i < components.size(); i++)
+	{
+		if (components[i]->IsActive())
+			components[i]->PostUpdate();
+	}
+}
+
 Component* GameObject::AddComponent(Component::Type _type, const char* params)
 {
 

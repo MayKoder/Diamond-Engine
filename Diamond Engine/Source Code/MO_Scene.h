@@ -55,6 +55,9 @@ private:
 	void Destroy(GameObject* gm);
 
 	void UpdateGameObjects();
+
 	void RecursiveUpdate(GameObject* parent);
+	void RecursivePostUpdate(GameObject* parent);
+
 	GameObject* LoadGOData(JSON_Object* goJsonObj, GameObject* parent);
 };

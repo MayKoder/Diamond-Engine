@@ -146,6 +146,7 @@ update_status M_Scene::Update(float dt)
 
 
 	UpdateGameObjects();
+	RecursivePostUpdate(root);
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -236,6 +237,22 @@ void M_Scene::RecursiveUpdate(GameObject* parent)
 		for (size_t i = 0; i < parent->children.size(); i++)
 		{
 			RecursiveUpdate(parent->children[i]);
+		}
+	}
+}
+
+void M_Scene::RecursivePostUpdate(GameObject* parent)
+{
+	if (parent->toDelete)
+		return;
+
+	if (parent->isActive())
+	{
+		parent->PostUpdate();
+
+		for (size_t i = 0; i < parent->children.size(); i++)
+		{
+			RecursivePostUpdate(parent->children[i]);
 		}
 	}
 }
