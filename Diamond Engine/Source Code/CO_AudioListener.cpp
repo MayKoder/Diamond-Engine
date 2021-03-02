@@ -37,7 +37,7 @@ bool C_AudioListener::OnEditor()
 			SetAsDefaultListener(listenerAux);
 		}
 
-		if (ImGui::SliderFloat("Master Audio Volume", &masterVolume, 0.0f, 100.0f))
+		if (ImGui::SliderFloat("Master Audio Volume", &masterVolume, 0.0f, 99.99f))
 		{
 			SetVolume(masterVolume);
 		}
@@ -81,7 +81,7 @@ void C_AudioListener::SetVolume(float newVol)
 	this->masterVolume = MAX(newVol, 0.0f);
 
 	if (isDefaultListener)
-		EngineExternal->moduleAudio->SetBusVolume(std::string("Master Audio Bus"), masterVolume);
+		EngineExternal->moduleAudio->SetBusVolume(masterVolume);
 }
 
 uint C_AudioListener::GetID()

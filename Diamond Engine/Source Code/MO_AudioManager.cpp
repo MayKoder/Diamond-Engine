@@ -375,7 +375,7 @@ void ModuleAudioManager::RemoveAudioSource(C_AudioSource* source)
 	}
 }
 
-void ModuleAudioManager::SetAudioObjTransform(unsigned int id,float3& pos, float3& forward,float3& up)
+void ModuleAudioManager::SetAudioObjTransform(unsigned int id, float3& pos, float3& forward, float3& up)
 {
 	AkSoundPosition newPos;
 	newPos.SetPosition(-pos.x, -pos.y, -pos.z);
@@ -384,11 +384,10 @@ void ModuleAudioManager::SetAudioObjTransform(unsigned int id,float3& pos, float
 	AK::SoundEngine::SetPosition(id, newPos);
 }
 
-void ModuleAudioManager::SetBusVolume(std::string& busName, float volume)
+void ModuleAudioManager::SetBusVolume(float volume)
 {
-	unsigned int busID = AK::SoundEngine::GetIDFromString(busName.c_str());
-	AK::SoundEngine::SetRTPCValue(busName.c_str(), volume);
-	//ChangeRTPCValue(busID, std::string("BusVolume"), volume);
+	if (defaultListener != nullptr)
+		ChangeRTPCValue(defaultListener->GetID(), std::string("BusVolume"), volume);
 }
 
 //this updates the listener that Wwise uses to be the Module Audio default listener
