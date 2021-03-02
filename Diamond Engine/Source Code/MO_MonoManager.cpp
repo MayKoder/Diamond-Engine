@@ -14,6 +14,7 @@
 #include"CO_Script.h"
 #include"CS_Transform_Bindings.h"
 #include "CS_Input_Bindings.h"
+#include"CS_Scene_Bindings.h"
 
 #include <iostream>
 #include <fstream> 
@@ -88,6 +89,8 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.GameObject::set_localScale", RecieveScale);
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
+
+	mono_add_internal_call("DiamondEngine.SceneManager::LoadScene", CS_LoadScene);
 
 	InitMono();
 
@@ -442,7 +445,7 @@ void M_MonoManager::InitMono()
 		const char* name_space = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
 		_class = mono_class_from_name(image, name_space, name);
 
-		if (strcmp(mono_class_get_namespace(_class), DE_SCRIPTS_NAMESPACE) != 0 && !mono_class_is_enum(_class))
+		if (_class != nullptr && strcmp(mono_class_get_namespace(_class), DE_SCRIPTS_NAMESPACE) != 0 && !mono_class_is_enum(_class))
 		{
 			userScripts.push_back(_class);
 			LOG(LogType::L_WARNING, "%s", mono_class_get_name(_class));

@@ -1,0 +1,100 @@
+{
+    "EditorCameraPosition": [
+        39.257171630859375,
+        34.986793518066406,
+        63.153152465820313
+    ],
+    "EditorCameraZ": [
+        -0.44835922122001648,
+        -0.43020963668823242,
+        -0.78351366519927979
+    ],
+    "EditorCameraY": [
+        -0.21366247534751892,
+        0.90272897481918335,
+        -0.37340152263641357
+    ],
+    "Game Objects": [
+        {
+            "name": "Scene root",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1676501951,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Cube",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                50,
+                0.20000000298023224,
+                50
+            ],
+            "UID": 1858632474,
+            "ParentUID": 1676501951,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        0,
+                        0.90625,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "RoomSwitch",
+                    "rooms": 152244000,
+                    "index": 0
+                }
+            ]
+        }
+    ]
+}
