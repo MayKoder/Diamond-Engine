@@ -565,6 +565,9 @@
     <ClInclude Include="Source Code\MA_ShortcutManager.h">
       <Filter>Sources\Editor\Commands</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CS_Input_Bindings.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
     <ClInclude Include="Source Code\INC_EditorWindows.h">
       <Filter>Sources\INC_Packs</Filter>
     </ClInclude>

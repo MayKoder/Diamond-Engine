@@ -19,16 +19,9 @@ public class BH_Bullet : DiamondComponent
 
         thisReference.localPosition += thisReference.GetForward() * (speed * Time.deltaTime);
 
-        yVel -= Time.deltaTime / 15.0f;
-        thisReference.localPosition += (Vector3.up * yVel);
-
         if (currentLifeTime >= maxLifeTime)
         {
             InternalCalls.Destroy(this.thisReference);
         }
     }
 }
-
-
-
-

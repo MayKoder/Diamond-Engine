@@ -3,20 +3,20 @@
 #include "Globals.h"
 #include "Application.h"
 
-#include"GameObject.h"
-#include"DETime.h"
-#include"RE_Mesh.h"
+#include "GameObject.h"
+#include "DETime.h"
+#include "RE_Mesh.h"
 
-#include"CO_MeshRenderer.h"
-#include"CO_Script.h"
-#include"CO_Transform.h"
+#include "CO_MeshRenderer.h"
+#include "CO_Script.h"
+#include "CO_Transform.h"
 
-#include"MO_Input.h"
-#include"MO_Scene.h"
-#include"MO_ResourceManager.h"
+#include "MO_Input.h"
+#include "MO_Scene.h"
+#include "MO_ResourceManager.h"
 
-#include"GameObject.h"
-#include"MathGeoLib/include/Math/float3.h"
+#include "GameObject.h"
+#include "MathGeoLib/include/Math/float3.h"
 
 //------//
 MonoObject* DE_Box_Vector(MonoObject* obj, const char* type, bool global)
@@ -66,35 +66,6 @@ void CSLog(MonoString* x)
 	char* msg = mono_string_to_utf8(x);
 	LOG(LogType::L_WARNING, msg);
 	mono_free(msg);
-}
-
-int GetKey(MonoObject* x)
-{
-	if (EngineExternal != nullptr)
-		return EngineExternal->moduleInput->GetKey(*(int*)mono_object_unbox(x));
-
-	return 0;
-}
-int GetMouseClick(MonoObject* x)
-{
-	if (EngineExternal != nullptr)
-		return EngineExternal->moduleInput->GetMouseButton(*(int*)mono_object_unbox(x));
-
-	return 0;
-}
-int MouseX()
-{
-	if (EngineExternal != nullptr)
-		return EngineExternal->moduleInput->GetMouseXMotion();
-
-	return 0;
-}
-int MouseY()
-{
-	if (EngineExternal != nullptr)
-		return EngineExternal->moduleInput->GetMouseYMotion();
-
-	return 0;
 }
 
 void CSCreateGameObject(MonoObject* name, MonoObject* position)

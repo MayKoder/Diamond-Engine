@@ -26,6 +26,7 @@ public:
 	void OnGUI() override;
 #endif // !STANDALONE
 
+	//Keyboard functions
 	KEY_STATE GetKey(int id) const
 	{
 		return keyboard[id];
@@ -61,9 +62,50 @@ public:
 		return mouse_y_motion;
 	}
 
+	//Game Pad functions
+	//Returns KEY_STATE of gamePad buttons: KEY_IDLE, KEY_DOWN, KEY_REPEAT, KEY_UP
+	KEY_STATE GetGamePadKey(int id) const {
+		return game_pad[id];
+	}
+
+	//Return values between -32768 (joystick up) and 32767 (joystick down). Value by default is -1 (idle)
+	int GetLeftAxisY() {
+		return SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_LEFTY);
+	}
+
+	//Return values between -32768 (joystick left) and 32767 (joystick right). Value by default is 0 (idle)
+	int GetLeftAxisX (){
+		return SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_LEFTX);
+	}
+	
+	//Return values between -32768 (joystick up) and 32767 (joystick down). Value by default is -1 (idle)
+	int GetRightAxisY() {
+		return SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_RIGHTY);
+	}
+
+	//Return values between -32768 (joystick left) and 32767 (joystick right). Value by default is 0 (idle)
+	int GetRightAxisX() {
+		return SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_RIGHTX);
+	}
+
+	//Return values between 0 (trigger idle) and 32767 (trigger pressed)
+	int GetRightTrigger() {
+		return SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
+	}
+
+	//Return values between 0 (trigger idle) and 32767 (trigger pressed)
+	int GetLeftTrigger() {
+		return SDL_GameControllerGetAxis(controller_player, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
+	}
+
 private:
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
+
+	//Gamepad control
+	KEY_STATE game_pad[SDL_CONTROLLER_BUTTON_MAX];
+	SDL_GameController* controller_player = nullptr;
+
 	int mouse_x;
 	int mouse_y;
 	int mouse_z;
