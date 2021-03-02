@@ -18,7 +18,7 @@
    {
     "Id": "1069811801",
     "Language": "SFX",
-    "Hash": "3716485186",
+    "Hash": "3053518406",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Audio",
     "ShortName": "Audio",
     "Path": "Audio.bnk",
@@ -146,6 +146,11 @@
       "Id": "1547598200",
       "Name": "SourcePitch",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\SourcePitch"
+     },
+     {
+      "Id": "2704707011",
+      "Name": "BusVolume",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\BusVolume"
      }
     ],
     "SwitchGroups": [
