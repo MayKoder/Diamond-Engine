@@ -63,6 +63,8 @@ public:
 
 	void SetAudioObjTransform(unsigned int id, float3& pos, float3& forward, float3& up);
 
+	void SetBusVolume(std::string& busName, float volume);
+
 private:
 	void UpdateWwiseListener();
 

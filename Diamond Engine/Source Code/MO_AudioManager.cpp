@@ -384,6 +384,13 @@ void ModuleAudioManager::SetAudioObjTransform(unsigned int id,float3& pos, float
 	AK::SoundEngine::SetPosition(id, newPos);
 }
 
+void ModuleAudioManager::SetBusVolume(std::string& busName, float volume)
+{
+	unsigned int busID = AK::SoundEngine::GetIDFromString(busName.c_str());
+	AK::SoundEngine::SetRTPCValue(busName.c_str(), volume);
+	//ChangeRTPCValue(busID, std::string("BusVolume"), volume);
+}
+
 //this updates the listener that Wwise uses to be the Module Audio default listener
 void ModuleAudioManager::UpdateWwiseListener()
 {
