@@ -17,9 +17,7 @@ void MaterialImporter::CreateBaseMaterialFile(const char* path)
 	root_object.WriteInt("ShaderUID", EngineExternal->moduleScene->defaultMaterial->shader->GetUID());
 
 	JSON_Value* uniformsArray = json_value_init_array();
-#ifndef STANDALONE
 	EngineExternal->moduleScene->defaultMaterial->SaveToJson(json_value_get_array(uniformsArray));
-#endif STANDALONE
 	
 	json_object_set_value(root_object.nObj, "Uniforms", uniformsArray);
 
@@ -41,9 +39,7 @@ void MaterialImporter::Save(ResourceMaterial* material, char** fileBuffer)
 	root_object.WriteInt("ShaderUID", material->shader->GetUID());
 
 	JSON_Value* uniformsArray = json_value_init_array();
-#ifndef STANDALONE
 	material->SaveToJson(json_value_get_array(uniformsArray));
-#endif //STANDALONE
 	json_object_set_value(root_object.nObj, "Uniforms", uniformsArray);
   
 	//TODO: Should be saving Assets material and not library but there is no assets path in the resource :(
