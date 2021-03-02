@@ -18,7 +18,7 @@
    {
     "Id": "1069811801",
     "Language": "SFX",
-    "Hash": "2627047551",
+    "Hash": "1750557341",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Audio",
     "ShortName": "Audio",
     "Path": "Audio.bnk",
@@ -134,6 +134,11 @@
         ]
        }
       ]
+     },
+     {
+      "Id": "2399259911",
+      "Name": "Set_General_Volume",
+      "ObjectPath": "\\Events\\Default Work Unit\\Set_General_Volume"
      }
     ],
     "GameParameters": [
@@ -198,10 +203,17 @@
    {
     "Id": "1355168291",
     "Language": "SFX",
-    "Hash": "3906755781",
+    "Hash": "101751641",
     "ObjectPath": "Init",
     "ShortName": "Init",
-    "Path": "Init.bnk"
+    "Path": "Init.bnk",
+    "GameParameters": [
+     {
+      "Id": "2704707011",
+      "Name": "BusVolume",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\BusVolume"
+     }
+    ]
    }
   ]
  }
