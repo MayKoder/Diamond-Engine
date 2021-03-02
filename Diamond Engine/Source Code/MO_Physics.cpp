@@ -152,7 +152,7 @@ bool ModulePhysics::Init() {
 //	mScene->addActor(*groundPlane);
 
 	mScene->setSimulationEventCallback(&detector);
-
+	mScene->setGravity(PxVec3(gravity.x, gravity.y, gravity.z));
 	
 	return true;
 }
@@ -161,9 +161,6 @@ update_status ModulePhysics::PreUpdate(float dt)
 {
 	if (DETime::state == GameState::PLAY)
 		SceneSimulation(DETime::deltaTime);
-
-	//TODO: REMOVE OR REPLACE
-	mScene->setGravity(PxVec3(gravity.x, gravity.y, gravity.z));
 
 	return update_status::UPDATE_CONTINUE;
 }
