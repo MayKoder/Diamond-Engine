@@ -30,8 +30,8 @@ C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject), rootBone
 	playing = true;
 	defaultBlend = 0.2f;
 	//TODO: Loading is hard coded for debugging purposes. We must change it
-	ResourceAnimation* resAnim = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION));
-	AddAnimation(resAnim);
+	//ResourceAnimation* resAnim = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION));
+	//AddAnimation(resAnim);
 
 	/*ResourceAnimation* resAnim2 = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(33771251, Resource::Type::ANIMATION));
 	AddAnimation(resAnim2);

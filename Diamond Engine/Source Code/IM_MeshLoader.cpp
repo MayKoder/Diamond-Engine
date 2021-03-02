@@ -120,6 +120,12 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTextur
 		}
 		else
 		{
+			std::string finalString = std::string(holderName);
+			size_t index = finalString.find("_$AssimpFbx$_");
+			if (index != std::string::npos) {
+				finalString = finalString.erase(index, std::string::npos);
+				holderName = finalString.c_str();
+			}
 			rootGO = new GameObject(holderName, gmParent);
 			PopulateTransform(rootGO, pos, rot, scale);
 		}
@@ -132,6 +138,12 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTextur
 	}
 	else if (node->mNumMeshes == 0)
 	{
+		std::string finalString = std::string(holderName);
+		size_t index = finalString.find("_$AssimpFbx$_");
+		if (index != std::string::npos) {
+			finalString = finalString.erase(index, std::string::npos);
+			holderName = finalString.c_str();
+		}
 		GameObject* noChildrenGO = new GameObject(holderName, gmParent);
 		PopulateTransform(noChildrenGO, pos, rot, scale);
 	}
