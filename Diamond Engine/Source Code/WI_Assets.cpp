@@ -81,6 +81,7 @@ void W_Assets::Draw()
 		
 		DrawFileTree(*displayFolder);
 		DrawFileTree(EngineExternal->moduleResources->meshesLibraryRoot);
+		DrawFileTree(EngineExternal->moduleResources->animationsLibraryRoot);
 
 		if (selectedFile != nullptr && /*ImGui::IsWindowHovered() &&*/ EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) 
 		{ //This prevents mesh removal because mesh files have no dirName
@@ -164,7 +165,6 @@ void W_Assets::DrawFileTree(AssetDir& file)
 		}
 	}
 
-
 	if (!file.isDir) 
 	{
 		if (ImGui::BeginDragDropSource(/*ImGuiDragDropFlags_SourceNoDisableHover*/))
@@ -186,7 +186,9 @@ void W_Assets::DrawFileTree(AssetDir& file)
 			case  Resource::Type::SHADER:
 				ImGui::SetDragDropPayload("_SHADER", &file.metaFileDir, file.metaFileDir.length());
 				break;
-
+			case  Resource::Type::ANIMATION:
+				ImGui::SetDragDropPayload("_ANIMATION", &file.importPath, file.importPath.length());
+				break;
 			default:
 				break;
 			}

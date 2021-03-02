@@ -23,7 +23,8 @@ resourceType(Resource::Type::UNKNOWN), parentDir(nullptr)
 		}
 		else if(!isDir)
 		{
-			resourceType = Resource::Type::MESH;
+			//resourceType = Resource::Type::MESH;
+			resourceType = EngineExternal->moduleResources->GetTypeFromLibraryExtension(_imPath);
 		}
 	}
 }

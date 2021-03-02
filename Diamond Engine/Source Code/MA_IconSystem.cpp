@@ -77,6 +77,14 @@ GLuint IconManager::GetIconTextureID(Resource::Type iconType)
 	case Resource::Type::SHADER:
 		ret = "SHADER";
 		break;
+	
+	/*case Resource::Type::MATERIAL:
+		ret = "MATERIAL";
+		break;
+	case Resource::Type::ANIMATION:
+		ret = "ANIMATION";
+		break;
+	*/
 	case Resource::Type::UNKNOWN:
 		ret = "FOLDER";
 		break;

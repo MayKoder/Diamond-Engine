@@ -29,7 +29,9 @@ bool ResourceAnimation::UnloadFromMemory()
 
 uint ResourceAnimation::SaveCustomFormat(ResourceAnimation* animation, char** buffer)
 {
-	uint size = sizeof(animationName) + sizeof(float) + sizeof(float) + sizeof(uint);
+	uint size = 
+		32 //name size 
+		+ sizeof(float) + sizeof(float) + sizeof(uint);
 
 	//Channels size 
 	std::map<std::string, Channel>::const_iterator it;
@@ -41,7 +43,7 @@ uint ResourceAnimation::SaveCustomFormat(ResourceAnimation* animation, char** bu
 	char* cursor = *buffer;
 
 	////Name
-	memcpy(cursor, &animation->animationName, sizeof(animationName));
+	memcpy(cursor, &animation->animationName, sizeof(char));
 	cursor += sizeof(animationName);
 
 	//Duration
@@ -73,8 +75,8 @@ void ResourceAnimation::LoadCustomFormat(const char* path)
 	const char* cursor = buffer;
 	uint bytes;
 
-	////Name
-	memcpy(&animationName, cursor, sizeof(animationName));
+	//////Name
+	memcpy(&animationName, cursor, sizeof(char));
 	cursor += sizeof(animationName);
 
 	//Fills Duration

@@ -49,7 +49,7 @@ public:
 
 public:
 
-	std::string animationName;
+	char animationName[32];
 	float duration;
 	float ticksPerSecond;
 	bool loopable = true;

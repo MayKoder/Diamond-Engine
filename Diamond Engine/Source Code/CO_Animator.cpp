@@ -68,7 +68,7 @@ void C_Animator::Start()
 	}
 
 	if (animations.size() > 0)
-		Play("Idle",defaultBlend);
+		Play("Default",defaultBlend);
 
 	started = true;
 }
@@ -152,7 +152,7 @@ void C_Animator::Update()
 				time = 0.f;
 			}
 			else {
-				Play("Idle",defaultBlend);
+				Play("Default",defaultBlend);
 				return;
 			}
 		}
@@ -288,7 +288,7 @@ bool C_Animator::OnEditor()
 			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "None");
 		}
 		else {
-			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", currentAnimation->animationName.c_str());
+			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", currentAnimation->animationName);
 			ImGui::Text("Duration: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->duration);
 			ImGui::Text("Ticks per second: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->ticksPerSecond);
 		}
@@ -304,7 +304,7 @@ bool C_Animator::OnEditor()
 			}
 
 			if (ImGui::Button(animName.c_str())) {
-				Play(animName,defaultBlend);
+				Play(animName, defaultBlend);
 				time = 0.f;
 
 				//if (currentAnimation == nullptr) {
@@ -318,9 +318,12 @@ bool C_Animator::OnEditor()
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ANIMATION"))
 			{
-				int uid = *(int*)payload->Data;
+				std::string* libraryPath = (std::string*)payload->Data;
 
-				ResourceAnimation* droppedAnimation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(uid, Resource::Type::ANIMATION));
+				std::string uid = "";
+				FileSystem::GetFileName(libraryPath->c_str(), uid, false);
+				ResourceAnimation* droppedAnimation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(std::atoi(uid.c_str())));
+
 				if (droppedAnimation != nullptr) {
 					AddAnimation(droppedAnimation);
 				}
@@ -484,9 +487,10 @@ void C_Animator::AddAnimation(ResourceAnimation* anim)
 {
 	if (anim != nullptr) {
 		_anim = anim;
-		//animations[anim->animationName] = anim;
+		animations[anim->animationName] = anim;
 	}
 	
+	/*
 	_anim->animationName = "Idle";
 	_anim->initTimeAnim = 0;
 	_anim->duration = 47;
@@ -505,6 +509,7 @@ void C_Animator::AddAnimation(ResourceAnimation* anim)
 	attack->duration = 120;
 	attack->loopable = false;
 	animations[attack->animationName] = attack;
+	*/
 }
 
 void C_Animator::AddClip(ResourceAnimation* anim)
@@ -514,7 +519,7 @@ void C_Animator::AddClip(ResourceAnimation* anim)
 
 	AnimationClip clip;
 
-	strcpy(clip.name, anim->animationName.c_str());
+	strcpy(clip.name, anim->animationName);
 	clip.startFrame = anim->initTimeAnim;
 	clip.endFrame = anim->initTimeAnim + anim->duration;
 	clip.originalAnimation = anim;
@@ -688,7 +693,7 @@ ResourceAnimation* C_Animator::ClipToAnimation(AnimationClip clip)
 {
 	ResourceAnimation* animation = new ResourceAnimation(EngineExternal->moduleResources->GenerateNewUID());
 
-	animation->animationName = clip.name;
+	strcpy(animation->animationName, clip.name);
 	animation->duration = clip.endFrame - clip.startFrame;
 	animation->initTimeAnim = clip.startFrame;
 	animation->loopable = clip.loop;
@@ -696,8 +701,6 @@ ResourceAnimation* C_Animator::ClipToAnimation(AnimationClip clip)
 
 	//Add all animation properties such as channels
 	//Create .anim 
-
-	
 
 	return animation;
 }
