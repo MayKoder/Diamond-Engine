@@ -64,6 +64,28 @@ enum class JointType {
     D6,
 };
 
+class CollisionDetector : public physx::PxSimulationEventCallback {
+public:
+    CollisionDetector();
+    ~CollisionDetector();
+
+    void onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)override;
+    void onWake(physx::PxActor** actors, physx::PxU32 count)override
+    {}
+    void onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count)override
+    {}
+    void onSleep(physx::PxActor** actors, physx::PxU32 count) override
+    {}
+    void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count) override
+    {}
+    void onAdvance(const physx::PxRigidBody* const* bodyBuffer, const physx::PxTransform* poseBuffer, const physx::PxU32 count) override
+    {}
+
+    physx::PxFilterFlags CollisionDetector::CollisionDetectorFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+        physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+        physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize);
+}; // end class
+
 class ModulePhysics : public Module {
 
 public:
@@ -104,30 +126,8 @@ public:
     physx::PxScene* mScene;
     physx::PxDefaultCpuDispatcher* mDispatcher;
     physx::PxDefaultAllocator		mAllocator;
+    CollisionDetector detector;
 
     float3 gravity;
 };
-
-
-class CollisionDetector : public physx::PxSimulationEventCallback {
-public:         
-    CollisionDetector();
-    ~CollisionDetector();
-
-     void onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)override;
-     void onWake(physx::PxActor** actors, physx::PxU32 count)override
-     {}
-     void onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count)override
-     {}
-     void onSleep(physx::PxActor** actors, physx::PxU32 count) override
-     {}
-     void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count) override
-     {}
-     void onAdvance(const physx::PxRigidBody* const* bodyBuffer, const physx::PxTransform* poseBuffer, const physx::PxU32 count) override
-     {}
-
-     physx::PxFilterFlags CollisionDetector::CollisionDetectorFilterShader	(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
-         physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
-         physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize);
-}; // end class
 

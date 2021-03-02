@@ -77,7 +77,7 @@ physx::PxFilterFlags contactReportFilterShader(physx::PxFilterObjectAttributes a
 
 bool ModulePhysics::Init() {
 
-	CollisionDetector* detector = new CollisionDetector();
+	//CollisionDetector* detector = new CollisionDetector();
 
 	//Initialize PhysX mFoundation
 #pragma region Foundation_Initialize
@@ -151,7 +151,7 @@ bool ModulePhysics::Init() {
 //	PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
 //	mScene->addActor(*groundPlane);
 
-	mScene->setSimulationEventCallback(detector);
+	mScene->setSimulationEventCallback(&detector);
 
 	
 	return true;
