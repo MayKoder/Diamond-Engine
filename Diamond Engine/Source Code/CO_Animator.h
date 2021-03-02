@@ -16,6 +16,16 @@ class Resource;
 
 typedef unsigned int uint;
 
+struct AnimationClip
+{
+	AnimationClip();
+	char name[32];
+	float startFrame;
+	float endFrame;
+	bool loop;
+	ResourceAnimation* originalAnimation;
+};
+
 class C_Animator : public Component
 {
 public:
@@ -33,6 +43,7 @@ public:
 	void StoreBoneMapping(GameObject* gameObject);
 
 	void AddAnimation(ResourceAnimation* anim);
+	void AddClip(ResourceAnimation* anim);
 	//void DrawLinkedBones() const;
 
 	void Start();
@@ -58,6 +69,12 @@ public:
 
 private:
 	void DrawBones(GameObject*);
+	ResourceAnimation* ClipToAnimation(AnimationClip clip);
+
+public:
+	void Play(std::string animName);
+	void Pause();
+	void Resume();
 
 public:
 	GameObject* rootBone = nullptr;
@@ -69,9 +86,7 @@ public:
 	uint previous_animation = 0;
 	uint current_animation = 0;
 	bool playing = false;
-	void Play(std::string animName);
-	void Pause();
-	void Resume();
+
 private:
 	bool started = false;
 
@@ -86,10 +101,10 @@ private:
 	uint currentTimeAnimation = 0;
 	uint previousTimeAnimation = 0;
 
-private:
 	ResourceAnimation* _anim; 
 	ResourceAnimation* currentAnimation = nullptr;
 	ResourceAnimation* previousAnimation = nullptr;
 	std::map<std::string,ResourceAnimation*> animations;
+	std::vector<AnimationClip> clips;
 };
 

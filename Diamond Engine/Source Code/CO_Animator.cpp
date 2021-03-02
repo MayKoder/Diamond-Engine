@@ -221,34 +221,7 @@ bool C_Animator::OnEditor()
 {	
 	if (Component::OnEditor() == true)
 	{
-		if (currentAnimation == nullptr) {
-			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "None");
-		}
-		else {
-			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", currentAnimation->animationName.c_str());
-			ImGui::Text("Duration: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->duration);
-			ImGui::Text("Ticks per second: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->ticksPerSecond);
-		}
-
-		//List of existing animations
-		ImGui::Text("Select a new animation");
-		for (std::map<std::string, ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); ++it)
-		{
-			std::string animName = it->first;
-
-			if (currentAnimation == it->second) {
-				animName += " (Current)";
-			}
-
-			if (ImGui::Button(animName.c_str())) {
-				Play(animName);
-				time = 0.f;
-			}
-		}
-
-		ImGui::Spacing();
-		ImGui::Separator();
-		ImGui::Spacing();
+		// RootBone and MeshRenderer =====================================================================================================
 
 		if (rootBone == nullptr)
 		{
@@ -275,7 +248,7 @@ bool C_Animator::OnEditor()
 		}
 		ImGui::Spacing();
 
-		
+
 		if (meshRendererUID == 0u) {
 			ImGui::Button("Drop here to set mesh renderer object");
 		}
@@ -283,6 +256,7 @@ bool C_Animator::OnEditor()
 			ImGui::Text("MeshRenderer Game Object UID: ");
 			char uidText[16];
 			sprintf_s(uidText, "%d", meshRendererUID);
+			ImGui::SameLine();
 			ImGui::Button(uidText);
 		}
 
@@ -304,6 +278,41 @@ bool C_Animator::OnEditor()
 			ImGui::EndDragDropTarget();
 		}
 
+		//=======================================================================================================================================
+
+		if (currentAnimation == nullptr) {
+			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "None");
+		}
+		else {
+			ImGui::Text("Current Animation: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", currentAnimation->animationName.c_str());
+			ImGui::Text("Duration: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->duration);
+			ImGui::Text("Ticks per second: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", currentAnimation->ticksPerSecond);
+		}
+
+		//List of existing animations
+		ImGui::Text("Select a new animation");
+		for (std::map<std::string, ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); ++it)
+		{
+			std::string animName = it->first;
+
+			if (currentAnimation == it->second) {
+				animName += " (Current)";
+			}
+
+			if (ImGui::Button(animName.c_str())) {
+				Play(animName);
+				time = 0.f;
+
+				//if (currentAnimation == nullptr) {
+				//	AddClip(currentAnimation);
+				//}
+			}
+		}
+
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+
 		ImGui::Text("Previous Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", prevAnimTime);
 		ImGui::Text("Current Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", currentTimeAnimation);
 		ImGui::Text("blendTime: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", blendTime);
@@ -324,6 +333,66 @@ bool C_Animator::OnEditor()
 		{
 			//ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _anim->GetLibraryPath());
 		}
+
+		ImGui::Spacing();
+
+		// Clips ===============================================================================================
+
+		ImGui::Columns(4, "Clips");
+		ImGui::Separator();
+		ImGui::Text("Clips");
+		ImGui::NextColumn();
+		ImGui::Text("Start");
+		ImGui::NextColumn();
+		ImGui::Text("End");
+		ImGui::NextColumn();
+		ImGui::Text("Loop");
+		ImGui::NextColumn();
+		ImGui::Separator();
+		//ImGuiInputTextFlags flags
+
+		for (size_t i = 0; i < clips.size(); i++)
+		{
+			ImGui::InputText("##name", clips[i].name, IM_ARRAYSIZE(clips[i].name));
+			ImGui::NextColumn();
+			ImGui::InputFloat("##start", &clips[i].startFrame, 1.0f, 0.0f, 0);
+			ImGui::NextColumn();
+			ImGui::InputFloat("##end", &clips[i].endFrame, 1.0f, 0.0f, 0);
+			ImGui::NextColumn();
+			ImGui::Checkbox("##loop", &clips[i].loop);
+			ImGui::NextColumn();
+		}
+
+		ImGui::Separator();
+		ImGui::Columns(1);
+		ImGui::Spacing();
+
+		if (ImGui::Button("+")) 
+		{
+			if (currentAnimation != nullptr) {
+				AddClip(currentAnimation);
+			}
+		}
+		
+		ImGui::SameLine();
+		if (ImGui::Button("-")) {
+			//Remove Clip
+		}
+
+		ImGui::Spacing();
+
+		if (ImGui::Button("Apply")) {
+			for (size_t i = 0; i < clips.size(); i++) {
+				ResourceAnimation* animation = ClipToAnimation(clips[i]);
+				AddAnimation(animation);
+			}
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel")) {
+
+		}
+
+		ImGui::Spacing();
 	}
 
 	return true;	
@@ -396,6 +465,20 @@ void C_Animator::AddAnimation(ResourceAnimation* anim)
 	//attack->duration = 120;
 	//attack->loopable = false;
 	//animations[attack->animationName] = attack;
+}
+
+void C_Animator::AddClip(ResourceAnimation* anim)
+{
+	if (anim == nullptr)
+		return;
+
+	AnimationClip clip;
+
+	strcpy(clip.name, anim->animationName.c_str());
+	clip.startFrame = anim->initTimeAnim;
+	clip.endFrame = anim->initTimeAnim + anim->duration;
+
+	clips.push_back(clip);
 }
 
 void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, const ResourceAnimation* blend, float blendRatio)
@@ -559,3 +642,19 @@ void C_Animator::DrawBones(GameObject* gameObject)
 	glLineWidth(1.f);
 	glColor3f(1.f, 1.f, 1.f);
 }
+
+ResourceAnimation* C_Animator::ClipToAnimation(AnimationClip clip)
+{
+	ResourceAnimation* animation = new ResourceAnimation(EngineExternal->moduleResources->GenerateNewUID());
+
+	animation->animationName = clip.name;
+	animation->duration = clip.endFrame - clip.startFrame;
+	animation->initTimeAnim = clip.startFrame;
+	animation->loopable = clip.loop;
+
+	//Add all animation properties such as channels
+
+	return animation;
+}
+
+AnimationClip::AnimationClip() : name("No name"), startFrame(0), endFrame(0), originalAnimation(nullptr), loop(false) {}
