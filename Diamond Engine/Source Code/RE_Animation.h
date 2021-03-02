@@ -45,6 +45,7 @@ public:
 
 	uint SaveCustomFormat(ResourceAnimation* animation, char** buffer);
 	void LoadCustomFormat(const char* path);
+	std::map<std::string, Channel> GetAllChannelsInRange(float startFrame, float endFrame);
 
 public:
 

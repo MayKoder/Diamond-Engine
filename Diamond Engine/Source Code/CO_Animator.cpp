@@ -23,7 +23,7 @@
 
 #include "DETime.h"
 
-C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject), rootBoneUID(0u), meshRendererUID(0u), selectedClip(nullptr)
+C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject), rootBoneUID(0u), meshRendererUID(0u), selectedClip(nullptr), showBones(false)
 {
 	gameObject = gameobject;
 	name = "Animator Component";
@@ -160,7 +160,9 @@ void C_Animator::Update()
 		UpdateMeshAnimation(gameObject->children[0]);
 		std::vector<GameObject*> bones;
 		rootBone->CollectChilds(bones);
-		DrawBones(bones[0]);
+		
+		if(showBones)
+			DrawBones(bones[0]);
 	}
 }
 
@@ -221,6 +223,7 @@ bool C_Animator::OnEditor()
 {	
 	if (Component::OnEditor() == true)
 	{
+		ImGui::Checkbox("Show Bones", &showBones);
 		// RootBone and MeshRenderer =====================================================================================================
 
 		if (rootBone == nullptr)
@@ -308,6 +311,8 @@ bool C_Animator::OnEditor()
 				//}
 			}
 		}
+
+		ImGui::Button("Drop new animation here");
 
 		ImGui::Spacing();
 		ImGui::Separator();
@@ -492,6 +497,7 @@ void C_Animator::AddClip(ResourceAnimation* anim)
 	strcpy(clip.name, anim->animationName.c_str());
 	clip.startFrame = anim->initTimeAnim;
 	clip.endFrame = anim->initTimeAnim + anim->duration;
+	clip.originalAnimation = anim;
 
 	clips.push_back(clip);
 }
@@ -666,8 +672,12 @@ ResourceAnimation* C_Animator::ClipToAnimation(AnimationClip clip)
 	animation->duration = clip.endFrame - clip.startFrame;
 	animation->initTimeAnim = clip.startFrame;
 	animation->loopable = clip.loop;
+	animation->ticksPerSecond = clip.originalAnimation->ticksPerSecond;
 
 	//Add all animation properties such as channels
+	//Create .anim 
+
+	
 
 	return animation;
 }
