@@ -42,8 +42,7 @@ ResourceAnimation* AnimationLoader::LoadAnimation(aiAnimation* importedAnimation
 
 	ResourceAnimation* anim = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->CreateNewResource("", UID, Resource::Type::ANIMATION));
 
-
-	strcpy(anim->animationName, "Default");
+	strcpy(anim->animationName, importedAnimation->mName.C_Str());
 	anim->ticksPerSecond = importedAnimation->mTicksPerSecond;
 	anim->duration = importedAnimation->mDuration;
 

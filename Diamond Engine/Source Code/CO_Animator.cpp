@@ -68,7 +68,9 @@ void C_Animator::Start()
 	}
 
 	if (animations.size() > 0)
-		Play("Default",defaultBlend);
+	{
+		Play(animations.begin()->first, defaultBlend);
+	}
 
 	started = true;
 }
@@ -116,54 +118,59 @@ void C_Animator::Update()
 	}
 	else
 	{
-		//Updating animation blend
-		float blendRatio = 0.0f;
-		if (blendTimeDuration > 0.0f)
+		if (showBones) {
+			std::vector<GameObject*> bones;
+			rootBone->CollectChilds(bones);
+			DrawBones(bones[0]);
+		}
+
+		if (currentAnimation != nullptr)
 		{
-			prevAnimTime += dt;
-			blendTime += dt;
-
-			//previousTimeAnimation = time * previousAnimation->ticksPerSecond;
-			//previousTimeAnimation += previousAnimation->initTimeAnim;
-
-			if (blendTime >= blendTimeDuration)
+			//Updating animation blend
+			float blendRatio = 0.0f;
+			if (blendTimeDuration > 0.0f)
 			{
-				blendTimeDuration = 0.0f;
-			}
-			else if (previousAnimation && prevAnimTime >= previousAnimation->duration)
-			{
-				if (previousAnimation->loopable == true)
+				prevAnimTime += dt;
+				blendTime += dt;
+
+				//previousTimeAnimation = time * previousAnimation->ticksPerSecond;
+				//previousTimeAnimation += previousAnimation->initTimeAnim;
+
+				if (blendTime >= blendTimeDuration)
 				{
-					prevAnimTime = 0.0f;
-					// + (currentFrame - endFrame);
+					blendTimeDuration = 0.0f;
+				}
+				else if (previousAnimation && prevAnimTime >= previousAnimation->duration)
+				{
+					if (previousAnimation->loopable == true)
+					{
+						prevAnimTime = 0.0f;
+						// + (currentFrame - endFrame);
+					}
+				}
+
+				if (blendTimeDuration > 0.0f)
+					blendRatio = blendTime / blendTimeDuration;
+			}
+			//Endof Updating animation blend
+
+			time += dt;
+			currentTimeAnimation = time * currentAnimation->ticksPerSecond;
+			currentTimeAnimation += currentAnimation->initTimeAnim;
+			if (currentAnimation && currentTimeAnimation >= currentAnimation->duration - 1) {
+				if (currentAnimation->loopable == true) {
+					time = 0.f;
+				}
+				else {
+					if (animations.size() > 0) {
+						Play(animations.begin()->first, defaultBlend); }
+					return;
 				}
 			}
 
-			if (blendTimeDuration > 0.0f)
-				blendRatio = blendTime / blendTimeDuration;
+			UpdateChannelsTransform(currentAnimation, blendRatio > 0.0f ? previousAnimation : nullptr, blendRatio);
+			UpdateMeshAnimation(gameObject->children[0]);
 		}
-		//Endof Updating animation blend
-
-		time += dt;
-		currentTimeAnimation = time * currentAnimation->ticksPerSecond;
-		currentTimeAnimation += currentAnimation->initTimeAnim;
-		if (currentAnimation && currentTimeAnimation >= currentAnimation->duration -1) {
-			if (currentAnimation->loopable == true) {
-				time = 0.f;
-			}
-			else {
-				Play("Default",defaultBlend);
-				return;
-			}
-		}
-
-		UpdateChannelsTransform(currentAnimation, blendRatio > 0.0f ? previousAnimation : nullptr, blendRatio);
-		UpdateMeshAnimation(gameObject->children[0]);
-		std::vector<GameObject*> bones;
-		rootBone->CollectChilds(bones);
-		
-		if(showBones)
-			DrawBones(bones[0]);
 	}
 }
 
