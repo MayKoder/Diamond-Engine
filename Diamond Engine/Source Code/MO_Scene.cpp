@@ -23,11 +23,15 @@
 
 #include"RE_Texture.h"
 #include"DETime.h"
-#include"RE_Shader.h"
+#include"RE_Material.h"
+
+#include "COMM_DeleteGO.h"
 
 M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr),
-defaultShader(nullptr)
+defaultMaterial(nullptr)
 {
+	current_scene[0] = '\0';
+	current_scene_name[0] = '\0';
 }
 
 M_Scene::~M_Scene()
@@ -45,7 +49,7 @@ bool M_Scene::Start()
 {
 	CreateGameCamera("Main Camera");
 
-	LoadScene("Library/Scenes/323737769.des");
+	LoadScene("Library/Scenes/884741631.des");
 
 #ifndef STANDALONE
 	//TODO IMPORTANT: This is why we should save icons .meta, or we could generate them every time
@@ -97,13 +101,12 @@ update_status M_Scene::Update(float dt)
 		{
 			JSON_Value* scene = json_parse_file("EngineIcons/cntlC.json");
 
-			//TODO: Duplicated code from scene loading, move to method
+			//TODO: Duplicated code from scene loading && delete command, move to method
 			if (scene != NULL) 
 			{
 
 				JSON_Object* sceneObj = json_value_get_object(scene);
 				JSON_Array* sceneGO = json_object_get_array(sceneObj, "Game Objects");
-				JSON_Object* goJsonObj = json_array_get_object(sceneGO, 0);
 
 				GameObject* parent = (App->moduleEditor->GetSelectedGO() == nullptr) ? root : App->moduleEditor->GetSelectedGO();
 				for (size_t i = 0; i < json_array_get_count(sceneGO); i++)
@@ -111,28 +114,7 @@ update_status M_Scene::Update(float dt)
 					parent = LoadGOData(json_array_get_object(sceneGO, i), parent);
 				}
 
-				//TODO: Duplicated code from scene loading C#, move to method
-				for (auto i = referenceMap.begin(); i != referenceMap.end(); ++i)
-				{
-					// Get the range of the current key
-					auto range = referenceMap.equal_range(i->first);
-
-					// Now render out that whole range
-					for (auto d = range.first; d != range.second; ++d)
-					{
-						d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
-
-						if (d->second->fiValue.goValue)
-						{
-							if (std::find(d->second->fiValue.goValue->csReferences.begin(), d->second->fiValue.goValue->csReferences.end(), d->second) == d->second->fiValue.goValue->csReferences.end())
-								d->second->fiValue.goValue->csReferences.push_back(d->second);
-
-							d->second->parentSC->SetField(d->second->field, d->second->fiValue.goValue);
-						}
-					}
-				}
-
-				referenceMap.clear();
+				LoadScriptsData();
 
 				//Free memory
 				json_value_free(scene);
@@ -140,10 +122,37 @@ update_status M_Scene::Update(float dt)
 		}
 	}
 
-	if (App->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && App->moduleEditor->GetSelectedGO() != nullptr && App->moduleEditor->GetSelectedAsset() == nullptr)
-		App->moduleEditor->GetSelectedGO()->Destroy();
-#endif // !STANDALONE
+	if (App->moduleInput->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->moduleInput->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	{
+		if (current_scene[0] == '\0')
+		{
+			std::string sceneDir = M_FileSystem::OpenSaveAsDialog();
+			App->moduleFileSystem->ToLocalAssetsPath(sceneDir);
+			if (!sceneDir.empty())
+			{
+				App->moduleScene->SaveScene(sceneDir.c_str());
+				App->moduleResources->NeedsDirsUpdate(App->moduleResources->assetsRoot);
+				strcpy(current_scene, sceneDir.c_str());
+			
+				std::string scene_name;
+				FileSystem::GetFileName(sceneDir.c_str(), scene_name, false);
+				strcpy(current_scene_name, scene_name.c_str());
+			}
+		}
+		else
+		{
+			App->moduleScene->SaveScene(current_scene);
+			App->moduleResources->NeedsDirsUpdate(App->moduleResources->assetsRoot);
+		}
+	}
 
+	App->moduleEditor->shortcutManager.HandleInput();
+	if (App->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && App->moduleEditor->GetSelectedGO() != nullptr && App->moduleEditor->GetSelectedAsset() == nullptr)
+	{
+		App->moduleEditor->shortcutManager.PushCommand(new COMM_DeleteGO(App->moduleEditor->GetSelectedGO()));
+		App->moduleEditor->GetSelectedGO()->Destroy();
+	}
+#endif // !STANDALONE
 
 	UpdateGameObjects();
 
@@ -153,8 +162,8 @@ update_status M_Scene::Update(float dt)
 bool M_Scene::CleanUp()
 {
 	//This will delete all the gameObjects
-	if (defaultShader != nullptr)
-		EngineExternal->moduleResources->UnloadResource(defaultShader->GetUID());
+	if (defaultMaterial != nullptr)
+		EngineExternal->moduleResources->UnloadResource(defaultMaterial->GetUID());
 
 	delete root;
 	return true;
@@ -181,6 +190,31 @@ GameObject* M_Scene::CreateGameObject(const char* name, GameObject* parent, int 
 {
 	GameObject* gm = new GameObject(name, parent, _uid);
 	return gm;
+}
+
+void M_Scene::LoadScriptsData()
+{
+	for (auto i = referenceMap.begin(); i != referenceMap.end(); ++i)
+	{
+		// Get the range of the current key
+		auto range = referenceMap.equal_range(i->first);
+
+		// Now render out that whole range
+		for (auto d = range.first; d != range.second; ++d)
+		{
+			d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
+
+			if (d->second->fiValue.goValue)
+			{
+				if (std::find(d->second->fiValue.goValue->csReferences.begin(), d->second->fiValue.goValue->csReferences.end(), d->second) == d->second->fiValue.goValue->csReferences.end())
+					d->second->fiValue.goValue->csReferences.push_back(d->second);
+
+				d->second->parentSC->SetField(d->second->field, d->second->fiValue.goValue);
+			}
+		}
+	}
+
+	referenceMap.clear();
 }
 
 void M_Scene::SetGameCamera(C_Camera* cam)
@@ -275,6 +309,7 @@ void M_Scene::SaveScene(const char* name)
 
 	//Free memory
 	json_value_free(file);
+	LOG(LogType::L_NORMAL, "Scene saved at: %s", name);
 }
 
 void M_Scene::LoadScene(const char* name)
@@ -284,6 +319,10 @@ void M_Scene::LoadScene(const char* name)
 
 	if (scene == NULL)
 		return;
+
+#ifndef STANDALONE
+	App->moduleEditor->shortcutManager.DeleteCommandHistory();
+#endif // !STANDALONE
 
 	//Clear all current scene memory
 	destroyList.clear();
@@ -306,30 +345,16 @@ void M_Scene::LoadScene(const char* name)
 		parent = LoadGOData(json_array_get_object(sceneGO, i), parent);
 	}
 
-	for (auto i = referenceMap.begin(); i != referenceMap.end(); ++i)
-	{
-		// Get the range of the current key
-		auto range = referenceMap.equal_range(i->first);
-
-		// Now render out that whole range
-		for (auto d = range.first; d != range.second; ++d) 
-		{
-			d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
-
-			if (d->second->fiValue.goValue) 
-			{
-				if (std::find(d->second->fiValue.goValue->csReferences.begin(), d->second->fiValue.goValue->csReferences.end(), d->second) == d->second->fiValue.goValue->csReferences.end())
-					d->second->fiValue.goValue->csReferences.push_back(d->second);
-
-				d->second->parentSC->SetField(d->second->field, d->second->fiValue.goValue);
-			}
-		}
-	}
-
-	referenceMap.clear();
+	LoadScriptsData();
 
 	//Free memory
 	json_value_free(scene);
+	strcpy(current_scene, name);
+
+	std::string scene_name;
+	FileSystem::GetFileName(name, scene_name, false);
+
+	strcpy(current_scene_name, scene_name.c_str());
 }
 
 void M_Scene::LoadModelTree(const char* modelPath)
@@ -374,9 +399,11 @@ void M_Scene::CleanScene()
 #endif
 
 	root = CreateGameObject("Scene root", nullptr);
+	current_scene[0] = '\0';
+	current_scene_name[0] = '\0';
 }
 
-GameObject* M_Scene::LoadGOData(JSON_Object* goJsonObj,  GameObject* parent)
+GameObject* M_Scene::LoadGOData(JSON_Object* goJsonObj, GameObject* parent)
 {
 	//goJsonObj = json_array_get_object(sceneGO, i);
 	GameObject* originalParent = parent;

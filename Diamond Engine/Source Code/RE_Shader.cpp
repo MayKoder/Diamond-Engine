@@ -5,17 +5,17 @@
 #include"IM_ShaderImporter.h"
 
 #include"ImGui/imgui.h"
+#include"RE_Material.h"
 
 ResourceShader::ResourceShader(unsigned int _uid) : Resource(_uid, Resource::Type::SHADER), shaderProgramID(0)
 {
 	for (GLuint i = 0; i < static_cast<GLuint>(ShaderType::SH_Max); i++)
 		shaderObjects[i] = 0;
-
-
 }
 
 ResourceShader::~ResourceShader()
 {
+	references.clear();
 	if (shaderProgramID != 0) 
 	{
 		glDeleteShader(shaderProgramID);
@@ -27,7 +27,7 @@ void ResourceShader::LinkToProgram()
 {
 	shaderProgramID = glCreateProgram();
 
-	for (size_t i = 0; i < ShaderType::SH_Max; i++)
+	for (size_t i = 0; i < static_cast<int>(ShaderType::SH_Max); i++)
 	{
 		glAttachShader(shaderProgramID,  shaderObjects[i]);
 	}
@@ -42,24 +42,23 @@ void ResourceShader::LinkToProgram()
 		glGetProgramInfoLog(shaderProgramID, 512, NULL, infoLog);
 		LOG(LogType::L_ERROR, "Error linking shader program: %s", infoLog);
 	}
-	//else
-	//{
-	//	shader->program_id = shaderProgram;
 
-	//	SetUniforms(shaderProgram, shader);
-
-	//	LOG("Shader program created porperly");
-	//}
-
-	for (size_t i = 0; i < ShaderType::SH_Max; i++)
+	for (size_t i = 0; i < static_cast<int>(ShaderType::SH_Max); i++)
 	{
 		glDetachShader(shaderProgramID, shaderObjects[i]);
 	}
 
-	for (size_t i = 0; i < ShaderType::SH_Max; i++)
+	for (size_t i = 0; i < static_cast<int>(ShaderType::SH_Max); i++)
 	{
 		glDeleteShader(shaderObjects[i]);
 		shaderObjects[i] = 0;
+	}
+
+	//TODO: Find all the active materials using this shader and update their uniforms with material->FillVariables()
+	//TODO: What if the shader changes on some materials?
+	for (std::vector<ResourceMaterial*>::iterator i = references.begin(); i != references.end(); ++i)
+	{
+		(*i)->FillVariables();
 	}
 }
 
@@ -79,106 +78,17 @@ bool ResourceShader::UnloadFromMemory()
 
 	glDeleteShader(shaderProgramID);
 	shaderProgramID = 0;
-
-	uniforms.clear();
-	attributes.clear();
-
 	return true;
 }
 
 void ResourceShader::Bind()
 {
 	glUseProgram(shaderProgramID);
-
-	//Push all uniforms
-
-
 }
 
 void ResourceShader::Unbind()
 {
 	glUseProgram(0);
-}
-
-#ifndef STANDALONE
-void ResourceShader::DrawEditor()
-{
-	ImGui::Dummy(ImVec2(0, 5));
-	ImGui::Text("Attributes");
-	for (size_t i = 0; i < attributes.size(); i++)
-	{
-		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s: ", attributes[i].name);
-	}
-
-	ImGui::Dummy(ImVec2(0, 5));
-	ImGui::Text("Uniforms");
-	for (size_t i = 0; i < uniforms.size(); i++)
-	{
-		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s: ", uniforms[i].name);
-
-		//ImGui::SameLine();
-		switch (uniforms[i].vType)
-		{
-
-		case GL_SAMPLER_2D: 
-		{
-			//ImGui::SameLine();
-			//GLuint test = 0;
-			//glGetUniformuiv(shaderProgramID, uniforms[i].vIndex, &test);
-			//ImGui::Image((ImTextureID)test, ImVec2(50, 50));
-			break;
-		}
-
-		case GL_FLOAT_VEC3: 
-		{
-			ImGui::SameLine();
-			ImVec4 ret = ImVec4(0, 0, 0, 0);
-			glGetUniformfv(shaderProgramID, uniforms[i].vIndex, &ret.x);
-			ImGui::ColorEdit4("##test", &ret.x);
-			break;
-		}
-
-		case GL_FLOAT_VEC4: 
-		{
-			ImGui::SameLine();
-			ImVec4 ret = ImVec4(0, 0, 0, 0);
-			ImGui::ColorEdit4("##test", &ret.x);
-			break;
-		}
-
-		case GL_FLOAT_MAT4:
-			ImGui::SameLine();
-			ImGui::Text("Matrix here");
-			break;
-
-		default:
-			break;
-		}
-	}
-}
-#endif // !STANDALONE
-
-void ResourceShader::FillVariables()
-{
-	GLint attCount = 0, uniCount = 0;
-	glGetProgramiv(shaderProgramID, GL_ACTIVE_ATTRIBUTES, &attCount);
-
-	for (size_t a = 0; a < attCount; a++)
-	{
-		ShaderVariable shdrVar;
-		glGetActiveAttrib(shaderProgramID, (GLuint)a, 25, &shdrVar.nameLength, &shdrVar.vSize, &shdrVar.vType, shdrVar.name);
-
-		attributes.push_back(shdrVar);
-	}
-
-	glGetProgramiv(shaderProgramID, GL_ACTIVE_UNIFORMS, &uniCount);
-	for (size_t b = 0; b < uniCount; b++)
-	{
-		ShaderVariable shdrVar;
-		glGetActiveUniform(shaderProgramID, (GLuint)b, 25, &shdrVar.nameLength, &shdrVar.vSize, &shdrVar.vType, shdrVar.name);
-
-		uniforms.push_back(shdrVar);
-	}
 }
 
 char* ResourceShader::SaveShaderCustomFormat(char* vertexObjectBuffer, int vofSize, char* fragObjectBuffer, int fobSize)
@@ -237,16 +147,9 @@ void ResourceShader::LoadShaderCustomFormat(const char* libraryPath)
 	shaderObjects[(int)ShaderType::SH_Frag] = ShaderImporter::Compile(fragment, ShaderType::SH_Frag, variables[(int)ShaderType::SH_Frag]);
 
 	this->LinkToProgram();
-	FillVariables();
 
 
 	RELEASE_ARRAY(vertex);
 	RELEASE_ARRAY(fragment);
 	RELEASE_ARRAY(fileBuffer);
-}
-
-ShaderVariable::ShaderVariable() : vIndex(0), vType(GL_INT), nameLength(0),
-name(""), vSize(0)
-{
-	//data.intValue = 0;
 }

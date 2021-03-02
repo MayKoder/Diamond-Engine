@@ -1,0 +1,184 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "12",
+  "SoundbankVersion": "135",
+  "RootPaths": {
+   "ProjectRoot": "C:\\Users\\admin\\Documents\\WwiseProjects\\Virtual Ragnarok Audio\\",
+   "SourceFilesRoot": "C:\\Users\\admin\\Documents\\WwiseProjects\\Virtual Ragnarok Audio\\.cache\\Windows\\",
+   "SoundBanksRoot": "C:\\Users\\admin\\Documents\\WwiseProjects\\Virtual Ragnarok Audio\\GeneratedSoundBanks\\Windows\\",
+   "ExternalSourcesInputFile": "",
+   "ExternalSourcesOutputRoot": "C:\\Users\\admin\\Documents\\WwiseProjects\\Virtual Ragnarok Audio\\GeneratedSoundBanks\\Windows"
+  },
+  "DialogueEvents": [],
+  "StreamedFiles": [],
+  "MediaFilesNotInAnyBank": [],
+  "SoundBanks": [
+   {
+    "Id": "1069811801",
+    "Language": "SFX",
+    "Hash": "444520679",
+    "ObjectPath": "\\SoundBanks\\Default Work Unit\\Audio",
+    "ShortName": "Audio",
+    "Path": "Audio.bnk",
+    "IncludedEvents": [
+     {
+      "Id": "1602358412",
+      "Name": "Play_Footstep",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Footstep",
+      "IncludedMemoryFiles": [
+       {
+        "Id": "604011556",
+        "Language": "SFX",
+        "ShortName": "Footstep wood2.wav",
+        "Path": "SFX\\Footstep wood2_10C4C929.wem"
+       },
+       {
+        "Id": "654547234",
+        "Language": "SFX",
+        "ShortName": "Footstep snow.wav",
+        "Path": "SFX\\Footstep snow_10C4C929.wem"
+       },
+       {
+        "Id": "675536826",
+        "Language": "SFX",
+        "ShortName": "Footstep wood1.wav",
+        "Path": "SFX\\Footstep wood1_10C4C929.wem"
+       },
+       {
+        "Id": "917854078",
+        "Language": "SFX",
+        "ShortName": "Footstep stone sandy.wav",
+        "Path": "SFX\\Footstep stone sandy_10C4C929.wem"
+       },
+       {
+        "Id": "938843669",
+        "Language": "SFX",
+        "ShortName": "Footstep sand.wav",
+        "Path": "SFX\\Footstep sand_10C4C929.wem"
+       }
+      ],
+      "DefaultSwitchValue": "{52DDF349-5B56-485F-B6A9-023045AD18BA}",
+      "SwitchContainers": [
+       {
+        "SwitchValue": "{F2156D10-1A20-4A8F-9D9B-83DA640588C9}",
+        "Media": [
+         {
+          "Id": "654547234"
+         }
+        ]
+       },
+       {
+        "SwitchValue": "{2123237A-A2E2-4B52-9C72-5536BD8E71EA}",
+        "Media": [
+         {
+          "Id": "938843669"
+         }
+        ]
+       },
+       {
+        "SwitchValue": "{52DDF349-5B56-485F-B6A9-023045AD18BA}",
+        "Media": [
+         {
+          "Id": "917854078"
+         }
+        ]
+       },
+       {
+        "SwitchValue": "{4721F08B-0882-4F5E-9413-21670EF8FDB1}",
+        "Media": [
+         {
+          "Id": "604011556"
+         },
+         {
+          "Id": "675536826"
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "Id": "2045397714",
+      "Name": "Play_Weapon_Shoot",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Weapon_Shoot"
+     }
+    ],
+    "IncludedMemoryFiles": [
+     {
+      "Id": "575059296",
+      "Language": "SFX",
+      "ShortName": "blaster wav.wav",
+      "Path": "SFX\\blaster wav_10C4C929.wem"
+     }
+    ],
+    "GameParameters": [
+     {
+      "Id": "467158820",
+      "Name": "SourceVolume",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\SourceVolume"
+     },
+     {
+      "Id": "1547598200",
+      "Name": "SourcePitch",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\SourcePitch"
+     }
+    ],
+    "SwitchGroups": [
+     {
+      "Id": "354267144",
+      "Name": "Terrain",
+      "ObjectPath": "\\Switches\\Default Work Unit\\Terrain",
+      "Switches": [
+       {
+        "Id": "803837735",
+        "Name": "Sand",
+        "ObjectPath": "\\Switches\\Default Work Unit\\Terrain\\Sand"
+       },
+       {
+        "Id": "787898836",
+        "Name": "Snow",
+        "ObjectPath": "\\Switches\\Default Work Unit\\Terrain\\Snow"
+       },
+       {
+        "Id": "1216965916",
+        "Name": "Stone",
+        "ObjectPath": "\\Switches\\Default Work Unit\\Terrain\\Stone"
+       },
+       {
+        "Id": "2058049674",
+        "Name": "Wood",
+        "ObjectPath": "\\Switches\\Default Work Unit\\Terrain\\Wood"
+       }
+      ]
+     },
+     {
+      "Id": "3893417221",
+      "Name": "Weapon",
+      "ObjectPath": "\\Switches\\Default Work Unit\\Weapon",
+      "Switches": [
+       {
+        "Id": "868398948",
+        "Name": "Blaster",
+        "ObjectPath": "\\Switches\\Default Work Unit\\Weapon\\Blaster"
+       },
+       {
+        "Id": "2550763292",
+        "Name": "Sniper",
+        "ObjectPath": "\\Switches\\Default Work Unit\\Weapon\\Sniper"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "Id": "1355168291",
+    "Language": "SFX",
+    "Hash": "3906755781",
+    "ObjectPath": "Init",
+    "ShortName": "Init",
+    "Path": "Init.bnk"
+   }
+  ]
+ }
+}

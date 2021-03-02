@@ -15,7 +15,7 @@
 #include"MO_Window.h"
 
 C_Camera::C_Camera() : Component(nullptr), fov(60.0f), cullingState(true),
-msaaSamples(4)
+msaaSamples(4), orthoSize(0.0f)
 {
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
@@ -28,10 +28,11 @@ msaaSamples(4)
 	camFrustrum.horizontalFov = 2.0f * atanf(tanf(camFrustrum.verticalFov / 2.0f) * 1.7f);
 
 	camFrustrum.pos = float3::zero;
+	orthoSize = 0.0f;
 }
 
 C_Camera::C_Camera(GameObject* _gm) : Component(_gm), fov(60.0f), cullingState(true),
-msaaSamples(4)
+msaaSamples(4), orthoSize(0.0f)
 {
 
 	name = "Camera";
@@ -69,15 +70,28 @@ bool C_Camera::OnEditor()
 		ImGui::DragFloat("Far Distance: ", &camFrustrum.farPlaneDistance, 0.1f, camFrustrum.nearPlaneDistance, 10000.f);
 
 		ImGui::Separator();
-		ImGui::Text("Vertical FOV: %f", camFrustrum.verticalFov);
-		ImGui::Text("Horizontal FOV: %f", camFrustrum.horizontalFov);
-		ImGui::Separator();
-
-		if (ImGui::DragFloat("FOV: ", &fov, 0.1f, 1.0f, 180.f))
+		
+		if (camFrustrum.type == FrustumType::PerspectiveFrustum) 
 		{
-			camFrustrum.verticalFov = fov * DEGTORAD;
-			//camFrustrum.horizontalFov = 2.0f * atanf(tanf(camFrustrum.verticalFov / 2.0f) * App->window->GetWindowWidth() / App->window->GetWindowHeight());
+			ImGui::Text("Vertical FOV: %f", camFrustrum.verticalFov);
+			ImGui::Text("Horizontal FOV: %f", camFrustrum.horizontalFov);
+			ImGui::Separator();
+			if (ImGui::DragFloat("FOV: ", &fov, 0.1f, 1.0f, 180.f))
+			{
+				camFrustrum.verticalFov = fov * DEGTORAD;
+				//camFrustrum.horizontalFov = 2.0f * atanf(tanf(camFrustrum.verticalFov / 2.0f) * App->window->GetWindowWidth() / App->window->GetWindowHeight());
+			}
 		}
+		else
+		{
+			if (ImGui::DragFloat("Size: ", &orthoSize, 0.1f, 1.0f, 180.f)) 
+			{
+				//camFrustrum.orthographicHeight = 1080;
+				//camFrustrum.orthographicWidth = 1920;
+			}
+		}
+		
+
 		
 		if (ImGui::BeginCombo("Frustrum Type", (camFrustrum.type == FrustumType::PerspectiveFrustum) ? "Prespective" : "Orthographic")) 
 		{
@@ -246,6 +260,11 @@ void C_Camera::LookAt(const float3& Spot)
 void C_Camera::Move(const float3& Movement)
 {
 	camFrustrum.pos += Movement;
+}
+
+float3 C_Camera::GetPosition()
+{
+	return camFrustrum.pos;
 }
 
 float4x4 C_Camera::ViewMatrixOpenGL() const
