@@ -127,10 +127,14 @@ void FileSystem::CreateLibraryFolders()
 	CreateDir(LIBRARY_PATH);
 	CreateDir(MESHES_PATH);
 	CreateDir(MODELS_PATH);
-	CreateDir(MATERIALS_PATH);
+	CreateDir(TEXTURES_PATH);
 	CreateDir(SCENES_PATH);
 	CreateDir(SCRIPTS_PATH);
 	CreateDir(SHADERS_PATH);
+	CreateDir(MATERIALS_PATH);
+	CreateDir(SOUNDS_PATH);
+
+	CreateLibrarySoundBanks();//TODO move this somewhere else? ask myke
 }
 
 // Add a new zip file or folder
@@ -222,7 +226,7 @@ void FileSystem::SplitFilePath(const char* full_path, std::string* path, std::st
 		if (path != nullptr)
 		{
 			if (pos_separator < full.length())
-				*path = full.substr(0, pos_separator + 1);
+				* path = full.substr(0, pos_separator + 1);
 			else
 				path->clear();
 		}
@@ -230,7 +234,7 @@ void FileSystem::SplitFilePath(const char* full_path, std::string* path, std::st
 		if (file != nullptr)
 		{
 			if (pos_separator < full.length())
-				*file = full.substr(pos_separator + 1, pos_dot - pos_separator - 1);
+				* file = full.substr(pos_separator + 1, pos_dot - pos_separator - 1);
 			else
 				*file = full.substr(0, pos_dot);
 		}
@@ -238,7 +242,7 @@ void FileSystem::SplitFilePath(const char* full_path, std::string* path, std::st
 		if (extension != nullptr)
 		{
 			if (pos_dot < full.length())
-				*extension = full.substr(pos_dot + 1);
+				* extension = full.substr(pos_dot + 1);
 			else
 				extension->clear();
 		}
@@ -343,6 +347,32 @@ uint FileSystem::Copy(const char* file, const char* dir, std::string& outputFile
 		LOG(LogType::L_ERROR, "FILE SYSTEM: Could not open file '%s' to read", file);
 
 	return size;
+}
+
+void FileSystem::CreateLibrarySoundBanks()
+{
+	std::string dir = "Assets/SoundBanks";
+	std::vector<std::string> fileList;
+
+	char** rc = PHYSFS_enumerateFiles(dir.c_str());
+	char** iter;
+
+	std::string directory = dir;
+
+	for (iter = rc; *iter != nullptr; iter++)
+	{
+		if (!PHYSFS_isDirectory((directory + *iter).c_str()))
+			fileList.push_back(*iter);
+	}
+
+	PHYSFS_freeList(rc);
+
+	for (int i = 0; i < fileList.size(); i++)
+	{
+		std::string output;
+		std::string fileDir = "Assets\\SoundBanks\\" + fileList[i];
+		Copy(fileDir.c_str(), SOUNDS_PATH, output);
+	}
 }
 
 

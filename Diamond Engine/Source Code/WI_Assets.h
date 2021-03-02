@@ -7,7 +7,7 @@
 #include<vector>
 #include<functional>
 
-class AssetDir;
+struct AssetDir;
 
 class W_Assets : public Window
 {

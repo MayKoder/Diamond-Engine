@@ -3,20 +3,20 @@
 #include "Globals.h"
 #include "Application.h"
 
-#include"GameObject.h"
-#include"DETime.h"
-#include"RE_Mesh.h"
+#include "GameObject.h"
+#include "DETime.h"
+#include "RE_Mesh.h"
 
-#include"CO_MeshRenderer.h"
-#include"CO_Script.h"
-#include"CO_Transform.h"
+#include "CO_MeshRenderer.h"
+#include "CO_Script.h"
+#include "CO_Transform.h"
 
-#include"MO_Input.h"
-#include"MO_Scene.h"
-#include"MO_ResourceManager.h"
+#include "MO_Input.h"
+#include "MO_Scene.h"
+#include "MO_ResourceManager.h"
 
-#include"GameObject.h"
-#include"MathGeoLib/include/Math/float3.h"
+#include "GameObject.h"
+#include "MathGeoLib/include/Math/float3.h"
 
 //------//
 MonoObject* DE_Box_Vector(MonoObject* obj, const char* type, bool global)
@@ -66,35 +66,6 @@ void CSLog(MonoString* x)
 	char* msg = mono_string_to_utf8(x);
 	LOG(LogType::L_WARNING, msg);
 	mono_free(msg);
-}
-
-int GetKey(MonoObject* x)
-{
-	if (EngineExternal != nullptr)
-		return EngineExternal->moduleInput->GetKey(*(int*)mono_object_unbox(x));
-
-	return 0;
-}
-int GetMouseClick(MonoObject* x)
-{
-	if (EngineExternal != nullptr)
-		return EngineExternal->moduleInput->GetMouseButton(*(int*)mono_object_unbox(x));
-
-	return 0;
-}
-int MouseX()
-{
-	if (EngineExternal != nullptr)
-		return EngineExternal->moduleInput->GetMouseXMotion();
-
-	return 0;
-}
-int MouseY()
-{
-	if (EngineExternal != nullptr)
-		return EngineExternal->moduleInput->GetMouseYMotion();
-
-	return 0;
 }
 
 void CSCreateGameObject(MonoObject* name, MonoObject* position)
@@ -168,7 +139,11 @@ void RecieveRotation(MonoObject* obj, MonoObject* secObj) //Allows to send float
 
 	if (workGO->transform)
 	{
-		workGO->transform->SetTransformMatrix(workGO->transform->position, omgItWorks, workGO->transform->localScale);
+		//workGO->transform->SetTransformMatrix(workGO->transform->position, omgItWorks, workGO->transform->localScale);
+
+		workGO->transform->rotation = omgItWorks.Normalized();
+		workGO->transform->eulerRotation = omgItWorks.ToEulerXYZ() * RADTODEG;
+
 		workGO->transform->updateTransform = true;
 	}
 }
@@ -187,7 +162,8 @@ void RecieveScale(MonoObject* obj, MonoObject* secObj)
 
 	if (workGO->transform)
 	{
-		workGO->transform->SetTransformMatrix(workGO->transform->position, workGO->transform->rotation, omgItWorks);
+		//workGO->transform->SetTransformMatrix(workGO->transform->position, workGO->transform->rotation, omgItWorks);
+		workGO->transform->localScale = omgItWorks;
 		workGO->transform->updateTransform = true;
 	}
 }
@@ -234,7 +210,8 @@ void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale)
 
 	C_MeshRenderer* meshRenderer =  dynamic_cast<C_MeshRenderer*>(go->AddComponent(Component::Type::MeshRenderer));
 
-	ResourceMesh* test = dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(1736836885, "Library/Meshes/1736836885.mmh"));
+	ResourceMesh* test = 
+		dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(965117995, Resource::Type::MESH));
 	meshRenderer->SetRenderMesh(test);
 
 	go->AddComponent(Component::Type::Script, "BH_Bullet");

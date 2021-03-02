@@ -1,12 +1,13 @@
 {
     "Assets Path": "Assets\/Jet\/jet.fbx",
-    "Library Path": "Library\/Models\/1617393430.model",
-    "UID": 1617393430,
+    "modTime": 1613402753,
+    "Library Path": "Library\/Models\/214132490.model",
+    "UID": 214132490,
     "Type": 1,
     "Meshes Inside": [
-        282717873,
-        1413411378,
-        1117874904,
-        613840457
+        720989604,
+        734455106,
+        1913299756,
+        1726656360
     ]
 }

@@ -174,11 +174,45 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkAtomic.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkBytesCount.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkBytesMem.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkCallback.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkCommonDefs.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkDynamicDialogue.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkDynamicSequence.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkFPUtilities.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkMemoryMgr.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkMidiTypes.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkModule.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkQueryParameters.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkSimd.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkSimdMath.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkSoundEngine.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkSoundEngineExport.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkSpeakerConfig.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkSpeakerVolumes.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkStreamMgrModule.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkTypes.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\AkVirtualAcoustics.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\IAkMixerPlugin.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\IAkPlatformContext.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\IAkPlugin.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\IAkPluginMemAlloc.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\IAkProcessorFeatures.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\IAkRTPCSubscriber.h" />
+    <ClInclude Include="..\..\..\..\..\Program Files (x86)\Audiokinetic\Wwise 2019.2.9.7459\SDK\include\AK\SoundEngine\Common\IAkStreamMgr.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source Code\Application.h" />
     <ClInclude Include="Source Code\AssetDir.h" />
+    <ClInclude Include="Source Code\AudioBank.h" />
     <ClInclude Include="Source Code\Color.h" />
+    <ClInclude Include="Source Code\Command.h" />
+    <ClInclude Include="Source Code\COMM_DeleteGO.h" />
+    <ClInclude Include="Source Code\COMM_Transform.h" />
     <ClInclude Include="Source Code\Component.h" />
+    <ClInclude Include="Source Code\CO_AudioListener.h" />
+    <ClInclude Include="Source Code\CO_AudioSource.h" />
     <ClInclude Include="Source Code\CO_Camera.h" />
     <ClInclude Include="Source Code\CO_Collider.h" />
     <ClInclude Include="Source Code\CO_MeshRenderer.h" />
@@ -186,6 +220,7 @@
     <ClInclude Include="Source Code\CO_RigidBody.h" />
     <ClInclude Include="Source Code\CO_Script.h" />
     <ClInclude Include="Source Code\CO_Transform.h" />
+    <ClInclude Include="Source Code\CS_Input_Bindings.h" />
     <ClInclude Include="Source Code\CS_Transform_Bindings.h" />
     <ClInclude Include="Source Code\DEJsonSupport.h" />
     <ClInclude Include="Source Code\DERect.h" />
@@ -281,20 +316,36 @@
     <ClInclude Include="Source Code\External Libraries\parson\parson.h" />
     <ClInclude Include="Source Code\External Libraries\PugiXML\pugiconfig.hpp" />
     <ClInclude Include="Source Code\External Libraries\PugiXML\pugixml.hpp" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkDefaultLowLevelIODispatcher.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFileLocationBase.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackage.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackageLowLevelIO.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackageLUT.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkMultipleFileLocation.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkDefaultIOHookBlocking.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkDefaultIOHookDeferred.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkFileHelpers.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkFilePackageLowLevelIOBlocking.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkFilePackageLowLevelIODeferred.h" />
+    <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\stdafx.h" />
     <ClInclude Include="Source Code\IM_FileSystem.h" />
     <ClInclude Include="Source Code\GameObject.h" />
     <ClInclude Include="Source Code\glmath.h" />
     <ClInclude Include="Source Code\Globals.h" />
+    <ClInclude Include="Source Code\IM_MaterialImporter.h" />
     <ClInclude Include="Source Code\IM_ModelImporter.h" />
     <ClInclude Include="Source Code\IM_ShaderImporter.h" />
     <ClInclude Include="Source Code\IM_TextureImporter.h" />
+    <ClInclude Include="Source Code\INC_EditorWindows.h" />
     <ClInclude Include="Source Code\Light.h" />
     <ClInclude Include="Source Code\MaykMath.h" />
     <ClInclude Include="Source Code\DEModelNode.h" />
     <ClInclude Include="Source Code\MA_IconSystem.h" />
+    <ClInclude Include="Source Code\MO_AudioManager.h" />
     <ClInclude Include="Source Code\MO_MonoManager.h" />
     <ClInclude Include="Source Code\MO_Physics.h" />
     <ClInclude Include="Source Code\MO_Physics\Header.h" />
+    <ClInclude Include="Source Code\RE_Material.h" />
     <ClInclude Include="Source Code\RE_Mesh.h" />
     <ClInclude Include="Source Code\MeshArrays.h" />
     <ClInclude Include="Source Code\IM_MeshLoader.h" />
@@ -313,6 +364,7 @@
     <ClInclude Include="Source Code\DEResource.h" />
     <ClInclude Include="Source Code\RE_Shader.h" />
     <ClInclude Include="Source Code\RE_Texture.h" />
+    <ClInclude Include="Source Code\MA_ShortcutManager.h" />
     <ClInclude Include="Source Code\Timer.h" />
     <ClInclude Include="Source Code\Window.h" />
     <ClInclude Include="Source Code\WI_About.h" />
@@ -324,12 +376,18 @@
     <ClInclude Include="Source Code\WI_Inspector.h" />
     <ClInclude Include="Source Code\WI_Scene.h" />
     <ClInclude Include="Source Code\WI_TextEditor.h" />
+    <ClInclude Include="Source Code\Wwise_Includes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp" />
     <ClCompile Include="Source Code\AssetDir.cpp" />
     <ClCompile Include="Source Code\Color.cpp" />
+    <ClCompile Include="Source Code\Command.cpp" />
+    <ClCompile Include="Source Code\COMM_DeleteGO.cpp" />
+    <ClCompile Include="Source Code\COMM_Transform.cpp" />
     <ClCompile Include="Source Code\Component.cpp" />
+    <ClCompile Include="Source Code\CO_AudioListener.cpp" />
+    <ClCompile Include="Source Code\CO_AudioSource.cpp" />
     <ClCompile Include="Source Code\CO_Camera.cpp" />
     <ClCompile Include="Source Code\CO_Collider.cpp" />
     <ClCompile Include="Source Code\CO_Material.cpp" />
@@ -390,16 +448,27 @@
     <ClCompile Include="Source Code\External Libraries\mmgr\mmgr.cpp" />
     <ClCompile Include="Source Code\External Libraries\parson\parson.c" />
     <ClCompile Include="Source Code\External Libraries\PugiXML\pugixml.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkDefaultLowLevelIODispatcher.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFileLocationBase.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackage.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackageLUT.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkMultipleFileLocation.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkDefaultIOHookBlocking.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\AkDefaultIOHookDeferred.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Win32\stdafx.cpp" />
     <ClCompile Include="Source Code\IM_FileSystem.cpp" />
     <ClCompile Include="Source Code\GameObject.cpp" />
     <ClCompile Include="Source Code\glmath.cpp" />
+    <ClCompile Include="Source Code\IM_MaterialImporter.cpp" />
     <ClCompile Include="Source Code\IM_ModelImporter.cpp" />
     <ClCompile Include="Source Code\IM_ShaderImporter.cpp" />
     <ClCompile Include="Source Code\IM_TextureImporter.cpp" />
     <ClCompile Include="Source Code\MA_IconSystem.cpp" />
     <ClCompile Include="Source Code\MMGui.cpp" />
+    <ClCompile Include="Source Code\MO_AudioManager.cpp" />
     <ClCompile Include="Source Code\MO_MonoManager.cpp" />
     <ClCompile Include="Source Code\MO_Physics.cpp" />
+    <ClCompile Include="Source Code\RE_Material.cpp" />
     <ClCompile Include="Source Code\RE_Mesh.cpp" />
     <ClCompile Include="Source Code\IM_MeshLoader.cpp" />
     <ClCompile Include="Source Code\MO_FileSystem.cpp" />
@@ -407,6 +476,7 @@
     <ClCompile Include="Source Code\MO_Scene.cpp" />
     <ClCompile Include="Source Code\RE_Shader.cpp" />
     <ClCompile Include="Source Code\RE_Texture.cpp" />
+    <ClCompile Include="Source Code\MA_ShortcutManager.cpp" />
     <ClCompile Include="Source Code\WI_Assets.cpp" />
     <ClCompile Include="Source Code\WI_Game.cpp" />
     <ClCompile Include="Source Code\WI_Hierarchy.cpp" />
@@ -428,6 +498,7 @@
     <ClCompile Include="Source Code\WI_Inspector.cpp" />
     <ClCompile Include="Source Code\WI_Scene.cpp" />
     <ClCompile Include="Source Code\WI_TextEditor.cpp" />
+    <ClCompile Include="Source Code\Wwise_Includes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source Code\External Libraries\DevIL\include\config.h.win" />
@@ -437,6 +508,7 @@
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_CPP.inl" />
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl" />
     <None Include="Source Code\External Libraries\MathGeoLib\include\Math\Matrix.inl" />
+    <None Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackageLowLevelIO.inl" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Diamond Engine.rc" />

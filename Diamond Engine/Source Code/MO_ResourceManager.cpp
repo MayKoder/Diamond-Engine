@@ -15,6 +15,7 @@
 #include"RE_Texture.h"
 #include"RE_Mesh.h"
 #include"RE_Shader.h"
+#include"RE_Material.h"
 
 #include"DEJsonSupport.h"
 #include"MO_Window.h"
@@ -183,6 +184,11 @@ void M_ResourceManager::UpdateMeshesDisplay()
 	LOG(LogType::L_WARNING, "Mesh display updated");
 }
 
+Resource* M_ResourceManager::RequestResource(int uid, Resource::Type type)
+{
+	return RequestResource(uid, GenLibraryPath(uid, type).c_str());
+}
+
 //Returns a resource* if the resource is loaded or creates a new resource from the library file
 Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 {
@@ -202,7 +208,7 @@ Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 	{
 		Resource* ret = nullptr;
 
-		static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 6, "Update all switches with new type");
+		static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 7, "Update all switches with new type");
 
 		//Save check
 		if (FileSystem::Exists(libraryPath))
@@ -214,6 +220,7 @@ Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 				//case Resource::Type::MODEL: ret = (Resource*) new ResourceMesh(uid); break;
 				case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
 				case Resource::Type::SHADER: ret = dynamic_cast<Resource*>(new ResourceShader(uid)); break;
+				case Resource::Type::MATERIAL: ret = dynamic_cast<Resource*>(new ResourceMaterial(uid)); break;
 				//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
 			}
 
@@ -278,6 +285,7 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 	char* fileBuffer = nullptr;
 	unsigned int size = FileSystem::LoadToBuffer(assetsFile, &fileBuffer);
 
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 7, "Update all switches with new type");
 	switch (resource->GetType()) 
 	{
 		case Resource::Type::TEXTURE: TextureImporter::Import(fileBuffer, size, resource); break;
@@ -285,6 +293,7 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 		//case Resource::Type::MESH: MeshLoader::BufferToMeshes(fileBuffer, size, resource); break;
 		case Resource::Type::SCENE: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 		case Resource::Type::SHADER: ShaderImporter::Import(fileBuffer, size, dynamic_cast<ResourceShader*>(resource), assetsFile); break;
+		case Resource::Type::MATERIAL: 	FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 	}
 
 	//Save the resource to custom format
@@ -305,8 +314,9 @@ int M_ResourceManager::CreateLibraryFromAssets(const char* assetsFile)
 	return resID;
 }
 
-void M_ResourceManager::RequestFromAssets(const char* assets_path)
+Resource* M_ResourceManager::RequestFromAssets(const char* assets_path)
 {
+	Resource* ret = nullptr;
 	if (ExistsOnLibrary(assets_path) != 0)
 	{
 		std::string meta = GetMetaPath(assets_path);
@@ -315,27 +325,26 @@ void M_ResourceManager::RequestFromAssets(const char* assets_path)
 		if (scene != NULL) 
 		{
 			DEConfig sceneObj(json_value_get_object(scene));
+			ret = RequestResource(sceneObj.ReadInt("UID"), (Resource::Type)sceneObj.ReadInt("Type")); 
 
-			switch ((Resource::Type)sceneObj.ReadInt("Type"))
-			{
-				case Resource::Type::TEXTURE: RequestResource(sceneObj.ReadInt("UID"), sceneObj.ReadString("Library Path")); break;
-				case Resource::Type::MODEL: ModelImporter::LoadModelCustom(sceneObj.ReadString("Library Path")); break;
-			}
 			//Free memory
 			json_value_free(scene);
+
+			if(ret != nullptr)
+				ret->SetAssetsPath(assets_path);
 		}
 	}
 	else
-	{
 		LOG(LogType::L_ERROR, "ASSET META OR LIBRARY NOT CREATED");
-	}
+
+	return ret;
 }
 
 Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid, Resource::Type type)
 {
 	Resource* ret = nullptr;
 
-	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 6, "Update all switches with new type");
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 7, "Update all switches with new type");
 	switch (type) 
 	{
 		case Resource::Type::SCENE : ret = new Resource(uid, Resource::Type::SCENE); break;
@@ -344,6 +353,7 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid,
 		case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
 		case Resource::Type::SCRIPT: App->moduleMono->ReCompileCS(); break;
 		case Resource::Type::SHADER: ret = (Resource*) new ResourceShader(uid); break;
+		case Resource::Type::MATERIAL: ret = (Resource*) new ResourceMaterial(uid); break;
 	}
 
 	if (ret != nullptr)
@@ -361,7 +371,7 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 {
 	Resource* ret = nullptr;
 
-	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 6, "Update all switches with new type");
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 7, "Update all switches with new type");
 
 	int uid = _uid;
 	switch (type)
@@ -370,6 +380,7 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 		case Resource::Type::MODEL: ret = (Resource*) new ResourceMesh(uid); break;
 		case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
 		case Resource::Type::SHADER: ret = (Resource*) new ResourceShader(uid); break;
+		case Resource::Type::MATERIAL: ret = (Resource*) new ResourceMaterial(uid); break;
 		//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
 	}
 
@@ -421,11 +432,12 @@ std::string M_ResourceManager::GenLibraryPath(uint _uid, Resource::Type _type)
 
 	switch (_type)
 	{
-		case Resource::Type::TEXTURE: ret = MATERIALS_PATH; ret += nameNoExt; ret += ".dds"; break;
+		case Resource::Type::TEXTURE: ret = TEXTURES_PATH; ret += nameNoExt; ret += ".dds"; break;
 		case Resource::Type::MODEL: ret = MODELS_PATH; ret += nameNoExt; ret += ".model"; break;
 		case Resource::Type::MESH: ret = MESHES_PATH; ret += nameNoExt; ret += ".mmh"; break;
 		case Resource::Type::SCENE : ret = SCENES_PATH; ret += nameNoExt; ret += ".des"; break;
 		case Resource::Type::SHADER : ret = SHADERS_PATH; ret += nameNoExt; ret += ".shdr"; break;
+		case Resource::Type::MATERIAL : ret = MATERIALS_PATH; ret += nameNoExt; ret += ".mat"; break;
 	}
 
 	return ret;
@@ -540,6 +552,8 @@ Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFil
 
 	if (ext == "glsl")
 		return Resource::Type::SHADER;
+	if (ext == "mat")
+		return Resource::Type::MATERIAL;
 
 
 	return Resource::Type::UNKNOWN;
@@ -565,6 +579,8 @@ Resource::Type M_ResourceManager::GetTypeFromLibraryExtension(const char* librar
 		return Resource::Type::SCENE;
 	if (ext == "shdr")
 		return Resource::Type::SHADER;
+	if (ext == "mat")
+		return Resource::Type::MATERIAL;
 	
 
 	return Resource::Type::UNKNOWN;

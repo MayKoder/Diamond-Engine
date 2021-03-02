@@ -9,7 +9,7 @@ class GameObject;
 class C_Camera;
 typedef unsigned int uint;
 struct SerializedField;
-class ResourceShader;
+class ResourceMaterial;
 
 class M_Scene : public Module
 {
@@ -29,6 +29,7 @@ public:
 
 	GameObject* GetGOFromUID(GameObject* n, uint sUID);
 	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
+	void LoadScriptsData();
 
 #ifndef STANDALONE
 	void OnGUI() override;
@@ -43,13 +44,15 @@ public:
 	void LoadModelTree(const char* modelPath);
 
 	void CleanScene();
-
+	GameObject* LoadGOData(JSON_Object* goJsonObj, GameObject* parent);
 
 	GameObject* root;
 	std::vector<GameObject*> destroyList;
 	std::multimap<uint, SerializedField*> referenceMap;
 
-	ResourceShader* defaultShader;
+	ResourceMaterial* defaultMaterial;
+	char current_scene[64];
+	char current_scene_name[32];
 
 private:
 	void Destroy(GameObject* gm);
@@ -60,4 +63,5 @@ private:
 	void RecursivePostUpdate(GameObject* parent);
 
 	GameObject* LoadGOData(JSON_Object* goJsonObj, GameObject* parent);
+
 };

@@ -27,15 +27,18 @@ public:
 
 	void Draw() override;
 	void AddLog(const char*, LogType);
+	void FilterLogs();
 
 	ImTextureID GetMsgType(LogType);
 
 	std::vector<LogMessage> logs;
+	std::vector<LogMessage> visibleLogs;
 	bool collapseMode;
 
 private:
 	bool scrollToBottom;
-	
+	bool showMessage[3];
+
 	//TODO: This should be a texture
 	char logTypeChar;
 

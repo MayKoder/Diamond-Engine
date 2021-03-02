@@ -37,7 +37,7 @@ void DE_FrameBuffer::ReGenerateBuffer(int w, int h, bool MSAA, int msaaSamples)
 	(MSAA) ? glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, msaaSamples, GL_RGB, w, h, GL_TRUE) : glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(textureTypr, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(textureTypr, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
+	glBindTexture(textureTypr, 0);
 
 	// attach it to currently bound framebuffer object
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, textureTypr, texColorBuffer, 0);

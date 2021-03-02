@@ -5,6 +5,7 @@
 #include "Application.h"
 #include "MO_Renderer3D.h"
 #include"MO_ResourceManager.h"
+#include"RE_Material.h"
 #include"RE_Shader.h"
 #include "IM_FileSystem.h"
 
@@ -79,14 +80,10 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 	if (material != nullptr && material->IsActive())
 		id = material->GetTextureID();
 
-	glColor3fv(&alternColor.x);
-
-	_mesh->RenderMesh(id, rTex, (material != nullptr) ? material->shader : nullptr, transform);
-
-	glColor3f(1.f, 1.f, 1.f);
+	_mesh->RenderMesh(id, alternColor, rTex, (material && material->material != nullptr) ? material->material : EngineExternal->moduleScene->defaultMaterial, transform);
 
 	if (vertexNormals || faceNormals)
-		_mesh->RenderMeshDebug(&vertexNormals, &faceNormals);
+		_mesh->RenderMeshDebug(&vertexNormals, &faceNormals, transform->GetGlobalTransposed());
 
 }
 
@@ -130,9 +127,7 @@ bool C_MeshRenderer::OnEditor()
 		{
 			//ImGui::Image((ImTextureID)_mesh->textureID, ImVec2(128, 128));
 			ImGui::Text("Vertices: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->vertices_count);
-			ImGui::Text("Normals: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->normals_count);
 			ImGui::Text("Indices: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->indices_count);
-			ImGui::Text("Texture coords: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->texCoords_count);
 
 			ImGui::Spacing();
 			ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _mesh->GetLibraryPath());

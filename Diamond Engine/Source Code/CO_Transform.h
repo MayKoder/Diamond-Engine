@@ -23,13 +23,15 @@ public:
 	bool OnEditor() override;
 #endif // !STANDALONE
 
+	float4x4 GetCurrentGlobalMatrix();
+
 	float4x4 globalTransform;
 	float4x4 localTransform;
 
 	float3 position, localScale, eulerRotation;
 	Quat rotation;
 
-	bool updateTransform;
+	bool updateTransform, sendCommand;
 	void SetTransformMatrix(float3 _position, Quat _rotation, float3 _localScale);
 
 	void SetTransformWithGlobal(float4x4& globalMat);
@@ -48,6 +50,7 @@ private:
 
 
 	float4x4 globalTransformTRANS;
+	float4x4 oldTransform;
 
 	float3 GetNormalizeAxis(int i);
 };

@@ -1,22 +1,29 @@
 #ifndef STANDALONE
 
 #include "WI_Inspector.h"
+#include"WI_Assets.h"
+
 #include "MMGui.h"
 #include "GameObject.h"
 #include "Application.h"
+
 #include "MO_Scene.h"
-
+#include"MO_ResourceManager.h"
 #include"MO_MonoManager.h"
-#include"mono/metadata/class.h"
-#include"CO_Script.h"
 
-W_Inspector::W_Inspector() : Window(), selectedGO(nullptr)
+#include"CO_Script.h"
+#include"RE_Material.h"
+
+W_Inspector::W_Inspector() : Window(), selectedGO(nullptr), editingRes(nullptr)
 {
 	name = "Inspector";
 }
 
 W_Inspector::~W_Inspector()
 {
+	if (editingRes)
+		EngineExternal->moduleResources->UnloadResource(editingRes->GetUID());
+
 }
 
 void W_Inspector::Draw()
@@ -26,7 +33,13 @@ void W_Inspector::Draw()
 
 	if (ImGui::Begin(name.c_str(), NULL /*| ImGuiWindowFlags_NoResize*/)) 
 	{
-		if (selectedGO != nullptr && !selectedGO->IsRoot()) 
+		if (editingRes != nullptr && editingRes->GetType() == Resource::Type::MATERIAL)
+		{
+			dynamic_cast<ResourceMaterial*>(editingRes)->DrawEditor();
+		}
+		else
+		{
+			if (selectedGO != nullptr && !selectedGO->IsRoot()) 
 		{
 			if (ImGui::Checkbox("##Active", &selectedGO->active)) 
 			{
@@ -133,6 +146,17 @@ void W_Inspector::Draw()
 					if (selectedGO->GetComponent(Component::Type::Collider) == nullptr)
 						selectedGO->AddComponent(Component::Type::Collider);
 				}
+				if (ImGui::Selectable("AudioListener"))
+				{
+					if (selectedGO->GetComponent(Component::Type::AudioListener) == nullptr)
+						selectedGO->AddComponent(Component::Type::AudioListener);
+				}
+				if (ImGui::Selectable("AudioSource"))
+				{
+					if (selectedGO->GetComponent(Component::Type::AudioSource) == nullptr)
+						selectedGO->AddComponent(Component::Type::AudioSource);
+				}
+
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)
 				{
 					if (ImGui::Selectable(mono_class_get_name(EngineExternal->moduleMono->userScripts[i]))) 
@@ -147,11 +171,21 @@ void W_Inspector::Draw()
 			}
 
 		}
+		}
 
 	}
 
 
 	ImGui::End();
+}
+
+void W_Inspector::SetEditingResource(Resource* res)
+{
+	if (editingRes != nullptr)
+		EngineExternal->moduleResources->UnloadResource(editingRes->GetUID());
+
+	editingRes = res;
+
 }
 
 #endif // !STANDALONE
