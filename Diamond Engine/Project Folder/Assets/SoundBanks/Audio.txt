@@ -11,6 +11,7 @@ Switch	ID	Name	Switch Group			Notes
 	787898836	Snow	Terrain			
 	803837735	Sand	Terrain			
 	1216965916	Stone	Terrain			
+	1700698134	Stone_sandy	Terrain			
 	2058049674	Wood	Terrain			
 	868398948	Blaster	Weapon			
 	2550763292	Sniper	Weapon			
@@ -24,7 +25,9 @@ Audio Bus	ID	Name			Wwise Object Path	Notes
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	119721926	Footstep stone 2	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Footstep stone 2_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Footsteps stone\Footstep stone 2		15920
 	209390670	Empire Music	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Empire Music_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Music\Empire Music		18249568
+	470698696	Footstep stone 1	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Footstep stone 1_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Footsteps stone\Footstep stone 1		9772
 	575059296	blaster wav	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\blaster wav_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Weapon_Shoot\blaster wav		56100
 	604011556	Footstep wood2	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Footstep wood2_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Footsteps wood\Footstep wood2		17270
 	654547234	Footstep snow	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Footstep snow_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Footstep snow		59952

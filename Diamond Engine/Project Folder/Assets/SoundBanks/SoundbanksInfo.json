@@ -18,7 +18,7 @@
    {
     "Id": "1069811801",
     "Language": "SFX",
-    "Hash": "3053518406",
+    "Hash": "562036426",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Audio",
     "ShortName": "Audio",
     "Path": "Audio.bnk",
@@ -28,6 +28,18 @@
       "Name": "Play_Footstep",
       "ObjectPath": "\\Events\\Default Work Unit\\Play_Footstep",
       "IncludedMemoryFiles": [
+       {
+        "Id": "119721926",
+        "Language": "SFX",
+        "ShortName": "Footstep stone 2.wav",
+        "Path": "SFX\\Footstep stone 2_10C4C929.wem"
+       },
+       {
+        "Id": "470698696",
+        "Language": "SFX",
+        "ShortName": "Footstep stone 1.wav",
+        "Path": "SFX\\Footstep stone 1_10C4C929.wem"
+       },
        {
         "Id": "604011556",
         "Language": "SFX",
@@ -78,7 +90,7 @@
         ]
        },
        {
-        "SwitchValue": "{52DDF349-5B56-485F-B6A9-023045AD18BA}",
+        "SwitchValue": "{756EFA02-6286-4350-9DF6-4B700085CB30}",
         "Media": [
          {
           "Id": "917854078"
@@ -93,6 +105,17 @@
          },
          {
           "Id": "675536826"
+         }
+        ]
+       },
+       {
+        "SwitchValue": "{52DDF349-5B56-485F-B6A9-023045AD18BA}",
+        "Media": [
+         {
+          "Id": "119721926"
+         },
+         {
+          "Id": "470698696"
          }
         ]
        }
@@ -178,6 +201,11 @@
         "Id": "2058049674",
         "Name": "Wood",
         "ObjectPath": "\\Switches\\Default Work Unit\\Terrain\\Wood"
+       },
+       {
+        "Id": "1700698134",
+        "Name": "Stone_sandy",
+        "ObjectPath": "\\Switches\\Default Work Unit\\Terrain\\Stone_sandy"
        }
       ]
      },
@@ -203,7 +231,7 @@
    {
     "Id": "1355168291",
     "Language": "SFX",
-    "Hash": "3789941178",
+    "Hash": "924124415",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
