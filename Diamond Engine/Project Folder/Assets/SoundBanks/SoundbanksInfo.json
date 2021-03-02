@@ -18,7 +18,7 @@
    {
     "Id": "1069811801",
     "Language": "SFX",
-    "Hash": "1750557341",
+    "Hash": "3716485186",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Audio",
     "ShortName": "Audio",
     "Path": "Audio.bnk",
@@ -134,11 +134,6 @@
         ]
        }
       ]
-     },
-     {
-      "Id": "2399259911",
-      "Name": "Set_General_Volume",
-      "ObjectPath": "\\Events\\Default Work Unit\\Set_General_Volume"
      }
     ],
     "GameParameters": [
@@ -203,7 +198,7 @@
    {
     "Id": "1355168291",
     "Language": "SFX",
-    "Hash": "101751641",
+    "Hash": "3789941178",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
