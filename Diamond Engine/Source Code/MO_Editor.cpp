@@ -34,6 +34,8 @@
 
 #include"GameObject.h"
 #include"IM_TextureImporter.h"
+#include"MO_Camera3D.h"
+#include "MO_AudioManager.h"
 
 //TODO: Do i really need all those includes?
 M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_enabled), displayWindow(false),
@@ -391,10 +393,13 @@ void M_Editor::DrawTopBar()
 				{
 					App->moduleScene->SaveScene("Library/Scenes/tmp.des");
 					DETime::Play();
+					EngineExternal->moduleAudio->PlayOnAwake();
 				}
 				else
 				{
 					DETime::Stop();
+					EngineExternal->moduleAudio->StopAllSounds();
+					EngineExternal->moduleAudio->UnLoadAllBanks();
 					App->moduleScene->LoadScene("Library/Scenes/tmp.des");
 					App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code, mmove to method
 				}
@@ -407,6 +412,8 @@ void M_Editor::DrawTopBar()
 				if (DETime::state == GameState::PLAY || DETime::state == GameState::PAUSE)
 				{
 					DETime::Stop();
+					EngineExternal->moduleAudio->StopAllSounds();
+					EngineExternal->moduleAudio->UnLoadAllBanks();
 					App->moduleScene->LoadScene("Library/Scenes/tmp.des");
 					App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des");
 				}
@@ -415,7 +422,17 @@ void M_Editor::DrawTopBar()
 
 			//Step one frame forward
 			if (ImGui::ImageButton((ImTextureID)editorIcons.GetIconTextureID("PAUSE"), ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+			{
 				DETime::Pause();
+				if (DETime::state == GameState::PLAY)
+				{
+					EngineExternal->moduleAudio->ResumeAllSounds();
+				}
+				else if (DETime::state == GameState::PAUSE)
+				{
+					EngineExternal->moduleAudio->PauseAllSounds();
+				}
+			}
 
 			ImGui::SameLine();
 			//Step one frame forward

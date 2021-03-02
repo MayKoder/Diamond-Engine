@@ -24,6 +24,8 @@ public:
 		TEXT_UI,
 		CANVAS,
 		IMAGE_2D,
+		AUDIO_LISTENER,
+		AUDIO_SOURCE,
 		COUNT
 	};
 

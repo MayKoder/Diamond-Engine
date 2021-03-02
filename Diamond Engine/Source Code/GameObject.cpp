@@ -6,6 +6,8 @@
 #include "CO_Material.h"
 #include "CO_Camera.h"
 #include "CO_Script.h"
+#include "CO_AudioListener.h"
+#include "CO_AudioSource.h"
 #include "CO_Transform2D.h"
 #include "CO_Button.h"
 #include "CO_Text.h"
@@ -115,6 +117,12 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 		ret = new C_Camera(this);
 		EngineExternal->moduleScene->SetGameCamera(dynamic_cast<C_Camera*>(ret));
 		break;
+	case Component::TYPE::AUDIO_LISTENER:
+		ret = new C_AudioListener(this);
+		break;
+	case Component::TYPE::AUDIO_SOURCE:
+		ret = new C_AudioSource(this);
+		break;
 
 	case Component::TYPE::TRANSFORM_2D:
 		ret = new C_Transform2D(this);
@@ -140,6 +148,7 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 		ret = new C_Image2D(this);
 		break;
 	}
+
 
 	if (ret != nullptr)
 	{		

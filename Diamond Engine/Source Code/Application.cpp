@@ -8,6 +8,7 @@
 #include "MO_Renderer3D.h"
 #include "MO_Camera3D.h"
 #include "MO_Scene.h"
+#include "MO_AudioManager.h"
 #include "MO_GUI.h"
 
 #ifndef STANDALONE
@@ -34,6 +35,7 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	moduleGui = new M_Gui(this);
 	moduleRenderer3D = new ModuleRenderer3D(this);
 	moduleCamera = new ModuleCamera3D(this);
+	moduleAudio = new ModuleAudioManager(this);
 
 	moduleMono = new M_MonoManager(this);
 
@@ -51,6 +53,9 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	AddModule(moduleFileSystem);
 	AddModule(moduleWindow);
 	AddModule(moduleInput);
+
+	//Should go before the scene
+	AddModule(moduleAudio);
 
 	//Should scene be here?
 	AddModule(moduleScene);

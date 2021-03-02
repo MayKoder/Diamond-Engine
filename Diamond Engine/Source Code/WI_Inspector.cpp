@@ -136,6 +136,16 @@ void W_Inspector::Draw()
 					if(selectedGO->GetComponent(Component::TYPE::CAMERA) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::CAMERA);
 				}
+				if (ImGui::Selectable("AudioListener"))
+				{
+					if (selectedGO->GetComponent(Component::TYPE::AUDIO_LISTENER) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::AUDIO_LISTENER);
+				}
+				if (ImGui::Selectable("AudioSource"))
+				{
+					if (selectedGO->GetComponent(Component::TYPE::AUDIO_SOURCE) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::AUDIO_SOURCE);
+				}
 
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)
 				{

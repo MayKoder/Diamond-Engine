@@ -23,6 +23,7 @@ namespace StringLogic {
 #define SCRIPTS_PATH "Library/ScriptsAssembly/"
 #define SHADERS_PATH "Library/Shaders/"
 #define MATERIALS_PATH "Library/Materials/"
+#define SOUNDS_PATH "Library/Sounds/"
 
 namespace FileSystem
 {
@@ -53,4 +54,7 @@ namespace FileSystem
 	uint Copy(const char* file, const char* dir, std::string& outputFile);
 
 	//std::string FileToText(const char* path);
+
+	//TEMPORAL FIX
+	void CreateLibrarySoundBanks();
 }

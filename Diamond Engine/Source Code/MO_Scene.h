@@ -51,6 +51,8 @@ public:
 	std::multimap<uint, SerializedField*> referenceMap;
 
 	ResourceMaterial* defaultMaterial;
+	char current_scene[64];
+	char current_scene_name[32];
 
 private:
 	void Destroy(GameObject* gm);

@@ -21,6 +21,7 @@ namespace DiamondEngine
     }
     public class Input
     {
+        //Keyboard and mouse
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern KeyState GetKey(object keyPressed);
 
@@ -32,6 +33,28 @@ namespace DiamondEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern int GetMouseY();
+
+        //Gamepad
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern KeyState GetGamepadButton(object keyPressed);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetLeftAxisX();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetLeftAxisY();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetRightAxisX();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetRightAxisY();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetLeftTrigger();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetRightTrigger();
     }
 
     public partial class Debug
@@ -610,4 +633,25 @@ public enum MouseButton
     LEFT = 1,
     MIDDLE,
     RIGHT,
+}
+
+public enum DEControllerButton
+{
+    INVALID = -1,
+    A,
+    B,
+    X,
+    Y,
+    BACK,
+    GUIDE,
+    START,
+    LEFTSTICK,
+    RIGHTSTICK,
+    LEFTSHOULDER,
+    RIGHTSHOULDER,
+    DPAD_UP,
+    DPAD_DOWN,
+    DPAD_LEFT,
+    DPAD_RIGHT,
+    MAX
 }
