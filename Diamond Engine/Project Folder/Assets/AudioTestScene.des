@@ -1,0 +1,157 @@
+{
+    "EditorCameraPosition": [
+        17.297677993774414,
+        10.252769470214844,
+        17.738853454589844
+    ],
+    "EditorCameraZ": [
+        -0.64509636163711548,
+        -0.38236486911773682,
+        -0.66154950857162476
+    ],
+    "EditorCameraY": [
+        -0.26694712042808533,
+        0.92401134967803955,
+        -0.27375558018684387
+    ],
+    "Game Objects": [
+        {
+            "name": "Scene root",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Player",
+            "Active": true,
+            "Position": [
+                0,
+                2,
+                -2.2426132773034624e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                2,
+                0.9999280571937561
+            ],
+            "UID": 1661764735,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        1,
+                        0.99998998641967773,
+                        0.99998998641967773
+                    ]
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "FPS_Controller",
+                    "reference": 1661764735,
+                    "turret": 1661764735,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 35,
+                    "mouseSens": 1
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Game Camera",
+            "Active": true,
+            "Position": [
+                0,
+                0.70512247085571289,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 188616957,
+            "ParentUID": 1661764735,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 4,
+                    "Active": true,
+                    "fType": 2,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 5000,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.7027026414871216,
+                    "culling": false
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "isDefaultListener": true,
+                    "masterVolume": 50
+                },
+                {
+                    "Type": 7,
+                    "Active": true,
+                    "evName": "Play",
+                    "audBankReference": "Test",
+                    "volume": 50,
+                    "pitch": 1,
+                    "playOnAwake": true,
+                    "isMuted": false
+                }
+            ]
+        }
+    ]
+}
