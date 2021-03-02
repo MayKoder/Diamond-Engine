@@ -23,7 +23,7 @@
 
 #include "DETime.h"
 
-C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject), rootBoneUID(0u), meshRendererUID(0u)
+C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject), rootBoneUID(0u), meshRendererUID(0u), selectedClip(nullptr)
 {
 	gameObject = gameobject;
 	name = "Animator Component";
@@ -353,11 +353,13 @@ bool C_Animator::OnEditor()
 
 		for (size_t i = 0; i < clips.size(); i++)
 		{
-			ImGui::InputText("##name", clips[i].name, IM_ARRAYSIZE(clips[i].name));
+			if (ImGui::Button(clips[i].name)) {
+				selectedClip = &clips[i];
+			}
 			ImGui::NextColumn();
-			ImGui::InputFloat("##start", &clips[i].startFrame, 1.0f, 0.0f, 0);
+			ImGui::InputFloat("##start", &clips[i].startFrame, 0.0f, 0.0f, 0);
 			ImGui::NextColumn();
-			ImGui::InputFloat("##end", &clips[i].endFrame, 1.0f, 0.0f, 0);
+			ImGui::InputFloat("##end", &clips[i].endFrame, 0.0f, 0.0f, 0);
 			ImGui::NextColumn();
 			ImGui::Checkbox("##loop", &clips[i].loop);
 			ImGui::NextColumn();
@@ -377,6 +379,19 @@ bool C_Animator::OnEditor()
 		ImGui::SameLine();
 		if (ImGui::Button("-")) {
 			//Remove Clip
+		}
+
+		ImGui::Spacing();
+
+		if (selectedClip != nullptr) 
+		{
+			ImGui::Spacing();
+			ImGui::Separator();
+			ImGui::Text("Selected Clip");
+			ImGui::InputText("Name", selectedClip->name, IM_ARRAYSIZE(selectedClip->name));
+			ImGui::InputFloat("Start Frame", &selectedClip->startFrame, 1.0f, 0.0f, 0.0f);
+			ImGui::InputFloat("End Frame", &selectedClip->endFrame, 1.0f, 0.0f, 0.0f);
+			ImGui::Checkbox("Loop", &selectedClip->loop);
 		}
 
 		ImGui::Spacing();

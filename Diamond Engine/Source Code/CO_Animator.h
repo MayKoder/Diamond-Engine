@@ -106,5 +106,6 @@ private:
 	ResourceAnimation* previousAnimation = nullptr;
 	std::map<std::string,ResourceAnimation*> animations;
 	std::vector<AnimationClip> clips;
+	AnimationClip* selectedClip;
 };
 
