@@ -232,6 +232,7 @@ bool ModuleInput::CleanUp()
 {
 	LOG(LogType::L_NORMAL, "Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+	SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
 	SDL_GameControllerClose(controller_player);
 	return true;
 }
