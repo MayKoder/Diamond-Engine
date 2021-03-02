@@ -16,7 +16,8 @@
 
 #include <assert.h>
 
-C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite_button_pressed(nullptr), sprite_button_hovered(nullptr), sprite_button_unhovered(nullptr), script(nullptr), num_sprite_used(BUTTONSTATE::BUTTONPRESSED)
+C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite_button_pressed(nullptr), sprite_button_hovered(nullptr), sprite_button_unhovered(nullptr), script(nullptr), 
+num_sprite_used(BUTTONSTATE::BUTTONUNHOVERED)
 {
 	name = "Button";
 
