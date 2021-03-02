@@ -375,23 +375,11 @@ void ModuleAudioManager::RemoveAudioSource(C_AudioSource* source)
 	}
 }
 
-void ModuleAudioManager::SetAudioObjTransform(unsigned int id, float4x4& transform)
+void ModuleAudioManager::SetAudioObjTransform(unsigned int id,float3& pos, float3& forward,float3& up)
 {
-	float3 pos;
-	float3 scale;
-	float3x3 rot;
-	float3 front(0.0f, 0.0f, 1.0f);
-	float3 up(0.0f, -1.0f, 0.0f);
-
-	transform.Decompose(pos, rot, scale);
-
-	//TODO take orientation too?
-	up = up * rot;
-	front = front * rot;
-
 	AkSoundPosition newPos;
-	newPos.SetPosition(pos.x, pos.y, pos.z);
-	newPos.SetOrientation(front.x, front.y, front.z, up.x, up.y, up.z);
+	newPos.SetPosition(-pos.x, -pos.y, -pos.z);
+	newPos.SetOrientation(forward.x, forward.y, forward.z, up.x, up.y, up.z);
 
 	AK::SoundEngine::SetPosition(id, newPos);
 }

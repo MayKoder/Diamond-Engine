@@ -50,7 +50,7 @@ bool C_AudioListener::OnEditor()
 
 void C_AudioListener::Update()
 {
-	EngineExternal->moduleAudio->SetAudioObjTransform(id, myTransform->globalTransform);
+	EngineExternal->moduleAudio->SetAudioObjTransform(id,myTransform->position, myTransform->GetForward(),myTransform->GetUp());
 }
 
 void C_AudioListener::SaveData(JSON_Object* nObj)

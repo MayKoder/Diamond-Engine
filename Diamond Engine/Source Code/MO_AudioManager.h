@@ -61,7 +61,7 @@ public:
 	void AddAudioSource(C_AudioSource* new_source);
 	void RemoveAudioSource(C_AudioSource* source);
 
-	void SetAudioObjTransform(unsigned int id,float4x4& transform);
+	void SetAudioObjTransform(unsigned int id, float3& pos, float3& forward, float3& up);
 
 private:
 	void UpdateWwiseListener();
