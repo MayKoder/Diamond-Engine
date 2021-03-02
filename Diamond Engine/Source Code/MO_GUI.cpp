@@ -41,7 +41,10 @@ bool M_Gui::Start()
 	glGenBuffers(1, &VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VAO);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 8, uiVAO, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 12, uiVAO, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -98,7 +101,7 @@ void M_Gui::RenderUiElement(GameObject* uiElement)
 
 		if (material->shader)
 		{
-			glEnableClientState(GL_VERTEX_ARRAY);
+			//glEnableClientState(GL_VERTEX_ARRAY);
 			material->shader->Bind();
 			material->PushUniforms();
 
@@ -106,9 +109,9 @@ void M_Gui::RenderUiElement(GameObject* uiElement)
 			static_cast<C_Image2D*>(img2D)->RenderImage(transform->GetGlobal2DTransform().ptr(), material->shader->shaderProgramID);
 
 			glBindBuffer(GL_ARRAY_BUFFER, VAO);
-			glVertexPointer(2, GL_FLOAT, 0, NULL);
+			//glVertexPointer(2, GL_FLOAT, 0, NULL);
 
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+			glDrawArrays(GL_TRIANGLES, 0, 6);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 			glActiveTexture(GL_TEXTURE0);
@@ -117,7 +120,7 @@ void M_Gui::RenderUiElement(GameObject* uiElement)
 			if (material->shader)
 				material->shader->Unbind();
 
-			glDisableClientState(GL_VERTEX_ARRAY);
+			//glDisableClientState(GL_VERTEX_ARRAY);
 		}
 	}
 }
