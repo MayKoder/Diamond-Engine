@@ -72,7 +72,7 @@ private:
 	ResourceAnimation* ClipToAnimation(AnimationClip clip);
 
 public:
-	void Play(std::string animName);
+	void Play(std::string animName, float blendDuration);
 	void Pause();
 	void Resume();
 
@@ -94,6 +94,8 @@ private:
 	float time = 0.0f;
 	float blendTime = 0.0f;
 	float blendTimeDuration = 0.0f;
+
+	float defaultBlend;
 
 	bool channeIsLinked = false;
 	bool bonesLinked = false;

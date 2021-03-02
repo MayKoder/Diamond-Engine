@@ -28,7 +28,7 @@ C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject), rootBone
 	gameObject = gameobject;
 	name = "Animator Component";
 	playing = true;
-
+	defaultBlend = 0.2f;
 	//TODO: Loading is hard coded for debugging purposes. We must change it
 	ResourceAnimation* resAnim = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION));
 	AddAnimation(resAnim);
@@ -68,14 +68,14 @@ void C_Animator::Start()
 	}
 
 	if (animations.size() > 0)
-		Play("Default");
+		Play("Idle",defaultBlend);
 
 	started = true;
 }
 
 void C_Animator::Update()
 {
-	//float time = DETime::deltaTime;
+	float dt = DETime::deltaTime;
 	if (DETime::state == GameState::PLAY)
 	{
 		if (!started) {
@@ -116,13 +116,15 @@ void C_Animator::Update()
 	}
 	else
 	{
+		//Updating animation blend
 		float blendRatio = 0.0f;
 		if (blendTimeDuration > 0.0f)
 		{
-			prevAnimTime += DETime::deltaTime;
-			previousTimeAnimation = time * previousAnimation->ticksPerSecond;
-			previousTimeAnimation += previousAnimation->initTimeAnim;
-			blendTime += DETime::deltaTime;
+			prevAnimTime += dt;
+			blendTime += dt;
+
+			//previousTimeAnimation = time * previousAnimation->ticksPerSecond;
+			//previousTimeAnimation += previousAnimation->initTimeAnim;
 
 			if (blendTime >= blendTimeDuration)
 			{
@@ -142,7 +144,7 @@ void C_Animator::Update()
 		}
 		//Endof Updating animation blend
 
-		time += DETime::deltaTime;
+		time += dt;
 		currentTimeAnimation = time * currentAnimation->ticksPerSecond;
 		currentTimeAnimation += currentAnimation->initTimeAnim;
 		if (currentAnimation && currentTimeAnimation >= currentAnimation->duration -1) {
@@ -150,8 +152,7 @@ void C_Animator::Update()
 				time = 0.f;
 			}
 			else {
-				Play("Idle");
-				time = 0.f;
+				Play("Idle",defaultBlend);
 				return;
 			}
 		}
@@ -300,7 +301,7 @@ bool C_Animator::OnEditor()
 			}
 
 			if (ImGui::Button(animName.c_str())) {
-				Play(animName);
+				Play(animName,defaultBlend);
 				time = 0.f;
 
 				//if (currentAnimation == nullptr) {
@@ -315,7 +316,7 @@ bool C_Animator::OnEditor()
 
 		ImGui::Text("Previous Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", prevAnimTime);
 		ImGui::Text("Current Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", currentTimeAnimation);
-		ImGui::Text("blendTime: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", blendTime);
+		ImGui::Text("blendTime: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", blendTime);
 
 		ImGui::Spacing();
 		if (playing)
@@ -436,13 +437,18 @@ void C_Animator::StoreBoneMapping(GameObject* gameObject)
 	}
 }
 
-void C_Animator::Play(std::string animName)
+void C_Animator::Play(std::string animName, float blendDuration)
 {
 	std::map<std::string, ResourceAnimation*>::iterator it = animations.find(animName);
 	if (it == animations.end())
 		return;
 
+	previousAnimation = currentAnimation;
+	prevAnimTime = time;
 	currentAnimation = animations[animName];
+	blendTimeDuration = blendDuration;
+	blendTime = 0.0f;
+	time = 0;
 }
 
 void C_Animator::Pause()
@@ -459,27 +465,27 @@ void C_Animator::AddAnimation(ResourceAnimation* anim)
 {
 	if (anim != nullptr) {
 		_anim = anim;
-		animations[anim->animationName] = anim;
+		//animations[anim->animationName] = anim;
 	}
-	/*
+	
 	_anim->animationName = "Idle";
 	_anim->initTimeAnim = 0;
-	_anim->duration = 21;
-	animations[_anim->animationName] = _anim;*/
+	_anim->duration = 47;
+	animations[_anim->animationName] = _anim;
 
-	//ResourceAnimation* run = new ResourceAnimation(*_anim);
-	//run->animationName = "Run";
-	//run->initTimeAnim = 49;
-	//run->duration = 72;
-	//animations[run->animationName] = run;
+	ResourceAnimation* run = new ResourceAnimation(*_anim);
+	run->animationName = "Run";
+	run->initTimeAnim = 49;
+	run->duration = 72;
+	animations[run->animationName] = run;
 
 
-	//ResourceAnimation* attack = new ResourceAnimation(*_anim);
-	//attack->animationName = "Attack";
-	//attack->initTimeAnim = 73;
-	//attack->duration = 120;
-	//attack->loopable = false;
-	//animations[attack->animationName] = attack;
+	ResourceAnimation* attack = new ResourceAnimation(*_anim);
+	attack->animationName = "Attack";
+	attack->initTimeAnim = 73;
+	attack->duration = 120;
+	attack->loopable = false;
+	animations[attack->animationName] = attack;
 }
 
 void C_Animator::AddClip(ResourceAnimation* anim)
@@ -503,7 +509,7 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, cons
 	uint prevBlendFrame = 0;
 	if (blend != nullptr)
 	{
-		prevBlendFrame = blend->ticksPerSecond * prevAnimTime;
+		prevBlendFrame = (blend->ticksPerSecond * prevAnimTime) + blend->initTimeAnim;
 	}
 	//LOG(LogType::L_NORMAL, "%i", currentFrame);
 	std::map<std::string, GameObject*>::iterator boneIt;
