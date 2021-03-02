@@ -126,7 +126,7 @@ void C_Collider::Update()
 		//EngineExternal->modulePhysics->DrawCollider(this);
 
 		float4x4 trans;
-		if (rigidbody != nullptr)
+		if (rigidbody != nullptr && rigidbody->rigid_dynamic)
 		trans = EngineExternal->modulePhysics->PhysXTransformToF4F(rigidbody->rigid_dynamic->getGlobalPose());
 		else
 			trans = transform->globalTransform;
