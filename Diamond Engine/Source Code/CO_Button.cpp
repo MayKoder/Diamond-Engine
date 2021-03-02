@@ -70,10 +70,7 @@ void C_Button::ChangeTexture(BUTTONSTATE new_num_sprite)
 		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
 
 		if (img != nullptr)
-		{
-			ResourceTexture* tex = img->GetTexture();
-			img->SetTexture(sprite_button_pressed, (tex != sprite_button_pressed && tex != sprite_button_hovered && tex != sprite_button_unhovered));
-		}
+			img->SetTexture(sprite_button_pressed);
 			break;
 	}
 
@@ -87,10 +84,7 @@ void C_Button::ChangeTexture(BUTTONSTATE new_num_sprite)
 		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
 
 		if (img != nullptr)
-		{
-			ResourceTexture* tex = img->GetTexture();
-			img->SetTexture(sprite_button_hovered, (tex != sprite_button_pressed && tex != sprite_button_hovered && tex != sprite_button_unhovered));
-		}
+			img->SetTexture(sprite_button_hovered);
 		break;
 	}
 
@@ -104,10 +98,7 @@ void C_Button::ChangeTexture(BUTTONSTATE new_num_sprite)
 		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
 
 		if (img != nullptr)
-		{
-			ResourceTexture* tex = img->GetTexture();
-			img->SetTexture(sprite_button_unhovered, (tex != sprite_button_pressed && tex != sprite_button_hovered && tex != sprite_button_unhovered));
-		}
+			img->SetTexture(sprite_button_unhovered);
 		break;
 		}
 	}

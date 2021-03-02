@@ -88,9 +88,11 @@ ResourceTexture* C_Image2D::GetTexture() const
 }
 
 
-void C_Image2D::SetTexture(ResourceTexture* tex, bool unloadTexture)
+void C_Image2D::SetTexture(ResourceTexture* tex)
 {
-	if (texture != nullptr && unloadTexture == true)
+	EngineExternal->moduleResources->RequestResource(tex->GetUID(), tex->GetLibraryPath());
+
+	if (texture != nullptr)
 		EngineExternal->moduleResources->UnloadResource(texture->GetUID());
 
 	texture = tex;

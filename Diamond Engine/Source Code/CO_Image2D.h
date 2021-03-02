@@ -18,7 +18,7 @@ public:
 	void RenderImage(float* transform, unsigned int shaderId);
 
 	ResourceTexture* GetTexture() const;
-	void SetTexture(ResourceTexture* tex, bool unloadTexture);
+	void SetTexture(ResourceTexture* tex);
 
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
