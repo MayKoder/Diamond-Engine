@@ -48,17 +48,6 @@ namespace physx
 
     //class PxFixedSizeLookupTable;
 
-    //Vehicles
-    class PxVehicleDrive4W;
-    class PxVehicleChassisData;
-    class PxVehicleWheelsSimData;
-    class PxVehicleDriveSimData4W;
-    class PxVehicleDrivableSurfaceToTireFrictionPairs;
-    class PxVehicleWheels;
-    class PxVehicleKeySmoothingData;
-    class PxVehiclePadSmoothingData;
-    class PxVehicleDrive4WRawInputData;
-
     typedef uint32_t PxU32;
     typedef float PxF32;
 
@@ -83,7 +72,8 @@ public:
     ~ModulePhysics();
 
     bool Init();
-    update_status Update(float dt);
+    update_status PreUpdate(float dt) override;
+    update_status Update(float dt) override;
     bool CleanUp();
 
     void SceneSimulation(float gameTimesetp, bool fetchResults = true);

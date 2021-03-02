@@ -19,7 +19,7 @@
 #        pragma comment(lib, "Physx/libx86/_release/PhysXCharacterKinematic_static_32.lib")
 #        pragma comment(lib, "Physx/libx86/_release/SceneQuery_static_32.lib")
 #        pragma comment(lib, "Physx/libx86/_release/PhysXCooking_32.lib")
-#		 pragma comment(lib, "Physx/libx86/_release/PhysXVehicle_static_32.lib")
+#		 //pragma comment(lib, "Physx/libx86/_release/PhysXVehicle_static_32.lib")
 #    else					  
 #        pragma comment(lib, "Physx/libx86/_debug/PhysX_32.lib")
 #        pragma comment(lib, "Physx/libx86/_debug/PhysXCommon_32.lib")
@@ -29,7 +29,7 @@
 #        pragma comment(lib, "Physx/libx86/_debug/PhysXCharacterKinematic_static_32.lib")
 #        pragma comment(lib, "Physx/libx86/_debug/SceneQuery_static_32.lib")
 #        pragma comment(lib, "Physx/libx86/_debug/PhysXCooking_32.lib")
-#		 pragma comment(lib, "Physx/libx86/_debug/PhysXVehicle_static_32.lib")
+#		 //pragma comment(lib, "Physx/libx86/_debug/PhysXVehicle_static_32.lib")
 #    endif // _DEBUG
 
 using namespace physx;
@@ -151,23 +151,24 @@ bool ModulePhysics::Init() {
 //	PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
 //	mScene->addActor(*groundPlane);
 
-	//Init vehicle after foundation and physics
-	PxInitVehicleSDK(*mPhysics);
-
 	mScene->setSimulationEventCallback(detector);
 
 	
 	return true;
 }
 
-update_status ModulePhysics::Update(float gameTimestep) {
-
-
-	if(DETime::state == GameState::PLAY)
-		SceneSimulation(gameTimestep);
+update_status ModulePhysics::PreUpdate(float dt)
+{
+	if (DETime::state == GameState::PLAY)
+		SceneSimulation(DETime::deltaTime);
 
 	//TODO: REMOVE OR REPLACE
 	mScene->setGravity(PxVec3(gravity.x, gravity.y, gravity.z));
+
+	return update_status::UPDATE_CONTINUE;
+}
+
+update_status ModulePhysics::Update(float gameTimestep) {
 
 	RenderGeometry();
 
@@ -198,34 +199,23 @@ void ModulePhysics::SceneSimulation(float gameTimestep, bool fetchResults) {
 }
 
 bool ModulePhysics::CleanUp() {
+	PX_RELEASE(mScene);
+	PX_RELEASE(mMaterial);
+	PX_RELEASE(mPhysics);
 
-	//if (App->vehicle->gVehicle4W != nullptr) {
-	//	App->vehicle->gVehicle4W->getRigidDynamicActor()->release();
-	//	App->vehicle->gVehicle4W->free();
-	//}
+	if (mPvd)
+	{
+		PxPvdTransport* transport = mPvd->getTransport();
+		mPvd->release(); mPvd = NULL;
+		PX_RELEASE(transport);
+	}
 
-	//PX_RELEASE(App->vehicle->gBatchQuery);
-	//App->vehicle->gVehicleSceneQueryData->free(mAllocator);
-	//PX_RELEASE(App->vehicle->gFrictionPairs);
-	//PxCloseVehicleSDK(); //->Close vehicle sdk before close physics and foundation
+	PX_RELEASE(mCooking);
+	PxCloseExtensions(); // Needed to close extensions we inited before
+	PX_RELEASE(mDispatcher);
 
-	//PX_RELEASE(mScene);
-	//PX_RELEASE(mMaterial);
-	//PX_RELEASE(mPhysics);
-
-	//if (mPvd)
-	//{
-	//	PxPvdTransport* transport = mPvd->getTransport();
-	//	mPvd->release(); mPvd = NULL;
-	//	PX_RELEASE(transport);
-	//}
-
-	//PX_RELEASE(mCooking);
-	//PxCloseExtensions(); // Needed to close extensions we inited before
-	//PX_RELEASE(mDispatcher);
-
-	////Remember to release the last
-	//PX_RELEASE(mFoundation);
+	//Remember to release the last
+	PX_RELEASE(mFoundation);
 
 	return true;
 }
