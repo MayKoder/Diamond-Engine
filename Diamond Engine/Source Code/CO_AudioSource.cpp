@@ -80,7 +80,7 @@ bool C_AudioSource::OnEditor()
 
 		ImGui::Checkbox("Play on Awake", &playOnAwake);
 
-		if (ImGui::SliderFloat("Volume", &volume, 0.0f, 100.0f))
+		if (ImGui::SliderFloat("Volume", &volume, 0.0f, 99.99f))
 		{
 			SetVolume(volume);
 		}
@@ -173,8 +173,8 @@ float C_AudioSource::GetVolume()
 
 void C_AudioSource::SetVolume(float newVol)
 {
-	this->volume = MIN(newVol, 100);
-	this->volume = MAX(newVol, 0);
+	this->volume = MIN(newVol, 99.99f);
+	this->volume = MAX(newVol, 0.0f);
 	if (!isMuted)
 		EngineExternal->moduleAudio->ChangeRTPCValue(this->id, std::string("SourceVolume"), this->volume);
 }
