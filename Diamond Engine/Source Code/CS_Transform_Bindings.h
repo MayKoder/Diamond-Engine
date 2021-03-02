@@ -139,7 +139,11 @@ void RecieveRotation(MonoObject* obj, MonoObject* secObj) //Allows to send float
 
 	if (workGO->transform)
 	{
-		workGO->transform->SetTransformMatrix(workGO->transform->position, omgItWorks, workGO->transform->localScale);
+		//workGO->transform->SetTransformMatrix(workGO->transform->position, omgItWorks, workGO->transform->localScale);
+
+		workGO->transform->rotation = omgItWorks.Normalized();
+		workGO->transform->eulerRotation = omgItWorks.ToEulerXYZ() * RADTODEG;
+
 		workGO->transform->updateTransform = true;
 	}
 }
