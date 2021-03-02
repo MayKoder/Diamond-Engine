@@ -14,7 +14,6 @@ public:
 #endif // !STANDALONE
 
 private:
-	int font_id;
 	const char* font_path;
 	char text_to_print[MAX_TEXT_CONTENT];
 };

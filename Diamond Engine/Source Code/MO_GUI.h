@@ -27,8 +27,6 @@ public:
 	void SetCanvas(int uid);
 	void EraseCanvas();
 
-public:
-	int index_font;
 
 private:
 	int canvas = -1;

@@ -5,10 +5,11 @@
 #include "MO_FileSystem.h"
 
 #include "IM_FontImporter.h"
+#include <map>
 
 #include "ImGui/imgui.h"
 
-C_Text::C_Text(GameObject* gameObject):Component(gameObject),font_id(-1),font_path(""),text_to_print("")
+C_Text::C_Text(GameObject* gameObject):Component(gameObject),font_path(""),text_to_print("")
 {
 }
 
@@ -28,12 +29,10 @@ bool C_Text::OnEditor()
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_FONT"))
 			{
 				const char* possible_new_font_path = ((std::string*)payload->Data)->c_str();
-				int possible_new_font_id = EngineExternal->moduleFileSystem->free_type_library->GetFont(possible_new_font_path);
-				if (possible_new_font_id < 0) {
+				if (!EngineExternal->moduleFileSystem->free_type_library->CheckIfFontExists(possible_new_font_path)) {
 					LOG(LogType::L_WARNING, "This file is not a font file");
 				}
 				else {
-					font_id = possible_new_font_id;
 					font_path = possible_new_font_path;
 				}
 

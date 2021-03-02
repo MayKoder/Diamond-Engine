@@ -22,8 +22,7 @@
 
 M_Gui::M_Gui(Application* app, bool startEnabled) : Module(app, startEnabled),
 	canvas(-1),
-	VAO(0),
-	index_font(-1)
+	VAO(0)
 {
 }
 
