@@ -10,8 +10,6 @@
 #include "RE_Mesh.h"
 #include "RE_Texture.h"
 
-#include "Joint.h"
-
 #include "IM_FileSystem.h"
 #include "IM_TextureImporter.h"
 #include "IM_ModelImporter.h"
@@ -47,12 +45,9 @@ void MeshLoader::DisableDebugMode()
 #endif // !STANDALONE
 
 
-
-
 //Following unity tree structure, comments represent blender tree structure
 void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTexture*>& sceneTextures, std::vector<ResourceMesh*>& _sceneMeshes, aiNode* node, GameObject* gmParent, const char* holderName)
 {
-
 	aiVector3D		aiTranslation, aiScale;
 	aiQuaternion	aiRotation;
 

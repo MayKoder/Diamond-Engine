@@ -22,7 +22,6 @@ W_About::W_About() : Window()
 
 	physVersion = std::to_string(physVersionStc.major) + '.' + std::to_string(physVersionStc.minor) + '.' + std::to_string(physVersionStc.patch);
 	assimpVersion = std::to_string(aiGetVersionMajor()) + '.' + std::to_string(aiGetVersionMinor()) + '.' + std::to_string(aiGetVersionRevision());
-
 }
 
 W_About::~W_About()

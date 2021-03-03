@@ -11,6 +11,9 @@ ResourceAnimation::ResourceAnimation(unsigned int _uid) : Resource(_uid, Resourc
 
 ResourceAnimation::~ResourceAnimation()
 {
+
+
+	channels.clear();
 }
 
 bool ResourceAnimation::LoadToMemory()
@@ -132,6 +135,13 @@ std::map<std::string, Channel> ResourceAnimation::GetAllChannelsInRange(float st
 	}
 
 	return channelsInRange;
+}
+
+Channel::~Channel()
+{
+	positionKeys.clear();
+	rotationKeys.clear();
+	scaleKeys.clear();
 }
 
 std::map<double, float3>::const_iterator Channel::GetPrevPosKey(double currentKey) const

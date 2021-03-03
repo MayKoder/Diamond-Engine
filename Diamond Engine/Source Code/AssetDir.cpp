@@ -37,6 +37,7 @@ AssetDir::~AssetDir()
 	metaFileDir.clear();
 	libraryPath.clear();
 	lastModTime = 0;
+	parentDir = nullptr;
 }
 
 void AssetDir::ClearData()

@@ -32,6 +32,8 @@ defaultMaterial(nullptr)
 
 M_Scene::~M_Scene()
 {
+	root = nullptr;
+	defaultMaterial = nullptr;
 }
 
 bool M_Scene::Init()
