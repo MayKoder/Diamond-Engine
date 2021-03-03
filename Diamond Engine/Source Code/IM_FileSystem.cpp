@@ -389,7 +389,6 @@ uint FileSystem::Save(const char* file, char* buffer, uint size, bool append)
 	std::string fileName;
 	GetFileName(file, fileName, true);
 
-
 	bool exists = Exists(file);
 
 	PHYSFS_file* filehandle = nullptr;

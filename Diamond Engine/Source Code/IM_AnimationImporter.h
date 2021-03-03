@@ -16,7 +16,7 @@ namespace AnimationLoader
 {
 	void logCallback(const char* message, char* user);
 
-	ResourceAnimation* LoadAnimation(aiAnimation* importedAnimation, uint oldUID = 0);
+	ResourceAnimation* ImportAnimation(aiAnimation* importedAnimation, uint oldUID = 0);
 	uint GetChannelsSize(const Channel& channel);
 
 	void SaveChannels(const Channel& channel, char** cursor);

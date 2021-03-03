@@ -96,7 +96,9 @@ Resource* M_ResourceManager::RequestFromAssets(const char* assets_path)
 		}
 	}
 	else
+	{
 		LOG(LogType::L_ERROR, "ASSET META OR LIBRARY NOT CREATED");
+	}
 
 	return ret;
 }
@@ -330,6 +332,8 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 		case Resource::Type::SCENE: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 		case Resource::Type::SHADER: ShaderImporter::Import(fileBuffer, size, dynamic_cast<ResourceShader*>(resource), assetsFile); break;
 		case Resource::Type::MATERIAL: 	FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
+		case Resource::Type::ANIMATION: 
+			FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 	}
 
 	//Save the resource to custom format
@@ -563,12 +567,12 @@ Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFil
 		return Resource::Type::SCENE;
 	if (ext == "cs")
 		return Resource::Type::SCRIPT;
-
 	if (ext == "glsl")
 		return Resource::Type::SHADER;
 	if (ext == "mat")
 		return Resource::Type::MATERIAL;
-
+	if (ext == "anim")
+		return Resource::Type::ANIMATION;
 
 	return Resource::Type::UNKNOWN;
 }

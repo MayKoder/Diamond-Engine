@@ -123,9 +123,9 @@ void ModelImporter::ImportAnimations(const aiScene* scene, std::vector<uint>& an
 		{
 			aiAnimation* anim = scene->mAnimations[i];
 			if (animationsUIDs.size() != 0)
-				animationsOnModelUIDs.push_back(AnimationLoader::LoadAnimation(anim, animationsUIDs[i]));
+				animationsOnModelUIDs.push_back(AnimationLoader::ImportAnimation(anim, animationsUIDs[i]));
 			else
-				animationsOnModelUIDs.push_back(AnimationLoader::LoadAnimation(anim));
+				animationsOnModelUIDs.push_back(AnimationLoader::ImportAnimation(anim));
 		}
 
 		SaveAnimationsToMeta(res->GetAssetPath(), animationsOnModelUIDs);

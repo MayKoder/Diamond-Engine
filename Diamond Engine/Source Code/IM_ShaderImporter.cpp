@@ -8,7 +8,7 @@
 
 void ShaderImporter::Import(char* buffer, int bSize, ResourceShader* res, const char* assetsPath)
 {
-//Get every shader typs string from the glsl
+	//Get every shader typs string from the glsl
 	//Buffer is now a complete shader with 2 types
 	//Get a string for every shader type with find
 	//Compile string

@@ -29,22 +29,22 @@ void  AnimationLoader::logCallback(const char* message, char* user)
 	EngineExternal->moduleEditor->LogToConsole(message);
 }
 
-ResourceAnimation* AnimationLoader::LoadAnimation(aiAnimation* importedAnimation, uint oldUID)
+ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimation, uint oldUID)
 {
 	uint UID = oldUID;
 	if (UID == 0)
 		UID = EngineExternal->moduleResources->GenerateNewUID();
 
 	LOG(LogType::L_NORMAL, "%s", importedAnimation->mName.C_Str());
-	std::string file = ANIMATIONS_PATH;
-	file += std::to_string(UID);
-	file += ".anim";
+	std::string library_path = ANIMATIONS_PATH;
+	library_path += std::to_string(UID);
+	library_path += ".anim";
 
-	ResourceAnimation* anim = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->CreateNewResource("", UID, Resource::Type::ANIMATION));
+	ResourceAnimation* animation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->CreateNewResource("", UID, Resource::Type::ANIMATION));
 
-	strcpy(anim->animationName, importedAnimation->mName.C_Str());
-	anim->ticksPerSecond = importedAnimation->mTicksPerSecond;
-	anim->duration = importedAnimation->mDuration;
+	strcpy(animation->animationName, importedAnimation->mName.C_Str());
+	animation->ticksPerSecond = importedAnimation->mTicksPerSecond;
+	animation->duration = importedAnimation->mDuration;
 
 	//Import from Assimp
 	for (int i = 0; i < importedAnimation->mNumChannels; i++)
@@ -81,24 +81,24 @@ ResourceAnimation* AnimationLoader::LoadAnimation(aiAnimation* importedAnimation
 
 			channel.scaleKeys[importedAnimation->mChannels[i]->mScalingKeys[j].mTime] = scaleKey;
 		}
-		anim->channels[channel.boneName] = channel;
+		animation->channels[channel.boneName] = channel;
 	}
 
 	//Save animation own format
 	char* buffer;
-	uint size = anim->SaveCustomFormat(anim, &buffer);
+	uint size = animation->SaveCustomFormat(animation, &buffer);
 
-	FileSystem::Save(file.c_str(), buffer, size, false);
+	//FileSystem::Save(library_path.c_str(), buffer, size, false);
+	std::string assets_path = "Assets/Animations/" + std::string(importedAnimation->mName.C_Str()) + ".anim";
+	FileSystem::Save(assets_path.c_str(), buffer, size, false);
+	//EngineExternal->moduleResources->GenerateMeta(assets_path.c_str(), library_path.c_str(), animation->GetUID(), Resource::Type::ANIMATION);
 
 	std::string file_name = std::to_string(UID);
 	file_name += ".anim";
 
 	RELEASE_ARRAY(buffer);
-	//FileSystem::Load(ANIMATIONS_PATH, file_name.c_str(), &buffer);
-	// 
-	//ResourceAnimation* loaded_animation =LoadCustomFormat(buffer);
 
-	return anim;
+	return animation;
 }
 
 uint AnimationLoader::GetChannelsSize(const Channel& channel)
