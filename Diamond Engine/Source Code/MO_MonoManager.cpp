@@ -288,6 +288,9 @@ MonoObject* M_MonoManager::QuatToCS(Quat& inVec) const
 
 GameObject* M_MonoManager::GameObject_From_CSGO(MonoObject* goObj)
 {
+	if (goObj == nullptr)
+		return nullptr;
+
 	uintptr_t ptr = 0;
 	MonoClass* goClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "GameObject");
 

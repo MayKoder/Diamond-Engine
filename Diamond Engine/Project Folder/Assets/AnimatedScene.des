@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        19.51249885559082,
-        68.394882202148438,
-        123.88587951660156
+        26.219907760620117,
+        70.758796691894531,
+        120.93428802490234
     ],
     "EditorCameraZ": [
-        -0.10897064954042435,
-        -0.065878942608833313,
-        -0.9918595552444458
+        -0.11518178135156631,
+        -0.18672381341457367,
+        -0.97563689947128296
     ],
     "EditorCameraY": [
-        -0.0072018057107925415,
-        0.99782764911651611,
-        -0.065484106540679932
+        -0.021892059594392776,
+        0.98241245746612549,
+        -0.18543602526187897
     ],
     "Game Objects": [
         {
@@ -71,10 +71,21 @@
                 {
                     "Type": 6,
                     "Active": true,
-                    "Path": "Library\/Animations\/727154610.anim",
-                    "UID": 727154610,
+                    "Path": "Library\/Animations\/1411043326.anim",
+                    "UID": 1411043326,
                     "RootBone UID": 601651866,
-                    "MeshRendererUID": 2121991281
+                    "MeshRendererUID": 2121991281,
+                    "Animations": [
+                        727154610,
+                        1942308043,
+                        1411043326
+                    ]
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "AnimationTest",
+                    "reference": 1341596004
                 }
             ]
         },
@@ -1939,7 +1950,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/animated_material.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/1948688504.mat",
                     "MaterialUID": 1948688504
                 }

@@ -196,16 +196,17 @@ void C_Animator::SaveData(JSON_Object* nObj)
 	DEJson::WriteInt(nObj, "RootBone UID", rootBone == nullptr ? 0 : rootBone->UID);
 	DEJson::WriteInt(nObj, "MeshRendererUID", meshRendererUID);
 
-	/*
+
 	JSON_Value* animationsValue = json_value_init_array();
 	JSON_Array* animationsArray = json_value_get_array(animationsValue);
 
-	for (size_t i = 0; i < animations.size(); i++)
+	for (std::map<std::string, ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); ++it)
 	{
-		json_array_append_number(animationsArray, animations[i]->GetUID());
+		json_array_append_number(animationsArray, it->second->GetUID());
 	}
+
 	json_object_set_value(nObj, "Animations", animationsValue);
-	*/
+	
 }
 
 void C_Animator::LoadData(DEConfig& nObj)
@@ -214,14 +215,21 @@ void C_Animator::LoadData(DEConfig& nObj)
 	rootBoneUID = nObj.ReadInt("RootBone UID");
 	meshRendererUID = nObj.ReadInt("MeshRendererUID");
 
+	JSON_Array* animationsArray = nObj.ReadArray("Animations");
+
+	for (size_t i = 0; i < json_array_get_count(animationsArray); i++)
+	{
+		uint animationUID = json_array_get_number(animationsArray, i);
+		ResourceAnimation* animation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(animationUID, Resource::Type::ANIMATION));
+
+		if (animation != nullptr) {
+			AddAnimation(animation);
+		}
+	}
+
+
 	//AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION)));
 	AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), Resource::Type::ANIMATION)));
-	if (_anim == nullptr)
-		return;
-	else
-	{
-		//LinkChannelBones(gameObject);
-	}
 
 	JSON_Array* animations_array = nObj.ReadArray("Animations");
 
@@ -331,9 +339,11 @@ bool C_Animator::OnEditor()
 			}
 
 			ImGui::SameLine();
+			ImGui::PushID(it->second->GetUID());
 			if (ImGui::Button("Remove Animation")) {
 				animation_to_remove = it->first;
 			}
+			ImGui::PopID();
 		}
 		if (animation_to_remove.size() > 0) {
 			animations.erase(animation_to_remove);
@@ -391,14 +401,6 @@ bool C_Animator::OnEditor()
 		{
 			ImGui::Text("Playing: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "false");
 		}
-
-		ImGui::Spacing();
-
-		if (_anim != nullptr)
-		{
-			//ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _anim->GetLibraryPath());
-		}
-
 		ImGui::Spacing();
 
 		// Clips ===============================================================================================
@@ -476,20 +478,6 @@ bool C_Animator::OnEditor()
 	}
 
 	return true;	
-}
-
-void C_Animator::LinkChannelBones(GameObject* gameObject)
-{
-	for (int i = 0; i < gameObject->children.size(); i++)
-	{
-		if (_anim->channels.find(gameObject->children[i]->name) != _anim->channels.end()) {
-			LOG(LogType::L_WARNING, "Found match between bone-channel");
-			rootBone = gameObject->children[i];
-			channeIsLinked = true;
-			StoreBoneMapping(gameObject);
-		}
-		LinkChannelBones(gameObject->children[i]);
-	}
 }
 
 void C_Animator::StoreBoneMapping(GameObject* gameObject)

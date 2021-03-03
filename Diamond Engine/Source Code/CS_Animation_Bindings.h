@@ -14,7 +14,7 @@ void Play(MonoObject* goObj,  MonoString* animationString)
 	if (animator != nullptr)
 	{
 		char* animationName = mono_string_to_utf8(animationString);
-		animator->Play(std::string(animationName), 0.0);
+		animator->Play(std::string(animationName), 0.2f);
 		mono_free(animationName);
 	}
 }

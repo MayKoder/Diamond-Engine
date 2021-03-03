@@ -39,7 +39,6 @@ public:
 
 	bool OnEditor() override;
 
-	void LinkChannelBones(GameObject* gameObject);
 	void StoreBoneMapping(GameObject* gameObject);
 
 	void AddAnimation(ResourceAnimation* anim);
@@ -61,7 +60,7 @@ private:
 	ResourceAnimation* ClipToAnimation(AnimationClip clip);
 
 public:
-	void Play(std::string animName, float blendDuration);
+	void Play(std::string animName, float blendDuration = 0.3f);
 	void Pause();
 	void Resume();
 
