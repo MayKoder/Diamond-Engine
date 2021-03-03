@@ -597,11 +597,15 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, cons
 		//BLEND
 		if (blend != nullptr)
 		{
-			const Channel& blendChannel = blend->channels.find(boneIt->first.c_str())->second;
+			std::map<std::string, Channel>::const_iterator foundChannel = blend->channels.find(boneIt->first.c_str());
+			if (foundChannel != blend->channels.end()) {
+				const Channel& blendChannel = foundChannel->second;
 
-			position = float3::Lerp(GetChannelPosition(blendChannel, prevBlendFrame, transform->position), position, blendRatio);
-			rotation = Quat::Slerp(GetChannelRotation(blendChannel, prevBlendFrame, transform->rotation), rotation, blendRatio);
-			scale = float3::Lerp(GetChannelScale(blendChannel, prevBlendFrame, transform->localScale), scale, blendRatio);
+				position = float3::Lerp(GetChannelPosition(blendChannel, prevBlendFrame, transform->position), position, blendRatio);
+				rotation = Quat::Slerp(GetChannelRotation(blendChannel, prevBlendFrame, transform->rotation), rotation, blendRatio);
+				scale = float3::Lerp(GetChannelScale(blendChannel, prevBlendFrame, transform->localScale), scale, blendRatio);
+			}
+
 		}
 
 		

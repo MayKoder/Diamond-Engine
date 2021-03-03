@@ -5,11 +5,14 @@ class GameObject;
 class Resource;
 class ResourceMesh;
 class ResourceAnimation;
+class aiScene;
 typedef unsigned int uint;
 
 namespace ModelImporter
 {
 	void Import(char* buffer, int bSize, Resource* res);
+
+	void ImportAnimations(const aiScene* scene, std::vector<uint>& animationsUIDs, std::vector<ResourceAnimation*>& animationsOnModelUIDs, Resource* res);
 
 	void SaveModelCustom(GameObject* root, const char* nameWithExtension);
 	void LoadModelCustom(const char* nameWithExtension);

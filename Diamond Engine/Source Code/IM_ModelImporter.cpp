@@ -22,6 +22,7 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 {
 	const aiScene* scene = aiImportFileFromMemory(buffer, bSize, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
 
+
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		std::vector<ResourceMesh*> meshesOnModelUIDs;
@@ -87,20 +88,7 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 		if (FileSystem::Exists(EngineExternal->moduleResources->GetMetaPath(res->GetAssetPath()).c_str()))
 			GetAnimationsFromMeta(res->GetAssetPath(), animationsUIDs);
 
-		if (scene->HasAnimations())
-		{
-			for (unsigned int i = 0; i < scene->mNumAnimations; i++)
-			{
-				aiAnimation* anim = scene->mAnimations[i];
-				if (animationsUIDs.size() != 0)
-					animationsOnModelUIDs.push_back(AnimationLoader::LoadAnimation(anim, animationsUIDs[i]));
-				else
-					animationsOnModelUIDs.push_back(AnimationLoader::LoadAnimation(anim));
-			}
-
-			SaveAnimationsToMeta(res->GetAssetPath(), animationsOnModelUIDs);
-			EngineExternal->moduleResources->UpdateAnimationsDisplay();
-		}
+		ImportAnimations(scene, animationsUIDs, animationsOnModelUIDs, res);
 
 		//Save custom format model
 		GameObject* root = new GameObject("First model GO", nullptr);
@@ -125,6 +113,24 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 	}
 	else
 		LOG(LogType::L_ERROR, "Error loading scene"/*, scene->name*/);
+}
+
+void ModelImporter::ImportAnimations(const aiScene* scene, std::vector<uint>& animationsUIDs, std::vector<ResourceAnimation*>& animationsOnModelUIDs, Resource* res)
+{
+	if (scene->HasAnimations())
+	{
+		for (unsigned int i = 0; i < scene->mNumAnimations; i++)
+		{
+			aiAnimation* anim = scene->mAnimations[i];
+			if (animationsUIDs.size() != 0)
+				animationsOnModelUIDs.push_back(AnimationLoader::LoadAnimation(anim, animationsUIDs[i]));
+			else
+				animationsOnModelUIDs.push_back(AnimationLoader::LoadAnimation(anim));
+		}
+
+		SaveAnimationsToMeta(res->GetAssetPath(), animationsOnModelUIDs);
+		EngineExternal->moduleResources->UpdateAnimationsDisplay();
+	}
 }
 
 void ModelImporter::SaveModelCustom(GameObject* root, const char* nameWithExtension)
