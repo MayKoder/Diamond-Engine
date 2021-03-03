@@ -402,6 +402,7 @@ void M_Editor::DrawTopBar()
 				{
 					App->moduleScene->SaveScene("Library/Scenes/tmp.des");
 					DETime::Play();
+					EngineExternal->moduleAudio->StopAllSounds();
 					EngineExternal->moduleAudio->PlayOnAwake();
 				}
 				else

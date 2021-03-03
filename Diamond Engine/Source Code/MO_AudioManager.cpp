@@ -266,6 +266,21 @@ void ModuleAudioManager::ResumeEvent(unsigned int id, std::string& eventName) co
 	AK::SoundEngine::ExecuteActionOnEvent(eventName.c_str(), AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Resume, id);
 }
 
+void ModuleAudioManager::StopComponent(unsigned int id) const
+{
+	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Stop, id);
+}
+
+void ModuleAudioManager::PauseComponent(unsigned int id) const
+{
+	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Pause, id);
+}
+
+void ModuleAudioManager::ResumeComponent(unsigned int id) const
+{
+	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Resume, id);
+}
+
 void ModuleAudioManager::ChangeRTPCValue(unsigned int id, std::string& RTPCname, float value)
 {
 	AK::SoundEngine::SetRTPCValue(RTPCname.c_str(), value, id);

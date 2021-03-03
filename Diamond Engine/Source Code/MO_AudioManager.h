@@ -48,6 +48,10 @@ public:
 	void PauseEvent(unsigned int id, std::string& eventName) const;
 	void ResumeEvent(unsigned int id, std::string& eventName) const;
 
+	void StopComponent(unsigned int id) const;
+	void PauseComponent(unsigned int id) const;
+	void ResumeComponent(unsigned int id) const;
+
 	void ChangeRTPCValue(unsigned int id, std::string& RTPCname, float value);
 
 	bool LoadBanksInfo();
