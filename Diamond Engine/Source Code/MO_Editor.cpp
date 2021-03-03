@@ -3,7 +3,7 @@
 #include "Application.h"
 
 #include "MMGui.h"
-#include "parson/parson.h"
+#include"IM_FileSystem.h"
 
 //ImGui Includes
 #include "ImGui/imgui.h"
@@ -12,6 +12,7 @@
 
 #include"DETime.h"
 #include"AssetDir.h"
+#include"parson/parson.h"
 
 #include "MO_Window.h"
 #include "MO_Renderer3D.h"
@@ -245,6 +246,14 @@ void M_Editor::DrawMenuBar()
 					App->moduleScene->LoadScene(test.c_str());
 				}
 			}
+			ImGui::GreySeparator();
+			if (ImGui::MenuItem("Build Game"))
+			{
+				//std::string buildDir = M_FileSystem::OpenSaveAsDialog();
+				//FileSystem::CreateDir("Standalone Build");
+				
+			}
+			ImGui::GreySeparator();
 			if (ImGui::MenuItem("Quit", "Esc"))
 			{
 				App->ExitApplication();

@@ -54,6 +54,7 @@
 		<Compile Include="Assets\Scripts\Hello.cs" />
 		<Compile Include="Assets\Scripts\HumanWalk.cs" />
 		<Compile Include="Assets\Scripts\FPS_Controller.cs" />
+		<Compile Include="Assets\Scripts\CameraController.cs" />
 	</ItemGroup>
 	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
