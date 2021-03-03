@@ -12,16 +12,19 @@ public class RoomSwitch : DiamondComponent
 	//public static int index = 0;
 	static Random test = new Random();
 
-	public void Update()
-	{
-		if (Input.GetKey(DEKeyCode.I) == KeyState.KEY_DOWN)
-        {
-			Debug.Log(rooms[test.Next(0, rooms.Length)].ToString());
+    public void OnCollisionEnter()
+    {
+        Debug.Log("Ayo i've been called.");
+		Debug.Log(rooms[test.Next(0, rooms.Length)].ToString());
+		SceneManager.LoadScene(rooms[test.Next(0, rooms.Length)]);
+	}
 
-			//index++;
-			//Debug.Log(index.ToString());
-			SceneManager.LoadScene(rooms[test.Next(0, rooms.Length)]);
-		}
+    public void Update()
+	{
+		//if (Input.GetKey(DEKeyCode.I) == KeyState.KEY_DOWN)
+  //      {
+			
+		//}
 	}
 
 }
