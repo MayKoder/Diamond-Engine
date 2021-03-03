@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "GameObject.h"
 #include "CO_AudioSource.h"
+#include "Component.h"
 
 void PlayAudio(MonoObject* go, MonoString* eventAudio)
 {
@@ -13,7 +14,7 @@ void PlayAudio(MonoObject* go, MonoString* eventAudio)
 	GameObject* GO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 	std::string ev = mono_string_to_utf8(eventAudio);
 
-	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::Type::AudioSource));
+	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::TYPE::AUDIO_SOURCE));
 	if (audSource != nullptr)
 	{
 		audSource->SetEventName(ev);
@@ -32,7 +33,7 @@ void ResumeAudio(MonoObject* go)
 
 	GameObject* GO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
-	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::Type::AudioSource));
+	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::TYPE::AUDIO_SOURCE));
 	if (audSource != nullptr)
 	{
 		audSource->ResumeEvent();
@@ -50,7 +51,7 @@ void PauseAudio(MonoObject* go)
 
 	GameObject* GO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
-	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::Type::AudioSource));
+	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::TYPE::AUDIO_SOURCE));
 	if (audSource != nullptr)
 	{
 		audSource->PauseEvent();
@@ -68,7 +69,7 @@ void StopAudio(MonoObject* go)
 
 	GameObject* GO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
-	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::Type::AudioSource));
+	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::TYPE::AUDIO_SOURCE));
 	if (audSource != nullptr)
 	{
 		audSource->StopEvent();
@@ -86,7 +87,7 @@ float GetVolume(MonoObject* go)
 
 	GameObject* GO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
-	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::Type::AudioSource));
+	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::TYPE::AUDIO_SOURCE));
 	if (audSource != nullptr)
 	{
 		return audSource->GetVolume();
@@ -105,7 +106,7 @@ void SetVolume(MonoObject* go, float volume)
 
 	GameObject* GO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
-	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::Type::AudioSource));
+	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::TYPE::AUDIO_SOURCE));
 	if (audSource != nullptr)
 	{
 		audSource->SetVolume(volume);
@@ -123,7 +124,7 @@ float GetPitch(MonoObject* go)
 
 	GameObject* GO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
-	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::Type::AudioSource));
+	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::TYPE::AUDIO_SOURCE));
 	if (audSource != nullptr)
 	{
 		return audSource->GetPitch();
@@ -142,7 +143,7 @@ void SetPitch(MonoObject* go, float pitch)
 
 	GameObject* GO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
-	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::Type::AudioSource));
+	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::TYPE::AUDIO_SOURCE));
 	if (audSource != nullptr)
 	{
 		audSource->SetPitch(pitch);
@@ -160,7 +161,7 @@ bool GetMuted(MonoObject* go)
 
 	GameObject* GO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
-	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::Type::AudioSource));
+	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::TYPE::AUDIO_SOURCE));
 	if (audSource != nullptr)
 	{
 		return audSource->IsMuted();
@@ -178,7 +179,7 @@ void SetMuted(MonoObject* go, bool muted)
 
 	GameObject* GO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
-	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::Type::AudioSource));
+	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::TYPE::AUDIO_SOURCE));
 	if (audSource != nullptr)
 	{
 		audSource->SetMuted(muted);
