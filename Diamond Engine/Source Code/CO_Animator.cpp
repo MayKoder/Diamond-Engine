@@ -310,6 +310,7 @@ bool C_Animator::OnEditor()
 		}
 
 		//List of existing animations
+		static char newName[32];
 		std::string animation_to_remove = "";
 		ImGui::Text("Select a new animation");
 		for (std::map<std::string, ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); ++it)
@@ -323,7 +324,7 @@ bool C_Animator::OnEditor()
 			if (ImGui::Button(animName.c_str())) {
 				Play(animName, defaultBlend);
 				time = 0.f;
-
+				sprintf_s(newName, animName.c_str());
 				//if (currentAnimation == nullptr) {
 				//	AddClip(currentAnimation);
 				//}
@@ -360,6 +361,22 @@ bool C_Animator::OnEditor()
 		ImGui::Spacing();
 		ImGui::Separator();
 		ImGui::Spacing();
+
+		if (currentAnimation != nullptr)
+		{
+			ImGui::InputText("Name", newName, IM_ARRAYSIZE(newName));
+			
+			if (ImGui::Button("Save Animation")) {
+				animations.erase(currentAnimation->animationName);
+				sprintf_s(currentAnimation->animationName, newName);
+				animations[currentAnimation->animationName] = currentAnimation;
+				char* buffer;
+				uint size = currentAnimation->SaveCustomFormat(currentAnimation, &buffer);
+				FileSystem::Save(currentAnimation->GetLibraryPath(), buffer, size, false);
+				RELEASE_ARRAY(buffer);
+			}
+			ImGui::Separator();
+		}
 
 		ImGui::Text("Previous Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%.2f", prevAnimTime);
 		ImGui::Text("Current Animation Time: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", currentTimeAnimation);
