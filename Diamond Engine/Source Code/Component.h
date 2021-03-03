@@ -54,6 +54,10 @@ public:
 		return gameObject;
 	}
 
+	inline std::string GetName() {
+		return name;
+	}
+
 	TYPE type;
 
 protected:

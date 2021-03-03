@@ -64,7 +64,6 @@ void C_Button::ChangeTexture(BUTTONSTATE new_num_sprite)
 	{
 		if (sprite_button_pressed == nullptr) 
 		{
-			LOG(LogType::L_WARNING, "The sprite 'P' is nullptr");
 			return;
 		}
 		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
@@ -77,7 +76,6 @@ void C_Button::ChangeTexture(BUTTONSTATE new_num_sprite)
 	case BUTTONSTATE::BUTTONHOVERED:
 	{
 		if (sprite_button_hovered == nullptr) {
-			LOG(LogType::L_WARNING, "The sprite 'H' is nullptr");
 			return;
 		}
 
@@ -91,7 +89,6 @@ void C_Button::ChangeTexture(BUTTONSTATE new_num_sprite)
 	case BUTTONSTATE::BUTTONUNHOVERED:
 	{
 		if (sprite_button_unhovered == nullptr) {
-			LOG(LogType::L_WARNING, "The sprite 'U' is nullptr");
 			return;
 		}
 		
@@ -239,22 +236,28 @@ bool C_Button::OnEditor()
 		ImGui::Columns(1);
 		ImGui::Separator();
 
+		if (script != nullptr) {
+			ImGui::Text(script->GetName().c_str());
+		}
 		ImGui::Text("Drop here to change the script");
 		/// ARNAU: Finish the script things
-		/*if (ImGui::BeginDragDropTarget())
+		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_SCRIPT"))
 			{
 				std::string* assetsPath = (std::string*)payload->Data;
+				std::string file_name;
+				FileSystem::GetFileName(assetsPath->c_str(), file_name, false);
 
 				if (script != nullptr)
 					delete script;
 
-				script = dynamic_cast<C_Script*>(gameObject->AddComponent(TYPE::SCRIPT, "");
+				script = dynamic_cast<C_Script*>(gameObject->AddComponent(TYPE::SCRIPT, file_name.c_str()));
+				script->LoadScriptData(file_name.c_str());
 
 			}
 			ImGui::EndDragDropTarget();
-		}*/
+		}
 
 
 	}
