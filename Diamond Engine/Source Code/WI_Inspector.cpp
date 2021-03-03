@@ -123,28 +123,38 @@ void W_Inspector::Draw()
 			{
 				if (ImGui::Selectable("Mesh Renderer"))
 				{
-					if (selectedGO->GetComponent(Component::Type::MeshRenderer) == nullptr)
-						selectedGO->AddComponent(Component::Type::MeshRenderer);
+					if (selectedGO->GetComponent(Component::TYPE::MESH_RENDERER) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::MESH_RENDERER);
 				}
 				if (ImGui::Selectable("Material"))
 				{
-					if (selectedGO->GetComponent(Component::Type::Material) == nullptr)
-						selectedGO->AddComponent(Component::Type::Material);
+					if (selectedGO->GetComponent(Component::TYPE::MATERIAL) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::MATERIAL);
 				}		
 				if (ImGui::Selectable("Camera")) 
 				{
-					if(selectedGO->GetComponent(Component::Type::Camera) == nullptr)
-						selectedGO->AddComponent(Component::Type::Camera);
+					if(selectedGO->GetComponent(Component::TYPE::CAMERA) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::CAMERA);
+				}
+				if (ImGui::Selectable("RigidBody3D"))
+				{
+					if (selectedGO->GetComponent(Component::TYPE::RigidBody) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::RigidBody);
+				}
+				if (ImGui::Selectable("Collider"))
+				{
+					if (selectedGO->GetComponent(Component::TYPE::Collider) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::Collider);
 				}
 				if (ImGui::Selectable("AudioListener"))
 				{
-					if (selectedGO->GetComponent(Component::Type::AudioListener) == nullptr)
-						selectedGO->AddComponent(Component::Type::AudioListener);
+					if (selectedGO->GetComponent(Component::TYPE::AUDIO_LISTENER) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::AUDIO_LISTENER);
 				}
 				if (ImGui::Selectable("AudioSource"))
 				{
-					if (selectedGO->GetComponent(Component::Type::AudioSource) == nullptr)
-						selectedGO->AddComponent(Component::Type::AudioSource);
+					if (selectedGO->GetComponent(Component::TYPE::AUDIO_SOURCE) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::AUDIO_SOURCE);
 				}
 
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)
@@ -152,7 +162,7 @@ void W_Inspector::Draw()
 					if (ImGui::Selectable(mono_class_get_name(EngineExternal->moduleMono->userScripts[i]))) 
 					{
 						const char* name = mono_class_get_name(EngineExternal->moduleMono->userScripts[i]);
-						C_Script* cs = dynamic_cast<C_Script*>(selectedGO->AddComponent(Component::Type::Script, name));
+						C_Script* cs = dynamic_cast<C_Script*>(selectedGO->AddComponent(Component::TYPE::SCRIPT, name));
 					}
 				}
 
