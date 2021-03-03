@@ -145,10 +145,13 @@ std::map<double, float3>::const_iterator Channel::GetPrevPosKey(double currentKe
 
 std::map<double, float3>::const_iterator Channel::GetNextPosKey(double currentKey) const
 {
-	std::map<double, float3>::const_iterator ret = positionKeys.upper_bound(currentKey);
-	if (ret == positionKeys.end())
-		ret--;
+	std::map<double, float3>::const_iterator ret = positionKeys.find(currentKey);
+	if (ret == positionKeys.end()) {
+		ret = positionKeys.upper_bound(currentKey);
 
+		if (ret == positionKeys.end())
+			ret--;
+	}
 	return ret;
 }
 
@@ -162,10 +165,13 @@ std::map<double, Quat>::const_iterator Channel::GetPrevRotKey(double currentKey)
 
 std::map<double, Quat>::const_iterator Channel::GetNextRotKey(double currentKey) const
 {
-	std::map<double, Quat>::const_iterator ret = rotationKeys.upper_bound(currentKey);
-	if (ret == rotationKeys.end())
-		ret--;
+	std::map<double, Quat>::const_iterator ret = rotationKeys.find(currentKey);
+	if (ret == rotationKeys.end()) {
+		ret = rotationKeys.upper_bound(currentKey);
 
+		if (ret == rotationKeys.end())
+			ret--;
+	}
 	return ret;
 }
 
@@ -179,9 +185,13 @@ std::map<double, float3>::const_iterator Channel::GetPrevScaleKey(double current
 
 std::map<double, float3>::const_iterator Channel::GetNextScaleKey(double currentKey) const
 {
-	std::map<double, float3>::const_iterator ret = scaleKeys.upper_bound(currentKey);
-	if (ret == scaleKeys.end())
-		ret--;
+	std::map<double, float3>::const_iterator ret = scaleKeys.find(currentKey);
+	if (ret == scaleKeys.end()) {
+		ret = scaleKeys.upper_bound(currentKey);
+
+		if (ret == scaleKeys.end())
+			ret--;
+	}
 
 	return ret;
 }

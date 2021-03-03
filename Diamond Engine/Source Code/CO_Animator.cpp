@@ -588,10 +588,6 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, cons
 		
 		transform->position = position;
 		transform->eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
-		//if (transform->eulerRotation.z == -19.41f) {
-		//	LOG(LogType::L_WARNING, "Current Frame: %i", currentFrame);
-		//}
-		//LOG(LogType::L_NORMAL, "%.2f Current frame: %i", transform->eulerRotation.z,currentFrame);
 		transform->localScale = scale;
 		transform->updateTransform = true;
 	}
