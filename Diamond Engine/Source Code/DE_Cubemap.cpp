@@ -81,7 +81,7 @@ void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 
 	//glDepthRange(0.f, 1.f);
 	glDepthFunc(GL_LESS);

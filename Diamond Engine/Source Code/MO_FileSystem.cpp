@@ -9,12 +9,14 @@
 #include "MO_Editor.h"
 #include "MO_ResourceManager.h"
 #include"MO_Scene.h"
+#include "MO_GUI.h"
+
+#include "IM_TextureImporter.h"
+#include "IM_FontImporter.h"
 
 #include "PhysFS/include/physfs.h"
 #include"DEJsonSupport.h"
 
-#include "DevIL\include\ilu.h"
-#include "DevIL\include\ilut.h"
 #include"RE_Shader.h"
 #include"RE_Material.h"
 
@@ -31,10 +33,11 @@ bool M_FileSystem::Init()
 {
 	//Devil init
 	LOG(LogType::L_NORMAL, "DevIL Init");
-	ilInit();
-	iluInit();
-	ilutInit();
-	ilutRenderer(ILUT_OPENGL);
+	TextureImporter::Init();
+
+	//FreeType init
+	LOG(LogType::L_NORMAL, "FreeType Init");
+	free_type_library=new FreeType_Library();
 
 	FileSystem::FSInit();
 
@@ -59,12 +62,14 @@ bool M_FileSystem::Start()
 	GetAllFilesRecursive(App->moduleResources->meshesLibraryRoot);
 	App->moduleScene->defaultMaterial = (ResourceMaterial*)App->moduleResources->RequestFromAssets("Assets/Materials/default.mat");
 	App->moduleRenderer3D->skybox.shaderRes = dynamic_cast<ResourceShader*>(App->moduleResources->RequestResource(28971592, "Library/Shaders/28971592.shdr"));
+	free_type_library->ImportNewFont("Assets/Fonts/arial.ttf");
 
 	return true;
 }
 
 bool M_FileSystem::CleanUp()
 {
+	delete free_type_library;
 
 	FileSystem::FSDeInit();
 

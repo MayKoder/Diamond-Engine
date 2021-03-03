@@ -14,8 +14,13 @@
 #include"OpenGL.h"
 #include"MO_Window.h"
 
-C_Camera::C_Camera() : Component(nullptr), fov(60.0f), cullingState(true),
-msaaSamples(4), orthoSize(0.0f)
+C_Camera::C_Camera() : Component(nullptr), 
+	fov(60.0f), 
+	cullingState(true),
+	msaaSamples(4), 
+	orthoSize(0.0f),
+	windowWidth(0),
+	windowHeight(0)
 {
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
@@ -239,6 +244,9 @@ void C_Camera::EndDraw()
 
 void C_Camera::ReGenerateBuffer(int w, int h)
 {
+	windowWidth = w;
+	windowHeight = h;
+
 	SetAspectRatio((float)w / (float)h);
 	
 	msaaFBO.ReGenerateBuffer(w, h, true, 4);

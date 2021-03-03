@@ -10,19 +10,25 @@ class Component
 {
 public:
 
-	enum class Type
+	enum class TYPE
 	{
-		None,
-		Transform,
-		MeshRenderer,
-		Material,
-		Camera,
-		Script,
-		AudioListener,
-		AudioSource,
-		Count,
-		RigidBody,
+		NONE,
+		TRANSFORM,
+		MESH_RENDERER,
+		MATERIAL,
+		CAMERA,
+		SCRIPT,
+		TRANSFORM_2D,
+		BUTTON,
+		CHECKBOX,
+		TEXT_UI,
+		CANVAS,
+		IMAGE_2D,
+		AUDIO_LISTENER,
+		AUDIO_SOURCE,
+    RigidBody,
 		Collider,
+		COUNT
 	};
 
 	Component(GameObject* _gm);
@@ -42,6 +48,7 @@ public:
 	virtual void SaveData(JSON_Object* nObj);
 	virtual void LoadData(DEConfig& nObj);
 
+
 	inline bool IsActive() {
 		return active;
 	}
@@ -50,7 +57,7 @@ public:
 		return gameObject;
 	}
 
-	Type type;
+	TYPE type;
 
 protected:
 	//const char* name;

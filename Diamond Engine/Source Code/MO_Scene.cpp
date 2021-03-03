@@ -230,7 +230,7 @@ void M_Scene::SetGameCamera(C_Camera* cam)
 void M_Scene::CreateGameCamera(const char* name)
 {
 	GameObject* cam = CreateGameObject(name, root);
-	C_Camera* c_comp = dynamic_cast<C_Camera*>(cam->AddComponent(Component::Type::Camera));
+	C_Camera* c_comp = dynamic_cast<C_Camera*>(cam->AddComponent(Component::TYPE::CAMERA));
 
 	//SetGameCamera(c_comp);
 }

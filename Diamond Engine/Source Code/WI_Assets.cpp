@@ -187,8 +187,8 @@ void W_Assets::DrawFileTree(AssetDir& file)
 			case  Resource::Type::SHADER:
 				ImGui::SetDragDropPayload("_SHADER", &file.metaFileDir, file.metaFileDir.length());
 				break;
-
-			default:
+			case  Resource::Type::FONT:
+				ImGui::SetDragDropPayload("_FONT", &file.importPath, file.importPath.length());
 				break;
 			}
 

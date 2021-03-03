@@ -10,6 +10,12 @@
 #include "CO_Collider.h"
 #include "CO_AudioListener.h"
 #include "CO_AudioSource.h"
+#include "CO_Transform2D.h"
+#include "CO_Button.h"
+#include "CO_Text.h"
+#include "CO_Canvas.h"
+#include "CO_Image2D.h"
+#include "CO_Checkbox.h"
 
 #include"MO_Scene.h"
 
@@ -28,7 +34,7 @@ active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), d
 	if(parent != nullptr)
 		parent->children.push_back(this);
 
-	transform = dynamic_cast<C_Transform*>(AddComponent(Component::Type::Transform));
+	transform = dynamic_cast<C_Transform*>(AddComponent(Component::TYPE::TRANSFORM));
 
 	//TODO: Should make sure there are not duplicated ID's
 	if (UID == -1) 
@@ -86,7 +92,6 @@ void GameObject::Update()
 	}
 }
 
-
 void GameObject::PostUpdate()
 {
 	for (size_t i = 0; i < components.size(); i++)
@@ -98,28 +103,27 @@ void GameObject::PostUpdate()
 
 Component* GameObject::AddComponent(Component::Type _type, const char* params)
 {
-
-	assert(_type != Component::Type::None, "Can't create a NONE component");
+	assert(_type != Component::TYPE::NONE, "Can't create a NONE component");
 	Component* ret = nullptr;
 
 	//TODO: Make a way to add only 1 instance components like transform and camera
 	switch (_type)
 	{
-	case Component::Type::Transform:
+	case Component::TYPE::TRANSFORM:
 		if(transform == nullptr)
 			ret = new C_Transform(this);
 		break;
-	case Component::Type::MeshRenderer:
+	case Component::TYPE::MESH_RENDERER:
 		ret = new C_MeshRenderer(this);
 		break;
-	case Component::Type::Material:
+	case Component::TYPE::MATERIAL:
 		ret = new C_Material(this);
 		break;
-	case Component::Type::Script:
+	case Component::TYPE::SCRIPT:
 		assert(params != nullptr, "Script without name can't be created");
 		ret = new C_Script(this, params);
 		break;
-	case Component::Type::Camera:
+	case Component::TYPE::CAMERA:
 		ret = new C_Camera(this);
 		EngineExternal->moduleScene->SetGameCamera(dynamic_cast<C_Camera*>(ret));
 		break;
@@ -129,11 +133,35 @@ Component* GameObject::AddComponent(Component::Type _type, const char* params)
 	case Component::Type::Collider:
 		ret = new C_Collider(this);
       break;
-	case Component::Type::AudioListener:
+	case Component::TYPE::AUDIO_LISTENER:
 		ret = new C_AudioListener(this);
 		break;
-	case Component::Type::AudioSource:
+	case Component::TYPE::AUDIO_SOURCE:
 		ret = new C_AudioSource(this);
+		break;
+
+	case Component::TYPE::TRANSFORM_2D:
+		ret = new C_Transform2D(this);
+		break;
+
+	case Component::TYPE::BUTTON:
+		ret = new C_Button(this);
+		break;
+
+	case Component::TYPE::CHECKBOX:
+		ret = new C_Checkbox(this);
+		break;
+
+	case Component::TYPE::TEXT_UI:
+		ret = new C_Text(this);
+		break;
+
+	case Component::TYPE::CANVAS:
+		ret = new C_Canvas(this);
+		break;
+
+	case Component::TYPE::IMAGE_2D:
+		ret = new C_Image2D(this);
 		break;
 	}
 
@@ -148,7 +176,7 @@ Component* GameObject::AddComponent(Component::Type _type, const char* params)
 }
 
 
-Component* GameObject::GetComponent(Component::Type _type)
+Component* GameObject::GetComponent(Component::TYPE _type)
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
@@ -276,10 +304,9 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 		conf.nObj = json_array_get_object(componentArray, i);
 
 		const char* scName = conf.ReadString("ScriptName");
-		Component* comp = AddComponent((Component::Type)conf.ReadInt("Type"), scName);
+		Component* comp = AddComponent((Component::TYPE)conf.ReadInt("Type"), scName);
 
 		comp->LoadData(conf);
-
 	}
 }
 

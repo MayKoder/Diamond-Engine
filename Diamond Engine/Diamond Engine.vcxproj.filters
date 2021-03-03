@@ -109,6 +109,12 @@
     <Filter Include="Externals\AK\LowLevelIO">
       <UniqueIdentifier>{dabae39a-3e64-4aa8-b0f1-127c4822ce97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Components\Derived\UI">
+      <UniqueIdentifier>{56cdc8d7-06f2-4c96-a910-b224a496a1b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Externals\FreeType">
+      <UniqueIdentifier>{c4e4d1f5-fadb-4402-a089-768ce08d95b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -718,6 +724,45 @@
     <ClInclude Include="Source Code\AudioBank.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\MO_GUI.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Transform2D.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\IM_FontImporter.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Button.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Canvas.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Text.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\freetype\config\ftheader.h">
+      <Filter>Externals\FreeType</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\freetype\freetype.h">
+      <Filter>Externals\FreeType</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\ft2build.h">
+      <Filter>Externals\FreeType</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\FreeType\include\freetype\config\ftconfig.h">
+      <Filter>Externals\FreeType</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Image2D.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Checkbox.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\COMM_Transform2D.h">
+      <Filter>Sources\Editor\Commands\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -1079,6 +1124,33 @@
     </ClCompile>
     <ClCompile Include="Source Code\CO_Script.cpp">
       <Filter>Sources\Components\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MO_GUI.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Transform2D.cpp">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\IM_FontImporter.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Button.cpp">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Canvas.cpp">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Text.cpp">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Image2D.cpp">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Checkbox.cpp">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\COMM_Transform2D.cpp">
+      <Filter>Sources\Editor\Commands\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -19,8 +19,8 @@ public:
 	void Update();
 	void PostUpdate();
 
-	Component* AddComponent(Component::Type _type, const char* params = nullptr);
-	Component* GetComponent(Component::Type _type);
+	Component* AddComponent(Component::TYPE _type, const char* params = nullptr);
+	Component* GetComponent(Component::TYPE _type);
 
 	void RecursiveUIDRegeneration();
 
