@@ -15,7 +15,6 @@ public class FPS_Controller : DiamondComponent
         if (this.reference == null)
             return;
 
-
         if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
             reference.localPosition += reference.GetForward() * movementSpeed * Time.deltaTime;
         if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT)
