@@ -349,6 +349,7 @@ uint FileSystem::Copy(const char* file, const char* dir, std::string& outputFile
 	return size;
 }
 
+
 void FileSystem::CreateLibrarySoundBanks()
 {
 	std::string dir = "Assets/SoundBanks";
@@ -369,11 +370,16 @@ void FileSystem::CreateLibrarySoundBanks()
 
 	for (int i = 0; i < fileList.size(); i++)
 	{
-		std::string output;
-		std::string fileDir = "Assets\\SoundBanks\\" + fileList[i];
-		Copy(fileDir.c_str(), SOUNDS_PATH, output);
+		uint found = fileList[i].find(".meta");
+		if (found == std::string::npos)
+		{
+			std::string output;
+			std::string fileDir = "Assets\\SoundBanks\\" + fileList[i];
+			Copy(fileDir.c_str(), SOUNDS_PATH, output);
+		}
 	}
 }
+
 
 
 //std::string FileSystem::FileToText(const char* path)
