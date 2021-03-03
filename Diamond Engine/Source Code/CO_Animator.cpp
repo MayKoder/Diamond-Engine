@@ -58,6 +58,8 @@ C_Animator::~C_Animator()
 		it->second = nullptr;
 	}
 	animations.clear();
+
+	boneMapping.clear();
 }
 
 void C_Animator::Start()

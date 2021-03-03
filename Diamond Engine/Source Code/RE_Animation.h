@@ -13,6 +13,8 @@ typedef unsigned int uint;
 
 struct Channel
 {
+	~Channel();
+
 	std::string boneName;
 
 	//Time & Value
