@@ -348,7 +348,7 @@ bool C_Animator::OnEditor()
 
 				std::string uid = "";
 				FileSystem::GetFileName(libraryPath->c_str(), uid, false);
-				ResourceAnimation* droppedAnimation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(std::atoi(uid.c_str())));
+				ResourceAnimation* droppedAnimation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(std::atoi(uid.c_str()), libraryPath->c_str()));
 
 				if (droppedAnimation != nullptr) {
 					AddAnimation(droppedAnimation);
