@@ -1,0 +1,14 @@
+Event	ID	Name			Wwise Object Path	Notes
+	3330097699	Play_Broken_Box			\Default Work Unit\Play_Broken_Box	
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	467158820	SourceVolume			\Default Work Unit\SourceVolume	
+	1547598200	SourcePitch			\Default Work Unit\SourcePitch	
+	2704707011	BusVolume			\Default Work Unit\BusVolume	
+
+Audio Bus	ID	Name			Wwise Object Path	Notes
+	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	729637962	Dash	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Dash_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Mando\Dash		192116
+
