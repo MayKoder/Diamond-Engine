@@ -273,7 +273,11 @@ void ModuleAudioManager::ChangeRTPCValue(unsigned int id, std::string& RTPCname,
 
 bool ModuleAudioManager::LoadBanksInfo()
 {
+#ifndef STANDALONE
 	JSON_Value* banksInfo = json_parse_file("Assets/SoundBanks/SoundbanksInfo.json");
+#else
+	JSON_Value* banksInfo = json_parse_file("Library/Sounds/SoundbanksInfo.json");
+#endif
 
 	if (banksInfo == NULL)
 		return false;
@@ -348,7 +352,8 @@ void ModuleAudioManager::UnLoadAllBanks()
 	std::vector<AudioBank*>::iterator it;
 	for (it = banks.begin(); it != banks.end(); ++it)
 	{
-		(*it)->loaded_in_heap = !UnLoadBank((*it)->bank_name);
+		if ((*it)->loaded_in_heap)
+			(*it)->loaded_in_heap = !UnLoadBank((*it)->bank_name);
 	}
 }
 
