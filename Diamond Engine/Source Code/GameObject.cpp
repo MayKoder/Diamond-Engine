@@ -176,11 +176,11 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 }
 
 
-Component* GameObject::GetComponent(Component::TYPE _type)
+Component* GameObject::GetComponent(Component::TYPE _type, const char* name)
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
-		if (components[i]->type == _type)
+		if (components[i]->type == _type && (name == "" || name == components[i]->GetName()))
 			return components[i];
 	}
 

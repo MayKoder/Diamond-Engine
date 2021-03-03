@@ -16,7 +16,7 @@
 
 #include <assert.h>
 
-C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite_button_pressed(nullptr), sprite_button_hovered(nullptr), sprite_button_unhovered(nullptr), script(nullptr), 
+C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite_button_pressed(nullptr), sprite_button_hovered(nullptr), sprite_button_unhovered(nullptr), script_name(""), 
 num_sprite_used(BUTTONSTATE::BUTTONUNHOVERED)
 {
 	name = "Button";
@@ -40,8 +40,9 @@ void C_Button::Update()
 {
 #ifndef STANDALONE
 	ChangeTexture(num_sprite_used);
+	if (gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()) == nullptr)
+		script_name = "";
 #endif // !STANDALONE
-
 }
 
 void C_Button::ExecuteButton()
@@ -102,6 +103,74 @@ void C_Button::ChangeTexture(BUTTONSTATE new_num_sprite)
 }
 
 
+
+void C_Button::SaveData(JSON_Object* nObj)
+{
+	Component::SaveData(nObj);
+
+	if (sprite_button_pressed != nullptr)
+	{
+		DEJson::WriteString(nObj, "Pressed_AssetsPath", sprite_button_pressed->GetAssetPath());
+		DEJson::WriteString(nObj, "Pressed_LibraryPath", sprite_button_pressed->GetLibraryPath());
+		DEJson::WriteInt(nObj, "Pressed_UID", sprite_button_pressed->GetUID());
+	}
+	if (sprite_button_hovered != nullptr)
+	{
+		DEJson::WriteString(nObj, "Hovered_AssetsPath", sprite_button_hovered->GetAssetPath());
+		DEJson::WriteString(nObj, "Hovered_LibraryPath", sprite_button_hovered->GetLibraryPath());
+		DEJson::WriteInt(nObj, "Hovered_UID", sprite_button_hovered->GetUID());
+	}
+	if (sprite_button_unhovered != nullptr)
+	{
+		DEJson::WriteString(nObj, "Unhovered_AssetsPath", sprite_button_unhovered->GetAssetPath());
+		DEJson::WriteString(nObj, "Unhovered_LibraryPath", sprite_button_unhovered->GetLibraryPath());
+		DEJson::WriteInt(nObj, "Unhovered_UID", sprite_button_unhovered->GetUID());
+	}
+	if (!script_name.empty())
+	{
+		DEJson::WriteString(nObj, "Script_Name", script_name.c_str());
+	}
+	DEJson::WriteInt(nObj, "ButtonState", static_cast<int>(num_sprite_used));
+}
+
+void C_Button::LoadData(DEConfig& nObj)
+{
+	Component::LoadData(nObj);
+
+	std::string texName = nObj.ReadString("Pressed_LibraryPath");
+	std::string assetsName = nObj.ReadString("Pressed_AssetsPath");
+
+	if (texName != "") {
+		sprite_button_pressed = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Pressed_UID"), texName.c_str()));
+		sprite_button_pressed->SetAssetsPath(assetsName.c_str());
+	}
+
+	texName = nObj.ReadString("Hovered_LibraryPath");
+	assetsName = nObj.ReadString("Hovered_AssetsPath");
+
+	if (texName != "") {
+		sprite_button_hovered = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Hovered_UID"), texName.c_str()));
+		sprite_button_hovered->SetAssetsPath(assetsName.c_str());
+	}
+
+
+	texName = nObj.ReadString("Unhovered_LibraryPath");
+	assetsName = nObj.ReadString("Unhovered_AssetsPath");
+
+	if (texName != "") {
+		sprite_button_unhovered = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Unhovered_UID"), texName.c_str()));
+		sprite_button_unhovered->SetAssetsPath(assetsName.c_str());
+	}
+
+	texName = nObj.ReadString("Script_Name");
+
+	if (texName != "")
+		script_name = nObj.ReadString("Script_Name");
+
+	num_sprite_used = static_cast<BUTTONSTATE>(nObj.ReadInt("ButtonState"));
+}
+
+
 #ifndef STANDALONE
 
 void C_Button::ChangeSprite(BUTTONSTATE num_sprite, ResourceTexture* sprite)
@@ -130,9 +199,18 @@ void C_Button::ChangeSprite(BUTTONSTATE num_sprite, ResourceTexture* sprite)
 }
 
 
-void C_Button::ChangeScript(C_Script* script)
+void C_Button::ChangeScript(const char* new_script_name)
 {
-	if (script != nullptr);
+	if (!script_name.empty()) {
+		Component* component= gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str());
+		if (gameObject != nullptr)
+			gameObject->RemoveComponent(component);
+		//DO NOW
+	}
+		//delete script;
+	dynamic_cast<C_Script*>(gameObject->AddComponent(TYPE::SCRIPT, new_script_name));
+
+	script_name = new_script_name;
 }
 
 bool C_Button::OnEditor()
@@ -236,9 +314,8 @@ bool C_Button::OnEditor()
 		ImGui::Columns(1);
 		ImGui::Separator();
 
-		if (script != nullptr) {
-			ImGui::Text(script->GetName().c_str());
-		}
+		ImGui::Text(script_name.c_str());
+		
 		ImGui::Text("Drop here to change the script");
 		/// ARNAU: Finish the script things
 		if (ImGui::BeginDragDropTarget())
@@ -249,12 +326,7 @@ bool C_Button::OnEditor()
 				std::string file_name;
 				FileSystem::GetFileName(assetsPath->c_str(), file_name, false);
 
-				if (script != nullptr)
-					delete script;
-
-				script = dynamic_cast<C_Script*>(gameObject->AddComponent(TYPE::SCRIPT, file_name.c_str()));
-				script->LoadScriptData(file_name.c_str());
-
+				ChangeScript(file_name.c_str());
 			}
 			ImGui::EndDragDropTarget();
 		}
