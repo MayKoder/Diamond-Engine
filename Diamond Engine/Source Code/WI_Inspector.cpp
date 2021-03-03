@@ -138,13 +138,13 @@ void W_Inspector::Draw()
 				}
 				if (ImGui::Selectable("RigidBody3D"))
 				{
-					if (selectedGO->GetComponent(Component::Type::RigidBody) == nullptr)
-						selectedGO->AddComponent(Component::Type::RigidBody);
+					if (selectedGO->GetComponent(Component::TYPE::RigidBody) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::RigidBody);
 				}
 				if (ImGui::Selectable("Collider"))
 				{
-					if (selectedGO->GetComponent(Component::Type::Collider) == nullptr)
-						selectedGO->AddComponent(Component::Type::Collider);
+					if (selectedGO->GetComponent(Component::TYPE::Collider) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::Collider);
 				}
 				if (ImGui::Selectable("AudioListener"))
 				{
