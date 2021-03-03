@@ -54,6 +54,16 @@ void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 
 	shaderRes->Bind();
 
+	bool cameraNeedsChange = false;
+	FrustumType cameraType = _camera->camFrustrum.type;
+
+	if(cameraType != FrustumType::PerspectiveFrustum)
+	{ 
+		cameraNeedsChange = true;
+		_camera->camFrustrum.type = FrustumType::PerspectiveFrustum;
+		_camera->camFrustrum.verticalFov = 60.0 * DEGTORAD;
+		_camera->camFrustrum.horizontalFov = 2.0f * atanf(tanf(_camera->camFrustrum.verticalFov / 2.0f) * 1.7f);
+	}
 
 	GLint modelLoc = glGetUniformLocation(shaderRes->shaderProgramID, "view");
 	float4x4 test = _camera->ViewMatrixOpenGL().Float3x3Part();
@@ -79,6 +89,8 @@ void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 	//glEnable(GL_DEPTH_TEST);
 	//glDepthFunc(GL_LESS);
 
-	shaderRes->Unbind();
+	if(cameraNeedsChange)
+		_camera->camFrustrum.type = FrustumType::OrthographicFrustum;
 
+	shaderRes->Unbind();
 }

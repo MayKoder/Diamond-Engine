@@ -145,9 +145,13 @@ void W_TextEditor::SplitErrors(const char* infoLog, std::vector<std::pair<int, s
 void W_TextEditor::SetTextFromFile(const char* path)
 {
 	txtEditor.Delete();
+
 	char* buffer = nullptr;
-	textType = EngineExternal->moduleResources->GetTypeFromAssetExtension(path);
-	FileSystem::LoadToBuffer(path, &buffer);
+	if (strcmp(path, "") != 0)
+	{
+		textType = EngineExternal->moduleResources->GetTypeFromAssetExtension(path);
+		FileSystem::LoadToBuffer(path, &buffer);
+	}
 
 	const TextEditor::LanguageDefinition* lng;
 	(textType == Resource::Type::SHADER) ? lng = TextEditor::LanguageDefinition::GLSL() : lng = TextEditor::LanguageDefinition::C();

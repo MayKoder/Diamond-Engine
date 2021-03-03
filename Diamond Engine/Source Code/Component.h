@@ -26,6 +26,8 @@ public:
 		IMAGE_2D,
 		AUDIO_LISTENER,
 		AUDIO_SOURCE,
+    RigidBody,
+		Collider,
 		COUNT
 	};
 
@@ -36,6 +38,7 @@ public:
 	virtual void Disable();
 
 	virtual void Update();
+	virtual void PostUpdate();
 
 #ifndef STANDALONE
 	virtual bool OnEditor();

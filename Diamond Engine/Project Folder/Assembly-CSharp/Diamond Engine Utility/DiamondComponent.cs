@@ -14,6 +14,6 @@ namespace DiamondEngine
         }
 
 
-        public int UID;
+        public UIntPtr UID;
     }
 }

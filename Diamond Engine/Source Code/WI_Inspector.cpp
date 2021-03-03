@@ -136,6 +136,16 @@ void W_Inspector::Draw()
 					if(selectedGO->GetComponent(Component::TYPE::CAMERA) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::CAMERA);
 				}
+				if (ImGui::Selectable("RigidBody3D"))
+				{
+					if (selectedGO->GetComponent(Component::Type::RigidBody) == nullptr)
+						selectedGO->AddComponent(Component::Type::RigidBody);
+				}
+				if (ImGui::Selectable("Collider"))
+				{
+					if (selectedGO->GetComponent(Component::Type::Collider) == nullptr)
+						selectedGO->AddComponent(Component::Type::Collider);
+				}
 				if (ImGui::Selectable("AudioListener"))
 				{
 					if (selectedGO->GetComponent(Component::TYPE::AUDIO_LISTENER) == nullptr)

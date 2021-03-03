@@ -30,10 +30,13 @@ public:
 
 	void LoadScriptData(const char*);
 
+	void CollisionCallback();
+
 	std::vector<std::string> methods;
 	std::vector<SerializedField> fields;
 
 	MonoMethod* updateMethod;
+	MonoMethod* onCollisionEnter;
 	uint32_t noGCobject;
 
 	static C_Script* runningScript;

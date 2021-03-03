@@ -23,6 +23,10 @@ void Component::Update()
 {
 }
 
+void Component::PostUpdate()
+{
+}
+
 #ifndef STANDALONE
 bool Component::OnEditor()
 {
