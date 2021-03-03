@@ -46,7 +46,9 @@ C_Script::~C_Script()
 	{
 		if (fields[i].type == MonoTypeEnum::MONO_TYPE_CLASS && fields[i].fiValue.goValue != nullptr && fields[i].fiValue.goValue->csReferences.size() != 0)
 		{
-			fields[i].fiValue.goValue->csReferences.erase(std::find(fields[i].fiValue.goValue->csReferences.begin(), fields[i].fiValue.goValue->csReferences.end(), &fields[i]));
+			auto ptr = std::find(fields[i].fiValue.goValue->csReferences.begin(), fields[i].fiValue.goValue->csReferences.end(), &fields[i]);
+			if(ptr != fields[i].fiValue.goValue->csReferences.end())
+				fields[i].fiValue.goValue->csReferences.erase(ptr);
 		}
 	}
 
