@@ -3,7 +3,7 @@
 #include"ImGui/imgui.h"
 #include"GameObject.h"
 
-Component::Component(GameObject* _gm) : active(true), /*name(""),*/ gameObject(_gm), type(Type::None)
+Component::Component(GameObject* _gm) : active(true), /*name(""),*/ gameObject(_gm), type(TYPE::NONE)
 {
 }
 
@@ -23,6 +23,10 @@ void Component::Update()
 {
 }
 
+void Component::PostUpdate()
+{
+}
+
 #ifndef STANDALONE
 bool Component::OnEditor()
 {
@@ -36,7 +40,7 @@ bool Component::OnEditor()
 
 	//ImGui::Text("UID: %i", gameObject->UID);
 
-	if (this->type != Component::Type::Transform) 
+	if (this->type != Component::TYPE::TRANSFORM)
 	{
 		ImGui::Text("Active: "); ImGui::SameLine(); ImGui::Checkbox("##MeshActive", &active);
 

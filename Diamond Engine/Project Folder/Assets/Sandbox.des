@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        17.297677993774414,
-        10.252769470214844,
-        17.738853454589844
+        25.1678466796875,
+        99.068618774414063,
+        -134.79179382324219
     ],
     "EditorCameraZ": [
-        -0.64509636163711548,
-        -0.38236486911773682,
-        -0.66154950857162476
+        -0.12746813893318176,
+        -0.65579932928085327,
+        0.74409639835357666
     ],
     "EditorCameraY": [
-        -0.26694712042808533,
-        0.92401134967803955,
-        -0.27375558018684387
+        -0.11073391139507294,
+        0.75493526458740234,
+        0.64638286828994751
     ],
     "Game Objects": [
         {
@@ -96,50 +96,6 @@
                     "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
                     "MaterialUID": 1051418604
-                }
-            ]
-        },
-        {
-            "name": "Game Camera",
-            "Active": true,
-            "Position": [
-                0,
-                0.70512247085571289,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 188616957,
-            "ParentUID": 1661764735,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 4,
-                    "Active": true,
-                    "fType": 2,
-                    "nearPlaneDist": 1,
-                    "farPlaneDist": 5000,
-                    "vFOV": 1.0471975803375244,
-                    "hFOV": 1.636405348777771,
-                    "culling": false
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "isDefaultListener": true,
-                    "masterVolume": 50
                 }
             ]
         },
@@ -256,16 +212,6 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true
-                },
-                {
-                    "Type": 7,
-                    "Active": true,
-                    "evName": "Play_Weapon_Shoot",
-                    "audBankReference": "Audio",
-                    "volume": 50,
-                    "pitch": 50,
-                    "playOnAwake": true,
-                    "isMuted": false
                 }
             ]
         },
@@ -305,6 +251,56 @@
                         1,
                         1
                     ]
+                }
+            ]
+        },
+        {
+            "name": "Game Camera",
+            "Active": true,
+            "Position": [
+                28.337120056152344,
+                34.217071533203125,
+                -37.998661041259766
+            ],
+            "Rotation": [
+                0.28966295719146729,
+                -0.30951860547065735,
+                0.099594630300998688,
+                0.9002079963684082
+            ],
+            "Scale": [
+                0.9999997615814209,
+                1.999998927116394,
+                0.999927818775177
+            ],
+            "UID": 188616957,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 4,
+                    "Active": true,
+                    "fType": 1,
+                    "fSize": 13.260000228881836,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 5000,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.5521194934844971,
+                    "culling": false
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "CameraController",
+                    "reference": 188616957,
+                    "target": 1661764735,
+                    "x": 1,
+                    "y": 1,
+                    "z": 1,
+                    "smoothSpeed": 1
                 }
             ]
         }
