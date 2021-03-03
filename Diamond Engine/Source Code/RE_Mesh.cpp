@@ -269,8 +269,18 @@ void ResourceMesh::LoadCustomFormat(const char* path)
 	cursor += bytes;
 
 	//TODO: Should this be here?
+
+	float* vertices_positions = new float[vertices_count * 3];
+	for (size_t i = 0; i < vertices_count; i ++)
+	{
+		vertices_positions[i * 3]	  = vertices[i * VERTEX_ATTRIBUTES];
+		vertices_positions[i * 3 + 1] = vertices[i * VERTEX_ATTRIBUTES + 1];
+		vertices_positions[i * 3 + 2] = vertices[i * VERTEX_ATTRIBUTES + 2];	
+	}
+
 	localAABB.SetNegativeInfinity();
-	localAABB.Enclose((float3*)vertices, vertices_count);
+	localAABB.Enclose((float3*)vertices_positions, vertices_count);
+	delete[] vertices_positions;
 
 	delete[] fileBuffer;
 	fileBuffer = nullptr;
