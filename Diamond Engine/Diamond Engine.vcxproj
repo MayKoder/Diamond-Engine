@@ -219,8 +219,10 @@
     <ClInclude Include="Source Code\CO_Canvas.h" />
     <ClInclude Include="Source Code\CO_Checkbox.h" />
     <ClInclude Include="Source Code\CO_Image2D.h" />
+    <ClInclude Include="Source Code\CO_Collider.h" />
     <ClInclude Include="Source Code\CO_MeshRenderer.h" />
     <ClInclude Include="Source Code\CO_Material.h" />
+    <ClInclude Include="Source Code\CO_RigidBody.h" />
     <ClInclude Include="Source Code\CO_Script.h" />
     <ClInclude Include="Source Code\CO_Text.h" />
     <ClInclude Include="Source Code\CO_Transform.h" />
@@ -353,6 +355,8 @@
     <ClInclude Include="Source Code\MO_GUI.h" />
     <ClInclude Include="Source Code\MO_AudioManager.h" />
     <ClInclude Include="Source Code\MO_MonoManager.h" />
+    <ClInclude Include="Source Code\MO_Physics.h" />
+    <ClInclude Include="Source Code\MO_Physics\Header.h" />
     <ClInclude Include="Source Code\RE_Material.h" />
     <ClInclude Include="Source Code\RE_Mesh.h" />
     <ClInclude Include="Source Code\MeshArrays.h" />
@@ -403,8 +407,10 @@
     <ClCompile Include="Source Code\CO_Canvas.cpp" />
     <ClCompile Include="Source Code\CO_Checkbox.cpp" />
     <ClCompile Include="Source Code\CO_Image2D.cpp" />
+    <ClCompile Include="Source Code\CO_Collider.cpp" />
     <ClCompile Include="Source Code\CO_Material.cpp" />
     <ClCompile Include="Source Code\CO_MeshRenderer.cpp" />
+    <ClCompile Include="Source Code\CO_RigidBody.cpp" />
     <ClCompile Include="Source Code\CO_Script.cpp" />
     <ClCompile Include="Source Code\CO_Text.cpp" />
     <ClCompile Include="Source Code\CO_Transform.cpp" />
@@ -482,6 +488,7 @@
     <ClCompile Include="Source Code\MO_GUI.cpp" />
     <ClCompile Include="Source Code\MO_AudioManager.cpp" />
     <ClCompile Include="Source Code\MO_MonoManager.cpp" />
+    <ClCompile Include="Source Code\MO_Physics.cpp" />
     <ClCompile Include="Source Code\RE_Material.cpp" />
     <ClCompile Include="Source Code\RE_Mesh.cpp" />
     <ClCompile Include="Source Code\IM_MeshLoader.cpp" />

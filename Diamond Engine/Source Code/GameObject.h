@@ -17,6 +17,7 @@ public:
 	virtual ~GameObject();
 
 	void Update();
+	void PostUpdate();
 
 	Component* AddComponent(Component::TYPE _type, const char* params = nullptr);
 	Component* GetComponent(Component::TYPE _type);
