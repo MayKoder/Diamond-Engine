@@ -17,6 +17,7 @@ C_AudioSource::C_AudioSource(GameObject* _gm) : Component(_gm), audBankReference
 
 C_AudioSource::~C_AudioSource()
 {
+	EngineExternal->moduleAudio->StopComponent(this->id);
 	EngineExternal->moduleAudio->RemoveAudioSource(this);
 	EngineExternal->moduleAudio->UnRegisterAudioObject(id);
 	gameObjectTransform = nullptr;
