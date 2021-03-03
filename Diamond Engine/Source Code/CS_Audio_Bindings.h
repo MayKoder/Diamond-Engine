@@ -82,14 +82,14 @@ void StopAudio(MonoObject* go)
 float GetVolume(MonoObject* go)
 {
 	if (EngineExternal == nullptr)
-		return;
+		return NULL;
 
 	GameObject* GO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
 	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::Type::AudioSource));
 	if (audSource != nullptr)
 	{
-		audSource->GetVolume();
+		return audSource->GetVolume();
 	}
 	else
 	{
@@ -119,14 +119,14 @@ void SetVolume(MonoObject* go, float volume)
 float GetPitch(MonoObject* go) 
 {
 	if (EngineExternal == nullptr)
-		return;
+		return NULL;
 
 	GameObject* GO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
 	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::Type::AudioSource));
 	if (audSource != nullptr)
 	{
-		audSource->GetPitch();
+		return audSource->GetPitch();
 	}
 	else
 	{
@@ -156,14 +156,14 @@ void SetPitch(MonoObject* go, float pitch)
 bool GetMuted(MonoObject* go)
 {
 	if (EngineExternal == nullptr)
-		return;
+		return NULL;
 
 	GameObject* GO = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 
 	C_AudioSource* audSource = dynamic_cast<C_AudioSource*>(GO->GetComponent(Component::Type::AudioSource));
 	if (audSource != nullptr)
 	{
-		audSource->IsMuted();
+		return audSource->IsMuted();
 	}
 	else
 	{
