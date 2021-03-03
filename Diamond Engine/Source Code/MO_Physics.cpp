@@ -186,7 +186,7 @@ void ModulePhysics::SceneSimulation(float gameTimestep, bool fetchResults) {
 		for (int i = 0; i < actors.size(); i++)
 		{
 			GameObject* contact = static_cast<GameObject*>(actors[i]->userData);
-			C_RigidBody* body = dynamic_cast<C_RigidBody*>(contact->GetComponent(Component::Type::RigidBody));
+			C_RigidBody* body = dynamic_cast<C_RigidBody*>(contact->GetComponent(Component::TYPE::RigidBody));
 			body->Step();
 		}
 	}

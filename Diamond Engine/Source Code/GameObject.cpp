@@ -101,7 +101,7 @@ void GameObject::PostUpdate()
 	}
 }
 
-Component* GameObject::AddComponent(Component::Type _type, const char* params)
+Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 {
 	assert(_type != Component::TYPE::NONE, "Can't create a NONE component");
 	Component* ret = nullptr;
@@ -127,10 +127,10 @@ Component* GameObject::AddComponent(Component::Type _type, const char* params)
 		ret = new C_Camera(this);
 		EngineExternal->moduleScene->SetGameCamera(dynamic_cast<C_Camera*>(ret));
 		break;
-	case Component::Type::RigidBody:
+	case Component::TYPE::RigidBody:
 		ret = new C_RigidBody(this);
 		break;
-	case Component::Type::Collider:
+	case Component::TYPE::Collider:
 		ret = new C_Collider(this);
       break;
 	case Component::TYPE::AUDIO_LISTENER:

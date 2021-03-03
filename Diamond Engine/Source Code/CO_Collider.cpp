@@ -32,9 +32,9 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 	//Checks if component does have any owner and get additional data to be created
 
 
-		transform = dynamic_cast<C_Transform*>(_gm->GetComponent(Component::Type::Transform));
-		rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::Type::RigidBody));
-		mesh = dynamic_cast<C_MeshRenderer*>(_gm->GetComponent(Component::Type::MeshRenderer));
+		transform = dynamic_cast<C_Transform*>(_gm->GetComponent(Component::TYPE::TRANSFORM));
+		rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RigidBody));
+		mesh = dynamic_cast<C_MeshRenderer*>(_gm->GetComponent(Component::TYPE::MESH_RENDERER));
 
 		
 
@@ -87,8 +87,8 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 			rigidbody->rigid_dynamic->attachShape(*colliderShape);
 		}
 		else {
-			_gm->AddComponent(Component::Type::RigidBody);
-			rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::Type::RigidBody));
+			_gm->AddComponent(Component::TYPE::RigidBody);
+			rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RigidBody));
 			rigidbody->use_kinematic = true;
 			rigidbody->EnableKinematic(rigidbody->use_kinematic);
 			rigidbody->rigid_dynamic->attachShape(*colliderShape);
