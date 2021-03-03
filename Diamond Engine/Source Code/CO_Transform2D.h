@@ -20,9 +20,13 @@ public:
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
 
+	void SetTransform(float locPosX, float locPosY, float locRotation, float sizeX, float sizeY);
+
+	void SetTrueUpdateTransform();
+
 private:
 	void UpdateTransform();
-	void SetTransform(float locPosX, float locPosY, float locRotation);
+	void SetPreviousParameters();
 
 public:
 	float position[2];
@@ -33,8 +37,10 @@ public:
 
 	float size[2];
 
+
 private:
-	bool updateTransform = false;
+	bool updateTransform, send_command;
+	float previous_parameters[5];////[0]&&[1] = position; [2] = rotation; [3] && [4] = size
 };
 
 #endif // !__CO_TRANSFORM_2D_H__

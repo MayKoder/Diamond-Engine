@@ -210,6 +210,7 @@
     <ClInclude Include="Source Code\Command.h" />
     <ClInclude Include="Source Code\COMM_DeleteGO.h" />
     <ClInclude Include="Source Code\COMM_Transform.h" />
+    <ClInclude Include="Source Code\COMM_Transform2D.h" />
     <ClInclude Include="Source Code\Component.h" />
     <ClInclude Include="Source Code\CO_Button.h" />
     <ClInclude Include="Source Code\CO_AudioListener.h" />
@@ -393,6 +394,7 @@
     <ClCompile Include="Source Code\Command.cpp" />
     <ClCompile Include="Source Code\COMM_DeleteGO.cpp" />
     <ClCompile Include="Source Code\COMM_Transform.cpp" />
+    <ClCompile Include="Source Code\COMM_Transform2D.cpp" />
     <ClCompile Include="Source Code\Component.cpp" />
     <ClCompile Include="Source Code\CO_Button.cpp" />
     <ClCompile Include="Source Code\CO_AudioListener.cpp" />

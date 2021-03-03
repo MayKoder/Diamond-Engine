@@ -19,16 +19,25 @@
                 1,
                 1
             ],
-            "UID": 105228350,
-            "ParentUID": 1808278918,
+            "UID": 1168538596,
+            "ParentUID": 259851228,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
                 },
                 {
-                    "Type": 7,
-                    "Active": true
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        0
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        20,
+                        20
+                    ]
                 },
                 {
                     "Type": 3,
@@ -37,6 +46,13 @@
                     "MaterialAssetPath": "Assets\/Materials\/ui.mat",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/934250681.dds",
+                    "UID": 934250681
                 }
             ]
         }

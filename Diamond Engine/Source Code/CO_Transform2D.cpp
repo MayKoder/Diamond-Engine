@@ -4,6 +4,10 @@
 
 #include "Application.h"
 #include "MO_GUI.h"
+#include "MO_Input.h"
+#include "MO_Editor.h"
+
+#include "COMM_Transform2D.h"
 
 #include "MathGeoLib/include/Math/float4x4.h"
 #include "ImGui/imgui.h"
@@ -11,7 +15,8 @@
 C_Transform2D::C_Transform2D(GameObject* gameObject) : Component(gameObject),
 	rotation(0.0f),
 	localRotation(0.0f),
-	updateTransform(false)
+	updateTransform(false),
+	send_command(false)
 {
 	name = "Transform 2D";
 
@@ -20,6 +25,8 @@ C_Transform2D::C_Transform2D(GameObject* gameObject) : Component(gameObject),
 
 	size[0] = 20.f;
 	size[1] = 20.f;
+
+	SetPreviousParameters();
 }
 
 
@@ -45,21 +52,42 @@ bool C_Transform2D::OnEditor()
 		int offset = ImGui::CalcTextSize("Position: ").x + 16;
 		ImGui::Text("Position: ");
 		ImGui::SameLine();
-		if (ImGui::DragFloat2("##lPosition", &localPos[0], 0.1f))
+		if (ImGui::DragFloat2("##lPosition", &localPos[0], 0.1f)) {
 			updateTransform = true;
+			send_command = true;
+		}
+		if (ImGui::IsItemClicked()) 
+			SetPreviousParameters();
 
 
 		ImGui::Text("Size: ");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(offset);
-		if (ImGui::DragFloat2("##lSize", &size[0], 0.1f))
+		if (ImGui::DragFloat2("##lSize", &size[0], 0.1f)) {
 			updateTransform = true;
+			send_command = true;
+		}
+		if (ImGui::IsItemClicked())
+			SetPreviousParameters();
+
 
 		ImGui::Text("2D Rotation: ");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(offset);
-		if (ImGui::DragFloat("##lRotation", &localRotation, 0.1f))
+		if (ImGui::DragFloat("##lRotation", &localRotation, 0.1f)) {
 			updateTransform = true;
+			send_command = true;
+		}if (ImGui::IsItemClicked())
+			SetPreviousParameters();
+
+
+		//TODO: Doubli-click + enter input does not work as a command and won't we added to the shortcut manager
+		if (EngineExternal->moduleInput->GetMouseButton(1) == KEY_STATE::KEY_UP && send_command == true)
+		{
+			float next_param[5] = { localPos[0],localPos[1],localRotation,size[0],size[1] };
+			EngineExternal->moduleEditor->shortcutManager.PushCommand(new COMM_Transform2D(gameObject->UID, next_param, previous_parameters));
+			send_command = false;
+		}
 	}
 
 
@@ -144,12 +172,24 @@ void C_Transform2D::UpdateTransform()
 	}
 }
 
+void C_Transform2D::SetPreviousParameters()
+{
+	previous_parameters[0] = localPos[0];
+	previous_parameters[1] = localPos[1];
+	previous_parameters[2] = localRotation;
+	previous_parameters[3] = size[0];
+	previous_parameters[4] = size[1];
 
-void C_Transform2D::SetTransform(float locPosX, float locPosY, float locRotation)
+}
+
+
+void C_Transform2D::SetTransform(float locPosX, float locPosY, float locRotation, float sizeX, float sizeY)
 {
 	localPos[0] = locPosX;
 	localPos[1] = locPosY;
 	localRotation = locRotation;
+	size[0] = sizeX;
+	size[1] = sizeY;
 
 	if (gameObject->parent != nullptr)
 	{
@@ -163,4 +203,9 @@ void C_Transform2D::SetTransform(float locPosX, float locPosY, float locRotation
 			rotation = localRotation + parentTransform->rotation;
 		}
 	}
+}
+
+void C_Transform2D::SetTrueUpdateTransform()
+{
+	updateTransform = true;
 }

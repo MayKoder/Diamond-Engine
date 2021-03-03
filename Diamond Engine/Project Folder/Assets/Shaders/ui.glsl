@@ -18,13 +18,14 @@ in vec2 textureCoords;
 
 out vec4 fragmentColor;
 
-uniform sampler2D guiTexture;
+uniform sampler2D ourTexture;
 
 void main() {
-	fragmentColor = texture(guiTexture,textureCoords);
+	fragmentColor = texture(ourTexture,textureCoords);
 }
 
 #endif
+
 
 
 
