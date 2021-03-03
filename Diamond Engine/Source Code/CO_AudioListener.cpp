@@ -21,6 +21,7 @@ C_AudioListener::C_AudioListener(GameObject* _gm, bool defaultListener) :Compone
 C_AudioListener::~C_AudioListener()
 {
 	EngineExternal->moduleAudio->UnRegisterAudioObject(id);
+	SetAsDefaultListener(false);
 	myTransform = nullptr;
 }
 
