@@ -41,7 +41,7 @@ bool C_AudioSource::OnEditor()
 				{
 					audBankReference = (*it);
 					audBankName = (*it)->bank_name;
-					if (!(*it)->loaded_in_heap) 
+					if (!(*it)->loaded_in_heap)
 					{
 						(*it)->loaded_in_heap = EngineExternal->moduleAudio->LoadBank(audBankReference->bank_name);
 					}
@@ -52,7 +52,7 @@ bool C_AudioSource::OnEditor()
 			ImGui::EndCombo();
 		}
 
-		if (audBankReference !=nullptr && ImGui::BeginCombo("Audio to Play", evName.c_str()))
+		if (audBankReference != nullptr && ImGui::BeginCombo("Audio to Play", evName.c_str()))
 		{
 			std::map<uint64, std::string>::const_iterator ev_it;
 			for (ev_it = audBankReference->events.begin(); ev_it != audBankReference->events.end(); ++ev_it)
@@ -85,7 +85,7 @@ bool C_AudioSource::OnEditor()
 			SetVolume(volume);
 		}
 		ImGui::SameLine();
-		if (ImGui::Checkbox("Mute", &isMuted)) 
+		if (ImGui::Checkbox("Mute", &isMuted))
 		{
 			SetMuted(isMuted);
 		}
@@ -103,15 +103,17 @@ bool C_AudioSource::OnEditor()
 
 void C_AudioSource::Update()
 {
-	EngineExternal->moduleAudio->SetAudioObjTransform(this->id,gameObjectTransform->position, gameObjectTransform->GetForward(), gameObjectTransform->GetUp());
+	EngineExternal->moduleAudio->SetAudioObjTransform(this->id, gameObjectTransform->position, gameObjectTransform->GetForward(), gameObjectTransform->GetUp());
 }
 
 void C_AudioSource::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
-
 	DEJson::WriteString(nObj, "evName", this->evName.c_str());
-	DEJson::WriteString(nObj, "audBankReference", this->audBankReference->bank_name.c_str());
+
+	if (this->audBankReference != nullptr)
+		DEJson::WriteString(nObj, "audBankReference", this->audBankReference->bank_name.c_str());
+
 	DEJson::WriteFloat(nObj, "volume", this->volume);
 	DEJson::WriteFloat(nObj, "pitch", this->pitch);
 	DEJson::WriteBool(nObj, "playOnAwake", this->playOnAwake);
