@@ -1,10 +1,4 @@
 {
-    "ShaderUID": 868044330,
-    "Uniforms": [
-        {
-            "name": "guiTexture",
-            "type": 35678,
-            "value": 698335242
-        }
-    ]
+    "ShaderUID": 2112650374,
+    "Uniforms": []
 }
