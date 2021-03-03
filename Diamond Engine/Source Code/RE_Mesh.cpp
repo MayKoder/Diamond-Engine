@@ -15,12 +15,16 @@
 #include "Joint.h"
 
 ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH), indices_id(0), vertices_id(0), generalWireframe(nullptr),
-EBO(0), VAO(0), VBO(0), jointTransforms(nullptr)
+EBO(0), VAO(0), VBO(0)
 {
 }
 
 ResourceMesh::~ResourceMesh()
-{}
+{
+	boneTransforms.clear();
+	bonesMap.clear();
+	bonesOffsets.clear();
+}
 
 bool ResourceMesh::LoadToMemory()
 {

@@ -45,11 +45,19 @@ C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject), rootBone
 
 C_Animator::~C_Animator()
 {
-	/*if (_anim != nullptr)
+	rootBone = nullptr;
+	clips.clear();
+
+	_anim = nullptr;
+	currentAnimation = nullptr;
+	previousAnimation = nullptr;
+
+	for(std::map<std::string, ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); it++)
 	{
-		EngineExternal->moduleResources->UnloadResource(_anim->GetUID());
-		_anim = nullptr;
-	}*/
+		EngineExternal->moduleResources->UnloadResource(it->second->GetUID());
+		it->second = nullptr;
+	}
+	animations.clear();
 }
 
 void C_Animator::Start()
@@ -300,6 +308,7 @@ bool C_Animator::OnEditor()
 		}
 
 		//List of existing animations
+		std::string animation_to_remove = "";
 		ImGui::Text("Select a new animation");
 		for (std::map<std::string, ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); ++it)
 		{
@@ -317,6 +326,14 @@ bool C_Animator::OnEditor()
 				//	AddClip(currentAnimation);
 				//}
 			}
+
+			ImGui::SameLine();
+			if (ImGui::Button("Remove Animation")) {
+				animation_to_remove = it->first;
+			}
+		}
+		if (animation_to_remove.size() > 0) {
+			animations.erase(animation_to_remove);
 		}
 
 		ImGui::Button("Drop new animation here");
@@ -571,10 +588,10 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, cons
 		
 		transform->position = position;
 		transform->eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
-		if (transform->eulerRotation.z == -19.41f) {
-			LOG(LogType::L_WARNING, "Current Frame: %i", currentFrame);
-		}
-		LOG(LogType::L_NORMAL, "%.2f Current frame: %i", transform->eulerRotation.z,currentFrame);
+		//if (transform->eulerRotation.z == -19.41f) {
+		//	LOG(LogType::L_WARNING, "Current Frame: %i", currentFrame);
+		//}
+		//LOG(LogType::L_NORMAL, "%.2f Current frame: %i", transform->eulerRotation.z,currentFrame);
 		transform->localScale = scale;
 		transform->updateTransform = true;
 	}
