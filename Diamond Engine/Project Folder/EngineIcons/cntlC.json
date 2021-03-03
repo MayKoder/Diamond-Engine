@@ -1,12 +1,12 @@
 {
     "Game Objects": [
         {
-            "name": "Image",
+            "name": "Cube",
             "Active": true,
             "Position": [
-                0,
-                0,
-                0
+                50.546199798583984,
+                3.2579998970031738,
+                -6.3833084595898981e-07
             ],
             "Rotation": [
                 -0.7071068286895752,
@@ -16,43 +16,26 @@
             ],
             "Scale": [
                 1,
-                1,
-                1
+                50,
+                5.5
             ],
-            "UID": 1168538596,
-            "ParentUID": 259851228,
+            "UID": 1800636349,
+            "ParentUID": 1676501951,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
                 },
                 {
-                    "Type": 6,
+                    "Type": 2,
                     "Active": true,
-                    "Position": [
-                        0,
-                        0
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        20,
-                        20
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
                     ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
-                },
-                {
-                    "Type": 11,
-                    "Active": true,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/934250681.dds",
-                    "UID": 934250681
                 }
             ]
         }
