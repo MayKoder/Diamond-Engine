@@ -16,6 +16,7 @@ public:
 		SCRIPT,
 		SHADER,
 		MATERIAL,
+		FONT,
 		UNKNOWN
 	};
 

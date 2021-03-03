@@ -208,13 +208,13 @@ void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale)
 	go->transform->updateTransform = true;
 
 
-	C_MeshRenderer* meshRenderer =  dynamic_cast<C_MeshRenderer*>(go->AddComponent(Component::Type::MeshRenderer));
+	C_MeshRenderer* meshRenderer =  dynamic_cast<C_MeshRenderer*>(go->AddComponent(Component::TYPE::MESH_RENDERER));
 
 	ResourceMesh* test = 
 		dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(965117995, Resource::Type::MESH));
 	meshRenderer->SetRenderMesh(test);
 
-	go->AddComponent(Component::Type::Script, "BH_Bullet");
+	go->AddComponent(Component::TYPE::SCRIPT, "BH_Bullet");
 
 	/*return mono_gchandle_get_target(cmp->noGCobject);*/
 }

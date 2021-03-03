@@ -14,8 +14,13 @@
 #include"OpenGL.h"
 #include"MO_Window.h"
 
-C_Camera::C_Camera() : Component(nullptr), fov(60.0f), cullingState(true),
-msaaSamples(4), orthoSize(0.0f)
+C_Camera::C_Camera() : Component(nullptr), 
+	fov(60.0f), 
+	cullingState(true),
+	msaaSamples(4), 
+	orthoSize(0.0f),
+	windowWidth(0),
+	windowHeight(0)
 {
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
@@ -84,10 +89,10 @@ bool C_Camera::OnEditor()
 		}
 		else
 		{
-			if (ImGui::DragFloat("Size: ", &orthoSize, 0.1f, 1.0f, 180.f)) 
+			if (ImGui::DragFloat("Size: ", &orthoSize, 0.01f, 0.01f, 100.0f)) 
 			{
-				//camFrustrum.orthographicHeight = 1080;
-				//camFrustrum.orthographicWidth = 1920;
+				//camFrustrum.orthographicWidth = 1920 / orthoSize;
+				//camFrustrum.orthographicHeight = 1080 / orthoSize;
 			}
 		}
 		
@@ -125,7 +130,7 @@ bool C_Camera::OnEditor()
 }
 #endif // !STANDALONE
 
-void C_Camera::Update()
+void C_Camera::PostUpdate()
 {
 
 	//Maybe dont update every frame?
@@ -147,7 +152,10 @@ void C_Camera::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
 
-	DEJson::WriteInt(nObj, "fType", (int)FrustumType::PerspectiveFrustum);
+	DEJson::WriteInt(nObj, "fType", camFrustrum.type);
+
+	if (camFrustrum.type == FrustumType::OrthographicFrustum)
+		DEJson::WriteFloat(nObj, "fSize", orthoSize);
 
 	DEJson::WriteFloat(nObj, "nearPlaneDist", camFrustrum.nearPlaneDistance);
 	DEJson::WriteFloat(nObj, "farPlaneDist", camFrustrum.farPlaneDistance);
@@ -162,6 +170,9 @@ void C_Camera::LoadData(DEConfig& nObj)
 	Component::LoadData(nObj);
 
 	camFrustrum.type = (FrustumType)nObj.ReadInt("fType");
+
+	if (camFrustrum.type == FrustumType::OrthographicFrustum)
+		orthoSize = nObj.ReadFloat("fSize");
 
 	camFrustrum.nearPlaneDistance = nObj.ReadFloat("nearPlaneDist");
 	camFrustrum.farPlaneDistance = nObj.ReadFloat("farPlaneDist");
@@ -233,6 +244,9 @@ void C_Camera::EndDraw()
 
 void C_Camera::ReGenerateBuffer(int w, int h)
 {
+	windowWidth = w;
+	windowHeight = h;
+
 	SetAspectRatio((float)w / (float)h);
 	
 	msaaFBO.ReGenerateBuffer(w, h, true, 4);

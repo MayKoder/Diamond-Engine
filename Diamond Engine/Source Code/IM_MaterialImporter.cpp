@@ -18,6 +18,7 @@ void MaterialImporter::CreateBaseMaterialFile(const char* path)
 
 	JSON_Value* uniformsArray = json_value_init_array();
 	EngineExternal->moduleScene->defaultMaterial->SaveToJson(json_value_get_array(uniformsArray));
+	
 	json_object_set_value(root_object.nObj, "Uniforms", uniformsArray);
 
 	//Default shader does not have a library path

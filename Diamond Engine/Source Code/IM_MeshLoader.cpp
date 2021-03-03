@@ -92,14 +92,14 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTextur
 		GameObject* gmNode = new GameObject(node->mName.C_Str(), gmParent); //Name should be scene->mMeshes[node->mMeshes[i]]
 
 		//Load mesh to GameObject
-		C_MeshRenderer* gmMeshRenderer = dynamic_cast<C_MeshRenderer*>(gmNode->AddComponent(Component::Type::MeshRenderer));
+		C_MeshRenderer* gmMeshRenderer = dynamic_cast<C_MeshRenderer*>(gmNode->AddComponent(Component::TYPE::MESH_RENDERER));
 
 		gmMeshRenderer->SetRenderMesh(meshPointer);
 
 		aiMesh* importedMesh = meshArray[node->mMeshes[i]];
 		if (importedMesh->mMaterialIndex < sceneTextures.size() && sceneTextures[importedMesh->mMaterialIndex] != nullptr)
 		{
-			C_Material* material = dynamic_cast<C_Material*>(gmNode->AddComponent(Component::Type::Material));
+			C_Material* material = dynamic_cast<C_Material*>(gmNode->AddComponent(Component::TYPE::MATERIAL));
 			material->matTexture = sceneTextures[importedMesh->mMaterialIndex];
 		}
 

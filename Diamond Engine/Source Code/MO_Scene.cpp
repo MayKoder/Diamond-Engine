@@ -155,6 +155,7 @@ update_status M_Scene::Update(float dt)
 #endif // !STANDALONE
 
 	UpdateGameObjects();
+	RecursivePostUpdate(root);
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -229,7 +230,7 @@ void M_Scene::SetGameCamera(C_Camera* cam)
 void M_Scene::CreateGameCamera(const char* name)
 {
 	GameObject* cam = CreateGameObject(name, root);
-	C_Camera* c_comp = dynamic_cast<C_Camera*>(cam->AddComponent(Component::Type::Camera));
+	C_Camera* c_comp = dynamic_cast<C_Camera*>(cam->AddComponent(Component::TYPE::CAMERA));
 
 	//SetGameCamera(c_comp);
 }
@@ -270,6 +271,22 @@ void M_Scene::RecursiveUpdate(GameObject* parent)
 		for (size_t i = 0; i < parent->children.size(); i++)
 		{
 			RecursiveUpdate(parent->children[i]);
+		}
+	}
+}
+
+void M_Scene::RecursivePostUpdate(GameObject* parent)
+{
+	if (parent->toDelete)
+		return;
+
+	if (parent->isActive())
+	{
+		parent->PostUpdate();
+
+		for (size_t i = 0; i < parent->children.size(); i++)
+		{
+			RecursivePostUpdate(parent->children[i]);
 		}
 	}
 }

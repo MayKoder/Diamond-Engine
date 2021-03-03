@@ -10,7 +10,7 @@ C_AudioSource::C_AudioSource(GameObject* _gm) : Component(_gm), audBankReference
 {
 	name = "Audio Source";
 	this->id = static_cast<unsigned int>(EngineExternal->GetRandomInt());
-	gameObjectTransform = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::Type::Transform));
+	gameObjectTransform = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM));
 	EngineExternal->moduleAudio->RegisterNewAudioObject(id);
 	EngineExternal->moduleAudio->AddAudioSource(this);
 }

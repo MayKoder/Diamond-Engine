@@ -1,60 +1,11 @@
 {
     "Game Objects": [
         {
-            "name": "Player",
+            "name": "Image",
             "Active": true,
             "Position": [
                 0,
-                2,
-                -2.2426132773034624e-07
-            ],
-            "Rotation": [
                 0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                2,
-                0.9999280571937561
-            ],
-            "UID": 1661764735,
-            "ParentUID": 143570472,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/796231171.mmh",
-                    "UID": 796231171,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "FPS_Controller",
-                    "reference": 1661764735,
-                    "turret": 1661764735,
-                    "rotationSpeed": 2,
-                    "movementSpeed": 35,
-                    "mouseSens": 1
-                }
-            ]
-        },
-        {
-            "name": "Game Camera",
-            "Active": true,
-            "Position": [
-                0,
-                0.70512247085571289,
                 0
             ],
             "Rotation": [
@@ -68,22 +19,40 @@
                 1,
                 1
             ],
-            "UID": 188616957,
-            "ParentUID": 1661764735,
+            "UID": 1168538596,
+            "ParentUID": 259851228,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
                 },
                 {
-                    "Type": 4,
+                    "Type": 6,
                     "Active": true,
-                    "fType": 2,
-                    "nearPlaneDist": 1,
-                    "farPlaneDist": 5000,
-                    "vFOV": 1.0471975803375244,
-                    "hFOV": 1.7053406238555908,
-                    "culling": false
+                    "Position": [
+                        0,
+                        0
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        20,
+                        20
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/934250681.dds",
+                    "UID": 934250681
                 }
             ]
         }
