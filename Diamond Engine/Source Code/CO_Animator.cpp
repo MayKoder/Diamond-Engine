@@ -23,21 +23,23 @@
 
 #include "DETime.h"
 
-C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject), rootBoneUID(0u), meshRendererUID(0u), selectedClip(nullptr), showBones(false)
+C_Animator::C_Animator(GameObject* _gameobject) : Component(_gameobject),
+selectedClip(nullptr), currentAnimation(nullptr), previousAnimation(nullptr),
+rootBoneUID(0u), meshRendererUID(0u), currentTimeAnimation(0u), previousTimeAnimation(0u), 
+prevAnimTime(0.0f), time(0.0f), blendTime(0.0f), blendTimeDuration(0.0f), defaultBlend(0.2f),
+playing(false), started(false), showBones(false)
 {
-	gameObject = gameobject;
-	name = "Animator Component";
-	playing = true;
-	defaultBlend = 0.2f;
+	gameObject = _gameobject;
+	name = "Animator";
 }
 
 C_Animator::~C_Animator()
 {
 	rootBone = nullptr;
-	clips.clear();
-	selectedClip = nullptr;
 
-	_anim = nullptr;
+	selectedClip = nullptr;
+	clips.clear();
+
 	currentAnimation = nullptr;
 	previousAnimation = nullptr;
 
@@ -82,7 +84,6 @@ void C_Animator::Update()
 		if (!started) {
 			Start();
 		}
-	
 	}
 	else {
 		if (rootBone == nullptr)
@@ -123,9 +124,6 @@ void C_Animator::Update()
 				prevAnimTime += dt;
 				blendTime += dt;
 
-				//previousTimeAnimation = time * previousAnimation->ticksPerSecond;
-				//previousTimeAnimation += previousAnimation->initTimeAnim;
-
 				if (blendTime >= blendTimeDuration)
 				{
 					blendTimeDuration = 0.0f;
@@ -135,7 +133,6 @@ void C_Animator::Update()
 					if (previousAnimation->loop == true)
 					{
 						prevAnimTime = 0.0f;
-						// + (currentFrame - endFrame);
 					}
 				}
 
@@ -158,21 +155,13 @@ void C_Animator::Update()
 				}
 			}
 			UpdateChannelsTransform(currentAnimation, blendRatio > 0.0f ? previousAnimation : nullptr, blendRatio);
-			UpdateMeshAnimation(gameObject->children[0]);
 		}
 	}
-}
-
-void C_Animator::SetResource(ResourceAnimation* re_anim)
-{
-	_anim = re_anim;
 }
 
 void C_Animator::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
-	DEJson::WriteString(nObj, "Path", _anim->GetLibraryPath());
-	DEJson::WriteInt(nObj, "UID", _anim->GetUID());
 	DEJson::WriteInt(nObj, "RootBone UID", rootBone == nullptr ? 0 : rootBone->UID);
 	DEJson::WriteInt(nObj, "MeshRendererUID", meshRendererUID);
 
@@ -480,31 +469,8 @@ void C_Animator::Resume()
 
 void C_Animator::AddAnimation(ResourceAnimation* anim)
 {
-	if (anim != nullptr) {
-		_anim = anim;
+	if (anim != nullptr) 
 		animations[anim->animationName] = anim;
-	}
-	
-	/*
-	_anim->animationName = "Idle";
-	_anim->initTimeAnim = 0;
-	_anim->duration = 47;
-	animations[_anim->animationName] = _anim;
-
-	ResourceAnimation* run = new ResourceAnimation(*_anim);
-	run->animationName = "Run";
-	run->initTimeAnim = 49;
-	run->duration = 72;
-	animations[run->animationName] = run;
-
-
-	ResourceAnimation* attack = new ResourceAnimation(*_anim);
-	attack->animationName = "Attack";
-	attack->initTimeAnim = 73;
-	attack->duration = 120;
-	attack->loopable = false;
-	animations[attack->animationName] = attack;
-	*/
 }
 
 void C_Animator::AddClip(ResourceAnimation* anim)
@@ -525,8 +491,10 @@ void C_Animator::AddClip(ResourceAnimation* anim)
 void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, const ResourceAnimation* blend, float blendRatio)
 {
 	uint currentFrame = currentTimeAnimation;
+
 	//LOG(LogType::L_NORMAL,"%i", currentFrame);
 	//LOG(LogType::L_NORMAL, "%i", currentFrame);
+
 	uint prevBlendFrame = 0;
 	if (blend != nullptr)
 	{
@@ -561,26 +529,11 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, cons
 
 		}
 
-		
 		transform->position = position;
 		transform->eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
 		transform->localScale = scale;
 		transform->updateTransform = true;
 	}
-}
-
-void C_Animator::UpdateMeshAnimation(GameObject* gameObject)
-{
-	C_MeshRenderer* mesh = dynamic_cast<C_MeshRenderer*>( gameObject->GetComponent(Component::Type::MeshRenderer));
-	if (mesh != nullptr)
-	{
-		//mesh->DuplicateMeshintoAnimable();
-		//mesh->MoveVerticesnNormals();
-	}
-
-	// eudald: Necessary?
-	for (uint i = 0; i < gameObject->children.size(); i++)
-		UpdateMeshAnimation(gameObject->children[i]);
 }
 
 Quat C_Animator::GetChannelRotation(const Channel& channel, float currentKey, Quat default) const

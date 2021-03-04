@@ -32,7 +32,8 @@ public:
 	C_Animator(GameObject* gameObject);
 	~C_Animator();
 
-	void SetResource(ResourceAnimation* re_anim);
+	void Start();
+	void Update() override;
 
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
@@ -43,17 +44,12 @@ public:
 
 	void AddAnimation(ResourceAnimation* anim);
 	void AddClip(ResourceAnimation* anim);
-	//void DrawLinkedBones() const;
-
-	void Start();
-	void Update() override;
 
 	void UpdateChannelsTransform(const ResourceAnimation* settings, const ResourceAnimation* blend, float blendRatio);
-	void UpdateMeshAnimation(GameObject* gameObject);
 
-	float3 GetChannelPosition(const Channel& channel, float currentKey, float3 default) const;
-	Quat GetChannelRotation(const Channel& channel, float currentKey, Quat default) const;
-	float3 GetChannelScale(const Channel& channel, float currentKey, float3 default) const;
+	float3	GetChannelPosition(const Channel& channel, float currentKey, float3 default) const;
+	Quat	GetChannelRotation(const Channel& channel, float currentKey, Quat default) const;
+	float3	GetChannelScale(const Channel& channel, float currentKey, float3 default) const;
 
 	void SaveAnimation(ResourceAnimation* animation, const char* name);
 
@@ -73,30 +69,24 @@ public:
 	std::map<std::string, GameObject*> boneMapping;
 
 	//Used for blending
-	uint previous_animation = 0;
-	uint current_animation = 0;
-	bool playing = false;
+	bool playing;
 
 private:
-	bool started = false;
-	bool showBones = false;
+	bool started;
+	bool showBones;
 
-	float prevAnimTime = 0.0f;
-	float time = 0.0f;
-	float blendTime = 0.0f;
-	float blendTimeDuration = 0.0f;
+	float prevAnimTime;
+	float time;
+	float blendTime;
+	float blendTimeDuration;
 
 	float defaultBlend;
 
-	bool channeIsLinked = false;
-	bool bonesLinked = false;
+	uint currentTimeAnimation;
+	uint previousTimeAnimation;
 
-	uint currentTimeAnimation = 0;
-	uint previousTimeAnimation = 0;
-
-	ResourceAnimation* _anim; 
-	ResourceAnimation* currentAnimation = nullptr;
-	ResourceAnimation* previousAnimation = nullptr;
+	ResourceAnimation* currentAnimation;
+	ResourceAnimation* previousAnimation;
 	std::map<std::string,ResourceAnimation*> animations;
 	std::vector<AnimationClip> clips;
 	AnimationClip* selectedClip;

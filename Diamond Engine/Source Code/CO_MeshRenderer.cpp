@@ -87,9 +87,12 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 		//Set bone Transforms array size using original bones transform array size
 		_mesh->boneTransforms.resize(_mesh->bonesOffsets.size());
 
-		for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
+		if(bonesMap.size() != _mesh->bonesMap.size())
 		{
-			_mesh->boneTransforms[i] = float4x4::identity;
+			for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
+			{
+				_mesh->boneTransforms[i] = float4x4::identity;
+			}
 		}
 
 		//Get each bone
@@ -108,11 +111,14 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 			}
 		}
 
-		for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
+		if (bonesMap.size() != _mesh->bonesMap.size())
 		{
-			if (_mesh->boneTransforms[i].Equals(float4x4::identity) && i > 0)
+			for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
 			{
-				_mesh->boneTransforms[i] = _mesh->boneTransforms[i - 1];
+				if (_mesh->boneTransforms[i].Equals(float4x4::identity) && i > 0)
+				{
+					_mesh->boneTransforms[i] = _mesh->boneTransforms[i - 1];
+				}
 			}
 		}
 
@@ -181,7 +187,7 @@ bool C_MeshRenderer::OnEditor()
 			ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _mesh->GetLibraryPath());
 		}
 
-		ImGui::Button("Drop .mmh to change mesh", ImVec2(200, 50));
+		ImGui::Button("Drop .mmh to change mesh", ImVec2(180, 40));
 		//TODO: Maybe move this into a function?
 		if (ImGui::BeginDragDropTarget())
 		{

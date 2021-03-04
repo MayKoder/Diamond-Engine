@@ -227,7 +227,7 @@ void AnimationLoader::SetAnimationOnGameObjectRoot(aiAnimation** animArray, std:
 		if (importedAnim->mDuration != 0)
 		{
 			C_Animator* animator = dynamic_cast<C_Animator*>(gmRoot->AddComponent(Component::Type::Animator));
-			animator->SetResource(_sceneAnimations[i]);
+			//animator->SetResource(_sceneAnimations[i]);
 		}
 	}
 }
