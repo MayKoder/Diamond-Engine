@@ -299,6 +299,7 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 	char* buffer = (char*)_mesh->SaveCustomFormat(size);
 
 	FileSystem::Save(file.c_str(), buffer, size, false);
+
 	RELEASE_ARRAY(buffer);
 
 	return _mesh;

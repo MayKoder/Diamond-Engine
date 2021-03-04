@@ -350,9 +350,8 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 		//case Resource::Type::MESH: MeshLoader::BufferToMeshes(fileBuffer, size, resource); break;
 		case Resource::Type::SCENE: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 		case Resource::Type::SHADER: ShaderImporter::Import(fileBuffer, size, dynamic_cast<ResourceShader*>(resource), assetsFile); break;
-		case Resource::Type::MATERIAL: 	FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
-		case Resource::Type::ANIMATION: 
-			FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
+		case Resource::Type::MATERIAL: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
+		case Resource::Type::ANIMATION: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 	}
 
 	//Save the resource to custom format
@@ -416,8 +415,7 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 		case Resource::Type::SHADER: ret = (Resource*) new ResourceShader(uid); break;
 		case Resource::Type::MATERIAL: ret = (Resource*) new ResourceMaterial(uid); break;
 		//case Resource::Type::SCENE : ret = (Resource*) new ResourceScene(uid); break;
-		case Resource::Type::ANIMATION : 
-			ret = (Resource*) new ResourceAnimation(uid); break;
+		case Resource::Type::ANIMATION : ret = (Resource*) new ResourceAnimation(uid); break;
 	}
 
 	if (ret != nullptr)

@@ -29,18 +29,6 @@ C_Animator::C_Animator(GameObject* gameobject) : Component(gameobject), rootBone
 	name = "Animator Component";
 	playing = true;
 	defaultBlend = 0.2f;
-	//TODO: Loading is hard coded for debugging purposes. We must change it
-	//ResourceAnimation* resAnim = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION));
-	//AddAnimation(resAnim);
-
-	/*ResourceAnimation* resAnim2 = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(33771251, Resource::Type::ANIMATION));
-	AddAnimation(resAnim2);
-
-	ResourceAnimation* resAnim3 = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(292022315, Resource::Type::ANIMATION));
-	AddAnimation(resAnim3);
-
-	ResourceAnimation* resAnim4 = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(657906466, Resource::Type::ANIMATION));
-	AddAnimation(resAnim4);*/
 }
 
 C_Animator::~C_Animator()
@@ -118,16 +106,7 @@ void C_Animator::Update()
 		return;
 	}
 
-	if (rootBone == nullptr)
-	{
-		if (gameObject->children.size() > 0)
-		{
-			//rootBone = gameObject->children[1]->children[0];
-			//dynamic_cast<C_MeshRenderer*>(gameObject->children[0]->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
-
-		}
-	}
-	else
+	if (rootBone != nullptr)
 	{
 		if (showBones) {
 			std::vector<GameObject*> bones;
@@ -196,7 +175,6 @@ void C_Animator::SaveData(JSON_Object* nObj)
 	DEJson::WriteInt(nObj, "UID", _anim->GetUID());
 	DEJson::WriteInt(nObj, "RootBone UID", rootBone == nullptr ? 0 : rootBone->UID);
 	DEJson::WriteInt(nObj, "MeshRendererUID", meshRendererUID);
-
 
 	JSON_Value* animationsValue = json_value_init_array();
 	JSON_Array* animationsArray = json_value_get_array(animationsValue);
@@ -303,7 +281,8 @@ bool C_Animator::OnEditor()
 		}
 
 		//List of existing animations
-		char newName[32];
+		static char newName[32];
+
 		std::string animation_to_remove = "";
 		ImGui::Text("Select a new animation");
 		for (std::map<std::string, ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); ++it)
@@ -318,9 +297,6 @@ bool C_Animator::OnEditor()
 				Play(animName, defaultBlend);
 				time = 0.f;
 				sprintf_s(newName, animName.c_str());
-				//if (currentAnimation == nullptr) {
-				//	AddClip(currentAnimation);
-				//}
 			}
 
 			ImGui::SameLine();
@@ -384,7 +360,8 @@ bool C_Animator::OnEditor()
 
 		// Clips ===============================================================================================
 
-		ImGui::Columns(4, "Clips");
+		//Table header
+		ImGui::Columns(3, "Clips");
 		ImGui::Separator();
 		ImGui::Text("Clips");
 		ImGui::NextColumn();
@@ -392,10 +369,7 @@ bool C_Animator::OnEditor()
 		ImGui::NextColumn();
 		ImGui::Text("End");
 		ImGui::NextColumn();
-		ImGui::Text("Loop");
-		ImGui::NextColumn();
 		ImGui::Separator();
-		//ImGuiInputTextFlags flags
 
 		for (size_t i = 0; i < clips.size(); i++)
 		{
@@ -406,8 +380,6 @@ bool C_Animator::OnEditor()
 			ImGui::InputFloat("##start", &clips[i].startFrame, 0.0f, 0.0f, 0);
 			ImGui::NextColumn();
 			ImGui::InputFloat("##end", &clips[i].endFrame, 0.0f, 0.0f, 0);
-			ImGui::NextColumn();
-			ImGui::Checkbox("##loop", &clips[i].loop);
 			ImGui::NextColumn();
 		}
 
@@ -423,8 +395,21 @@ bool C_Animator::OnEditor()
 		}
 		
 		ImGui::SameLine();
-		if (ImGui::Button("-")) {
-			//Remove Clip
+		if (ImGui::Button("-")) 
+		{
+			if (selectedClip != nullptr)
+			{
+				std::vector<AnimationClip> remainingClips;
+				for (size_t i = 0; i < clips.size(); i++)
+				{
+					if (selectedClip != &clips[i])
+						remainingClips.push_back(clips[i]);
+				}
+
+				selectedClip = nullptr;
+				clips = remainingClips;
+				remainingClips.clear();
+			}
 		}
 
 		ImGui::Spacing();
@@ -450,7 +435,8 @@ bool C_Animator::OnEditor()
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Cancel")) {
-
+			selectedClip = nullptr;
+			clips.clear();
 		}
 
 		ImGui::Spacing();

@@ -330,6 +330,7 @@ void ResourceMaterial::DrawEditor()
 	{
 		char* fileBuffer = nullptr;
 		MaterialImporter::Save(this, &fileBuffer);
+		RELEASE_ARRAY(fileBuffer);
 	}
 }
 void ResourceMaterial::SaveToJson(JSON_Array* uniformsArray)

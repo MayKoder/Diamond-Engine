@@ -22,7 +22,6 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 {
 	const aiScene* scene = aiImportFileFromMemory(buffer, bSize, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
 
-
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		std::vector<ResourceMesh*> meshesOnModelUIDs;

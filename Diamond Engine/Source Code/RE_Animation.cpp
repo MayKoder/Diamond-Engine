@@ -102,6 +102,8 @@ void ResourceAnimation::LoadCustomFormat(const char* path)
 		AnimationLoader::LoadChannels(Channelat, &cursor);
 		channels[Channelat.boneName.c_str()] = Channelat;
 	}
+
+	RELEASE_ARRAY(buffer);
 }
 
 std::map<std::string, Channel> ResourceAnimation::GetAllChannelsInRange(float startFrame, float endFrame)

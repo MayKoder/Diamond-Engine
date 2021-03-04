@@ -29,6 +29,7 @@ public:
 	ResourceMesh* GetRenderMesh();
 	float4x4 CalculateDeltaMatrix(float4x4 globalMat, float4x4 invertMat);
 	void GetBoneMapping(std::map<std::string, GameObject*>& boneMapping);
+	void DrawDebugVertices();
 
 	OBB globalOBB;
 	AABB globalAABB;
@@ -39,4 +40,5 @@ public:
 private:
 	ResourceMesh* _mesh;
 	float3 alternColor;
+	bool drawDebugVertices;
 };
