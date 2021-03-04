@@ -269,9 +269,9 @@ bool C_Collider::OnEditor()
 	if (Component::OnEditor() == true)
 	{
 		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+		
 		static bool trigger = isTrigger;
-
-		ImGui::Checkbox("Sensor", &trigger);
+		ImGui::Checkbox("isTrigger", &trigger);
 
 		if (trigger != isTrigger)
 		{

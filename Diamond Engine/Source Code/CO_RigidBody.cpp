@@ -186,6 +186,15 @@ bool C_RigidBody::OnEditor()
 		if (temp != use_kinematic)
 			EnableKinematic(use_kinematic);
 		
+		bool gravity = use_gravity;
+		ImGui::Checkbox("Gravity", &gravity);
+
+		if (gravity != use_gravity)
+		{
+			EnableGravity(gravity);
+			use_gravity = gravity;
+		}
+
 		return true;
 	}
 	return false;
