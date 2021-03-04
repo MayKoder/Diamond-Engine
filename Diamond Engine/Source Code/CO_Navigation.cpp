@@ -23,9 +23,6 @@ void C_Navigation::Update()
 {
 	if (!is_selected)
 		return;
-	if (gameObject->GetComponent(Component::TYPE::CHECKBOX) != nullptr) {
-		LOG(LogType::L_NORMAL, "HEY");
-	}
 }
 
 void C_Navigation::Select()
@@ -45,10 +42,113 @@ bool C_Navigation::OnEditor()
 	{
 		ImGui::Separator();
 
+
+		if (ImGui::Checkbox("Is this UI component selected?", &is_selected)) {
+			if (is_selected)
+				Select();
+			else
+				EngineExternal->moduleGui->uid_gameobject_of_ui_selected = 0;
+		}
+		ImGui::Columns(3);
+
+
+		ImGui::Text("Button A:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Button B:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Button X:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Button Y:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Button Back:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Button Home:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Button Start:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Button Left Trigger:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Button Right Trigger:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Button Left Shoulder:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Button Right Shoulder:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("DPad Up:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("DPad Down:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("DPad Left:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("DPad Right:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Right Joystick Up:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Right Joystick Down:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Right Joystick Left:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Right Joystick Right:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Left Joystick Up:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Left Joystick Down:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Left Joystick Left:");
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::NextColumn();
+		ImGui::Text("Left Joystick Right:");
+		ImGui::Columns(1);
+
+
+
 		
 		//if (ImGui::BeginDragDropTarget())
 		//{
-		//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
+		//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT"))
 		//	{
 		//		//Drop asset from Asset window to scene window
 		//		std::string* metaFileDrop = (std::string*)payload->Data;
@@ -64,12 +164,6 @@ bool C_Navigation::OnEditor()
 		//	ImGui::EndDragDropTarget();
 		//}
 
-		if (ImGui::Checkbox("Is this UI component selected?", &is_selected)) {
-			if (is_selected)
-				Select();
-			else
-				EngineExternal->moduleGui->uid_gameobject_of_ui_selected = 0;
-		}
 	}
 
 	return true;
