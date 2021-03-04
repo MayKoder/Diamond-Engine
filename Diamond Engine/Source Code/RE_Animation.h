@@ -54,7 +54,7 @@ public:
 	char animationName[32];
 	float duration;
 	float ticksPerSecond;
-	bool loopable = true;
+	bool loop = true;
 	uint initTimeAnim = 0;
 	float time;
 

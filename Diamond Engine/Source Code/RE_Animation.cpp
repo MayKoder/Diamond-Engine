@@ -5,7 +5,7 @@
 #include "RE_Animation.h"
 #include "IM_AnimationImporter.h"
 
-ResourceAnimation::ResourceAnimation(unsigned int _uid) : Resource(_uid, Resource::Type::ANIMATION),duration(0),ticksPerSecond(0),loopable(true)
+ResourceAnimation::ResourceAnimation(unsigned int _uid) : Resource(_uid, Resource::Type::ANIMATION),duration(0),ticksPerSecond(0),loop(true)
 {
 }
 
@@ -34,7 +34,9 @@ uint ResourceAnimation::SaveCustomFormat(ResourceAnimation* animation, char** bu
 {
 	uint size = 
 		32 //name size 
-		+ sizeof(float) + sizeof(float) + sizeof(uint);
+		+ sizeof(float) //duration
+		+ sizeof(float) //ticks per second
+		+ sizeof(uint); //channels size
 
 	//Channels size 
 	std::map<std::string, Channel>::const_iterator it;

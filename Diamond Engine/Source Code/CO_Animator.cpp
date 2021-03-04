@@ -152,7 +152,7 @@ void C_Animator::Update()
 				}
 				else if (previousAnimation && prevAnimTime >= previousAnimation->duration)
 				{
-					if (previousAnimation->loopable == true)
+					if (previousAnimation->loop == true)
 					{
 						prevAnimTime = 0.0f;
 						// + (currentFrame - endFrame);
@@ -168,8 +168,8 @@ void C_Animator::Update()
 			currentTimeAnimation = time * currentAnimation->ticksPerSecond;
 			currentTimeAnimation += currentAnimation->initTimeAnim;
 			if (currentAnimation && currentTimeAnimation >= currentAnimation->duration) {
-				if (currentAnimation->loopable == true) {
-					time = 0.f;
+				if (currentAnimation->loop == true) {
+					time = 0.0f;
 				}
 				else {
 					if (animations.size() > 0) {
@@ -374,7 +374,8 @@ bool C_Animator::OnEditor()
 		if (currentAnimation != nullptr)
 		{
 			ImGui::InputText("Name", newName, IM_ARRAYSIZE(newName));
-			
+			ImGui::Checkbox("Loop", &currentAnimation->loop);
+
 			if (ImGui::Button("Save Animation")) {
 				animations.erase(currentAnimation->animationName);
 				sprintf_s(currentAnimation->animationName, newName);
@@ -730,7 +731,7 @@ ResourceAnimation* C_Animator::ClipToAnimation(AnimationClip clip)
 	strcpy(animation->animationName, clip.name);
 	animation->duration = clip.endFrame - clip.startFrame;
 	animation->initTimeAnim = clip.startFrame;
-	animation->loopable = clip.loop;
+	animation->loop = clip.loop;
 	animation->ticksPerSecond = clip.originalAnimation->ticksPerSecond;
 
 	//Add all animation properties such as channels

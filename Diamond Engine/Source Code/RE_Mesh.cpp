@@ -67,6 +67,10 @@ bool ResourceMesh::LoadToMemory()
 	glEnableVertexAttribArray(5);
 	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(WEIGHTS_OFFSET * sizeof(GLfloat)));
 
+	//colors
+	glEnableVertexAttribArray(6);
+	glVertexAttribPointer(6, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(COLORS_OFFSET * sizeof(GLfloat)));
+
 
 	return true;
 }
@@ -139,12 +143,7 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 		{
 			modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "jointTransforms");
 			glUniformMatrix4fv(modelLoc, boneTransforms.size(), GL_FALSE, (GLfloat*)&boneTransforms[0]);
-		}
-
-		std::vector<float3> colors = { float3(0, 0, 0), float3(0, 1, 0), float3(0, 0, 1) };
-		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "colors");
-		glUniform3fv(modelLoc, colors.size(), colors[0].ptr());
-		
+		}		
 
 		//glUniform4fv(modelLoc, bonesTransforms.size(), reinterpret_cast<GLfloat*>(bonesTransforms.data()));
 	}

@@ -190,7 +190,7 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 			_mesh->vertices[i * VERTEX_ATTRIBUTES + TANGENTS_OFFSET + 2] = 0.0f;
 		}
 
-
+		//Normals
 		if (importedMesh->HasNormals())
 		{
 			_mesh->vertices[i * VERTEX_ATTRIBUTES + NORMALS_OFFSET]     = importedMesh->mNormals[i].x;
@@ -217,6 +217,20 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 		_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + 1] = 0.0f;
 		_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + 2] = 0.0f;
 		_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + 3] = 0.0f;
+
+		//Colors
+		if (importedMesh->HasVertexColors(0))
+		{
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + COLORS_OFFSET]	   = importedMesh->mColors[0]->r;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + COLORS_OFFSET + 1] = importedMesh->mColors[0]->g;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + COLORS_OFFSET + 2] = importedMesh->mColors[0]->b;
+		}
+		else
+		{
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + COLORS_OFFSET]     = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + COLORS_OFFSET + 1] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + COLORS_OFFSET + 2] = 0.0f;
+		}
 	}
 
 	
@@ -258,14 +272,7 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 			//_mesh->joints.push_back(joint);
 		}		
 	}
-		
-	//So are we really only supporting 1 channel uv and colors?
-
-	//TODO: Load vertex colors
-	if (importedMesh->HasVertexColors(0))
-	{
-		LOG(LogType::L_ERROR, "ADD VERTEX COLORS");
-	}
+	
 
 	// Generate indices
 	if (importedMesh->HasFaces())

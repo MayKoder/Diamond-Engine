@@ -10,11 +10,13 @@ layout (location = 2) in vec3 normals;
 layout (location = 3) in vec3 tangents;
 layout (location = 4) in vec4 boneIDs;
 layout (location = 5) in vec4 weights;
+layout (location = 6) in vec3 colors;
 
 out vec3 influenceColor;
 out vec2 TexCoord;
 out vec3 Normal;
 out vec3 fPosition;
+out vec3 vertexColor;
 
 uniform mat4 model_matrix;
 uniform mat4 view;
@@ -50,6 +52,7 @@ void main()
 	TexCoord = texCoord;
 	influenceColor = vec3(weights.x, weights.y, weights.z);
 	//ourColor = vec3(boneIDs.x / 30, boneIDs.y / 30, boneIDs.z / 30);
+	vertexColor = colors;
     
 }
 #endif
@@ -58,9 +61,9 @@ void main()
 #version 330 core
 in vec3 influenceColor;
 in vec2 TexCoord;
-out vec4 color;
+in vec3 vertexColor; 
 
-uniform vec3 colors[3];
+out vec4 color;
 uniform sampler2D diffuseTexture;
 
 void main()
@@ -68,8 +71,11 @@ void main()
 	vec3 textureColor = texture(diffuseTexture, TexCoord).rgb;
  	color = vec4(textureColor, 1.0);
  	//color = vec4(influenceColor, 1.0);
+ 	//color = vec4(vertexColor.x, vertexColor.y, vertexColor.z, 1.0);
 }
 #endif
+
+
 
 
 

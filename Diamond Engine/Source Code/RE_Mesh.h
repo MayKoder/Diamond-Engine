@@ -14,13 +14,14 @@ class ResourceMaterial;
 class C_Transform;
 class Joint;
 
-static const int VERTEX_ATTRIBUTES      = 19;  // 3 vertex + 2 texcoords + 3 normals + 3 tangents + 4 joint indices + 4 weights
+static const int VERTEX_ATTRIBUTES      = 22;  // 3 vertex + 2 texcoords + 3 normals + 3 tangents + 4 joint indices + 4 weights + 3 colors
 static const int VERTEX_POSITION_OFFSET = 0;
 static const int TEXCOORD_OFFSET	    = 3;
 static const int NORMALS_OFFSET			= 5;
 static const int TANGENTS_OFFSET		= 8;
 static const int BONES_ID_OFFSET		= 11;
 static const int WEIGHTS_OFFSET			= 15;
+static const int COLORS_OFFSET			= 19;
 
 class ResourceMesh  : public Resource
 {
