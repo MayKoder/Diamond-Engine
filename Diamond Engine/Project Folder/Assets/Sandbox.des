@@ -5,14 +5,14 @@
         -134.79179382324219
     ],
     "EditorCameraZ": [
-        -0.12746813893318176,
-        -0.65579932928085327,
-        0.74409639835357666
+        -0.14877679944038391,
+        -0.58563262224197388,
+        0.79680603742599487
     ],
     "EditorCameraY": [
-        -0.11073391139507294,
-        0.75493526458740234,
-        0.64638286828994751
+        -0.10748959332704544,
+        0.81057661771774292,
+        0.57568359375
     ],
     "Game Objects": [
         {
@@ -47,7 +47,7 @@
             "Active": true,
             "Position": [
                 0,
-                2,
+                64.621551513671875,
                 -2.2426132773034624e-07
             ],
             "Rotation": [
@@ -96,6 +96,15 @@
                     "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
                     "MaterialUID": 1051418604
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": false
+                },
+                {
+                    "Type": 15,
+                    "Active": true
                 }
             ]
         },
@@ -168,6 +177,15 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true
+                },
+                {
+                    "Type": 15,
+                    "Active": true
                 }
             ]
         },

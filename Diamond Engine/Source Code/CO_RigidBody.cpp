@@ -117,7 +117,6 @@ void C_RigidBody::PostUpdate()
 		physx::PxQuat rotation = { rot.x,  rot.y, rot.z, rot.w };
 		rigid_dynamic->setGlobalPose(physx::PxTransform({ pos.x, pos.y, pos.z }, rotation));
 
-	LOG(LogType::L_NORMAL, "")
 	
 		
 	/*}

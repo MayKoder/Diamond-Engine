@@ -71,7 +71,9 @@ physx::PxFilterFlags contactReportFilterShader(physx::PxFilterObjectAttributes a
 	pairFlags = PxPairFlag::eSOLVE_CONTACT | PxPairFlag::eDETECT_DISCRETE_CONTACT
 		| PxPairFlag::eNOTIFY_TOUCH_FOUND
 		| PxPairFlag::eNOTIFY_TOUCH_PERSISTS
-		| PxPairFlag::eNOTIFY_CONTACT_POINTS;
+		| PxPairFlag::eNOTIFY_CONTACT_POINTS
+		| PxPairFlag::eTRIGGER_DEFAULT 
+		| PxPairFlag::eDETECT_CCD_CONTACT; 
 	return PxFilterFlag::eDEFAULT;
 }
 
@@ -332,13 +334,13 @@ void CollisionDetector::onContact(const PxContactPairHeader& pairHeader,
 		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
 
-			/*for (size_t k= 0; k < 2; ++k)
+			for (size_t k= 0; k < 2; ++k)
 			{
 				GameObject* contact = static_cast<GameObject*>(pairHeader.actors[k]->userData);
-				C_Script* script =  dynamic_cast<C_Script*>(contact->GetComponent(Component::Type::Script));
+				C_Script* script =  dynamic_cast<C_Script*>(contact->GetComponent(Component::TYPE::SCRIPT));
 				if (script)
 					script->CollisionCallback();
-			}*/
+			}
 
 			/*if ((pairHeader.actors[0] == mSubmarineActor) ||
 				(pairHeader.actors[1] == mSubmarineActor))*/
@@ -346,24 +348,25 @@ void CollisionDetector::onContact(const PxContactPairHeader& pairHeader,
 	}
 }
 
-physx::PxFilterFlags CollisionDetector::CollisionDetectorFilterShader(
-	PxFilterObjectAttributes attributes0, PxFilterData filterData0,
-	PxFilterObjectAttributes attributes1, PxFilterData filterData1,
-	PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize)
+void CollisionDetector::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 {
-	// let triggers through
-	if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
+	LOG(LogType::L_NORMAL, "Trigger detected");
+	for (PxU32 i = 0; i < count; i++)
 	{
-		pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
-		return PxFilterFlag::eDEFAULT;
+		const PxTriggerPair& cp = pairs[i];
+
+		if (PxPairFlag::eNOTIFY_TOUCH_FOUND)
+		{
+
+			for (size_t k = 0; k < 2; ++k)
+			{
+				GameObject* contact = static_cast<GameObject*>(pairs->otherActor->userData);
+				C_Script* script = dynamic_cast<C_Script*>(contact->GetComponent(Component::TYPE::SCRIPT));
+				if (script)
+					script->CollisionCallback();
+			}
+
+		
+		}
 	}
-	// generate contacts for all that were not filtered above
-	pairFlags = PxPairFlag::eCONTACT_DEFAULT;
-
-	// trigger the contact callback for pairs (A,B) where
-	// the filtermask of A contains the ID of B and vice versa.
-	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
-		pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
-
-	return PxFilterFlag::eDEFAULT;
 }

@@ -13,7 +13,7 @@ public class FPS_Controller : DiamondComponent
     public void OnCollisionEnter()
     {
         Debug.Log("Ayo i've been called.");
-        InternalCalls.Destroy(reference);
+       // InternalCalls.Destroy(reference);
     }
 
     public void Update()
