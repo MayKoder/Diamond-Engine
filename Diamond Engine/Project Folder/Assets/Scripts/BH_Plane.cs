@@ -41,9 +41,4 @@ public class BH_Plane : DiamondComponent
 
         thisReference.localPosition += thisReference.GetForward() * cSpeed;
     }
-
-
-
-
 }
-

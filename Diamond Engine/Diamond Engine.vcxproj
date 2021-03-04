@@ -228,6 +228,7 @@
     <ClInclude Include="Source Code\CO_Transform.h" />
     <ClInclude Include="Source Code\CS_Audio_Bindings.h" />
     <ClInclude Include="Source Code\CS_Input_Bindings.h" />
+    <ClInclude Include="Source Code\CS_Scene_Bindings.h" />
     <ClInclude Include="Source Code\CS_Transform_Bindings.h" />
     <ClInclude Include="Source Code\DEJsonSupport.h" />
     <ClInclude Include="Source Code\DERect.h" />

@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        27.403854370117188,
-        44.242267608642578,
-        6.281865119934082
+        25.1678466796875,
+        99.068618774414063,
+        -134.79179382324219
     ],
     "EditorCameraZ": [
-        -0.52277904748916626,
-        -0.84400284290313721,
-        -0.1198381632566452
+        -0.14877679944038391,
+        -0.58563262224197388,
+        0.79680603742599487
     ],
     "EditorCameraY": [
-        -0.82266497611999512,
-        0.53633862733840942,
-        -0.18858188390731812
+        -0.10748959332704544,
+        0.81057661771774292,
+        0.57568359375
     ],
     "Game Objects": [
         {
@@ -34,7 +34,7 @@
                 1,
                 1
             ],
-            "UID": 1828803901,
+            "UID": 143570472,
             "Components": [
                 {
                     "Type": 1,
@@ -43,11 +43,86 @@
             ]
         },
         {
-            "name": "jet",
+            "name": "Player",
             "Active": true,
             "Position": [
                 0,
-                3.6877350807189941,
+                64.621551513671875,
+                -2.2426132773034624e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                2,
+                0.9999280571937561
+            ],
+            "UID": 1661764735,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        1,
+                        0.99998998641967773,
+                        0.99998998641967773
+                    ]
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "FPS_Controller",
+                    "reference": 1661764735,
+                    "turret": 1661764735,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 35,
+                    "mouseSens": 1
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": false,
+                    "Gravity": true,
+                    "LockLinearX": false,
+                    "LockLinearY": false,
+                    "LockLinearZ": false,
+                    "LockAngularX": false,
+                    "LockAngularY": false,
+                    "LockAngularZ": false,
+                    "Mass": 10,
+                    "Density": 1
+                },
+                {
+                    "Type": 15,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "TestSandbox",
+            "Active": true,
+            "Position": [
+                0,
+                0,
                 0
             ],
             "Rotation": [
@@ -57,34 +132,26 @@
                 1
             ],
             "Scale": [
-                5,
-                5,
-                5
+                0.24000000953674316,
+                0.24000000953674316,
+                0.24000000953674316
             ],
-            "UID": 2043187514,
-            "ParentUID": 1828803901,
+            "UID": 1716888692,
+            "ParentUID": 143570472,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "BH_Plane",
-                    "thisReference": 2043187514,
-                    "speedIncrement": 0.05000000074505806,
-                    "cSpeed": 0
                 }
             ]
         },
         {
-            "name": "plane_full",
+            "name": "Plane",
             "Active": true,
             "Position": [
-                0.0018557249568402767,
-                0.76921975612640381,
-                -2.411759614944458
+                0,
+                0,
+                0
             ],
             "Rotation": [
                 -0.7071068286895752,
@@ -93,40 +160,12 @@
                 0.70710670948028564
             ],
             "Scale": [
-                1,
-                1,
-                1
+                500,
+                500,
+                500
             ],
-            "UID": 1588618561,
-            "ParentUID": 2043187514,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                }
-            ]
-        },
-        {
-            "name": "former",
-            "Active": true,
-            "Position": [
-                -0.00064132735133171082,
-                -2.5335988998413086,
-                -0.94312137365341187
-            ],
-            "Rotation": [
-                0.7071068286895752,
-                0,
-                0,
-                0.70710670948028564
-            ],
-            "Scale": [
-                0.31961476802825928,
-                0.31961476802825928,
-                2.8115179538726807
-            ],
-            "UID": 1510047587,
-            "ParentUID": 1588618561,
+            "UID": 420350065,
+            "ParentUID": 1716888692,
             "Components": [
                 {
                     "Type": 1,
@@ -135,8 +174,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/282717873.mmh",
-                    "UID": 282717873,
+                    "Path": "Library\/Meshes\/296489994.mmh",
+                    "UID": 296489994,
                     "alternColor": [
                         1,
                         1,
@@ -146,37 +185,49 @@
                 {
                     "Type": 3,
                     "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/2091676807.dds",
-                    "UID": 2091676807,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
+                    "IsEmpty": true
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true,
+                    "Gravity": true,
+                    "LockLinearX": false,
+                    "LockLinearY": false,
+                    "LockLinearZ": false,
+                    "LockAngularX": false,
+                    "LockAngularY": false,
+                    "LockAngularZ": false,
+                    "Mass": 10,
+                    "Density": 1
+                },
+                {
+                    "Type": 15,
+                    "Active": true
                 }
             ]
         },
         {
-            "name": "prop",
+            "name": "Cube",
             "Active": true,
             "Position": [
-                -0.00064132735133171082,
-                -2.5335988998413086,
-                -0.94312137365341187
+                -300,
+                0,
+                -300
             ],
             "Rotation": [
-                0.7071068286895752,
-                0,
-                0,
-                0.70710670948028564
+                -0.68301278352737427,
+                -0.1830126941204071,
+                -0.1830127090215683,
+                0.68301266431808472
             ],
             "Scale": [
-                0.31961476802825928,
-                0.31961476802825928,
-                2.8115179538726807
+                17.39555549621582,
+                17.39555549621582,
+                17.39555549621582
             ],
-            "UID": 961115642,
-            "ParentUID": 1588618561,
+            "UID": 1432217696,
+            "ParentUID": 1716888692,
             "Components": [
                 {
                     "Type": 1,
@@ -185,37 +236,42 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1413411378.mmh",
-                    "UID": 1413411378,
+                    "Path": "Library\/Meshes\/317057310.mmh",
+                    "UID": 317057310,
                     "alternColor": [
-                        0.86029410362243652,
-                        0.86028546094894409,
-                        0.86028546094894409
+                        1,
+                        1,
+                        1
                     ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true
                 }
             ]
         },
         {
-            "name": "tires",
+            "name": "Sphere",
             "Active": true,
             "Position": [
-                -0.0018557249568402767,
-                -3.1366498470306396,
-                -1.5134222507476807
+                -287.66519165039063,
+                65.438919067382813,
+                -303.3785400390625
             ],
             "Rotation": [
-                0.7071068286895752,
+                -0.7071068286895752,
                 0,
                 0,
                 0.70710670948028564
             ],
             "Scale": [
-                1,
-                1,
-                1
+                18.083625793457031,
+                18.083625793457031,
+                18.083625793457031
             ],
-            "UID": 389154809,
-            "ParentUID": 1588618561,
+            "UID": 467515712,
+            "ParentUID": 1716888692,
             "Components": [
                 {
                     "Type": 1,
@@ -224,47 +280,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1117874904.mmh",
-                    "UID": 1117874904,
-                    "alternColor": [
-                        9.9999999747524271e-07,
-                        9.9998999303352321e-07,
-                        9.9998999303352321e-07
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "tires",
-            "Active": true,
-            "Position": [
-                -0.0018557249568402767,
-                -3.1366498470306396,
-                -1.5134222507476807
-            ],
-            "Rotation": [
-                0.7071068286895752,
-                0,
-                0,
-                0.70710670948028564
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 693266837,
-            "ParentUID": 1588618561,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/613840457.mmh",
-                    "UID": 613840457,
+                    "Path": "Library\/Meshes\/2010055644.mmh",
+                    "UID": 2010055644,
                     "alternColor": [
                         1,
                         1,
@@ -277,23 +294,23 @@
             "name": "Game Camera",
             "Active": true,
             "Position": [
-                0,
-                2.812565803527832,
-                -8.3644371032714844
+                28.337120056152344,
+                34.217071533203125,
+                -37.998661041259766
             ],
             "Rotation": [
-                0.06748490035533905,
-                0,
-                0,
-                0.99772030115127563
+                0.28966298699378967,
+                -0.30951863527297974,
+                0.099594645202159882,
+                0.90020811557769775
             ],
             "Scale": [
-                0.20000000298023224,
-                0.20000001788139343,
-                0.20000001788139343
+                0.9999997615814209,
+                1.999998927116394,
+                0.999927818775177
             ],
-            "UID": 1121153426,
-            "ParentUID": 2043187514,
+            "UID": 188616957,
+            "ParentUID": 143570472,
             "Components": [
                 {
                     "Type": 1,
@@ -302,1696 +319,24 @@
                 {
                     "Type": 4,
                     "Active": true,
-                    "fType": 2,
+                    "fType": 1,
+                    "fSize": 13.260000228881836,
                     "nearPlaneDist": 1,
-                    "farPlaneDist": 3000,
+                    "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4993821382522583,
-                    "culling": true
-                }
-            ]
-        },
-        {
-            "name": "scene",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 2001891973,
-            "ParentUID": 1828803901,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                }
-            ]
-        },
-        {
-            "name": "Dummy001",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                -0.7071068286895752,
-                0,
-                0,
-                0.7071068286895752
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 2032361933,
-            "ParentUID": 2001891973,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                }
-            ]
-        },
-        {
-            "name": "City_building_004",
-            "Active": true,
-            "Position": [
-                -41.47589111328125,
-                21.01409912109375,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1667603857,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/285057427.mmh",
-                    "UID": 285057427,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/445551395.dds",
-                    "UID": 445551395,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_001",
-            "Active": true,
-            "Position": [
-                21.443628311157227,
-                20.053276062011719,
-                -1.2278178473934531e-11
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 839720436,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1086743240.mmh",
-                    "UID": 1086743240,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/521204416.dds",
-                    "UID": 521204416,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_007",
-            "Active": true,
-            "Position": [
-                18.547374725341797,
-                37.4932861328125,
-                -1.9999993128294591e-06
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1229152475,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/7260936.mmh",
-                    "UID": 7260936,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/486701648.dds",
-                    "UID": 486701648,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_008",
-            "Active": true,
-            "Position": [
-                40.979995727539063,
-                18.270824432373047,
-                -1.9999999949504854e-06
-            ],
-            "Rotation": [
-                0,
-                0,
-                0.7071068286895752,
-                0.7071068286895752
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1896096319,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/854968211.mmh",
-                    "UID": 854968211,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1658453042.dds",
-                    "UID": 1658453042,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "Line002",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 154560362,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/964712435.mmh",
-                    "UID": 964712435,
-                    "alternColor": [
-                        9.9999999747524271e-07,
-                        9.9998999303352321e-07,
-                        9.9998999303352321e-07
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "Plane001",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1753891332,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1693377210.mmh",
-                    "UID": 1693377210,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1093215599.dds",
-                    "UID": 1093215599,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_010",
-            "Active": true,
-            "Position": [
-                25.154010772705078,
-                -39.153720855712891,
-                9.9999999747524271e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                0.7071068286895752,
-                0.7071068286895752
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1748256752,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1937574132.mmh",
-                    "UID": 1937574132,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/741462977.dds",
-                    "UID": 741462977,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_010",
-            "Active": true,
-            "Position": [
-                25.154010772705078,
-                -39.153720855712891,
-                9.9999999747524271e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                0.7071068286895752,
-                0.7071068286895752
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 305186326,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1663357667.mmh",
-                    "UID": 1663357667,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/741462977.dds",
-                    "UID": 741462977,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_011",
-            "Active": true,
-            "Position": [
-                30.134540557861328,
-                37.4932861328125,
-                -1.9999999949504854e-06
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 173999028,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/7260936.mmh",
-                    "UID": 7260936,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/486701648.dds",
-                    "UID": 486701648,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_013",
-            "Active": true,
-            "Position": [
-                -42.288055419921875,
-                33.201576232910156,
-                9.9999999747524271e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                0.7071068286895752,
-                0.7071068286895752
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 31075661,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1568469732.mmh",
-                    "UID": 1568469732,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1921918051.dds",
-                    "UID": 1921918051,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_014",
-            "Active": true,
-            "Position": [
-                -19.439706802368164,
-                32.061729431152344,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                1,
-                0
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1002561952,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/2057484404.mmh",
-                    "UID": 2057484404,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/445551395.dds",
-                    "UID": 445551395,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_016",
-            "Active": true,
-            "Position": [
-                34.270423889160156,
-                -41.972747802734375,
-                9.9999999747524271e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                1,
-                0
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1852165398,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1937574132.mmh",
-                    "UID": 1937574132,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/741462977.dds",
-                    "UID": 741462977,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_016",
-            "Active": true,
-            "Position": [
-                34.270423889160156,
-                -41.972747802734375,
-                9.9999999747524271e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                1,
-                0
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1804106396,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1663357667.mmh",
-                    "UID": 1663357667,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/741462977.dds",
-                    "UID": 741462977,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_017",
-            "Active": true,
-            "Position": [
-                44.260082244873047,
-                -39.153720855712891,
-                9.9999999747524271e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                0.7071068286895752,
-                0.7071068286895752
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1667850180,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1937574132.mmh",
-                    "UID": 1937574132,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/741462977.dds",
-                    "UID": 741462977,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_017",
-            "Active": true,
-            "Position": [
-                44.260082244873047,
-                -39.153720855712891,
-                9.9999999747524271e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                0.7071068286895752,
-                0.7071068286895752
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 809104843,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1663357667.mmh",
-                    "UID": 1663357667,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/741462977.dds",
-                    "UID": 741462977,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_022",
-            "Active": true,
-            "Position": [
-                -20.831323623657227,
-                -30.475727081298828,
-                -3.6349820220493712e-07
-            ],
-            "Rotation": [
-                1.411721494612004e-22,
-                1.2341661514819987e-29,
-                -1,
-                -4.3711388286737929e-08
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 44730046,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/519985043.mmh",
-                    "UID": 519985043,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1479874027.dds",
-                    "UID": 1479874027,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_023",
-            "Active": true,
-            "Position": [
-                42.130641937255859,
-                37.4932861328125,
-                -1.9999999949504854e-06
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 299244416,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/7260936.mmh",
-                    "UID": 7260936,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/486701648.dds",
-                    "UID": 486701648,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_024",
-            "Active": true,
-            "Position": [
-                -20.572771072387695,
-                43.060829162597656,
-                -0.069193996489048004
-            ],
-            "Rotation": [
-                0,
-                0,
-                1,
-                0
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 956626789,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/854968211.mmh",
-                    "UID": 854968211,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1658453042.dds",
-                    "UID": 1658453042,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_026",
-            "Active": true,
-            "Position": [
-                31.51188850402832,
-                -20.148473739624023,
-                -4.4133639676147141e-07
-            ],
-            "Rotation": [
-                1.411721494612004e-22,
-                1.2341661514819987e-29,
-                -1,
-                -4.3711388286737929e-08
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1403332558,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1746841224.mmh",
-                    "UID": 1746841224,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1479874027.dds",
-                    "UID": 1479874027,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_028",
-            "Active": true,
-            "Position": [
-                16.688911437988281,
-                -33.755039215087891,
-                -1.0000003385357559e-06
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1647500253,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1035245269.mmh",
-                    "UID": 1035245269,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1538850819.dds",
-                    "UID": 1538850819,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "Object010",
-            "Active": true,
-            "Position": [
-                -18.236892700195313,
-                1.4930175542831421,
-                -0.46262097358703613
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1366044196,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/538959200.mmh",
-                    "UID": 538959200,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "City_building_030",
-            "Active": true,
-            "Position": [
-                -42.807239532470703,
-                -41.835563659667969,
-                -9.9999999747524271e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                -0.7071068286895752,
-                0.7071068286895752
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1902178674,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1035245269.mmh",
-                    "UID": 1035245269,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1538850819.dds",
-                    "UID": 1538850819,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_031",
-            "Active": true,
-            "Position": [
-                -34.679481506347656,
-                -41.835563659667969,
-                -9.9999999747524271e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                -0.7071068286895752,
-                0.7071068286895752
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 559919358,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1035245269.mmh",
-                    "UID": 1035245269,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1538850819.dds",
-                    "UID": 1538850819,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_032",
-            "Active": true,
-            "Position": [
-                -29.478403091430664,
-                21.01409912109375,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1022462974,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/285057427.mmh",
-                    "UID": 285057427,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/445551395.dds",
-                    "UID": 445551395,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_033",
-            "Active": true,
-            "Position": [
-                -32.361495971679688,
-                42.37042236328125,
-                9.9999999747524271e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 106782098,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/2044182816.mmh",
-                    "UID": 2044182816,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1921918051.dds",
-                    "UID": 1921918051,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_034",
-            "Active": true,
-            "Position": [
-                19.224380493164063,
-                -19.575641632080078,
-                -3.4315189623157494e-07
-            ],
-            "Rotation": [
-                2.5122306883710536e-15,
-                -2.51223026485458e-15,
-                -0.7071068286895752,
-                0.70710670948028564
-            ],
-            "Scale": [
-                0.99998748302459717,
-                0.99998754262924194,
-                1
-            ],
-            "UID": 1835542591,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/15578752.mmh",
-                    "UID": 15578752,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1479874027.dds",
-                    "UID": 1479874027,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_035",
-            "Active": true,
-            "Position": [
-                16.919795989990234,
-                -40.802516937255859,
-                -9.9997305369470268e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 2001345982,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1035245269.mmh",
-                    "UID": 1035245269,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1538850819.dds",
-                    "UID": 1538850819,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_036",
-            "Active": true,
-            "Position": [
-                -31.216331481933594,
-                33.201576232910156,
-                9.9999999747524271e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                -0.7071068286895752,
-                0.7071068286895752
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 527144521,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1568469732.mmh",
-                    "UID": 1568469732,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1921918051.dds",
-                    "UID": 1921918051,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_037",
-            "Active": true,
-            "Position": [
-                -20.317693710327148,
-                -18.832399368286133,
-                -3.1814465728530195e-07
-            ],
-            "Rotation": [
-                -2.823442989224008e-22,
-                2.4683323029639974e-29,
-                1,
-                -4.3711388286737929e-08
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1980652958,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/129051257.mmh",
-                    "UID": 129051257,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1479874027.dds",
-                    "UID": 1479874027,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_038",
-            "Active": true,
-            "Position": [
-                -41.649002075195313,
-                -19.870986938476563,
-                -4.0239842746814247e-07
-            ],
-            "Rotation": [
-                2.5121669491417727e-15,
-                -2.5121661021088254e-15,
-                -0.7071068286895752,
-                0.70710670948028564
-            ],
-            "Scale": [
-                0.99999713897705078,
-                0.99999719858169556,
-                1
-            ],
-            "UID": 819647754,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1753468196.mmh",
-                    "UID": 1753468196,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1479874027.dds",
-                    "UID": 1479874027,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_039",
-            "Active": true,
-            "Position": [
-                -42.807239532470703,
-                -30.643888473510742,
-                -9.9999999747524271e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                -0.7071068286895752,
-                0.7071068286895752
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1760813150,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1035245269.mmh",
-                    "UID": 1035245269,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1538850819.dds",
-                    "UID": 1538850819,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_040",
-            "Active": true,
-            "Position": [
-                -34.679481506347656,
-                -30.643888473510742,
-                -9.9999999747524271e-07
-            ],
-            "Rotation": [
-                0,
-                0,
-                -0.7071068286895752,
-                0.7071068286895752
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 468327155,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1035245269.mmh",
-                    "UID": 1035245269,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/1538850819.dds",
-                    "UID": 1538850819,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
-                }
-            ]
-        },
-        {
-            "name": "City_building_041",
-            "Active": true,
-            "Position": [
-                32.459548950195313,
-                21.612646102905273,
-                -3.637978807091713e-11
-            ],
-            "Rotation": [
-                2.5122095125473722e-15,
-                2.5122095125473722e-15,
-                0.7071068286895752,
-                0.70710670948028564
-            ],
-            "Scale": [
-                0.99999052286148071,
-                0.99999058246612549,
-                1
-            ],
-            "UID": 160645854,
-            "ParentUID": 2032361933,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1086743240.mmh",
-                    "UID": 1086743240,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Materials\/521204416.dds",
-                    "UID": 521204416,
-                    "ShaderAssetPath": "Empty",
-                    "ShaderLibraryPath": "Library\/Shaders\/1042663147.shdr",
-                    "ShaderUID": 1042663147
+                    "hFOV": 1.5521194934844971,
+                    "culling": false
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "CameraController",
+                    "reference": 188616957,
+                    "target": 1661764735,
+                    "x": 1,
+                    "y": 1,
+                    "z": 1,
+                    "smoothSpeed": 1
                 }
             ]
         }
