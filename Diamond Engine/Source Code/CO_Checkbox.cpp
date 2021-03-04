@@ -85,7 +85,6 @@ void C_Checkbox::ChangeTexture(CHECKBOXSTATE new_num_sprite)
 	{
 		if (sprite_checkbox_active == nullptr)
 		{
-			LOG(LogType::L_WARNING, "The sprite 'A' is nullptr");
 			return;
 		}
 		C_Image2D* img = static_cast<C_Image2D*>(gameObject->GetComponent(TYPE::IMAGE_2D));
@@ -98,7 +97,6 @@ void C_Checkbox::ChangeTexture(CHECKBOXSTATE new_num_sprite)
 	case CHECKBOXSTATE::CHECKBOXACTIVEHOVERED:
 	{
 		if (sprite_checkbox_active_hovered == nullptr) {
-			LOG(LogType::L_WARNING, "The sprite 'AH' is nullptr");
 			return;
 		}
 
@@ -111,7 +109,6 @@ void C_Checkbox::ChangeTexture(CHECKBOXSTATE new_num_sprite)
 	case CHECKBOXSTATE::CHECKBOXACTIVEPRESSED:
 	{
 		if (sprite_checkbox_active_pressed == nullptr) {
-			LOG(LogType::L_WARNING, "The sprite 'AP' is nullptr");
 			return;
 		}
 
@@ -124,7 +121,6 @@ void C_Checkbox::ChangeTexture(CHECKBOXSTATE new_num_sprite)
 	case CHECKBOXSTATE::CHECKBOXUNACTIVE:
 	{
 		if (sprite_checkbox_unactive == nullptr) {
-			LOG(LogType::L_WARNING, "The sprite 'U' is nullptr");
 			return;
 		}
 
@@ -138,7 +134,6 @@ void C_Checkbox::ChangeTexture(CHECKBOXSTATE new_num_sprite)
 	case CHECKBOXSTATE::CHECKBOXUNACTIVEHOVERED:
 	{
 		if (sprite_checkbox_unactive_hovered == nullptr) {
-			LOG(LogType::L_WARNING, "The sprite 'UH' is nullptr");
 			return;
 		}
 
@@ -152,7 +147,6 @@ void C_Checkbox::ChangeTexture(CHECKBOXSTATE new_num_sprite)
 	case CHECKBOXSTATE::CHECKBOXUNACTIVEPRESSED:
 	{
 		if (sprite_checkbox_unactive_pressed == nullptr) {
-			LOG(LogType::L_WARNING, "The sprite 'UP' is nullptr");
 			return;
 		}
 

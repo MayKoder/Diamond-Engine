@@ -763,6 +763,9 @@
     <ClInclude Include="Source Code\COMM_Transform2D.h">
       <Filter>Sources\Editor\Commands\Derived</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CO_Navigation.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -1151,6 +1154,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\COMM_Transform2D.cpp">
       <Filter>Sources\Editor\Commands\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Navigation.cpp">
+      <Filter>Sources\Components\Derived\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

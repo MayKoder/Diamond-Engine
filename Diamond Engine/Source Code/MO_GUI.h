@@ -27,6 +27,8 @@ public:
 	void SetCanvas(int uid);
 	void EraseCanvas();
 
+public:
+	int uid_gameobject_of_ui_selected;
 
 private:
 	int canvas = -1;

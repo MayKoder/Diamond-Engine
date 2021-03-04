@@ -22,7 +22,8 @@
 
 M_Gui::M_Gui(Application* app, bool startEnabled) : Module(app, startEnabled),
 	canvas(-1),
-	VAO(0)
+	VAO(0),
+	uid_gameobject_of_ui_selected(0)
 {
 }
 
@@ -167,6 +168,7 @@ void M_Gui::CreateButton()
 	button->AddComponent(Component::TYPE::MATERIAL);
 	button->AddComponent(Component::TYPE::BUTTON);
 	button->AddComponent(Component::TYPE::IMAGE_2D);
+	button->AddComponent(Component::TYPE::NAVIGATION);
 }
 
 void M_Gui::CreateCheckbox()
@@ -178,11 +180,13 @@ void M_Gui::CreateCheckbox()
 		canvasGO = App->moduleScene->GetGOFromUID(App->moduleScene->root, canvas);
 	}
 
-	GameObject* button = new GameObject("Checkbox", canvasGO);
-	button->AddComponent(Component::TYPE::TRANSFORM_2D);
-	button->AddComponent(Component::TYPE::MATERIAL);
-	button->AddComponent(Component::TYPE::CHECKBOX);
-	button->AddComponent(Component::TYPE::IMAGE_2D);
+	GameObject* checkbox = new GameObject("Checkbox", canvasGO);
+	checkbox->AddComponent(Component::TYPE::TRANSFORM_2D);
+	checkbox->AddComponent(Component::TYPE::MATERIAL);
+	checkbox->AddComponent(Component::TYPE::CHECKBOX);
+	checkbox->AddComponent(Component::TYPE::IMAGE_2D);
+	checkbox->AddComponent(Component::TYPE::NAVIGATION);
+
 }
 
 void M_Gui::CreateText()
