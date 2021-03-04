@@ -28,13 +28,13 @@ bool C_Text::OnEditor()
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_FONT"))
 			{
-				const char* possible_new_font_path = ((std::string*)payload->Data)->c_str();
+				/*const char* possible_new_font_path = ((std::string*)payload->Data)->c_str();
 				if (!EngineExternal->moduleFileSystem->free_type_library->CheckIfFontExists(possible_new_font_path)) {
 					LOG(LogType::L_WARNING, "This file is not a font file");
 				}
 				else {
 					font_path = possible_new_font_path;
-				}
+				}*/
 
 			}
 			ImGui::EndDragDropTarget();
