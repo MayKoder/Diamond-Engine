@@ -47,6 +47,7 @@ C_Animator::~C_Animator()
 {
 	rootBone = nullptr;
 	clips.clear();
+	selectedClip = nullptr;
 
 	_anim = nullptr;
 	currentAnimation = nullptr;
@@ -226,22 +227,6 @@ void C_Animator::LoadData(DEConfig& nObj)
 			AddAnimation(animation);
 		}
 	}
-
-
-	//AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(1305320173, Resource::Type::ANIMATION)));
-	AddAnimation(dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), Resource::Type::ANIMATION)));
-
-	JSON_Array* animations_array = nObj.ReadArray("Animations");
-
-	for (size_t i = 0; i < json_array_get_count(animations_array); i++)
-	{
-		ResourceAnimation* animation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(json_array_get_number(animations_array, i), Resource::Type::ANIMATION));
-
-		if (animation != nullptr)
-		{
-			AddAnimation(animation);
-		}
-	}
 }
 
 bool C_Animator::OnEditor()
@@ -318,7 +303,7 @@ bool C_Animator::OnEditor()
 		}
 
 		//List of existing animations
-		static char newName[32];
+		char newName[32];
 		std::string animation_to_remove = "";
 		ImGui::Text("Select a new animation");
 		for (std::map<std::string, ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); ++it)
@@ -706,6 +691,8 @@ void C_Animator::SaveAnimation(ResourceAnimation* animation, const char* name)
 
 	EngineExternal->moduleResources->RenameAsset(old_assets_path.c_str(), new_assets_path.c_str(), buffer, size, animation);
 
+	old_assets_path.clear();
+	new_assets_path.clear();
 	RELEASE_ARRAY(buffer);
 }
 

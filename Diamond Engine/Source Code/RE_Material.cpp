@@ -21,6 +21,7 @@ ResourceMaterial::~ResourceMaterial()
 {
 	uniforms.clear();
 	attributes.clear();
+	shader = nullptr;
 }
 
 bool ResourceMaterial::LoadToMemory()

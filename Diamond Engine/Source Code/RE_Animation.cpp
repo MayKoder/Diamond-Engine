@@ -5,14 +5,12 @@
 #include "RE_Animation.h"
 #include "IM_AnimationImporter.h"
 
-ResourceAnimation::ResourceAnimation(unsigned int _uid) : Resource(_uid, Resource::Type::ANIMATION),duration(0),ticksPerSecond(0),loop(true)
+ResourceAnimation::ResourceAnimation(unsigned int _uid) : Resource(_uid, Resource::Type::ANIMATION), animationName("No Name"),duration(0),ticksPerSecond(0), loop(true), time(0.0f)
 {
 }
 
 ResourceAnimation::~ResourceAnimation()
 {
-
-
 	channels.clear();
 }
 
@@ -141,6 +139,7 @@ std::map<std::string, Channel> ResourceAnimation::GetAllChannelsInRange(float st
 
 Channel::~Channel()
 {
+	boneName.clear();
 	positionKeys.clear();
 	rotationKeys.clear();
 	scaleKeys.clear();

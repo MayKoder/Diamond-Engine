@@ -91,7 +91,6 @@ ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimati
 	//FileSystem::Save(library_path.c_str(), buffer, size, false);
 	std::string assets_path = "Assets/Animations/" + std::string(importedAnimation->mName.C_Str()) + ".anim";
 	FileSystem::Save(assets_path.c_str(), buffer, size, false);
-	//EngineExternal->moduleResources->GenerateMeta(assets_path.c_str(), library_path.c_str(), animation->GetUID(), Resource::Type::ANIMATION);
 
 	std::string file_name = std::to_string(UID);
 	file_name += ".anim";
