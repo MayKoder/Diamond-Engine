@@ -272,6 +272,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		}
 
 		skybox.DrawAsSkybox(gameCamera);
+		glClear(GL_DEPTH_BUFFER_BIT);
 		App->moduleGui->RenderCanvas2D();
 		gameCamera->EndDraw();
 	}
