@@ -181,20 +181,63 @@ bool C_RigidBody::OnEditor()
 	{
 
 		bool temp = use_kinematic;
-
 		ImGui::Checkbox("Is Static", &use_kinematic);
 		if (temp != use_kinematic)
 			EnableKinematic(use_kinematic);
 		
 		bool gravity = use_gravity;
-		ImGui::Checkbox("Gravity", &gravity);
-
+		ImGui::Checkbox("Gravity", &use_gravity);
 		if (gravity != use_gravity)
+			EnableGravity(use_gravity);
+		ImGui::Separator();
+
+		ImGui::Columns(2, "LockBodies");
+		bool linearx = lock_linearX;
+		ImGui::Checkbox("LockLinearX", &lock_linearX);
+		if (linearx != lock_linearX)
+			LockLinearX(lock_linearX);
+
+		bool lineary = lock_linearY;
+		ImGui::Checkbox("LockLinearY", &lock_linearY);
+		if (lineary != lock_linearY)
+			LockLinearY(lock_linearY);
+
+		bool linearz = lock_linearZ;
+		ImGui::Checkbox("LockLinearZ", &lock_linearZ);
+		if (linearz != lock_linearZ)
+			LockLinearZ(lock_linearZ);
+
+		ImGui::NextColumn();
+
+		bool angularx = lock_angularX;
+		ImGui::Checkbox("LockAngularX", &lock_angularX);
+		if (angularx != lock_angularX)
+			LockAngularX(lock_angularX);
+
+		bool angulary = lock_angularY;
+		ImGui::Checkbox("LockAngularY", &lock_angularY);
+		if (angulary != lock_angularY)
+			LockAngularY(lock_angularY);
+
+		bool angularz = lock_angularZ;
+		ImGui::Checkbox("LockAngularZ", &lock_angularZ);
+		if (angularz != lock_angularZ)
+			LockAngularZ(lock_angularZ);
+		ImGui::Columns(1);
+		ImGui::Separator();
+		
+		
+		ImGui::DragFloat("mass", &mass, 0.1f);
+		if (ImGui::IsItemActive())
 		{
-			EnableGravity(gravity);
-			use_gravity = gravity;
+			SetMass(mass);
 		}
 
+		ImGui::DragFloat("density", &density, 0.1f);
+		if (ImGui::IsItemActive())
+		{
+			SetDensity(density);
+		}
 		return true;
 	}
 	return false;

@@ -42,7 +42,7 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 		//We first initialize material to create shape later
 		colliderMaterial = EngineExternal->modulePhysics->CreateMaterial();
 		localTransform = float4x4::identity;
-
+	
 		//If gameObject does have mesh we apply measures directly to collider from OBB
 		if (mesh != nullptr) {
 
@@ -459,6 +459,9 @@ bool C_Collider::OnEditor()
 
 		}
 		ImGui::Separator();
+
+		//Editar materiales
+		//colliderMaterial
 
 		return true;
 	}
