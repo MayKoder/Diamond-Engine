@@ -16,18 +16,51 @@
   "MediaFilesNotInAnyBank": [],
   "SoundBanks": [
    {
-    "Id": "1069811801",
+    "Id": "1093318992",
     "Language": "SFX",
-    "Hash": "444520679",
-    "ObjectPath": "\\SoundBanks\\Default Work Unit\\Audio",
-    "ShortName": "Audio",
-    "Path": "Audio.bnk",
+    "Hash": "2101818935",
+    "ObjectPath": "\\SoundBanks\\Default Work Unit\\Mando",
+    "ShortName": "Mando",
+    "Path": "Mando.bnk",
     "IncludedEvents": [
      {
       "Id": "1602358412",
       "Name": "Play_Footstep",
       "ObjectPath": "\\Events\\Default Work Unit\\Play_Footstep",
+      "DurationType": "Mixed",
+      "DurationMin": "0.302461",
+      "DurationMax": "Infinite",
       "IncludedMemoryFiles": [
+       {
+        "Id": "119721926",
+        "Language": "SFX",
+        "ShortName": "Footstep stone 2.wav",
+        "Path": "SFX\\Footstep stone 2_10C4C929.wem"
+       },
+       {
+        "Id": "342426643",
+        "Language": "SFX",
+        "ShortName": "Footstep stone sandy 2.wav",
+        "Path": "SFX\\Footstep stone sandy 2_10C4C929.wem"
+       },
+       {
+        "Id": "358571324",
+        "Language": "SFX",
+        "ShortName": "Footstep sand 1.wav",
+        "Path": "SFX\\Footstep sand 1_D79FB2B7.wem"
+       },
+       {
+        "Id": "470698696",
+        "Language": "SFX",
+        "ShortName": "Footstep stone 1.wav",
+        "Path": "SFX\\Footstep stone 1_10C4C929.wem"
+       },
+       {
+        "Id": "546938401",
+        "Language": "SFX",
+        "ShortName": "Footstep stone 4.wav",
+        "Path": "SFX\\Footstep stone 4_10C4C929.wem"
+       },
        {
         "Id": "604011556",
         "Language": "SFX",
@@ -47,41 +80,49 @@
         "Path": "SFX\\Footstep wood1_10C4C929.wem"
        },
        {
-        "Id": "917854078",
+        "Id": "705521758",
         "Language": "SFX",
-        "ShortName": "Footstep stone sandy.wav",
-        "Path": "SFX\\Footstep stone sandy_10C4C929.wem"
+        "ShortName": "Footstep stone sandy 3.wav",
+        "Path": "SFX\\Footstep stone sandy 3_D79FB2B7.wem"
        },
        {
-        "Id": "938843669",
+        "Id": "810029336",
         "Language": "SFX",
-        "ShortName": "Footstep sand.wav",
-        "Path": "SFX\\Footstep sand_10C4C929.wem"
+        "ShortName": "Footstep wood3.wav",
+        "Path": "SFX\\Footstep wood3_10C4C929.wem"
+       },
+       {
+        "Id": "834817991",
+        "Language": "SFX",
+        "ShortName": "Footstep wood4.wav",
+        "Path": "SFX\\Footstep wood4_10C4C929.wem"
+       },
+       {
+        "Id": "855174588",
+        "Language": "SFX",
+        "ShortName": "Footstep stone sandy 1.wav",
+        "Path": "SFX\\Footstep stone sandy 1_10C4C929.wem"
+       },
+       {
+        "Id": "967739381",
+        "Language": "SFX",
+        "ShortName": "Footstep stone 3.wav",
+        "Path": "SFX\\Footstep stone 3_10C4C929.wem"
+       },
+       {
+        "Id": "991936097",
+        "Language": "SFX",
+        "ShortName": "Footstep stone sandy 4.wav",
+        "Path": "SFX\\Footstep stone sandy 4_D79FB2B7.wem"
        }
       ],
-      "DefaultSwitchValue": "{52DDF349-5B56-485F-B6A9-023045AD18BA}",
+      "DefaultSwitchValue": "{2123237A-A2E2-4B52-9C72-5536BD8E71EA}",
       "SwitchContainers": [
        {
         "SwitchValue": "{F2156D10-1A20-4A8F-9D9B-83DA640588C9}",
         "Media": [
          {
           "Id": "654547234"
-         }
-        ]
-       },
-       {
-        "SwitchValue": "{2123237A-A2E2-4B52-9C72-5536BD8E71EA}",
-        "Media": [
-         {
-          "Id": "938843669"
-         }
-        ]
-       },
-       {
-        "SwitchValue": "{52DDF349-5B56-485F-B6A9-023045AD18BA}",
-        "Media": [
-         {
-          "Id": "917854078"
          }
         ]
        },
@@ -93,6 +134,54 @@
          },
          {
           "Id": "675536826"
+         },
+         {
+          "Id": "810029336"
+         },
+         {
+          "Id": "834817991"
+         }
+        ]
+       },
+       {
+        "SwitchValue": "{52DDF349-5B56-485F-B6A9-023045AD18BA}",
+        "Media": [
+         {
+          "Id": "119721926"
+         },
+         {
+          "Id": "470698696"
+         },
+         {
+          "Id": "546938401"
+         },
+         {
+          "Id": "967739381"
+         }
+        ]
+       },
+       {
+        "SwitchValue": "{756EFA02-6286-4350-9DF6-4B700085CB30}",
+        "Media": [
+         {
+          "Id": "342426643"
+         },
+         {
+          "Id": "855174588"
+         }
+        ]
+       },
+       {
+        "SwitchValue": "{2123237A-A2E2-4B52-9C72-5536BD8E71EA}",
+        "Media": [
+         {
+          "Id": "358571324"
+         },
+         {
+          "Id": "705521758"
+         },
+         {
+          "Id": "991936097"
          }
         ]
        }
@@ -101,15 +190,43 @@
      {
       "Id": "2045397714",
       "Name": "Play_Weapon_Shoot",
-      "ObjectPath": "\\Events\\Default Work Unit\\Play_Weapon_Shoot"
-     }
-    ],
-    "IncludedMemoryFiles": [
-     {
-      "Id": "575059296",
-      "Language": "SFX",
-      "ShortName": "blaster wav.wav",
-      "Path": "SFX\\blaster wav_10C4C929.wem"
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Weapon_Shoot",
+      "DurationType": "OneShot",
+      "DurationMin": "0.168277",
+      "DurationMax": "0.731042",
+      "IncludedMemoryFiles": [
+       {
+        "Id": "163793026",
+        "Language": "SFX",
+        "ShortName": "Sniper shot.wav",
+        "Path": "SFX\\Sniper shot_10C4C929.wem"
+       },
+       {
+        "Id": "575059296",
+        "Language": "SFX",
+        "ShortName": "blaster wav.wav",
+        "Path": "SFX\\blaster wav_10C4C929.wem"
+       }
+      ],
+      "DefaultSwitchValue": "{21D5D886-05F7-4F0D-AA11-6F543FC38106}",
+      "SwitchContainers": [
+       {
+        "SwitchValue": "{21D5D886-05F7-4F0D-AA11-6F543FC38106}",
+        "Media": [
+         {
+          "Id": "575059296"
+         }
+        ]
+       },
+       {
+        "SwitchValue": "{D9D7BAE3-FEAF-489E-A93F-E360579A008C}",
+        "Media": [
+         {
+          "Id": "163793026"
+         }
+        ]
+       }
+      ]
      }
     ],
     "GameParameters": [
@@ -122,6 +239,11 @@
       "Id": "1547598200",
       "Name": "SourcePitch",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\SourcePitch"
+     },
+     {
+      "Id": "2704707011",
+      "Name": "BusVolume",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\BusVolume"
      }
     ],
     "SwitchGroups": [
@@ -149,6 +271,11 @@
         "Id": "2058049674",
         "Name": "Wood",
         "ObjectPath": "\\Switches\\Default Work Unit\\Terrain\\Wood"
+       },
+       {
+        "Id": "1700698134",
+        "Name": "Stone_sandy",
+        "ObjectPath": "\\Switches\\Default Work Unit\\Terrain\\Stone_sandy"
        }
       ]
      },
@@ -172,12 +299,121 @@
     ]
    },
    {
+    "Id": "1229948536",
+    "Language": "SFX",
+    "Hash": "509016848",
+    "ObjectPath": "\\SoundBanks\\Default Work Unit\\Environment",
+    "ShortName": "Environment",
+    "Path": "Environment.bnk",
+    "IncludedEvents": [
+     {
+      "Id": "3330097699",
+      "Name": "Play_Broken_Box",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Broken_Box",
+      "DurationType": "OneShot",
+      "DurationMin": "0.707298",
+      "DurationMax": "1.122766",
+      "IncludedMemoryFiles": [
+       {
+        "Id": "729637962",
+        "Language": "SFX",
+        "ShortName": "Dash.wav",
+        "Path": "SFX\\Dash_10C4C929.wem"
+       }
+      ]
+     }
+    ],
+    "GameParameters": [
+     {
+      "Id": "467158820",
+      "Name": "SourceVolume",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\SourceVolume"
+     },
+     {
+      "Id": "1547598200",
+      "Name": "SourcePitch",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\SourcePitch"
+     },
+     {
+      "Id": "2704707011",
+      "Name": "BusVolume",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\BusVolume"
+     }
+    ]
+   },
+   {
     "Id": "1355168291",
     "Language": "SFX",
-    "Hash": "3906755781",
+    "Hash": "3789941178",
     "ObjectPath": "Init",
     "ShortName": "Init",
-    "Path": "Init.bnk"
+    "Path": "Init.bnk",
+    "GameParameters": [
+     {
+      "Id": "2704707011",
+      "Name": "BusVolume",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\BusVolume"
+     }
+    ]
+   },
+   {
+    "Id": "3991942870",
+    "Language": "SFX",
+    "Hash": "694692624",
+    "ObjectPath": "\\SoundBanks\\Default Work Unit\\Music",
+    "ShortName": "Music",
+    "Path": "Music.bnk",
+    "IncludedEvents": [
+     {
+      "Id": "2932040671",
+      "Name": "Play_Music",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Music",
+      "DurationType": "OneShot",
+      "DurationMin": "95.049500",
+      "DurationMax": "95.049500",
+      "IncludedMemoryFiles": [
+       {
+        "Id": "209390670",
+        "Language": "SFX",
+        "ShortName": "Empire Music.wav",
+        "Path": "SFX\\Empire Music_10C4C929.wem"
+       }
+      ]
+     },
+     {
+      "Id": "4068124964",
+      "Name": "Play_Music_2",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Music_2",
+      "DurationType": "OneShot",
+      "DurationMin": "78.746101",
+      "DurationMax": "78.746101",
+      "IncludedMemoryFiles": [
+       {
+        "Id": "739659711",
+        "Language": "SFX",
+        "ShortName": "Hud.wav",
+        "Path": "SFX\\Hud_10C4C929.wem"
+       }
+      ]
+     }
+    ],
+    "GameParameters": [
+     {
+      "Id": "467158820",
+      "Name": "SourceVolume",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\SourceVolume"
+     },
+     {
+      "Id": "1547598200",
+      "Name": "SourcePitch",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\SourcePitch"
+     },
+     {
+      "Id": "2704707011",
+      "Name": "BusVolume",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\BusVolume"
+     }
+    ]
    }
   ]
  }

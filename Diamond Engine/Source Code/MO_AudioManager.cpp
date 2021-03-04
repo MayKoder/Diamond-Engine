@@ -266,6 +266,21 @@ void ModuleAudioManager::ResumeEvent(unsigned int id, std::string& eventName) co
 	AK::SoundEngine::ExecuteActionOnEvent(eventName.c_str(), AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Resume, id);
 }
 
+void ModuleAudioManager::StopComponent(unsigned int id) const
+{
+	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Stop, id);
+}
+
+void ModuleAudioManager::PauseComponent(unsigned int id) const
+{
+	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Pause, id);
+}
+
+void ModuleAudioManager::ResumeComponent(unsigned int id) const
+{
+	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Resume, id);
+}
+
 void ModuleAudioManager::ChangeRTPCValue(unsigned int id, std::string& RTPCname, float value)
 {
 	AK::SoundEngine::SetRTPCValue(RTPCname.c_str(), value, id);
@@ -273,7 +288,11 @@ void ModuleAudioManager::ChangeRTPCValue(unsigned int id, std::string& RTPCname,
 
 bool ModuleAudioManager::LoadBanksInfo()
 {
+#ifndef STANDALONE
 	JSON_Value* banksInfo = json_parse_file("Assets/SoundBanks/SoundbanksInfo.json");
+#else
+	JSON_Value* banksInfo = json_parse_file("Library/Sounds/SoundbanksInfo.json");
+#endif
 
 	if (banksInfo == NULL)
 		return false;
@@ -348,7 +367,8 @@ void ModuleAudioManager::UnLoadAllBanks()
 	std::vector<AudioBank*>::iterator it;
 	for (it = banks.begin(); it != banks.end(); ++it)
 	{
-		(*it)->loaded_in_heap = !UnLoadBank((*it)->bank_name);
+		if ((*it)->loaded_in_heap)
+			(*it)->loaded_in_heap = !UnLoadBank((*it)->bank_name);
 	}
 }
 
@@ -375,25 +395,19 @@ void ModuleAudioManager::RemoveAudioSource(C_AudioSource* source)
 	}
 }
 
-void ModuleAudioManager::SetAudioObjTransform(unsigned int id, float4x4& transform)
+void ModuleAudioManager::SetAudioObjTransform(unsigned int id, float3& pos, float3& forward, float3& up)
 {
-	float3 pos;
-	float3 scale;
-	float3x3 rot;
-	float3 front(0.0f, 0.0f, 1.0f);
-	float3 up(0.0f, 1.0f, 0.0f);
-
-	transform.Decompose(pos, rot, scale);
-
-	//TODO take orientation too?
-	up = up * rot;
-	front = front * rot;
-
 	AkSoundPosition newPos;
-	newPos.SetPosition(pos.x, pos.y, pos.z);
-	newPos.SetOrientation(front.x, front.y, front.z, up.x, up.y, up.z);
+	newPos.SetPosition(-pos.x, -pos.y, -pos.z);
+	newPos.SetOrientation(forward.x, forward.y, forward.z, up.x, up.y, up.z);
 
 	AK::SoundEngine::SetPosition(id, newPos);
+}
+
+void ModuleAudioManager::SetBusVolume(float volume)
+{
+	if (defaultListener != nullptr)
+		ChangeRTPCValue(defaultListener->GetID(), std::string("BusVolume"), volume);
 }
 
 //this updates the listener that Wwise uses to be the Module Audio default listener

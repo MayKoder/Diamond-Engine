@@ -15,6 +15,7 @@
 #include"CS_Transform_Bindings.h"
 #include "CS_Input_Bindings.h"
 #include"CS_Scene_Bindings.h"
+#include "CS_Audio_Bindings.h"
 
 #include <iostream>
 #include <fstream> 
@@ -90,7 +91,18 @@ bool M_MonoManager::Init()
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
 
+
 	mono_add_internal_call("DiamondEngine.SceneManager::LoadScene", CS_LoadScene);
+	mono_add_internal_call("DiamondEngine.Audio::PlayAudio", PlayAudio);
+	mono_add_internal_call("DiamondEngine.Audio::StopAudio", StopAudio);
+	mono_add_internal_call("DiamondEngine.Audio::ResumeAudio", ResumeAudio);
+	mono_add_internal_call("DiamondEngine.Audio::PauseAudio", PauseAudio);
+	mono_add_internal_call("DiamondEngine.Audio::GetVolume", GetVolume);
+	mono_add_internal_call("DiamondEngine.Audio::SetVolume", SetVolume);
+	mono_add_internal_call("DiamondEngine.Audio::GetPitch", GetPitch);
+	mono_add_internal_call("DiamondEngine.Audio::SetPitch", SetPitch);
+	mono_add_internal_call("DiamondEngine.Audio::GetMuted", GetMuted);
+	mono_add_internal_call("DiamondEngine.Audio::SetMuted", SetMuted);
 
 	InitMono();
 
