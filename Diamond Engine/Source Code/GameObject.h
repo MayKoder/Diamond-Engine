@@ -20,7 +20,7 @@ public:
 	void PostUpdate();
 
 	Component* AddComponent(Component::TYPE _type, const char* params = nullptr);
-	Component* GetComponent(Component::TYPE _type, const char* name = "");
+	Component* GetComponent(Component::TYPE _type, const char* name = nullptr);
 
 	void RecursiveUIDRegeneration();
 

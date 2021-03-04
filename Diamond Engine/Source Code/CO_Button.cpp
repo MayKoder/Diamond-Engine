@@ -205,9 +205,7 @@ void C_Button::ChangeScript(const char* new_script_name)
 		Component* component= gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str());
 		if (gameObject != nullptr)
 			gameObject->RemoveComponent(component);
-		//DO NOW
 	}
-		//delete script;
 	dynamic_cast<C_Script*>(gameObject->AddComponent(TYPE::SCRIPT, new_script_name));
 
 	script_name = new_script_name;
