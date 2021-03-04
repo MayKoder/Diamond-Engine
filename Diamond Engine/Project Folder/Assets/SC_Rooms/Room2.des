@@ -1,0 +1,472 @@
+{
+    "EditorCameraPosition": [
+        73.948455810546875,
+        27.73564338684082,
+        -20.0208740234375
+    ],
+    "EditorCameraZ": [
+        -0.71643543243408203,
+        -0.23494939506053925,
+        0.65690112113952637
+    ],
+    "EditorCameraY": [
+        -0.17317360639572144,
+        0.97200751304626465,
+        0.15878322720527649
+    ],
+    "Game Objects": [
+        {
+            "name": "Scene root",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1676501951,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Player",
+            "Active": true,
+            "Position": [
+                0,
+                10.636103630065918,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                2,
+                1
+            ],
+            "UID": 63506331,
+            "ParentUID": 1676501951,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "FPS_Controller",
+                    "reference": 63506331,
+                    "turret": 63506331,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 35,
+                    "mouseSens": 1
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": false
+                },
+                {
+                    "Type": 15,
+                    "Active": true
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/default.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/715565838.mat",
+                    "MaterialUID": 715565838
+                }
+            ]
+        },
+        {
+            "name": "Game Camera",
+            "Active": true,
+            "Position": [
+                0,
+                0.70499998331069946,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                0.5,
+                1
+            ],
+            "UID": 1852925025,
+            "ParentUID": 63506331,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 4,
+                    "Active": true,
+                    "fType": 2,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 5000,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.6568517684936523,
+                    "culling": false
+                }
+            ]
+        },
+        {
+            "name": "Room",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 833835288,
+            "ParentUID": 1676501951,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Wall",
+            "Active": true,
+            "Position": [
+                -50.89898681640625,
+                3.2579998970031738,
+                -6.3833078911557095e-07
+            ],
+            "Rotation": [
+                -0.70713216066360474,
+                0,
+                0,
+                0.7070813775062561
+            ],
+            "Scale": [
+                1,
+                49.996749877929688,
+                5.4995937347412109
+            ],
+            "UID": 1800636349,
+            "ParentUID": 833835288,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        0.13877546787261963,
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true
+                },
+                {
+                    "Type": 15,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Wall",
+            "Active": true,
+            "Position": [
+                0,
+                3.258328914642334,
+                50.980846405029297
+            ],
+            "Rotation": [
+                -0.70713216066360474,
+                0,
+                0,
+                0.7070813775062561
+            ],
+            "Scale": [
+                50,
+                0.99986779689788818,
+                5.4994978904724121
+            ],
+            "UID": 597876457,
+            "ParentUID": 833835288,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        0.13877546787261963,
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true
+                },
+                {
+                    "Type": 15,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Wall",
+            "Active": true,
+            "Position": [
+                50.546199798583984,
+                3.2579998970031738,
+                -6.3833078911557095e-07
+            ],
+            "Rotation": [
+                -0.70713216066360474,
+                0,
+                0,
+                0.7070813775062561
+            ],
+            "Scale": [
+                1,
+                49.999992370605469,
+                5.4999990463256836
+            ],
+            "UID": 1800636349,
+            "ParentUID": 833835288,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        0.13877546787261963,
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true
+                },
+                {
+                    "Type": 15,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Wall",
+            "Active": true,
+            "Position": [
+                0,
+                3.2583203315734863,
+                -50.911586761474609
+            ],
+            "Rotation": [
+                -0.70713216066360474,
+                0,
+                0,
+                0.7070813775062561
+            ],
+            "Scale": [
+                50,
+                0.99980670213699341,
+                5.4990086555480957
+            ],
+            "UID": 597876457,
+            "ParentUID": 833835288,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        0.13877546787261963,
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true
+                },
+                {
+                    "Type": 15,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Portal",
+            "Active": true,
+            "Position": [
+                0,
+                3.4848313331604004,
+                47.782619476318359
+            ],
+            "Rotation": [
+                -0.70713216066360474,
+                0,
+                0,
+                0.7070813775062561
+            ],
+            "Scale": [
+                3.1256139278411865,
+                0.99990683794021606,
+                3.2230079174041748
+            ],
+            "UID": 785570981,
+            "ParentUID": 833835288,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        1,
+                        0.92857116460800171,
+                        0
+                    ]
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true
+                },
+                {
+                    "Type": 15,
+                    "Active": true
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "RoomSwitch",
+                    "rooms": 0
+                }
+            ]
+        },
+        {
+            "name": "Floor",
+            "Active": true,
+            "Position": [
+                0,
+                -1.1999502182006836,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                50,
+                0.99999988079071045,
+                50
+            ],
+            "UID": 1943344183,
+            "ParentUID": 833835288,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        0.13877546787261963,
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true
+                },
+                {
+                    "Type": 15,
+                    "Active": true
+                }
+            ]
+        }
+    ]
+}

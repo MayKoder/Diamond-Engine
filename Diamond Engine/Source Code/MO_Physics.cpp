@@ -6,6 +6,7 @@
 
 #include"CO_Script.h"
 #include"GameObject.h"
+#include "Component.h"
 
 #include "CO_Collider.h"
 #include "CO_RigidBody.h"

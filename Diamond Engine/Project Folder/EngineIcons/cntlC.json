@@ -1,12 +1,12 @@
 {
     "Game Objects": [
         {
-            "name": "Image",
+            "name": "awdwdawda",
             "Active": true,
             "Position": [
-                0,
-                0,
-                0
+                1.4847038984298706,
+                2.6636946201324463,
+                -1.0098497867584229
             ],
             "Rotation": [
                 0,
@@ -19,40 +19,32 @@
                 1,
                 1
             ],
-            "UID": 1168538596,
-            "ParentUID": 259851228,
+            "UID": 920775840,
+            "ParentUID": 143570472,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
                 },
                 {
-                    "Type": 6,
+                    "Type": 2,
                     "Active": true,
-                    "Position": [
-                        0,
-                        0
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        20,
-                        20
+                    "Path": "Library\/Meshes\/277778019.mmh",
+                    "UID": 277778019,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
                     ]
                 },
                 {
-                    "Type": 3,
+                    "Type": 14,
                     "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "kinematic": true
                 },
                 {
-                    "Type": 11,
-                    "Active": true,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/934250681.dds",
-                    "UID": 934250681
+                    "Type": 15,
+                    "Active": true
                 }
             ]
         }

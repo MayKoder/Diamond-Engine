@@ -14,6 +14,7 @@
 #include"CO_Script.h"
 #include"CS_Transform_Bindings.h"
 #include "CS_Input_Bindings.h"
+#include"CS_Scene_Bindings.h"
 #include "CS_Audio_Bindings.h"
 
 #include <iostream>
@@ -90,6 +91,8 @@ bool M_MonoManager::Init()
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
 
+
+	mono_add_internal_call("DiamondEngine.SceneManager::LoadScene", CS_LoadScene);
 	mono_add_internal_call("DiamondEngine.Audio::PlayAudio", PlayAudio);
 	mono_add_internal_call("DiamondEngine.Audio::StopAudio", StopAudio);
 	mono_add_internal_call("DiamondEngine.Audio::ResumeAudio", ResumeAudio);
@@ -446,18 +449,22 @@ void M_MonoManager::InitMono()
 	MonoClass* _class = nullptr;
 
 	userScripts.clear();
-	for (int i = 1; i < rows; i++)
+	for (int i = 0; i < rows; i++)
 	{
 		uint32_t cols[MONO_TYPEDEF_SIZE];
 		mono_metadata_decode_row(table_info, i, cols, MONO_TYPEDEF_SIZE);
 		const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
-		const char* name_space = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
-		_class = mono_class_from_name(image, name_space, name);
 
-		if (strcmp(mono_class_get_namespace(_class), DE_SCRIPTS_NAMESPACE) != 0 && !mono_class_is_enum(_class))
+		if (name[0] != '<') 
 		{
-			userScripts.push_back(_class);
-			LOG(LogType::L_WARNING, "%s", mono_class_get_name(_class));
+			const char* name_space = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
+			_class = mono_class_from_name(image, name_space, name);
+
+			if (_class != nullptr && strcmp(mono_class_get_namespace(_class), DE_SCRIPTS_NAMESPACE) != 0 && !mono_class_is_enum(_class))
+			{
+				userScripts.push_back(_class);
+				LOG(LogType::L_WARNING, "%s", mono_class_get_name(_class));
+			}
 		}
 	}
 }

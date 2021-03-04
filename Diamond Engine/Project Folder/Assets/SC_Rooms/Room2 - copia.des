@@ -1,0 +1,381 @@
+{
+    "EditorCameraPosition": [
+        -29.548175811767578,
+        47.347953796386719,
+        -88.817108154296875
+    ],
+    "EditorCameraZ": [
+        0.28168722987174988,
+        -0.45137518644332886,
+        0.84670698642730713
+    ],
+    "EditorCameraY": [
+        0.14248768985271454,
+        0.89233428239822388,
+        0.42829528450965881
+    ],
+    "Game Objects": [
+        {
+            "name": "Scene root",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1676501951,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Floor",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                50,
+                0.20000000298023224,
+                50
+            ],
+            "UID": 1858632474,
+            "ParentUID": 1676501951,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        0.14901961386203766,
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "RoomSwitch",
+                    "rooms": 152244064
+                }
+            ]
+        },
+        {
+            "name": "Wall",
+            "Active": true,
+            "Position": [
+                1.0053147077560425,
+                28.614555358886719,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                0.0040000001899898052,
+                28.5,
+                1
+            ],
+            "UID": 1613044882,
+            "ParentUID": 1858632474,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        0.14901961386203766,
+                        1,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Wall",
+            "Active": true,
+            "Position": [
+                -0.00069311371771618724,
+                27.814998626708984,
+                -1.003886342048645
+            ],
+            "Rotation": [
+                -4.0978193283081055e-08,
+                0.70722860097885132,
+                -1.5469267964363098e-05,
+                0.70698493719100952
+            ],
+            "Scale": [
+                0.0040000006556510925,
+                28.5,
+                1.0080000162124634
+            ],
+            "UID": 1613044882,
+            "ParentUID": 1858632474,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        0.1484375,
+                        1,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Wall",
+            "Active": true,
+            "Position": [
+                -1.0034165382385254,
+                27.5,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                0.0040000001899898052,
+                28.5,
+                1
+            ],
+            "UID": 1613044882,
+            "ParentUID": 1858632474,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        0.14901961386203766,
+                        1,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Wall",
+            "Active": true,
+            "Position": [
+                0,
+                27.815000534057617,
+                1.0037999153137207
+            ],
+            "Rotation": [
+                4.0978193283081055e-08,
+                0.70722860097885132,
+                1.5469267964363098e-05,
+                0.70698493719100952
+            ],
+            "Scale": [
+                0.0040000006556510925,
+                28.5,
+                1.0080000162124634
+            ],
+            "UID": 1613044882,
+            "ParentUID": 1858632474,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        0.14901961386203766,
+                        1,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Player",
+            "Active": true,
+            "Position": [
+                0,
+                5,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                2,
+                1
+            ],
+            "UID": 63506331,
+            "ParentUID": 1676501951,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "FPS_Controller",
+                    "reference": 63506331,
+                    "turret": 63506331,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 35,
+                    "mouseSens": 1
+                }
+            ]
+        },
+        {
+            "name": "Game Camera",
+            "Active": true,
+            "Position": [
+                0,
+                0.70499998331069946,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                0.5,
+                1
+            ],
+            "UID": 1852925025,
+            "ParentUID": 63506331,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 4,
+                    "Active": true,
+                    "fType": 2,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 5000,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.6568517684936523,
+                    "culling": false
+                }
+            ]
+        },
+        {
+            "name": "Portal",
+            "Active": true,
+            "Position": [
+                0,
+                5.0850725173950195,
+                46.124942779541016
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                3.2985827922821045,
+                0.49789801239967346,
+                5.0248641967773438
+            ],
+            "UID": 815704434,
+            "ParentUID": 1676501951,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        0.9921875,
+                        1,
+                        0
+                    ]
+                }
+            ]
+        }
+    ]
+}

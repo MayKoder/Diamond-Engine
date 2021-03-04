@@ -31,6 +31,7 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 	Quat rot;
 	float3 pos, scale;
 	goTransform->globalTransform.Decompose(pos, rot, scale);
+	if(mesh != nullptr)
 	pos = mesh->globalOBB.pos;
 
 
@@ -85,7 +86,10 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 	SetLinearDamping(linear_damping);
 	SetAngularDamping(angular_damping);
 
+	rigid_dynamic->setRigidDynamicLockFlags(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z | physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y);
+
 	rigid_dynamic->userData = this->gameObject;
+
 }
 
 C_RigidBody::~C_RigidBody()
