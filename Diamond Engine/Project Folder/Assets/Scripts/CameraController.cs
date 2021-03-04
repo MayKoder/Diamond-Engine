@@ -16,5 +16,4 @@ public class CameraController : DiamondComponent
 		Vector3 smoothPosition = Vector3.Lerp(reference.localPosition, desiredPosition, smoothSpeed);
 		reference.localPosition = smoothPosition;
 	}
-
 }
