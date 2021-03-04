@@ -31,6 +31,7 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 	Quat rot;
 	float3 pos, scale;
 	goTransform->globalTransform.Decompose(pos, rot, scale);
+	if(mesh != nullptr)
 	pos = mesh->globalOBB.pos;
 
 

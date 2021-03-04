@@ -1,26 +1,26 @@
 {
     "Game Objects": [
         {
-            "name": "Cube",
+            "name": "awdwdawda",
             "Active": true,
             "Position": [
-                50.546199798583984,
-                3.2579998970031738,
-                -6.3833084595898981e-07
+                1.4847038984298706,
+                2.6636946201324463,
+                -1.0098497867584229
             ],
             "Rotation": [
-                -0.7071068286895752,
                 0,
                 0,
-                0.70710670948028564
+                0,
+                1
             ],
             "Scale": [
                 1,
-                50,
-                5.5
+                1,
+                1
             ],
-            "UID": 1800636349,
-            "ParentUID": 1676501951,
+            "UID": 920775840,
+            "ParentUID": 143570472,
             "Components": [
                 {
                     "Type": 1,
@@ -29,13 +29,22 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1313575480.mmh",
-                    "UID": 1313575480,
+                    "Path": "Library\/Meshes\/277778019.mmh",
+                    "UID": 277778019,
                     "alternColor": [
                         1,
                         1,
                         1
                     ]
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true
+                },
+                {
+                    "Type": 15,
+                    "Active": true
                 }
             ]
         }
