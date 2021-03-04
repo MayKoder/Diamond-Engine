@@ -25,6 +25,7 @@ public:
 #ifndef STANDALONE
 	void OnGUI() override;
 	Resource* RequestFromAssets(const char* assets_path);
+	bool RenameAsset(const char* old_assets_path, const char* new_assets_path, char* buffer, uint size, Resource* resource);
 #endif // !STANDALONE
 
 

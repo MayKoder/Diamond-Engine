@@ -103,6 +103,25 @@ Resource* M_ResourceManager::RequestFromAssets(const char* assets_path)
 	return ret;
 }
 
+bool M_ResourceManager::RenameAsset(const char* old_assets_path, const char* new_assets_path, char* buffer, uint size, Resource* resource)
+{
+	bool success = false;
+	if (FileSystem::Exists(old_assets_path)) 
+	{
+		success = FileSystem::Delete(old_assets_path) != 0;
+		success = FileSystem::Save(new_assets_path, buffer, size, false) > 0;
+		
+		success = true;
+
+		std::string old_meta_file = old_assets_path + std::string(".meta");
+		FileSystem::Delete(old_meta_file.c_str());
+
+		GenerateMeta(new_assets_path, resource->GetLibraryPath(), resource->GetUID(), resource->GetType());
+	}
+
+	return success;
+}
+
 #endif // !STANDALONE
 
 void M_ResourceManager::PopulateFileArray()

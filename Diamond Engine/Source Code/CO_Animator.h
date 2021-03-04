@@ -55,6 +55,8 @@ public:
 	Quat GetChannelRotation(const Channel& channel, float currentKey, Quat default) const;
 	float3 GetChannelScale(const Channel& channel, float currentKey, float3 default) const;
 
+	void SaveAnimation(ResourceAnimation* animation, const char* name);
+
 private:
 	void DrawBones(GameObject*);
 	ResourceAnimation* ClipToAnimation(AnimationClip clip);

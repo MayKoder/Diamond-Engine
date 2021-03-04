@@ -150,6 +150,29 @@ bool FileSystem::AddPath(const char* path_or_zip)
 	return ret;
 }
 
+//Deletes a file if it exists. Returns nonzero on success, zero on failure
+int FileSystem::Delete(const char* file_to_delete)
+{
+	int success = 0;
+
+	//Check if the file exists to avoid unnecessary operations and get the actual error
+	if (!Exists(file_to_delete)) 
+	{
+		LOG(LogType::L_ERROR, " File %s could not be deleted, it does not exist");
+		return 0;
+	}
+
+	success = PHYSFS_delete(file_to_delete); 
+
+	//if it exists try to delete it
+	if (success == 0) {
+		LOG(LogType::L_ERROR, "File %s could not be deleted", file_to_delete);}
+	else {
+		LOG(LogType::L_NORMAL, "File %s was deleted successfully", file_to_delete);}
+
+	return success;
+}
+
 // Check if a file exists
 bool FileSystem::Exists(const char* file) /*const*/
 {
