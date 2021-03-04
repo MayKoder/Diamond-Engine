@@ -22,7 +22,7 @@ public:
 	void SetPosition(float3 position);
 	inline float3 GetPosition() { return colliderPos; };
 
-	void SetRotation(float3 rotation);
+	void SetRotation(Quat rotation);
 	inline float3 GetEuler() { return colliderEuler; };
 
 	void SetScale(float3 scale, float radius = 1.0f);
@@ -34,7 +34,8 @@ public:
 
 	void UpdateValues();
 
-
+	void SaveData(JSON_Object* nObj) override;
+	void LoadData(DEConfig& nObj) override;
 #ifndef STANDALONE
 	bool OnEditor() override;
 #endif // !STANDALONE
@@ -48,6 +49,7 @@ public:
 	C_RigidBody* rigidbody;
 	C_MeshRenderer* mesh;
 
+	float4x4 localTransform;
 	float3 colliderPos = float3::zero;
 	float3 colliderSize = float3::one; //BOX AND CAPSULE
 	float3 colliderEuler = float3::zero;
