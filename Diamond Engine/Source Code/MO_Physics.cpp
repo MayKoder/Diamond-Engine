@@ -174,11 +174,12 @@ update_status ModulePhysics::Update(float gameTimestep) {
 	return update_status::UPDATE_CONTINUE;
 }
 
-void ModulePhysics::SceneSimulation(float gameTimestep, bool fetchResults) {
-
-
-	mScene->simulate(DETime::deltaTime);
-	mScene->fetchResults(fetchResults);
+void ModulePhysics::SceneSimulation(double gameTimestep, bool fetchResults) {
+	PxReal step = DETime::deltaTime;
+	//if(step < 0.002)
+	//step = 0.002;
+	mScene->simulate(step);
+		mScene->fetchResults(fetchResults);
 
 	PxU32 nbActors = mScene->getNbActors(PxActorTypeFlag::eRIGID_DYNAMIC | PxActorTypeFlag::eRIGID_STATIC);
 	if (nbActors)
@@ -325,8 +326,7 @@ CollisionDetector::~CollisionDetector()
 void CollisionDetector::onContact(const PxContactPairHeader& pairHeader,
 	const PxContactPair* pairs, PxU32 nbPairs)
 {
-	LOG(LogType::L_NORMAL, "Collision detected");
-
+	
 	for (PxU32 i = 0; i < nbPairs; i++)
 	{
 		const PxContactPair& cp = pairs[i];

@@ -99,7 +99,7 @@ public:
     update_status Update(float dt) override;
     bool CleanUp();
 
-    void SceneSimulation(float gameTimesetp, bool fetchResults = true);
+    void SceneSimulation(double gameTimesetp, bool fetchResults = true);
     void RenderGeometry();
 
 

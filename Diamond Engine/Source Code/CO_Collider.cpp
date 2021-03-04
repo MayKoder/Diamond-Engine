@@ -249,8 +249,9 @@ void C_Collider::SetTrigger(bool trigger) {
 		colliderShape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 	}
 	else {
-		colliderShape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
 		colliderShape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, false);
+		colliderShape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
+
 	}
 }
 
@@ -263,6 +264,58 @@ void C_Collider::UpdateValues() {
 	//SetScale();
 }
 
+void C_Collider::SaveData(JSON_Object* nObj)
+{
+	Component::SaveData(nObj);
+
+//	DEJson::WriteBool(nObj, "kinematic", use_kinematic);
+	float3 pos, scale;
+	Quat rot;
+	localTransform.Decompose(pos, rot, scale);
+
+	Component::SaveData(nObj);
+
+	DEJson::WriteBool(nObj, "isTrigger", isTrigger);
+
+	DEJson::WriteVector3(nObj, "Position", pos.ptr());
+	DEJson::WriteQuat(nObj, "Rotation", rot.ptr());
+	DEJson::WriteVector3(nObj, "Scale", scale.ptr());
+
+}
+
+void C_Collider::LoadData(DEConfig& nObj)
+{
+	Component::LoadData(nObj);
+	float3 pos, scale;
+	Quat rot;
+	bool trigger;
+	
+	trigger = nObj.ReadBool("isTrigger");
+	if (trigger != isTrigger)
+	{
+		SetTrigger(trigger);
+		isTrigger = trigger;
+	}
+
+	pos = nObj.ReadVector3("Position");
+	rot = nObj.ReadQuat("Rotation");
+	scale = nObj.ReadVector3("Scale");
+	
+
+	physx::PxTransform physTrans;
+	physTrans.p = physx::PxVec3(pos.x, pos.y, pos.z);
+	physTrans.q = physx::PxQuat(rot.x, rot.y, rot.z, rot.w);
+	float3 newSize;
+	newSize.x = colliderSize.x * scale.x;
+	newSize.y = colliderSize.y * scale.y;
+	newSize.z = colliderSize.z * scale.z;
+	colliderShape->setGeometry(physx::PxBoxGeometry(newSize.x, newSize.y, newSize.z));
+	colliderShape->setLocalPose(physTrans);
+
+	localTransform = float4x4::FromTRS(pos, rot, scale);
+
+}
+
 #ifndef STANDALONE
 bool C_Collider::OnEditor()
 {
@@ -270,7 +323,7 @@ bool C_Collider::OnEditor()
 	{
 		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 		
-		static bool trigger = isTrigger;
+		bool trigger = isTrigger;
 		ImGui::Checkbox("isTrigger", &trigger);
 
 		if (trigger != isTrigger)
@@ -385,6 +438,7 @@ bool C_Collider::OnEditor()
 			}
 			//Scale
 			float s2 = scale.y;
+			ImGui::SetNextItemWidth(50);
 			ImGui::DragFloat("      ", &s2, 0.1f);
 			if (ImGui::IsItemActive())
 			{
@@ -433,6 +487,7 @@ bool C_Collider::OnEditor()
 			}
 			//Scale
 			float s3 = scale.z;
+			ImGui::SetNextItemWidth(50);
 			ImGui::DragFloat("         ", &s3, 0.1f);
 			if (ImGui::IsItemActive())
 			{

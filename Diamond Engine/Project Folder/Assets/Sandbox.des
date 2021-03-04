@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        25.1678466796875,
-        99.068618774414063,
-        -134.79179382324219
+        33.292034149169922,
+        271.10330200195313,
+        279.26467895507813
     ],
     "EditorCameraZ": [
-        -0.14877679944038391,
-        -0.58563262224197388,
-        0.79680603742599487
+        -0.085225872695446014,
+        -0.69401031732559204,
+        -0.71490299701690674
     ],
     "EditorCameraY": [
-        -0.10748959332704544,
-        0.81057661771774292,
-        0.57568359375
+        -0.082153476774692535,
+        0.71996510028839111,
+        -0.68913066387176514
     ],
     "Game Objects": [
         {
@@ -46,7 +46,7 @@
             "name": "Player",
             "Active": true,
             "Position": [
-                0,
+                -20.743518829345703,
                 64.621551513671875,
                 -2.2426132773034624e-07
             ],
@@ -100,11 +100,37 @@
                 {
                     "Type": 14,
                     "Active": true,
-                    "kinematic": false
+                    "kinematic": false,
+                    "Gravity": true,
+                    "LockLinearX": false,
+                    "LockLinearY": false,
+                    "LockLinearZ": false,
+                    "LockAngularX": true,
+                    "LockAngularY": true,
+                    "LockAngularZ": true,
+                    "Mass": 10,
+                    "Density": 1
                 },
                 {
                     "Type": 15,
-                    "Active": true
+                    "Active": true,
+                    "isTrigger": false,
+                    "Position": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "Rotation": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "Scale": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         },
@@ -181,11 +207,37 @@
                 {
                     "Type": 14,
                     "Active": true,
-                    "kinematic": true
+                    "kinematic": true,
+                    "Gravity": true,
+                    "LockLinearX": false,
+                    "LockLinearY": false,
+                    "LockLinearZ": false,
+                    "LockAngularX": false,
+                    "LockAngularY": false,
+                    "LockAngularZ": false,
+                    "Mass": 30.799999237060547,
+                    "Density": 1
                 },
                 {
                     "Type": 15,
-                    "Active": true
+                    "Active": true,
+                    "isTrigger": false,
+                    "Position": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "Rotation": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "Scale": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         },
