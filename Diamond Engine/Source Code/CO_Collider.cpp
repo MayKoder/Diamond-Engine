@@ -53,7 +53,7 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 
 		}
 		else {
-			colliderSize = { 1.0f, 1.0f, 1.0f };
+			colliderSize = { 1.f, 1.f, 1.f };
 			colliderShape = EngineExternal->modulePhysics->CreateCollider( colliderSize / 2, colliderMaterial);
 		}
 
@@ -65,19 +65,19 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 		if (rigidbody != nullptr && rigidbody->collider_info == nullptr)
 			rigidbody->collider_info = this;
 
-		if (mesh != nullptr) {
-			colliderPos = (mesh->globalOBB.pos);
-			colliderPos.Set(0, 0, 0);
-			SetPosition(colliderPos);
-			
-		}
-		else {
-			/*colliderPos = (transform->position - owner->PositionOffset).Div(owner->SizeOffset);
-			SetPosition(colliderPos);
-			owner->PositionOffset = float3::zero;
-			owner->SizeOffset = float3::one;
-			owner->RotationOffset = float3::zero;*/
-		}
+		//if (mesh != nullptr) {
+		//	colliderPos = (mesh->globalOBB.pos);
+		//	colliderPos.Set(0, 0, 0);
+		//	SetPosition(colliderPos);
+		//	
+		//}
+		//else {
+		//	/*colliderPos = (transform->position - owner->PositionOffset).Div(owner->SizeOffset);
+		//	SetPosition(colliderPos);
+		//	owner->PositionOffset = float3::zero;
+		//	owner->SizeOffset = float3::one;
+		//	owner->RotationOffset = float3::zero;*/
+		//}
 
 
 		rigidStatic = nullptr;

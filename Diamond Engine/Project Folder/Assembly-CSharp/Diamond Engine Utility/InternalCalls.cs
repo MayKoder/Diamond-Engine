@@ -56,6 +56,11 @@ namespace DiamondEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern int GetRightTrigger();
     }
+    public class SceneManager
+    {
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void LoadScene(int libraryPath);
+    }
 
     public partial class Debug
     {

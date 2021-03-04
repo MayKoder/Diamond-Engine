@@ -284,6 +284,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//TEMPORAL: Delete here so you can call mouse picking from scene window, should not be here in the future
 	ClearAllRenderData();
 
+	App->moduleScene->LoadHoldScene();
+
 	SDL_GL_SwapWindow(App->moduleWindow->window);
 
 	return UPDATE_CONTINUE;

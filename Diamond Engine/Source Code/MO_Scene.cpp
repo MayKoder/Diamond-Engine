@@ -28,7 +28,7 @@
 #include "COMM_DeleteGO.h"
 
 M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr),
-defaultMaterial(nullptr)
+defaultMaterial(nullptr), holdUID(0)
 {
 	current_scene[0] = '\0';
 	current_scene_name[0] = '\0';
@@ -272,6 +272,16 @@ void M_Scene::RecursiveUpdate(GameObject* parent)
 		{
 			RecursiveUpdate(parent->children[i]);
 		}
+	}
+}
+
+	void M_Scene::LoadHoldScene()
+{
+	if (holdUID != 0)
+	{
+		std::string ret = { "Library/Scenes/" + std::to_string(holdUID) + ".des" };
+		LoadScene(ret.c_str());
+		holdUID = 0;
 	}
 }
 

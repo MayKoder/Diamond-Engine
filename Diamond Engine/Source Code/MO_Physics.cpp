@@ -6,6 +6,7 @@
 
 #include"CO_Script.h"
 #include"GameObject.h"
+#include "Component.h"
 
 #include "CO_Collider.h"
 #include "CO_RigidBody.h"
@@ -332,13 +333,13 @@ void CollisionDetector::onContact(const PxContactPairHeader& pairHeader,
 		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
 
-			/*for (size_t k= 0; k < 2; ++k)
+			for (size_t k= 0; k < 2; ++k)
 			{
 				GameObject* contact = static_cast<GameObject*>(pairHeader.actors[k]->userData);
-				C_Script* script =  dynamic_cast<C_Script*>(contact->GetComponent(Component::Type::Script));
+				C_Script* script =  dynamic_cast<C_Script*>(contact->GetComponent(Component::TYPE::SCRIPT));
 				if (script)
 					script->CollisionCallback();
-			}*/
+			}
 
 			/*if ((pairHeader.actors[0] == mSubmarineActor) ||
 				(pairHeader.actors[1] == mSubmarineActor))*/
