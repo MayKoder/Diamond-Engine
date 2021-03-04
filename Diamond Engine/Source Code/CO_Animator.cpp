@@ -299,6 +299,8 @@ bool C_Animator::OnEditor()
 			animations.erase(animation_to_remove);
 		}
 
+		ImGui::Spacing();
+		ImGui::Spacing();
 		ImGui::Button("Drop new animation here");
 		if (ImGui::BeginDragDropTarget())
 		{
