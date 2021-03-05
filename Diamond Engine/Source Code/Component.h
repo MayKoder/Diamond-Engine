@@ -28,6 +28,7 @@ public:
 		AUDIO_SOURCE,
     RigidBody,
 		Collider,
+    Animator,
 		COUNT
 	};
 

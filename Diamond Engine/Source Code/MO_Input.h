@@ -1,5 +1,6 @@
 #pragma once
 #include "Module.h"
+#include"SDL/include/SDL_gamecontroller.h"
 
 #define MAX_MOUSE_BUTTONS 5
 

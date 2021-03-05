@@ -97,7 +97,7 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 		//Start drag for reparent
 		if (ImGui::BeginDragDropSource(/*ImGuiDragDropFlags_SourceNoDisableHover*/))
 		{
-			ImGui::SetDragDropPayload("_GAMEOBJECT", node, sizeof(GameObject*));
+			ImGui::SetDragDropPayload("_GAMEOBJECT", &node->UID, sizeof(int));
 
 			dropTarget = node;
 

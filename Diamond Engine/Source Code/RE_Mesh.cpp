@@ -16,11 +16,14 @@
 ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH), indices_id(0), vertices_id(0), generalWireframe(nullptr),
 EBO(0), VAO(0), VBO(0)
 {
-
 }
 
 ResourceMesh::~ResourceMesh()
-{}
+{
+	boneTransforms.clear();
+	bonesMap.clear();
+	bonesOffsets.clear();
+}
 
 bool ResourceMesh::LoadToMemory()
 {
@@ -41,21 +44,32 @@ bool ResourceMesh::LoadToMemory()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indices_count, indices, GL_STATIC_DRAW);
 
 	//position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)0);
 
 	//texcoords attribute
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(3 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(TEXCOORD_OFFSET * sizeof(GLfloat)));
 
 	//normals attribute
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(5 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(NORMALS_OFFSET * sizeof(GLfloat)));
 
 	//tangents attribute
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(8 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(TANGENTS_OFFSET * sizeof(GLfloat)));
 
+	//joint indices
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(BONES_ID_OFFSET * sizeof(GLfloat)));
+
+	//weights
+	glEnableVertexAttribArray(5);
+	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(WEIGHTS_OFFSET * sizeof(GLfloat)));
+
+	//colors
+	glEnableVertexAttribArray(6);
+	glVertexAttribPointer(6, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(COLORS_OFFSET * sizeof(GLfloat)));
 
 	return true;
 }
@@ -123,6 +137,14 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 
 		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "altColor");
 		glUniform3fv(modelLoc, 1, &color.x);
+
+		if (boneTransforms.size() > 0)
+		{
+			modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "jointTransforms");
+			glUniformMatrix4fv(modelLoc, boneTransforms.size(), GL_FALSE, (GLfloat*)&boneTransforms[0]);
+		}		
+
+		//glUniform4fv(modelLoc, bonesTransforms.size(), reinterpret_cast<GLfloat*>(bonesTransforms.data()));
 	}
 
 	//vertices
@@ -164,8 +186,8 @@ void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals, const
 		glBegin(GL_LINES);
 		for (unsigned int i = 0; i < vertices_count; i++)
 		{
-			glVertex3f(vertices[i * VERTEX_ATTRIBUTES], vertices[i * VERTEX_ATTRIBUTES + 1], vertices[i * VERTEX_ATTRIBUTES + 2]);
-			glVertex3f(vertices[i * VERTEX_ATTRIBUTES] + vertices[i * VERTEX_ATTRIBUTES + 5] * normalLenght,
+			glVertex3f(vertices[i * VERTEX_ATTRIBUTES],      vertices[i * VERTEX_ATTRIBUTES + 1],  vertices[i * VERTEX_ATTRIBUTES + 2]);
+			glVertex3f(vertices[i * VERTEX_ATTRIBUTES]     + vertices[i * VERTEX_ATTRIBUTES + 5] * normalLenght,
 					   vertices[i * VERTEX_ATTRIBUTES + 1] + vertices[i * VERTEX_ATTRIBUTES + 6] * normalLenght,
 					   vertices[i * VERTEX_ATTRIBUTES + 2] + vertices[i * VERTEX_ATTRIBUTES + 7] * normalLenght);
 		}
@@ -218,8 +240,13 @@ vec3 ResourceMesh::GetVectorFromIndex(float* startValue)
 
 const char* ResourceMesh::SaveCustomFormat(uint& retSize)
 {
-	uint aCounts[2] = { indices_count, vertices_count};
-	retSize = sizeof(aCounts) + (sizeof(uint) * indices_count) + (sizeof(float) * vertices_count * VERTEX_ATTRIBUTES);
+	uint aCounts[4] = { hasSkeleton, indices_count, vertices_count, bonesOffsets.size()};
+
+	retSize = sizeof(aCounts) 
+			+ sizeof(uint) * indices_count 
+			+ sizeof(float) * vertices_count * VERTEX_ATTRIBUTES  
+			+ sizeof(float) * 16 * bonesOffsets.size() 
+			+ (sizeof(char) * 30 * bonesMap.size());
 
 	char* fileBuffer = new char[retSize];
 	char* cursor = fileBuffer;
@@ -236,6 +263,8 @@ const char* ResourceMesh::SaveCustomFormat(uint& retSize)
 	memcpy(cursor, vertices, bytes);
 	cursor += bytes;
 
+	SaveBones(&cursor);
+
 	return fileBuffer;
 }
 
@@ -249,13 +278,18 @@ void ResourceMesh::LoadCustomFormat(const char* path)
 		return;
 
 	char* cursor = fileBuffer;
-	uint variables[2];
+	uint variables[4];
 
 	uint bytes = sizeof(variables);
 	memcpy(variables, cursor, bytes);
-	indices_count = variables[0];
-	vertices_count = variables[1];
+	hasSkeleton = variables[0];
+	indices_count = variables[1];
+	vertices_count = variables[2];
+	uint bonesSize = variables[3];
 	cursor += bytes;
+
+	boneTransforms.resize(bonesSize);
+	bonesOffsets.resize(bonesSize);
 
 	bytes = sizeof(uint) * indices_count;
 
@@ -267,6 +301,8 @@ void ResourceMesh::LoadCustomFormat(const char* path)
 	bytes = sizeof(float) * vertices_count * VERTEX_ATTRIBUTES;
 	memcpy(vertices, cursor, bytes);
 	cursor += bytes;
+
+	LoadBones(&cursor);
 
 	//TODO: Should this be here?
 
@@ -284,4 +320,74 @@ void ResourceMesh::LoadCustomFormat(const char* path)
 
 	delete[] fileBuffer;
 	fileBuffer = nullptr;
+}
+
+void ResourceMesh::SaveBones(char** cursor)
+{
+	uint bytes = 0;
+
+	if (bonesOffsets.size() > 0)
+	{
+		for (int i = 0; i < bonesOffsets.size(); ++i)
+		{
+			bytes = sizeof(float) * 16;
+			memcpy(*cursor, bonesOffsets[i].ptr(), bytes);
+			*cursor += bytes;
+		}
+	}
+
+	for (int i = 0; i < bonesMap.size(); ++i)
+	{
+		std::map<std::string, uint>::const_iterator it;
+		for (it = bonesMap.begin(); it != bonesMap.end(); ++it)
+		{
+			if (it->second == i)
+			{
+				bytes = sizeof(uint);
+				uint stringSize = it->first.size();
+				memcpy(*cursor, &stringSize, bytes);
+				*cursor += bytes;
+
+				bytes = sizeof(char) * stringSize;
+				memcpy(*cursor, it->first.c_str(), bytes);
+				*cursor += bytes;
+			}
+		}
+	}
+}
+
+void ResourceMesh::LoadBones(char** cursor)
+{
+	uint bytes = 0;
+
+	//Fills the mesh boneOffset matrix by copying on an empty of 4x4 size and setting later
+	float offsets_matrix[16];
+	for (uint i = 0; i < bonesOffsets.size(); ++i)
+	{
+		bytes = sizeof(float) * 16;
+		memcpy(offsets_matrix, *cursor, bytes);
+		*cursor += bytes;
+
+		float4x4 offset;
+		offset.Set(offsets_matrix);
+		bonesOffsets[i] = offset;
+	}
+
+	//Fills the mesh boneMap by getting the string size and using it to read the name stored and setting it on the map
+	char name[30];
+	for (uint i = 0; i < boneTransforms.size(); ++i)
+	{
+		bytes = sizeof(uint);
+		uint nameSize = 0;
+		memcpy(&nameSize, *cursor, bytes);
+		*cursor += bytes;
+
+		bytes = sizeof(char) * nameSize;
+		memcpy(name, *cursor, bytes);
+		*cursor += bytes;
+
+		name[nameSize] = '\0';
+		std::string str(name);
+		bonesMap[str.c_str()] = i;
+	}
 }

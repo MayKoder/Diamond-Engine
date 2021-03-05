@@ -298,6 +298,8 @@ bool ModuleRenderer3D::CleanUp()
 	LOG(LogType::L_NORMAL, "Destroying 3D Renderer");
 	skybox.ClearMemory();
 
+	glDeleteTextures(1, &checkersTexture);
+
 	SDL_GL_DeleteContext(context);
 	ClearAllRenderData();
 

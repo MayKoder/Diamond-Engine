@@ -6,6 +6,7 @@
 #include "CO_Material.h"
 #include "CO_Camera.h"
 #include "CO_Script.h"
+#include "CO_Animator.h"
 #include "CO_RigidBody.h"
 #include "CO_Collider.h"
 #include "CO_AudioListener.h"
@@ -127,6 +128,9 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 		ret = new C_Camera(this);
 		EngineExternal->moduleScene->SetGameCamera(dynamic_cast<C_Camera*>(ret));
 		break;
+	case Component::TYPE::Animator:
+		ret = new C_Animator(this);
+      break;
 	case Component::TYPE::RigidBody:
 		ret = new C_RigidBody(this);
 		break;
@@ -361,4 +365,11 @@ bool GameObject::IsChild(GameObject* _toFind)
 void GameObject::RemoveChild(GameObject* child)
 {
 	children.erase(std::find(children.begin(), children.end(), child));
+}
+
+void GameObject::CollectChilds(std::vector<GameObject*>& vector)
+{
+	vector.push_back(this);
+	for (uint i = 0; i < children.size(); i++)
+		children[i]->CollectChilds(vector);
 }

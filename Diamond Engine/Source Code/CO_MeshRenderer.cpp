@@ -23,7 +23,7 @@
 #include"MathGeoLib/include/Geometry/Plane.h"
 
 C_MeshRenderer::C_MeshRenderer(GameObject* _gm) : Component(_gm), _mesh(nullptr),
-faceNormals(false), vertexNormals(false), showAABB(false), showOBB(false)
+faceNormals(false), vertexNormals(false), showAABB(false), showOBB(false), drawDebugVertices(false)
 {
 	name = "Mesh Renderer";
 	alternColor = float3::one;
@@ -48,7 +48,6 @@ void C_MeshRenderer::Update()
 #ifndef STANDALONE
 	if (showAABB ==true) 
 	{
-
 		float3 points[8];
 		globalAABB.GetCornerPoints(points);
 		ModuleRenderer3D::DrawBox(points, float3(0.2f, 1.f, 0.101f));
@@ -70,7 +69,6 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 	if (_mesh == nullptr)
 		return;
 
-
 	C_Transform* transform = gameObject->transform;
 
 	//TODO IMPORTANT: Optimize this, save this pointer or something
@@ -79,6 +77,62 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 
 	if (material != nullptr && material->IsActive())
 		id = material->GetTextureID();
+
+	//Mesh array with transform matrix of each bone
+	if (rootBone != nullptr) {
+		//Get all the bones
+		std::map<std::string, GameObject*> bonesMap;
+		GetBoneMapping(bonesMap);
+
+		//Set bone Transforms array size using original bones transform array size
+		_mesh->boneTransforms.resize(_mesh->bonesOffsets.size());
+
+		if(bonesMap.size() != _mesh->bonesMap.size())
+		{
+			for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
+			{
+				_mesh->boneTransforms[i] = float4x4::identity;
+			}
+		}
+
+		//Get each bone
+		for (std::map<std::string, uint>::iterator it = _mesh->bonesMap.begin(); it != _mesh->bonesMap.end(); ++it)
+		{
+			GameObject* bone = bonesMap[it->first];
+
+			if (bone != nullptr)
+			{
+				//Calcule of Delta Matrix
+				float4x4 Delta = CalculateDeltaMatrix(dynamic_cast<C_Transform*>(bone->GetComponent(Component::TYPE::TRANSFORM))->globalTransform, dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM))->globalTransform.Inverted());
+				Delta = Delta * _mesh->bonesOffsets[it->second];
+
+				//Storage of Delta Matrix (Transformation applied to each bone)
+				_mesh->boneTransforms[it->second] = Delta.Transposed();
+			}
+		}
+
+		if (bonesMap.size() != _mesh->bonesMap.size())
+		{
+			for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
+			{
+				if (_mesh->boneTransforms[i].Equals(float4x4::identity) && i > 0)
+				{
+					_mesh->boneTransforms[i] = _mesh->boneTransforms[i - 1];
+				}
+			}
+		}
+
+		bonesMap.clear();
+	}
+	else
+	{
+		for (size_t i = 0; i < _mesh->boneTransforms.size(); i++) {
+			_mesh->boneTransforms[i] = float4x4::identity;
+		}
+	}
+
+	if (drawDebugVertices)
+		DrawDebugVertices();
 
 	_mesh->RenderMesh(id, alternColor, rTex, (material && material->material != nullptr) ? material->material : EngineExternal->moduleScene->defaultMaterial, transform);
 
@@ -104,7 +158,6 @@ void C_MeshRenderer::SaveData(JSON_Object* nObj)
 void C_MeshRenderer::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
-
 
 	SetRenderMesh(dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), nObj.ReadString("Path"))));
 
@@ -135,7 +188,7 @@ bool C_MeshRenderer::OnEditor()
 			ImGui::Text("Path: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%s", _mesh->GetLibraryPath());
 		}
 
-		ImGui::Button("Drop .mmh to change mesh", ImVec2(200, 50));
+		ImGui::Button("Drop .mmh to change mesh", ImVec2(180, 40));
 		//TODO: Maybe move this into a function?
 		if (ImGui::BeginDragDropTarget())
 		{
@@ -163,11 +216,11 @@ bool C_MeshRenderer::OnEditor()
 
 		ImGui::Checkbox("Vertex Normals", &vertexNormals);
 		ImGui::SameLine();
-		ImGui::Checkbox("Face Normals", &faceNormals);
-
 		ImGui::Checkbox("Show AABB", &showAABB);
+		ImGui::Checkbox("Face Normals", &faceNormals);
 		ImGui::SameLine();
 		ImGui::Checkbox("Show OBB", &showOBB);
+		ImGui::Checkbox("Draw Vertices", &drawDebugVertices);
 
 		ImGui::ColorPicker3("No texture color: ", &alternColor.x);
 
@@ -234,4 +287,79 @@ void C_MeshRenderer::SetRenderMesh(ResourceMesh* mesh)
 ResourceMesh* C_MeshRenderer::GetRenderMesh()
 {
 	return _mesh;
+}
+
+
+float4x4 C_MeshRenderer::CalculateDeltaMatrix(float4x4 globalMat, float4x4 invertMat)
+{
+	float3 position;
+	Quat rotation;
+	float3 scale;
+
+	float4x4 mat = globalMat;
+	mat.Decompose(position, rotation, scale);
+	mat = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM))->globalTransform.Inverted() * mat;
+	mat.Decompose(position, rotation, scale);
+
+	return mat;
+}
+
+void C_MeshRenderer::GetBoneMapping(std::map<std::string, GameObject*>& boneMapping)
+{
+	boneMapping.clear();
+	std::vector<GameObject*> gameObjects;
+	rootBone->CollectChilds(gameObjects);
+
+	for (uint i = 0; i < gameObjects.size(); ++i)
+	{
+		boneMapping[gameObjects[i]->name] = gameObjects[i];
+	}
+}
+
+void C_MeshRenderer::DrawDebugVertices()
+{
+	if (_mesh->boneTransforms.size() > 0)
+	{
+		for (uint v = 0; v < _mesh->vertices_count; ++v)
+		{
+			float3 vertex;
+			vertex.x = _mesh->vertices[v * VERTEX_ATTRIBUTES];
+			vertex.y = _mesh->vertices[v * VERTEX_ATTRIBUTES + 1];
+			vertex.z = _mesh->vertices[v * VERTEX_ATTRIBUTES + 2];
+
+			//For each set of 4 bones for bertex
+			for (uint b = 0; b < 4; ++b)
+			{
+				//Get bone identificator and weights from arrays
+				int bone_ID = _mesh->vertices[v * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + b];
+				float boneWeight = _mesh->vertices[v * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + b];
+
+				//Meaning boneWeight will be 0
+				if (bone_ID == -1)
+					continue;
+
+				//Transforming original mesh vertex with bone transformation matrix
+				float3 vertexTransform;
+				vertexTransform.x = _mesh->vertices[v * VERTEX_ATTRIBUTES];
+				vertexTransform.y = _mesh->vertices[v * VERTEX_ATTRIBUTES + 1];
+				vertexTransform.z = _mesh->vertices[v * VERTEX_ATTRIBUTES + 2];
+				//float3 Inc = _mesh->boneTransforms[bone_ID].TransformPos(vertexTransform);
+
+				float4 Inc = _mesh->boneTransforms[bone_ID].Transposed().Mul(float4(vertexTransform, 1.0));
+
+				vertex.x += Inc.x * boneWeight;
+				vertex.y += Inc.y * boneWeight;
+				vertex.z += Inc.z * boneWeight;
+			}
+
+			glPushMatrix();
+			glMultMatrixf(gameObject->transform->globalTransform.Transposed().ptr());
+			glPointSize(4.0f);
+			glBegin(GL_POINTS);
+			glVertex3fv(vertex.ptr());
+			glEnd();
+			glPointSize(1.0f);
+			glPopMatrix();
+		}
+	}
 }

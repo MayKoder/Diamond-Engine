@@ -1,9 +1,13 @@
 #ifdef vertex
 #version 330 core
 layout (location = 0) in vec3 position;
-layout (location = 1) in vec3 color;
-layout (location = 2) in vec2 texCoord;
-layout (location = 3) in vec3 normals;
+layout (location = 1) in vec2 texCoord;
+layout (location = 2) in vec3 normals;
+layout (location = 3) in vec3 tangents;
+layout (location = 4) in vec4 boneIDs;
+layout (location = 5) in vec4 weights;
+layout (location = 6) in vec3 colors;
+
 
 out vec3 ourColor;
 out vec2 TexCoord;
@@ -25,7 +29,7 @@ fPosition = pos.xyz;
 
 gl_Position = projection * view * model_matrix * vec4(position, 1.0f);
 
-ourColor = color;
+ourColor = colors;
 TexCoord = texCoord;
 }
 #endif
@@ -61,4 +65,6 @@ vec2 inten = blinnPhongDir(vec3(0.8,1,0.2), 0.5, 0.2, 0.8, 0.3, 80.0);
 gl_FragColor = vec4(lcolor * inten.x + vec3(1.0) * inten.y, 1.0) * vec4(altColor, 1.0);
 }
 #endif
+
+
 

@@ -6,6 +6,7 @@ using DiamondEngine;
 
 public class Core : DiamondComponent
 {
+
     public GameObject reference = null;
     public GameObject shootPoint = null;
 
@@ -27,7 +28,6 @@ public class Core : DiamondComponent
             Vector3 vectorUp = new Vector3(-0.5f, 0, 0.5f);
             reference.localPosition += vectorUp * movementSpeed * Time.deltaTime;
         }
-
         if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT || Input.GetLeftAxisY() > 30000)
         {
             Vector3 vectorDown = new Vector3(0.5f, 0, -0.5f);
@@ -57,5 +57,5 @@ public class Core : DiamondComponent
             InternalCalls.CreateBullet(shootPoint.globalPosition, shootPoint.globalRotation, shootPoint.globalScale);
             timePassed = 0.0f;
         }
-    }
+	}
 }
