@@ -88,10 +88,16 @@ void C_Checkbox::PressCheckbox()
 void C_Checkbox::UnpressCheckbox()
 {
 	if (checkbox_active) {
-		ChangeTexture(CHECKBOXSTATE::CHECKBOXACTIVEHOVERED);
+		if (is_selected)
+			ChangeTexture(CHECKBOXSTATE::CHECKBOXACTIVEHOVERED);
+		else
+			ChangeTexture(CHECKBOXSTATE::CHECKBOXACTIVE);
 	}
 	else {
-		ChangeTexture(CHECKBOXSTATE::CHECKBOXUNACTIVEHOVERED);
+		if (is_selected)
+			ChangeTexture(CHECKBOXSTATE::CHECKBOXUNACTIVEHOVERED);
+		else
+			ChangeTexture(CHECKBOXSTATE::CHECKBOXUNACTIVE);
 	}
 }
 

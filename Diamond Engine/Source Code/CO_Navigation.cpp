@@ -36,15 +36,15 @@ void C_Navigation::Update()
 		CheckIfButtonOrJoystickIsBeingUsed(it->first,state);
 
 		if (button_or_joystick_being_used == it->first && state == KEY_STATE::KEY_UP) {
-			GameObject* gameobject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, it->second.uid_gameobject);
-			DoTheAction(gameObject, it->first, it->second.action, true);
+			GameObject* gameobject_to_pass = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, it->second.uid_gameobject);
 			button_or_joystick_being_used = BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
+			DoTheAction(gameobject_to_pass, it->first, it->second.action, true);
 			return;
 		}
 		else if (button_or_joystick_being_used == BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK && state == KEY_STATE::KEY_DOWN) {
-			GameObject* gameobject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, it->second.uid_gameobject);
-			DoTheAction(gameObject, it->first, it->second.action, false);
+			GameObject* gameobject_to_pass = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, it->second.uid_gameobject);
 			button_or_joystick_being_used = it->first;
+			DoTheAction(gameobject_to_pass, it->first, it->second.action, false);
 			return;
 		}
 
@@ -273,17 +273,22 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	return;
 }
 
-void C_Navigation::DoTheAction(GameObject* gameobject, BUTTONSANDJOYSTICKS button_or_joystick_used, ACTIONSNAVIGATION action, bool is_key_released)
+void C_Navigation::DoTheAction(GameObject* gameobject_passed, BUTTONSANDJOYSTICKS button_or_joystick_used, ACTIONSNAVIGATION action, bool is_key_released)
 {
 	
 	switch (action)
 	{
 	case ACTIONSNAVIGATION::MOVE: {
-		C_Navigation* nav = static_cast<C_Navigation*>(gameObject->GetComponent(Component::TYPE::NAVIGATION));
+		if (is_key_released)
+			return;
+		C_Navigation* nav = static_cast<C_Navigation*>(gameobject_passed->GetComponent(Component::TYPE::NAVIGATION));
 		nav->Select();
-		map_of_buttons_and_joysticks[button_or_joystick_being_used].is_key_down = false;
-		map_of_buttons_and_joysticks[button_or_joystick_being_used].is_key_up = true;
-		button_or_joystick_being_used = BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
+		if (button_or_joystick_being_used != BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK) {
+			nav->button_or_joystick_being_used = button_or_joystick_being_used;
+			map_of_buttons_and_joysticks[button_or_joystick_being_used].is_key_down = false;
+			map_of_buttons_and_joysticks[button_or_joystick_being_used].is_key_up = true;
+			button_or_joystick_being_used = BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
+		}
 		switch (type_of_ui) {
 		case Component::TYPE::BUTTON: {
 			C_Button* button = static_cast<C_Button*>(gameObject->GetComponent(Component::TYPE::BUTTON));
@@ -296,16 +301,19 @@ void C_Navigation::DoTheAction(GameObject* gameobject, BUTTONSANDJOYSTICKS butto
 			break;
 		}
 		}
-		if (nav->map_of_buttons_and_joysticks.count(button_or_joystick_being_used) == 0)
+		if (nav->map_of_buttons_and_joysticks.count(nav->button_or_joystick_being_used) == 0) {
+			nav->button_or_joystick_being_used= BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
 			return;
+		}
 		nav->map_of_buttons_and_joysticks[button_or_joystick_being_used].is_key_down = true;
-		nav->button_or_joystick_being_used = button_or_joystick_used;
+		nav->map_of_buttons_and_joysticks[button_or_joystick_being_used].is_key_up = false;
 		break; }
 
 	case ACTIONSNAVIGATION::EXECUTE:
-		switch (type_of_ui) {
+		C_Navigation* nav = static_cast<C_Navigation*>(gameobject_passed->GetComponent(Component::TYPE::NAVIGATION));
+		switch (nav->type_of_ui) {
 		case Component::TYPE::BUTTON: {
-			C_Button* button = static_cast<C_Button*>(gameObject->GetComponent(Component::TYPE::BUTTON));
+			C_Button* button = static_cast<C_Button*>(gameobject_passed->GetComponent(Component::TYPE::BUTTON));
 			if (is_key_released) {
 				button->ReleaseButton();
 				return;
@@ -314,12 +322,12 @@ void C_Navigation::DoTheAction(GameObject* gameobject, BUTTONSANDJOYSTICKS butto
 			break;
 		}
 		case Component::TYPE::CHECKBOX: {
-			C_Checkbox* checbox = static_cast<C_Checkbox*>(gameObject->GetComponent(Component::TYPE::CHECKBOX));
+			C_Checkbox* checkbox = static_cast<C_Checkbox*>(gameobject_passed->GetComponent(Component::TYPE::CHECKBOX));
 			if (is_key_released) {
-				checbox->UnpressCheckbox();
+				checkbox->UnpressCheckbox();
 				return;
 			}
-			checbox->PressCheckbox();
+			checkbox->PressCheckbox();
 			break;
 		}
 		}
