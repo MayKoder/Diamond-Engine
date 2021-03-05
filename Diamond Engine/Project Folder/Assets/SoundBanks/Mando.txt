@@ -1,6 +1,9 @@
 Event	ID	Name			Wwise Object Path	Notes
+	192623117	Pause_Object			\Default Work Unit\Pause_Object	
 	1602358412	Play_Footstep			\Default Work Unit\Play_Footstep	
+	1931338186	Resume_Object			\Default Work Unit\Resume_Object	
 	2045397714	Play_Weapon_Shoot			\Default Work Unit\Play_Weapon_Shoot	
+	3318621861	Stop_Object			\Default Work Unit\Stop_Object	
 
 Switch Group	ID	Name			Wwise Object Path	Notes
 	354267144	Terrain			\Default Work Unit\Terrain	
