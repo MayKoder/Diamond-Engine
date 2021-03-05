@@ -104,23 +104,7 @@ bool C_Navigation::OnEditor()
 
 
 		
-		//if (ImGui::BeginDragDropTarget())
-		//{
-		//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT"))
-		//	{
-		//		//Drop asset from Asset window to scene window
-		//		std::string* metaFileDrop = (std::string*)payload->Data;
-
-		//		if (texture != nullptr)
-		//			EngineExternal->moduleResources->UnloadResource(texture->GetUID());
-
-		//		std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
-
-		//		texture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
-		//		LOG(LogType::L_WARNING, "File %s loaded to scene", (*metaFileDrop).c_str());
-		//	}
-		//	ImGui::EndDragDropTarget();
-		//}
+		
 
 	}
 
@@ -166,6 +150,19 @@ void C_Navigation::WriteButtonOrJoystickOnEditor(const char* text, BUTTONSANDJOY
 		ImGui::EndCombo();
 	}
 	ImGui::NextColumn();
+	if (current_item != items[0]) {
+		ImGui::Text("UID:"); 
+		ImGui::SameLine();
+		ImGui::Text(std::to_string(map_of_buttons_and_joysticks[button_or_joystick].uid_gameobject).c_str());
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT"))
+			{
+				map_of_buttons_and_joysticks[button_or_joystick].uid_gameobject = *(int*)payload->Data;
+			}
+			ImGui::EndDragDropTarget();
+		}
+	}
 	ImGui::NextColumn();
 }
 
