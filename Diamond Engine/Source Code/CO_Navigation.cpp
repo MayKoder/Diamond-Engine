@@ -37,12 +37,16 @@ void C_Navigation::Update()
 
 		if (button_or_joystick_being_used == it->first && state == KEY_STATE::KEY_UP) {
 			GameObject* gameobject_to_pass = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, it->second.uid_gameobject);
+			if (gameobject_to_pass == nullptr || gameobject_to_pass->GetComponent(Component::TYPE::NAVIGATION) == nullptr)
+				continue;
 			button_or_joystick_being_used = BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
 			DoTheAction(gameobject_to_pass, it->first, it->second.action, true);
 			return;
 		}
 		else if (button_or_joystick_being_used == BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK && state == KEY_STATE::KEY_DOWN) {
 			GameObject* gameobject_to_pass = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, it->second.uid_gameobject);
+			if (gameobject_to_pass == nullptr || gameobject_to_pass->GetComponent(Component::TYPE::NAVIGATION) == nullptr)
+				continue;
 			button_or_joystick_being_used = it->first;
 			DoTheAction(gameobject_to_pass, it->first, it->second.action, false);
 			return;
