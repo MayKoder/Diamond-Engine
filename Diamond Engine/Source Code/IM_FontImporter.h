@@ -27,11 +27,13 @@ public:
 struct FontDictionary
 {
 public:
-	FontDictionary(std::vector<Character>& characterVec);
+	FontDictionary(std::map<char, Character>& characterVec);
 	~FontDictionary();
 
+	void UnloadCharacterTextures();
+
 public:
-	std::vector<Character> characters;
+	std::map<char, Character> characters;
 };
 
 
@@ -43,12 +45,12 @@ public:
 
 	void ImportNewFont(const char* path, int size);
 	void InitFontDictionary(FT_Face& face, const char* fontName);
+	FontDictionary* GetFont(const char* name);
 
 private:
 	FT_Library library;
 	
 	//Font name	---- Leters of the font
 	std::map<std::string, FontDictionary> fontLibrary;
-
 };
 

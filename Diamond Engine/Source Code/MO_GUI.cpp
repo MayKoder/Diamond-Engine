@@ -12,6 +12,7 @@
 #include "CO_Camera.h"
 #include "CO_Button.h"
 #include "CO_Image2D.h"
+#include "CO_Text.h"
 
 #include "RE_Material.h"
 #include "RE_Shader.h"
@@ -33,21 +34,39 @@ M_Gui::~M_Gui()
 	glDeleteBuffers(1, &VAO);
 	VAO = 0;
 
+	glDeleteBuffers(1, &textVAO);
+	textVAO = 0;
+	glDeleteBuffers(1, &textVBO);
+	textVBO = 0;
+
 	canvas = -1;
 }
 
 
 bool M_Gui::Start()
 {
+	//Generate ui buffer
 	glGenBuffers(1, &VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VAO);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 12, uiVAO, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 12, arrayUiVAO, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	//Generate text buffer
+	glGenVertexArrays(1, &textVAO);
+	glGenBuffers(1, &textVBO);
+
+	glBindVertexArray(textVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, textVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 
 	return true;
 }
@@ -94,34 +113,20 @@ void M_Gui::RenderUiElement(GameObject* uiElement)
 	Component* mat = uiElement->GetComponent(Component::TYPE::MATERIAL);
 	Component* trans2D = uiElement->GetComponent(Component::TYPE::TRANSFORM_2D);
 	Component* img2D = uiElement->GetComponent(Component::TYPE::IMAGE_2D);
+	Component* txt = uiElement->GetComponent(Component::TYPE::TEXT_UI);
 
-	if (mat != nullptr && trans2D != nullptr && img2D != nullptr)
+	if (mat != nullptr && trans2D != nullptr && (img2D != nullptr || txt != nullptr))
 	{
 		C_Transform2D* transform = static_cast<C_Transform2D*>(trans2D);
 		ResourceMaterial* material = static_cast<C_Material*>(mat)->material;
 
 		if (material->shader)
 		{
-			//glEnableClientState(GL_VERTEX_ARRAY);
-			material->shader->Bind();
-			material->PushUniforms();
+			if (img2D != nullptr)
+				static_cast<C_Image2D*>(img2D)->RenderImage(transform->GetGlobal2DTransform().ptr(), material, VAO);
 
-			//TOD: Change this with the C_Image resource id
-			static_cast<C_Image2D*>(img2D)->RenderImage(transform->GetGlobal2DTransform().ptr(), material->shader->shaderProgramID);
-
-			glBindBuffer(GL_ARRAY_BUFFER, VAO);
-			//glVertexPointer(2, GL_FLOAT, 0, NULL);
-
-			glDrawArrays(GL_TRIANGLES, 0, 6);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-			//glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, 0);
-
-			if (material->shader)
-				material->shader->Unbind();
-
-			//glDisableClientState(GL_VERTEX_ARRAY);
+			if (txt != nullptr)
+				static_cast<C_Text*>(txt)->RenderText(transform, material, textVAO, textVBO);
 		}
 	}
 }
@@ -186,7 +191,6 @@ void M_Gui::CreateCheckbox()
 	checkbox->AddComponent(Component::TYPE::CHECKBOX);
 	checkbox->AddComponent(Component::TYPE::IMAGE_2D);
 	checkbox->AddComponent(Component::TYPE::NAVIGATION, "Checkbox");
-
 }
 
 void M_Gui::CreateText()
@@ -202,7 +206,6 @@ void M_Gui::CreateText()
 	text->AddComponent(Component::TYPE::TRANSFORM_2D);
 	text->AddComponent(Component::TYPE::MATERIAL);
 	text->AddComponent(Component::TYPE::TEXT_UI);
-
 }
 
 

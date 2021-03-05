@@ -33,9 +33,12 @@ public:
 private:
 	int canvas = -1;
 	unsigned int VAO = 0;
+
+	unsigned int textVAO = 0;
+	unsigned int textVBO = 0;
 };
 
-const float uiVAO[] = {
+const float arrayUiVAO[] = {
 -1, -1,
 1, -1,
 -1, 1,
