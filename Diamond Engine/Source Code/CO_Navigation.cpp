@@ -65,49 +65,49 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	switch (button_or_joystick_to_check)
 	{
 	case BUTTONSANDJOYSTICKS::BUTTON_A:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_A);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_A);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_B:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_B);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_B);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_X:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_X);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_X);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_Y:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_Y);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_Y);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_BACK:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_BACK);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_BACK);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_GUIDE:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_GUIDE);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_GUIDE);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_START:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_START);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_START);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_LEFTTTRIGGER:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_LEFTSTICK);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_LEFTSTICK);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_RIGHTTRIGGER:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_RIGHTSTICK);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_RIGHTSTICK);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_LEFTSHOULDER:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_RIGHTSHOULDER:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_DPAD_UP:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_DPAD_UP);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_DPAD_UP);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_DPAD_DOWN:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_DPAD_DOWN);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_DPAD_DOWN);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_DPAD_LEFT:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_DPAD_LEFT);
 		break;
 	case BUTTONSANDJOYSTICKS::BUTTON_DPAD_RIGHT:
-		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+		state = EngineExternal->moduleInput->GetGamePadKey(SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
 		break;
 	case BUTTONSANDJOYSTICKS::RIGHT_JOYSTICK_UP: {
 		int value_of_axis = EngineExternal->moduleInput->GetRightAxisY();
