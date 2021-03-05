@@ -128,7 +128,7 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 		ret = new C_Camera(this);
 		EngineExternal->moduleScene->SetGameCamera(dynamic_cast<C_Camera*>(ret));
 		break;
-	case Component::Type::Animator:
+	case Component::TYPE::Animator:
 		ret = new C_Animator(this);
       break;
 	case Component::TYPE::RigidBody:

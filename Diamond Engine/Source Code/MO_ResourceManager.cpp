@@ -264,7 +264,7 @@ Resource* M_ResourceManager::RequestResource(int uid, const char* libraryPath)
 	{
 		Resource* ret = nullptr;
 
-		static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 8, "Update all switches with new type");
+		static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 9, "Update all switches with new type");
 
 		//Save check
 		if (FileSystem::Exists(libraryPath))
@@ -342,7 +342,7 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 	char* fileBuffer = nullptr;
 	unsigned int size = FileSystem::LoadToBuffer(assetsFile, &fileBuffer);
 
-	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 8, "Update all switches with new type");
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 9, "Update all switches with new type");
 	switch (resource->GetType()) 
 	{
 		case Resource::Type::TEXTURE: TextureImporter::Import(fileBuffer, size, resource); break;
@@ -376,7 +376,7 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid,
 {
 	Resource* ret = nullptr;
 
-	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 8, "Update all switches with new type");
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 9, "Update all switches with new type");
 	switch (type) 
 	{
 		case Resource::Type::SCENE : ret = new Resource(uid, Resource::Type::SCENE); break;
@@ -404,7 +404,7 @@ Resource* M_ResourceManager::LoadFromLibrary(const char* libraryFile, Resource::
 {
 	Resource* ret = nullptr;
 
-	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 8, "Update all switches with new type");
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 9, "Update all switches with new type");
 
 	int uid = _uid;
 	switch (type)

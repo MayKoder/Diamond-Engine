@@ -97,7 +97,7 @@ void C_Animator::Update()
 					GameObject* meshRendererObject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, meshRendererUID);
 					if (meshRendererObject != nullptr)
 					{
-						dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::Type::MeshRenderer))->rootBone = rootBone;
+						dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::TYPE::MESH_RENDERER))->rootBone = rootBone;
 					}
 				}
 				if (rootBone == nullptr)
@@ -248,7 +248,7 @@ bool C_Animator::OnEditor()
 
 				GameObject* dropGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, uid);
 				if (rootBone != nullptr) {
-					C_MeshRenderer* meshRenderer = dynamic_cast<C_MeshRenderer*>(dropGO->GetComponent(Component::Type::MeshRenderer));
+					C_MeshRenderer* meshRenderer = dynamic_cast<C_MeshRenderer*>(dropGO->GetComponent(Component::TYPE::MESH_RENDERER));
 					if (meshRenderer != nullptr) {
 						meshRenderer->rootBone = rootBone;
 						meshRendererUID = dropGO->UID;
@@ -506,7 +506,7 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, cons
 	std::map<std::string, GameObject*>::iterator boneIt;
 	for (boneIt = boneMapping.begin(); boneIt != boneMapping.end(); ++boneIt)
 	{
-		C_Transform* transform = dynamic_cast<C_Transform*>(boneIt->second->GetComponent(Component::Type::Transform));
+		C_Transform* transform = dynamic_cast<C_Transform*>(boneIt->second->GetComponent(Component::TYPE::TRANSFORM));
 
 		if (settings->channels.find(boneIt->first.c_str()) == settings->channels.end()) continue;
 

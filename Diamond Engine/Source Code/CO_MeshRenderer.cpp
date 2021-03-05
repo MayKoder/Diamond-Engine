@@ -103,7 +103,7 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 			if (bone != nullptr)
 			{
 				//Calcule of Delta Matrix
-				float4x4 Delta = CalculateDeltaMatrix(dynamic_cast<C_Transform*>(bone->GetComponent(Component::Type::Transform))->globalTransform, dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::Type::Transform))->globalTransform.Inverted());
+				float4x4 Delta = CalculateDeltaMatrix(dynamic_cast<C_Transform*>(bone->GetComponent(Component::TYPE::TRANSFORM))->globalTransform, dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM))->globalTransform.Inverted());
 				Delta = Delta * _mesh->bonesOffsets[it->second];
 
 				//Storage of Delta Matrix (Transformation applied to each bone)
@@ -299,7 +299,7 @@ float4x4 C_MeshRenderer::CalculateDeltaMatrix(float4x4 globalMat, float4x4 inver
 
 	float4x4 mat = globalMat;
 	mat.Decompose(position, rotation, scale);
-	mat = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::Type::Transform))->globalTransform.Inverted() * mat;
+	mat = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM))->globalTransform.Inverted() * mat;
 	mat.Decompose(position, rotation, scale);
 
 	return mat;
