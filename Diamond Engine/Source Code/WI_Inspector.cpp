@@ -106,8 +106,9 @@ void W_Inspector::Draw()
 			ImGui::PopItemWidth();
 
 			if (ImGui::Button("Delete")) {
-				selectedGO->Destroy();
-			}
+				selectedGO->Destroy();}
+
+			ImGui::Text("UID: %d", selectedGO->UID);
 
 			ImGui::GreySeparator();
 

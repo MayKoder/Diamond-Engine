@@ -648,7 +648,8 @@ void C_Animator::DrawBones(GameObject* gameObject)
 	Quat rotation;
 	float3 scale;
 
-	if (gameObject->parent != nullptr) {
+	if (gameObject->parent != nullptr) 
+	{
 		gameObject->parent->transform->globalTransform.Decompose(position, rotation, scale);
 		glVertex3f(position.x, position.y, position.z);
 	}

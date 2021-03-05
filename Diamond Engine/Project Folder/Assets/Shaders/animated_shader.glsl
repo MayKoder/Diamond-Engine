@@ -28,7 +28,7 @@ uniform mat4 jointTransforms[MAX_JOINTS];
 
 void main()
 {
-	vec4 totalPosition = vec4(1.0);
+	vec4 totalPosition = vec4(0.0);
 	
 	for(int i= 0; i < MAX_WEIGHTS; i++){
 	
@@ -52,8 +52,7 @@ void main()
 	TexCoord = texCoord;
 	influenceColor = vec3(weights.x, weights.y, weights.z);
 	//ourColor = vec3(boneIDs.x / 30, boneIDs.y / 30, boneIDs.z / 30);
-	vertexColor = colors;
-    
+	vertexColor = colors; 
 }
 #endif
 
@@ -74,6 +73,9 @@ void main()
  	//color = vec4(vertexColor.x, vertexColor.y, vertexColor.z, 1.0);
 }
 #endif
+
+
+
 
 
 

@@ -159,7 +159,6 @@ void C_MeshRenderer::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
 
-
 	SetRenderMesh(dynamic_cast<ResourceMesh*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), nObj.ReadString("Path"))));
 
 	alternColor = nObj.ReadVector3("alternColor");

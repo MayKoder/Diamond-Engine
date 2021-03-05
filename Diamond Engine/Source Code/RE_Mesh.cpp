@@ -71,7 +71,6 @@ bool ResourceMesh::LoadToMemory()
 	glEnableVertexAttribArray(6);
 	glVertexAttribPointer(6, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(COLORS_OFFSET * sizeof(GLfloat)));
 
-
 	return true;
 }
 
