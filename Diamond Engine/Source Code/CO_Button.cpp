@@ -146,6 +146,7 @@ void C_Button::SaveData(JSON_Object* nObj)
 		DEJson::WriteString(nObj, "Script_Name", script_name.c_str());
 	}
 	DEJson::WriteInt(nObj, "ButtonState", static_cast<int>(num_sprite_used));
+	DEJson::WriteBool(nObj, "Is Selected", is_selected);
 }
 
 void C_Button::LoadData(DEConfig& nObj)
@@ -183,6 +184,7 @@ void C_Button::LoadData(DEConfig& nObj)
 		script_name = nObj.ReadString("Script_Name");
 
 	num_sprite_used = static_cast<BUTTONSTATE>(nObj.ReadInt("ButtonState"));
+	is_selected = nObj.ReadBool("Is Selected");
 }
 
 

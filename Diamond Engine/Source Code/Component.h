@@ -21,7 +21,6 @@ public:
 		TRANSFORM_2D,
 		BUTTON,
 		CHECKBOX,
-		NAVIGATION,
 		TEXT_UI,
 		CANVAS,
 		IMAGE_2D,
@@ -29,6 +28,7 @@ public:
 		AUDIO_SOURCE,
     RigidBody,
 		Collider,
+		NAVIGATION,
 		COUNT
 	};
 

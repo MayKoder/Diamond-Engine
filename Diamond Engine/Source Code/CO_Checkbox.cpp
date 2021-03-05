@@ -232,6 +232,7 @@ void C_Checkbox::SaveData(JSON_Object* nObj)
 	}
 	DEJson::WriteInt(nObj, "ButtonState", static_cast<int>(num_sprite_used));
 	DEJson::WriteBool(nObj, "Checkbox Active", checkbox_active);
+	DEJson::WriteBool(nObj, "Is Selected", is_selected);
 }
 
 void C_Checkbox::LoadData(DEConfig& nObj)
@@ -295,6 +296,7 @@ void C_Checkbox::LoadData(DEConfig& nObj)
 
 	num_sprite_used = static_cast<CHECKBOXSTATE>(nObj.ReadInt("ButtonState"));
 	checkbox_active = nObj.ReadBool("Checkbox Active");
+	is_selected = nObj.ReadBool("Is Selected");
 }
 
 #ifndef STANDALONE

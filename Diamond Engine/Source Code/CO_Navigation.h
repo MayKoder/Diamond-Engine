@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-//#include "SDL/include/SDL_gamecontroller.h" ///ARNAU: PREGUNTAR A MAYK
 #include <map>
 
 enum KEY_STATE;
