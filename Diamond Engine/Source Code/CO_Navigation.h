@@ -63,6 +63,11 @@ public:
 
     void Select();
 
+    void SaveData(JSON_Object* nObj) override;
+    void LoadData(DEConfig& nObj) override;
+
+    void SaveMapData(JSON_Object* nObj, ActionToRealize& action, BUTTONSANDJOYSTICKS map_index);
+    void LoadMapaData(DEConfig& nObj);
 
 #ifndef STANDALONE
     bool OnEditor() override;

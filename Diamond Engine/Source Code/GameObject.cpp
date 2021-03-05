@@ -315,6 +315,18 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 		conf.nObj = json_array_get_object(componentArray, i);
 
 		const char* scName = conf.ReadString("ScriptName");
+		int num_type = conf.ReadInt("Type Of UI");
+		if (num_type != 0) {
+			switch (static_cast<Component::TYPE>(num_type)) {
+			case Component::TYPE::BUTTON:
+				scName = "Button";
+				break;
+			case Component::TYPE::CHECKBOX:
+				scName = "Checkbox";
+				break;
+			}
+
+		}
 		Component* comp = AddComponent((Component::TYPE)conf.ReadInt("Type"), scName);
 
 		comp->LoadData(conf);

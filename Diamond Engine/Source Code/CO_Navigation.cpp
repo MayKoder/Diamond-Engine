@@ -362,6 +362,65 @@ void C_Navigation::Select()
 	}
 }
 
+void C_Navigation::SaveData(JSON_Object* nObj)
+{
+	Component::SaveData(nObj);
+
+	JSON_Value* goArray = json_value_init_array();
+	JSON_Array* jsArray = json_value_get_array(goArray);
+	for (std::map<BUTTONSANDJOYSTICKS, ActionToRealize>::iterator it = map_of_buttons_and_joysticks.begin(); it != map_of_buttons_and_joysticks.end(); ++it)
+	{
+		JSON_Value* nVal = json_value_init_object();
+		JSON_Object* nObj_map = json_value_get_object(nVal);
+		SaveMapData(nObj_map, it->second, it->first);
+		json_array_append_value(jsArray, nVal);
+	}
+	json_object_set_value(nObj, "Map", goArray);
+	DEJson::WriteInt(nObj, "Button Being Used", static_cast<int>(button_or_joystick_being_used));
+	DEJson::WriteInt(nObj, "Type Of UI", static_cast<int>(type_of_ui));
+	DEJson::WriteBool(nObj, "Is Selected", is_selected);
+}
+
+void C_Navigation::LoadData(DEConfig& nObj)
+{
+	Component::LoadData(nObj);
+
+	
+
+	for (size_t i = 0; i < json_array_get_count(json_object_get_array(nObj.nObj, "Map")); i++)
+	{
+		DEConfig conf(nullptr);
+
+		conf.nObj = json_array_get_object(json_object_get_array(nObj.nObj, "Map"), i);
+
+		LoadMapaData(conf);
+
+	}
+
+	button_or_joystick_being_used = static_cast<BUTTONSANDJOYSTICKS>(nObj.ReadInt("Button Being Used"));
+	is_selected= nObj.ReadBool("Is Selected");
+}
+
+void C_Navigation::SaveMapData(JSON_Object* nObj, ActionToRealize& action, BUTTONSANDJOYSTICKS map_index)
+{
+	DEJson::WriteInt(nObj, "Index", static_cast<int>(map_index));
+	DEJson::WriteInt(nObj, "UID", action.uid_gameobject);
+	DEJson::WriteInt(nObj, "Action", static_cast<int>(action.action));
+	DEJson::WriteBool(nObj, "Is Key Down", action.is_key_down);
+	DEJson::WriteBool(nObj, "Is Key Up", action.is_key_up);
+
+}
+
+void C_Navigation::LoadMapaData(DEConfig& nObj)
+{
+	ActionToRealize new_action;
+	new_action.action= static_cast<ACTIONSNAVIGATION>(nObj.ReadInt("Action"));
+	new_action.uid_gameobject = nObj.ReadInt("UID");
+	new_action.is_key_down = nObj.ReadBool("Is Key Down");
+	new_action.is_key_up = nObj.ReadBool("Is Key Up");
+	map_of_buttons_and_joysticks.emplace(static_cast<BUTTONSANDJOYSTICKS>(nObj.ReadInt("Index")), new_action);
+}
+
 
 
 #ifndef STANDALONE
