@@ -95,6 +95,8 @@ ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimati
 	std::string file_name = std::to_string(UID);
 	file_name += ".anim";
 
+	//EngineExternal->moduleResources->UnloadResource(animation->GetUID());
+
 	RELEASE_ARRAY(buffer);
 
 	return animation;

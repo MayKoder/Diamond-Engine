@@ -297,7 +297,9 @@ bool C_Animator::OnEditor()
 			}
 			ImGui::PopID();
 		}
-		if (animation_to_remove.size() > 0) {
+		if (animation_to_remove.size() > 0) 
+		{
+			EngineExternal->moduleResources->UnloadResource(animations[animation_to_remove]->GetUID());
 			animations.erase(animation_to_remove);
 		}
 
