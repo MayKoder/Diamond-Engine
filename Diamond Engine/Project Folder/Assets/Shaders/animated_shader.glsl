@@ -28,7 +28,7 @@ uniform mat4 jointTransforms[MAX_JOINTS];
 
 void main()
 {
-	vec4 totalPosition = vec4(1.0);
+	vec4 totalPosition = vec4(0.0);
 	
 	for(int i= 0; i < MAX_WEIGHTS; i++){
 	
@@ -74,6 +74,7 @@ void main()
  	//color = vec4(vertexColor.x, vertexColor.y, vertexColor.z, 1.0);
 }
 #endif
+
 
 
 
