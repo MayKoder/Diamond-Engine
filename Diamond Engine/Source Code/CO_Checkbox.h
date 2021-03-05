@@ -33,6 +33,8 @@ public:
 	bool OnEditor() override;
 #endif // !STANDALONE
 
+public:
+	bool is_selected;
 private:
 	ResourceTexture* sprite_checkbox_active;
 	ResourceTexture* sprite_checkbox_active_hovered;

@@ -16,7 +16,7 @@
 
 C_Checkbox::C_Checkbox(GameObject* gameObject): Component(gameObject), sprite_checkbox_active(nullptr), sprite_checkbox_active_hovered(nullptr), sprite_checkbox_active_pressed(nullptr),
 sprite_checkbox_unactive(nullptr), sprite_checkbox_unactive_hovered(nullptr), sprite_checkbox_unactive_pressed(nullptr), script_name(""), num_sprite_used(CHECKBOXSTATE::CHECKBOXUNACTIVE),
-checkbox_active(false)
+checkbox_active(false), is_selected(false)
 {
 	name = "Checkbox";
 }
@@ -45,6 +45,26 @@ C_Checkbox::~C_Checkbox()
 
 void C_Checkbox::Update()
 {
+	switch (num_sprite_used)
+	{
+	case CHECKBOXSTATE::CHECKBOXACTIVE:
+		if (is_selected)
+			ChangeTexture(CHECKBOXSTATE::CHECKBOXACTIVEHOVERED);
+		break;
+	case CHECKBOXSTATE::CHECKBOXACTIVEHOVERED:
+		if (!is_selected)
+			ChangeTexture(CHECKBOXSTATE::CHECKBOXACTIVE);
+		break;
+	case CHECKBOXSTATE::CHECKBOXUNACTIVE:
+		if (is_selected)
+			ChangeTexture(CHECKBOXSTATE::CHECKBOXUNACTIVEHOVERED);
+		break;
+	case CHECKBOXSTATE::CHECKBOXUNACTIVEHOVERED:
+		if (!is_selected)
+			ChangeTexture(CHECKBOXSTATE::CHECKBOXUNACTIVE);
+		break;
+	}
+
 #ifndef STANDALONE
 	ChangeTexture(num_sprite_used);
 	if (gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()) == nullptr)
@@ -54,23 +74,23 @@ void C_Checkbox::Update()
 
 void C_Checkbox::PressCheckbox()
 {
+	checkbox_active = !checkbox_active;
 	if (checkbox_active) {
+		/// ARNAU: EXECUTE SCRIPT
 		ChangeTexture(CHECKBOXSTATE::CHECKBOXACTIVEPRESSED);
 	}
 	else {
+		/// ARNAU: EXECUTE SCRIPT
 		ChangeTexture(CHECKBOXSTATE::CHECKBOXUNACTIVEPRESSED);
 	}
 }
 
 void C_Checkbox::UnpressCheckbox()
 {
-	checkbox_active = !checkbox_active;
 	if (checkbox_active) {
-		/// ARNAU: EXECUTE SCRIPT
 		ChangeTexture(CHECKBOXSTATE::CHECKBOXACTIVEHOVERED);
 	}
 	else {
-		/// ARNAU: EXECUTE SCRIPT
 		ChangeTexture(CHECKBOXSTATE::CHECKBOXUNACTIVEHOVERED);
 	}
 }

@@ -168,7 +168,7 @@ void M_Gui::CreateButton()
 	button->AddComponent(Component::TYPE::MATERIAL);
 	button->AddComponent(Component::TYPE::BUTTON);
 	button->AddComponent(Component::TYPE::IMAGE_2D);
-	button->AddComponent(Component::TYPE::NAVIGATION);
+	button->AddComponent(Component::TYPE::NAVIGATION, "Button");
 }
 
 void M_Gui::CreateCheckbox()
@@ -185,7 +185,7 @@ void M_Gui::CreateCheckbox()
 	checkbox->AddComponent(Component::TYPE::MATERIAL);
 	checkbox->AddComponent(Component::TYPE::CHECKBOX);
 	checkbox->AddComponent(Component::TYPE::IMAGE_2D);
-	checkbox->AddComponent(Component::TYPE::NAVIGATION);
+	checkbox->AddComponent(Component::TYPE::NAVIGATION, "Checkbox");
 
 }
 

@@ -53,7 +53,7 @@ struct ActionToRealize {
 
 class C_Navigation :public Component {
 public:
-	C_Navigation(GameObject* gameObject);
+	C_Navigation(GameObject* gameObject, Component::TYPE type_of_ui);
 	~C_Navigation() override;
 
 	void Update() override;
@@ -64,6 +64,7 @@ public:
 
     void Select();
 
+
 #ifndef STANDALONE
     bool OnEditor() override;
     void WriteButtonOrJoystickOnEditor(const char* text,BUTTONSANDJOYSTICKS button_or_joystick);
@@ -73,4 +74,5 @@ private:
     std::map< BUTTONSANDJOYSTICKS, ActionToRealize> map_of_buttons_and_joysticks;
     bool is_selected;
     BUTTONSANDJOYSTICKS button_or_joystick_being_used;
+    Component::TYPE type_of_ui;
 };

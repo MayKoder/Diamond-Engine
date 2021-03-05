@@ -1,6 +1,7 @@
 #include "CO_Button.h"
 #include "CO_Script.h"
 #include "CO_Image2D.h"
+#include "CO_Navigation.h"
 
 #include "RE_Texture.h"
 
@@ -16,7 +17,7 @@
 
 
 C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite_button_pressed(nullptr), sprite_button_hovered(nullptr), sprite_button_unhovered(nullptr), script_name(""), 
-num_sprite_used(BUTTONSTATE::BUTTONUNHOVERED)
+num_sprite_used(BUTTONSTATE::BUTTONUNHOVERED), is_selected(false)
 {
 	name = "Button";
 
@@ -37,6 +38,18 @@ C_Button::~C_Button()
 
 void C_Button::Update()
 {
+	switch (num_sprite_used)
+	{
+	case BUTTONSTATE::BUTTONHOVERED:
+		if(!is_selected)
+			ChangeTexture(BUTTONSTATE::BUTTONUNHOVERED);
+		break;
+	case BUTTONSTATE::BUTTONUNHOVERED:
+		if (is_selected)
+			ChangeTexture(BUTTONSTATE::BUTTONHOVERED);
+		break;
+	}
+	
 #ifndef STANDALONE
 	ChangeTexture(num_sprite_used);
 	if (gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()) == nullptr)
@@ -52,7 +65,10 @@ void C_Button::ExecuteButton()
 
 void C_Button::ReleaseButton()
 {
-	ChangeTexture(BUTTONSTATE::BUTTONHOVERED);
+	if(is_selected)
+		ChangeTexture(BUTTONSTATE::BUTTONHOVERED);
+	else
+		ChangeTexture(BUTTONSTATE::BUTTONUNHOVERED);
 }
 
 void C_Button::ChangeTexture(BUTTONSTATE new_num_sprite)

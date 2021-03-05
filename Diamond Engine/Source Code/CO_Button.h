@@ -30,6 +30,8 @@ public:
 	bool OnEditor() override;
 #endif // !STANDALONE
 
+public:
+	bool is_selected;
 private:
 	ResourceTexture* sprite_button_pressed;
 	ResourceTexture* sprite_button_hovered;

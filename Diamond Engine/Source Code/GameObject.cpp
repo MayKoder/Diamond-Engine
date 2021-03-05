@@ -154,7 +154,13 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 		break;
 
 	case Component::TYPE::NAVIGATION:
-		ret = new C_Navigation(this);
+		assert(params != nullptr, "You need to specify the type of ui");
+		if ("Button" == params)
+			ret = new C_Navigation(this, Component::TYPE::BUTTON);
+		else if ("Checkbox" == params)
+			ret = new C_Navigation(this, Component::TYPE::CHECKBOX);
+		else 
+			LOG(LogType::L_WARNING, "The Navigation component hasn't been created because the type wasn't correct");
 		break;
 
 	case Component::TYPE::TEXT_UI:
