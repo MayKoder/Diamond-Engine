@@ -434,8 +434,6 @@ void M_Scene::CleanScene()
 #endif
 
 	root = CreateGameObject("Scene root", nullptr);
-	current_scene[0] = '\0';
-	current_scene_name[0] = '\0';
 }
 
 GameObject* M_Scene::LoadGOData(JSON_Object* goJsonObj, GameObject* parent)

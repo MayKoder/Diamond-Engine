@@ -226,6 +226,8 @@ void M_Editor::DrawMenuBar()
 			{
 				//Do something
 				App->moduleScene->CleanScene();
+				App->moduleScene->current_scene[0] = '\0';
+				App->moduleScene->current_scene_name[0] = '\0';
 			}
 			if (ImGui::MenuItem("Save scene", "CTRL+S"))
 			{
@@ -400,7 +402,13 @@ void M_Editor::DrawTopBar()
 			{
 				if (DETime::state == GameState::STOP) 
 				{
-					App->moduleScene->SaveScene("Library/Scenes/tmp.des");
+					char scene_to_save[64];
+					if (App->moduleScene->current_scene == "") {
+						App->moduleScene->SaveScene("Library/Scenes/tmp.des");
+					}
+					else {
+						App->moduleScene->SaveScene(App->moduleScene->current_scene);}
+
 					DETime::Play();
 					EngineExternal->moduleAudio->StopAllSounds();
 					EngineExternal->moduleAudio->PlayOnAwake();
@@ -424,7 +432,14 @@ void M_Editor::DrawTopBar()
 					DETime::Stop();
 					EngineExternal->moduleAudio->StopAllSounds();
 					EngineExternal->moduleAudio->UnLoadAllBanks();
-					App->moduleScene->LoadScene("Library/Scenes/tmp.des");
+
+					if (App->moduleScene->current_scene == "") {
+						App->moduleScene->LoadScene("Library/Scenes/tmp.des");
+					}
+					else {
+						App->moduleScene->LoadScene(App->moduleScene->current_scene);}
+
+					//App->moduleScene->LoadScene("Library/Scenes/tmp.des");
 					App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des");
 				}
 			}
