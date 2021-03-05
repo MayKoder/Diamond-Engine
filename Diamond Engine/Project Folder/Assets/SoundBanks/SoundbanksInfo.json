@@ -18,11 +18,19 @@
    {
     "Id": "1093318992",
     "Language": "SFX",
-    "Hash": "2101818935",
+    "Hash": "2142774806",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Mando",
     "ShortName": "Mando",
     "Path": "Mando.bnk",
     "IncludedEvents": [
+     {
+      "Id": "192623117",
+      "Name": "Pause_Object",
+      "ObjectPath": "\\Events\\Default Work Unit\\Pause_Object",
+      "DurationType": "OneShot",
+      "DurationMin": "0.000000",
+      "DurationMax": "0.000000"
+     },
      {
       "Id": "1602358412",
       "Name": "Play_Footstep",
@@ -227,6 +235,22 @@
         ]
        }
       ]
+     },
+     {
+      "Id": "1931338186",
+      "Name": "Resume_Object",
+      "ObjectPath": "\\Events\\Default Work Unit\\Resume_Object",
+      "DurationType": "OneShot",
+      "DurationMin": "0.000000",
+      "DurationMax": "0.000000"
+     },
+     {
+      "Id": "3318621861",
+      "Name": "Stop_Object",
+      "ObjectPath": "\\Events\\Default Work Unit\\Stop_Object",
+      "DurationType": "OneShot",
+      "DurationMin": "0.000000",
+      "DurationMax": "0.000000"
      }
     ],
     "GameParameters": [
@@ -301,7 +325,7 @@
    {
     "Id": "1229948536",
     "Language": "SFX",
-    "Hash": "509016848",
+    "Hash": "1074631424",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Environment",
     "ShortName": "Environment",
     "Path": "Environment.bnk",
@@ -311,14 +335,14 @@
       "Name": "Play_Broken_Box",
       "ObjectPath": "\\Events\\Default Work Unit\\Play_Broken_Box",
       "DurationType": "OneShot",
-      "DurationMin": "0.707298",
-      "DurationMax": "1.122766",
+      "DurationMin": "0.511503",
+      "DurationMax": "0.682775",
       "IncludedMemoryFiles": [
        {
-        "Id": "729637962",
+        "Id": "31545617",
         "Language": "SFX",
-        "ShortName": "Dash.wav",
-        "Path": "SFX\\Dash_10C4C929.wem"
+        "ShortName": "Wood box broken.wav",
+        "Path": "SFX\\Wood box broken_10C4C929.wem"
        }
       ]
      }

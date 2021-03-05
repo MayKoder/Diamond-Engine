@@ -10,5 +10,5 @@ Audio Bus	ID	Name			Wwise Object Path	Notes
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	729637962	Dash	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Dash_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Mando\Dash		192116
+	31545617	Wood box broken	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Wood box broken_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\Wood box broken		138952
 

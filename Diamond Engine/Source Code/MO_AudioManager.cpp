@@ -266,19 +266,23 @@ void ModuleAudioManager::ResumeEvent(unsigned int id, std::string& eventName) co
 	AK::SoundEngine::ExecuteActionOnEvent(eventName.c_str(), AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Resume, id);
 }
 
+
 void ModuleAudioManager::StopComponent(unsigned int id) const
 {
-	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Stop, id);
+	AK::SoundEngine::PostEvent("Stop_Object", id);
+	//AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Stop, id); //this doesn't work
 }
 
 void ModuleAudioManager::PauseComponent(unsigned int id) const
 {
-	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Pause, id);
+	AK::SoundEngine::PostEvent("Pause_Object", id); //Note that this is not a master resume, that means that will only remove 1 pause action if many
+	//AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Pause, id); //this doesn't work
 }
 
 void ModuleAudioManager::ResumeComponent(unsigned int id) const
 {
-	AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Resume, id);
+	AK::SoundEngine::PostEvent("Resume_Object", id);
+	//AK::SoundEngine::ExecuteActionOnPlayingID(AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Resume, id); //this doesn't work
 }
 
 void ModuleAudioManager::ChangeRTPCValue(unsigned int id, std::string& RTPCname, float value)
