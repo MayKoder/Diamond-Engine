@@ -38,7 +38,10 @@ public:
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
 
+#ifndef STANDALONE
 	bool OnEditor() override;
+	void SaveAnimation(ResourceAnimation* animation, const char* name);
+#endif // !STANDALONE
 
 	void StoreBoneMapping(GameObject* gameObject);
 
@@ -51,7 +54,7 @@ public:
 	Quat	GetChannelRotation(const Channel& channel, float currentKey, Quat default) const;
 	float3	GetChannelScale(const Channel& channel, float currentKey, float3 default) const;
 
-	void SaveAnimation(ResourceAnimation* animation, const char* name);
+
 
 private:
 	void DrawBones(GameObject*);

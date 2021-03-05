@@ -196,6 +196,8 @@ void C_Animator::LoadData(DEConfig& nObj)
 	}
 }
 
+#ifndef STANDALONE
+
 bool C_Animator::OnEditor()
 {	
 	if (Component::OnEditor() == true)
@@ -436,6 +438,32 @@ bool C_Animator::OnEditor()
 	return true;	
 }
 
+void C_Animator::SaveAnimation(ResourceAnimation* animation, const char* name)
+{
+	std::string old_name = animation->animationName;
+	animations.erase(currentAnimation->animationName);
+	sprintf_s(currentAnimation->animationName, name);
+	animations[currentAnimation->animationName] = currentAnimation;
+
+	char* buffer;
+	uint size = currentAnimation->SaveCustomFormat(currentAnimation, &buffer);
+
+	//Save in Library
+	FileSystem::Save(currentAnimation->GetLibraryPath(), buffer, size, false);
+
+	//Save a copy in Assets 
+	std::string old_assets_path = "Assets/Animations/" + old_name + ".anim";
+	std::string new_assets_path = "Assets/Animations/" + std::string(name) + ".anim";
+
+	EngineExternal->moduleResources->RenameAsset(old_assets_path.c_str(), new_assets_path.c_str(), buffer, size, animation);
+
+	old_assets_path.clear();
+	new_assets_path.clear();
+	RELEASE_ARRAY(buffer);
+}
+
+#endif // !STANDALONE
+
 void C_Animator::StoreBoneMapping(GameObject* gameObject)
 {
 	boneMapping[gameObject->name] = gameObject;
@@ -611,30 +639,6 @@ float3 C_Animator::GetChannelScale(const Channel & channel, float currentKey, fl
 		}
 	}
 	return scale;
-}
-
-void C_Animator::SaveAnimation(ResourceAnimation* animation, const char* name)
-{
-	std::string old_name = animation->animationName;
-	animations.erase(currentAnimation->animationName);
-	sprintf_s(currentAnimation->animationName, name);
-	animations[currentAnimation->animationName] = currentAnimation;
-
-	char* buffer;
-	uint size = currentAnimation->SaveCustomFormat(currentAnimation, &buffer);
-
-	//Save in Library
-	FileSystem::Save(currentAnimation->GetLibraryPath(), buffer, size, false); 
-
-	//Save a copy in Assets 
-	std::string old_assets_path = "Assets/Animations/" + old_name + ".anim";
-	std::string new_assets_path = "Assets/Animations/" + std::string(name) + ".anim";
-
-	EngineExternal->moduleResources->RenameAsset(old_assets_path.c_str(), new_assets_path.c_str(), buffer, size, animation);
-
-	old_assets_path.clear();
-	new_assets_path.clear();
-	RELEASE_ARRAY(buffer);
 }
 
 void C_Animator::DrawBones(GameObject* gameObject)

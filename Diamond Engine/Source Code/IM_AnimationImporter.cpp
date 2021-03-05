@@ -26,7 +26,7 @@
 
 void  AnimationLoader::logCallback(const char* message, char* user)
 {
-	EngineExternal->moduleEditor->LogToConsole(message);
+	LOG(LogType::L_NORMAL, message);
 }
 
 ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimation, uint oldUID)
