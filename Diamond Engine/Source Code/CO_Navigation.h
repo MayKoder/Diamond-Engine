@@ -60,6 +60,8 @@ public:
 
     void CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button_or_joystick_to_check, KEY_STATE& state);
 
+    void DoTheAction(GameObject* gameobject, BUTTONSANDJOYSTICKS button_or_joystick_used, ACTIONSNAVIGATION action, bool is_key_released);
+
     void Select();
 
 #ifndef STANDALONE

@@ -6,6 +6,8 @@
 #include "MO_Input.h"
 
 #include "GameObject.h"
+#include "CO_Button.h"
+#include "CO_Checkbox.h"
 
 #include "ImGui/imgui.h"
 
@@ -32,14 +34,25 @@ void C_Navigation::Update()
 			continue;
 		CheckIfButtonOrJoystickIsBeingUsed(it->first,state);
 
-
+		if (button_or_joystick_being_used == it->first && state == KEY_STATE::KEY_UP) {
+			GameObject* gameobject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, it->second.uid_gameobject);
+			DoTheAction(gameObject, it->first, it->second.action, true);
+			button_or_joystick_being_used = BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
+			return;
+		}
+		else if (button_or_joystick_being_used == BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK && state == KEY_STATE::KEY_DOWN) {
+			GameObject* gameobject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, it->second.uid_gameobject);
+			DoTheAction(gameObject, it->first, it->second.action, false);
+			button_or_joystick_being_used = it->first;
+			return;
+		}
 
 		it->second.is_key_down = false;
 		it->second.is_key_up = false;
-		if (state == KEY_STATE::KEY_DOWN) {
+		if (state == KEY_STATE::KEY_DOWN || state == KEY_STATE::KEY_REPEAT) {
 			it->second.is_key_down = true;
 		}
-		if (state == KEY_STATE::KEY_UP) {
+		if (state == KEY_STATE::KEY_UP || state == KEY_STATE::KEY_IDLE) {
 			it->second.is_key_up = true;
 		}
 
@@ -259,6 +272,46 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	return;
 }
 
+void C_Navigation::DoTheAction(GameObject* gameobject, BUTTONSANDJOYSTICKS button_or_joystick_used, ACTIONSNAVIGATION action, bool is_key_released)
+{
+	
+	switch (action)
+	{
+	case ACTIONSNAVIGATION::MOVE:
+		C_Navigation* nav = static_cast<C_Navigation*>(gameObject->GetComponent(Component::TYPE::NAVIGATION));
+		nav->Select();
+		map_of_buttons_and_joysticks[button_or_joystick_being_used].is_key_down = false;
+		map_of_buttons_and_joysticks[button_or_joystick_being_used].is_key_up = true;
+		button_or_joystick_being_used = BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
+		if(nav->map_of_buttons_and_joysticks.count(button_or_joystick_being_used)==0)
+			return;
+		nav->map_of_buttons_and_joysticks[button_or_joystick_being_used].is_key_down = true;
+		nav->button_or_joystick_being_used = button_or_joystick_used;
+		break;
+	case ACTIONSNAVIGATION::EXECUTE:
+		Component* component = gameObject->GetComponent(Component::TYPE::BUTTON);
+		if (component == nullptr) {
+			component = gameObject->GetComponent(Component::TYPE::CHECKBOX);
+			if (component == nullptr)
+				return;
+			C_Checkbox* checbox = static_cast<C_Checkbox*>(component);
+			if (is_key_released) {
+				checbox->UnpressCheckbox();
+				return;
+			}
+			checbox->PressCheckbox();
+			return;
+		}
+		C_Button* button = static_cast<C_Button*>(component);
+		if (is_key_released) {
+			button->ReleaseButton();
+			return;
+		}
+		button->ExecuteButton();
+		break;
+	}
+}
+
 void C_Navigation::Select()
 {
 	if (EngineExternal->moduleGui->uid_gameobject_of_ui_selected != 0) {
@@ -395,7 +448,7 @@ void C_Navigation::WriteButtonOrJoystickOnEditor(const char* text, BUTTONSANDJOY
 
 #endif // !STANDALONE
 
-ActionToRealize::ActionToRealize() :action(ACTIONSNAVIGATION::NONE), uid_gameobject(0), is_key_down(false), is_key_up(false)
+ActionToRealize::ActionToRealize() :action(ACTIONSNAVIGATION::NONE), uid_gameobject(0), is_key_down(false), is_key_up(true)
 {
 }
 
