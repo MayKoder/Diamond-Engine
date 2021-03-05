@@ -15,7 +15,7 @@ public:
 	bool OnEditor() override;
 #endif // !STANDALONE
 
-	void Update() override;
+	void PostUpdate() override;
 
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
@@ -39,6 +39,9 @@ public:
 	float fov;
 	float orthoSize;
 	bool cullingState;
+
+	int windowWidth;
+	int windowHeight;
 
 //Movement logic
 public: 

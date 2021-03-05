@@ -10,10 +10,13 @@ class ModuleWindow;
 class ModuleInput;
 class ModuleRenderer3D;
 class ModuleCamera3D;
+class ModuleAudioManager;
 class M_Scene;
 class M_Editor;
 class M_ResourceManager;
 class M_MonoManager;
+class M_Gui;
+class ModulePhysics;
 
 #include"MathGeoLib/include/Algorithm/Random/LCG.h"
 
@@ -25,11 +28,13 @@ public:
 	ModuleInput* moduleInput = nullptr;
 	ModuleRenderer3D* moduleRenderer3D = nullptr;
 	ModuleCamera3D* moduleCamera = nullptr;
+	ModuleAudioManager* moduleAudio = nullptr;
 	M_Scene* moduleScene = nullptr;
+	M_Gui* moduleGui = nullptr;
 	M_Editor* moduleEditor = nullptr;
 	M_ResourceManager* moduleResources = nullptr;
 	M_MonoManager* moduleMono = nullptr;
-
+	ModulePhysics* modulePhysics = nullptr;
 	std::vector<Module*> list_modules;
 
 private:

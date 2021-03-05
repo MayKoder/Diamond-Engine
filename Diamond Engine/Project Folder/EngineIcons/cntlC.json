@@ -1,26 +1,26 @@
 {
     "Game Objects": [
         {
-            "name": "Object02",
+            "name": "awdwdawda",
             "Active": true,
             "Position": [
-                0,
-                0,
-                0
+                1.4847038984298706,
+                2.6636946201324463,
+                -1.0098497867584229
             ],
             "Rotation": [
-                -0.7071068286895752,
                 0,
                 0,
-                0.70710670948028564
+                0,
+                1
             ],
             "Scale": [
-                2.5399999618530273,
-                2.5399999618530273,
-                2.5399999618530273
+                1,
+                1,
+                1
             ],
-            "UID": 402367908,
-            "ParentUID": 1108032202,
+            "UID": 920775840,
+            "ParentUID": 143570472,
             "Components": [
                 {
                     "Type": 1,
@@ -29,8 +29,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1490558274.mmh",
-                    "UID": 1490558274,
+                    "Path": "Library\/Meshes\/277778019.mmh",
+                    "UID": 277778019,
                     "alternColor": [
                         1,
                         1,
@@ -38,15 +38,13 @@
                     ]
                 },
                 {
-                    "Type": 3,
+                    "Type": 14,
                     "Active": true,
-                    "IsEmpty": false,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/494557343.dds",
-                    "UID": 494557343,
-                    "MaterialAssetPath": "Assets\/Materials\/animated_material.mat",
-                    "MaterialLibraryPath": "Library\/Materials\/1948688504.mat",
-                    "MaterialUID": 1948688504
+                    "kinematic": true
+                },
+                {
+                    "Type": 15,
+                    "Active": true
                 }
             ]
         }

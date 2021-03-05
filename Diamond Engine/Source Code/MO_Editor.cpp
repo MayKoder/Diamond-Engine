@@ -3,7 +3,7 @@
 #include "Application.h"
 
 #include "MMGui.h"
-#include "parson/parson.h"
+#include"IM_FileSystem.h"
 
 //ImGui Includes
 #include "ImGui/imgui.h"
@@ -12,12 +12,15 @@
 
 #include"DETime.h"
 #include"AssetDir.h"
+#include"parson/parson.h"
 
 #include "MO_Window.h"
 #include "MO_Renderer3D.h"
 #include "MO_Editor.h"
 #include "MO_Scene.h"
 #include "MO_ResourceManager.h"
+#include"MO_Camera3D.h"
+#include "MO_GUI.h"
 
 //Window types
 #include "WI_Configuration.h"
@@ -33,6 +36,7 @@
 #include"GameObject.h"
 #include"IM_TextureImporter.h"
 #include"MO_Camera3D.h"
+#include "MO_AudioManager.h"
 
 //TODO: Do i really need all those includes?
 M_Editor::M_Editor(Application* app, bool start_enabled) : Module(app, start_enabled), displayWindow(false),
@@ -60,9 +64,11 @@ viewportCorSize(0.f), dockspace_id(0)
 
 }
 
+
 M_Editor::~M_Editor()
 {
 }
+
 
 bool M_Editor::Init()
 {
@@ -112,6 +118,7 @@ bool M_Editor::Init()
 	return true;
 }
 
+
 bool M_Editor::Start()
 {
 	//W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(GetEditorWindow(EditorWindow::TEXTEDITOR));
@@ -120,6 +127,7 @@ bool M_Editor::Start()
 
 	return true;
 }
+
 
 void M_Editor::Draw()
 {
@@ -244,6 +252,14 @@ void M_Editor::DrawMenuBar()
 					App->moduleScene->LoadScene(test.c_str());
 				}
 			}
+			ImGui::GreySeparator();
+			if (ImGui::MenuItem("Build Game"))
+			{
+				//std::string buildDir = M_FileSystem::OpenSaveAsDialog();
+				//FileSystem::CreateDir("Standalone Build");
+				
+			}
+			ImGui::GreySeparator();
 			if (ImGui::MenuItem("Quit", "Esc"))
 			{
 				App->ExitApplication();
@@ -386,10 +402,14 @@ void M_Editor::DrawTopBar()
 				{
 					App->moduleScene->SaveScene("Library/Scenes/tmp.des");
 					DETime::Play();
+					EngineExternal->moduleAudio->StopAllSounds();
+					EngineExternal->moduleAudio->PlayOnAwake();
 				}
 				else
 				{
 					DETime::Stop();
+					EngineExternal->moduleAudio->StopAllSounds();
+					EngineExternal->moduleAudio->UnLoadAllBanks();
 					App->moduleScene->LoadScene("Library/Scenes/tmp.des");
 					App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code, mmove to method
 				}
@@ -402,6 +422,8 @@ void M_Editor::DrawTopBar()
 				if (DETime::state == GameState::PLAY || DETime::state == GameState::PAUSE)
 				{
 					DETime::Stop();
+					EngineExternal->moduleAudio->StopAllSounds();
+					EngineExternal->moduleAudio->UnLoadAllBanks();
 					App->moduleScene->LoadScene("Library/Scenes/tmp.des");
 					App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des");
 				}
@@ -410,7 +432,17 @@ void M_Editor::DrawTopBar()
 
 			//Step one frame forward
 			if (ImGui::ImageButton((ImTextureID)editorIcons.GetIconTextureID("PAUSE"), ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+			{
 				DETime::Pause();
+				if (DETime::state == GameState::PLAY)
+				{
+					EngineExternal->moduleAudio->ResumeAllSounds();
+				}
+				else if (DETime::state == GameState::PAUSE)
+				{
+					EngineExternal->moduleAudio->PauseAllSounds();
+				}
+			}
 
 			ImGui::SameLine();
 			//Step one frame forward
@@ -476,6 +508,29 @@ void M_Editor::DrawCreateMenu()
 			EngineExternal->moduleScene->LoadModelTree(EngineExternal->moduleResources->LibraryFromMeta("Assets/Primitives/Monkey.fbx.meta").c_str());
 		ImGui::EndMenu();
 	}
+
+	if (ImGui::BeginMenu("UI"))
+	{
+		//TODO: This is temporal, meshes should not laod every time and 
+		//should be stored only once, then only copy mesh pointers.
+		if (ImGui::MenuItem("Canvas", nullptr))
+			EngineExternal->moduleGui->CreateCanvas();
+
+		if (ImGui::MenuItem("Image", nullptr))
+			EngineExternal->moduleGui->CreateImage();
+
+		if (ImGui::MenuItem("Button", nullptr))
+			EngineExternal->moduleGui->CreateButton();
+
+		if (ImGui::MenuItem("Checkbox", nullptr))
+			EngineExternal->moduleGui->CreateCheckbox();
+
+		if (ImGui::MenuItem("Text", nullptr))
+			EngineExternal->moduleGui->CreateText();
+		
+		ImGui::EndMenu();
+	}
+
 	if (ImGui::MenuItem("Game Camera", nullptr))
 		App->moduleScene->CreateGameCamera("Game Camera");
 

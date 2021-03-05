@@ -7,6 +7,7 @@
 #include "MO_Editor.h"
 #include "MO_Scene.h"
 #include "MO_Input.h"
+#include "MO_GUI.h"
 
 #include "RE_Mesh.h"
 #include "RE_Texture.h"
@@ -271,6 +272,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		}
 
 		skybox.DrawAsSkybox(gameCamera);
+		glClear(GL_DEPTH_BUFFER_BIT);
+		App->moduleGui->RenderCanvas2D();
 		gameCamera->EndDraw();
 	}
 
@@ -281,6 +284,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	
 	//TEMPORAL: Delete here so you can call mouse picking from scene window, should not be here in the future
 	ClearAllRenderData();
+
+	App->moduleScene->LoadHoldScene();
 
 	SDL_GL_SwapWindow(App->moduleWindow->window);
 

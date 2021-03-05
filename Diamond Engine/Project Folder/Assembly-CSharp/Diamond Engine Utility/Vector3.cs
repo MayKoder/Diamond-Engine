@@ -57,6 +57,7 @@ namespace DiamondEngine
         public static Vector3 operator +(Vector3 a, Vector3 b) { return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z); }
         public static Vector3 operator /(Vector3 a, float d) { return new Vector3(a.x / d, a.y / d, a.z / d); }
         public static Vector3 operator -(Vector3 a, float d) { return new Vector3(a.x - d, a.y - d, a.z - d); }
+        public static Vector3 operator -(Vector3 a, Vector3 b) { return new Vector3(a.x - b.x, a.y - b.y, a.z - b.z); }
 
         static readonly Vector3 zeroVector = new Vector3(0F, 0F, 0F);
         static readonly Vector3 oneVector = new Vector3(1F, 1F, 1F);
@@ -74,6 +75,21 @@ namespace DiamondEngine
         public static Vector3 positiveInfinity { get { return positiveInfinityVector; } }
         public static Vector3 negativeInfinity { get { return negativeInfinityVector; } }
 
+        public static float Dot(Vector3 a, Vector3 b)
+        {
+            return (a.x * b.x + a.y + b.y + a.z + b.z);
+        }
+
+        public static Vector3 Cross(Vector3 v1, Vector3 v2)
+        {
+            float x, y, z;
+            x = v1.y * v2.z - v2.y * v1.z;
+            y = (v1.x * v2.z - v2.x * v1.z) * -1;
+            z = v1.x * v2.y - v2.x * v1.y;
+
+            Vector3 result = new Vector3(x, y, z);
+            return result;
+        }
 
         public static float Magnitude(Vector3 vector) { return (float)Math.Sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z); }
         public float magnitude { get { return (float)Math.Sqrt(x * x + y * y + z * z); } }
@@ -85,6 +101,11 @@ namespace DiamondEngine
                 return value / mag;
             else
                 return zero;
+        }
+
+        public static Vector3 Lerp(Vector3 a, Vector3 b, float t)
+        {
+            return (a+ (b - a)*t);
         }
 
         //public void Normalize()
@@ -103,5 +124,7 @@ namespace DiamondEngine
         {
             return (this.x.ToString() + ", " + this.y.ToString() + ", " + this.z.ToString());
         }
+
+
     }
 }

@@ -29,7 +29,12 @@ void W_Game::Draw()
 		if (targetCamera != nullptr && targetCamera->resolvedFBO.GetFrameBuffer() != 0) {
 			//LOG(LogType::L_WARNING, "Frame buffer game id: %d", targetCamera->framebuffer);
 			//TODO: Dont modify aspect ratio every frame
-			targetCamera->SetAspectRatio(ImGui::GetContentRegionAvail().x / ImGui::GetContentRegionAvail().y);
+			if(targetCamera->camFrustrum.type == FrustumType::PerspectiveFrustum)
+				targetCamera->SetAspectRatio(ImGui::GetContentRegionAvail().x / ImGui::GetContentRegionAvail().y);
+			else {
+				targetCamera->camFrustrum.orthographicWidth = ImGui::GetContentRegionAvail().x / targetCamera->orthoSize;
+				targetCamera->camFrustrum.orthographicHeight = ImGui::GetContentRegionAvail().y / targetCamera->orthoSize;
+			}
 
 			//float w = ImGui::GetWindowSize().x;
 			//float h = (9 * w) / 16;

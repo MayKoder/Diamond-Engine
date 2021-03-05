@@ -13,16 +13,19 @@ namespace StringLogic {
 	std::string GlobalToLocalPath(const char* _globalPath);
 }
 
-#define ASSETS_PATH		"Assets/"
 
-#define LIBRARY_PATH	"Library/"
-#define MESHES_PATH		"Library/Meshes/"
-#define TEXTURES_PATH	"Library/Textures/"
-#define MODELS_PATH		"Library/Models/"
-#define SCENES_PATH		"Library/Scenes/"
-#define SCRIPTS_PATH	"Library/ScriptsAssembly/"
-#define SHADERS_PATH	"Library/Shaders/"
-#define MATERIALS_PATH	"Library/Materials/"
+
+#define ASSETS_PATH "Assets/"
+
+#define LIBRARY_PATH "Library/"
+#define MESHES_PATH "Library/Meshes/"
+#define TEXTURES_PATH "Library/Textures/"
+#define MODELS_PATH "Library/Models/"
+#define SCENES_PATH "Library/Scenes/"
+#define SCRIPTS_PATH "Library/ScriptsAssembly/"
+#define SHADERS_PATH "Library/Shaders/"
+#define MATERIALS_PATH "Library/Materials/"
+#define SOUNDS_PATH "Library/Sounds/"
 #define ANIMATIONS_PATH "Library/Animations/"
 
 namespace FileSystem
@@ -55,4 +58,7 @@ namespace FileSystem
 	uint Copy(const char* file, const char* dir, std::string& outputFile);
 
 	//std::string FileToText(const char* path);
+
+	//TEMPORAL FIX
+	void CreateLibrarySoundBanks();
 }

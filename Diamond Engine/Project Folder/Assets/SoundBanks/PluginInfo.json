@@ -1,0 +1,24 @@
+{
+ "PluginInfo": {
+  "Project": "Virtual Ragnarok Audio",
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "Plugins": [
+   {
+    "Name": "System",
+    "ID": "11403271",
+    "DLL": "DefaultSink"
+   },
+   {
+    "Name": "No Output",
+    "ID": "11862023",
+    "DLL": "DefaultSink"
+   },
+   {
+    "Name": "Wwise Motion",
+    "ID": "33226759",
+    "DLL": "AkMotion"
+   }
+  ]
+ }
+}

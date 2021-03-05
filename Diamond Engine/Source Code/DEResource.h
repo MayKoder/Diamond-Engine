@@ -17,6 +17,7 @@ public:
 		SHADER,
 		MATERIAL,
 		ANIMATION,
+		FONT,
 		UNKNOWN
 	};
 

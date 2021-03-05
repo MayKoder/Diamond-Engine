@@ -333,6 +333,7 @@ void ResourceMaterial::DrawEditor()
 		RELEASE_ARRAY(fileBuffer);
 	}
 }
+#endif // !STANDALONE
 void ResourceMaterial::SaveToJson(JSON_Array* uniformsArray)
 {
 	for (size_t i = 0; i < uniforms.size(); i++)
@@ -388,7 +389,6 @@ void ResourceMaterial::SaveToJson(JSON_Array* uniformsArray)
 	}
 
 }
-#endif // !STANDALONE
 
 
 ShaderVariable::ShaderVariable() : vIndex(0), vType(GL_INT), nameLength(0),

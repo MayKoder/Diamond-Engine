@@ -25,7 +25,3 @@ public class BH_Bullet : DiamondComponent
         }
     }
 }
-
-
-
-

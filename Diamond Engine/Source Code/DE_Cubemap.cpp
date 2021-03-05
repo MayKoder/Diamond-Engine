@@ -24,6 +24,9 @@ void DE_Cubemap::CreateGLData()
 	// upload data to VBO
 	glBufferData(GL_ARRAY_BUFFER, 108 * sizeof(float), skyboxVertices, GL_STATIC_DRAW);
 
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -51,6 +54,16 @@ void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 
 	shaderRes->Bind();
 
+	bool cameraNeedsChange = false;
+	FrustumType cameraType = _camera->camFrustrum.type;
+
+	if(cameraType != FrustumType::PerspectiveFrustum)
+	{ 
+		cameraNeedsChange = true;
+		_camera->camFrustrum.type = FrustumType::PerspectiveFrustum;
+		_camera->camFrustrum.verticalFov = 60.0 * DEGTORAD;
+		_camera->camFrustrum.horizontalFov = 2.0f * atanf(tanf(_camera->camFrustrum.verticalFov / 2.0f) * 1.7f);
+	}
 
 	GLint modelLoc = glGetUniformLocation(shaderRes->shaderProgramID, "view");
 	float4x4 test = _camera->ViewMatrixOpenGL().Float3x3Part();
@@ -61,18 +74,14 @@ void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 
 	//glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
-
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
-	glDisableVertexAttribArray(0);
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 
 	//glDepthRange(0.f, 1.f);
 	glDepthFunc(GL_LESS);
@@ -80,6 +89,8 @@ void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 	//glEnable(GL_DEPTH_TEST);
 	//glDepthFunc(GL_LESS);
 
-	shaderRes->Unbind();
+	if(cameraNeedsChange)
+		_camera->camFrustrum.type = FrustumType::OrthographicFrustum;
 
+	shaderRes->Unbind();
 }

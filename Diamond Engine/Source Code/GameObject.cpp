@@ -7,6 +7,16 @@
 #include "CO_Camera.h"
 #include "CO_Script.h"
 #include "CO_Animator.h"
+#include "CO_RigidBody.h"
+#include "CO_Collider.h"
+#include "CO_AudioListener.h"
+#include "CO_AudioSource.h"
+#include "CO_Transform2D.h"
+#include "CO_Button.h"
+#include "CO_Text.h"
+#include "CO_Canvas.h"
+#include "CO_Image2D.h"
+#include "CO_Checkbox.h"
 
 #include"MO_Scene.h"
 
@@ -17,6 +27,7 @@
 #include"Application.h"
 #include"MO_Editor.h"
 
+
 GameObject::GameObject(const char* _name, GameObject* parent, int _uid) : parent(parent), name(_name), showChildren(false),
 active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr)
 {
@@ -24,7 +35,7 @@ active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), d
 	if(parent != nullptr)
 		parent->children.push_back(this);
 
-	transform = dynamic_cast<C_Transform*>(AddComponent(Component::Type::Transform));
+	transform = dynamic_cast<C_Transform*>(AddComponent(Component::TYPE::TRANSFORM));
 
 	//TODO: Should make sure there are not duplicated ID's
 	if (UID == -1) 
@@ -33,6 +44,7 @@ active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), d
 	}
 		//UID = MaykMath::Random(0, INT_MAX);
 }
+
 
 GameObject::~GameObject()
 {
@@ -64,6 +76,7 @@ GameObject::~GameObject()
 	csReferences.clear();
 }
 
+
 void GameObject::Update()
 {
 	if (dumpComponent != nullptr) 
@@ -80,36 +93,82 @@ void GameObject::Update()
 	}
 }
 
-Component* GameObject::AddComponent(Component::Type _type, const char* params)
+void GameObject::PostUpdate()
 {
-	assert(_type != Component::Type::None, "Can't create a NONE component");
+	for (size_t i = 0; i < components.size(); i++)
+	{
+		if (components[i]->IsActive())
+			components[i]->PostUpdate();
+	}
+}
+
+Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
+{
+	assert(_type != Component::TYPE::NONE, "Can't create a NONE component");
 	Component* ret = nullptr;
 
 	//TODO: Make a way to add only 1 instance components like transform and camera
 	switch (_type)
 	{
-	case Component::Type::Transform:
+	case Component::TYPE::TRANSFORM:
 		if(transform == nullptr)
 			ret = new C_Transform(this);
 		break;
-	case Component::Type::MeshRenderer:
+	case Component::TYPE::MESH_RENDERER:
 		ret = new C_MeshRenderer(this);
 		break;
-	case Component::Type::Material:
+	case Component::TYPE::MATERIAL:
 		ret = new C_Material(this);
 		break;
-	case Component::Type::Script:
+	case Component::TYPE::SCRIPT:
 		assert(params != nullptr, "Script without name can't be created");
 		ret = new C_Script(this, params);
 		break;
-	case Component::Type::Camera:
+	case Component::TYPE::CAMERA:
 		ret = new C_Camera(this);
 		EngineExternal->moduleScene->SetGameCamera(dynamic_cast<C_Camera*>(ret));
 		break;
 	case Component::Type::Animator:
 		ret = new C_Animator(this);
+      break;
+	case Component::TYPE::RigidBody:
+		ret = new C_RigidBody(this);
+		break;
+	case Component::TYPE::Collider:
+		ret = new C_Collider(this);
+      break;
+	case Component::TYPE::AUDIO_LISTENER:
+		ret = new C_AudioListener(this);
+		break;
+	case Component::TYPE::AUDIO_SOURCE:
+		ret = new C_AudioSource(this);
+		break;
+
+	case Component::TYPE::TRANSFORM_2D:
+		ret = new C_Transform2D(this);
+		break;
+
+	case Component::TYPE::BUTTON:
+		ret = new C_Button(this);
+		break;
+
+	case Component::TYPE::CHECKBOX:
+		ret = new C_Checkbox(this);
+		break;
+
+	case Component::TYPE::TEXT_UI:
+		ret = new C_Text(this);
+		break;
+
+	case Component::TYPE::CANVAS:
+		ret = new C_Canvas(this);
+		break;
+
+	case Component::TYPE::IMAGE_2D:
+		ret = new C_Image2D(this);
 		break;
 	}
+
 
 	if (ret != nullptr)
 	{		
@@ -120,7 +179,8 @@ Component* GameObject::AddComponent(Component::Type _type, const char* params)
 	return ret;
 }
 
-Component* GameObject::GetComponent(Component::Type _type)
+
+Component* GameObject::GetComponent(Component::TYPE _type)
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
@@ -130,6 +190,7 @@ Component* GameObject::GetComponent(Component::Type _type)
 
 	return nullptr;
 }
+
 
 //When we load models from model trees the UID should get regenerated
 //because the .model UID are not unique.
@@ -143,15 +204,18 @@ void GameObject::RecursiveUIDRegeneration()
 	}
 }
 
+
 bool GameObject::isActive() const
 {
 	return active;
 }
 
+
 //void GameObject::ChangeActiveState()
 //{
 //	(active == true) ? Disable() : Enable();
 //}
+
 
 void GameObject::Enable()
 {
@@ -160,6 +224,7 @@ void GameObject::Enable()
 	if (parent != nullptr)
 		parent->Enable();
 }
+
 
 void GameObject::Disable()
 {
@@ -170,15 +235,18 @@ void GameObject::Disable()
 	//}
 }
 
+
 bool GameObject::IsRoot()
 {
 	return (parent == nullptr) ? true : false;
 }
 
+
 void GameObject::Destroy()
 {
 	toDelete = true;
 }
+
 
 void GameObject::SaveToJson(JSON_Array* _goArray)
 {
@@ -222,6 +290,7 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 	}
 }
 
+
 void GameObject::LoadFromJson(JSON_Object* _obj)
 {
 
@@ -229,6 +298,7 @@ void GameObject::LoadFromJson(JSON_Object* _obj)
 	transform->SetTransformMatrix(DEJson::ReadVector3(_obj, "Position"), DEJson::ReadQuat(_obj, "Rotation"), DEJson::ReadVector3(_obj, "Scale"));
 	LoadComponents(json_object_get_array(_obj, "Components"));
 }
+
 
 void GameObject::LoadComponents(JSON_Array* componentArray)
 {
@@ -238,16 +308,18 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 		conf.nObj = json_array_get_object(componentArray, i);
 
 		const char* scName = conf.ReadString("ScriptName");
-		Component* comp = AddComponent((Component::Type)conf.ReadInt("Type"), scName);
+		Component* comp = AddComponent((Component::TYPE)conf.ReadInt("Type"), scName);
 
 		comp->LoadData(conf);
 	}
 }
 
+
 void GameObject::RemoveComponent(Component* ptr)
 {
 	dumpComponent = ptr;
 }
+
 
 //TODO: WTF IS GOING ON WITH THE ARNAU BUG FFS
 //Deparenting objects with deformations grows transforms
@@ -271,8 +343,8 @@ void GameObject::ChangeParent(GameObject* newParent)
 
 	transform->SetTransformMatrix(transform->localTransform.TranslatePart(), _rot, scale);
 	transform->updateTransform = true;
-
 }
+
 
 bool GameObject::IsChild(GameObject* _toFind)
 {
@@ -288,6 +360,7 @@ bool GameObject::IsChild(GameObject* _toFind)
 		return IsChild(_toFind->parent);
 	}
 }
+
 
 void GameObject::RemoveChild(GameObject* child)
 {

@@ -8,7 +8,12 @@
 #include"CO_MeshRenderer.h"
 #include"RE_Mesh.h"
 
-C_Transform::C_Transform() : Component(nullptr), updateTransform(false)
+#include "Application.h"
+#include "MO_Editor.h"
+#include"MO_Input.h"
+#include "COMM_Transform.h"
+
+C_Transform::C_Transform() : Component(nullptr), updateTransform(false), sendCommand(false)
 {
 	globalTransform.SetIdentity();
 	localTransform.SetIdentity();
@@ -20,10 +25,12 @@ C_Transform::C_Transform() : Component(nullptr), updateTransform(false)
 
 	globalTransformTRANS = globalTransform.Transposed();
 
+	oldTransform.SetIdentity();
+
 	name = "Transform";
 }
 
-C_Transform::C_Transform(GameObject* _gm/*, float3 _position, Quat _rotation, float3 _localScale*/): Component(_gm), updateTransform(false)/*,
+C_Transform::C_Transform(GameObject* _gm/*, float3 _position, Quat _rotation, float3 _localScale*/): Component(_gm), updateTransform(false), sendCommand(false)/*,
 position(_position), rotation(_rotation), localScale(_localScale)*/
 {
 	globalTransform.SetIdentity();
@@ -36,6 +43,8 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 
 	globalTransformTRANS = globalTransform.Transposed();
 
+	oldTransform.SetIdentity();
+
 	name = "Transform";
 }
 
@@ -43,7 +52,7 @@ C_Transform::~C_Transform()
 {
 }
 
-void C_Transform::Update()
+void C_Transform::PostUpdate()
 {
 	if (updateTransform)
 		UpdateTransform();
@@ -59,24 +68,39 @@ bool C_Transform::OnEditor()
 		ImGui::Text("Local Position: "); 
 		ImGui::SameLine(); 
 		if (ImGui::DragFloat3("##lPos", &position[0], 0.1f))
-			updateTransform = true;
+			updateTransform = sendCommand = true;
+		if (ImGui::IsItemClicked())
+			oldTransform = GetCurrentGlobalMatrix();
 
 
 		ImGui::Text("Rotation: ");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(offset);
 		if (ImGui::DragFloat3("##lRot", &eulerRotation[0], 0.1f))
-			updateTransform = true;
+			updateTransform = sendCommand = true;
+		if (ImGui::IsItemClicked())
+			oldTransform = GetCurrentGlobalMatrix();
 
 
 		ImGui::Text("Scale: ");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(offset);
 		if (ImGui::DragFloat3("##lScale", &localScale[0], 0.1f))
-			updateTransform = true;
+			updateTransform = sendCommand = true;
+		if (ImGui::IsItemClicked())
+			oldTransform = GetCurrentGlobalMatrix();
 
 		if (ImGui::Button("Reset Transform"))
 			ResetTransform();
+		if (ImGui::IsItemClicked())
+			oldTransform = GetCurrentGlobalMatrix();
+
+		//TODO: Doubli-click + enter input does not work as a command and won't we added to the shortcut manager
+		if (EngineExternal->moduleInput->GetMouseButton(1) == KEY_STATE::KEY_UP && sendCommand == true)
+		{
+			EngineExternal->moduleEditor->shortcutManager.PushCommand(new COMM_Transform(gameObject->UID, GetCurrentGlobalMatrix().ptr(), oldTransform.ptr()));
+			sendCommand = false;
+		}
 
 		// GLOBAL MATRIX //
 		/*ImGui::Separator();
@@ -106,6 +130,12 @@ bool C_Transform::OnEditor()
 		return true;
 	}
 	return false;
+}
+float4x4 C_Transform::GetCurrentGlobalMatrix()
+{
+	Quat rot = Quat::FromEulerXYZ(eulerRotation.x * DEGTORAD, eulerRotation.y * DEGTORAD, eulerRotation.z * DEGTORAD);
+	rot.Normalize();
+	return gameObject->parent->transform->globalTransform * float4x4::FromTRS(position, rot, localScale);
 }
 #endif // !STANDALONE
 
@@ -167,7 +197,7 @@ C_Transform* C_Transform::GetRecursiveTransforms(C_Transform* node, std::vector<
 void C_Transform::UpdateBoxes()
 {
 	C_MeshRenderer* mesh = nullptr;
-	mesh = dynamic_cast<C_MeshRenderer*>(gameObject->GetComponent(Component::Type::MeshRenderer));
+	mesh = dynamic_cast<C_MeshRenderer*>(gameObject->GetComponent(Component::TYPE::MESH_RENDERER));
 	if (mesh != nullptr)
 	{
 		mesh->globalOBB = mesh->GetRenderMesh()->localAABB;

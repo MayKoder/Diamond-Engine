@@ -7,6 +7,8 @@
 
 #include"AssetDir.h"
 
+class FreeType_Library;
+
 class M_FileSystem : public Module
 {
 
@@ -34,4 +36,7 @@ public:
 private:
 	void GenerateAllMetaFiles();
 	void ImportAssetsToLibrary();
+
+public:
+	FreeType_Library* free_type_library;
 };

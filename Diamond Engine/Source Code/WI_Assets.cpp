@@ -189,8 +189,11 @@ void W_Assets::DrawFileTree(AssetDir& file)
 			case  Resource::Type::ANIMATION:
 				ImGui::SetDragDropPayload("_ANIMATION", &file.importPath, file.importPath.length());
 				break;
-			default:
+			case  Resource::Type::FONT:
+				ImGui::SetDragDropPayload("_FONT", &file.importPath, file.importPath.length());
 				break;
+      default:
+          break;
 			}
 
 			ImGui::Text("Import asset: %s", file.metaFileDir.c_str());

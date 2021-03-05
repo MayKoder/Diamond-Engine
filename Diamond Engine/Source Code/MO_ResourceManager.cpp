@@ -590,6 +590,8 @@ Resource::Type M_ResourceManager::GetTypeFromAssetExtension(const char* assetFil
 		return Resource::Type::MATERIAL;
 	if (ext == "anim")
 		return Resource::Type::ANIMATION;
+	if (ext == "ttf")
+		return Resource::Type::FONT;
 
 	return Resource::Type::UNKNOWN;
 }

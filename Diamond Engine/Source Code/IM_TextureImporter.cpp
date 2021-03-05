@@ -17,6 +17,15 @@
 #pragma comment( lib, "DevIL/libx86/ILUT.lib" )
 
 
+
+void TextureImporter::Init()
+{
+	ilInit();
+	iluInit();
+	ilutInit();
+	ilutRenderer(ILUT_OPENGL);
+}
+
 GLuint TextureImporter::LoadToMemory(char* buffer, int size, int* w, int* h)
 {
 	ILuint imageID;
