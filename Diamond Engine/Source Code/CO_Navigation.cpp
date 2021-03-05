@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "MO_GUI.h"
 #include "MO_Scene.h"
+#include "MO_Input.h"
 
 #include "GameObject.h"
 
@@ -10,7 +11,7 @@
 
 #include <assert.h>
 
-C_Navigation::C_Navigation(GameObject* gameObject) :Component(gameObject), is_selected(false)
+C_Navigation::C_Navigation(GameObject* gameObject) :Component(gameObject), is_selected(false),button_or_joystick_being_used(BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK)
 {
 	map_of_buttons_and_joysticks.clear();
 	name = "Navigation";
@@ -23,8 +24,239 @@ C_Navigation::~C_Navigation()
 
 void C_Navigation::Update()
 {
-	if (!is_selected)
+	if (!is_selected || map_of_buttons_and_joysticks.size() == 0)
 		return;
+	KEY_STATE state;
+	for (std::map<BUTTONSANDJOYSTICKS, ActionToRealize>::iterator it = map_of_buttons_and_joysticks.begin(); it != map_of_buttons_and_joysticks.end(); ++it) {
+		if (it->second.uid_gameobject == 0)
+			continue;
+		CheckIfButtonOrJoystickIsBeingUsed(it->first,state);
+
+
+
+		it->second.is_key_down = false;
+		it->second.is_key_up = false;
+		if (state == KEY_STATE::KEY_DOWN) {
+			it->second.is_key_down = true;
+		}
+		if (state == KEY_STATE::KEY_UP) {
+			it->second.is_key_up = true;
+		}
+
+	}
+}
+
+void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button_or_joystick_to_check, KEY_STATE& state)
+{
+	switch (button_or_joystick_to_check)
+	{
+	case BUTTONSANDJOYSTICKS::BUTTON_A:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_A);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_B:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_B);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_X:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_X);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_Y:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_Y);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_BACK:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_BACK);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_GUIDE:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_GUIDE);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_START:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_START);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_LEFTTTRIGGER:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_LEFTSTICK);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_RIGHTTRIGGER:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_RIGHTSTICK);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_LEFTSHOULDER:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_RIGHTSHOULDER:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_DPAD_UP:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_DPAD_UP);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_DPAD_DOWN:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_DPAD_DOWN);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_DPAD_LEFT:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+		break;
+	case BUTTONSANDJOYSTICKS::BUTTON_DPAD_RIGHT:
+		state = EngineExternal->moduleInput->GetKey(SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+		break;
+	case BUTTONSANDJOYSTICKS::RIGHT_JOYSTICK_UP: {
+		int value_of_axis = EngineExternal->moduleInput->GetRightAxisY();
+		if (value_of_axis >= 0) {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
+				state = KEY_UP;
+			}
+			else {
+				state = KEY_IDLE;
+			}
+		}
+		else {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_up) {
+				state = KEY_DOWN;
+			}
+			else {
+				state = KEY_REPEAT;
+			}
+		}
+		break;
+	}
+	case BUTTONSANDJOYSTICKS::RIGHT_JOYSTICK_DOWN: {
+		int value_of_axis = EngineExternal->moduleInput->GetRightAxisY();
+		if (value_of_axis <= 0) {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
+				state = KEY_UP;
+			}
+			else {
+				state = KEY_IDLE;
+			}
+		}
+		else {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_up) {
+				state = KEY_DOWN;
+			}
+			else {
+				state = KEY_REPEAT;
+			}
+		}
+		break;
+	}
+	case BUTTONSANDJOYSTICKS::RIGHT_JOYSTICK_LEFT: {
+		int value_of_axis = EngineExternal->moduleInput->GetRightAxisX();
+		if (value_of_axis >= 0) {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
+				state = KEY_UP;
+			}
+			else {
+				state = KEY_IDLE;
+			}
+		}
+		else {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_up) {
+				state = KEY_DOWN;
+			}
+			else {
+				state = KEY_REPEAT;
+			}
+		}
+		break;
+	}
+	case BUTTONSANDJOYSTICKS::RIGHT_JOYSTICK_RIGHT: {
+		int value_of_axis = EngineExternal->moduleInput->GetRightAxisX();
+		if (value_of_axis <= 0) {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
+				state = KEY_UP;
+			}
+			else {
+				state = KEY_IDLE;
+			}
+		}
+		else {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_up) {
+				state = KEY_DOWN;
+			}
+			else {
+				state = KEY_REPEAT;
+			}
+		}
+		break;
+	}
+	case BUTTONSANDJOYSTICKS::LEFT_JOYSTICK_UP: {
+		int value_of_axis = EngineExternal->moduleInput->GetLeftAxisY();
+		if (value_of_axis >= 0) {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
+				state = KEY_UP;
+			}
+			else {
+				state = KEY_IDLE;
+			}
+		}
+		else {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_up) {
+				state = KEY_DOWN;
+			}
+			else {
+				state = KEY_REPEAT;
+			}
+		}
+		break;
+	}
+	case BUTTONSANDJOYSTICKS::LEFT_JOYSTICK_DOWN: {
+		int value_of_axis = EngineExternal->moduleInput->GetLeftAxisY();
+		if (value_of_axis <= 0) {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
+				state = KEY_UP;
+			}
+			else {
+				state = KEY_IDLE;
+			}
+		}
+		else {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_up) {
+				state = KEY_DOWN;
+			}
+			else {
+				state = KEY_REPEAT;
+			}
+		}
+		break;
+	}
+	case BUTTONSANDJOYSTICKS::LEFT_JOYSTICK_LEFT: {
+		int value_of_axis = EngineExternal->moduleInput->GetLeftAxisX();
+		if (value_of_axis >= 0) {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
+				state = KEY_UP;
+			}
+			else {
+				state = KEY_IDLE;
+			}
+		}
+		else {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_up) {
+				state = KEY_DOWN;
+			}
+			else {
+				state = KEY_REPEAT;
+			}
+		}
+		break;
+	}
+	case BUTTONSANDJOYSTICKS::LEFT_JOYSTICK_RIGHT: {
+		int value_of_axis = EngineExternal->moduleInput->GetRightAxisX();
+		if (value_of_axis <= 0) {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
+				state = KEY_UP;
+			}
+			else {
+				state = KEY_IDLE;
+			}
+		}
+		else {
+			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_up) {
+				state = KEY_DOWN;
+			}
+			else {
+				state = KEY_REPEAT;
+			}
+		}
+		break;
+	}
+	}
+	return;
 }
 
 void C_Navigation::Select()
@@ -101,11 +333,6 @@ bool C_Navigation::OnEditor()
 
 		ImGui::Columns(1);
 
-
-
-		
-		
-
 	}
 
 	return true;
@@ -140,7 +367,6 @@ void C_Navigation::WriteButtonOrJoystickOnEditor(const char* text, BUTTONSANDJOY
 				else {
 					ActionToRealize action;
 					action.action = static_cast<ACTIONSNAVIGATION>(n);
-					action.uid_gameobject = 0;
 					map_of_buttons_and_joysticks.emplace(button_or_joystick, action);
 				}
 			}
@@ -169,3 +395,10 @@ void C_Navigation::WriteButtonOrJoystickOnEditor(const char* text, BUTTONSANDJOY
 
 #endif // !STANDALONE
 
+ActionToRealize::ActionToRealize() :action(ACTIONSNAVIGATION::NONE), uid_gameobject(0), is_key_down(false), is_key_up(false)
+{
+}
+
+ActionToRealize::~ActionToRealize()
+{
+}
