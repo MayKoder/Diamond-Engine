@@ -402,13 +402,7 @@ void M_Editor::DrawTopBar()
 			{
 				if (DETime::state == GameState::STOP) 
 				{
-					char scene_to_save[64];
-					if (App->moduleScene->current_scene == "") {
-						App->moduleScene->SaveScene("Library/Scenes/tmp.des");
-					}
-					else {
-						App->moduleScene->SaveScene(App->moduleScene->current_scene);}
-
+					App->moduleScene->SaveScene("Library/Scenes/tmp.des");
 					DETime::Play();
 					EngineExternal->moduleAudio->StopAllSounds();
 					EngineExternal->moduleAudio->PlayOnAwake();
@@ -433,13 +427,12 @@ void M_Editor::DrawTopBar()
 					EngineExternal->moduleAudio->StopAllSounds();
 					EngineExternal->moduleAudio->UnLoadAllBanks();
 
-					if (App->moduleScene->current_scene == "") {
-						App->moduleScene->LoadScene("Library/Scenes/tmp.des");
-					}
-					else {
-						App->moduleScene->LoadScene(App->moduleScene->current_scene);}
+					char scene_name[64];
+					strcpy(scene_name, App->moduleScene->current_scene_name);
 
-					//App->moduleScene->LoadScene("Library/Scenes/tmp.des");
+					App->moduleScene->LoadScene("Library/Scenes/tmp.des");
+					strcpy(App->moduleScene->current_scene_name, scene_name);
+
 					App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des");
 				}
 			}

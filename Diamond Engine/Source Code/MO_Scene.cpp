@@ -50,16 +50,18 @@ bool M_Scene::Init()
 bool M_Scene::Start()
 {
 	CreateGameCamera("Main Camera");
-
-	//LoadScene("Library/Scenes/884741631.des");
 	LoadScene("Library/Scenes/1100889454.des");
 
+	//LoadScene("Library/Scenes/884741631.des");
+	//LoadScene("Library/Scenes/tmp.des");
+	
 #ifndef STANDALONE
 	//TODO IMPORTANT: This is why we should save icons .meta, or we could generate them every time
 	//But this will introduce some randomized problems with ID duplications
 	// TODO: Maybe this should be handled on the editor module? texture #include is stupid
 	App->moduleEditor->editorIcons.LoadPreDefinedIcons();
 #endif // !STANDALONE
+
 
 	return true;
 }
