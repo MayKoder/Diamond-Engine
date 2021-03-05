@@ -20,6 +20,10 @@ C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite_button
 num_sprite_used(BUTTONSTATE::BUTTONUNHOVERED), is_selected(false)
 {
 	name = "Button";
+#ifndef STANDALONE
+	sprites_freezed = false;
+#endif // !STANDALONE
+
 
 }
 
@@ -38,6 +42,14 @@ C_Button::~C_Button()
 
 void C_Button::Update()
 {
+#ifndef STANDALONE
+	ChangeTexture(num_sprite_used);
+	if (gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()) == nullptr)
+		script_name = "";
+	if (sprites_freezed)
+		return;
+#endif // !STANDALONE
+
 	switch (num_sprite_used)
 	{
 	case BUTTONSTATE::BUTTONHOVERED:
@@ -50,11 +62,6 @@ void C_Button::Update()
 		break;
 	}
 	
-#ifndef STANDALONE
-	ChangeTexture(num_sprite_used);
-	if (gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()) == nullptr)
-		script_name = "";
-#endif // !STANDALONE
 }
 
 void C_Button::ExecuteButton()
@@ -233,6 +240,8 @@ bool C_Button::OnEditor()
 	if (Component::OnEditor() == true)
 	{
 		ImGui::Separator();
+		ImGui::Checkbox("Freeze sprites", &sprites_freezed);
+
 		if (sprite_button_pressed != nullptr) {
 			ImGui::Text("%s", sprite_button_pressed->GetAssetPath());
 		}

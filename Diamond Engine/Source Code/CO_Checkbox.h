@@ -31,6 +31,10 @@ public:
 	void ChangeSprite(CHECKBOXSTATE num_sprite, ResourceTexture* sprite);
 	void ChangeScript(const char* script);
 	bool OnEditor() override;
+
+
+private:
+	bool sprites_freezed;
 #endif // !STANDALONE
 
 public:

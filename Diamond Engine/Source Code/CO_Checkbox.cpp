@@ -19,6 +19,9 @@ sprite_checkbox_unactive(nullptr), sprite_checkbox_unactive_hovered(nullptr), sp
 checkbox_active(false), is_selected(false)
 {
 	name = "Checkbox";
+#ifndef STANDALONE
+	sprites_freezed = false;
+#endif // !STANDALONE
 }
 
 C_Checkbox::~C_Checkbox()
@@ -45,6 +48,15 @@ C_Checkbox::~C_Checkbox()
 
 void C_Checkbox::Update()
 {
+#ifndef STANDALONE
+	ChangeTexture(num_sprite_used);
+	if (gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()) == nullptr)
+		script_name = "";
+	if (sprites_freezed)
+		return;
+#endif // !STANDALONE
+
+
 	switch (num_sprite_used)
 	{
 	case CHECKBOXSTATE::CHECKBOXACTIVE:
@@ -65,11 +77,6 @@ void C_Checkbox::Update()
 		break;
 	}
 
-#ifndef STANDALONE
-	ChangeTexture(num_sprite_used);
-	if (gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()) == nullptr)
-		script_name = "";
-#endif // !STANDALONE
 }
 
 void C_Checkbox::PressCheckbox()
@@ -361,6 +368,8 @@ bool C_Checkbox::OnEditor()
 	if (Component::OnEditor() == true)
 	{
 		ImGui::Separator();
+		ImGui::Checkbox("Freeze sprites", &sprites_freezed);
+
 		if (sprite_checkbox_active != nullptr) {
 			ImGui::Text("%s", sprite_checkbox_active->GetAssetPath());
 		}

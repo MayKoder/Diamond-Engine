@@ -28,6 +28,9 @@ public:
 	void ChangeSprite(BUTTONSTATE num_sprite, ResourceTexture* sprite);
 	void ChangeScript(const char* script_name);
 	bool OnEditor() override;
+
+private:
+	bool sprites_freezed;
 #endif // !STANDALONE
 
 public:
