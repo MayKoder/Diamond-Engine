@@ -156,6 +156,11 @@ void W_Inspector::Draw()
 					if (selectedGO->GetComponent(Component::TYPE::AUDIO_SOURCE) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::AUDIO_SOURCE);
 				}
+				if (ImGui::Selectable("Animator"))
+				{
+					if (selectedGO->GetComponent(Component::Type::Animator) == nullptr)
+						selectedGO->AddComponent(Component::Type::Animator);
+				}
 
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)
 				{

@@ -36,6 +36,8 @@ defaultMaterial(nullptr), holdUID(0)
 
 M_Scene::~M_Scene()
 {
+	root = nullptr;
+	defaultMaterial = nullptr;
 }
 
 bool M_Scene::Init()
@@ -49,7 +51,8 @@ bool M_Scene::Start()
 {
 	CreateGameCamera("Main Camera");
 
-	LoadScene("Library/Scenes/884741631.des");
+	//LoadScene("Library/Scenes/884741631.des");
+	LoadScene("Library/Scenes/1100889454.des");
 
 #ifndef STANDALONE
 	//TODO IMPORTANT: This is why we should save icons .meta, or we could generate them every time

@@ -45,12 +45,9 @@ void MeshLoader::DisableDebugMode()
 #endif // !STANDALONE
 
 
-
-
 //Following unity tree structure, comments represent blender tree structure
 void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTexture*>& sceneTextures, std::vector<ResourceMesh*>& _sceneMeshes, aiNode* node, GameObject* gmParent, const char* holderName)
 {
-
 	aiVector3D		aiTranslation, aiScale;
 	aiQuaternion	aiRotation;
 
@@ -118,6 +115,12 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTextur
 		}
 		else
 		{
+			std::string finalString = std::string(holderName);
+			size_t index = finalString.find("_$AssimpFbx$_");
+			if (index != std::string::npos) {
+				finalString = finalString.erase(index, std::string::npos);
+				holderName = finalString.c_str();
+			}
 			rootGO = new GameObject(holderName, gmParent);
 			PopulateTransform(rootGO, pos, rot, scale);
 		}
@@ -127,6 +130,17 @@ void MeshLoader::NodeToGameObject(aiMesh** meshArray, std::vector<ResourceTextur
 		{
 			NodeToGameObject(meshArray, sceneTextures, _sceneMeshes, node->mChildren[i], rootGO, node->mChildren[i]->mName.C_Str());
 		}
+	}
+	else if (node->mNumMeshes == 0)
+	{
+		std::string finalString = std::string(holderName);
+		size_t index = finalString.find("_$AssimpFbx$_");
+		if (index != std::string::npos) {
+			finalString = finalString.erase(index, std::string::npos);
+			holderName = finalString.c_str();
+		}
+		GameObject* noChildrenGO = new GameObject(holderName, gmParent);
+		PopulateTransform(noChildrenGO, pos, rot, scale);
 	}
 
 }
@@ -150,50 +164,115 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 
 	for (size_t i = 0; i < _mesh->vertices_count; i++)
 	{
-		_mesh->vertices[i * VERTEX_ATTRIBUTES] = importedMesh->mVertices[i].x;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES]     = importedMesh->mVertices[i].x;
 		_mesh->vertices[i * VERTEX_ATTRIBUTES + 1] = importedMesh->mVertices[i].y;
 		_mesh->vertices[i * VERTEX_ATTRIBUTES + 2] = importedMesh->mVertices[i].z;
 
 		if (importedMesh->HasTextureCoords(0))
 		{
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + 3] = importedMesh->mTextureCoords[0][i].x;
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + 4] = importedMesh->mTextureCoords[0][i].y;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + TEXCOORD_OFFSET]     = importedMesh->mTextureCoords[0][i].x;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + TEXCOORD_OFFSET + 1] = importedMesh->mTextureCoords[0][i].y;
 
 			if (importedMesh->mTangents != nullptr)
 			{
-				_mesh->vertices[i * VERTEX_ATTRIBUTES + 8] = importedMesh->mTangents[i].x;
-				_mesh->vertices[i * VERTEX_ATTRIBUTES + 9] = importedMesh->mTangents[i].y;
-				_mesh->vertices[i * VERTEX_ATTRIBUTES + 10] = importedMesh->mTangents[i].z;
+				_mesh->vertices[i * VERTEX_ATTRIBUTES + TANGENTS_OFFSET]     = importedMesh->mTangents[i].x;
+				_mesh->vertices[i * VERTEX_ATTRIBUTES + TANGENTS_OFFSET + 1] = importedMesh->mTangents[i].y;
+				_mesh->vertices[i * VERTEX_ATTRIBUTES + TANGENTS_OFFSET + 2] = importedMesh->mTangents[i].z;
 			}
 		}
 		else
 		{
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + 3] = 0.0f;
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + 4] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + TEXCOORD_OFFSET]     = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + TEXCOORD_OFFSET + 1] = 0.0f;
 
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + 8] = 0.0f;
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + 9] = 0.0f;
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + 10] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + TANGENTS_OFFSET]     = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + TANGENTS_OFFSET + 1] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + TANGENTS_OFFSET + 2] = 0.0f;
 		}
-			
 
+		//Normals
 		if (importedMesh->HasNormals())
 		{
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + 5] = importedMesh->mNormals[i].x;
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + 6] = importedMesh->mNormals[i].y;
-			_mesh->vertices[i * VERTEX_ATTRIBUTES + 7] = importedMesh->mNormals[i].z;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + NORMALS_OFFSET]     = importedMesh->mNormals[i].x;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + NORMALS_OFFSET + 1] = importedMesh->mNormals[i].y;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + NORMALS_OFFSET + 2] = importedMesh->mNormals[i].z;
 			//LOG(LogType::L_NORMAL, "New mesh with %d normals", _mesh->normals_count);
+		}
+		else
+		{
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + NORMALS_OFFSET]		= 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + NORMALS_OFFSET + 1] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + NORMALS_OFFSET + 2] = 0.0f;
+		}
+
+
+		//boneIDs
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + BONES_ID_OFFSET]     = -1.0f;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + 1] = -1.0f;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + 2] = -1.0f;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + 3] = -1.0f;
+
+		//weights
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET]     = 0.0f;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + 1] = 0.0f;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + 2] = 0.0f;
+		_mesh->vertices[i * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET + 3] = 0.0f;
+
+		//Colors
+		if (importedMesh->HasVertexColors(0))
+		{
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + COLORS_OFFSET]	   = importedMesh->mColors[0]->r;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + COLORS_OFFSET + 1] = importedMesh->mColors[0]->g;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + COLORS_OFFSET + 2] = importedMesh->mColors[0]->b;
+		}
+		else
+		{
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + COLORS_OFFSET]     = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + COLORS_OFFSET + 1] = 0.0f;
+			_mesh->vertices[i * VERTEX_ATTRIBUTES + COLORS_OFFSET + 2] = 0.0f;
 		}
 	}
 
-	//So are we really only supporting 1 channel uv and colors?
-
-	//TODO: Load vertex colors
-	if (importedMesh->HasVertexColors(0)) 
+	
+	if (importedMesh->HasBones())
 	{
-		LOG(LogType::L_ERROR, "ADD VERTEX COLORS");
-	}
+		//iterate all bones
+		for (size_t boneId = 0; boneId < importedMesh->mNumBones; boneId++)
+		{
+			aiBone* aibone = importedMesh->mBones[boneId];
+			_mesh->bonesMap[aibone->mName.C_Str()] = boneId;
 
+			//Load offsets
+			float4x4 offset = float4x4(aibone->mOffsetMatrix.a1, aibone->mOffsetMatrix.a2, aibone->mOffsetMatrix.a3, aibone->mOffsetMatrix.a4,
+				                       aibone->mOffsetMatrix.b1, aibone->mOffsetMatrix.b2, aibone->mOffsetMatrix.b3, aibone->mOffsetMatrix.b4,
+				                       aibone->mOffsetMatrix.c1, aibone->mOffsetMatrix.c2, aibone->mOffsetMatrix.c3, aibone->mOffsetMatrix.c4,
+				                       aibone->mOffsetMatrix.d1, aibone->mOffsetMatrix.d2, aibone->mOffsetMatrix.d3, aibone->mOffsetMatrix.d4);
+
+			//_mesh->bonesOffsets.push_back(offset);
+			//Joint* joint = new Joint(aibone->mName.C_Str(), b, offset);
+			_mesh->bonesOffsets.push_back(offset);
+
+			//iterate all bone weights
+			for (int weights = 0; weights < aibone->mNumWeights; weights++) {
+
+				int vertexId = aibone->mWeights[weights].mVertexId; // *4;
+
+				for (int w = 0; w < 4; w++)
+				{
+					if (_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + w] == -1.0f)
+					{
+						//bone ids
+						_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + BONES_ID_OFFSET + w] = boneId;
+						//weights
+						_mesh->vertices[vertexId * VERTEX_ATTRIBUTES + WEIGHTS_OFFSET  + w] = aibone->mWeights[weights].mWeight;
+						break;
+					}
+				}
+			}
+			//_mesh->joints.push_back(joint);
+		}		
+	}
+	
 
 	// Generate indices
 	if (importedMesh->HasFaces())
@@ -213,7 +292,6 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 		}
 	}
 
-
 	_mesh->generalWireframe = &EngineExternal->moduleRenderer3D->wireframe;
 
 	//TODO: Save on own file format
@@ -221,6 +299,7 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 	char* buffer = (char*)_mesh->SaveCustomFormat(size);
 
 	FileSystem::Save(file.c_str(), buffer, size, false);
+
 	RELEASE_ARRAY(buffer);
 
 	return _mesh;

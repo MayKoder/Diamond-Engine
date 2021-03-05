@@ -21,6 +21,7 @@ ResourceMaterial::~ResourceMaterial()
 {
 	uniforms.clear();
 	attributes.clear();
+	shader = nullptr;
 }
 
 bool ResourceMaterial::LoadToMemory()
@@ -329,6 +330,7 @@ void ResourceMaterial::DrawEditor()
 	{
 		char* fileBuffer = nullptr;
 		MaterialImporter::Save(this, &fileBuffer);
+		RELEASE_ARRAY(fileBuffer);
 	}
 }
 #endif // !STANDALONE

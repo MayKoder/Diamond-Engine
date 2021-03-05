@@ -12,6 +12,7 @@ namespace DiamondEngine
             name = "Empty";
             pointer = UIntPtr.Zero;
         }
+
         public GameObject(string _name, UIntPtr ptr)
         {
             name = _name;

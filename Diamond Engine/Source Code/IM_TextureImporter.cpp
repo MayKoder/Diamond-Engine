@@ -77,6 +77,7 @@ void TextureImporter::SaveDDS(char* buffer, int size, const char* fileName)
 	ILubyte* data = nullptr;
 	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
 	_size = ilSaveL(IL_DDS, nullptr, 0);
+	
 	if (_size > 0) 
 	{
 		data = new ILubyte[_size];

@@ -13,6 +13,7 @@
 #include"GameObject.h"
 #include"CO_Script.h"
 #include"CS_Transform_Bindings.h"
+#include "CS_Animation_Bindings.h"
 #include "CS_Input_Bindings.h"
 #include"CS_Scene_Bindings.h"
 #include "CS_Audio_Bindings.h"
@@ -88,6 +89,10 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.GameObject::get_localScale", SendScale);
 	mono_add_internal_call("DiamondEngine.GameObject::get_globalScale", SendGlobalScale);
 	mono_add_internal_call("DiamondEngine.GameObject::set_localScale", RecieveScale);
+
+	mono_add_internal_call("DiamondEngine.Animator::Play", Play);
+	mono_add_internal_call("DiamondEngine.Animator::Pause", Pause);
+	mono_add_internal_call("DiamondEngine.Animator::Resume", Resume);
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
 
@@ -310,6 +315,9 @@ MonoObject* M_MonoManager::QuatToCS(Quat& inVec) const
 
 GameObject* M_MonoManager::GameObject_From_CSGO(MonoObject* goObj)
 {
+	if (goObj == nullptr)
+		return nullptr;
+
 	uintptr_t ptr = 0;
 	MonoClass* goClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "GameObject");
 

@@ -42,6 +42,7 @@ public:
 	bool IsChild(GameObject*);
 
 	void RemoveChild(GameObject*);
+	void CollectChilds(std::vector<GameObject*>& vector);
 
 	GameObject* parent;
 	C_Transform* transform;
