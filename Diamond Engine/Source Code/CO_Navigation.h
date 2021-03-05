@@ -4,8 +4,10 @@
 #include <map>
 
 enum class ACTIONSNAVIGATION {
+    NONE,
 	MOVE,
-	EXECUTE
+	EXECUTE,
+    TOTAL_ACTIONS_WITH_NONE
 };
 
 enum class BUTTONSANDJOYSTICKS {
@@ -17,7 +19,7 @@ enum class BUTTONSANDJOYSTICKS {
     BUTTON_GUIDE,
     BUTTON_START,
     BUTTON_LEFTTTRIGGER,
-    BUTTON_RIGHTTRIGGERK,
+    BUTTON_RIGHTTRIGGER,
     BUTTON_LEFTSHOULDER,
     BUTTON_RIGHTSHOULDER,
     BUTTON_DPAD_UP,
@@ -51,9 +53,10 @@ public:
 
 #ifndef STANDALONE
     bool OnEditor() override;
+    void WriteButtonOrJoystickOnEditor(const char* text,BUTTONSANDJOYSTICKS button_or_joystick);
 #endif // !STANDALONE
 
 private:
-    std::map< int, ActionToRealize> map_of_buttons_and_joysticks;
+    std::map< BUTTONSANDJOYSTICKS, ActionToRealize> map_of_buttons_and_joysticks;
     bool is_selected;
 };

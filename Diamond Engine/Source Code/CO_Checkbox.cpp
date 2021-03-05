@@ -13,7 +13,6 @@
 
 #include "ImGui/imgui.h"
 
-#include <assert.h>
 
 C_Checkbox::C_Checkbox(GameObject* gameObject): Component(gameObject), sprite_checkbox_active(nullptr), sprite_checkbox_active_hovered(nullptr), sprite_checkbox_active_pressed(nullptr),
 sprite_checkbox_unactive(nullptr), sprite_checkbox_unactive_hovered(nullptr), sprite_checkbox_unactive_pressed(nullptr), script_name(""), num_sprite_used(CHECKBOXSTATE::CHECKBOXUNACTIVE),
