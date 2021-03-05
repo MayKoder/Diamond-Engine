@@ -107,15 +107,20 @@ update_status M_Scene::Update(float dt)
 			//TODO: Duplicated code from scene loading && delete command, move to method
 			if (scene != NULL) 
 			{
-
 				JSON_Object* sceneObj = json_value_get_object(scene);
 				JSON_Array* sceneGO = json_object_get_array(sceneObj, "Game Objects");
 
 				GameObject* parent = (App->moduleEditor->GetSelectedGO() == nullptr) ? root : App->moduleEditor->GetSelectedGO();
+				GameObject* gameObjectRoot = nullptr;
 				for (size_t i = 0; i < json_array_get_count(sceneGO); i++)
 				{
 					parent = LoadGOData(json_array_get_object(sceneGO, i), parent);
+					
+					if (i == 0)
+						gameObjectRoot = parent;
 				}
+
+				gameObjectRoot->RecursiveUIDRegeneration();
 
 				LoadScriptsData();
 
