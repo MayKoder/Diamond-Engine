@@ -21,6 +21,7 @@ public:
 	void Draw() override;
 
 	ImVec2 NormalizeOnWindow(float x, float y, float w, float h, ImVec2 point);
+	ImVec2 GetRegionAvailable();
 
 private:
 	void DrawGuizmo();
