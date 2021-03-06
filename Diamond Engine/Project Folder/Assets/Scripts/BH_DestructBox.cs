@@ -10,8 +10,9 @@ public class BH_DestructBox : DiamondComponent
 
 	}
 
-	public void OnCollisionEnter()
+	public void OnTriggerEnter()
 	{
 		InternalCalls.Destroy(thisReference);
 	}
+
 }
