@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        95.441520690917969,
-        34.784126281738281,
-        -39.727909088134766
+        3.8507547378540039,
+        9.417973518371582,
+        -0.86845499277114868
     ],
     "EditorCameraZ": [
-        -0.71643543243408203,
-        -0.23494939506053925,
-        0.65690112113952637
+        -0.63148730993270874,
+        -0.16558195650577545,
+        0.75750017166137695
     ],
     "EditorCameraY": [
-        -0.17317360639572144,
-        0.97200751304626465,
-        0.15878322720527649
+        -0.1060289591550827,
+        0.98619604110717773,
+        0.12718193233013153
     ],
     "Game Objects": [
         {
@@ -137,12 +137,10 @@
                 {
                     "Type": 4,
                     "Active": true,
-                    "fType": 2,
-                    "nearPlaneDist": 1,
-                    "farPlaneDist": 5000,
-                    "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6568517684936523,
-                    "culling": false
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
                 }
             ]
         },
@@ -171,6 +169,60 @@
                 {
                     "Type": 1,
                     "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1461105634.mmh",
+                    "UID": 1461105634,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true,
+                    "Gravity": true,
+                    "LockLinearX": false,
+                    "LockLinearY": false,
+                    "LockLinearZ": false,
+                    "LockAngularX": false,
+                    "LockAngularY": false,
+                    "LockAngularZ": false,
+                    "Mass": 10,
+                    "Density": 1
+                },
+                {
+                    "Type": 15,
+                    "Active": true,
+                    "isTrigger": false,
+                    "Position": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "Rotation": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "Scale": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
                 }
             ]
         },
@@ -218,7 +270,32 @@
                 },
                 {
                     "Type": 15,
-                    "Active": true
+                    "Active": true,
+                    "isTrigger": false,
+                    "Position": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "Rotation": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "Scale": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
                 }
             ]
         },
@@ -266,7 +343,32 @@
                 },
                 {
                     "Type": 15,
-                    "Active": true
+                    "Active": true,
+                    "isTrigger": false,
+                    "Position": [
+                        -2,
+                        4,
+                        0
+                    ],
+                    "Rotation": [
+                        0,
+                        0,
+                        0.38268482685089111,
+                        0.92387896776199341
+                    ],
+                    "Scale": [
+                        1.4000009298324585,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
                 }
             ]
         },
@@ -314,7 +416,32 @@
                 },
                 {
                     "Type": 15,
-                    "Active": true
+                    "Active": true,
+                    "isTrigger": false,
+                    "Position": [
+                        4,
+                        2,
+                        0
+                    ],
+                    "Rotation": [
+                        -9.6275027317460626e-05,
+                        -0.00023829368001315743,
+                        0.37460425496101379,
+                        0.92718476057052612
+                    ],
+                    "Scale": [
+                        0.99998587369918823,
+                        1.3999999761581421,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
                 }
             ]
         },
@@ -362,7 +489,32 @@
                 },
                 {
                     "Type": 15,
-                    "Active": true
+                    "Active": true,
+                    "isTrigger": false,
+                    "Position": [
+                        4,
+                        -2,
+                        0
+                    ],
+                    "Rotation": [
+                        0,
+                        0,
+                        0.39073276519775391,
+                        0.92050415277481079
+                    ],
+                    "Scale": [
+                        1.2999999523162842,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
                 }
             ]
         },
@@ -415,8 +567,10 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "RoomSwitch",
-                    "rooms": 0
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
                 }
             ]
         },
@@ -465,6 +619,207 @@
                 {
                     "Type": 15,
                     "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1909063491.mmh",
+                    "UID": 1909063491,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": false,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "EngineIcons\/PlayButton.dds",
+                    "UID": 0,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/715565838.mat",
+                    "MaterialUID": 715565838
+                }
+            ]
+        },
+        {
+            "name": "ShootPoint",
+            "Active": true,
+            "Position": [
+                0,
+                0.84793615341186523,
+                0.70000004768371582
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                0.20000000298023224,
+                0.20000000298023224,
+                0.20000000298023224
+            ],
+            "UID": 1579331010,
+            "ParentUID": 196363487,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 13,
+                    "Active": true,
+                    "evName": "Empty",
+                    "audBankReference": "Mando",
+                    "volume": 2.0490000247955322,
+                    "pitch": 50,
+                    "playOnAwake": false,
+                    "isMuted": false
+                }
+            ]
+        },
+        {
+            "name": "Game Camera",
+            "Active": true,
+            "Position": [
+                0,
+                18.81976318359375,
+                -19.997871398925781
+            ],
+            "Rotation": [
+                0.17129690945148468,
+                0.40555047988891602,
+                -0.057422444224357605,
+                0.89604073762893677
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "UID": 71863204,
+            "ParentUID": 1676501951,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 4,
+                    "Active": true,
+                    "fType": 1,
+                    "fSize": 45,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 100,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.5521194934844971,
+                    "culling": false
+                },
+                {
+                    "Type": 12,
+                    "Active": true,
+                    "isDefaultListener": true,
+                    "masterVolume": 50
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "CameraController",
+                    "reference": 71863204,
+                    "target": 196363487,
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "smoothSpeed": 0.0099999997764825821,
+                    "zoomDesired": 0.10000000149011612,
+                    "zooming": false,
+                    "time_easing": 0.20000000298023224,
+                    "timer": 0,
+                    "pointA_zoom": 0
+                }
+            ]
+        },
+        {
+            "name": "World Limit",
+            "Active": true,
+            "Position": [
+                0,
+                -10.891530990600586,
+                1.2983717851966503e-06
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                3609.90625,
+                2996.216552734375,
+                0.99999576807022095
+            ],
+            "UID": 451272464,
+            "ParentUID": 1676501951,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": false,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "Respawn",
+                    "room": 1076838722
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true,
+                    "Gravity": true,
+                    "LockLinearX": false,
+                    "LockLinearY": false,
+                    "LockLinearZ": false,
+                    "LockAngularX": false,
+                    "LockAngularY": false,
+                    "LockAngularZ": false,
+                    "Mass": 10,
+                    "Density": 1
+                },
+                {
+                    "Type": 15,
+                    "Active": true,
+                    "isTrigger": false,
+                    "Position": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "Rotation": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "Scale": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         }
