@@ -27,12 +27,13 @@ public:
 struct FontDictionary
 {
 public:
-	FontDictionary(std::map<char, Character>& characterVec);
+	FontDictionary(const char* name, std::map<char, Character>& characterVec);
 	~FontDictionary();
 
 	void UnloadCharacterTextures();
 
 public:
+	std::string name;
 	std::map<char, Character> characters;
 };
 

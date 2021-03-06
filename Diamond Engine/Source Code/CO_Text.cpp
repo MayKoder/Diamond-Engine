@@ -20,6 +20,7 @@ C_Text::C_Text(GameObject* gameObject) : Component(gameObject),
 	text(""),
 	font(nullptr)
 {
+	memset(textColor, 0, sizeof(textColor));
 	name = "Text";
 	font = EngineExternal->moduleFileSystem->free_type_library->GetFont("Arial");
 }
@@ -43,38 +44,46 @@ void C_Text::RenderText(C_Transform2D* transform, ResourceMaterial* material, un
 
 	for (int i = 0; i < text.size(); ++i)
 	{
-		const Character& character = font->characters.find(text[i])->second;
+		std::map<char, Character>::iterator it = font->characters.find(text[i]);
 
-		glBindTexture(GL_TEXTURE_2D, character.textureId);
-		GLint modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "model_matrix");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, transform->GetGlobal2DTransform().ptr());
+		if (it != font->characters.end())
+		{
+			const Character& character = it->second;
 
-		float posX = (x + character.bearing[0]) / 100;
-		float posY = (y - (character.size[1] - character.bearing[1])) / 100;
+			glBindTexture(GL_TEXTURE_2D, character.textureId);
+			GLint modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "model_matrix");
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, transform->GetGlobal2DTransform().ptr());
 
-		float width = character.size[0] / 100;
-		float height = character.size[1] / 100;
+			modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "altColor");
+			glUniform3f(modelLoc, textColor[0], textColor[1], textColor[2]);
 
-		float vertices[6][4] = {
-			{ posX,			posY + height,  0.0f, 0.0f },
-			{ posX,			posY,			0.0f, 1.0f },
-			{ posX + width, posY,			1.0f, 1.0f },
+			float posX = (x + character.bearing[0]) / 100.f;
+			float posY = (y - (character.size[1] - character.bearing[1])) / 100.f;
 
-			{ posX,			posY + height,  0.0f, 0.0f },
-			{ posX + width, posY,			1.0f, 1.0f },
-			{ posX + width, posY + height,  1.0f, 0.0f }
-		};
+			float width = character.size[0] / 100.f;
+			float height = character.size[1] / 100.f;
 
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+			float vertices[6][4] = {
+				{ posX,			posY + height,  0.0f, 0.0f },
+				{ posX,			posY,			0.0f, 1.0f },
+				{ posX + width, posY,			1.0f, 1.0f },
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (GLvoid*)0);
+				{ posX,			posY + height,  0.0f, 0.0f },
+				{ posX + width, posY,			1.0f, 1.0f },
+				{ posX + width, posY + height,  1.0f, 0.0f }
+			};
 
-		// render quad
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+			glBindBuffer(GL_ARRAY_BUFFER, VBO);
+			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 
-		x += (character.advance >> 6);	//Bitshift by 6 to get size in pixels
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (GLvoid*)0);
+
+			// render quad
+			glDrawArrays(GL_TRIANGLES, 0, 6);
+
+			x += (character.advance >> 6);	//Bitshift by 6 to get size in pixels
+		}	
 	}
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -97,7 +106,37 @@ bool C_Text::OnEditor()
 		ImGui::InputText("Text to print", &inputText[0], sizeof(inputText));
 
 		text = inputText;
+		
+		ImGui::DragFloat3("##ltextCol", &textColor[0], 0.1f);
 	}
 	return true;
 }
 #endif // !STANDALONE
+
+
+void C_Text::SaveData(JSON_Object* nObj)
+{
+	Component::SaveData(nObj);
+
+	DEJson::WriteString(nObj, "text", text.c_str());
+
+	if (font != nullptr)
+		DEJson::WriteString(nObj, "fontName", font->name.c_str());
+	
+	DEJson::WriteVector3(nObj, "textColor", textColor);
+}
+
+
+void C_Text::LoadData(DEConfig& nObj)
+{
+	Component::LoadData(nObj);
+
+	text = nObj.ReadString("text");
+
+	font = EngineExternal->moduleFileSystem->free_type_library->GetFont(nObj.ReadString("fontName"));
+
+	float3 col = nObj.ReadVector3("textColor");
+	textColor[0] = col.x;
+	textColor[1] = col.y;
+	textColor[2] = col.z;
+}

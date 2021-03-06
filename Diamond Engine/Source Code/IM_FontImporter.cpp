@@ -27,7 +27,8 @@ Character::~Character()
 }
 
 
-FontDictionary::FontDictionary(std::map<char, Character>& characterVec) :
+FontDictionary::FontDictionary(const char* name, std::map<char, Character>& characterVec) :
+	name(name),
 	characters(characterVec)
 {
 }
@@ -118,7 +119,7 @@ void FreeType_Library::InitFontDictionary(FT_Face& face, const char* fontName)
 		charVector.insert(std::pair<char, Character>(c, Character(texture, face->glyph->advance.x, face->glyph->bitmap.width, face->glyph->bitmap.rows, face->glyph->bitmap_left, face->glyph->bitmap_top)));
 	}
 
-	fontLibrary.emplace(std::pair<std::string, FontDictionary>(fontName, FontDictionary(charVector)));
+	fontLibrary.emplace(std::pair<std::string, FontDictionary>(fontName, FontDictionary(fontName, charVector)));
 	glBindTexture(GL_TEXTURE_2D, 0);
 	FT_Done_Face(face);
 }
@@ -126,5 +127,7 @@ void FreeType_Library::InitFontDictionary(FT_Face& face, const char* fontName)
 
 FontDictionary* FreeType_Library::GetFont(const char* name)
 {
-	return &fontLibrary.find(name)->second;
+	std::map<std::string, FontDictionary>::iterator iterator = fontLibrary.find(name);
+
+	return (iterator != fontLibrary.end() ? &iterator->second : nullptr);
 }

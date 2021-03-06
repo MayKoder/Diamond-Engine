@@ -21,12 +21,14 @@ public:
 	bool OnEditor() override;
 #endif // !STANDALONE
 
-private:
-	float4x4 GetCharacterTransform(const Character& character, C_Transform2D* transform, float posX, float posY);
+	void SaveData(JSON_Object* nObj) override;
+	void LoadData(DEConfig& nObj) override;
 
 private:
 	const char* font_path;
 	std::string text;
+
+	float textColor[3];
 
 	FontDictionary* font = nullptr;
 };
