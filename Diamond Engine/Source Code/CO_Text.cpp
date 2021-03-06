@@ -49,11 +49,11 @@ void C_Text::RenderText(C_Transform2D* transform, ResourceMaterial* material, un
 		GLint modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "model_matrix");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, transform->GetGlobal2DTransform().ptr());
 
-		float posX = x + character.bearing[0];
-		float posY = y + character.bearing[1];
+		float posX = (x + character.bearing[0]) / 100;
+		float posY = -(y + character.bearing[1]) / 100;
 
-		float width = character.size[0];
-		float height = character.size[1];
+		float width = character.size[0] / 100;
+		float height = character.size[1] / 100;
 
 		float vertices[6][4] = {
 			{ posX,			posY + height,  0.0f, 0.0f },

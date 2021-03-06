@@ -1,7 +1,7 @@
 {
     "Game Objects": [
         {
-            "name": "Image",
+            "name": "Text",
             "Active": true,
             "Position": [
                 0,
@@ -19,8 +19,8 @@
                 1,
                 1
             ],
-            "UID": 1168538596,
-            "ParentUID": 259851228,
+            "UID": 1859337144,
+            "ParentUID": 356497960,
             "Components": [
                 {
                     "Type": 1,
@@ -30,7 +30,7 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        0,
+                        -73.599998474121094,
                         0
                     ],
                     "Rotation": 0,
@@ -43,16 +43,13 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
                 },
                 {
-                    "Type": 11,
-                    "Active": true,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/934250681.dds",
-                    "UID": 934250681
+                    "Type": 9,
+                    "Active": true
                 }
             ]
         }
