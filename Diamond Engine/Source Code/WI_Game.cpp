@@ -4,6 +4,11 @@
 #include "CO_Camera.h"
 #include"Globals.h"
 
+#include "Application.h"
+#include "MO_Camera3D.h"
+#include "MO_Editor.h"
+#include "WI_Scene.h"
+
 #include"DETime.h"
 #include "SDL/include/SDL_mouse.h"
 
@@ -29,7 +34,13 @@ void W_Game::Draw()
 		if (targetCamera != nullptr && targetCamera->resolvedFBO.GetFrameBuffer() != 0) {
 			//LOG(LogType::L_WARNING, "Frame buffer game id: %d", targetCamera->framebuffer);
 			//TODO: Dont modify aspect ratio every frame
-			targetCamera->SetAspectRatio(ImGui::GetContentRegionAvail().x / ImGui::GetContentRegionAvail().y);
+			if (targetCamera->camFrustrum.type == FrustumType::PerspectiveFrustum)
+				targetCamera->SetAspectRatio(ImGui::GetContentRegionAvail().x / ImGui::GetContentRegionAvail().y);
+			else
+			{
+				targetCamera->camFrustrum.orthographicWidth = ImGui::GetContentRegionAvail().x / targetCamera->orthoSize;
+				targetCamera->camFrustrum.orthographicHeight = ImGui::GetContentRegionAvail().y / targetCamera->orthoSize;
+			}
 
 			//float w = ImGui::GetWindowSize().x;
 			//float h = (9 * w) / 16;
@@ -45,6 +56,20 @@ void W_Game::Draw()
 		//}
 
 	}
+	else if (targetCamera != nullptr && targetCamera->resolvedFBO.GetFrameBuffer() != 0)
+	{
+		W_Scene* scene_window = dynamic_cast<W_Scene*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::SCENE));
+		ImVec2 size = scene_window->GetRegionAvailable();
+
+		if (targetCamera->camFrustrum.type == FrustumType::PerspectiveFrustum)
+			targetCamera->SetAspectRatio(size.x / size.y);
+		else
+		{
+			targetCamera->camFrustrum.orthographicWidth = size.x / targetCamera->orthoSize;
+			targetCamera->camFrustrum.orthographicHeight = size.y / targetCamera->orthoSize;
+		}
+	}
+
 	ImGui::End();
 }
 

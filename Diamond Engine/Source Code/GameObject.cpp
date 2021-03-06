@@ -265,7 +265,7 @@ void GameObject::ChangeParent(GameObject* newParent)
 
 	Quat _rot;
 	float3 scale, pos;
-	transform->localTransform.RotatePart().Decompose(_rot, scale);
+	transform->localTransform.Decompose(pos, _rot, scale);
 
 	transform->SetTransformMatrix(transform->localTransform.TranslatePart(), _rot, scale);
 	transform->updateTransform = true;

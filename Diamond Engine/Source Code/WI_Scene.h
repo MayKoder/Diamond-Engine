@@ -22,6 +22,7 @@ public:
 	ImGuizmo::MODE mode;
 
 	ImVec2 NormalizeOnWindow(float x, float y, float w, float h, ImVec2 point);
+	ImVec2 GetRegionAvailable();
 
 	Application* App;
 

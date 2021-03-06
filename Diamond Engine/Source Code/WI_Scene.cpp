@@ -169,4 +169,14 @@ ImVec2 W_Scene::NormalizeOnWindow(float x, float y, float w, float h, ImVec2 poi
 	return normalizedPoint;
 }
 
+ImVec2 W_Scene::GetRegionAvailable()
+{
+	ImVec2 size;
+
+	size.x = ImGui::GetContentRegionAvail().x;
+	size.y = ImGui::GetContentRegionAvail().y;
+
+	return size;
+}
+
 #endif // !STANDALONE
