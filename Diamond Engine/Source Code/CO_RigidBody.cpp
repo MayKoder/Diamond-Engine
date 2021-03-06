@@ -99,6 +99,7 @@ C_RigidBody::~C_RigidBody()
 		collider_info->rigidbody = nullptr;
 	//rigid_dynamic->getGlobalPose();
 	EngineExternal->modulePhysics->ReleaseActor((physx::PxRigidActor*)rigid_dynamic);
+	rigid_dynamic->userData = nullptr;
 }
 
 void C_RigidBody::PostUpdate()
