@@ -62,6 +62,7 @@ public:
     void DoTheAction(GameObject* gameobject, BUTTONSANDJOYSTICKS button_or_joystick_used, ACTIONSNAVIGATION action, bool is_key_released);
 
     void Select();
+    void Deselect();
 
     void SaveData(JSON_Object* nObj) override;
     void LoadData(DEConfig& nObj) override;

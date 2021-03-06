@@ -362,6 +362,26 @@ void C_Navigation::Select()
 	}
 }
 
+void C_Navigation::Deselect()
+{
+
+	EngineExternal->moduleGui->uid_gameobject_of_ui_selected = 0;
+	is_selected = false;
+
+	switch (type_of_ui) {
+	case Component::TYPE::BUTTON: {
+		C_Button* button = static_cast<C_Button*>(gameObject->GetComponent(Component::TYPE::BUTTON));
+		button->is_selected = false;
+		break;
+	}
+	case Component::TYPE::CHECKBOX: {
+		C_Checkbox* checbox = static_cast<C_Checkbox*>(gameObject->GetComponent(Component::TYPE::CHECKBOX));
+		checbox->is_selected = false;
+		break;
+	}
+	}
+}
+
 void C_Navigation::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
@@ -432,10 +452,19 @@ bool C_Navigation::OnEditor()
 
 
 		if (ImGui::Checkbox("Is this UI component selected?", &is_selected)) {
-			if (is_selected)
+			if (is_selected) {
+				if (EngineExternal->moduleGui->uid_gameobject_of_ui_selected != 0) {
+					GameObject* g = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, EngineExternal->moduleGui->uid_gameobject_of_ui_selected);
+					if (g != nullptr) {
+						C_Navigation* nav = static_cast<C_Navigation*>(g->GetComponent(Component::TYPE::NAVIGATION));
+						if (nav != nullptr)
+							nav->Deselect();
+					}
+				}
 				Select();
+			}
 			else
-				EngineExternal->moduleGui->uid_gameobject_of_ui_selected = 0;
+				Deselect();
 		}
 		ImGui::Columns(3);
 
