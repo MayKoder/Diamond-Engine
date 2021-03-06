@@ -32,9 +32,9 @@ void W_Game::Draw()
 		if (targetCamera != nullptr && targetCamera->resolvedFBO.GetFrameBuffer() != 0) {
 			//LOG(LogType::L_WARNING, "Frame buffer game id: %d", targetCamera->framebuffer);
 			//TODO: Dont modify aspect ratio every frame
-			if(targetCamera->camFrustrum.type == FrustumType::PerspectiveFrustum)
+			if (targetCamera->camFrustrum.type == FrustumType::PerspectiveFrustum)
 				targetCamera->SetAspectRatio(ImGui::GetContentRegionAvail().x / ImGui::GetContentRegionAvail().y);
-			else 
+			else
 			{
 				targetCamera->camFrustrum.orthographicWidth = ImGui::GetContentRegionAvail().x / targetCamera->orthoSize;
 				targetCamera->camFrustrum.orthographicHeight = ImGui::GetContentRegionAvail().y / targetCamera->orthoSize;
@@ -45,7 +45,7 @@ void W_Game::Draw()
 			ImGui::Image((ImTextureID)targetCamera->resolvedFBO.GetTextureBuffer(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
 		}
 
-		if (ImGui::IsWindowHovered() && DETime::state == GameState::PLAY && ImGui::IsMouseClicked(ImGuiMouseButton_Left)) 
+		if (ImGui::IsWindowHovered() && DETime::state == GameState::PLAY && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
 			SDL_SetRelativeMouseMode(SDL_TRUE);
 
 		//ImGui::SetCursorPos(ImVec2(10, 50));
@@ -55,16 +55,21 @@ void W_Game::Draw()
 		//}
 
 	}
-	#ifndef STANDALONE
-	else
+#ifndef STANDALONE
+	else if (targetCamera != nullptr && targetCamera->resolvedFBO.GetFrameBuffer() != 0)
 	{
-
 		W_Scene* scene_window = dynamic_cast<W_Scene*>(EngineExternal->moduleEditor->GetEditorWindow(EditorWindow::SCENE));
 		ImVec2 size = scene_window->GetRegionAvailable();
-		targetCamera->camFrustrum.orthographicWidth = size.x / targetCamera->orthoSize;
-		targetCamera->camFrustrum.orthographicHeight = size.y / targetCamera->orthoSize;
+
+		if (targetCamera->camFrustrum.type == FrustumType::PerspectiveFrustum)
+			targetCamera->SetAspectRatio(size.x / size.y);
+		else
+		{
+			targetCamera->camFrustrum.orthographicWidth = size.x / targetCamera->orthoSize;
+			targetCamera->camFrustrum.orthographicHeight = size.y / targetCamera->orthoSize;
+		}
 	}
-	#endif // !STANDALONE
+#endif // !STANDALONE
 
 	ImGui::End();
 }
