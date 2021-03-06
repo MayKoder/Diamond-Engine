@@ -359,13 +359,19 @@ void CollisionDetector::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 coun
 		GameObject* contact = static_cast<GameObject*>(pairs->triggerActor->userData);
 		GameObject* contact2 = static_cast<GameObject*>(pairs->otherActor->userData);
 
-		C_Script* script = dynamic_cast<C_Script*>(contact->GetComponent(Component::TYPE::SCRIPT));
-		if (script)
-			script->CollisionCallback(true);
+		if (contact != nullptr) 
+		{
+			C_Script* script = dynamic_cast<C_Script*>(contact->GetComponent(Component::TYPE::SCRIPT));
+			if (script)
+				script->CollisionCallback(true);
+		}
 
-		script = dynamic_cast<C_Script*>(contact2->GetComponent(Component::TYPE::SCRIPT));
-		if (script)
-			script->CollisionCallback(false);
+		if (contact2 != nullptr) 
+		{
+			C_Script* script = dynamic_cast<C_Script*>(contact2->GetComponent(Component::TYPE::SCRIPT));
+			if (script)
+				script->CollisionCallback(false);
+		}
 		
 	}
 }
