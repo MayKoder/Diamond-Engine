@@ -24,4 +24,9 @@ public class BH_Bullet : DiamondComponent
             InternalCalls.Destroy(this.thisReference);
         }
     }
+
+    public void OnTriggerEnter()
+    {
+        InternalCalls.Destroy(thisReference);
+    }
 }

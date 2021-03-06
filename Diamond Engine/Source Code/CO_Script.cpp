@@ -303,14 +303,27 @@ void C_Script::LoadScriptData(const char* scriptName)
 	onCollisionEnter = mono_method_desc_search_in_class(oncDesc, klass);
 	mono_method_desc_free(oncDesc);
 
+	oncDesc = mono_method_desc_new(":OnTriggerEnter", false);
+	onTriggerEnter = mono_method_desc_search_in_class(oncDesc, klass);
+	mono_method_desc_free(oncDesc);
 
 	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject), this);
 }
 
-void C_Script::CollisionCallback()
+void C_Script::CollisionCallback(bool isTrigger)
 {
-	if(onCollisionEnter != nullptr)
+	if (onCollisionEnter != nullptr)
 		mono_runtime_invoke(onCollisionEnter, mono_gchandle_get_target(noGCobject), NULL, NULL);
+	if (isTrigger)
+	{
+		if (onTriggerEnter != nullptr)
+			mono_runtime_invoke(onTriggerEnter, mono_gchandle_get_target(noGCobject), NULL, NULL);
+	}
+	else
+	{
+		if (onCollisionEnter != nullptr)
+			mono_runtime_invoke(onCollisionEnter, mono_gchandle_get_target(noGCobject), NULL, NULL);
+	}
 }
 
 void C_Script::SetField(MonoClassField* field, GameObject* value)

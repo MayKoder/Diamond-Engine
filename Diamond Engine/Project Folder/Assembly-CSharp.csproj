@@ -41,7 +41,7 @@
 		<StartupObject />
 	</PropertyGroup>
 	<ItemGroup>
-    <Compile Include="Assembly-CSharp\Diamond Engine Utility\Audio.cs" />
+		<Compile Include="Assembly-CSharp\Diamond Engine Utility\Audio.cs" />
 		<Compile Include="Assembly-CSharp\Diamond Engine Utility\DiamondComponent.cs" />
 		<Compile Include="Assembly-CSharp\Diamond Engine Utility\GameObject.cs" />
 		<Compile Include="Assembly-CSharp\Diamond Engine Utility\InternalCalls.cs" />
@@ -58,7 +58,8 @@
 		<Compile Include="Assets\Scripts\FPS_Controller.cs" />
 		<Compile Include="Assets\Scripts\AnimationTest.cs" />
 		<Compile Include="Assets\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Scripts\RoomSwitch.cs" />
+		<Compile Include="Assets\Scripts\RoomSwitch.cs" />
+		<Compile Include="Assets\Scripts\BH_DestructBox.cs" />
 	</ItemGroup>
 	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

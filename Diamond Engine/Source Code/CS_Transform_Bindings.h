@@ -10,6 +10,8 @@
 #include "CO_MeshRenderer.h"
 #include "CO_Script.h"
 #include "CO_Transform.h"
+#include "CO_Collider.h"
+#include "CO_RigidBody.h"
 
 #include "MO_Input.h"
 #include "MO_Scene.h"
@@ -226,6 +228,13 @@ void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale)
 	meshRenderer->SetRenderMesh(test);
 
 	go->AddComponent(Component::TYPE::SCRIPT, "BH_Bullet");
+
+	C_Collider* col = dynamic_cast<C_Collider*>(go->AddComponent(Component::TYPE::Collider));
+	col->SetTrigger(true);
+
+	C_RigidBody* rb = dynamic_cast<C_RigidBody*>(go->GetComponent(Component::TYPE::RigidBody));
+	rb->EnableGravity(false);
+	rb->EnableKinematic(false);
 
 	/*return mono_gchandle_get_target(cmp->noGCobject);*/
 }
