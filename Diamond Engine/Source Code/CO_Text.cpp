@@ -50,7 +50,7 @@ void C_Text::RenderText(C_Transform2D* transform, ResourceMaterial* material, un
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, transform->GetGlobal2DTransform().ptr());
 
 		float posX = (x + character.bearing[0]) / 100;
-		float posY = -(y + character.bearing[1]) / 100;
+		float posY = (y - (character.size[1] - character.bearing[1])) / 100;
 
 		float width = character.size[0] / 100;
 		float height = character.size[1] / 100;
@@ -68,13 +68,16 @@ void C_Text::RenderText(C_Transform2D* transform, ResourceMaterial* material, un
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (GLvoid*)0);
+
 		// render quad
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		x += (character.advance >> 6);	//Bitshift by 6 to get size in pixels
 	}
 	
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
