@@ -310,10 +310,22 @@ bool C_Animator::OnEditor()
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ANIMATION"))
 			{
-				std::string* assets_path = (std::string*)payload->Data;
+				std::string* path = (std::string*)payload->Data;
 
-				std::string uid = "";
-				ResourceAnimation* droppedAnimation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestFromAssets(assets_path->c_str()));
+				ResourceAnimation* droppedAnimation = nullptr;
+
+				if (path->find("Assets") != std::string::npos)
+				{
+					droppedAnimation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestFromAssets(path->c_str()));
+				}
+				else //Take from Library
+				{
+					std::string uid;
+					FileSystem::GetFileName(path->c_str(), uid, false);
+
+					droppedAnimation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(std::atoi(uid.c_str()), Resource::Type::ANIMATION));
+				}
+
 
 				if (droppedAnimation != nullptr) {
 					AddAnimation(droppedAnimation);

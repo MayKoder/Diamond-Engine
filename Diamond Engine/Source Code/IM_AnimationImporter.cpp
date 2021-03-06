@@ -88,7 +88,7 @@ ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimati
 	char* buffer;
 	uint size = animation->SaveCustomFormat(animation, &buffer);
 
-	//FileSystem::Save(library_path.c_str(), buffer, size, false);
+	FileSystem::Save(library_path.c_str(), buffer, size, false);
 	std::string assets_path = "Assets/Animations/" + std::string(importedAnimation->mName.C_Str()) + ".anim";
 	FileSystem::Save(assets_path.c_str(), buffer, size, false);
 
