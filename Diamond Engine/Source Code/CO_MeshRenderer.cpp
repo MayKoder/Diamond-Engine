@@ -111,6 +111,7 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 			}
 		}
 
+		/*
 		if (bonesMap.size() != _mesh->bonesMap.size())
 		{
 			for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
@@ -121,7 +122,7 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 				}
 			}
 		}
-
+		*/
 		bonesMap.clear();
 	}
 	else

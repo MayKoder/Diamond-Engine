@@ -81,7 +81,7 @@ void W_Assets::Draw()
 		
 		DrawFileTree(*displayFolder);
 		DrawFileTree(EngineExternal->moduleResources->meshesLibraryRoot);
-		//DrawFileTree(EngineExternal->moduleResources->animationsLibraryRoot);
+		DrawFileTree(EngineExternal->moduleResources->animationsLibraryRoot);
 
 		if (selectedFile != nullptr && /*ImGui::IsWindowHovered() &&*/ EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) 
 		{ //This prevents mesh removal because mesh files have no dirName

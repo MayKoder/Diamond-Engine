@@ -196,6 +196,8 @@ void C_Animator::LoadData(DEConfig& nObj)
 	}
 }
 
+#ifndef STANDALONE
+
 bool C_Animator::OnEditor()
 {	
 	if (Component::OnEditor() == true)
@@ -295,7 +297,9 @@ bool C_Animator::OnEditor()
 			}
 			ImGui::PopID();
 		}
-		if (animation_to_remove.size() > 0) {
+		if (animation_to_remove.size() > 0) 
+		{
+			EngineExternal->moduleResources->UnloadResource(animations[animation_to_remove]->GetUID());
 			animations.erase(animation_to_remove);
 		}
 
@@ -306,10 +310,22 @@ bool C_Animator::OnEditor()
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ANIMATION"))
 			{
-				std::string* assets_path = (std::string*)payload->Data;
+				std::string* path = (std::string*)payload->Data;
 
-				std::string uid = "";
-				ResourceAnimation* droppedAnimation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestFromAssets(assets_path->c_str()));
+				ResourceAnimation* droppedAnimation = nullptr;
+
+				if (path->find("Assets") != std::string::npos)
+				{
+					droppedAnimation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestFromAssets(path->c_str()));
+				}
+				else //Take from Library
+				{
+					std::string uid;
+					FileSystem::GetFileName(path->c_str(), uid, false);
+
+					droppedAnimation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(std::atoi(uid.c_str()), Resource::Type::ANIMATION));
+				}
+
 
 				if (droppedAnimation != nullptr) {
 					AddAnimation(droppedAnimation);
@@ -435,6 +451,32 @@ bool C_Animator::OnEditor()
 
 	return true;	
 }
+
+void C_Animator::SaveAnimation(ResourceAnimation* animation, const char* name)
+{
+	std::string old_name = animation->animationName;
+	animations.erase(currentAnimation->animationName);
+	sprintf_s(currentAnimation->animationName, name);
+	animations[currentAnimation->animationName] = currentAnimation;
+
+	char* buffer;
+	uint size = currentAnimation->SaveCustomFormat(currentAnimation, &buffer);
+
+	//Save in Library
+	FileSystem::Save(currentAnimation->GetLibraryPath(), buffer, size, false);
+
+	//Save a copy in Assets 
+	std::string old_assets_path = "Assets/Animations/" + old_name + ".anim";
+	std::string new_assets_path = "Assets/Animations/" + std::string(name) + ".anim";
+
+	EngineExternal->moduleResources->RenameAsset(old_assets_path.c_str(), new_assets_path.c_str(), buffer, size, animation);
+
+	old_assets_path.clear();
+	new_assets_path.clear();
+	RELEASE_ARRAY(buffer);
+}
+
+#endif // !STANDALONE
 
 void C_Animator::StoreBoneMapping(GameObject* gameObject)
 {
@@ -611,30 +653,6 @@ float3 C_Animator::GetChannelScale(const Channel & channel, float currentKey, fl
 		}
 	}
 	return scale;
-}
-
-void C_Animator::SaveAnimation(ResourceAnimation* animation, const char* name)
-{
-	std::string old_name = animation->animationName;
-	animations.erase(currentAnimation->animationName);
-	sprintf_s(currentAnimation->animationName, name);
-	animations[currentAnimation->animationName] = currentAnimation;
-
-	char* buffer;
-	uint size = currentAnimation->SaveCustomFormat(currentAnimation, &buffer);
-
-	//Save in Library
-	FileSystem::Save(currentAnimation->GetLibraryPath(), buffer, size, false); 
-
-	//Save a copy in Assets 
-	std::string old_assets_path = "Assets/Animations/" + old_name + ".anim";
-	std::string new_assets_path = "Assets/Animations/" + std::string(name) + ".anim";
-
-	EngineExternal->moduleResources->RenameAsset(old_assets_path.c_str(), new_assets_path.c_str(), buffer, size, animation);
-
-	old_assets_path.clear();
-	new_assets_path.clear();
-	RELEASE_ARRAY(buffer);
 }
 
 void C_Animator::DrawBones(GameObject* gameObject)

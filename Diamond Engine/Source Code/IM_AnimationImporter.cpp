@@ -26,7 +26,7 @@
 
 void  AnimationLoader::logCallback(const char* message, char* user)
 {
-	EngineExternal->moduleEditor->LogToConsole(message);
+	LOG(LogType::L_NORMAL, message);
 }
 
 ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimation, uint oldUID)
@@ -88,12 +88,14 @@ ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimati
 	char* buffer;
 	uint size = animation->SaveCustomFormat(animation, &buffer);
 
-	//FileSystem::Save(library_path.c_str(), buffer, size, false);
+	FileSystem::Save(library_path.c_str(), buffer, size, false);
 	std::string assets_path = "Assets/Animations/" + std::string(importedAnimation->mName.C_Str()) + ".anim";
 	FileSystem::Save(assets_path.c_str(), buffer, size, false);
 
 	std::string file_name = std::to_string(UID);
 	file_name += ".anim";
+
+	//EngineExternal->moduleResources->UnloadResource(animation->GetUID());
 
 	RELEASE_ARRAY(buffer);
 

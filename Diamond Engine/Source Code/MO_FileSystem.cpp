@@ -51,7 +51,6 @@ bool M_FileSystem::Init()
 
 bool M_FileSystem::Start()
 {
-
 	//TODO: Move to resource manager
 	App->moduleResources->PopulateFileArray();
 	GenerateAllMetaFiles();
@@ -61,7 +60,7 @@ bool M_FileSystem::Start()
 	//TODO: Add Library/ to gitignore?
 	GetAllFilesRecursive(App->moduleResources->meshesLibraryRoot);
 	GetAllFilesRecursive(App->moduleResources->animationsLibraryRoot);
-	App->moduleScene->defaultMaterial = (ResourceMaterial*)App->moduleResources->RequestFromAssets("Assets/Materials/default.mat");
+	App->moduleScene->defaultMaterial = (ResourceMaterial*)App->moduleResources->RequestResource(715565838, Resource::Type::MATERIAL);
 	App->moduleRenderer3D->skybox.shaderRes = dynamic_cast<ResourceShader*>(App->moduleResources->RequestResource(28971592, "Library/Shaders/28971592.shdr"));
 	free_type_library->ImportNewFont("Assets/Fonts/arial.ttf");
 
