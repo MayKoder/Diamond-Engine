@@ -10,10 +10,12 @@
 
 #pragma comment (lib, "FreeType/win32/freetype.lib")
 
-Character::Character(unsigned int textureId, unsigned int advance, float sizeX, float sizeY, float bearingX, float bearingY) :
-	textureId(textureId),
-	advance(advance)
+Character::Character(unsigned int textureId, unsigned int advanceX, unsigned int advanceY, float sizeX, float sizeY, float bearingX, float bearingY) :
+	textureId(textureId)
 {
+	advance[0] = advanceX;
+	advance[1] = advanceY;
+
 	size[0] = sizeX;
 	size[1] = sizeY;
 
@@ -50,11 +52,8 @@ void FontDictionary::UnloadCharacterTextures()
 			glDeleteTextures(1, &it->second.textureId);
 
 		it->second.textureId = 0;
-
 	}
 }
-
-
 
 
 FreeType_Library::FreeType_Library()
@@ -116,7 +115,7 @@ void FreeType_Library::InitFontDictionary(FT_Face& face, const char* fontName)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		charVector.insert(std::pair<char, Character>(c, Character(texture, face->glyph->advance.x, face->glyph->bitmap.width, face->glyph->bitmap.rows, face->glyph->bitmap_left, face->glyph->bitmap_top)));
+		charVector.insert(std::pair<char, Character>(c, Character(texture, face->glyph->advance.x, face->size->metrics.height, face->glyph->bitmap.width, face->glyph->bitmap.rows, face->glyph->bitmap_left, face->glyph->bitmap_top)));
 	}
 
 	fontLibrary.emplace(std::pair<std::string, FontDictionary>(fontName, FontDictionary(fontName, charVector)));

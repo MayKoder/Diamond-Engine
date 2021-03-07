@@ -16,8 +16,8 @@
 #include "OpenGL.h"
 
 C_Text::C_Text(GameObject* gameObject) : Component(gameObject), 
-	font_path(""), 
 	text(""),
+	maxTextLenght(0.f),
 	font(nullptr)
 {
 	memset(textColor, 0, sizeof(textColor));
@@ -82,7 +82,13 @@ void C_Text::RenderText(C_Transform2D* transform, ResourceMaterial* material, un
 			// render quad
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 
-			x += (character.advance >> 6);	//Bitshift by 6 to get size in pixels
+			x += (character.advance[0] >> 6);	//Bitshift by 6 to get size in pixels
+
+			if (x >= maxTextLenght && maxTextLenght != 0)
+			{
+				y -= (character.advance[1] >> 6);
+				x = 0.f;
+			}
 		}	
 	}
 	
@@ -107,7 +113,13 @@ bool C_Text::OnEditor()
 
 		text = inputText;
 		
+		ImGui::Text("Text color"); 
+		ImGui::SameLine();
 		ImGui::DragFloat3("##ltextCol", &textColor[0], 0.01f,0.0f,1.0f);
+
+		ImGui::Text("Text width");
+		ImGui::SameLine();
+		ImGui::DragFloat("##lMaxLenght", &maxTextLenght);
 	}
 	return true;
 }
@@ -119,6 +131,7 @@ void C_Text::SaveData(JSON_Object* nObj)
 	Component::SaveData(nObj);
 
 	DEJson::WriteString(nObj, "text", text.c_str());
+	DEJson::WriteFloat(nObj, "maxTextLenght", maxTextLenght);
 
 	if (font != nullptr)
 		DEJson::WriteString(nObj, "fontName", font->name.c_str());
@@ -132,6 +145,7 @@ void C_Text::LoadData(DEConfig& nObj)
 	Component::LoadData(nObj);
 
 	text = nObj.ReadString("text");
+	maxTextLenght = nObj.ReadFloat("maxTextLenght");
 
 	font = EngineExternal->moduleFileSystem->free_type_library->GetFont(nObj.ReadString("fontName"));
 

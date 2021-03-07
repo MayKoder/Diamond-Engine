@@ -12,12 +12,13 @@ typedef FT_LibraryRec_* FT_Library;
 struct Character
 {
 public:
-	Character(unsigned int textureId, unsigned int advance, float sizeX, float sizeY, float bearingX, float bearingY);
+	Character(unsigned int textureId, unsigned int advanceX, unsigned int advanceY, float sizeX, float sizeY, float bearingX, float bearingY);
 	~Character();
 
 public:
 	unsigned int textureId;
-	unsigned int advance;
+	unsigned int advance[2];
+	int lineDistance;
 
 	float size[2];
 	float bearing[2];
