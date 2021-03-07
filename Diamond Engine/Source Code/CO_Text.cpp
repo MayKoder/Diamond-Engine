@@ -15,25 +15,28 @@
 #include "ImGui/imgui.h"
 #include "OpenGL.h"
 
-C_Text::C_Text(GameObject* gameObject) : Component(gameObject), 
+C_Text::C_Text(GameObject* gameObject) : Component(gameObject),
 	text(""),
 	maxTextLenght(0.f),
 	font(nullptr)
 {
 	memset(textColor, 0, sizeof(textColor));
 	name = "Text";
-	font = EngineExternal->moduleFileSystem->free_type_library->GetFont("Arial");
 }
 
 
 C_Text::~C_Text()
 {
+	text.clear();
 	font = nullptr;
 }
 
 
 void C_Text::RenderText(C_Transform2D* transform, ResourceMaterial* material, unsigned int VAO, unsigned int VBO)
 {
+	if (font == nullptr)
+		return;
+
 	material->shader->Bind();
 	material->PushUniforms();
 	glActiveTexture(GL_TEXTURE0);
@@ -89,9 +92,9 @@ void C_Text::RenderText(C_Transform2D* transform, ResourceMaterial* material, un
 				y -= (character.advance[1] >> 6);
 				x = 0.f;
 			}
-		}	
+		}
 	}
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -112,14 +115,29 @@ bool C_Text::OnEditor()
 		ImGui::InputText("Text to print", &inputText[0], sizeof(inputText));
 
 		text = inputText;
-		
-		ImGui::Text("Text color"); 
+
+
+		ImGui::Text("Text color");
 		ImGui::SameLine();
-		ImGui::DragFloat3("##ltextCol", &textColor[0], 0.01f,0.0f,1.0f);
+		ImGui::DragFloat3("##ltextCol", &textColor[0], 0.01f, 0.0f, 1.0f);
 
 		ImGui::Text("Text width");
 		ImGui::SameLine();
 		ImGui::DragFloat("##lMaxLenght", &maxTextLenght);
+
+		ImGui::Text("Drop here to change font");
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_FONT"))
+			{
+				std::string* assetsPath = (std::string*)payload->Data;
+				font = EngineExternal->moduleFileSystem->free_type_library->GetFont(assetsPath->c_str());
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		if (font)
+			ImGui::Text("Using font: %s", font->name.c_str());
 	}
 	return true;
 }
@@ -135,7 +153,7 @@ void C_Text::SaveData(JSON_Object* nObj)
 
 	if (font != nullptr)
 		DEJson::WriteString(nObj, "fontName", font->name.c_str());
-	
+
 	DEJson::WriteVector3(nObj, "textColor", textColor);
 }
 

@@ -89,7 +89,7 @@ void FreeType_Library::ImportNewFont(const char* path, int size)
 
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		InitFontDictionary(new_face, new_face->family_name);
+		InitFontDictionary(new_face, path);
 	}
 }
 
@@ -106,14 +106,15 @@ void FreeType_Library::InitFontDictionary(FT_Face& face, const char* fontName)
 			continue;
 		}
 
-		unsigned int texture;
-		glGenBuffers(1, &texture);
+		unsigned int texture = 0;
+		glGenTextures(1, &texture);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width, face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		charVector.insert(std::pair<char, Character>(c, Character(texture, face->glyph->advance.x, face->size->metrics.height, face->glyph->bitmap.width, face->glyph->bitmap.rows, face->glyph->bitmap_left, face->glyph->bitmap_top)));
 	}
@@ -128,5 +129,14 @@ FontDictionary* FreeType_Library::GetFont(const char* name)
 {
 	std::map<std::string, FontDictionary>::iterator iterator = fontLibrary.find(name);
 
-	return (iterator != fontLibrary.end() ? &iterator->second : nullptr);
+	if (iterator != fontLibrary.end())
+		return &iterator->second;
+
+	else
+	{
+		ImportNewFont(name, 48);
+		iterator = fontLibrary.find(name);
+
+		return (iterator != fontLibrary.end() ? &iterator->second : nullptr);
+	}
 }
