@@ -25,8 +25,8 @@ public:
 	void LoadData(DEConfig& nObj) override;
 
 private:
-	const char* font_path;
 	std::string text;
+	float maxTextLenght;
 
 	float textColor[3];
 
