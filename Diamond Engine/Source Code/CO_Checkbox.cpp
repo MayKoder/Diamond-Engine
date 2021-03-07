@@ -85,12 +85,14 @@ void C_Checkbox::PressCheckbox()
 	if (checkbox_active) {
 		ChangeTexture(CHECKBOXSTATE::CHECKBOXACTIVEPRESSED);
 		C_Script* script = static_cast<C_Script*>(gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()));
-		script->ExecuteCheckbox(checkbox_active);
+		if (script != nullptr)
+			script->ExecuteCheckbox(checkbox_active);
 	}
 	else {
 		ChangeTexture(CHECKBOXSTATE::CHECKBOXUNACTIVEPRESSED);
 		C_Script* script = static_cast<C_Script*>(gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()));
-		script->ExecuteCheckbox(checkbox_active);
+		if (script != nullptr)
+			script->ExecuteCheckbox(checkbox_active);
 	}
 }
 

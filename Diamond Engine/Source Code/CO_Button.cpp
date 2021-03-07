@@ -68,7 +68,8 @@ void C_Button::ExecuteButton()
 {
 	ChangeTexture(BUTTONSTATE::BUTTONPRESSED);
 	C_Script* script=static_cast<C_Script*>(gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()));
-	script->ExecuteButton();
+	if(script!=nullptr)
+		script->ExecuteButton();
 }
 
 void C_Button::ReleaseButton()
