@@ -8,6 +8,7 @@
 #include "MO_Scene.h"
 #include "MO_Input.h"
 #include "MO_GUI.h"
+#include"MO_Window.h"
 
 #include "RE_Mesh.h"
 #include "RE_Texture.h"
@@ -59,6 +60,13 @@ bool ModuleRenderer3D::Init()
 	//ASK: Can i do this inside the MM namespace?
 	MaykMath::Init();
 	LOG(LogType::L_NORMAL, "Init: MaykMath");
+
+#ifdef STANDALONE
+	vsync = true;
+	SDL_SetWindowFullscreen(App->moduleWindow->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	SDL_GetWindowSize(App->moduleWindow->window, &App->moduleWindow->s_width, &App->moduleWindow->s_height);
+	App->moduleRenderer3D->OnResize(App->moduleWindow->s_width, App->moduleWindow->s_height);
+#endif // STANDALONE
 
 	//Create context
 	context = SDL_GL_CreateContext(App->moduleWindow->window);
@@ -196,6 +204,7 @@ bool ModuleRenderer3D::Init()
 	TextureImporter::LoadCubeMap(faces, skybox);
 	skybox.CreateGLData();
 	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
 
 	return ret;
 }
