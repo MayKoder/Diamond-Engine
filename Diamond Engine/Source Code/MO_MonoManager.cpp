@@ -31,9 +31,7 @@
 
 M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app, start_enabled), domain(nullptr), domainThread(nullptr), assembly(nullptr), image(nullptr)
 ,jitDomain(nullptr)
-{
-
-}
+{}
 
 M_MonoManager::~M_MonoManager()
 {}

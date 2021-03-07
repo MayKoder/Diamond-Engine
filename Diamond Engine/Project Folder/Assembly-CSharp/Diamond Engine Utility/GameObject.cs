@@ -68,6 +68,8 @@ namespace DiamondEngine
             get;
         }
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern void GetComponent<T>();
 
         int GetHash()
         {
