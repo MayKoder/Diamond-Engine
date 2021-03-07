@@ -307,6 +307,10 @@ void C_Script::LoadScriptData(const char* scriptName)
 	onExecuteButton = mono_method_desc_search_in_class(oncBut, klass);
 	mono_method_desc_free(oncBut);
 
+	MonoMethodDesc* oncChck = mono_method_desc_new(":OnExecuteCheckbox", false);
+	onExecuteCheckbox = mono_method_desc_search_in_class(oncChck, klass);
+	mono_method_desc_free(oncChck);
+
 
 	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject), this);
 }
@@ -324,6 +328,10 @@ void C_Script::ExecuteButton()
 
 void C_Script::ExecuteCheckbox(bool checkbox_active)
 {
+	void* args[1];
+	args[0] = &checkbox_active;
+
+	mono_runtime_invoke(onExecuteCheckbox, mono_gchandle_get_target(noGCobject), args, NULL);
 }
 
 void C_Script::SetField(MonoClassField* field, GameObject* value)

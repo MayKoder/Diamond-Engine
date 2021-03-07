@@ -41,6 +41,7 @@ public:
 	MonoMethod* updateMethod;
 	MonoMethod* onCollisionEnter;
 	MonoMethod* onExecuteButton;
+	MonoMethod* onExecuteCheckbox;
 	uint32_t noGCobject;
 
 	static C_Script* runningScript;
