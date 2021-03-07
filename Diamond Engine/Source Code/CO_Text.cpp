@@ -107,7 +107,7 @@ bool C_Text::OnEditor()
 
 		text = inputText;
 		
-		ImGui::DragFloat3("##ltextCol", &textColor[0], 0.1f);
+		ImGui::DragFloat3("##ltextCol", &textColor[0], 0.01f,0.0f,1.0f);
 	}
 	return true;
 }
