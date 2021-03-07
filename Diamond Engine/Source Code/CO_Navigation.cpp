@@ -115,7 +115,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 		break;
 	case BUTTONSANDJOYSTICKS::RIGHT_JOYSTICK_UP: {
 		int value_of_axis = EngineExternal->moduleInput->GetRightAxisY();
-		if (value_of_axis >= 0) {
+		if (value_of_axis >= 10) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -135,7 +135,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::RIGHT_JOYSTICK_DOWN: {
 		int value_of_axis = EngineExternal->moduleInput->GetRightAxisY();
-		if (value_of_axis <= 0) {
+		if (value_of_axis <= -10) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -155,7 +155,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::RIGHT_JOYSTICK_LEFT: {
 		int value_of_axis = EngineExternal->moduleInput->GetRightAxisX();
-		if (value_of_axis >= 0) {
+		if (value_of_axis >= 10) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -175,7 +175,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::RIGHT_JOYSTICK_RIGHT: {
 		int value_of_axis = EngineExternal->moduleInput->GetRightAxisX();
-		if (value_of_axis <= 0) {
+		if (value_of_axis <= -10) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -195,7 +195,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::LEFT_JOYSTICK_UP: {
 		int value_of_axis = EngineExternal->moduleInput->GetLeftAxisY();
-		if (value_of_axis >= 0) {
+		if (value_of_axis >= 10) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -215,7 +215,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::LEFT_JOYSTICK_DOWN: {
 		int value_of_axis = EngineExternal->moduleInput->GetLeftAxisY();
-		if (value_of_axis <= 0) {
+		if (value_of_axis <= -10) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -235,7 +235,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::LEFT_JOYSTICK_LEFT: {
 		int value_of_axis = EngineExternal->moduleInput->GetLeftAxisX();
-		if (value_of_axis >= 0) {
+		if (value_of_axis >= 10) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -255,7 +255,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::LEFT_JOYSTICK_RIGHT: {
 		int value_of_axis = EngineExternal->moduleInput->GetRightAxisX();
-		if (value_of_axis <= 0) {
+		if (value_of_axis <= -10) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
