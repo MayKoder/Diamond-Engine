@@ -254,7 +254,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 		break;
 	}
 	case BUTTONSANDJOYSTICKS::LEFT_JOYSTICK_RIGHT: {
-		int value_of_axis = EngineExternal->moduleInput->GetRightAxisX();
+		int value_of_axis = EngineExternal->moduleInput->GetLeftAxisX();
 		if (value_of_axis <= 1000) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
