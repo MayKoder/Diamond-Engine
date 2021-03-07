@@ -153,6 +153,14 @@ void C_RigidBody::Step()
 		rot = { rigid_dynamic->getGlobalPose().q.x, rigid_dynamic->getGlobalPose().q.y, rigid_dynamic->getGlobalPose().q.z,  rigid_dynamic->getGlobalPose().q.w };
 
 
+		if (DETime::state == GameState::PLAY)
+		{
+			for (size_t i = 0; i < pos.Size; i++)
+			{
+				pos[i] = Round(pos[i] * 100) / 100;
+			}
+		}
+
 		worldtrans = float4x4::FromTRS(pos, rot, scale);
 
 		//	float4x4 pivotrans =  global_to_pivot.Inverted() * worldtrans;
