@@ -67,7 +67,8 @@ void C_Button::Update()
 void C_Button::ExecuteButton()
 {
 	ChangeTexture(BUTTONSTATE::BUTTONPRESSED);
-	/// ARNAU: EXECUTE SCRIPT
+	C_Script* script=static_cast<C_Script*>(gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()));
+	script->ExecuteButton();
 }
 
 void C_Button::ReleaseButton()
@@ -341,7 +342,6 @@ bool C_Button::OnEditor()
 		ImGui::Text(script_name.c_str());
 		
 		ImGui::Text("Drop here to change the script");
-		/// ARNAU: Finish the script things
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_SCRIPT"))

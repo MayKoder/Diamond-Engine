@@ -83,12 +83,14 @@ void C_Checkbox::PressCheckbox()
 {
 	checkbox_active = !checkbox_active;
 	if (checkbox_active) {
-		/// ARNAU: EXECUTE SCRIPT
 		ChangeTexture(CHECKBOXSTATE::CHECKBOXACTIVEPRESSED);
+		C_Script* script = static_cast<C_Script*>(gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()));
+		script->ExecuteCheckbox(checkbox_active);
 	}
 	else {
-		/// ARNAU: EXECUTE SCRIPT
 		ChangeTexture(CHECKBOXSTATE::CHECKBOXUNACTIVEPRESSED);
+		C_Script* script = static_cast<C_Script*>(gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()));
+		script->ExecuteCheckbox(checkbox_active);
 	}
 }
 

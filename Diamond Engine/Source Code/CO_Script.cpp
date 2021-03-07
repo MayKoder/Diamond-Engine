@@ -303,6 +303,10 @@ void C_Script::LoadScriptData(const char* scriptName)
 	onCollisionEnter = mono_method_desc_search_in_class(oncDesc, klass);
 	mono_method_desc_free(oncDesc);
 
+	MonoMethodDesc* oncBut = mono_method_desc_new(":OnExecuteButton", false);
+	onExecuteButton = mono_method_desc_search_in_class(oncBut, klass);
+	mono_method_desc_free(oncBut);
+
 
 	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject), this);
 }
@@ -311,6 +315,15 @@ void C_Script::CollisionCallback()
 {
 	if(onCollisionEnter != nullptr)
 		mono_runtime_invoke(onCollisionEnter, mono_gchandle_get_target(noGCobject), NULL, NULL);
+}
+
+void C_Script::ExecuteButton()
+{
+	mono_runtime_invoke(onExecuteButton, mono_gchandle_get_target(noGCobject), NULL, NULL);
+}
+
+void C_Script::ExecuteCheckbox(bool checkbox_active)
+{
 }
 
 void C_Script::SetField(MonoClassField* field, GameObject* value)

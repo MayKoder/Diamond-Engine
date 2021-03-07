@@ -32,11 +32,15 @@ public:
 
 	void CollisionCallback();
 
+	void ExecuteButton();
+	void ExecuteCheckbox(bool checkbox_active);
+
 	std::vector<std::string> methods;
 	std::vector<SerializedField> fields;
 
 	MonoMethod* updateMethod;
 	MonoMethod* onCollisionEnter;
+	MonoMethod* onExecuteButton;
 	uint32_t noGCobject;
 
 	static C_Script* runningScript;
