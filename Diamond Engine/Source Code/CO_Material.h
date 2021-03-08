@@ -13,6 +13,8 @@ public:
 	bool OnEditor() override;
 #endif // !STANDALONE
 
+	static inline Type GetType() { return Type::Material; }; //This will allow us to get the type from a template
+
 	int GetTextureID();
 
 

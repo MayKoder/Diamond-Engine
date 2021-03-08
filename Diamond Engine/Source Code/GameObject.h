@@ -46,8 +46,7 @@ public:
 	template<typename A>
 	A* GetComponent()
 	{
-		Component::Type type = A::GetType();
-		return GetComponent(type);
+		return (A*)GetComponent(A::GetType());
 	}
 
 	GameObject* parent;

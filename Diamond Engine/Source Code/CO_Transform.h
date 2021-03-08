@@ -23,6 +23,8 @@ public:
 	bool OnEditor() override;
 #endif // !STANDALONE
 
+	static inline Type GetType() { return Type::Transform; }; //This will allow us to get the type from a template
+
 	float4x4 globalTransform;
 	float4x4 localTransform;
 

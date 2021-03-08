@@ -110,6 +110,10 @@ void W_Console::AddLog(const char* s_msg, LogType _type)
 		if (logs[logs.size() - 1].msg == s_msg)
 		{
 			++logs[logs.size() - 1].prints;
+			if (showMessage[(int)_type])
+			{
+				++visibleLogs[visibleLogs.size() - 1].prints;
+			}
 			return;
 		}
 	}

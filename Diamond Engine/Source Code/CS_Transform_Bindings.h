@@ -7,9 +7,7 @@
 #include "DETime.h"
 #include "RE_Mesh.h"
 
-#include "CO_MeshRenderer.h"
-#include "CO_Script.h"
-#include "CO_Transform.h"
+#include "INC_AllComponents.h"
 
 #include "MO_Input.h"
 #include "MO_Scene.h"
@@ -18,7 +16,18 @@
 #include "GameObject.h"
 #include "MathGeoLib/include/Math/float3.h"
 
-void CS_GetComponent(MonoObject* ref, MonoString* type) 
+Component* DECS_CompToComp(MonoObject* obj)
+{
+	uintptr_t ptr = 0;
+	MonoClass* goClass = mono_class_from_name(EngineExternal->moduleMono->image, DE_SCRIPTS_NAMESPACE, "Transform");
+
+	mono_field_get_value(obj, mono_class_get_field_from_name(goClass, "pointer"), &ptr);
+
+	return reinterpret_cast<Component*>(ptr);
+}
+
+//template<typename A>
+void CS_GetComponent(MonoObject* ref, MonoString* type, int inputType) 
 {
 	//const char* name = mono_type_get_name(type);
 	//MonoClass* klass = mono_object_get_class(type);
@@ -36,11 +45,43 @@ void CS_GetComponent(MonoObject* ref, MonoString* type)
 	MonoClass* cmpClass = mono_class_from_name(EngineExternal->moduleMono->image, klass.c_str(), np.c_str());
 	MonoObject* ret = mono_object_new(EngineExternal->moduleMono->domain, cmpClass);
 
-	//Get type
-	Component* transform = EngineExternal->moduleMono->GameObject_From_CSGO(ref)->GetComponent<Component>();
-	MonoClassField* field = mono_class_get_field_from_name(cmpClass, "pointer");
-	mono_field_set_value(ret, field, transform);
+	//Get type from unity
+	Component::Type sType = static_cast<Component::Type>(inputType);
+	Component* transform = EngineExternal->moduleMono->GameObject_From_CSGO(ref)->GetComponent(sType);
 
+	//switch (sType)
+	//{
+	//case Component::Type::None:
+	//	break;
+	//case Component::Type::Transform:
+	//	transform = EngineExternal->moduleMono->GameObject_From_CSGO(ref)->GetComponent<C_Transform>();
+	//	break;
+	//case Component::Type::MeshRenderer:
+	//	transform = EngineExternal->moduleMono->GameObject_From_CSGO(ref)->GetComponent<C_MeshRenderer>();
+	//	break;
+	//case Component::Type::Material:
+	//	transform = EngineExternal->moduleMono->GameObject_From_CSGO(ref)->GetComponent<C_Material>();
+	//	break;
+	//case Component::Type::Camera:
+	//	transform = EngineExternal->moduleMono->GameObject_From_CSGO(ref)->GetComponent<C_Camera>();
+	//	break;
+	//case Component::Type::Script:
+	//	transform = EngineExternal->moduleMono->GameObject_From_CSGO(ref)->GetComponent<C_Script>();
+	//	break;
+	//case Component::Type::Count:
+	//	break;
+	//default:
+	//	break;
+	//}
+
+	//Get type
+	MonoClassField* field = mono_class_get_field_from_name(cmpClass, "pointer");
+
+	uintptr_t goPtr = reinterpret_cast<uintptr_t>(transform);
+	mono_field_set_value(ret, field, &goPtr);
+
+
+	Component* willThisWork = DECS_CompToComp(ret);
 	//MonoObject* ret = mono_object_new(EngineExternal->moduleMono->domain, mono_class_from_mono_type(mono_type_create_from_typespec(EngineExternal->moduleMono->image, type)));
 
 

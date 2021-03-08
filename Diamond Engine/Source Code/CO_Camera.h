@@ -15,6 +15,8 @@ public:
 	bool OnEditor() override;
 #endif // !STANDALONE
 
+	static inline Type GetType() { return Type::Camera; }; //This will allow us to get the type from a template
+
 	void Update() override;
 
 	void SaveData(JSON_Object* nObj) override;

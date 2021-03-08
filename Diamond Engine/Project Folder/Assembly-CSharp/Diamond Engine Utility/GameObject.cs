@@ -75,7 +75,7 @@ namespace DiamondEngine
 
 
        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        extern internal void TryGetComponent(string type);
+        extern internal void TryGetComponent(string type, ComponentType inputType = ComponentType.Transform);
 
         int GetHash()
         {

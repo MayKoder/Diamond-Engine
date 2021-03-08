@@ -19,6 +19,10 @@ void Component::Disable()
 {
 }
 
+void Component::Awake()
+{
+}
+
 void Component::Update()
 {
 }

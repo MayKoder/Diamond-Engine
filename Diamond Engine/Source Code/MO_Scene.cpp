@@ -71,6 +71,7 @@ update_status M_Scene::PreUpdate(float dt)
 	return update_status::UPDATE_CONTINUE;
 }
 
+#include<chrono>
 update_status M_Scene::Update(float dt)
 {
 #ifndef STANDALONE
@@ -144,8 +145,10 @@ update_status M_Scene::Update(float dt)
 		App->moduleEditor->GetSelectedGO()->Destroy();
 #endif // !STANDALONE
 
-
+	//auto t1 = SDL_GetTicks();
 	UpdateGameObjects();
+	//auto t2 = SDL_GetTicks();
+	//LOG(LogType::L_NORMAL, std::to_string(t2-t1).c_str());
 
 	return update_status::UPDATE_CONTINUE;
 }

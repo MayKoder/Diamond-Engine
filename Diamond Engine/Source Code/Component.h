@@ -27,6 +27,7 @@ public:
 	virtual void Enable();
 	virtual void Disable();
 
+	virtual void Awake();
 	virtual void Update();
 
 #ifndef STANDALONE
