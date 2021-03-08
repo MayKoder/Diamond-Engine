@@ -91,6 +91,9 @@
     <Filter Include="Externals\PugiXML">
       <UniqueIdentifier>{8d7a61ce-5fc5-4d64-a398-1e455f4ea9b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\MMath\INC_Packs">
+      <UniqueIdentifier>{0cb31e81-3904-46c0-8a3a-c06e72338b1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -537,6 +540,9 @@
     </ClInclude>
     <ClInclude Include="Source Code\CS_Input_Bindings.h">
       <Filter>Sources\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\INC_AllComponents.h">
+      <Filter>Sources\Tools\MMath\INC_Packs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
