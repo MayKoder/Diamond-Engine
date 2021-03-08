@@ -48,7 +48,11 @@ void W_Game::Draw()
 		//{
 		//	targetCamera->SetAspectRatio(aspect[0] / aspect[1]);
 		//}
-
+		if (targetCamera)
+		{
+			targetCamera->windowWidth = ImGui::GetWindowWidth();
+			targetCamera->windowHeight = ImGui::GetWindowHeight();
+		}
 	}
 	ImGui::End();
 }
