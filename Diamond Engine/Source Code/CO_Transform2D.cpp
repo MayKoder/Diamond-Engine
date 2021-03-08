@@ -20,8 +20,9 @@ C_Transform2D::C_Transform2D(GameObject* gameObject) : Component(gameObject),
 {
 	name = "Transform 2D";
 
-	memset(position, 0.f, sizeof(float) * 2);
-	memset(localPos, 0.f, sizeof(float) * 2);
+	memset(position, 0.f, sizeof(position));
+	memset(localPos, 0.f, sizeof(localPos));
+	memset(previous_transform, 0.f, sizeof(previous_transform));
 
 	size[0] = 20.f;
 	size[1] = 20.f;
@@ -52,7 +53,8 @@ bool C_Transform2D::OnEditor()
 		int offset = ImGui::CalcTextSize("Position: ").x + 16;
 		ImGui::Text("Position: ");
 		ImGui::SameLine();
-		if (ImGui::DragFloat2("##lPosition", &localPos[0], 0.1f)) {
+		if (ImGui::DragFloat2("##lPosition", &localPos[0], 0.1f)) 
+		{
 			updateTransform = true;
 			send_command = true;
 		}
@@ -63,7 +65,8 @@ bool C_Transform2D::OnEditor()
 		ImGui::Text("Size: ");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(offset);
-		if (ImGui::DragFloat2("##lSize", &size[0], 0.1f)) {
+		if (ImGui::DragFloat2("##lSize", &size[0], 0.1f)) 
+		{
 			updateTransform = true;
 			send_command = true;
 		}
@@ -74,10 +77,12 @@ bool C_Transform2D::OnEditor()
 		ImGui::Text("2D Rotation: ");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(offset);
-		if (ImGui::DragFloat("##lRotation", &localRotation, 0.1f)) {
+		if (ImGui::DragFloat("##lRotation", &localRotation, 0.1f)) 
+		{
 			updateTransform = true;
 			send_command = true;
-		}if (ImGui::IsItemClicked())
+		}
+		if (ImGui::IsItemClicked())
 			SetPreviousParameters();
 
 
@@ -85,11 +90,10 @@ bool C_Transform2D::OnEditor()
 		if (EngineExternal->moduleInput->GetMouseButton(1) == KEY_STATE::KEY_UP && send_command == true)
 		{
 			float next_param[5] = { localPos[0],localPos[1],localRotation,size[0],size[1] };
-			EngineExternal->moduleEditor->shortcutManager.PushCommand(new COMM_Transform2D(gameObject->UID, next_param, previous_parameters));
+			EngineExternal->moduleEditor->shortcutManager.PushCommand(new COMM_Transform2D(gameObject->UID, next_param, previous_transform));
 			send_command = false;
 		}
 	}
-
 
 	return true;
 }
@@ -162,23 +166,20 @@ void C_Transform2D::UpdateTransform()
 	int childCount = gameObject->children.size();
 	for (int i = 0; i < childCount; ++i)
 	{
-		Component* childComponent = gameObject->children[i]->GetComponent(Component::TYPE::TRANSFORM_2D);
+		Component* childTransform = gameObject->children[i]->GetComponent(Component::TYPE::TRANSFORM_2D);
 
-		if (childComponent != nullptr)
-		{
-			C_Transform2D* childTransform = (C_Transform2D*)childComponent;
-			childTransform->UpdateTransform();
-		}
+		if (childTransform != nullptr)
+			static_cast<C_Transform2D*>(childTransform)->UpdateTransform();
 	}
 }
 
 void C_Transform2D::SetPreviousParameters()
 {
-	previous_parameters[0] = localPos[0];
-	previous_parameters[1] = localPos[1];
-	previous_parameters[2] = localRotation;
-	previous_parameters[3] = size[0];
-	previous_parameters[4] = size[1];
+	previous_transform[0] = localPos[0];
+	previous_transform[1] = localPos[1];
+	previous_transform[2] = localRotation;
+	previous_transform[3] = size[0];
+	previous_transform[4] = size[1];
 
 }
 
@@ -204,6 +205,7 @@ void C_Transform2D::SetTransform(float locPosX, float locPosY, float locRotation
 		}
 	}
 }
+
 
 void C_Transform2D::SetTrueUpdateTransform()
 {

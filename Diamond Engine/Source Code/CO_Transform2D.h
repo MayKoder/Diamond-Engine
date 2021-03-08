@@ -40,7 +40,7 @@ public:
 
 private:
 	bool updateTransform, send_command;
-	float previous_parameters[5];////[0]&&[1] = position; [2] = rotation; [3] && [4] = size
+	float previous_transform[5];////[0]&&[1] = position; [2] = rotation; [3] && [4] = size
 };
 
 #endif // !__CO_TRANSFORM_2D_H__

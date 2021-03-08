@@ -78,7 +78,7 @@ void M_Gui::RenderCanvas2D()
 
 	if (canvasGO != nullptr)
 	{
-		std::stack<GameObject*> stack;
+		std::stack<GameObject*> stack, stackToDraw;		//Need to traverse the tree in postorder to draw the childs in the front
 		GameObject* node = nullptr;
 
 		int elementsCount = canvasGO->children.size();
@@ -90,13 +90,19 @@ void M_Gui::RenderCanvas2D()
 			{
 				node = stack.top();
 				stack.pop();
-
-				RenderUiElement(node);
+				stackToDraw.push(node);
 
 				int childNumber = node->children.size();
 				for (int i = 0; i < childNumber; ++i)
 					stack.push(node->children[i]);
 			}
+		}
+
+		while (stackToDraw.empty() == false)
+		{
+			node = stackToDraw.top();
+			stackToDraw.pop();
+			RenderUiElement(node);
 		}
 	}
 }
