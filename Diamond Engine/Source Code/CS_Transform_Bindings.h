@@ -27,7 +27,7 @@ Component* DECS_CompToComp(MonoObject* obj)
 }
 
 //template<typename A>
-void CS_GetComponent(MonoObject* ref, MonoString* type, int inputType) 
+MonoObject* CS_GetComponent(MonoObject* ref, MonoString* type, int inputType) 
 {
 	//const char* name = mono_type_get_name(type);
 	//MonoClass* klass = mono_object_get_class(type);
@@ -86,6 +86,8 @@ void CS_GetComponent(MonoObject* ref, MonoString* type, int inputType)
 
 
 	mono_free(name);
+
+	return ret;
 }
 
 

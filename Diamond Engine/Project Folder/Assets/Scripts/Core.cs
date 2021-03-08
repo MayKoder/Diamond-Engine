@@ -44,7 +44,8 @@ public class Core : DiamondComponent
         if (Input.GetMouseClick(MouseButton.LEFT) == KeyState.KEY_REPEAT)
         {
             //InternalCalls.CreateBullet(shootPoint.globalPosition, shootPoint.globalRotation, shootPoint.globalScale);
-            reference.GetComponent<Transform>();
+            Transform trans = reference.GetComponent<Transform>();
+            Debug.Log(trans.type.ToString());
         }
 	}
 }

@@ -67,15 +67,15 @@ namespace DiamondEngine
             get;
         }
 
-        public void GetComponent<T>()
+        public T GetComponent<T>() where T : DiamondComponent
         {
-            Debug.Log(typeof(T).ToString());
-            TryGetComponent(typeof(T).ToString());
+            //ComponentType type = T.get;
+            return TryGetComponent<T>(typeof(T).ToString(), (int)DiamondComponent.componentTable[typeof(T)]);
         }
 
 
        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        extern internal void TryGetComponent(string type, ComponentType inputType = ComponentType.Transform);
+        extern internal T TryGetComponent<T>(string type, int inputType = 0);
 
         int GetHash()
         {

@@ -7,11 +7,6 @@ namespace DiamondEngine
     public class Transform : DiamondComponent
     {
         //Change type depending of class
-        //public override DiamondComponent()
-        //{
-        //    type = ComponentType.Transform;
-        //} 
-
 
 
     }
