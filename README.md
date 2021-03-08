@@ -63,5 +63,5 @@ YouTube:	https://www.youtube.com/channel/UCzwLxtTAxGMVG1belis7tkw
 
 
 ## License:
-MIT License
+GNU Affero General Public License v3.0
 Check the full license in our Github project
