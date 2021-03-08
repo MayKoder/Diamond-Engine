@@ -45,6 +45,10 @@ public:
 		return gameObject;
 	}
 
+	inline Component::Type GetType() const{
+		return type;
+	}
+
 	Type type;
 
 protected:

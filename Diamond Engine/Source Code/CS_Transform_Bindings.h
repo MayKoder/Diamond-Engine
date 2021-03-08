@@ -18,6 +18,36 @@
 #include "GameObject.h"
 #include "MathGeoLib/include/Math/float3.h"
 
+void CS_GetComponent(MonoObject* ref, MonoString* type) 
+{
+	//const char* name = mono_type_get_name(type);
+	//MonoClass* klass = mono_object_get_class(type);
+	//const char* name = mono_class_get_name(klass);
+
+	char* name = mono_string_to_utf8(type);
+	std::string complete(name);
+
+	std::string np(complete);
+	np = np.substr(np.find_first_of('.') + 1);
+
+	std::string klass(complete);
+	klass = klass.substr(0, klass.find_first_of('.'));
+
+	MonoClass* cmpClass = mono_class_from_name(EngineExternal->moduleMono->image, klass.c_str(), np.c_str());
+	MonoObject* ret = mono_object_new(EngineExternal->moduleMono->domain, cmpClass);
+
+	//Get type
+	Component* transform = EngineExternal->moduleMono->GameObject_From_CSGO(ref)->GetComponent<Component>();
+	MonoClassField* field = mono_class_get_field_from_name(cmpClass, "pointer");
+	mono_field_set_value(ret, field, transform);
+
+	//MonoObject* ret = mono_object_new(EngineExternal->moduleMono->domain, mono_class_from_mono_type(mono_type_create_from_typespec(EngineExternal->moduleMono->image, type)));
+
+
+	mono_free(name);
+}
+
+
 //------//
 MonoObject* DE_Box_Vector(MonoObject* obj, const char* type, bool global)
 {

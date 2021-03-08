@@ -42,6 +42,14 @@ public:
 
 	void RemoveChild(GameObject*);
 
+
+	template<typename A>
+	A* GetComponent()
+	{
+		Component::Type type = A::GetType();
+		return GetComponent(type);
+	}
+
 	GameObject* parent;
 	C_Transform* transform;
 

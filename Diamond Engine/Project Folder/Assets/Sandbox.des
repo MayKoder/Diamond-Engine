@@ -5,14 +5,14 @@
         17.738853454589844
     ],
     "EditorCameraZ": [
-        -0.66908836364746094,
-        -0.31685283780097961,
-        -0.67225372791290283
+        -0.64509636163711548,
+        -0.38236486911773682,
+        -0.66154950857162476
     ],
     "EditorCameraY": [
-        -0.22351881861686707,
-        0.9484747052192688,
-        -0.22457751631736755
+        -0.26694712042808533,
+        0.92401134967803955,
+        -0.27375558018684387
     ],
     "Game Objects": [
         {
@@ -80,22 +80,25 @@
                     ]
                 },
                 {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "FPS_Controller",
-                    "reference": 1661764735,
-                    "turret": 1661764735,
-                    "rotationSpeed": 2,
-                    "movementSpeed": 35,
-                    "mouseSens": 1
-                },
-                {
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
                     "MaterialUID": 1051418604
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "Core",
+                    "reference": 1661764735,
+                    "turret": 1661764735,
+                    "shootPoint": 1661764735,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 35,
+                    "mouseSens": 1,
+                    "testBool": false,
+                    "testString": "Hello World"
                 }
             ]
         },
@@ -132,7 +135,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 0.96812385320663452,
+                    "hFOV": 0.96493721008300781,
                     "culling": false
                 }
             ]

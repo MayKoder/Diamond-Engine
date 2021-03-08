@@ -58,6 +58,7 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Input::GetMouseX", MouseX);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseY", MouseY);
 
+#pragma region Controller
 	// --- Controller gamepad start --- //
 	mono_add_internal_call("DiamondEngine.Input::GetGamepadButton", GetGamepadButton);
 	//mono_add_internal_call("DiamondEngine.Input::GamepadAxis", GetGamepadAxis);
@@ -67,7 +68,9 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Input::GetLeftAxisY", GetLeftAxisY);
 	mono_add_internal_call("DiamondEngine.Input::GetRightAxisY", GetRightAxisY);
 	mono_add_internal_call("DiamondEngine.Input::GetRightAxisX", GetRightAxisX);
-	// --- Controller gamepad end --- //
+	// --- Controller gamepad end --- //  
+#pragma endregion
+
 
 	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateBullet", CreateBullet);
@@ -86,6 +89,7 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.GameObject::get_localScale", SendScale);
 	mono_add_internal_call("DiamondEngine.GameObject::get_globalScale", SendGlobalScale);
 	mono_add_internal_call("DiamondEngine.GameObject::set_localScale", RecieveScale);
+	mono_add_internal_call("DiamondEngine.GameObject::TryGetComponent", CS_GetComponent);
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
 
