@@ -625,7 +625,9 @@ Resource::Type M_ResourceManager::GetTypeFromLibraryExtension(const char* librar
 	else if (ext == "mat")
 		return Resource::Type::MATERIAL;
 	else if (ext == "anim")
-		return Resource::Type::ANIMATION;	
+		return Resource::Type::ANIMATION;
+	else if (ext == "prefab")
+		return Resource::Type::PREFAB;
 
 	return Resource::Type::UNKNOWN;
 }

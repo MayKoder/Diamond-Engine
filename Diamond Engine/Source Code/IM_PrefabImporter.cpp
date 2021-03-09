@@ -42,6 +42,7 @@ GameObject* PrefabImporter::LoadPrefab(const char* libraryPath)
 	JSON_Object* goJsonObj = json_array_get_object(gameObjects, 0);
 
 	rootObject = new GameObject(json_object_get_string(goJsonObj, "name"), EngineExternal->moduleScene->root, json_object_get_number(goJsonObj, "UID"));
+	rootObject->LoadFromJson(goJsonObj);
 
 	GameObject* parent = rootObject;
 
@@ -54,6 +55,8 @@ GameObject* PrefabImporter::LoadPrefab(const char* libraryPath)
 
 	//Free memory
 	json_value_free(prefab);
+
+	return rootObject;
 }
 
 GameObject* PrefabImporter::LoadGOData(JSON_Object* goJsonObj, GameObject* parent)
