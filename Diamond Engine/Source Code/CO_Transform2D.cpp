@@ -1,11 +1,13 @@
 #include "CO_Transform2D.h"
 
 #include "GameObject.h"
+#include "CO_Camera.h"
 
 #include "Application.h"
 #include "MO_GUI.h"
 #include "MO_Input.h"
 #include "MO_Editor.h"
+#include "MO_Renderer3D.h"
 
 #include "COMM_Transform2D.h"
 
@@ -13,16 +15,18 @@
 #include "ImGui/imgui.h"
 
 C_Transform2D::C_Transform2D(GameObject* gameObject) : Component(gameObject),
-	rotation(0.0f),
-	localRotation(0.0f),
-	updateTransform(false),
-	send_command(false)
+rotation(0.0f),
+localRotation(0.0f),
+updateTransform(false),
+send_command(false),
+maintainSize(false)
 {
 	name = "Transform 2D";
 
 	memset(position, 0.f, sizeof(position));
 	memset(localPos, 0.f, sizeof(localPos));
 	memset(previous_transform, 0.f, sizeof(previous_transform));
+	memset(pixelSize, 0.f, sizeof(pixelSize));
 
 	size[0] = 20.f;
 	size[1] = 20.f;
@@ -53,20 +57,25 @@ bool C_Transform2D::OnEditor()
 		int offset = ImGui::CalcTextSize("Position: ").x + 16;
 		ImGui::Text("Position: ");
 		ImGui::SameLine();
-		if (ImGui::DragFloat2("##lPosition", &localPos[0], 0.1f)) 
+		if (ImGui::DragFloat2("##lPosition", &localPos[0], 0.1f))
 		{
 			updateTransform = true;
 			send_command = true;
 		}
-		if (ImGui::IsItemClicked()) 
+		if (ImGui::IsItemClicked())
 			SetPreviousParameters();
 
 
 		ImGui::Text("Size: ");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(offset);
-		if (ImGui::DragFloat2("##lSize", &size[0], 0.1f)) 
+		if (ImGui::DragFloat2("##lSize", &size[0], 0.1f))
 		{
+			if (maintainSize == true)
+			{
+				pixelSize[0] = EngineExternal->moduleRenderer3D->activeRenderCamera->windowWidth * size[0];
+				pixelSize[1] = EngineExternal->moduleRenderer3D->activeRenderCamera->windowHeight * size[1];
+			}
 			updateTransform = true;
 			send_command = true;
 		}
@@ -77,7 +86,7 @@ bool C_Transform2D::OnEditor()
 		ImGui::Text("2D Rotation: ");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(offset);
-		if (ImGui::DragFloat("##lRotation", &localRotation, 0.1f)) 
+		if (ImGui::DragFloat("##lRotation", &localRotation, 0.1f))
 		{
 			updateTransform = true;
 			send_command = true;
@@ -85,6 +94,13 @@ bool C_Transform2D::OnEditor()
 		if (ImGui::IsItemClicked())
 			SetPreviousParameters();
 
+		ImGui::Text("Maintain size: ");
+		ImGui::SameLine();
+		if (ImGui::Checkbox("##lMaintainSize", &maintainSize))
+		{
+			pixelSize[0] = EngineExternal->moduleRenderer3D->activeRenderCamera->windowWidth * size[0];
+			pixelSize[1] = EngineExternal->moduleRenderer3D->activeRenderCamera->windowHeight * size[1];
+		}
 
 		//TODO: Doubli-click + enter input does not work as a command and won't we added to the shortcut manager
 		if (EngineExternal->moduleInput->GetMouseButton(1) == KEY_STATE::KEY_UP && send_command == true)
@@ -105,8 +121,15 @@ float4x4 C_Transform2D::GetGlobal2DTransform()
 	float positionX = position[0] / 100.f;
 	float positionY = position[1] / 100.f;
 
+	if (maintainSize == true)
+	{
+		size[0] = pixelSize[0] / EngineExternal->moduleRenderer3D->activeRenderCamera->windowWidth;
+		size[1] = pixelSize[1] / EngineExternal->moduleRenderer3D->activeRenderCamera->windowHeight;
+	}
+
 	float scaleX = size[0] / 100.f;
 	float scaleY = size[1] / 100.f;
+
 
 	return float4x4::FromTRS(float3(positionX, positionY, 0), Quat::FromEulerXYZ(0, 0, rotation), float3(scaleX, scaleY, 1)).Transposed();
 }
