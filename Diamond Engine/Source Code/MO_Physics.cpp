@@ -370,7 +370,7 @@ void CollisionDetector::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 coun
 		{
 			C_Script* script = dynamic_cast<C_Script*>(contact2->GetComponent(Component::TYPE::SCRIPT));
 			if (script)
-				script->CollisionCallback(false);
+				script->CollisionCallback(true);
 		}
 		
 	}

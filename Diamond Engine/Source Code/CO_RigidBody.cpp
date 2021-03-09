@@ -110,15 +110,20 @@ void C_RigidBody::PostUpdate()
 	
 		
 		Quat rot;
-		float3 pos, scale;
-		goTransform->globalTransform.Decompose(pos, rot, scale);
-		//pos = mesh->globalOBB.pos;
-		
-
-		float4x4 pivotrans = float4x4::FromTRS(pos, rot, scale);
+		float3 pos, scale;	
+		float4x4 pivotrans = goTransform->globalTransform;
 
 		float4x4 worldtrans = pivotrans * global_to_pivot;
 		worldtrans.Decompose(pos, rot, scale);
+
+		if (DETime::state == GameState::PLAY) 
+		{
+			for (size_t i = 0; i < pos.Size; i++)
+			{
+				pos[i] = Round(pos[i] * 100) / 100;
+			}
+		}
+
 		physx::PxQuat rotation = { rot.x,  rot.y, rot.z, rot.w };
 		rigid_dynamic->setGlobalPose(physx::PxTransform({ pos.x, pos.y, pos.z }, rotation));
 
@@ -147,6 +152,14 @@ void C_RigidBody::Step()
 		pos = { rigid_dynamic->getGlobalPose().p.x, rigid_dynamic->getGlobalPose().p.y, rigid_dynamic->getGlobalPose().p.z };
 		rot = { rigid_dynamic->getGlobalPose().q.x, rigid_dynamic->getGlobalPose().q.y, rigid_dynamic->getGlobalPose().q.z,  rigid_dynamic->getGlobalPose().q.w };
 
+
+		if (DETime::state == GameState::PLAY)
+		{
+			for (size_t i = 0; i < pos.Size; i++)
+			{
+				pos[i] = Round(pos[i] * 100) / 100;
+			}
+		}
 
 		worldtrans = float4x4::FromTRS(pos, rot, scale);
 
