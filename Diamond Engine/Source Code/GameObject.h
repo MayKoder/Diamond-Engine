@@ -62,6 +62,7 @@ public:
 	bool toDelete;
 
 	int UID;
+	uint prefabID;
 
 private:
 	Component* dumpComponent;

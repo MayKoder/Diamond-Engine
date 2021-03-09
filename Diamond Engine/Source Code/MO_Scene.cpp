@@ -203,6 +203,11 @@ GameObject* M_Scene::CreateGameObject(const char* name, GameObject* parent, int 
 	return gm;
 }
 
+void M_Scene::GetAllGameObjects(std::vector<GameObject*>& gameObjects)
+{
+	root->CollectChilds(gameObjects);
+}
+
 void M_Scene::LoadScriptsData()
 {
 	for (auto i = referenceMap.begin(); i != referenceMap.end(); ++i)

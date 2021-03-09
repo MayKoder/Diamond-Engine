@@ -5,8 +5,9 @@
 #include "MO_ResourceManager.h"
 #include "IM_FileSystem.h"
 #include "MO_Scene.h"
+#include <string>
 
-void PrefabImporter::SavePrefab(const char* folder, GameObject* gameObject)
+void PrefabImporter::SavePrefab(const char* assets_path, GameObject* gameObject)
 {
 	JSON_Value* file = json_value_init_object();
 	DEConfig root_object(json_value_get_object(file));
@@ -14,15 +15,12 @@ void PrefabImporter::SavePrefab(const char* folder, GameObject* gameObject)
 	JSON_Value* goArray = json_value_init_array();
 	gameObject->SaveToJson(json_value_get_array(goArray));
 
-	std::string assets_path = std::string(folder) + "/" + gameObject->name + ".prefab";
-	json_object_set_string(root_object.nObj, "assets_path", assets_path.c_str());
+	
+	json_object_set_string(root_object.nObj, "assets_path", assets_path);
 	json_object_set_value(root_object.nObj, "Game Objects", goArray);
 
 	//Save file 
-	json_serialize_to_file_pretty(file, assets_path.c_str());
-
-	//std::string library_path = std::string(PREFABS_PATH) + std::to_string(EngineExternal->moduleResources->GenerateNewUID()) + ".prefab";
-	//json_serialize_to_file_pretty(file, library_path.c_str());
+	json_serialize_to_file_pretty(file, assets_path);
 
 	//Free memory
 	json_value_free(file);
@@ -52,6 +50,10 @@ GameObject* PrefabImporter::LoadPrefab(const char* libraryPath)
 	}
 
 	rootObject->RecursiveUIDRegeneration();
+	
+	std::string id_string;
+	FileSystem::GetFileName(libraryPath, id_string, false);
+	rootObject->prefabID = (uint)atoi(id_string.c_str());
 
 	//Free memory
 	json_value_free(prefab);
@@ -72,4 +74,34 @@ GameObject* PrefabImporter::LoadGOData(JSON_Object* goJsonObj, GameObject* paren
 	parent = new GameObject(json_object_get_string(goJsonObj, "name"), parent, json_object_get_number(goJsonObj, "UID"));
 	parent->LoadFromJson(goJsonObj);
 	return parent;
+}
+
+void PrefabImporter::OverridePrefabGameObjects(uint prefabID, GameObject* gameObject)
+{
+	//SavePrefab();
+	std::string libraryPath = EngineExternal->moduleResources->GenLibraryPath(prefabID, Resource::Type::PREFAB);
+
+	JSON_Value* prefab = json_parse_file(libraryPath.c_str());
+	JSON_Object* prefabObj = json_value_get_object(prefab);
+	const char* assets_path = json_object_get_string(prefabObj, "assets_path");
+
+	SavePrefab(assets_path, gameObject);
+
+	json_value_free(prefab);
+
+	std::vector<GameObject*> sceneObjects;
+	EngineExternal->moduleScene->GetAllGameObjects(sceneObjects);
+
+	std::vector<GameObject*> prefabObjects;
+	for (size_t i = 0; i < sceneObjects.size(); i++)
+	{
+		if (sceneObjects[i]->prefabID == prefabID)
+			prefabObjects.push_back(sceneObjects[i]);
+	}
+
+	for (size_t i = 0; i < prefabObjects.size(); i++)
+	{
+		prefabObjects[i]->Destroy();
+		LoadPrefab(libraryPath.c_str());
+	}
 }

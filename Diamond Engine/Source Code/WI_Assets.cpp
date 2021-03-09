@@ -17,6 +17,8 @@
 
 #include "MO_Scene.h"
 
+#include "GameObject.h"
+
 W_Assets::W_Assets() : Window(), selectedFile(nullptr)
 {
 	name = "Assets";
@@ -215,7 +217,10 @@ void W_Assets::DrawFileTree(AssetDir& file)
 				int uid = *(int*)payload->Data;
 
 				GameObject* droppedGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, uid);
-				PrefabImporter::SavePrefab(file.importPath.c_str(), droppedGO);
+
+				std::string assets_path = file.importPath.c_str();
+				assets_path += "/" + std::string(droppedGO->name) + ".prefab";
+				PrefabImporter::SavePrefab(assets_path.c_str(), droppedGO);
 			}
 			ImGui::EndDragDropTarget();
 		}

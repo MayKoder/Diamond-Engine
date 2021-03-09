@@ -21,6 +21,7 @@
                 0.24000000953674316
             ],
             "UID": 1716888692,
+            "PrefabID": 0,
             "ParentUID": 143570472,
             "Components": [
                 {
@@ -49,6 +50,7 @@
                 500
             ],
             "UID": 420350065,
+            "PrefabID": 0,
             "ParentUID": 1716888692,
             "Components": [
                 {
@@ -82,17 +84,17 @@
                     "LockAngularX": false,
                     "LockAngularY": false,
                     "LockAngularZ": false,
-                    "Mass": 10,
+                    "Mass": 30.799999237060547,
                     "Density": 1
                 },
                 {
                     "Type": 15,
                     "Active": true,
-                    "isTrigger": true,
+                    "isTrigger": false,
                     "Position": [
-                        1,
-                        1,
-                        1
+                        0,
+                        0,
+                        0
                     ],
                     "Rotation": [
                         0,
@@ -128,6 +130,7 @@
                 17.39555549621582
             ],
             "UID": 1432217696,
+            "PrefabID": 0,
             "ParentUID": 1716888692,
             "Components": [
                 {
@@ -172,6 +175,7 @@
                 18.083625793457031
             ],
             "UID": 467515712,
+            "PrefabID": 0,
             "ParentUID": 1716888692,
             "Components": [
                 {
