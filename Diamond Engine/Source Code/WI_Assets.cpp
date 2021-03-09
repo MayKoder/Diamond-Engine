@@ -196,7 +196,7 @@ void W_Assets::DrawFileTree(AssetDir& file)
 				ImGui::SetDragDropPayload("_FONT", &file.importPath, file.importPath.length());
 				break;
 			case  Resource::Type::PREFAB:
-				ImGui::SetDragDropPayload("_PREFAB", &file.importPath, file.importPath.length());
+				ImGui::SetDragDropPayload("_PREFAB", &file.metaFileDir, file.metaFileDir.length());
 				break;
 			default:
 				 break;
@@ -210,13 +210,12 @@ void W_Assets::DrawFileTree(AssetDir& file)
 	{
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_PREFAB"))
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT"))
 			{
 				int uid = *(int*)payload->Data;
 
 				GameObject* droppedGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, uid);
 				PrefabImporter::SavePrefab(file.importPath.c_str(), droppedGO);
-
 			}
 			ImGui::EndDragDropTarget();
 		}

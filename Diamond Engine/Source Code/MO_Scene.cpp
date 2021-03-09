@@ -440,7 +440,6 @@ void M_Scene::CleanScene()
 
 GameObject* M_Scene::LoadGOData(JSON_Object* goJsonObj, GameObject* parent)
 {
-	//goJsonObj = json_array_get_object(sceneGO, i);
 	GameObject* originalParent = parent;
 
 	while (parent != nullptr && json_object_get_number(goJsonObj, "ParentUID") != parent->UID)

@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "MO_ResourceManager.h"
 #include "IM_FileSystem.h"
+#include "MO_Scene.h"
 
 void PrefabImporter::SavePrefab(const char* folder, GameObject* gameObject)
 {
@@ -25,4 +26,47 @@ void PrefabImporter::SavePrefab(const char* folder, GameObject* gameObject)
 
 	//Free memory
 	json_value_free(file);
+}
+
+GameObject* PrefabImporter::LoadPrefab(const char* libraryPath)
+{
+	GameObject* rootObject = nullptr;
+
+	JSON_Value* prefab = json_parse_file(libraryPath);
+	
+	if (prefab == nullptr)
+		return nullptr;
+
+	JSON_Object* prefabObj = json_value_get_object(prefab);
+	JSON_Array* gameObjects = json_object_get_array(prefabObj, "Game Objects");
+	JSON_Object* goJsonObj = json_array_get_object(gameObjects, 0);
+
+	rootObject = new GameObject(json_object_get_string(goJsonObj, "name"), EngineExternal->moduleScene->root, json_object_get_number(goJsonObj, "UID"));
+
+	GameObject* parent = rootObject;
+
+	for (size_t i = 1; i < json_array_get_count(gameObjects); i++)
+	{
+		parent = LoadGOData(json_array_get_object(gameObjects, i), parent);
+	}
+
+	rootObject->RecursiveUIDRegeneration();
+
+	//Free memory
+	json_value_free(prefab);
+}
+
+GameObject* PrefabImporter::LoadGOData(JSON_Object* goJsonObj, GameObject* parent)
+{
+	GameObject* originalParent = parent;
+
+	while (parent != nullptr && json_object_get_number(goJsonObj, "ParentUID") != parent->UID)
+		parent = parent->parent;
+
+	if (parent == nullptr)
+		parent = originalParent;
+
+	parent = new GameObject(json_object_get_string(goJsonObj, "name"), parent, json_object_get_number(goJsonObj, "UID"));
+	parent->LoadFromJson(goJsonObj);
+	return parent;
 }
