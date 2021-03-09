@@ -23,10 +23,13 @@ public:
 
 private:
 
+	void Move(const float3& movement);
+	void MoveTo(const float3& destination);
 	void OrbitalRotation(float3 center, float dt);
 	void FreeRotation(float dt);
 	void FocusCamera(float3 center, float offset);
 	void PanCamera(float);
+	void CamZoom(int addZoomAmount);
 
 public:
 	
@@ -39,4 +42,6 @@ public:
 
 private:
 	float3 cameraMovement;
+	float3 reference;
+	float zoomLevel;
 };
