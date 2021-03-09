@@ -13,7 +13,10 @@
 #include"GameObject.h"
 #include"CO_Script.h"
 #include"CS_Transform_Bindings.h"
+#include "CS_Animation_Bindings.h"
 #include "CS_Input_Bindings.h"
+#include"CS_Scene_Bindings.h"
+#include "CS_Audio_Bindings.h"
 
 #include <iostream>
 #include <fstream> 
@@ -87,7 +90,24 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.GameObject::get_globalScale", SendGlobalScale);
 	mono_add_internal_call("DiamondEngine.GameObject::set_localScale", RecieveScale);
 
+	mono_add_internal_call("DiamondEngine.Animator::Play", Play);
+	mono_add_internal_call("DiamondEngine.Animator::Pause", Pause);
+	mono_add_internal_call("DiamondEngine.Animator::Resume", Resume);
+
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
+
+
+	mono_add_internal_call("DiamondEngine.SceneManager::LoadScene", CS_LoadScene);
+	mono_add_internal_call("DiamondEngine.Audio::PlayAudio", PlayAudio);
+	mono_add_internal_call("DiamondEngine.Audio::StopAudio", StopAudio);
+	mono_add_internal_call("DiamondEngine.Audio::ResumeAudio", ResumeAudio);
+	mono_add_internal_call("DiamondEngine.Audio::PauseAudio", PauseAudio);
+	mono_add_internal_call("DiamondEngine.Audio::GetVolume", GetVolume);
+	mono_add_internal_call("DiamondEngine.Audio::SetVolume", SetVolume);
+	mono_add_internal_call("DiamondEngine.Audio::GetPitch", GetPitch);
+	mono_add_internal_call("DiamondEngine.Audio::SetPitch", SetPitch);
+	mono_add_internal_call("DiamondEngine.Audio::GetMuted", GetMuted);
+	mono_add_internal_call("DiamondEngine.Audio::SetMuted", SetMuted);
 
 	InitMono();
 
@@ -295,6 +315,9 @@ MonoObject* M_MonoManager::QuatToCS(Quat& inVec) const
 
 GameObject* M_MonoManager::GameObject_From_CSGO(MonoObject* goObj)
 {
+	if (goObj == nullptr)
+		return nullptr;
+
 	uintptr_t ptr = 0;
 	MonoClass* goClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "GameObject");
 
@@ -434,18 +457,22 @@ void M_MonoManager::InitMono()
 	MonoClass* _class = nullptr;
 
 	userScripts.clear();
-	for (int i = 1; i < rows; i++)
+	for (int i = 0; i < rows; i++)
 	{
 		uint32_t cols[MONO_TYPEDEF_SIZE];
 		mono_metadata_decode_row(table_info, i, cols, MONO_TYPEDEF_SIZE);
 		const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
-		const char* name_space = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
-		_class = mono_class_from_name(image, name_space, name);
 
-		if (strcmp(mono_class_get_namespace(_class), DE_SCRIPTS_NAMESPACE) != 0 && !mono_class_is_enum(_class))
+		if (name[0] != '<') 
 		{
-			userScripts.push_back(_class);
-			LOG(LogType::L_WARNING, "%s", mono_class_get_name(_class));
+			const char* name_space = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
+			_class = mono_class_from_name(image, name_space, name);
+
+			if (_class != nullptr && strcmp(mono_class_get_namespace(_class), DE_SCRIPTS_NAMESPACE) != 0 && !mono_class_is_enum(_class))
+			{
+				userScripts.push_back(_class);
+				LOG(LogType::L_WARNING, "%s", mono_class_get_name(_class));
+			}
 		}
 	}
 }

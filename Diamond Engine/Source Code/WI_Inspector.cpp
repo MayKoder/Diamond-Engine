@@ -106,8 +106,9 @@ void W_Inspector::Draw()
 			ImGui::PopItemWidth();
 
 			if (ImGui::Button("Delete")) {
-				selectedGO->Destroy();
-			}
+				selectedGO->Destroy();}
+
+			ImGui::Text("UID: %d", selectedGO->UID);
 
 			ImGui::GreySeparator();
 
@@ -155,6 +156,11 @@ void W_Inspector::Draw()
 				{
 					if (selectedGO->GetComponent(Component::TYPE::AUDIO_SOURCE) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::AUDIO_SOURCE);
+				}
+				if (ImGui::Selectable("Animator"))
+				{
+					if (selectedGO->GetComponent(Component::TYPE::Animator) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::Animator);
 				}
 
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)

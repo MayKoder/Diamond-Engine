@@ -148,7 +148,6 @@ void ResourceShader::LoadShaderCustomFormat(const char* libraryPath)
 
 	this->LinkToProgram();
 
-
 	RELEASE_ARRAY(vertex);
 	RELEASE_ARRAY(fragment);
 	RELEASE_ARRAY(fileBuffer);

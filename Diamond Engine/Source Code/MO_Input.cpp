@@ -31,6 +31,7 @@ ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, sta
 ModuleInput::~ModuleInput()
 {
 	delete[] keyboard;
+	keyboard = nullptr;
 }
 
 // Called before render is available

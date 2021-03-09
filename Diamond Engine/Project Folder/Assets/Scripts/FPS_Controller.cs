@@ -13,14 +13,13 @@ public class FPS_Controller : DiamondComponent
     public void OnCollisionEnter()
     {
         Debug.Log("Ayo i've been called.");
-        InternalCalls.Destroy(reference);
+       // InternalCalls.Destroy(reference);
     }
 
     public void Update()
 	{
         if (this.reference == null)
             return;
-
 
         if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
             reference.localPosition += reference.GetForward() * movementSpeed * Time.deltaTime;
@@ -31,9 +30,7 @@ public class FPS_Controller : DiamondComponent
         if (Input.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
             reference.localPosition += reference.GetRight() * -movementSpeed * Time.deltaTime;
 
-
         if (Input.GetMouseX() != 0 && turret != null)
             turret.localRotation = Quaternion.RotateAroundAxis(Vector3.up, -Input.GetMouseX() * mouseSens * Time.deltaTime) * turret.localRotation;
     }
-
 }

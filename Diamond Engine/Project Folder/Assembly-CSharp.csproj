@@ -41,11 +41,13 @@
 		<StartupObject />
 	</PropertyGroup>
 	<ItemGroup>
+		<Compile Include="Assembly-CSharp\Diamond Engine Utility\Audio.cs" />
 		<Compile Include="Assembly-CSharp\Diamond Engine Utility\DiamondComponent.cs" />
 		<Compile Include="Assembly-CSharp\Diamond Engine Utility\GameObject.cs" />
 		<Compile Include="Assembly-CSharp\Diamond Engine Utility\InternalCalls.cs" />
 		<Compile Include="Assembly-CSharp\Diamond Engine Utility\Quaternion.cs" />
 		<Compile Include="Assembly-CSharp\Diamond Engine Utility\Time.cs" />
+		<Compile Include="Assembly-CSharp\Diamond Engine Utility\Animator.cs" />
 		<Compile Include="Assembly-CSharp\Diamond Engine Utility\Vector3.cs" />
 		<Compile Include="Assets\Scripts\BH_Bullet.cs" />
 		<Compile Include="Assets\Scripts\BH_Plane.cs" />
@@ -54,7 +56,10 @@
 		<Compile Include="Assets\Scripts\Hello.cs" />
 		<Compile Include="Assets\Scripts\HumanWalk.cs" />
 		<Compile Include="Assets\Scripts\FPS_Controller.cs" />
+		<Compile Include="Assets\Scripts\AnimationTest.cs" />
 		<Compile Include="Assets\Scripts\CameraController.cs" />
+		<Compile Include="Assets\Scripts\RoomSwitch.cs" />
+		<Compile Include="Assets\Scripts\BH_DestructBox.cs" />
 	</ItemGroup>
 	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

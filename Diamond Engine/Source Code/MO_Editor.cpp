@@ -226,6 +226,8 @@ void M_Editor::DrawMenuBar()
 			{
 				//Do something
 				App->moduleScene->CleanScene();
+				App->moduleScene->current_scene[0] = '\0';
+				App->moduleScene->current_scene_name[0] = '\0';
 			}
 			if (ImGui::MenuItem("Save scene", "CTRL+S"))
 			{
@@ -402,6 +404,7 @@ void M_Editor::DrawTopBar()
 				{
 					App->moduleScene->SaveScene("Library/Scenes/tmp.des");
 					DETime::Play();
+					EngineExternal->moduleAudio->StopAllSounds();
 					EngineExternal->moduleAudio->PlayOnAwake();
 				}
 				else
@@ -423,7 +426,13 @@ void M_Editor::DrawTopBar()
 					DETime::Stop();
 					EngineExternal->moduleAudio->StopAllSounds();
 					EngineExternal->moduleAudio->UnLoadAllBanks();
+
+					char scene_name[64];
+					strcpy(scene_name, App->moduleScene->current_scene_name);
+
 					App->moduleScene->LoadScene("Library/Scenes/tmp.des");
+					strcpy(App->moduleScene->current_scene_name, scene_name);
+
 					App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des");
 				}
 			}

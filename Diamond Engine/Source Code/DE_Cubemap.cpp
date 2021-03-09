@@ -24,8 +24,8 @@ void DE_Cubemap::CreateGLData()
 	// upload data to VBO
 	glBufferData(GL_ARRAY_BUFFER, 108 * sizeof(float), skyboxVertices, GL_STATIC_DRAW);
 
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+	//glEnableVertexAttribArray(0);
+	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -76,11 +76,10 @@ void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
-	glEnableVertexAttribArray(0);     
+	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
 
 	glDrawArrays(GL_TRIANGLES, 0, 36);
-
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
@@ -91,6 +90,8 @@ void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 	//glDisable(GL_DEPTH_CLAMP);
 	//glEnable(GL_DEPTH_TEST);
 	//glDepthFunc(GL_LESS);
+
+	glBindVertexArray(0);
 
 	if(cameraNeedsChange)
 		_camera->camFrustrum.type = FrustumType::OrthographicFrustum;

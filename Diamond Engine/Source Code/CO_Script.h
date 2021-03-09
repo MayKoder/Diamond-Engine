@@ -30,7 +30,7 @@ public:
 
 	void LoadScriptData(const char*);
 
-	void CollisionCallback();
+	void CollisionCallback(bool);
 
 	void ExecuteButton();
 	void ExecuteCheckbox(bool checkbox_active);
@@ -39,7 +39,10 @@ public:
 	std::vector<SerializedField> fields;
 
 	MonoMethod* updateMethod;
+
 	MonoMethod* onCollisionEnter;
+	MonoMethod* onTriggerEnter;
+	
 	MonoMethod* onExecuteButton;
 	MonoMethod* onExecuteCheckbox;
 	uint32_t noGCobject;

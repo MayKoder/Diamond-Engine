@@ -26,7 +26,6 @@ public:
 
 	bool CleanUp() override;
 
-
 	GameObject* GetGOFromUID(GameObject* n, uint sUID);
 	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
 	void LoadScriptsData();
@@ -46,19 +45,23 @@ public:
 	void CleanScene();
 	GameObject* LoadGOData(JSON_Object* goJsonObj, GameObject* parent);
 
+	int holdUID;
+
 	GameObject* root;
 	std::vector<GameObject*> destroyList;
 	std::multimap<uint, SerializedField*> referenceMap;
-
 	ResourceMaterial* defaultMaterial;
 	char current_scene[64];
 	char current_scene_name[32];
 
+
+	void LoadHoldScene();
 private:
 	void Destroy(GameObject* gm);
 
 	void UpdateGameObjects();
 
 	void RecursiveUpdate(GameObject* parent);
+
 	void RecursivePostUpdate(GameObject* parent);
 };

@@ -3,6 +3,7 @@
 #include "glmath.h" //Move to MathGeoLib
 #include <vector>
 #include<string>
+#include <map>
 
 #include"MathGeoLib/include/Geometry/AABB.h"
 #include"DEResource.h"
@@ -11,8 +12,16 @@ typedef unsigned int GLuint;
 typedef unsigned int uint;
 class ResourceMaterial;
 class C_Transform;
+class Joint;
 
-#define VERTEX_ATTRIBUTES 11
+static const int VERTEX_ATTRIBUTES      = 22;  // 3 vertex + 2 texcoords + 3 normals + 3 tangents + 4 joint indices + 4 weights + 3 colors
+static const int VERTEX_POSITION_OFFSET = 0;
+static const int TEXCOORD_OFFSET	    = 3;
+static const int NORMALS_OFFSET			= 5;
+static const int TANGENTS_OFFSET		= 8;
+static const int BONES_ID_OFFSET		= 11;
+static const int WEIGHTS_OFFSET			= 15;
+static const int COLORS_OFFSET			= 19;
 
 class ResourceMesh  : public Resource
 {
@@ -43,6 +52,13 @@ public:
 
 	AABB localAABB;
 
+	//Bones stuff [Remember 4 max for vertices]
+	bool hasSkeleton = false;
+
+	std::vector<float4x4> boneTransforms;
+	std::map<std::string, uint> bonesMap;
+	std::vector<float4x4>   bonesOffsets;
+
 	//TODO: Delete this, wireframe mode should be different
 	// ----------- TEMPORAL LOGIC, MUST BE DELETED ---------------//
 	bool* generalWireframe;
@@ -55,4 +71,6 @@ public:
 	//TODO: Move this to file system
 	const char* SaveCustomFormat(uint& retSize);
 	void LoadCustomFormat(const char*);
+	void SaveBones(char** cursor);
+	void LoadBones(char** cursor);
 };

@@ -48,6 +48,10 @@ public:
 	void PauseEvent(unsigned int id, std::string& eventName) const;
 	void ResumeEvent(unsigned int id, std::string& eventName) const;
 
+	void StopComponent(unsigned int id) const;
+	void PauseComponent(unsigned int id) const;
+	void ResumeComponent(unsigned int id) const;
+
 	void ChangeRTPCValue(unsigned int id, std::string& RTPCname, float value);
 
 	bool LoadBanksInfo();
@@ -61,7 +65,9 @@ public:
 	void AddAudioSource(C_AudioSource* new_source);
 	void RemoveAudioSource(C_AudioSource* source);
 
-	void SetAudioObjTransform(unsigned int id,float4x4& transform);
+	void SetAudioObjTransform(unsigned int id, float3& pos, float3& forward, float3& up);
+
+	void SetBusVolume(float volume);
 
 private:
 	void UpdateWwiseListener();

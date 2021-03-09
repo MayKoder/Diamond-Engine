@@ -6,6 +6,7 @@ using DiamondEngine;
 
 public class Core : DiamondComponent
 {
+
     public GameObject reference = null;
     public GameObject shootPoint = null;
 
@@ -17,21 +18,31 @@ public class Core : DiamondComponent
 
     //public Vector3 testOtherClass; //Should find a way to tell if the class is a gameobject or not
 
-
     public void Update(/*int x*/)
     {
         if (this.reference == null)
             return;
 
         if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT || Input.GetLeftAxisY() < -30000)
-            reference.localPosition += reference.GetForward() * movementSpeed * Time.deltaTime;
+        {
+            Vector3 vectorUp = new Vector3(-0.5f, 0, 0.5f);
+            reference.localPosition += vectorUp * movementSpeed * Time.deltaTime;
+        }
         if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT || Input.GetLeftAxisY() > 30000)
-            reference.localPosition += reference.GetForward() * -movementSpeed * Time.deltaTime;
+        {
+            Vector3 vectorDown = new Vector3(0.5f, 0, -0.5f);
+            reference.localPosition += vectorDown * movementSpeed * Time.deltaTime;
+        }
         if (Input.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT || Input.GetLeftAxisX() < -30000)
-            reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, rotationSpeed * Time.deltaTime);
+        {
+            Vector3 vectorLeft = new Vector3(0.5f, 0, 0.5f);
+            reference.localPosition += vectorLeft * movementSpeed * Time.deltaTime;
+        }
         if (Input.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT || Input.GetLeftAxisX() > 30000)
-            reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -rotationSpeed * Time.deltaTime);
-
+        {
+            Vector3 vectorRight = new Vector3(-0.5f, 0, -0.5f);
+            reference.localPosition += vectorRight * movementSpeed * Time.deltaTime;
+        }
 
         if (Input.GetMouseX() != 0 && reference != null)
             reference.localRotation = Quaternion.RotateAroundAxis(Vector3.up, -Input.GetMouseX() * mouseSens * Time.deltaTime) * reference.localRotation;
@@ -46,5 +57,5 @@ public class Core : DiamondComponent
             InternalCalls.CreateBullet(shootPoint.globalPosition, shootPoint.globalRotation, shootPoint.globalScale);
             timePassed = 0.0f;
         }
-    }
+	}
 }

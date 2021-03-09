@@ -28,7 +28,7 @@
 #include "COMM_DeleteGO.h"
 
 M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr),
-defaultMaterial(nullptr)
+defaultMaterial(nullptr), holdUID(0)
 {
 	current_scene[0] = '\0';
 	current_scene_name[0] = '\0';
@@ -36,6 +36,8 @@ defaultMaterial(nullptr)
 
 M_Scene::~M_Scene()
 {
+	root = nullptr;
+	defaultMaterial = nullptr;
 }
 
 bool M_Scene::Init()
@@ -48,15 +50,18 @@ bool M_Scene::Init()
 bool M_Scene::Start()
 {
 	CreateGameCamera("Main Camera");
+	//LoadScene("Library/Scenes/1076838722.des");
 
-	LoadScene("Library/Scenes/884741631.des");
-
+	//LoadScene("Library/Scenes/884741631.des");
+	//LoadScene("Library/Scenes/tmp.des");
+	
 #ifndef STANDALONE
 	//TODO IMPORTANT: This is why we should save icons .meta, or we could generate them every time
 	//But this will introduce some randomized problems with ID duplications
 	// TODO: Maybe this should be handled on the editor module? texture #include is stupid
 	App->moduleEditor->editorIcons.LoadPreDefinedIcons();
 #endif // !STANDALONE
+
 
 	return true;
 }
@@ -104,15 +109,20 @@ update_status M_Scene::Update(float dt)
 			//TODO: Duplicated code from scene loading && delete command, move to method
 			if (scene != NULL) 
 			{
-
 				JSON_Object* sceneObj = json_value_get_object(scene);
 				JSON_Array* sceneGO = json_object_get_array(sceneObj, "Game Objects");
 
 				GameObject* parent = (App->moduleEditor->GetSelectedGO() == nullptr) ? root : App->moduleEditor->GetSelectedGO();
+				GameObject* gameObjectRoot = nullptr;
 				for (size_t i = 0; i < json_array_get_count(sceneGO); i++)
 				{
 					parent = LoadGOData(json_array_get_object(sceneGO, i), parent);
+					
+					if (i == 0)
+						gameObjectRoot = parent;
 				}
+
+				gameObjectRoot->RecursiveUIDRegeneration();
 
 				LoadScriptsData();
 
@@ -275,6 +285,16 @@ void M_Scene::RecursiveUpdate(GameObject* parent)
 	}
 }
 
+	void M_Scene::LoadHoldScene()
+{
+	if (holdUID != 0)
+	{
+		std::string ret = { "Library/Scenes/" + std::to_string(holdUID) + ".des" };
+		LoadScene(ret.c_str());
+		holdUID = 0;
+	}
+}
+
 void M_Scene::RecursivePostUpdate(GameObject* parent)
 {
 	if (parent->toDelete)
@@ -416,8 +436,6 @@ void M_Scene::CleanScene()
 #endif
 
 	root = CreateGameObject("Scene root", nullptr);
-	current_scene[0] = '\0';
-	current_scene_name[0] = '\0';
 }
 
 GameObject* M_Scene::LoadGOData(JSON_Object* goJsonObj, GameObject* parent)

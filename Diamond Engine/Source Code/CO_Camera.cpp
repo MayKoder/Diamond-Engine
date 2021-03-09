@@ -188,6 +188,16 @@ void C_Camera::StartDraw()
 {
 	EngineExternal->moduleRenderer3D->activeRenderCamera = this;
 
+#ifdef STANDALONE
+	if (camFrustrum.type == FrustumType::PerspectiveFrustum)
+		SetAspectRatio(this->windowWidth / this->windowHeight);
+	else {
+		camFrustrum.orthographicWidth = this->windowWidth / orthoSize;
+		camFrustrum.orthographicHeight = this->windowHeight / orthoSize;
+	}
+#endif // !STANDALONE
+
+
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 

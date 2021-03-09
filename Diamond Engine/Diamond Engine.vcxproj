@@ -212,6 +212,7 @@
     <ClInclude Include="Source Code\COMM_Transform.h" />
     <ClInclude Include="Source Code\COMM_Transform2D.h" />
     <ClInclude Include="Source Code\Component.h" />
+    <ClInclude Include="Source Code\CO_Animator.h" />
     <ClInclude Include="Source Code\CO_Button.h" />
     <ClInclude Include="Source Code\CO_AudioListener.h" />
     <ClInclude Include="Source Code\CO_AudioSource.h" />
@@ -227,7 +228,10 @@
     <ClInclude Include="Source Code\CO_Script.h" />
     <ClInclude Include="Source Code\CO_Text.h" />
     <ClInclude Include="Source Code\CO_Transform.h" />
+    <ClInclude Include="Source Code\CS_Animation_Bindings.h" />
+    <ClInclude Include="Source Code\CS_Audio_Bindings.h" />
     <ClInclude Include="Source Code\CS_Input_Bindings.h" />
+    <ClInclude Include="Source Code\CS_Scene_Bindings.h" />
     <ClInclude Include="Source Code\CS_Transform_Bindings.h" />
     <ClInclude Include="Source Code\DEJsonSupport.h" />
     <ClInclude Include="Source Code\DERect.h" />
@@ -327,6 +331,7 @@
     <ClInclude Include="Source Code\External Libraries\parson\parson.h" />
     <ClInclude Include="Source Code\External Libraries\PugiXML\pugiconfig.hpp" />
     <ClInclude Include="Source Code\External Libraries\PugiXML\pugixml.hpp" />
+    <ClInclude Include="Source Code\IM_AnimationImporter.h" />
     <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkDefaultLowLevelIODispatcher.h" />
     <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFileLocationBase.h" />
     <ClInclude Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackage.h" />
@@ -356,6 +361,7 @@
     <ClInclude Include="Source Code\MO_GUI.h" />
     <ClInclude Include="Source Code\MO_AudioManager.h" />
     <ClInclude Include="Source Code\MO_MonoManager.h" />
+    <ClInclude Include="Source Code\RE_Animation.h" />
     <ClInclude Include="Source Code\MO_Physics.h" />
     <ClInclude Include="Source Code\MO_Physics\Header.h" />
     <ClInclude Include="Source Code\RE_Material.h" />
@@ -401,6 +407,7 @@
     <ClCompile Include="Source Code\COMM_Transform.cpp" />
     <ClCompile Include="Source Code\COMM_Transform2D.cpp" />
     <ClCompile Include="Source Code\Component.cpp" />
+    <ClCompile Include="Source Code\CO_Animator.cpp" />
     <ClCompile Include="Source Code\CO_Button.cpp" />
     <ClCompile Include="Source Code\CO_AudioListener.cpp" />
     <ClCompile Include="Source Code\CO_AudioSource.cpp" />
@@ -469,6 +476,7 @@
     <ClCompile Include="Source Code\External Libraries\mmgr\mmgr.cpp" />
     <ClCompile Include="Source Code\External Libraries\parson\parson.c" />
     <ClCompile Include="Source Code\External Libraries\PugiXML\pugixml.cpp" />
+    <ClCompile Include="Source Code\IM_AnimationImporter.cpp" />
     <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkDefaultLowLevelIODispatcher.cpp" />
     <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFileLocationBase.cpp" />
     <ClCompile Include="Source Code\External Libraries\Wwise\low_level_IO\Common\AkFilePackage.cpp" />
@@ -490,6 +498,7 @@
     <ClCompile Include="Source Code\MO_GUI.cpp" />
     <ClCompile Include="Source Code\MO_AudioManager.cpp" />
     <ClCompile Include="Source Code\MO_MonoManager.cpp" />
+    <ClCompile Include="Source Code\RE_Animation.cpp" />
     <ClCompile Include="Source Code\MO_Physics.cpp" />
     <ClCompile Include="Source Code\RE_Material.cpp" />
     <ClCompile Include="Source Code\RE_Mesh.cpp" />

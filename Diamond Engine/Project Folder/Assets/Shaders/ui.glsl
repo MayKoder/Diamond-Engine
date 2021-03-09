@@ -7,7 +7,7 @@ uniform mat4 model_matrix;
 
 void main() {
 	gl_Position = model_matrix * vec4(aPos, 0.0, 1.0);
-	textureCoords = vec2((aPos.x + 0.5),(aPos.y + 0.5));
+	textureCoords = vec2((aPos.x + 1.0) * 0.5,(aPos.y + 1.0) * 0.5);
 
 }
 #endif
@@ -25,6 +25,7 @@ void main() {
 }
 
 #endif
+
 
 
 

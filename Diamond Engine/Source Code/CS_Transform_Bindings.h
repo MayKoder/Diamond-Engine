@@ -10,6 +10,8 @@
 #include "CO_MeshRenderer.h"
 #include "CO_Script.h"
 #include "CO_Transform.h"
+#include "CO_Collider.h"
+#include "CO_RigidBody.h"
 
 #include "MO_Input.h"
 #include "MO_Scene.h"
@@ -50,7 +52,18 @@ MonoObject* DE_Box_Quat(MonoObject* obj, bool global)
 	Quat value;
 	GameObject* workGO = EngineExternal->moduleMono->GameObject_From_CSGO(obj);
 
-	(global == true) ? value = workGO->transform->globalTransform.RotatePart().ToQuat().Normalized() : value = workGO->transform->rotation;
+	if (global == true) 
+	{
+		float3 pos, scale;
+		Quat globalRot;
+		workGO->transform->globalTransform.Decompose(pos, globalRot, scale);
+
+		value = globalRot;
+	}
+	else
+	{
+		value = workGO->transform->rotation;
+	}
 
 
 	return EngineExternal->moduleMono->QuatToCS(value);
@@ -215,6 +228,13 @@ void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale)
 	meshRenderer->SetRenderMesh(test);
 
 	go->AddComponent(Component::TYPE::SCRIPT, "BH_Bullet");
+
+	C_Collider* col = dynamic_cast<C_Collider*>(go->AddComponent(Component::TYPE::Collider));
+	col->SetTrigger(true);
+
+	C_RigidBody* rb = dynamic_cast<C_RigidBody*>(go->GetComponent(Component::TYPE::RigidBody));
+	rb->EnableGravity(false);
+	rb->EnableKinematic(false);
 
 	/*return mono_gchandle_get_target(cmp->noGCobject);*/
 }
