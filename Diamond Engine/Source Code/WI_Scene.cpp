@@ -78,6 +78,12 @@ void W_Scene::Draw()
 				//EngineExternal->moduleResources->AssetsToScene((*name).c_str());
 				LOG(LogType::L_WARNING, "Texture %s did nothing", (*name).c_str());
 			}
+
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_PREFAB"))
+			{
+				std::string* name = (std::string*)payload->Data;
+			}
+
 			ImGui::EndDragDropTarget();
 		}
 
