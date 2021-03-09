@@ -26,9 +26,8 @@ bool ModuleCamera3D::Start()
 	bool ret = true;
 	CamZoom(0);
 
+	reference = float3(0.0f, 0.0f, 0.0f);
 	editorCamera.LookAt(float3(0.f, 0.f, 0.f));
-
-	//LookAt(float3(0.f, 1.f, 0.f));
 
 	return ret;
 }
@@ -121,7 +120,7 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 			target.Set(maTogl.x, maTogl.y, maTogl.z);
 		}
 		OrbitalRotation(target, dt);*/
-		OrbitalRotation(reference, dt);
+		OrbitalRotation(dt);
 	}
 
 
@@ -159,12 +158,12 @@ void ModuleCamera3D::MoveTo(const float3& destination)
 ////Could be a good idea to use quaternions? Would it be faster?
 ////BUG: Camera will bug when the the horizontal rotation is almost 
 ////equal as the target X and Z coords
-void ModuleCamera3D::OrbitalRotation(float3 center, float dt)
+void ModuleCamera3D::OrbitalRotation(float dt)
 {
 	int dx = -App->moduleInput->GetMouseXMotion();
 	int dy = -App->moduleInput->GetMouseYMotion();
 
-	float distance = editorCamera.camFrustrum.pos.Distance(center);
+	float distance = editorCamera.camFrustrum.pos.Distance(reference);
 
 	Quat direction;
 	editorCamera.camFrustrum.WorldMatrix().Decompose(float3(), direction, float3());
@@ -195,8 +194,8 @@ void ModuleCamera3D::OrbitalRotation(float3 center, float dt)
 	mat.SetRotatePart(direction.Normalized());
 	editorCamera.camFrustrum.SetWorldMatrix(mat.Float3x4Part());
 
-	editorCamera.camFrustrum.pos = center + (editorCamera.camFrustrum.front * -distance);
-	editorCamera.LookAt(center);
+	editorCamera.camFrustrum.pos = reference + (editorCamera.camFrustrum.front * -distance);
+	editorCamera.LookAt(reference);
 }
 
 void ModuleCamera3D::FreeRotation(float dt)
@@ -235,12 +234,15 @@ void ModuleCamera3D::FreeRotation(float dt)
 	reference = editorCamera.camFrustrum.pos + editorCamera.camFrustrum.front * (reference-editorCamera.camFrustrum.pos).Length();
 }
 
+//Deprecated
+/*
 void ModuleCamera3D::FocusCamera(float3 center, float offset)
 {
 
 	editorCamera.LookAt(center);
 	editorCamera.camFrustrum.pos = center + (((editorCamera.camFrustrum.pos - center).Normalized()) * offset);
 }
+*/
 
 void ModuleCamera3D::PanCamera(float dt)
 {
@@ -250,17 +252,17 @@ void ModuleCamera3D::PanCamera(float dt)
 	int dy = App->moduleInput->GetMouseYMotion();
 	float3 aux = editorCamera.camFrustrum.pos - reference;
 	float sensitivity = sqrt(aux.Length() * 0.005f) * 0.5f;/*Pow(2.0f,zoomLevel*0.075f)*0.005f;*/
-	sensitivity = max(sensitivity, 0.05f);
+	sensitivity = max(sensitivity, 0.05f);//TODO missing dt here?
 
 	if (dx != 0)
 	{
-		float deltaX = dx * sensitivity;//TODO missing dt here
+		float deltaX = dx * sensitivity;
 		Move(editorCamera.camFrustrum.WorldRight() * sensitivity * deltaX);
 	}
 
 	if (dy != 0)
 	{
-		float deltaY = dy * sensitivity;//TODO missing dt here
+		float deltaY = dy * sensitivity;
 		Move(editorCamera.camFrustrum.up * sensitivity * deltaY);
 	}
 
@@ -279,7 +281,9 @@ void ModuleCamera3D::PanCamera(float dt)
 void ModuleCamera3D::CamZoom(int addZoomAmount)
 {
 	zoomLevel -= addZoomAmount;
-	if (zoomLevel < 0)zoomLevel = 0;
+	if (zoomLevel < 1)zoomLevel = 1;
+
+	LOG(LogType::L_NORMAL, "Zoom level set to %f",zoomLevel);
 	
-	editorCamera.camFrustrum.pos = reference + (-editorCamera.camFrustrum.front * (pow(2.0f, zoomLevel * 0.1f) - 1));
+	editorCamera.camFrustrum.pos = reference -editorCamera.camFrustrum.front * (pow(2.0f, zoomLevel * 0.1f) - 1);
 }
