@@ -29,6 +29,7 @@ public:
     RigidBody,
 		Collider,
     Animator,
+	PARTICLE_SYSTEM,
 		COUNT
 	};
 

@@ -162,6 +162,11 @@ void W_Inspector::Draw()
 					if (selectedGO->GetComponent(Component::TYPE::Animator) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::Animator);
 				}
+				if (ImGui::Selectable("Particle System"))
+				{
+					if (selectedGO->GetComponent(Component::TYPE::PARTICLE_SYSTEM) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::PARTICLE_SYSTEM);
+				}
 
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)
 				{

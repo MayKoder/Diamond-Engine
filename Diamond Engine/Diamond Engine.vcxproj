@@ -223,6 +223,7 @@
     <ClInclude Include="Source Code\CO_Collider.h" />
     <ClInclude Include="Source Code\CO_MeshRenderer.h" />
     <ClInclude Include="Source Code\CO_Material.h" />
+    <ClInclude Include="Source Code\CO_ParticleSystem.h" />
     <ClInclude Include="Source Code\CO_RigidBody.h" />
     <ClInclude Include="Source Code\CO_Script.h" />
     <ClInclude Include="Source Code\CO_Text.h" />
@@ -360,6 +361,9 @@
     <ClInclude Include="Source Code\MO_GUI.h" />
     <ClInclude Include="Source Code\MO_AudioManager.h" />
     <ClInclude Include="Source Code\MO_MonoManager.h" />
+    <ClInclude Include="Source Code\Particle.h" />
+    <ClInclude Include="Source Code\ParticleEffects.h" />
+    <ClInclude Include="Source Code\ParticleEmitter.h" />
     <ClInclude Include="Source Code\RE_Animation.h" />
     <ClInclude Include="Source Code\MO_Physics.h" />
     <ClInclude Include="Source Code\MO_Physics\Header.h" />
@@ -417,6 +421,7 @@
     <ClCompile Include="Source Code\CO_Collider.cpp" />
     <ClCompile Include="Source Code\CO_Material.cpp" />
     <ClCompile Include="Source Code\CO_MeshRenderer.cpp" />
+    <ClCompile Include="Source Code\CO_ParticleSystem.cpp" />
     <ClCompile Include="Source Code\CO_RigidBody.cpp" />
     <ClCompile Include="Source Code\CO_Script.cpp" />
     <ClCompile Include="Source Code\CO_Text.cpp" />
@@ -496,6 +501,9 @@
     <ClCompile Include="Source Code\MO_GUI.cpp" />
     <ClCompile Include="Source Code\MO_AudioManager.cpp" />
     <ClCompile Include="Source Code\MO_MonoManager.cpp" />
+    <ClCompile Include="Source Code\Particle.cpp" />
+    <ClCompile Include="Source Code\ParticleEffects.cpp" />
+    <ClCompile Include="Source Code\ParticleEmitter.cpp" />
     <ClCompile Include="Source Code\RE_Animation.cpp" />
     <ClCompile Include="Source Code\MO_Physics.cpp" />
     <ClCompile Include="Source Code\RE_Material.cpp" />

@@ -115,6 +115,12 @@
     <Filter Include="Externals\FreeType">
       <UniqueIdentifier>{c4e4d1f5-fadb-4402-a089-768ce08d95b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Components\Derived\ParticleSystem">
+      <UniqueIdentifier>{bb32799f-8b53-4f4e-8bf7-5d88265959e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Containers\ParticleSystem">
+      <UniqueIdentifier>{dbea5857-b556-45ef-98b4-cf2a0608c4e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -778,6 +784,19 @@
     <ClInclude Include="Source Code\CS_Audio_Bindings.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CS_Scene_Bindings.h" />
+    <ClInclude Include="Source Code\CO_ParticleSystem.h">
+      <Filter>Sources\Components\Derived\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\ParticleEmitter.h">
+      <Filter>Sources\Containers\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\ParticleEffects.h">
+      <Filter>Sources\Containers\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Particle.h">
+      <Filter>Sources\Containers\ParticleSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -1175,6 +1194,18 @@
     </ClCompile>
     <ClCompile Include="Source Code\COMM_Transform2D.cpp">
       <Filter>Sources\Editor\Commands\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_ParticleSystem.cpp">
+      <Filter>Sources\Components\Derived\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Particle.cpp">
+      <Filter>Sources\Containers\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\ParticleEffects.cpp">
+      <Filter>Sources\Containers\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\ParticleEmitter.cpp">
+      <Filter>Sources\Containers\ParticleSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
