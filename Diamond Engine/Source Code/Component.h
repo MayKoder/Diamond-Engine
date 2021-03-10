@@ -49,6 +49,9 @@ public:
 	inline Component::Type GetType() const{
 		return type;
 	}
+	inline std::string& GetName() {
+		return name;
+	}
 
 	Type type;
 

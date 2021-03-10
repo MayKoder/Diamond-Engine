@@ -47,7 +47,10 @@ MonoObject* CS_GetComponent(MonoObject* ref, MonoString* type, int inputType)
 {
 
 	Component::Type sType = static_cast<Component::Type>(inputType);
-	Component* component = EngineExternal->moduleMono->GameObject_From_CSGO(ref)->GetComponent(sType); //TODO: Can only get 1 C_Script component
+
+	char* name = mono_string_to_utf8(type);
+	Component* component = EngineExternal->moduleMono->GameObject_From_CSGO(ref)->GetComponent(sType, name);
+	mono_free(name);
 
 	if (sType == Component::Type::Script) 
 		return mono_gchandle_get_target(dynamic_cast<C_Script*>(component)->noGCobject);

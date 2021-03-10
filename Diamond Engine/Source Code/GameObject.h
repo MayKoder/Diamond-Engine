@@ -19,7 +19,7 @@ public:
 	void Update();
 
 	Component* AddComponent(Component::Type _type, const char* params = nullptr);
-	Component* GetComponent(Component::Type _type);
+	Component* GetComponent(Component::Type _type , const char* scriptName = nullptr);
 
 	void RecursiveUIDRegeneration();
 
