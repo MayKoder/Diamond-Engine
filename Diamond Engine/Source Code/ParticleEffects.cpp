@@ -1,2 +1,19 @@
 #include "ParticleEffects.h"
-//TODO
+
+ParticleEffect::ParticleEffect(PARTICLEEFFECTTYPES type):type(type)
+{
+}
+
+ParticleEffect::~ParticleEffect()
+{
+}
+
+#ifndef STANDALONE
+void ParticleEffect::OnEditor()
+{
+}
+#endif // !STANDALONE
+
+void ParticleEffect::Update()
+{
+}
