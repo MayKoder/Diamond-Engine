@@ -48,20 +48,25 @@ GameObject* PrefabImporter::LoadPrefab(const char* libraryPath)
 		return nullptr;
 
 	JSON_Object* prefabObj = json_value_get_object(prefab);
-	JSON_Array* gameObjects = json_object_get_array(prefabObj, "Game Objects");
-	JSON_Object* goJsonObj = json_array_get_object(gameObjects, 0);
+	JSON_Array* gameObjectsArray = json_object_get_array(prefabObj, "Game Objects");
+	JSON_Object* goJsonObj = json_array_get_object(gameObjectsArray, 0);
 
 	rootObject = new GameObject(json_object_get_string(goJsonObj, "name"), EngineExternal->moduleScene->root, json_object_get_number(goJsonObj, "UID"));
 	rootObject->LoadFromJson(goJsonObj);
 
 	GameObject* parent = rootObject;
 
-	for (size_t i = 1; i < json_array_get_count(gameObjects); i++)
+	for (size_t i = 1; i < json_array_get_count(gameObjectsArray); i++)
 	{
-		parent = LoadGOData(json_array_get_object(gameObjects, i), parent);
+		parent = LoadGOData(json_array_get_object(gameObjectsArray, i), parent);
 	}
 
+	std::vector<GameObject*> gameObjects;
+	rootObject->CollectChilds(gameObjects);
+
 	rootObject->RecursiveUIDRegeneration();
+	//std::map<uint, uint> uints;
+	//rootObject->RecursiveUIDRegenerationSavingOldUIDs(uints);
 	
 	std::string id_string;
 	FileSystem::GetFileName(libraryPath, id_string, false);

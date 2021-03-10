@@ -204,6 +204,18 @@ void GameObject::RecursiveUIDRegeneration()
 	}
 }
 
+void GameObject::RecursiveUIDRegenerationSavingOldUIDs(std::map<uint, uint>& uids)
+{
+	uint new_uid = EngineExternal->GetRandomInt();
+	uids[new_uid] = this->UID;
+	this->UID = new_uid;
+
+	for (size_t i = 0; i < this->children.size(); i++)
+	{
+		this->children[i]->RecursiveUIDRegenerationSavingOldUIDs(uids);
+	}
+}
+
 
 bool GameObject::isActive() const
 {
