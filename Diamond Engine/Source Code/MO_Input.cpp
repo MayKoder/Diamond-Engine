@@ -52,6 +52,37 @@ bool ModuleInput::Init()
 	//Gamepad init
 	SDL_Init(SDL_INIT_GAMECONTROLLER);
 
+	//Haptic init
+	SDL_Init(SDL_INIT_HAPTIC);
+
+	SDL_Haptic* haptic;
+
+	//Open Joystick for haptic usage
+	if (SDL_NumJoysticks() > 0) {
+		SDL_Joystick* joystick = SDL_JoystickOpen(0);
+		if (joystick)
+			LOG(LogType::L_NORMAL, "Opened Joystick 0");
+
+		//Check if is haptic
+		if (SDL_JoystickIsHaptic(joystick) == 1) {
+			LOG(LogType::L_NORMAL, "Is Haptic");
+			return ret;
+		}
+
+		//Open the device
+		haptic = SDL_HapticOpenFromJoystick(joystick);
+		if (haptic == nullptr) return ret;
+
+		if (SDL_HapticRumbleInit(haptic) == 0) {
+			LOG(LogType::L_NORMAL, "Rumlbe Init Innit");
+
+			//SDL_HapticRumblePlay(haptic, 1.0f, 50);
+
+		}
+
+	}
+
+
 #ifdef STANDALONE
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 #endif // STANDALONE
