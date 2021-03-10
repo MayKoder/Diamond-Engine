@@ -161,7 +161,7 @@ bool ModulePhysics::Init() {
 	mScene->setSimulationEventCallback(&detector);
 	mScene->setGravity(PxVec3(gravity.x, gravity.y, gravity.z));
 	mScene->setVisualizationParameter(PxVisualizationParameter::eSCALE, 1.0f);
-	mScene->setVisualizationParameter(PxVisualizationParameter::eCOLLISION_AABBS, 2.0f);
+	mScene->setVisualizationParameter(PxVisualizationParameter::eCOLLISION_SHAPES, 1.0f);
 
 	return true;
 }
@@ -289,12 +289,12 @@ physx::PxShape* ModulePhysics::CreateCollider(float3 size, PxMaterial* material)
 		material = mMaterial;
 
 	
-	colliderShape = mPhysics->createShape(PxBoxGeometry(size.x, size.y, size.z), *material, true);
+	colliderShape = mPhysics->createShape(PxCapsuleGeometry(size.x/2, size.y / 2), *material, true);
 
 	return colliderShape;
 }
 
-physx::PxShape* ModulePhysics::CreateMeshCollider()
+physx::PxShape* ModulePhysics::CreateMeshCollider(PxRigidActor* aConvexActor)
 {
 	static const PxVec3 convexVerts[] = { PxVec3(0,1,0),PxVec3(1,0,0),PxVec3(-1,0,0),PxVec3(0,0,1),
 		PxVec3(0,0,-1) };
@@ -314,7 +314,8 @@ physx::PxShape* ModulePhysics::CreateMeshCollider()
 	PxConvexMesh* aConvexMesh = mCooking->createConvexMesh(convexDesc,
 		mPhysics->getPhysicsInsertionCallback());
 
-	return nullptr;
+	PxShape* aConvexShape = PxRigidActorExt::createExclusiveShape(*aConvexActor, PxConvexMeshGeometry(aConvexMesh), *mMaterial);
+	return aConvexShape;
 }
 
 physx::PxMaterial* ModulePhysics::CreateMaterial(float staticFriction, float dynamicFriction, float restitution) {

@@ -151,11 +151,11 @@ void W_Inspector::Draw()
 					if (selectedGO->GetComponent(Component::TYPE::Collider) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::Collider);
 				}
-				if (ImGui::Selectable("MeshCollider"))
-				{
-					EngineExternal->modulePhysics->CreateMeshCollider();
+				//if (ImGui::Selectable("MeshCollider"))
+				//{
+				//	//EngineExternal->modulePhysics->CreateMeshCollider();
 
-				}
+				//}
 				if (ImGui::Selectable("AudioListener"))
 				{
 					if (selectedGO->GetComponent(Component::TYPE::AUDIO_LISTENER) == nullptr)
