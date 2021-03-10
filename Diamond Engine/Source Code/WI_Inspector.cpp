@@ -14,6 +14,8 @@
 #include"CO_Script.h"
 #include"RE_Material.h"
 
+#include "IM_PrefabImporter.h"
+
 W_Inspector::W_Inspector() : Window(), selectedGO(nullptr), editingRes(nullptr)
 {
 	name = "Inspector";
@@ -108,7 +110,21 @@ void W_Inspector::Draw()
 			if (ImGui::Button("Delete")) {
 				selectedGO->Destroy();}
 
+			ImGui::SameLine();
 			ImGui::Text("UID: %d", selectedGO->UID);
+
+			if (selectedGO->prefabID != 0u) 
+			{
+				ImGui::Text("Prefab ID: %d", selectedGO->prefabID);
+				if (ImGui::Button("Override Prefab")){
+					PrefabImporter::OverridePrefabGameObjects(selectedGO->prefabID, selectedGO);
+				}
+
+				ImGui::SameLine();
+				if (ImGui::Button("Revert Changes")) {
+					PrefabImporter::OverrideGameObject(selectedGO->prefabID, selectedGO);
+				}
+			}
 
 			ImGui::GreySeparator();
 

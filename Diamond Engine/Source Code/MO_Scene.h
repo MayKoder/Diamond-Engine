@@ -28,6 +28,7 @@ public:
 
 	GameObject* GetGOFromUID(GameObject* n, uint sUID);
 	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
+	void GetAllGameObjects(std::vector<GameObject*>& gameObjects);
 	void LoadScriptsData();
 
 #ifndef STANDALONE

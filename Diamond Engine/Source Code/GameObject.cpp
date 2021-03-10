@@ -29,7 +29,7 @@
 
 
 GameObject::GameObject(const char* _name, GameObject* parent, int _uid) : parent(parent), name(_name), showChildren(false),
-active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr)
+active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr), prefabID(0u)
 {
 
 	if(parent != nullptr)
@@ -204,6 +204,20 @@ void GameObject::RecursiveUIDRegeneration()
 	}
 }
 
+/*
+void GameObject::RecursiveUIDRegenerationSavingOldUIDs(std::map<uint, uint>& uids)
+{
+	uint new_uid = EngineExternal->GetRandomInt();
+	uids[new_uid] = this->UID;
+	this->UID = new_uid;
+
+	for (size_t i = 0; i < this->children.size(); i++)
+	{
+		this->children[i]->RecursiveUIDRegenerationSavingOldUIDs(uids);
+	}
+}
+*/
+
 
 bool GameObject::isActive() const
 {
@@ -262,6 +276,7 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 	DEJson::WriteVector3(goData, "Scale", &transform->localScale[0]);
 
 	DEJson::WriteInt(goData, "UID", UID);
+	DEJson::WriteInt(goData, "PrefabID", prefabID);
 
 	if (parent)
 		DEJson::WriteInt(goData, "ParentUID", parent->UID);
@@ -293,9 +308,9 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 
 void GameObject::LoadFromJson(JSON_Object* _obj)
 {
-
 	active = DEJson::ReadBool(_obj, "Active");
 	transform->SetTransformMatrix(DEJson::ReadVector3(_obj, "Position"), DEJson::ReadQuat(_obj, "Rotation"), DEJson::ReadVector3(_obj, "Scale"));
+	prefabID = DEJson::ReadInt(_obj, "PrefabID");
 	LoadComponents(json_object_get_array(_obj, "Components"));
 }
 

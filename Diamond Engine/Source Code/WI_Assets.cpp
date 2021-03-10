@@ -7,12 +7,17 @@
 #include"IM_FileSystem.h"
 #include"IM_ShaderImporter.h"
 #include"IM_MaterialImporter.h"
+#include "IM_PrefabImporter.h"
 
 #include"MO_ResourceManager.h"
 #include"MO_Input.h"
 #include"MO_Editor.h"
 #include"MO_MonoManager.h"
 #include"RE_Texture.h"
+
+#include "MO_Scene.h"
+
+#include "GameObject.h"
 
 W_Assets::W_Assets() : Window(), selectedFile(nullptr)
 {
@@ -192,12 +197,32 @@ void W_Assets::DrawFileTree(AssetDir& file)
 			case  Resource::Type::FONT:
 				ImGui::SetDragDropPayload("_FONT", &file.importPath, file.importPath.length());
 				break;
-      default:
-          break;
+			case  Resource::Type::PREFAB:
+				ImGui::SetDragDropPayload("_PREFAB", &file.metaFileDir, file.metaFileDir.length());
+				break;
+			default:
+				 break;
 			}
 
 			ImGui::Text("Import asset: %s", file.metaFileDir.c_str());
 			ImGui::EndDragDropSource();
+		}
+	}
+	else
+	{
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT"))
+			{
+				int uid = *(int*)payload->Data;
+
+				GameObject* droppedGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, uid);
+
+				std::string assets_path = file.importPath.c_str();
+				assets_path += "/" + std::string(droppedGO->name) + ".prefab";
+				droppedGO->prefabID = PrefabImporter::SavePrefab(assets_path.c_str(), droppedGO);
+			}
+			ImGui::EndDragDropTarget();
 		}
 	}
 
