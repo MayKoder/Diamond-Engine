@@ -64,6 +64,7 @@ public:
 	void RemoveScriptFromSLN(const char* scriptLocalPath);
 
 	GameObject* GameObject_From_CSGO(MonoObject* goObj);
+	GameObject* GameObject_From_CSCOMP(MonoObject* goComponent);
 
 	MonoObject* QuatToCS(Quat& inVec) const;
 	MonoObject* Float3ToCS(float3& inVec) const;

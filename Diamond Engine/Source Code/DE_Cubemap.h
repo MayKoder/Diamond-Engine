@@ -22,6 +22,7 @@ public:
 	unsigned int textureID;
 
 	unsigned int vboId;
+	unsigned int vaoID;
 };
 
 static const float skyboxVertices[] = 

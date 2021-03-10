@@ -4,7 +4,6 @@ using DiamondEngine;
 
 public class BH_Plane : DiamondComponent
 {
-    public GameObject thisReference = null;
     public float speedIncrement = 0.03f;
 
     float cSpeed = 0.0f;
@@ -22,24 +21,24 @@ public class BH_Plane : DiamondComponent
         }
 
         if (Input.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT)
-            thisReference.localRotation = Quaternion.RotateAroundAxis(Vector3.up, 0.4f * Time.deltaTime) * thisReference.localRotation;
+            gameObject.transform.localRotation = Quaternion.RotateAroundAxis(Vector3.up, 0.4f * Time.deltaTime) * gameObject.transform.localRotation;
 
         if (Input.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
-            thisReference.localRotation = Quaternion.RotateAroundAxis(Vector3.up, -0.4f * Time.deltaTime) * thisReference.localRotation;
+            gameObject.transform.localRotation = Quaternion.RotateAroundAxis(Vector3.up, -0.4f * Time.deltaTime) * gameObject.transform.localRotation;
 
         if (Input.GetMouseX() > 0)
-            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.forward, Input.GetMouseX() * 0.1f * Time.deltaTime);
+            gameObject.transform.localRotation = gameObject.transform.localRotation * Quaternion.RotateAroundAxis(Vector3.forward, Input.GetMouseX() * 0.1f * Time.deltaTime);
 
         if (Input.GetMouseX() < 0)
-            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.forward, Input.GetMouseX() * 0.1f * Time.deltaTime);
+            gameObject.transform.localRotation = gameObject.transform.localRotation * Quaternion.RotateAroundAxis(Vector3.forward, Input.GetMouseX() * 0.1f * Time.deltaTime);
 
         if (Input.GetMouseY() > 0)
-            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.right, -Input.GetMouseY() * 0.1f * Time.deltaTime);
+            gameObject.transform.localRotation = gameObject.transform.localRotation * Quaternion.RotateAroundAxis(Vector3.right, -Input.GetMouseY() * 0.1f * Time.deltaTime);
 
         if (Input.GetMouseY() < 0)
-            thisReference.localRotation = thisReference.localRotation * Quaternion.RotateAroundAxis(Vector3.right, -Input.GetMouseY() * 0.1f * Time.deltaTime);
+            gameObject.transform.localRotation = gameObject.transform.localRotation * Quaternion.RotateAroundAxis(Vector3.right, -Input.GetMouseY() * 0.1f * Time.deltaTime);
 
-        thisReference.localPosition += thisReference.GetForward() * cSpeed;
+        gameObject.transform.localPosition += gameObject.transform.GetForward() * cSpeed;
     }
 
 

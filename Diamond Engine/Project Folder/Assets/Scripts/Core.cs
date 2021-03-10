@@ -6,7 +6,6 @@ using DiamondEngine;
 
 public class Core : DiamondComponent
 {
-	public GameObject reference = null;
 	public GameObject turret = null;
 	public GameObject shootPoint = null;
 		
@@ -21,22 +20,18 @@ public class Core : DiamondComponent
 
 	public void Update(/*int x*/)
 	{
-		if (this.reference == null)
-			return;
-
- 
         if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
-            reference.localPosition += reference.GetForward() * movementSpeed * Time.deltaTime;
+            gameObject.transform.localPosition += gameObject.transform.GetForward() * movementSpeed * Time.deltaTime;
         if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT)
-            reference.localPosition += reference.GetForward() * -movementSpeed * Time.deltaTime;
+            gameObject.transform.localPosition += gameObject.transform.GetForward() * -movementSpeed * Time.deltaTime;
         if (Input.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT)
-            reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, rotationSpeed * Time.deltaTime);
+            gameObject.transform.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, rotationSpeed * Time.deltaTime);
         if (Input.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
-            reference.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -rotationSpeed * Time.deltaTime);
+            gameObject.transform.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -rotationSpeed * Time.deltaTime);
 
 
         if (Input.GetMouseX() != 0 && turret != null)
-            turret.localRotation = Quaternion.RotateAroundAxis(Vector3.up, -Input.GetMouseX() * mouseSens * Time.deltaTime) * turret.localRotation;
+            turret.transform.localRotation = Quaternion.RotateAroundAxis(Vector3.up, -Input.GetMouseX() * mouseSens * Time.deltaTime) * turret.transform.localRotation;
 
         //if (Input.GetMouseY() != 0 && turret != null)
         //    turret.localRotation = turret.localRotation * Quaternion.RotateAroundAxis(Vector3.right, -Input.GetMouseY() * Time.deltaTime);
@@ -44,8 +39,10 @@ public class Core : DiamondComponent
         if (Input.GetMouseClick(MouseButton.LEFT) == KeyState.KEY_REPEAT)
         {
             //InternalCalls.CreateBullet(shootPoint.globalPosition, shootPoint.globalRotation, shootPoint.globalScale);
-            Transform trans = reference.GetComponent<Transform>();
-            Debug.Log(trans.type.ToString());
+            //Debug.Log(gameObject.transform.pointer.ToString());
+            Core test = gameObject.GetComponent<Core>();
+            Debug.Log(test.rotationSpeed.ToString());
+           // Debug.Log(gameObject.transform.globalPosition.ToString());
         }
 	}
 }

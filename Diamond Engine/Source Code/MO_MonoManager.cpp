@@ -75,22 +75,26 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateBullet", CreateBullet);
 
-	mono_add_internal_call("DiamondEngine.GameObject::get_localPosition", SendPosition);
-	mono_add_internal_call("DiamondEngine.GameObject::get_globalPosition", SendGlobalPosition);
-	mono_add_internal_call("DiamondEngine.GameObject::set_localPosition", RecievePosition);
+#pragma region TRANSFORMS
+	mono_add_internal_call("DiamondEngine.Transform::GetForward", GetForward);
+	mono_add_internal_call("DiamondEngine.Transform::GetRight", GetRight);
 
-	mono_add_internal_call("DiamondEngine.GameObject::GetForward", GetForward);
-	mono_add_internal_call("DiamondEngine.GameObject::GetRight", GetRight);
+	mono_add_internal_call("DiamondEngine.Transform::get_localPosition", SendPosition);
+	mono_add_internal_call("DiamondEngine.Transform::get_globalPosition", SendGlobalPosition);
+	mono_add_internal_call("DiamondEngine.Transform::set_localPosition", RecievePosition);
 
-	mono_add_internal_call("DiamondEngine.GameObject::get_localRotation", SendRotation);
-	mono_add_internal_call("DiamondEngine.GameObject::get_globalRotation", SendGlobalRotation);
-	mono_add_internal_call("DiamondEngine.GameObject::set_localRotation", RecieveRotation);
+	mono_add_internal_call("DiamondEngine.Transform::get_localRotation", SendRotation);
+	mono_add_internal_call("DiamondEngine.Transform::get_globalRotation", SendGlobalRotation);
+	mono_add_internal_call("DiamondEngine.Transform::set_localRotation", RecieveRotation);
 
-	mono_add_internal_call("DiamondEngine.GameObject::get_localScale", SendScale);
-	mono_add_internal_call("DiamondEngine.GameObject::get_globalScale", SendGlobalScale);
-	mono_add_internal_call("DiamondEngine.GameObject::set_localScale", RecieveScale);
+	mono_add_internal_call("DiamondEngine.Transform::get_localScale", SendScale);
+	mono_add_internal_call("DiamondEngine.Transform::get_globalScale", SendGlobalScale);
+	mono_add_internal_call("DiamondEngine.Transform::set_localScale", RecieveScale);
+
+	mono_add_internal_call("DiamondEngine.DiamondComponent::get_gameObject", CS_Component_Get_GO);
+#pragma endregion
+
 	mono_add_internal_call("DiamondEngine.GameObject::TryGetComponent", CS_GetComponent);
-
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
 
 	InitMono();
@@ -209,12 +213,15 @@ MonoObject* M_MonoManager::GoToCSGO(GameObject* inGo) const
 	MonoClass* goClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "GameObject");
 	uintptr_t goPtr = reinterpret_cast<uintptr_t>(inGo);
 
-	void* args[2];
+	void* args[3];
 	args[0] = &inGo->name;
 	args[1] = &goPtr;
+
+	uintptr_t transPTR = reinterpret_cast<uintptr_t>(inGo->transform);
+	args[2] = &transPTR;
 	
 
-	MonoMethodDesc* constructorDesc = mono_method_desc_new("DiamondEngine.GameObject:.ctor(string,uintptr)", true);
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("DiamondEngine.GameObject:.ctor(string,uintptr,uintptr)", true);
 	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, goClass);
 	MonoObject* goObj = mono_object_new(domain, goClass);
 	mono_runtime_invoke(method, goObj, args, NULL);
@@ -305,6 +312,16 @@ GameObject* M_MonoManager::GameObject_From_CSGO(MonoObject* goObj)
 	mono_field_get_value(goObj, mono_class_get_field_from_name(goClass, "pointer"), &ptr);
 
 	return reinterpret_cast<GameObject*>(ptr);
+}
+
+GameObject* M_MonoManager::GameObject_From_CSCOMP(MonoObject* goComponent)
+{
+	uintptr_t ptr = 0;
+	MonoClass* goClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "DiamondComponent");
+
+	mono_field_get_value(goComponent, mono_class_get_field_from_name(goClass, "pointer"), &ptr);
+
+	return reinterpret_cast<Component*>(ptr)->GetGO();
 }
 
 SerializedField::SerializedField() : field(nullptr), parentSC(nullptr)

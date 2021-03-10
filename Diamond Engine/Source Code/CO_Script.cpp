@@ -296,12 +296,51 @@ void C_Script::LoadScriptData(const char* scriptName)
 	noGCobject = mono_gchandle_new(mono_object_new(EngineExternal->moduleMono->domain, klass), false);
 	mono_runtime_object_init(mono_gchandle_get_target(noGCobject));
 
+
+	MonoClass* goClass = mono_object_get_class(mono_gchandle_get_target(noGCobject));
+	uintptr_t ptr = reinterpret_cast<uintptr_t>(this);
+	mono_field_set_value(mono_gchandle_get_target(noGCobject), mono_class_get_field_from_name(goClass, "pointer"), &ptr);
+
 	MonoMethodDesc* mdesc = mono_method_desc_new(":Update", false);
 	updateMethod = mono_method_desc_search_in_class(mdesc, klass);
 	mono_method_desc_free(mdesc);
 
 	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject), this);
 }
+
+//void C_Script::SetField(MonoObject* obj, SerializedField& field)
+//{
+//	switch (field.type)
+//	{
+//	case MonoTypeEnum::MONO_TYPE_BOOLEAN:
+//			mono_field_set_value(obj, field.field, &field.fiValue.bValue);
+//		break;
+//
+//	case MonoTypeEnum::MONO_TYPE_I4:
+//			mono_field_set_value(obj, field.field, &field.fiValue.iValue);
+//		break;
+//
+//	case MonoTypeEnum::MONO_TYPE_CLASS:
+//
+//		if (strcmp(mono_type_get_name(mono_field_get_type(field.field)), "DiamondEngine.GameObject") != 0)
+//			break;
+//
+//		SetField(field.field, field.fiValue.goValue);
+//		break;
+//
+//	case MonoTypeEnum::MONO_TYPE_R4:
+//		mono_field_set_value(obj, field.field, &field.fiValue.fValue);
+//		break;
+//
+//	case MonoTypeEnum::MONO_TYPE_STRING:
+//	{
+//		MonoString* str = mono_string_new(EngineExternal->moduleMono->domain, field.fiValue.strValue);
+//		mono_field_set_value(obj, field.field, str);
+//		//mono_free(str);
+//		break;
+//	}
+//	}
+//}
 
 void C_Script::SetField(MonoClassField* field, GameObject* value)
 {

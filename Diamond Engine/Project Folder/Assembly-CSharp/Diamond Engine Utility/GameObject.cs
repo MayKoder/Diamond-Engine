@@ -7,87 +7,41 @@ namespace DiamondEngine
 
     public sealed class GameObject
     {
+        public string name;
+        public UIntPtr pointer; //Searching all the GO's with UID's? Nah boy we cast stuff here
+        public Transform transform;
+
         public GameObject()
         {
             name = "Empty";
             pointer = UIntPtr.Zero;
+            //transform = new Transform(); //ERROR TODO: If we request something out of a gameobject created like this, we are fucked
+            //InternalCalls.CreateGameObject(name, Vector3.zero);
         }
-        public GameObject(string _name, UIntPtr ptr)
+        public GameObject(string _name, UIntPtr ptr, UIntPtr transPTR)
         {
             name = _name;
             pointer = ptr;
-            //Debug.Log(ptr.ToString());
-            //Debug.Log("Created: " + UID.ToString());
+
+            transform = new Transform();
+            transform.pointer = transPTR;
         }
 
-        public string name;
-        public UIntPtr pointer; //Searching all the GO's with UID's? Nah boy we cast stuff here
-        public extern Vector3 localPosition
-        {
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            get;
-
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            set;
-        }
-
-        public extern Vector3 globalPosition
-        {
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            get;
-        }
-
-        public extern Quaternion localRotation
-        {
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            get;
-
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            set;
-        }
-
-        public extern Quaternion globalRotation
-        {
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            get;
-        }
-
-        public extern Vector3 localScale
-        {
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            get;
-
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            set;
-        }
-
-        public extern Vector3 globalScale
-        {
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            get;
-        }
 
         public T GetComponent<T>() where T : DiamondComponent
         {
             //ComponentType type = T.get;
-            return TryGetComponent<T>(typeof(T).ToString(), (int)DiamondComponent.componentTable[typeof(T)]);
+            ComponentType retValue = ComponentType.Script;
+            if (DiamondComponent.componentTable.ContainsKey(typeof(T)))
+            {
+                retValue = DiamondComponent.componentTable[typeof(T)];
+            }
+            return TryGetComponent<T>(typeof(T).ToString(), (int)retValue);
         }
 
 
-       [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         extern internal T TryGetComponent<T>(string type, int inputType = 0);
-
-        int GetHash()
-        {
-            return this.GetHashCode();
-        }
-
-
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern Vector3 GetForward();
-
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern Vector3 GetRight();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void AddComponent(int componentType);
