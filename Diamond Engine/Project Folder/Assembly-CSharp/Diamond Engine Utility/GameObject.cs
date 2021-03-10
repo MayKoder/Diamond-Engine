@@ -9,7 +9,7 @@ namespace DiamondEngine
     {
         public string name;
         public UIntPtr pointer; //Searching all the GO's with UID's? Nah boy we cast stuff here
-        Transform transform;
+        public Transform transform;
 
         public GameObject()
         {
@@ -29,10 +29,14 @@ namespace DiamondEngine
         }
 
         
-
         public T GetComponent<T>() where T : DiamondComponent
         {
             //ComponentType type = T.get;
+            ComponentType retValue = ComponentType.SCRIPT;
+            if(DiamondComponent.componentTable.ContainsKey(typeof(T)))
+            {
+                retValue = DiamondComponent.componentTable[typeof(T)];
+            }
             return TryGetComponent<T>(typeof(T).ToString(), (int)DiamondComponent.componentTable[typeof(T)]);
         }
 

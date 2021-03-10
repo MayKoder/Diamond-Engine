@@ -29,8 +29,8 @@
 #pragma comment( lib, "mono/libx86/mono-2.0-boehm.lib" )
 #pragma comment( lib, "mono/libx86/mono-2.0-sgen.lib" )
 
-M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app, start_enabled), domain(nullptr), domainThread(nullptr), assembly(nullptr), image(nullptr)
-,jitDomain(nullptr)
+M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app, start_enabled), domain(nullptr), domainThread(nullptr), assembly(nullptr), image(nullptr),
+jitDomain(nullptr)
 {}
 
 M_MonoManager::~M_MonoManager()
@@ -334,11 +334,8 @@ GameObject* M_MonoManager::GameObject_From_CSGO(MonoObject* goObj)
 
 GameObject* M_MonoManager::GameObject_From_CSCOMP(MonoObject* goComponent)
 {
-	if (goComponent == nullptr)
-		return nullptr;
-
 	uintptr_t ptr = 0;
-	MonoClass* goClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "Transform");
+	MonoClass* goClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "DiamondComponent");
 
 	mono_field_get_value(goComponent, mono_class_get_field_from_name(goClass, "pointer"), &ptr);
 
