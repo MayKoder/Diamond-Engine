@@ -61,8 +61,8 @@ GameObject* PrefabImporter::LoadPrefab(const char* libraryPath)
 		parent = LoadGOData(json_array_get_object(gameObjectsArray, i), parent);
 	}
 
-	std::vector<GameObject*> gameObjects;
-	rootObject->CollectChilds(gameObjects);
+	//std::vector<GameObject*> gameObjects;
+	//rootObject->CollectChilds(gameObjects);
 
 	rootObject->RecursiveUIDRegeneration();
 	//std::map<uint, uint> uints;
