@@ -24,8 +24,6 @@ int PrefabImporter::SavePrefab(const char* assets_path, GameObject* gameObject)
 	json_serialize_to_file_pretty(file, assets_path);
 
 	int uid = EngineExternal->moduleResources->ImportFile(assets_path, Resource::Type::PREFAB);
-
-	Resource* prefab = EngineExternal->moduleResources->GetResourceFromUID(uid);
 	EngineExternal->moduleResources->GenerateMeta(assets_path, EngineExternal->moduleResources->GenLibraryPath(uid, Resource::Type::PREFAB).c_str(),
 												  uid, Resource::Type::PREFAB);
 

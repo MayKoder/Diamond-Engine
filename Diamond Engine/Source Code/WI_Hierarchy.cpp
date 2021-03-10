@@ -120,7 +120,6 @@ void W_Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 	{
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT")) 
 		{
-
 			GameObject* dropGO = static_cast<GameObject*>(payload->Data);
 			//memcpy(dropGO, payload->Data, payload->DataSize);
 

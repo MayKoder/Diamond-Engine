@@ -197,7 +197,6 @@ void M_Gui::CreateText()
 	text->AddComponent(Component::TYPE::TRANSFORM_2D);
 	text->AddComponent(Component::TYPE::MATERIAL);
 	text->AddComponent(Component::TYPE::TEXT_UI);
-
 }
 
 

@@ -33,60 +33,20 @@ W_Assets::~W_Assets()
 
 void W_Assets::Draw()
 {
+	static float width = ImGui::GetContentRegionAvail().x * 0.45f;
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/))
 	{
-
-#pragma region Just hide this for now
-		//int cellSize = 70 + 15;
-		//int windowWidth = (int)ImGui::GetWindowContentRegionMax().x;
-
-		//int cellsPerRow = windowWidth / cellSize;
-		//int counter = 0;
-
-		//AssetDir* toChange = nullptr;
-
-		//if (bigDisplayFolder->parentDir != nullptr)
-		//	if (ImGui::Button("Go back"))
-		//		bigDisplayFolder = bigDisplayFolder->parentDir;
-
-		//for (auto it = bigDisplayFolder->childDirs.begin(); it != bigDisplayFolder->childDirs.end(); ++it)
-		//{
-		//	if (ImGui::BeginChild(it->dirName.c_str(), ImVec2(70, 110), false, ImGuiWindowFlags_NoScrollbar))
-		//	{
-		//		//if (ImGui::IsWindowHovered())
-		//		//	ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ChildBg, ImGui::GetStyle().Colors[ImGuiCol_HeaderHovered]);
-		//		if (!it->isDir && ImGui::BeginDragDropSource(/*ImGuiDragDropFlags_SourceNoDisableHover*/))
-		//		{
-		//			ImGui::Text("Drag");
-		//			ImGui::EndDragDropSource();
-		//		}
-		//		if(it->isDir && ImGui::IsMouseDoubleClicked(0) && ImGui::IsWindowHovered())
-		//			toChange = it._Ptr;
-
-		//		ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID(it->resourceType), ImVec2(70, 70), ImVec2(0, 1), ImVec2(1, 0));
-		//		ImGui::TextWrapped(it->dirName.c_str());
-
-		//		//if (ImGui::IsWindowHovered())
-		//		//	ImGui::PopStyleColor();
-		//	}
-		//	ImGui::EndChild();
-
-		//	counter++;
-		//	if (counter < cellsPerRow && it != bigDisplayFolder->childDirs.end() - 1)
-		//		ImGui::SameLine(0.0f, 15.0f);
-		//	else
-		//		counter = 0;
-		//}
-		//if (toChange != nullptr) 
-		//{
-		//	bigDisplayFolder = toChange;
-		//	//ImGui::SetScrollHereY(1.0f);
-		//}
-#pragma endregion
-		
+		ImGuiWindowFlags window_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar;
+		ImGui::BeginChild("Tree", ImVec2(ImGui::GetWindowContentRegionWidth() * 0.15f, ImGui::GetContentRegionAvail().y), false, window_flags);
 		DrawFileTree(*displayFolder);
 		DrawFileTree(EngineExternal->moduleResources->meshesLibraryRoot);
 		DrawFileTree(EngineExternal->moduleResources->animationsLibraryRoot);
+		ImGui::EndChild();
+
+		ImGui::SameLine();
+		ImGui::BeginChild("Folder", ImVec2(0, ImGui::GetContentRegionAvail().y), true);
+		DrawBigIconsWindow();
+		ImGui::EndChild();
 
 		if (selectedFile != nullptr && /*ImGui::IsWindowHovered() &&*/ EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) 
 		{ //This prevents mesh removal because mesh files have no dirName
@@ -261,6 +221,70 @@ void W_Assets::DrawCreationPopup(const char* popDisplay, const char* dotExtensio
 		}
 
 		ImGui::CloseCurrentPopup();
+	}
+}
+void W_Assets::DrawPathButtons()
+{
+}
+void W_Assets::DrawBigIconsWindow()
+{
+	int cellSize = 70 + 15;
+	int windowWidth = (int)ImGui::GetWindowContentRegionMax().x;
+
+	int cellsPerRow = windowWidth / cellSize;
+	int counter = 0;
+
+	AssetDir* toChange = nullptr;
+
+	if (bigDisplayFolder->parentDir != nullptr)
+		if (ImGui::Button("Go back"))
+			bigDisplayFolder = bigDisplayFolder->parentDir;
+
+	for (auto it = bigDisplayFolder->childDirs.begin(); it != bigDisplayFolder->childDirs.end(); ++it)
+	{
+		bool selected = selectedFile == it._Ptr;
+		if(selected)
+			ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(60, 85, 115, 255));
+
+		if (ImGui::BeginChild(it->dirName.c_str(), ImVec2(70, 110), false, ImGuiWindowFlags_NoScrollbar))
+		{
+			//if (ImGui::IsWindowHovered())
+			//	ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ChildBg, ImGui::GetStyle().Colors[ImGuiCol_HeaderHovered]);
+			if (!it->isDir && ImGui::BeginDragDropSource(/*ImGuiDragDropFlags_SourceNoDisableHover*/))
+			{
+				ImGui::Text("Drag");
+				ImGui::EndDragDropSource();
+			}
+
+			if (ImGui::IsMouseClicked(0) && ImGui::IsWindowHovered()) 
+				selectedFile = it._Ptr;;
+
+
+			if (it->isDir && ImGui::IsMouseDoubleClicked(0) && ImGui::IsWindowHovered()) {
+				toChange = it._Ptr;
+				selectedFile = nullptr;
+			}
+
+			ImGui::Image((ImTextureID)EngineExternal->moduleEditor->editorIcons.GetIconTextureID(it->resourceType), ImVec2(60, 60), ImVec2(0, 1), ImVec2(1, 0));
+			ImGui::TextWrapped(it->dirName.c_str());
+
+			//if (ImGui::IsWindowHovered())
+			//	ImGui::PopStyleColor();
+		}
+		ImGui::EndChild();
+		if(selected)
+			ImGui::PopStyleColor();
+
+		counter++;
+		if (counter < cellsPerRow && it != bigDisplayFolder->childDirs.end() - 1)
+			ImGui::SameLine(0.0f, 15.0f);
+		else
+			counter = 0;
+	}
+	if (toChange != nullptr) 
+	{
+		bigDisplayFolder = toChange;
+		//ImGui::SetScrollHereY(1.0f);
 	}
 }
 #endif // !STANDALONE

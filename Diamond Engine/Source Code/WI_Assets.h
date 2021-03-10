@@ -21,6 +21,9 @@ public:
 	void DrawFileTree(AssetDir& file);
 	void DrawCreationPopup(const char* popName, const char* dotExtension, std::function<void(const char*)> f);
 
+	void DrawPathButtons();
+	void DrawBigIconsWindow();
+
 	AssetDir* selectedFile;
 	AssetDir* bigDisplayFolder;
 	AssetDir* displayFolder;
