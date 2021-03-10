@@ -7,7 +7,7 @@
             "Position": [
                 0,
                 0,
-                0
+                264.96176147460938
             ],
             "Rotation": [
                 0,
@@ -20,8 +20,8 @@
                 0.24000000953674316,
                 0.24000000953674316
             ],
-            "UID": 1716888692,
-            "PrefabID": 0,
+            "UID": 1666983189,
+            "PrefabID": 284852509,
             "ParentUID": 143570472,
             "Components": [
                 {
@@ -49,9 +49,9 @@
                 500,
                 500
             ],
-            "UID": 420350065,
+            "UID": 577866548,
             "PrefabID": 0,
-            "ParentUID": 1716888692,
+            "ParentUID": 1666983189,
             "Components": [
                 {
                     "Type": 1,
@@ -111,51 +111,6 @@
             ]
         },
         {
-            "name": "Cube",
-            "Active": true,
-            "Position": [
-                -300,
-                0,
-                -300
-            ],
-            "Rotation": [
-                -0.68301278352737427,
-                -0.1830126941204071,
-                -0.1830127090215683,
-                0.68301266431808472
-            ],
-            "Scale": [
-                17.39555549621582,
-                17.39555549621582,
-                17.39555549621582
-            ],
-            "UID": 1432217696,
-            "PrefabID": 0,
-            "ParentUID": 1716888692,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/317057310.mmh",
-                    "UID": 317057310,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true
-                }
-            ]
-        },
-        {
             "name": "Sphere",
             "Active": true,
             "Position": [
@@ -174,9 +129,9 @@
                 18.083625793457031,
                 18.083625793457031
             ],
-            "UID": 467515712,
+            "UID": 864640452,
             "PrefabID": 0,
-            "ParentUID": 1716888692,
+            "ParentUID": 1666983189,
             "Components": [
                 {
                     "Type": 1,

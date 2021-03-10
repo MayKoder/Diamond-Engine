@@ -122,8 +122,7 @@ void W_Inspector::Draw()
 
 				ImGui::SameLine();
 				if (ImGui::Button("Revert Changes")) {
-					selectedGO->Destroy();
-					PrefabImporter::LoadPrefab(EngineExternal->moduleResources->GenLibraryPath(selectedGO->prefabID, Resource::Type::PREFAB).c_str());
+					PrefabImporter::OverrideGameObject(selectedGO->prefabID, selectedGO);
 				}
 			}
 

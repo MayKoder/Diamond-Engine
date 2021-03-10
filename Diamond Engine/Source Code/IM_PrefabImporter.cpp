@@ -5,6 +5,8 @@
 #include "MO_ResourceManager.h"
 #include "IM_FileSystem.h"
 #include "MO_Scene.h"
+#include "CO_Transform.h"
+
 #include <string>
 
 void PrefabImporter::SavePrefab(const char* assets_path, GameObject* gameObject)
@@ -101,7 +103,24 @@ void PrefabImporter::OverridePrefabGameObjects(uint prefabID, GameObject* gameOb
 
 	for (size_t i = 0; i < prefabObjects.size(); i++)
 	{
-		prefabObjects[i]->Destroy();
-		LoadPrefab(libraryPath.c_str());
+		OverrideGameObject(prefabID, prefabObjects[i]);
 	}
+}
+
+void PrefabImporter::OverrideGameObject(uint prefabID, GameObject* objectToReplace)
+{
+	std::string libraryPath = EngineExternal->moduleResources->GenLibraryPath(prefabID, Resource::Type::PREFAB);
+
+	GameObject* prefabObject = LoadPrefab(libraryPath.c_str());
+
+	if (prefabObject == nullptr) {
+		return;
+	}
+
+	C_Transform* oldObjectTransform = objectToReplace->transform;
+	prefabObject->transform->SetTransformMatrix(oldObjectTransform->position, oldObjectTransform->rotation, oldObjectTransform->localScale);
+
+	prefabObject->ChangeParent(objectToReplace->parent);
+
+	objectToReplace->Destroy();
 }
