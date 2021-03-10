@@ -10,7 +10,7 @@
 
 #define MAX_KEYS 300
 
-ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, start_enabled), haptic(nullptr)
 {
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
@@ -55,8 +55,6 @@ bool ModuleInput::Init()
 	//Haptic init
 	SDL_Init(SDL_INIT_HAPTIC);
 
-	SDL_Haptic* haptic;
-
 	//Open Joystick for haptic usage
 	if (SDL_NumJoysticks() > 0) {
 		SDL_Joystick* joystick = SDL_JoystickOpen(0);
@@ -66,7 +64,6 @@ bool ModuleInput::Init()
 		//Check if is haptic
 		if (SDL_JoystickIsHaptic(joystick) == 1) {
 			LOG(LogType::L_NORMAL, "Is Haptic");
-			return ret;
 		}
 
 		//Open the device
@@ -75,9 +72,6 @@ bool ModuleInput::Init()
 
 		if (SDL_HapticRumbleInit(haptic) == 0) {
 			LOG(LogType::L_NORMAL, "Rumlbe Init Innit");
-
-			//SDL_HapticRumblePlay(haptic, 1.0f, 50);
-
 		}
 
 	}
@@ -311,5 +305,9 @@ void ModuleInput::OnGUI()
 		ImGui::Text("GamePad: Pressing DPad Left: %d", game_pad[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_REPEAT);
 		ImGui::Text("GamePad: Pressing DPad Right: %d", game_pad[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_REPEAT);
 	}
+}
+void ModuleInput::PlayHaptic(float strength, int length)
+{
+	SDL_HapticRumblePlay(haptic, strength, length);
 }
 #endif // !STANDALONE

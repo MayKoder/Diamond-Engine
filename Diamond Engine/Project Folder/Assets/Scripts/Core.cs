@@ -56,6 +56,7 @@ public class Core : DiamondComponent
         {
             InternalCalls.CreateBullet(shootPoint.globalPosition, shootPoint.globalRotation, shootPoint.globalScale);
             timePassed = 0.0f;
+            Input.PlayHaptic(1f,30);
         }
 	}
 }
