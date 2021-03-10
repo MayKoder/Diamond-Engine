@@ -309,8 +309,8 @@ void C_Navigation::DoTheAction(GameObject* gameobject_passed, BUTTONSANDJOYSTICK
 			nav->button_or_joystick_being_used= BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
 			return;
 		}
-		nav->map_of_buttons_and_joysticks[button_or_joystick_being_used].is_key_down = true;
-		nav->map_of_buttons_and_joysticks[button_or_joystick_being_used].is_key_up = false;
+		nav->map_of_buttons_and_joysticks[nav->button_or_joystick_being_used].is_key_down = true;
+		nav->map_of_buttons_and_joysticks[nav->button_or_joystick_being_used].is_key_up = false;
 		break; }
 
 	case ACTIONSNAVIGATION::EXECUTE:
@@ -419,6 +419,8 @@ void C_Navigation::LoadData(DEConfig& nObj)
 
 	button_or_joystick_being_used = static_cast<BUTTONSANDJOYSTICKS>(nObj.ReadInt("Button Being Used"));
 	is_selected= nObj.ReadBool("Is Selected");
+	if (is_selected)
+		EngineExternal->moduleGui->uid_gameobject_of_ui_selected = gameObject->UID;
 }
 
 void C_Navigation::SaveMapData(JSON_Object* nObj, ActionToRealize& action, BUTTONSANDJOYSTICKS map_index)
