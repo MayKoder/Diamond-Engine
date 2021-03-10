@@ -23,7 +23,7 @@ public:
 	Component* GetComponent(Component::TYPE _type);
 
 	void RecursiveUIDRegeneration();
-	void RecursiveUIDRegenerationSavingOldUIDs(std::map<uint, uint>& uids);
+	//void RecursiveUIDRegenerationSavingOldUIDs(std::map<uint, uint>& uids);
 
 	bool isActive() const;
 
