@@ -6,7 +6,7 @@ class GameObject;
 
 namespace PrefabImporter
 {
-	void SavePrefab(const char* assets_path, GameObject* gameObject);
+	int SavePrefab(const char* assets_path, GameObject* gameObject);
 	GameObject* LoadPrefab(const char* libraryPath);
 	GameObject* LoadGOData(JSON_Object* goJsonObj, GameObject* parent);
 

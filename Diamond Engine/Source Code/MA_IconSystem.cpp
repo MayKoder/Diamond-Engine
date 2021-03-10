@@ -45,7 +45,7 @@ void IconManager::LoadPreDefinedIcons()
 void IconManager::LoadEditorIcon(const char* iconID, const char* path)
 {
 	//TODO: Maybe hard-coding id's is stupid, find a better way
-	icons.emplace(iconID, dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(iconCount, path)));
+	icons[iconID] = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(iconCount + 1, path));
 	iconCount++;
 }
 

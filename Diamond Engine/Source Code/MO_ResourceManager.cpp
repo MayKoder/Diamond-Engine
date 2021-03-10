@@ -352,8 +352,7 @@ int M_ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
 		case Resource::Type::SHADER: ShaderImporter::Import(fileBuffer, size, dynamic_cast<ResourceShader*>(resource), assetsFile); break;
 		case Resource::Type::MATERIAL: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 		case Resource::Type::ANIMATION: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
-		case Resource::Type::PREFAB: 
-			FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
+		case Resource::Type::PREFAB: FileSystem::Save(resource->GetLibraryPath(), fileBuffer, size, false); break;
 	}
 
 	//Save the resource to custom format
@@ -377,6 +376,10 @@ int M_ResourceManager::CreateLibraryFromAssets(const char* assetsFile)
 Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid, Resource::Type type)
 {
 	Resource* ret = nullptr;
+
+	if (uid == 0) 
+		uid = GenerateNewUID();
+	
 
 	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 10, "Update all switches with new type");
 	switch (type) 

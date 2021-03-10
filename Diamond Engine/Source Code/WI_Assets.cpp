@@ -220,7 +220,7 @@ void W_Assets::DrawFileTree(AssetDir& file)
 
 				std::string assets_path = file.importPath.c_str();
 				assets_path += "/" + std::string(droppedGO->name) + ".prefab";
-				PrefabImporter::SavePrefab(assets_path.c_str(), droppedGO);
+				droppedGO->prefabID = PrefabImporter::SavePrefab(assets_path.c_str(), droppedGO);
 			}
 			ImGui::EndDragDropTarget();
 		}

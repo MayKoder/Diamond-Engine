@@ -9,7 +9,7 @@
 
 #include <string>
 
-void PrefabImporter::SavePrefab(const char* assets_path, GameObject* gameObject)
+int PrefabImporter::SavePrefab(const char* assets_path, GameObject* gameObject)
 {
 	JSON_Value* file = json_value_init_object();
 	DEConfig root_object(json_value_get_object(file));
@@ -17,15 +17,25 @@ void PrefabImporter::SavePrefab(const char* assets_path, GameObject* gameObject)
 	JSON_Value* goArray = json_value_init_array();
 	gameObject->SaveToJson(json_value_get_array(goArray));
 
-	
 	json_object_set_string(root_object.nObj, "assets_path", assets_path);
 	json_object_set_value(root_object.nObj, "Game Objects", goArray);
 
 	//Save file 
 	json_serialize_to_file_pretty(file, assets_path);
 
+	int uid = EngineExternal->moduleResources->ImportFile(assets_path, Resource::Type::PREFAB);
+
+	Resource* prefab = EngineExternal->moduleResources->GetResourceFromUID(uid);
+	EngineExternal->moduleResources->GenerateMeta(assets_path, EngineExternal->moduleResources->GenLibraryPath(uid, Resource::Type::PREFAB).c_str(),
+												  uid, Resource::Type::PREFAB);
+
+	//std::string meta = std::string(assets_path) + ".meta";
+	//int uid = EngineExternal->moduleResources->GetMetaUID(meta.c_str());
+
 	//Free memory
 	json_value_free(file);
+
+	return uid;
 }
 
 GameObject* PrefabImporter::LoadPrefab(const char* libraryPath)
@@ -84,11 +94,23 @@ void PrefabImporter::OverridePrefabGameObjects(uint prefabID, GameObject* gameOb
 	std::string libraryPath = EngineExternal->moduleResources->GenLibraryPath(prefabID, Resource::Type::PREFAB);
 
 	JSON_Value* prefab = json_parse_file(libraryPath.c_str());
-	JSON_Object* prefabObj = json_value_get_object(prefab);
-	const char* assets_path = json_object_get_string(prefabObj, "assets_path");
+	std::string assets_path;
 
-	SavePrefab(assets_path, gameObject);
-	EngineExternal->moduleResources->ImportFile(assets_path, Resource::Type::PREFAB);
+	if (prefab == nullptr)
+	{
+		if (!FileSystem::Exists(libraryPath.c_str())) {
+			assets_path = "Assets/Prefabs/" + gameObject->name + ".prefab";
+			LOG(LogType::L_ERROR, "The prefab tried to override does not exist, it will be created at: %s", assets_path.c_str());
+		}
+	}
+	else
+	{
+		JSON_Object* prefabObj = json_value_get_object(prefab);
+		assets_path = json_object_get_string(prefabObj, "assets_path");
+	}
+
+	SavePrefab(assets_path.c_str(), gameObject);
+	//EngineExternal->moduleResources->ImportFile(assets_path.c_str(), Resource::Type::PREFAB);
 
 	json_value_free(prefab);
 
