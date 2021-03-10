@@ -44,7 +44,6 @@
     <Compile Include="Assembly-CSharp\DefaultComponents\DiamondComponent.cs" />
     <Compile Include="Assembly-CSharp\DefaultComponents\Transform.cs" />
     <Compile Include="Assembly-CSharp\Diamond Engine Utility\Audio.cs" />
-    <Compile Include="Assembly-CSharp\Diamond Engine Utility\DiamondComponent.cs" />
     <Compile Include="Assembly-CSharp\Diamond Engine Utility\GameObject.cs" />
     <Compile Include="Assembly-CSharp\Diamond Engine Utility\InternalCalls.cs" />
     <Compile Include="Assembly-CSharp\Diamond Engine Utility\Quaternion.cs" />
