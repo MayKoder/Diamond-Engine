@@ -225,19 +225,14 @@ void C_RigidBody::LoadData(DEConfig& nObj)
 	if (temp != lock_linearZ)
 		LockLinearZ(lock_linearZ);
 
-	temp = lock_angularX;
 	lock_angularX = nObj.ReadBool("LockAngularX");
-	if (temp != lock_angularX)
 		LockAngularX(lock_angularX);
 
-	temp = lock_angularY;
 	lock_angularY = nObj.ReadBool("LockAngularY");
-	if (temp != lock_angularY)
 		LockAngularY(lock_angularY);
 
-	temp = lock_angularZ;
+
 	lock_angularZ = nObj.ReadBool("LockAngularZ");
-	if (temp != lock_angularZ)
 		LockAngularZ(lock_angularZ);
 	
 	mass = nObj.ReadFloat("Mass");

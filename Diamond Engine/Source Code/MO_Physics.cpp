@@ -168,10 +168,9 @@ bool ModulePhysics::Init() {
 
 update_status ModulePhysics::PreUpdate(float dt)
 {
-	//if (DETime::state == GameState::PLAY)
-	//	SceneSimulation(DETime::deltaTime);
-	//
-	SceneSimulation(DETime::deltaTime);
+	if (DETime::state == GameState::PLAY)
+		SceneSimulation(DETime::deltaTime);
+
 
 	
 	return update_status::UPDATE_CONTINUE;
@@ -289,7 +288,7 @@ physx::PxShape* ModulePhysics::CreateCollider(float3 size, PxMaterial* material)
 		material = mMaterial;
 
 	
-	colliderShape = mPhysics->createShape(PxCapsuleGeometry(size.x/2, size.y / 2), *material, true);
+	colliderShape = mPhysics->createShape(PxBoxGeometry(size.x, size.y, size.z), *material, true);
 
 	return colliderShape;
 }
