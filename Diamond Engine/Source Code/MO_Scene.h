@@ -33,9 +33,9 @@ public:
 
 #ifndef STANDALONE
 	void OnGUI() override;
-#endif // !STANDALONE
 
 	void SaveScene(const char* name);
+#endif // !STANDALONE
 	void LoadScene(const char* name);
 
 	void SetGameCamera(C_Camera* cam);

@@ -4,6 +4,7 @@
 #include"CO_Camera.h"
 #include"MathGeoLib/include/Math/float4x4.h"
 #include"MathGeoLib/include/Math/Quat.h"
+#ifndef STANDALONE
 
 class ModuleCamera3D : public Module
 {
@@ -15,9 +16,7 @@ public:
 	update_status Update(float dt) override;
 	bool CleanUp() override;
 
-#ifndef STANDALONE
 	void OnGUI() override;
-#endif // !STANDALONE
 
 	void ProcessSceneKeyboard();
 
@@ -54,3 +53,4 @@ private:
 	float3 reference;
 	float zoomLevel;
 };
+#endif // !STANDALONE

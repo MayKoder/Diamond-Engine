@@ -1,4 +1,6 @@
-﻿#include "Globals.h"
+﻿#ifndef STANDALONE
+
+#include "Globals.h"
 #include "Application.h"
 #include "MO_Camera3D.h"
 #include "ImGui/imgui.h"
@@ -107,7 +109,7 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 		FreeRotation(dt);
 	}
 
-#ifndef STANDALONE
+
 	//Rotate around 0,0,0
 	//ASK: Should i also include Right alt?
 	//Maybe we could use quaternions?
@@ -135,7 +137,8 @@ void ModuleCamera3D::ProcessSceneKeyboard()
 		//FocusCamera(target, 10.f);
 		MoveTo(target);
 	}
-#endif // !STANDALONE
+
+
 
 
 	if (App->moduleInput->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
@@ -281,9 +284,8 @@ void ModuleCamera3D::PanCamera(float dt)
 void ModuleCamera3D::CamZoom(int addZoomAmount)
 {
 	zoomLevel -= addZoomAmount;
-	if (zoomLevel < 1)zoomLevel = 1;
-
-	LOG(LogType::L_NORMAL, "Zoom level set to %f",zoomLevel);
-	
+	if (zoomLevel < 1)zoomLevel = 1;	
 	editorCamera.camFrustrum.pos = reference -editorCamera.camFrustrum.front * (pow(2.0f, zoomLevel * 0.1f) - 1);
 }
+
+#endif // !STANDALONE
