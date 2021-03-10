@@ -50,7 +50,7 @@ bool M_Scene::Init()
 bool M_Scene::Start()
 {
 	CreateGameCamera("Main Camera");
-	//LoadScene("Library/Scenes/1076838722.des");
+	LoadScene("Library/Scenes/1085444261.des");
 
 	//LoadScene("Library/Scenes/884741631.des");
 	//LoadScene("Library/Scenes/tmp.des");
@@ -201,6 +201,11 @@ GameObject* M_Scene::CreateGameObject(const char* name, GameObject* parent, int 
 {
 	GameObject* gm = new GameObject(name, parent, _uid);
 	return gm;
+}
+
+void M_Scene::GetAllGameObjects(std::vector<GameObject*>& gameObjects)
+{
+	root->CollectChilds(gameObjects);
 }
 
 void M_Scene::LoadScriptsData()
@@ -440,7 +445,6 @@ void M_Scene::CleanScene()
 
 GameObject* M_Scene::LoadGOData(JSON_Object* goJsonObj, GameObject* parent)
 {
-	//goJsonObj = json_array_get_object(sceneGO, i);
 	GameObject* originalParent = parent;
 
 	while (parent != nullptr && json_object_get_number(goJsonObj, "ParentUID") != parent->UID)

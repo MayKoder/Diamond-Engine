@@ -134,6 +134,7 @@ void FileSystem::CreateLibraryFolders()
 	CreateDir(MATERIALS_PATH);
 	CreateDir(ANIMATIONS_PATH);
 	CreateDir(SOUNDS_PATH);
+	CreateDir(PREFABS_PATH);
 
 	CreateLibrarySoundBanks();//TODO move this somewhere else? ask myke
 }

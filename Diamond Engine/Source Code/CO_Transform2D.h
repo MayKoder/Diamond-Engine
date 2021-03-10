@@ -39,8 +39,12 @@ public:
 
 
 private:
-	bool updateTransform, send_command;
-	float previous_parameters[5];////[0]&&[1] = position; [2] = rotation; [3] && [4] = size
+	bool updateTransform = false;
+	bool send_command = false;
+	bool maintainSize = false;
+	float previous_transform[5];////[0]&&[1] = position; [2] = rotation; [3] && [4] = size
+
+	float pixelSize[2];	//Used to maintain the size of the image when resizing the window
 };
 
 #endif // !__CO_TRANSFORM_2D_H__

@@ -17,6 +17,7 @@
 #include "CO_Canvas.h"
 #include "CO_Image2D.h"
 #include "CO_Checkbox.h"
+#include "CO_Navigation.h"
 
 #include"MO_Scene.h"
 
@@ -29,7 +30,7 @@
 
 
 GameObject::GameObject(const char* _name, GameObject* parent, int _uid) : parent(parent), name(_name), showChildren(false),
-active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr)
+active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr), prefabID(0u)
 {
 
 	if(parent != nullptr)
@@ -156,6 +157,16 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 		ret = new C_Checkbox(this);
 		break;
 
+	case Component::TYPE::NAVIGATION:
+		assert(params != nullptr, "You need to specify the type of ui");
+		if ("Button" == params)
+			ret = new C_Navigation(this, Component::TYPE::BUTTON);
+		else if ("Checkbox" == params)
+			ret = new C_Navigation(this, Component::TYPE::CHECKBOX);
+		else 
+			LOG(LogType::L_WARNING, "The Navigation component hasn't been created because the type wasn't correct");
+		break;
+
 	case Component::TYPE::TEXT_UI:
 		ret = new C_Text(this);
 		break;
@@ -180,11 +191,11 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 }
 
 
-Component* GameObject::GetComponent(Component::TYPE _type)
+Component* GameObject::GetComponent(Component::TYPE _type, const char* name)
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
-		if (components[i]->type == _type)
+		if (components[i]->type == _type && (name == nullptr || name == components[i]->GetName()))
 			return components[i];
 	}
 
@@ -203,6 +214,20 @@ void GameObject::RecursiveUIDRegeneration()
 		this->children[i]->RecursiveUIDRegeneration();
 	}
 }
+
+/*
+void GameObject::RecursiveUIDRegenerationSavingOldUIDs(std::map<uint, uint>& uids)
+{
+	uint new_uid = EngineExternal->GetRandomInt();
+	uids[new_uid] = this->UID;
+	this->UID = new_uid;
+
+	for (size_t i = 0; i < this->children.size(); i++)
+	{
+		this->children[i]->RecursiveUIDRegenerationSavingOldUIDs(uids);
+	}
+}
+*/
 
 
 bool GameObject::isActive() const
@@ -262,6 +287,7 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 	DEJson::WriteVector3(goData, "Scale", &transform->localScale[0]);
 
 	DEJson::WriteInt(goData, "UID", UID);
+	DEJson::WriteInt(goData, "PrefabID", prefabID);
 
 	if (parent)
 		DEJson::WriteInt(goData, "ParentUID", parent->UID);
@@ -293,9 +319,9 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 
 void GameObject::LoadFromJson(JSON_Object* _obj)
 {
-
 	active = DEJson::ReadBool(_obj, "Active");
 	transform->SetTransformMatrix(DEJson::ReadVector3(_obj, "Position"), DEJson::ReadQuat(_obj, "Rotation"), DEJson::ReadVector3(_obj, "Scale"));
+	prefabID = DEJson::ReadInt(_obj, "PrefabID");
 	LoadComponents(json_object_get_array(_obj, "Components"));
 }
 
@@ -308,6 +334,18 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 		conf.nObj = json_array_get_object(componentArray, i);
 
 		const char* scName = conf.ReadString("ScriptName");
+		int num_type = conf.ReadInt("Type Of UI");
+		if (num_type != 0) {
+			switch (static_cast<Component::TYPE>(num_type)) {
+			case Component::TYPE::BUTTON:
+				scName = "Button";
+				break;
+			case Component::TYPE::CHECKBOX:
+				scName = "Checkbox";
+				break;
+			}
+
+		}
 		Component* comp = AddComponent((Component::TYPE)conf.ReadInt("Type"), scName);
 
 		comp->LoadData(conf);

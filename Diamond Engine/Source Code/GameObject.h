@@ -20,9 +20,10 @@ public:
 	void PostUpdate();
 
 	Component* AddComponent(Component::TYPE _type, const char* params = nullptr);
-	Component* GetComponent(Component::TYPE _type);
+	Component* GetComponent(Component::TYPE _type, const char* name = nullptr);
 
 	void RecursiveUIDRegeneration();
+	//void RecursiveUIDRegenerationSavingOldUIDs(std::map<uint, uint>& uids);
 
 	bool isActive() const;
 
@@ -62,6 +63,7 @@ public:
 	bool toDelete;
 
 	int UID;
+	uint prefabID;
 
 private:
 	Component* dumpComponent;
