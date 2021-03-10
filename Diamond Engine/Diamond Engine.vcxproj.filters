@@ -780,6 +780,10 @@
     </ClInclude>
     <ClInclude Include="Source Code\CO_Navigation.h">
       <Filter>Sources\Components\Derived\UI</Filter>
+    </ClCompile>
+    <ClInclude Include="Source Code\CS_Scene_Bindings.h" />
+    <ClInclude Include="Source Code\IM_PrefabImporter.h">
+      <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1181,6 +1185,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\CO_Navigation.cpp">
       <Filter>Sources\Components\Derived\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\IM_PrefabImporter.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
