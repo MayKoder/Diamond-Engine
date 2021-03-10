@@ -5,9 +5,9 @@
             "name": "TestSandbox",
             "Active": true,
             "Position": [
+                73.746620178222656,
                 0,
-                0,
-                264.96176147460938
+                -49.635986328125
             ],
             "Rotation": [
                 0,
@@ -20,8 +20,8 @@
                 0.24000000953674316,
                 0.24000000953674316
             ],
-            "UID": 1666983189,
-            "PrefabID": 284852509,
+            "UID": 503039891,
+            "PrefabID": 491440377,
             "ParentUID": 143570472,
             "Components": [
                 {
@@ -31,27 +31,27 @@
             ]
         },
         {
-            "name": "Plane",
+            "name": "Cube",
             "Active": true,
             "Position": [
+                -300,
                 0,
-                0,
-                0
+                -300
             ],
             "Rotation": [
-                -0.7071068286895752,
-                0,
-                0,
-                0.70710670948028564
+                -0.68301278352737427,
+                -0.1830126941204071,
+                -0.1830127090215683,
+                0.68301266431808472
             ],
             "Scale": [
-                500,
-                500,
-                500
+                17.39555549621582,
+                17.39555549621582,
+                17.39555549621582
             ],
-            "UID": 577866548,
+            "UID": 161624951,
             "PrefabID": 0,
-            "ParentUID": 1666983189,
+            "ParentUID": 503039891,
             "Components": [
                 {
                     "Type": 1,
@@ -60,8 +60,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/296489994.mmh",
-                    "UID": 296489994,
+                    "Path": "Library\/Meshes\/317057310.mmh",
+                    "UID": 317057310,
                     "alternColor": [
                         1,
                         1,
@@ -72,41 +72,6 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true
-                },
-                {
-                    "Type": 14,
-                    "Active": true,
-                    "kinematic": true,
-                    "Gravity": true,
-                    "LockLinearX": false,
-                    "LockLinearY": false,
-                    "LockLinearZ": false,
-                    "LockAngularX": false,
-                    "LockAngularY": false,
-                    "LockAngularZ": false,
-                    "Mass": 30.799999237060547,
-                    "Density": 1
-                },
-                {
-                    "Type": 15,
-                    "Active": true,
-                    "isTrigger": false,
-                    "Position": [
-                        0,
-                        0,
-                        0
-                    ],
-                    "Rotation": [
-                        0,
-                        0,
-                        0,
-                        1
-                    ],
-                    "Scale": [
-                        1,
-                        1,
-                        1
-                    ]
                 }
             ]
         },
@@ -129,9 +94,9 @@
                 18.083625793457031,
                 18.083625793457031
             ],
-            "UID": 864640452,
+            "UID": 1823886938,
             "PrefabID": 0,
-            "ParentUID": 1666983189,
+            "ParentUID": 503039891,
             "Components": [
                 {
                     "Type": 1,

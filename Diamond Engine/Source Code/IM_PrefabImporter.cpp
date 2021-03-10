@@ -88,6 +88,7 @@ void PrefabImporter::OverridePrefabGameObjects(uint prefabID, GameObject* gameOb
 	const char* assets_path = json_object_get_string(prefabObj, "assets_path");
 
 	SavePrefab(assets_path, gameObject);
+	EngineExternal->moduleResources->ImportFile(assets_path, Resource::Type::PREFAB);
 
 	json_value_free(prefab);
 
@@ -103,7 +104,8 @@ void PrefabImporter::OverridePrefabGameObjects(uint prefabID, GameObject* gameOb
 
 	for (size_t i = 0; i < prefabObjects.size(); i++)
 	{
-		OverrideGameObject(prefabID, prefabObjects[i]);
+		if(prefabObjects[i] != gameObject)
+			OverrideGameObject(prefabID, prefabObjects[i]);
 	}
 }
 
