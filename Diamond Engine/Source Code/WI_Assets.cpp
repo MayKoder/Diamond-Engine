@@ -197,6 +197,9 @@ void W_Assets::DrawFileTree(AssetDir& file)
 			case  Resource::Type::FONT:
 				ImGui::SetDragDropPayload("_FONT", &file.importPath, file.importPath.length());
 				break;
+			case Resource::Type::SCRIPT:
+				ImGui::SetDragDropPayload("_SCRIPT", &file.importPath, file.importPath.length());
+				break;
 			case  Resource::Type::PREFAB:
 				ImGui::SetDragDropPayload("_PREFAB", &file.metaFileDir, file.metaFileDir.length());
 				break;

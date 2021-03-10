@@ -223,6 +223,7 @@
     <ClInclude Include="Source Code\CO_Collider.h" />
     <ClInclude Include="Source Code\CO_MeshRenderer.h" />
     <ClInclude Include="Source Code\CO_Material.h" />
+    <ClInclude Include="Source Code\CO_Navigation.h" />
     <ClInclude Include="Source Code\CO_RigidBody.h" />
     <ClInclude Include="Source Code\CO_Script.h" />
     <ClInclude Include="Source Code\CO_Text.h" />
@@ -418,6 +419,7 @@
     <ClCompile Include="Source Code\CO_Collider.cpp" />
     <ClCompile Include="Source Code\CO_Material.cpp" />
     <ClCompile Include="Source Code\CO_MeshRenderer.cpp" />
+    <ClCompile Include="Source Code\CO_Navigation.cpp" />
     <ClCompile Include="Source Code\CO_RigidBody.cpp" />
     <ClCompile Include="Source Code\CO_Script.cpp" />
     <ClCompile Include="Source Code\CO_Text.cpp" />

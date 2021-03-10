@@ -306,6 +306,14 @@ void C_Script::LoadScriptData(const char* scriptName)
 	oncDesc = mono_method_desc_new(":OnTriggerEnter", false);
 	onTriggerEnter = mono_method_desc_search_in_class(oncDesc, klass);
 	mono_method_desc_free(oncDesc);
+	MonoMethodDesc* oncBut = mono_method_desc_new(":OnExecuteButton", false);
+	onExecuteButton = mono_method_desc_search_in_class(oncBut, klass);
+	mono_method_desc_free(oncBut);
+
+	MonoMethodDesc* oncChck = mono_method_desc_new(":OnExecuteCheckbox", false);
+	onExecuteCheckbox = mono_method_desc_search_in_class(oncChck, klass);
+	mono_method_desc_free(oncChck);
+
 
 	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject), this);
 }
@@ -324,6 +332,19 @@ void C_Script::CollisionCallback(bool isTrigger)
 		if (onCollisionEnter != nullptr)
 			mono_runtime_invoke(onCollisionEnter, mono_gchandle_get_target(noGCobject), NULL, NULL);
 	}
+}
+
+void C_Script::ExecuteButton()
+{
+	mono_runtime_invoke(onExecuteButton, mono_gchandle_get_target(noGCobject), NULL, NULL);
+}
+
+void C_Script::ExecuteCheckbox(bool checkbox_active)
+{
+	void* args[1];
+	args[0] = &checkbox_active;
+
+	mono_runtime_invoke(onExecuteCheckbox, mono_gchandle_get_target(noGCobject), args, NULL);
 }
 
 void C_Script::SetField(MonoClassField* field, GameObject* value)

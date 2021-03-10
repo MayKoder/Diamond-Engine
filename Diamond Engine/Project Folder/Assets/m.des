@@ -1,0 +1,431 @@
+{
+    "EditorCameraPosition": [
+        25.1678466796875,
+        99.068618774414063,
+        -134.79179382324219
+    ],
+    "EditorCameraZ": [
+        -0.14877679944038391,
+        -0.58563262224197388,
+        0.79680603742599487
+    ],
+    "EditorCameraY": [
+        -0.10748959332704544,
+        0.81057661771774292,
+        0.57568359375
+    ],
+    "Game Objects": [
+        {
+            "name": "Scene root",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Player",
+            "Active": true,
+            "Position": [
+                0,
+                2,
+                -2.2426132773034624e-07
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                2,
+                0.9999280571937561
+            ],
+            "UID": 1661764735,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        1,
+                        0.99998998641967773,
+                        0.99998998641967773
+                    ]
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "FPS_Controller",
+                    "reference": 1661764735,
+                    "turret": 1661764735,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 35,
+                    "mouseSens": 1
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "TestSandbox",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                0.24000000953674316,
+                0.24000000953674316,
+                0.24000000953674316
+            ],
+            "UID": 1716888692,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Plane",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                500,
+                500,
+                500
+            ],
+            "UID": 420350065,
+            "ParentUID": 1716888692,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/296489994.mmh",
+                    "UID": 296489994,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true
+                }
+            ]
+        },
+        {
+            "name": "Cube",
+            "Active": true,
+            "Position": [
+                -300,
+                0,
+                -300
+            ],
+            "Rotation": [
+                -0.68301278352737427,
+                -0.1830126941204071,
+                -0.1830127090215683,
+                0.68301266431808472
+            ],
+            "Scale": [
+                17.39555549621582,
+                17.39555549621582,
+                17.39555549621582
+            ],
+            "UID": 1432217696,
+            "ParentUID": 1716888692,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/317057310.mmh",
+                    "UID": 317057310,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true
+                }
+            ]
+        },
+        {
+            "name": "Sphere",
+            "Active": true,
+            "Position": [
+                -287.66519165039063,
+                65.438919067382813,
+                -303.3785400390625
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                18.083625793457031,
+                18.083625793457031,
+                18.083625793457031
+            ],
+            "UID": 467515712,
+            "ParentUID": 1716888692,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/2010055644.mmh",
+                    "UID": 2010055644,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Game Camera",
+            "Active": true,
+            "Position": [
+                28.337120056152344,
+                34.217071533203125,
+                -37.998661041259766
+            ],
+            "Rotation": [
+                0.28966295719146729,
+                -0.30951860547065735,
+                0.099594630300998688,
+                0.9002079963684082
+            ],
+            "Scale": [
+                0.9999997615814209,
+                1.999998927116394,
+                0.999927818775177
+            ],
+            "UID": 188616957,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 4,
+                    "Active": true,
+                    "fType": 1,
+                    "fSize": 13.260000228881836,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 5000,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.5521194934844971,
+                    "culling": false
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "CameraController",
+                    "reference": 188616957,
+                    "target": 1661764735,
+                    "x": 1,
+                    "y": 1,
+                    "z": 1,
+                    "smoothSpeed": 1
+                }
+            ]
+        },
+        {
+            "name": "Canvas",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 823247492,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 10,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Checkbox",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1480233741,
+            "ParentUID": 823247492,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        0
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        20,
+                        20
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 8,
+                    "Active": true,
+                    "Active_Pressed_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
+                    "Active_Pressed_LibraryPath": "Library\/Textures\/481961565.dds",
+                    "Active_Pressed_UID": 481961565,
+                    "Active_Hovered_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
+                    "Active_Hovered_LibraryPath": "Library\/Textures\/934250681.dds",
+                    "Active_Hovered_UID": 934250681,
+                    "Active_AssetsPath": "Assets\/Baker_house.png",
+                    "Active_LibraryPath": "Library\/Textures\/366394407.dds",
+                    "Active_UID": 366394407,
+                    "Unactive_Pressed_AssetsPath": "Assets\/Pilot\/Material.002_Base_Color.png",
+                    "Unactive_Pressed_LibraryPath": "Library\/Textures\/1907274499.dds",
+                    "Unactive_Pressed_UID": 1907274499,
+                    "Unactive_Hovered_AssetsPath": "Assets\/Jet\/window.png",
+                    "Unactive_Hovered_LibraryPath": "Library\/Textures\/1721814459.dds",
+                    "Unactive_Hovered_UID": 1721814459,
+                    "Unactive_AssetsPath": "Assets\/Jet\/wide.png",
+                    "Unactive_LibraryPath": "Library\/Textures\/286608816.dds",
+                    "Unactive_UID": 286608816,
+                    "Script_Name": "BH_Bullet",
+                    "ButtonState": 1,
+                    "Checkbox Active": false
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Assets\/Jet\/atlasjet-black.png",
+                    "LibraryPath": "Library\/Textures\/934250681.dds",
+                    "UID": 934250681
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "BH_Bullet",
+                    "thisReference": 1480233741,
+                    "speed": 60,
+                    "maxLifeTime": 10,
+                    "currentLifeTime": 0,
+                    "yVel": 0
+                }
+            ]
+        }
+    ]
+}

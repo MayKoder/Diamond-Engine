@@ -2,7 +2,6 @@
 #include "Component.h"
 
 class ResourceTexture;
-class C_Script;
 
 enum class CHECKBOXSTATE {
 	CHECKBOXACTIVE,
@@ -25,12 +24,21 @@ public:
 
 	void ChangeTexture(CHECKBOXSTATE new_num_sprite);
 
+	void SaveData(JSON_Object* nObj) override;
+	void LoadData(DEConfig& nObj) override;
+
 #ifndef STANDALONE
 	void ChangeSprite(CHECKBOXSTATE num_sprite, ResourceTexture* sprite);
-	void ChangeScript(C_Script* script);
+	void ChangeScript(const char* script);
 	bool OnEditor() override;
+
+
+private:
+	bool sprites_freezed;
 #endif // !STANDALONE
 
+public:
+	bool is_selected;
 private:
 	ResourceTexture* sprite_checkbox_active;
 	ResourceTexture* sprite_checkbox_active_hovered;
@@ -39,6 +47,6 @@ private:
 	ResourceTexture* sprite_checkbox_unactive_hovered;
 	ResourceTexture* sprite_checkbox_unactive_pressed;
 	CHECKBOXSTATE num_sprite_used;
-	C_Script* script;
+	std::string script_name;
 	bool checkbox_active;
 };

@@ -17,6 +17,7 @@
 #include "CO_Canvas.h"
 #include "CO_Image2D.h"
 #include "CO_Checkbox.h"
+#include "CO_Navigation.h"
 
 #include"MO_Scene.h"
 
@@ -156,6 +157,16 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 		ret = new C_Checkbox(this);
 		break;
 
+	case Component::TYPE::NAVIGATION:
+		assert(params != nullptr, "You need to specify the type of ui");
+		if ("Button" == params)
+			ret = new C_Navigation(this, Component::TYPE::BUTTON);
+		else if ("Checkbox" == params)
+			ret = new C_Navigation(this, Component::TYPE::CHECKBOX);
+		else 
+			LOG(LogType::L_WARNING, "The Navigation component hasn't been created because the type wasn't correct");
+		break;
+
 	case Component::TYPE::TEXT_UI:
 		ret = new C_Text(this);
 		break;
@@ -180,11 +191,11 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 }
 
 
-Component* GameObject::GetComponent(Component::TYPE _type)
+Component* GameObject::GetComponent(Component::TYPE _type, const char* name)
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
-		if (components[i]->type == _type)
+		if (components[i]->type == _type && (name == nullptr || name == components[i]->GetName()))
 			return components[i];
 	}
 
@@ -323,6 +334,18 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 		conf.nObj = json_array_get_object(componentArray, i);
 
 		const char* scName = conf.ReadString("ScriptName");
+		int num_type = conf.ReadInt("Type Of UI");
+		if (num_type != 0) {
+			switch (static_cast<Component::TYPE>(num_type)) {
+			case Component::TYPE::BUTTON:
+				scName = "Button";
+				break;
+			case Component::TYPE::CHECKBOX:
+				scName = "Checkbox";
+				break;
+			}
+
+		}
 		Component* comp = AddComponent((Component::TYPE)conf.ReadInt("Type"), scName);
 
 		comp->LoadData(conf);
