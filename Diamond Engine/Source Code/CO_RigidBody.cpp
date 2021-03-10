@@ -90,6 +90,7 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 
 	rigid_dynamic->userData = this->gameObject;
 
+	rigid_dynamic->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
 }
 
 C_RigidBody::~C_RigidBody()

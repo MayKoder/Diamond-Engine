@@ -103,7 +103,8 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 
 	
 
-	
+		colliderShape->setFlag(physx::PxShapeFlag::eVISUALIZATION, true);
+
 }
 
 C_Collider::~C_Collider()
@@ -143,8 +144,8 @@ void C_Collider::Update()
 		colliderShape->getBoxGeometry(boxCollider);
 
 		float3 half_size = { boxCollider.halfExtents.x, boxCollider.halfExtents.y, boxCollider.halfExtents.z };
-		
-		glPushMatrix();
+
+	/*	glPushMatrix();
 		glMultMatrixf(trans.Transposed().ptr());
 
 
@@ -172,7 +173,7 @@ void C_Collider::Update()
 		glVertex3f(half_size.x, -half_size.y, half_size.z);
 		glVertex3f(-half_size.x, half_size.y, half_size.z);
 		glVertex3f(-half_size.x, -half_size.y, half_size.z);
-		glEnd();
+		glEnd();*/
 
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glPopMatrix();

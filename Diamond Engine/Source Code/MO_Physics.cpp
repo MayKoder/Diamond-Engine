@@ -11,6 +11,10 @@
 #include "CO_Collider.h"
 #include "CO_RigidBody.h"
 
+//todelete
+#include "MO_Renderer3D.h"
+
+
 #ifndef _DEBUG
 #        pragma comment(lib, "Physx/libx86/_release/PhysX_32.lib")
 #        pragma comment(lib, "Physx/libx86/_release/PhysXCommon_32.lib")
@@ -156,27 +160,47 @@ bool ModulePhysics::Init() {
 
 	mScene->setSimulationEventCallback(&detector);
 	mScene->setGravity(PxVec3(gravity.x, gravity.y, gravity.z));
-	
+	mScene->setVisualizationParameter(PxVisualizationParameter::eSCALE, 1.0f);
+	mScene->setVisualizationParameter(PxVisualizationParameter::eCOLLISION_AABBS, 2.0f);
+
 	return true;
 }
 
 update_status ModulePhysics::PreUpdate(float dt)
 {
-	if (DETime::state == GameState::PLAY)
-		SceneSimulation(DETime::deltaTime);
+	//if (DETime::state == GameState::PLAY)
+	//	SceneSimulation(DETime::deltaTime);
+	//
+	SceneSimulation(DETime::deltaTime);
 
+	
 	return update_status::UPDATE_CONTINUE;
 }
 
 update_status ModulePhysics::Update(float gameTimestep) {
 
 	//RenderGeometry();
+	const PxRenderBuffer& rb = mScene->getRenderBuffer();
+	for (PxU32 i = 0; i < rb.getNbLines(); i++)
+	{
+		const PxDebugLine& line = rb.getLines()[i];
 
+
+		glLineWidth(2.0f);
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glBegin(GL_LINES);
+		glVertex3f(line.pos0.x, line.pos0.y, line.pos0.z);
+		glVertex3f(line.pos1.x, line.pos1.y, line.pos1.z);
+		
+		glEnd();
+		glColor3f(1.0f, 1.0f, 1.0f);
+
+	}
 	return update_status::UPDATE_CONTINUE;
 }
 
 void ModulePhysics::SceneSimulation(double gameTimestep, bool fetchResults) {
-	PxReal step = DETime::deltaTime;
+	PxReal step = gameTimestep;
 	//if(step < 0.002)
 	//step = 0.002;
 	mScene->simulate(step);
@@ -195,7 +219,6 @@ void ModulePhysics::SceneSimulation(double gameTimestep, bool fetchResults) {
 		}
 	}
 	
-
 
 }
 
@@ -269,6 +292,29 @@ physx::PxShape* ModulePhysics::CreateCollider(float3 size, PxMaterial* material)
 	colliderShape = mPhysics->createShape(PxBoxGeometry(size.x, size.y, size.z), *material, true);
 
 	return colliderShape;
+}
+
+physx::PxShape* ModulePhysics::CreateMeshCollider()
+{
+	static const PxVec3 convexVerts[] = { PxVec3(0,1,0),PxVec3(1,0,0),PxVec3(-1,0,0),PxVec3(0,0,1),
+		PxVec3(0,0,-1) };
+	
+	PxConvexMeshDesc convexDesc;
+	convexDesc.points.count = 5;
+	convexDesc.points.stride = sizeof(PxVec3);
+	convexDesc.points.data = convexVerts;
+	convexDesc.flags = PxConvexFlag::eCOMPUTE_CONVEX;
+
+#ifdef _DEBUG
+	// mesh should be validated before cooking without the mesh cleaning
+	//bool res = mCooking->validateConvexMesh(convexDesc);
+	//PX_ASSERT(res);
+#endif
+
+	PxConvexMesh* aConvexMesh = mCooking->createConvexMesh(convexDesc,
+		mPhysics->getPhysicsInsertionCallback());
+
+	return nullptr;
 }
 
 physx::PxMaterial* ModulePhysics::CreateMaterial(float staticFriction, float dynamicFriction, float restitution) {

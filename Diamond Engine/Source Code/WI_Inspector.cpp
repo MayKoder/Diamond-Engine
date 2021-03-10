@@ -14,6 +14,10 @@
 #include"CO_Script.h"
 #include"RE_Material.h"
 
+//todelete
+#include "Application.h"
+#include "MO_Physics.h"
+
 W_Inspector::W_Inspector() : Window(), selectedGO(nullptr), editingRes(nullptr)
 {
 	name = "Inspector";
@@ -147,6 +151,11 @@ void W_Inspector::Draw()
 					if (selectedGO->GetComponent(Component::TYPE::Collider) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::Collider);
 				}
+				if (ImGui::Selectable("MeshCollider"))
+				{
+					EngineExternal->modulePhysics->CreateMeshCollider();
+
+				}
 				if (ImGui::Selectable("AudioListener"))
 				{
 					if (selectedGO->GetComponent(Component::TYPE::AUDIO_LISTENER) == nullptr)
@@ -162,7 +171,7 @@ void W_Inspector::Draw()
 					if (selectedGO->GetComponent(Component::TYPE::Animator) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::Animator);
 				}
-
+				
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)
 				{
 					if (ImGui::Selectable(mono_class_get_name(EngineExternal->moduleMono->userScripts[i]))) 
