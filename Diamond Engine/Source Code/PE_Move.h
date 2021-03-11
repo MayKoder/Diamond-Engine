@@ -3,21 +3,22 @@
 
 #include "ParticleEffects.h"
 
-class PE_Spawn : public ParticleEffect
+class PE_Move : ParticleEffect
 {
 public:
-	PE_Spawn();
-	~PE_Spawn() override;
+	PE_Move();
+	~PE_Move() override;
 
 	void Spawn(Particle& particle) override;
+	void Update(Particle& particle, float dt) override;
 
 #ifndef STANDALONE
 	void OnEditor() override;
 #endif // !STANDALONE
 
-private:
-	float spawnPos[3];
+public:
+	float speed[3];
+	float acceleration[3];
 };
-
 
 #endif // !__PE_SPAWN_H__

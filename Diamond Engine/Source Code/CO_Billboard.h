@@ -2,7 +2,8 @@
 
 #include "Component.h"
 
-enum class BILLBOARDALIGNMENT {
+enum class BILLBOARD_ALIGNMENT : int
+{
 	SCREEN_ALIGNED = 0,
 	WORLD_ALIGNED,
 	AXIS_ALIGNED
@@ -17,7 +18,7 @@ public:
 	bool OnEditor() override;
 #endif // !STANDALONE
 
-	void SetAlignment(BILLBOARDALIGNMENT new_alignment);
+	void SetAlignment(BILLBOARD_ALIGNMENT new_alignment);
 	void Draw();
 private:
 	void UseAlignment();
@@ -26,5 +27,5 @@ private:
 	void AxisAlign();
 
 private:
-	BILLBOARDALIGNMENT currentAlignment;
+	BILLBOARD_ALIGNMENT currentAlignment;
 };

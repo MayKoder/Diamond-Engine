@@ -3,51 +3,33 @@
 
 #include "ImGui/imgui.h"
 
-PE_Move::PE_Move() : ParticleEffect(PARTICLE_EFFECT_TYPE::MOVE)
+PE_Spawn::PE_Spawn() : ParticleEffect(PARTICLE_EFFECT_TYPE::SPAWN)
 {
-	memset(speed, 0.f, sizeof(speed));
-	memset(acceleration, 0.f, sizeof(acceleration));
+	memset(spawnPos, 0.f, sizeof(spawnPos));
 }
 
 
-PE_Move::~PE_Move()
+PE_Spawn::~PE_Spawn()
 {
 }
 
 
-void PE_Move::Spawn(Particle& particle)
+void PE_Spawn::Spawn(Particle& particle)
 {
-	particle.speed.x = speed[0];
-	particle.speed.y = speed[1];
-	particle.speed.z = speed[2];
-}
-
-
-void PE_Move::Update(Particle& particle, float dt)
-{
-	particle.speed.x += acceleration[0];
-	particle.speed.y += acceleration[1];
-	particle.speed.z += acceleration[2];
-
-	particle.pos.x += particle.speed.x;
-	particle.pos.y += particle.speed.y;
-	particle.pos.z += particle.speed.z;
+	particle.pos.x = spawnPos[0];
+	particle.pos.y = spawnPos[1];
+	particle.pos.z = spawnPos[2];
 }
 
 
 #ifndef STANDALONE
-void PE_Move::OnEditor()
+void PE_Spawn::OnEditor()
 {
 	ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "Particle movement: ");
 
 	int offset = ImGui::CalcTextSize("Particle speed: ").x + 16;
 	ImGui::Text("Particle speed: ");
 	ImGui::SameLine();
-	ImGui::DragFloat3("##lPaSpd", speed, 0.1f);
-
-	ImGui::Text("Part acceleration: ");
-	ImGui::SameLine();
-	ImGui::SetCursorPosX(offset);
-	ImGui::DragFloat3("##lPaAcc", acceleration, 0.1f);
+	ImGui::DragFloat3("##lPaSpd", spawnPos, 0.1f);
 }
 #endif // !STANDALONE

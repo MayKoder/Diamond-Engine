@@ -365,6 +365,8 @@
     <ClInclude Include="Source Code\Particle.h" />
     <ClInclude Include="Source Code\ParticleEffects.h" />
     <ClInclude Include="Source Code\ParticleEmitter.h" />
+    <ClInclude Include="Source Code\PE_Move.h" />
+    <ClInclude Include="Source Code\PE_Spawn.h" />
     <ClInclude Include="Source Code\RE_Animation.h" />
     <ClInclude Include="Source Code\MO_Physics.h" />
     <ClInclude Include="Source Code\MO_Physics\Header.h" />
@@ -506,6 +508,8 @@
     <ClCompile Include="Source Code\Particle.cpp" />
     <ClCompile Include="Source Code\ParticleEffects.cpp" />
     <ClCompile Include="Source Code\ParticleEmitter.cpp" />
+    <ClCompile Include="Source Code\PE_Move.cpp" />
+    <ClCompile Include="Source Code\PE_Spawn.cpp" />
     <ClCompile Include="Source Code\RE_Animation.cpp" />
     <ClCompile Include="Source Code\MO_Physics.cpp" />
     <ClCompile Include="Source Code\RE_Material.cpp" />

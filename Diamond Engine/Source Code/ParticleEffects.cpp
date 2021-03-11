@@ -1,6 +1,6 @@
 #include "ParticleEffects.h"
 
-ParticleEffect::ParticleEffect(PARTICLEEFFECTTYPES type):type(type)
+ParticleEffect::ParticleEffect(PARTICLE_EFFECT_TYPE type):type(type)
 {
 }
 

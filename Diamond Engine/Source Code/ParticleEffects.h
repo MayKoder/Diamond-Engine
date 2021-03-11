@@ -6,13 +6,15 @@ struct Particle;
 enum class PARTICLE_EFFECT_TYPE : int
 {
     NONE = -1,
+    SPAWN,
     AREA_SPAWN,
     MOVE,
     RANDOM_MOVE,
     ROTATE,
 };
 
-class ParticleEffect {
+class ParticleEffect 
+{
 public:
     ParticleEffect(PARTICLE_EFFECT_TYPE type);
     virtual ~ParticleEffect();
