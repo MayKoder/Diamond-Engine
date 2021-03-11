@@ -87,11 +87,14 @@ void M_Gui::RenderCanvas2D()
 			{
 				node = stack.top();
 				stack.pop();
-				stackToDraw.push(node);
+				if (node->active)
+				{
+					stackToDraw.push(node);
 
-				int childNumber = node->children.size();
-				for (int i = 0; i < childNumber; ++i)
-					stack.push(node->children[i]);
+					int childNumber = node->children.size();
+					for (int i = 0; i < childNumber; ++i)
+						stack.push(node->children[i]);
+				}
 			}
 		}
 
