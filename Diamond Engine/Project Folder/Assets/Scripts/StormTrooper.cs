@@ -18,7 +18,7 @@ public class StormTrooper : DiamondComponent
 
 	public float wanderTime = 5.0f;
 	public float idleTime = 5.0f;
-	private Vector3 targetPosition;
+	private Vector3 targetPosition = null;
 	private float stoppingDistance = 1.0f;
 
 	private STATES state;
@@ -35,7 +35,9 @@ public class StormTrooper : DiamondComponent
 	public void Start()
     {
 		state = STATES.WANDER;
+		targetPosition = CalculateNewPosition();
 		shotTimes = 0;
+		Debug.Log("Started");
     }
 
 	public void Update()
@@ -54,29 +56,33 @@ public class StormTrooper : DiamondComponent
 
 			case STATES.RUN:
 				gameObject.transform.localPosition = Vector3.Lerp(gameObject.transform.localPosition, targetPosition, 0.01f);
+				
+				/*
 				if (Mathf.Distance(gameObject.transform.localPosition, targetPosition) < stoppingDistance)
 				{
 					state = STATES.IDLE;
 				}
-
+				*/
 				break;
 
 			case STATES.WANDER:
 
 				Debug.Log("Wander");
 
-				gameObject.transform.localPosition = Vector3.Lerp(gameObject.transform.localPosition, player.transform.localPosition, 0.01f);
+				if (targetPosition == null)
+					targetPosition = CalculateNewPosition();
 
-				if(gameObject.transform == null)
-                {
-					Debug.Log("Null transform");
-                }
+				gameObject.transform.localPosition = Vector3.Lerp(gameObject.transform.localPosition, targetPosition, 0.01f);
+				//Vector3 newPosition	= Vector3.Lerp(gameObject.transform.localPosition, targetPosition, 0.01f);
+				//Debug.Log("New Position: " + newPosition.x + " " + newPosition.z);
 
+				/*
 				if (Mathf.Distance(gameObject.transform.localPosition, targetPosition) < stoppingDistance)
 				{
 					targetPosition = CalculateNewPosition();
 				}
-			
+				*/
+
 				break;
 
 			case STATES.SHOOT:
@@ -109,17 +115,7 @@ public class StormTrooper : DiamondComponent
 		return true;
 	}
 
-	public bool Idle()
-    {
-		return true;
-    }
-
-	public bool Hit()
-    {
-		return true;
-    }
-
-	public bool Run()
+	public bool TakeDamage()
     {
 		return true;
     }
@@ -131,7 +127,9 @@ public class StormTrooper : DiamondComponent
 		Random random = new Random();
 
         newPosition.x = random.Next(range);
-		newPosition.y = random.Next(range);
+		newPosition.z = random.Next(range);
+
+		//Debug.Log("New Position: " + newPosition.x + " " + newPosition.z);
 
 		return newPosition;
     }

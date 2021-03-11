@@ -20,7 +20,7 @@ public:
 	void PostUpdate();
 
 	Component* AddComponent(Component::TYPE _type, const char* params = nullptr);
-	Component* GetComponent(Component::TYPE _type, const char* name = nullptr);
+	Component* GetComponent(Component::TYPE _type, const char* scriptName = nullptr);
 
 	void RecursiveUIDRegeneration();
 	//void RecursiveUIDRegenerationSavingOldUIDs(std::map<uint, uint>& uids);

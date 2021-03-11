@@ -191,12 +191,22 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 }
 
 
-Component* GameObject::GetComponent(Component::TYPE _type, const char* name)
+Component* GameObject::GetComponent(Component::TYPE _type, const char* scriptName)
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
-		if (components[i]->type == _type && (name == nullptr || name == components[i]->GetName()))
-			return components[i];
+		if (components[i]->type == _type)
+		{
+			if (_type == Component::TYPE::SCRIPT)
+			{
+				if (scriptName != nullptr && strcmp(components[i]->GetName().c_str(), scriptName) == 0)
+					return components[i];
+			}
+			else
+			{
+				return components[i];
+			}
+		}
 	}
 
 	return nullptr;

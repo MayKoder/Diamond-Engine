@@ -201,9 +201,6 @@ void M_MonoManager::DebugAllFields(const char* className, std::vector<Serialized
 	while (field = mono_class_get_fields(klass, &iter))
 	{
 		SerializedField pushField = SerializedField(field, obj, script);
-
-
-
 		_data.push_back(pushField);
 		//LOG(LogType::L_NORMAL, mono_field_full_name(method2));
 	}
