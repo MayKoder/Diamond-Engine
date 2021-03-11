@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        12.210494995117188,
-        2.2774577140808105,
-        -0.019244767725467682
+        25.1678466796875,
+        99.068618774414063,
+        -134.79179382324219
     ],
     "EditorCameraZ": [
-        -0.98304563760757446,
-        -0.18335409462451935,
-        0.0015493627870455384
+        -0.14877679944038391,
+        -0.58563262224197388,
+        0.79680603742599487
     ],
     "EditorCameraY": [
-        -0.18335387110710144,
-        0.98304688930511475,
-        0.00028898115851916373
+        -0.10748959332704544,
+        0.81057661771774292,
+        0.57568359375
     ],
     "Game Objects": [
         {
@@ -34,12 +34,51 @@
                 1,
                 1
             ],
-            "UID": 1828803901,
+            "UID": 773381005,
             "PrefabID": 0,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Game Camera",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1848951521,
+            "PrefabID": 0,
+            "ParentUID": 773381005,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 4,
+                    "Active": true,
+                    "fType": 2,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 100,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.5169296264648438,
+                    "culling": true
                 }
             ]
         },
@@ -62,9 +101,9 @@
                 1,
                 1
             ],
-            "UID": 581109778,
+            "UID": 1569285633,
             "PrefabID": 0,
-            "ParentUID": 1828803901,
+            "ParentUID": 773381005,
             "Components": [
                 {
                     "Type": 1,
@@ -95,9 +134,9 @@
                 1,
                 1
             ],
-            "UID": 999428305,
+            "UID": 174117743,
             "PrefabID": 0,
-            "ParentUID": 581109778,
+            "ParentUID": 1569285633,
             "Components": [
                 {
                     "Type": 1,
@@ -134,7 +173,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "Checkbox",
             "Active": true,
             "Position": [
                 0,
@@ -152,9 +191,9 @@
                 1,
                 1
             ],
-            "UID": 580375958,
+            "UID": 2004513968,
             "PrefabID": 0,
-            "ParentUID": 999428305,
+            "ParentUID": 174117743,
             "Components": [
                 {
                     "Type": 1,
@@ -164,13 +203,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        0,
-                        47.099998474121094
+                        13.399999618530273,
+                        44.900001525878906
                     ],
                     "Rotation": 0,
                     "Size": [
-                        15.100000381469727,
-                        8
+                        6.3000001907348633,
+                        7
                     ]
                 },
                 {
@@ -182,26 +221,36 @@
                     "MaterialUID": 457052853
                 },
                 {
-                    "Type": 7,
+                    "Type": 8,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Baker_house.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/366394407.dds",
-                    "Pressed_UID": 366394407,
-                    "Hovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Hovered_UID": 1721814459,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Unhovered_UID": 481961565,
-                    "ButtonState": 2,
-                    "Is Selected": false
+                    "Active_Pressed_AssetsPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
+                    "Active_Pressed_LibraryPath": "Library\/Textures\/113519198.dds",
+                    "Active_Pressed_UID": 113519198,
+                    "Active_Hovered_AssetsPath": "Assets\/Pilot\/Material.002_Metallic.png",
+                    "Active_Hovered_LibraryPath": "Library\/Textures\/1001549928.dds",
+                    "Active_Hovered_UID": 1001549928,
+                    "Active_AssetsPath": "Assets\/Pilot\/Material.002_Base_Color.png",
+                    "Active_LibraryPath": "Library\/Textures\/1907274499.dds",
+                    "Active_UID": 1907274499,
+                    "Unactive_Pressed_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
+                    "Unactive_Pressed_LibraryPath": "Library\/Textures\/481961565.dds",
+                    "Unactive_Pressed_UID": 481961565,
+                    "Unactive_Hovered_AssetsPath": "Assets\/Pilot\/Material.002_Roughness.png",
+                    "Unactive_Hovered_LibraryPath": "Library\/Textures\/27816394.dds",
+                    "Unactive_Hovered_UID": 27816394,
+                    "Unactive_AssetsPath": "Assets\/Pilot\/Material.002_Normal_OpenGL.png",
+                    "Unactive_LibraryPath": "Library\/Textures\/580262998.dds",
+                    "Unactive_UID": 580262998,
+                    "ButtonState": 4,
+                    "Checkbox Active": false,
+                    "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
+                    "AssetPath": "Assets\/Pilot\/Material.002_Roughness.png",
+                    "LibraryPath": "Library\/Textures\/27816394.dds",
+                    "UID": 27816394
                 },
                 {
                     "Type": 17,
@@ -209,57 +258,57 @@
                     "Map": [
                         {
                             "Index": 0,
-                            "UID": 580375958,
+                            "UID": 2004513968,
                             "Action": 2,
                             "Is Key Down": false,
                             "Is Key Up": true
                         },
                         {
                             "Index": 11,
-                            "UID": 683882051,
+                            "UID": 1000223014,
                             "Action": 1,
                             "Is Key Down": false,
                             "Is Key Up": true
                         },
                         {
                             "Index": 12,
-                            "UID": 1449753613,
+                            "UID": 700536711,
                             "Action": 1,
                             "Is Key Down": false,
                             "Is Key Up": true
                         },
                         {
                             "Index": 15,
-                            "UID": 683882051,
+                            "UID": 1000223014,
                             "Action": 1,
                             "Is Key Down": false,
                             "Is Key Up": true
                         },
                         {
                             "Index": 16,
-                            "UID": 1449753613,
+                            "UID": 700536711,
                             "Action": 1,
                             "Is Key Down": false,
                             "Is Key Up": true
                         },
                         {
                             "Index": 19,
-                            "UID": 683882051,
+                            "UID": 1000223014,
                             "Action": 1,
                             "Is Key Down": false,
                             "Is Key Up": true
                         },
                         {
                             "Index": 20,
-                            "UID": 1449753613,
+                            "UID": 700536711,
                             "Action": 1,
                             "Is Key Down": false,
                             "Is Key Up": true
                         }
                     ],
                     "Button Being Used": -1,
-                    "Type Of UI": 7,
-                    "Is Selected": false
+                    "Type Of UI": 8,
+                    "Is Selected": true
                 }
             ]
         },
@@ -282,9 +331,9 @@
                 1,
                 1
             ],
-            "UID": 2060531189,
+            "UID": 598582919,
             "PrefabID": 0,
-            "ParentUID": 580375958,
+            "ParentUID": 2004513968,
             "Components": [
                 {
                     "Type": 1,
@@ -294,12 +343,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -14.699999809265137,
-                        -3.0999999046325684
+                        -33.799999237060547,
+                        -3.7000000476837158
                     ],
                     "Rotation": 0,
                     "Size": [
-                        15.199999809265137,
+                        20,
                         20
                     ]
                 },
@@ -307,20 +356,20 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
                     "MaterialUID": 744544911
                 },
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Continue",
+                    "text": "Vsync",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0,
-                        0,
-                        0
+                        0.36000001430511475,
+                        1,
+                        1
                     ]
                 }
             ]
@@ -344,9 +393,9 @@
                 1,
                 1
             ],
-            "UID": 1449753613,
+            "UID": 700536711,
             "PrefabID": 0,
-            "ParentUID": 999428305,
+            "ParentUID": 174117743,
             "Components": [
                 {
                     "Type": 1,
@@ -357,12 +406,12 @@
                     "Active": true,
                     "Position": [
                         0,
-                        23.799999237060547
+                        -0.80000001192092896
                     ],
                     "Rotation": 0,
                     "Size": [
-                        15.100000381469727,
-                        8
+                        27.799999237060547,
+                        5.6999998092651367
                     ]
                 },
                 {
@@ -376,24 +425,478 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Baker_house.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/366394407.dds",
-                    "Pressed_UID": 366394407,
-                    "Hovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Hovered_UID": 1721814459,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Unhovered_UID": 481961565,
+                    "Pressed_AssetsPath": "Assets\/Pilot\/Material.002_Base_Color.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1907274499.dds",
+                    "Pressed_UID": 1907274499,
+                    "Hovered_AssetsPath": "Assets\/Pilot\/Material.002_Metallic.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1001549928.dds",
+                    "Hovered_UID": 1001549928,
+                    "Unhovered_AssetsPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/113519198.dds",
+                    "Unhovered_UID": 113519198,
                     "ButtonState": 2,
                     "Is Selected": false
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
+                    "AssetPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
+                    "LibraryPath": "Library\/Textures\/113519198.dds",
+                    "UID": 113519198
+                },
+                {
+                    "Type": 17,
+                    "Active": true,
+                    "Map": [
+                        {
+                            "Index": 11,
+                            "UID": 2004513968,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 12,
+                            "UID": 2097601430,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 13,
+                            "UID": 700536711,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 14,
+                            "UID": 700536711,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 15,
+                            "UID": 2004513968,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 16,
+                            "UID": 2097601430,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 17,
+                            "UID": 700536711,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 18,
+                            "UID": 700536711,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 19,
+                            "UID": 2004513968,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 20,
+                            "UID": 2097601430,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 21,
+                            "UID": 700536711,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 22,
+                            "UID": 700536711,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        }
+                    ],
+                    "Button Being Used": -1,
+                    "Type Of UI": 7,
+                    "Is Selected": false
+                }
+            ]
+        },
+        {
+            "name": "Text",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 565249514,
+            "PrefabID": 0,
+            "ParentUID": 700536711,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -19.899999618530273,
+                        8.1999998092651367
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        17.299999237060547,
+                        17.799999237060547
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "Resolution",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "textColor": [
+                        0.51999998092651367,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Button",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 2097601430,
+            "PrefabID": 0,
+            "ParentUID": 174117743,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        -36.200000762939453
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        27.799999237060547,
+                        5.6999998092651367
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 7,
+                    "Active": true,
+                    "Pressed_AssetsPath": "Assets\/Pilot\/Material.002_Base_Color.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1907274499.dds",
+                    "Pressed_UID": 1907274499,
+                    "Hovered_AssetsPath": "Assets\/Pilot\/Material.002_Metallic.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1001549928.dds",
+                    "Hovered_UID": 1001549928,
+                    "Unhovered_AssetsPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/113519198.dds",
+                    "Unhovered_UID": 113519198,
+                    "ButtonState": 2,
+                    "Is Selected": false
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
+                    "LibraryPath": "Library\/Textures\/113519198.dds",
+                    "UID": 113519198
+                },
+                {
+                    "Type": 17,
+                    "Active": true,
+                    "Map": [
+                        {
+                            "Index": 11,
+                            "UID": 700536711,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 12,
+                            "UID": 1000223014,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 13,
+                            "UID": 2097601430,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 14,
+                            "UID": 2097601430,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 15,
+                            "UID": 700536711,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 16,
+                            "UID": 1000223014,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 17,
+                            "UID": 2097601430,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 18,
+                            "UID": 2097601430,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 19,
+                            "UID": 700536711,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 20,
+                            "UID": 1000223014,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 21,
+                            "UID": 2097601430,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 22,
+                            "UID": 2097601430,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        }
+                    ],
+                    "Button Being Used": -1,
+                    "Type Of UI": 7,
+                    "Is Selected": false
+                }
+            ]
+        },
+        {
+            "name": "Text",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1778711089,
+            "PrefabID": 0,
+            "ParentUID": 2097601430,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -30.100000381469727,
+                        7.5999999046325684
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        20,
+                        20
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "Window Mode",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "textColor": [
+                        0.40000000596046448,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Button",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1000223014,
+            "PrefabID": 0,
+            "ParentUID": 174117743,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        -74.400001525878906
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        15.100000381469727,
+                        8.3000001907348633
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 7,
+                    "Active": true,
+                    "Pressed_AssetsPath": "Assets\/Pilot\/Material.002_Base_Color.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1907274499.dds",
+                    "Pressed_UID": 1907274499,
+                    "Hovered_AssetsPath": "Assets\/Pilot\/Material.002_Metallic.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1001549928.dds",
+                    "Hovered_UID": 1001549928,
+                    "Unhovered_AssetsPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/113519198.dds",
+                    "Unhovered_UID": 113519198,
+                    "ButtonState": 2,
+                    "Is Selected": false
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
+                    "LibraryPath": "Library\/Textures\/113519198.dds",
+                    "UID": 113519198
                 },
                 {
                     "Type": 17,
@@ -401,49 +904,49 @@
                     "Map": [
                         {
                             "Index": 0,
-                            "UID": 1449753613,
+                            "UID": 1000223014,
                             "Action": 2,
                             "Is Key Down": false,
                             "Is Key Up": true
                         },
                         {
                             "Index": 11,
-                            "UID": 580375958,
+                            "UID": 2097601430,
                             "Action": 1,
                             "Is Key Down": false,
                             "Is Key Up": true
                         },
                         {
                             "Index": 12,
-                            "UID": 1564881673,
+                            "UID": 2004513968,
                             "Action": 1,
                             "Is Key Down": false,
                             "Is Key Up": true
                         },
                         {
                             "Index": 15,
-                            "UID": 580375958,
+                            "UID": 2097601430,
                             "Action": 1,
                             "Is Key Down": false,
                             "Is Key Up": true
                         },
                         {
                             "Index": 16,
-                            "UID": 1564881673,
+                            "UID": 2004513968,
                             "Action": 1,
                             "Is Key Down": false,
                             "Is Key Up": true
                         },
                         {
                             "Index": 19,
-                            "UID": 580375958,
+                            "UID": 2097601430,
                             "Action": 1,
                             "Is Key Down": false,
                             "Is Key Up": true
                         },
                         {
                             "Index": 20,
-                            "UID": 1564881673,
+                            "UID": 2004513968,
                             "Action": 1,
                             "Is Key Down": false,
                             "Is Key Up": true
@@ -474,9 +977,9 @@
                 1,
                 1
             ],
-            "UID": 1193797123,
+            "UID": 74236425,
             "PrefabID": 0,
-            "ParentUID": 1449753613,
+            "ParentUID": 1000223014,
             "Components": [
                 {
                     "Type": 1,
@@ -487,11 +990,11 @@
                     "Active": true,
                     "Position": [
                         -14,
-                        27.200000762939453
+                        -2.7000000476837158
                     ],
                     "Rotation": 0,
                     "Size": [
-                        16.299999237060547,
+                        20,
                         20
                     ]
                 },
@@ -499,206 +1002,14 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
-                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
-                    "MaterialUID": 744544911
-                },
-                {
-                    "Type": 9,
-                    "Active": true,
-                    "text": "Settings",
-                    "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
-                    "textColor": [
-                        0,
-                        0,
-                        0
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "Button",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1564881673,
-            "PrefabID": 0,
-            "ParentUID": 999428305,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        0,
-                        0.5
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        15.100000381469727,
-                        8
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
-                },
-                {
-                    "Type": 7,
-                    "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Baker_house.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/366394407.dds",
-                    "Pressed_UID": 366394407,
-                    "Hovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Hovered_UID": 1721814459,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Unhovered_UID": 481961565,
-                    "ButtonState": 2,
-                    "Is Selected": false
-                },
-                {
-                    "Type": 11,
-                    "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
-                },
-                {
-                    "Type": 17,
-                    "Active": true,
-                    "Map": [
-                        {
-                            "Index": 0,
-                            "UID": 1564881673,
-                            "Action": 2,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 11,
-                            "UID": 1449753613,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 12,
-                            "UID": 339092682,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 15,
-                            "UID": 1564881673,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 16,
-                            "UID": 339092682,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 19,
-                            "UID": 1564881673,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 20,
-                            "UID": 339092682,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        }
-                    ],
-                    "Button Being Used": -1,
-                    "Type Of UI": 7,
-                    "Is Selected": false
-                }
-            ]
-        },
-        {
-            "name": "Text",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 39322475,
-            "PrefabID": 0,
-            "ParentUID": 1564881673,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        -14.399999618530273,
-                        -3.2000000476837158
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        18.200000762939453,
-                        19.299999237060547
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
                     "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
                     "MaterialUID": 744544911
                 },
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Display",
+                    "text": "Return",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
@@ -706,429 +1017,6 @@
                         0,
                         0
                     ]
-                }
-            ]
-        },
-        {
-            "name": "Button",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 339092682,
-            "PrefabID": 0,
-            "ParentUID": 999428305,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        0,
-                        -22.799999237060547
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        15.100000381469727,
-                        8
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
-                },
-                {
-                    "Type": 7,
-                    "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Baker_house.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/366394407.dds",
-                    "Pressed_UID": 366394407,
-                    "Hovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Hovered_UID": 1721814459,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Unhovered_UID": 481961565,
-                    "ButtonState": 2,
-                    "Is Selected": false
-                },
-                {
-                    "Type": 11,
-                    "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
-                },
-                {
-                    "Type": 17,
-                    "Active": true,
-                    "Map": [
-                        {
-                            "Index": 0,
-                            "UID": 339092682,
-                            "Action": 2,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 11,
-                            "UID": 1564881673,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 12,
-                            "UID": 683882051,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 15,
-                            "UID": 1564881673,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 16,
-                            "UID": 683882051,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 19,
-                            "UID": 1564881673,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 20,
-                            "UID": 683882051,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        }
-                    ],
-                    "Button Being Used": -1,
-                    "Type Of UI": 7,
-                    "Is Selected": false
-                }
-            ]
-        },
-        {
-            "name": "Text",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 469682106,
-            "PrefabID": 0,
-            "ParentUID": 339092682,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        -15,
-                        -3.5999999046325684
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        16.399999618530273,
-                        20
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
-                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
-                    "MaterialUID": 744544911
-                },
-                {
-                    "Type": 9,
-                    "Active": true,
-                    "text": "Controls",
-                    "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
-                    "textColor": [
-                        0,
-                        0,
-                        0
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "Button",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 683882051,
-            "PrefabID": 0,
-            "ParentUID": 999428305,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        0,
-                        -46.099998474121094
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        15.100000381469727,
-                        8
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
-                },
-                {
-                    "Type": 7,
-                    "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Baker_house.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/366394407.dds",
-                    "Pressed_UID": 366394407,
-                    "Hovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Hovered_UID": 1721814459,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Unhovered_UID": 481961565,
-                    "ButtonState": 2,
-                    "Is Selected": false
-                },
-                {
-                    "Type": 11,
-                    "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
-                },
-                {
-                    "Type": 17,
-                    "Active": true,
-                    "Map": [
-                        {
-                            "Index": 0,
-                            "UID": 683882051,
-                            "Action": 2,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 11,
-                            "UID": 339092682,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 12,
-                            "UID": 580375958,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 15,
-                            "UID": 339092682,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 16,
-                            "UID": 580375958,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 19,
-                            "UID": 339092682,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 20,
-                            "UID": 580375958,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        }
-                    ],
-                    "Button Being Used": -1,
-                    "Type Of UI": 7,
-                    "Is Selected": false
-                }
-            ]
-        },
-        {
-            "name": "Text",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 4408957,
-            "PrefabID": 0,
-            "ParentUID": 683882051,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        -8.3999996185302734,
-                        -2.4000000953674316
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        18.100000381469727,
-                        20
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
-                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
-                    "MaterialUID": 744544911
-                },
-                {
-                    "Type": 9,
-                    "Active": true,
-                    "text": "Quit",
-                    "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
-                    "textColor": [
-                        0,
-                        0,
-                        0
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "Game Camera",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 2099345549,
-            "PrefabID": 0,
-            "ParentUID": 1828803901,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 4,
-                    "Active": true,
-                    "fType": 2,
-                    "nearPlaneDist": 1,
-                    "farPlaneDist": 100,
-                    "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4245340824127197,
-                    "culling": true
                 }
             ]
         }
