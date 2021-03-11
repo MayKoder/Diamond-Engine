@@ -797,6 +797,9 @@
     <ClInclude Include="Source Code\Particle.h">
       <Filter>Sources\Containers\ParticleSystem</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CO_Billboard.h">
+      <Filter>Sources\Components\Derived\ParticleSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -1206,6 +1209,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\ParticleEmitter.cpp">
       <Filter>Sources\Containers\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Billboard.cpp">
+      <Filter>Sources\Components\Derived\ParticleSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
