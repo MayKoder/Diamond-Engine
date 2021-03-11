@@ -67,5 +67,4 @@ protected:
 	bool active;
 	GameObject* gameObject;
 	std::string name;
-
 };
