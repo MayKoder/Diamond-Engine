@@ -9,6 +9,7 @@ enum class BILLBOARDALIGNMENT {
 };
 
 class C_Billboard : public Component {
+public:
 	C_Billboard(GameObject* _gm);
 	~C_Billboard();
 
@@ -17,7 +18,9 @@ class C_Billboard : public Component {
 #endif // !STANDALONE
 
 	void SetAlignment(BILLBOARDALIGNMENT new_alignment);
+	void Draw();
 private:
+	void UseAlignment();
 	void ScreenAlign();
 	void WorldAlign();
 	void AxisAlign();

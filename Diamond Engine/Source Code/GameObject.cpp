@@ -18,6 +18,7 @@
 #include "CO_Image2D.h"
 #include "CO_Checkbox.h"
 #include "CO_ParticleSystem.h"
+#include "CO_Billboard.h"
 
 #include"MO_Scene.h"
 
@@ -172,8 +173,10 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 	case Component::TYPE::PARTICLE_SYSTEM:
 		ret = new C_ParticleSystem(this);
 		break;
+	case Component::TYPE::BILLBOARD:
+		ret = new C_Billboard(this);
+		break;
 	}
-
 
 	if (ret != nullptr)
 	{		

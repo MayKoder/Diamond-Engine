@@ -26,10 +26,11 @@ public:
 		IMAGE_2D,
 		AUDIO_LISTENER,
 		AUDIO_SOURCE,
-    RigidBody,
+		RigidBody,
 		Collider,
-    Animator,
-	PARTICLE_SYSTEM,
+		Animator,
+		PARTICLE_SYSTEM,
+		BILLBOARD,
 		COUNT
 	};
 
