@@ -1,5 +1,6 @@
 #pragma once
 #include "Particle.h"
+#include "ParticleEffects.h"
 #include <vector>
 
 class Emitter
@@ -20,9 +21,13 @@ private:
 	//adds particles to the pool
 	void CreateParticles(unsigned int particlesToAdd);
 	void ThrowParticles(float dt);
+
 private:
-	unsigned int maxParticles;
 	float3 position;
-	float particlesRate;
+	//particles per second
+	int particlesPerSec;
+	//this variable holds the extra time from the particle spawn last frame
+	float lastParticeTime;
 	std::vector<Particle> myParticles;
+	std::vector<ParticleEffect> myEffects;
 };
