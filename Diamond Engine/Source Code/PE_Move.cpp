@@ -36,7 +36,7 @@ void PE_Move::Update(Particle& particle, float dt)
 
 
 #ifndef STANDALONE
-void PE_Move::OnEditor()
+void PE_Move::OnEditor(int emitterIndex)
 {
 	ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "Particle movement: ");
 

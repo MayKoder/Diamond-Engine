@@ -1,9 +1,13 @@
 #include "ParticleEmitter.h"
+#include "ImGui/imgui.h"
 
-Emitter::Emitter() : position(0.0f, 0.0f, 0.0f), 
+
+Emitter::Emitter() : 
 particlesPerSec(0), 
-lastParticeTime(0)
+lastParticeTime(0),
+toDelete(false)
 {
+	memset(particlesLifeTime, 0.0f, sizeof(particlesLifeTime));
 
 }
 
@@ -21,10 +25,43 @@ void Emitter::Draw()
 }
 
 #ifndef STANDALONE
-void Emitter::OnEditor()
+void Emitter::OnEditor(int emitterIndex)
 {
+	std::string guiName = "Emitter " + emitterIndex;
+	if (ImGui::CollapsingHeader(guiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		bool poolToEdit = false;
+
+		guiName = "Particle Lifetime##" + emitterIndex;
+		if (ImGui::DragFloat2(guiName.c_str(), particlesLifeTime))
+		{
+			poolToEdit = true;
+		}
+		guiName = "Particles per Second##" + emitterIndex;
+		if (ImGui::DragInt(guiName.c_str(),&particlesPerSec))
+		{
+			poolToEdit = true;
+		}
+
+		if (poolToEdit)
+		{
+			CalculatePoolSize();
+		}
+
+		for (int i = 0; i < myEffects.size(); ++i)
+		{
+			myEffects[i]->OnEditor(emitterIndex);
+
+		}
+	}
 }
 #endif // !STANDALONE
+
+void Emitter::CalculatePoolSize()
+{
+	int poolSize = ceilf(particlesPerSec * particlesLifeTime[1]);
+	SetPoolSize(poolSize);
+}
 
 void Emitter::SetPoolSize(unsigned int poolSize)
 {
@@ -39,7 +76,7 @@ void Emitter::CreateParticles(unsigned int particlesToAdd)
 	{
 		for (unsigned int j = lastIndex; j < myParticles.size(); ++j)
 		{
-			//myEffects[i].Spawn(&myParticles[j]);
+			myEffects[i]->Spawn(myParticles[j]);
 		}
 	}
 }
@@ -59,17 +96,13 @@ void Emitter::ThrowParticles(float dt)
 		{
 			for (int j = 0; j < myEffects.size(); ++j)
 			{
-				//myEffects[i].Spawn(&myParticles[j]);
+				myEffects[i]->Spawn(myParticles[j]);
 			}
-
-
 			--numberOfParticlesToSpawn;
 		}
 
 		if (numberOfParticlesToSpawn == 0)
 			break;
 	}
-
-
 
 }
