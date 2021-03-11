@@ -1,4 +1,7 @@
 Event	ID	Name			Wwise Object Path	Notes
+	192623117	Pause_Object			\Default Work Unit\Pause_Object	
+	1931338186	Resume_Object			\Default Work Unit\Resume_Object	
+	3318621861	Stop_Object			\Default Work Unit\Stop_Object	
 	3330097699	Play_Broken_Box			\Default Work Unit\Play_Broken_Box	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
@@ -10,5 +13,5 @@ Audio Bus	ID	Name			Wwise Object Path	Notes
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	31545617	Wood box broken	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Wood box broken_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\Wood box broken		138952
+	31545617	Wood box broken	C:\Users\admin\Documents\GitHub\Wwise-project\Virtual Ragnarok Audio\.cache\Windows\SFX\Wood box broken_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\Wood box broken		138952
 
