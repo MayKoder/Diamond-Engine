@@ -23,7 +23,7 @@ void PE_Spawn::Spawn(Particle& particle)
 
 
 #ifndef STANDALONE
-void PE_Spawn::OnEditor()
+void PE_Spawn::OnEditor(int emitterIndex)
 {
 	ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "Particle movement: ");
 

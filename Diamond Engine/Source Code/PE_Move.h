@@ -13,7 +13,7 @@ public:
 	void Update(Particle& particle, float dt) override;
 
 #ifndef STANDALONE
-	void OnEditor() override;
+	void OnEditor(int emitterIndex) override;
 #endif // !STANDALONE
 
 public:

@@ -1,4 +1,5 @@
 #pragma once
+#include "MathGeoLib/include/Math/float2.h"
 #include "MathGeoLib/include/Math/float3.h"
 #include "MathGeoLib/include/Math/float4.h"
 

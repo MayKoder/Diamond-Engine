@@ -9,7 +9,7 @@ ParticleEffect::~ParticleEffect()
 }
 
 #ifndef STANDALONE
-void ParticleEffect::OnEditor()
+void ParticleEffect::OnEditor(int emitterIndex)
 {
 }
 #endif // !STANDALONE

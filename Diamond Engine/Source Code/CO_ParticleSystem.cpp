@@ -18,11 +18,32 @@ bool C_ParticleSystem::OnEditor()
 
 	if (Component::OnEditor() == false)
 		return false;
-
 	ImGui::Separator();
+	ImGui::Checkbox("SystemActive", &systemActive);
 
-	//Put particle modules onEditor here
+	ImGui::Spacing();
 
+	for (int i = 0; i < myEmitters.size(); ++i)
+	{
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		myEmitters[i].OnEditor(i);
+
+		std::string guiName = "Delete Emitter ##" + i;
+		if(ImGui::Button(guiName.c_str()))
+		{
+			myEmitters[i].toDelete = true;
+		}
+	}
+
+	ImGui::Spacing();
+	ImGui::Spacing();
+
+	if (ImGui::Button("Add Emitter"))
+	{
+		myEmitters.resize(myEmitters.size() + 1);
+	}
 	return true;
 }
 #endif // !STANDALONE

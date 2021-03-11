@@ -12,7 +12,7 @@ public:
 	void Spawn(Particle& particle) override;
 
 #ifndef STANDALONE
-	void OnEditor() override;
+	void OnEditor(int emitterIndex) override;
 #endif // !STANDALONE
 
 private:

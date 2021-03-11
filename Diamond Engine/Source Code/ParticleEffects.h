@@ -24,7 +24,7 @@ public:
     virtual void Update(Particle& particle, float dt) = 0;
 
 #ifndef STANDALONE
-    virtual void OnEditor();
+    virtual void OnEditor(int emitterIndex);
 #endif // !STANDALONE
 
 public:
