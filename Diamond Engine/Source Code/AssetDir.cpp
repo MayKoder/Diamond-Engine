@@ -166,7 +166,9 @@ void AssetDir::DeletePermanent()
 		if (resourceType == Resource::Type::SCRIPT)
 		{
 			EngineExternal->moduleMono->RemoveScriptFromSLN(this->importPath.c_str());
+#ifndef STANDALONE
 			EngineExternal->moduleMono->ReCompileCS();
+#endif // !STANDALONE
 		}
 	}
 
@@ -174,3 +176,5 @@ void AssetDir::DeletePermanent()
 
 	ClearData();
 }
+
+

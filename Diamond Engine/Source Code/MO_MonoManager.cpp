@@ -134,7 +134,6 @@ void M_MonoManager::OnGUI()
 		
 	}
 }
-#endif // !STANDALONE
 
 void M_MonoManager::ReCompileCS() 
 {
@@ -160,13 +159,12 @@ void M_MonoManager::ReCompileCS()
 	App->moduleScene->LoadScene("Library/Scenes/tmp.des");
 	App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code from editor, mmove to method
 
-#ifndef STANDALONE
 	W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(App->moduleEditor->GetEditorWindow(EditorWindow::TEXTEDITOR));
 	if (txtEditor != nullptr)
 		txtEditor->SetTextFromFile(txtEditor->txtName.c_str());
-#endif // !STANDALONE
 
 }
+#endif // !STANDALONE
 
 //ASK: Is this the worst idea ever? TOO SLOW
 float3 M_MonoManager::UnboxVector(MonoObject* _obj)
@@ -362,8 +360,12 @@ void M_MonoManager::CreateAssetsScript(const char* localPath)
 	outfile.close();
 
 	AddScriptToSLN(unnormalizedPath.c_str());
+#ifndef STANDALONE
 	ReCompileCS();
+#endif // !STANDALONE
 }
+
+
 
 void M_MonoManager::AddScriptToSLN(const char* scriptLocalPath)
 {
