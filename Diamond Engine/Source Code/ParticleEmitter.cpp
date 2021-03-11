@@ -1,6 +1,8 @@
 #include "ParticleEmitter.h"
 
-Emitter::Emitter() : position(0.0f, 0.0f, 0.0f), particlesPerSec(0), lastParticeTime(0)//TODO do we need to pass values to the constructor?
+Emitter::Emitter() : position(0.0f, 0.0f, 0.0f), 
+particlesPerSec(0), 
+lastParticeTime(0)
 {
 
 }
