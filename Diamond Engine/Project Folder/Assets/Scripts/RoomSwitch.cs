@@ -5,9 +5,9 @@ public class RoomSwitch : DiamondComponent
 {
 
 	static int[] rooms = { 1076838722,
-		1934547592,
-		1406013733,
-		1482507639};
+						   1934547592,
+						   1406013733,
+						   1482507639};
 
 	//public static int index = 0;
 	static Random test = new Random();
@@ -22,8 +22,7 @@ public class RoomSwitch : DiamondComponent
     public void Update()
 	{
 		//if (Input.GetKey(DEKeyCode.I) == KeyState.KEY_DOWN)
-  //      {
-			
+		//{	
 		//}
 	}
 
