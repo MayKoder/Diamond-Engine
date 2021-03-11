@@ -24,8 +24,9 @@ public:
 	bool LoadToMemory() override;
 	bool UnloadFromMemory() override;
 
-	void RenderMesh(GLuint textureID, float3 color, bool renderTexture = false, ResourceMaterial* shader = nullptr, C_Transform* _transform = nullptr);
 	void RenderMeshDebug(bool* vertexNormals, bool* faceNormals, const float*);
+	void RenderMesh(GLuint textureID, float3 color, bool renderTexture = false, ResourceMaterial* shader = nullptr, C_Transform* _transform = nullptr);
+	void OGL_GPU_Render();
 
 	vec3 GetVectorFromIndex(float* startValue);
 

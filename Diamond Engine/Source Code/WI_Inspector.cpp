@@ -136,6 +136,11 @@ void W_Inspector::Draw()
 					if(selectedGO->GetComponent(Component::Type::Camera) == nullptr)
 						selectedGO->AddComponent(Component::Type::Camera);
 				}
+				if (ImGui::Selectable("Directional Light"))
+				{
+					if (selectedGO->GetComponent(Component::Type::DIRECTIONAL_LIGHT) == nullptr)
+						selectedGO->AddComponent(Component::Type::DIRECTIONAL_LIGHT);
+				}
 
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)
 				{

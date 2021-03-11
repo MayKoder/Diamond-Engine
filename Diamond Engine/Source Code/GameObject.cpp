@@ -6,6 +6,7 @@
 #include "CO_Material.h"
 #include "CO_Camera.h"
 #include "CO_Script.h"
+#include "CO_DirectionalLight.h"
 
 #include"MO_Scene.h"
 
@@ -105,6 +106,9 @@ Component* GameObject::AddComponent(Component::Type _type, const char* params)
 	case Component::Type::Camera:
 		ret = new C_Camera(this);
 		EngineExternal->moduleScene->SetGameCamera(dynamic_cast<C_Camera*>(ret));
+		break;
+	case Component::Type::DIRECTIONAL_LIGHT:
+		ret = new C_DirectionalLight(this);
 		break;
 	}
 

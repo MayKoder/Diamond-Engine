@@ -40,8 +40,6 @@ public class Core : DiamondComponent
         {
             //InternalCalls.CreateBullet(shootPoint.globalPosition, shootPoint.globalRotation, shootPoint.globalScale);
             //Debug.Log(gameObject.transform.pointer.ToString());
-            Core test = gameObject.GetComponent<Core>();
-            Debug.Log(test.rotationSpeed.ToString());
            // Debug.Log(gameObject.transform.globalPosition.ToString());
         }
 	}

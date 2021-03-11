@@ -257,6 +257,14 @@ void C_Camera::LookAt(const float3& Spot)
 	camFrustrum.up = camFrustrum.front.Cross(X);
 }
 
+void C_Camera::LookAt(Frustum& frus, const float3& Spot)
+{
+	/*Reference = Spot;*/
+	frus.front = (Spot - frus.pos).Normalized();
+	float3 X = float3(0, 1, 0).Cross(frus.front).Normalized();
+	frus.up = frus.front.Cross(X);
+}
+
 void C_Camera::Move(const float3& Movement)
 {
 	camFrustrum.pos += Movement;

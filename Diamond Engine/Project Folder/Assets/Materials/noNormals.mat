@@ -1,4 +1,23 @@
 {
-    "ShaderUID": 1741187670,
-    "Uniforms": []
+    "ShaderUID": 901402780,
+    "Uniforms": [
+        {
+            "name": "lightPos",
+            "type": 35665,
+            "value": [
+                0,
+                0,
+                0
+            ]
+        },
+        {
+            "name": "viewPos",
+            "type": 35665,
+            "value": [
+                0,
+                0,
+                0
+            ]
+        }
+    ]
 }

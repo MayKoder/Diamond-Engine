@@ -544,6 +544,9 @@
     <ClInclude Include="Source Code\INC_AllComponents.h">
       <Filter>Sources\Tools\MMath\INC_Packs</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CO_DirectionalLight.h">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -848,6 +851,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\IM_MaterialImporter.cpp">
       <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_DirectionalLight.cpp">
+      <Filter>Sources\Components\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

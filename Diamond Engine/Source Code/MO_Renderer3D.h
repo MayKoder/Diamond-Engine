@@ -10,6 +10,7 @@
 #include"MathGeoLib/include/Geometry/LineSegment.h"
 
 #include"DE_Cubemap.h"
+#include"Primitive.h"
 
 #include<map>
 
@@ -17,11 +18,18 @@ class ResourceMesh;
 class C_MeshRenderer;
 class ResourceTexture;
 class C_Camera;
+class C_DirectionalLight;
 
 #define MAX_LIGHTS 1
 
 #define SQUARE_TEXTURE_W 256
 #define SQUARE_TEXTURE_H 256
+
+struct LineRender
+{
+	LineRender(float3& _a, float3& _b, float3& _color) : a(_a), b(_b), color(_color) {}
+	float3 a, b, color;
+};
 
 class ModuleRenderer3D : public Module
 {
@@ -39,6 +47,9 @@ public:
 #ifndef STANDALONE
 	void OnGUI() override;
 #endif // !STANDALONE
+
+	void DrawDebugLines();
+	void AddDebugLines(float3& a, float3& b, float3& color);
 
 	static void DrawBox(float3* points, float3 color = float3::one);
 	
@@ -69,8 +80,12 @@ public:
 
 	C_Camera* activeRenderCamera = nullptr; //TODO: This is temporal
 	DE_Cubemap skybox;
+	C_DirectionalLight* directLight;
+
 
 private:
+	std::vector<LineRender> lines;
 	C_Camera* gameCamera;
 	LineSegment pickingDebug;
+	Grid p;
 };

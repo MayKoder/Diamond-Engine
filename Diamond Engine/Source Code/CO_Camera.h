@@ -45,6 +45,8 @@ public:
 //Movement logic
 public: 
 	void LookAt(const float3& Spot);
+	static void LookAt(Frustum& frust, const float3& Spot);
+
 	void Move(const float3& Movement);
 	float3 GetPosition();
 

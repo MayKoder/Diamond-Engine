@@ -12,6 +12,7 @@
 #include"CO_Transform.h"
 #include"DETime.h"
 #include "GameObject.h"
+#include"CO_DirectionalLight.h"
 
 ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH), indices_id(0), vertices_id(0), generalWireframe(nullptr),
 EBO(0), VAO(0), VBO(0)
@@ -126,12 +127,12 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 
 		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "altColor");
 		glUniform3fv(modelLoc, 1, &color.x);
+
+		if(EngineExternal->moduleRenderer3D->directLight)
+		EngineExternal->moduleRenderer3D->directLight->PushLightUniforms(material);
 	}
 
-	//vertices
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
-	glBindVertexArray(0);
+	OGL_GPU_Render();
 
 	//if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
 	//{
@@ -141,6 +142,14 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 
 	if (material->shader)
 		material->shader->Unbind();
+}
+
+void ResourceMesh::OGL_GPU_Render()
+{
+	//vertices
+	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
+	glBindVertexArray(0);
 }
 
 void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals, const float* globalTransform)

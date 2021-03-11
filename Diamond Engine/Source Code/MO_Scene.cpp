@@ -107,10 +107,14 @@ update_status M_Scene::Update(float dt)
 				JSON_Object* goJsonObj = json_array_get_object(sceneGO, 0);
 
 				GameObject* parent = (App->moduleEditor->GetSelectedGO() == nullptr) ? root : App->moduleEditor->GetSelectedGO();
+				GameObject* gameObjectRoot = nullptr;
 				for (size_t i = 0; i < json_array_get_count(sceneGO); i++)
 				{
 					parent = LoadGOData(json_array_get_object(sceneGO, i), parent);
+					if (i == 0)
+						gameObjectRoot = parent;
 				}
+				gameObjectRoot->RecursiveUIDRegeneration();
 
 				//TODO: Duplicated code from scene loading C#, move to method
 				for (auto i = referenceMap.begin(); i != referenceMap.end(); ++i)
