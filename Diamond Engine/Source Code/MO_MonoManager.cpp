@@ -29,11 +29,9 @@
 #pragma comment( lib, "mono/libx86/mono-2.0-boehm.lib" )
 #pragma comment( lib, "mono/libx86/mono-2.0-sgen.lib" )
 
-M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app, start_enabled), domain(nullptr), domainThread(nullptr), assembly(nullptr), image(nullptr)
-,jitDomain(nullptr)
-{
-
-}
+M_MonoManager::M_MonoManager(Application* app, bool start_enabled) : Module(app, start_enabled), domain(nullptr), domainThread(nullptr), assembly(nullptr), image(nullptr),
+jitDomain(nullptr)
+{}
 
 M_MonoManager::~M_MonoManager()
 {}
@@ -70,32 +68,38 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Input::GetLeftAxisY", GetLeftAxisY);
 	mono_add_internal_call("DiamondEngine.Input::GetRightAxisY", GetRightAxisY);
 	mono_add_internal_call("DiamondEngine.Input::GetRightAxisX", GetRightAxisX);
+	mono_add_internal_call("DiamondEngine.Input::PlayHaptic", PlayHaptic);
 	// --- Controller gamepad end --- //
 
 	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateBullet", CreateBullet);
 
-	mono_add_internal_call("DiamondEngine.GameObject::get_localPosition", SendPosition);
-	mono_add_internal_call("DiamondEngine.GameObject::get_globalPosition", SendGlobalPosition);
-	mono_add_internal_call("DiamondEngine.GameObject::set_localPosition", RecievePosition);
 
-	mono_add_internal_call("DiamondEngine.GameObject::GetForward", GetForward);
-	mono_add_internal_call("DiamondEngine.GameObject::GetRight", GetRight);
+	mono_add_internal_call("DiamondEngine.GameObject::TryGetComponent", CS_GetComponent);
 
-	mono_add_internal_call("DiamondEngine.GameObject::get_localRotation", SendRotation);
-	mono_add_internal_call("DiamondEngine.GameObject::get_globalRotation", SendGlobalRotation);
-	mono_add_internal_call("DiamondEngine.GameObject::set_localRotation", RecieveRotation);
+#pragma region Transform
+	mono_add_internal_call("DiamondEngine.Transform::get_localPosition", SendPosition);
+	mono_add_internal_call("DiamondEngine.Transform::get_globalPosition", SendGlobalPosition);
+	mono_add_internal_call("DiamondEngine.Transform::set_localPosition", RecievePosition);
 
-	mono_add_internal_call("DiamondEngine.GameObject::get_localScale", SendScale);
-	mono_add_internal_call("DiamondEngine.GameObject::get_globalScale", SendGlobalScale);
-	mono_add_internal_call("DiamondEngine.GameObject::set_localScale", RecieveScale);
+	mono_add_internal_call("DiamondEngine.Transform::GetForward", GetForward);
+	mono_add_internal_call("DiamondEngine.Transform::GetRight", GetRight);
+
+	mono_add_internal_call("DiamondEngine.Transform::get_localRotation", SendRotation);
+	mono_add_internal_call("DiamondEngine.Transform::get_globalRotation", SendGlobalRotation);
+	mono_add_internal_call("DiamondEngine.Transform::set_localRotation", RecieveRotation);
+
+	mono_add_internal_call("DiamondEngine.Transform::get_localScale", SendScale);
+	mono_add_internal_call("DiamondEngine.Transform::get_globalScale", SendGlobalScale);
+	mono_add_internal_call("DiamondEngine.Transform::set_localScale", RecieveScale);
+#pragma endregion
 
 	mono_add_internal_call("DiamondEngine.Animator::Play", Play);
 	mono_add_internal_call("DiamondEngine.Animator::Pause", Pause);
 	mono_add_internal_call("DiamondEngine.Animator::Resume", Resume);
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
-
+	
 
 	mono_add_internal_call("DiamondEngine.SceneManager::LoadScene", CS_LoadScene);
 	mono_add_internal_call("DiamondEngine.Audio::PlayAudio", PlayAudio);
@@ -134,7 +138,6 @@ void M_MonoManager::OnGUI()
 		
 	}
 }
-#endif // !STANDALONE
 
 void M_MonoManager::ReCompileCS() 
 {
@@ -160,13 +163,12 @@ void M_MonoManager::ReCompileCS()
 	App->moduleScene->LoadScene("Library/Scenes/tmp.des");
 	App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code from editor, mmove to method
 
-#ifndef STANDALONE
 	W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(App->moduleEditor->GetEditorWindow(EditorWindow::TEXTEDITOR));
 	if (txtEditor != nullptr)
 		txtEditor->SetTextFromFile(txtEditor->txtName.c_str());
-#endif // !STANDALONE
 
 }
+#endif // !STANDALONE
 
 //ASK: Is this the worst idea ever? TOO SLOW
 float3 M_MonoManager::UnboxVector(MonoObject* _obj)
@@ -225,12 +227,15 @@ MonoObject* M_MonoManager::GoToCSGO(GameObject* inGo) const
 	MonoClass* goClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "GameObject");
 	uintptr_t goPtr = reinterpret_cast<uintptr_t>(inGo);
 
-	void* args[2];
+	void* args[3];
 	args[0] = &inGo->name;
 	args[1] = &goPtr;
+
+	uintptr_t transPTR = reinterpret_cast<uintptr_t>(inGo->transform);
+	args[2] = &transPTR;
 	
 
-	MonoMethodDesc* constructorDesc = mono_method_desc_new("DiamondEngine.GameObject:.ctor(string,uintptr)", true);
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("DiamondEngine.GameObject:.ctor(string,uintptr,uintptr)", true);
 	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, goClass);
 	MonoObject* goObj = mono_object_new(domain, goClass);
 	mono_runtime_invoke(method, goObj, args, NULL);
@@ -326,6 +331,18 @@ GameObject* M_MonoManager::GameObject_From_CSGO(MonoObject* goObj)
 	return reinterpret_cast<GameObject*>(ptr);
 }
 
+GameObject* M_MonoManager::GameObject_From_CSCOMP(MonoObject* goComponent)
+{
+	uintptr_t ptr = 0;
+	MonoClass* goClass = mono_class_from_name(image, DE_SCRIPTS_NAMESPACE, "DiamondComponent");
+
+	mono_field_get_value(goComponent, mono_class_get_field_from_name(goClass, "pointer"), &ptr);
+
+	return reinterpret_cast<Component*>(ptr)->GetGO();
+}
+
+
+
 SerializedField::SerializedField() : field(nullptr), parentSC(nullptr)
 {
 	fiValue.iValue = 0;
@@ -362,8 +379,12 @@ void M_MonoManager::CreateAssetsScript(const char* localPath)
 	outfile.close();
 
 	AddScriptToSLN(unnormalizedPath.c_str());
+#ifndef STANDALONE
 	ReCompileCS();
+#endif // !STANDALONE
 }
+
+
 
 void M_MonoManager::AddScriptToSLN(const char* scriptLocalPath)
 {

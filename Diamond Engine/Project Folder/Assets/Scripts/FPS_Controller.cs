@@ -22,15 +22,15 @@ public class FPS_Controller : DiamondComponent
             return;
 
         if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
-            reference.localPosition += reference.GetForward() * movementSpeed * Time.deltaTime;
+            gameObject.transform.localPosition += gameObject.transform.GetForward() * movementSpeed * Time.deltaTime;
         if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT)
-            reference.localPosition += reference.GetForward() * -movementSpeed * Time.deltaTime;
+            gameObject.transform.localPosition += gameObject.transform.GetForward() * -movementSpeed * Time.deltaTime;
         if (Input.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT)
-            reference.localPosition += reference.GetRight() * movementSpeed * Time.deltaTime;
+            gameObject.transform.localPosition += gameObject.transform.GetRight() * movementSpeed * Time.deltaTime;
         if (Input.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
-            reference.localPosition += reference.GetRight() * -movementSpeed * Time.deltaTime;
+            gameObject.transform.localPosition += gameObject.transform.GetRight() * -movementSpeed * Time.deltaTime;
 
         if (Input.GetMouseX() != 0 && turret != null)
-            turret.localRotation = Quaternion.RotateAroundAxis(Vector3.up, -Input.GetMouseX() * mouseSens * Time.deltaTime) * turret.localRotation;
+            turret.transform.localRotation = Quaternion.RotateAroundAxis(Vector3.up, -Input.GetMouseX() * mouseSens * Time.deltaTime) * turret.transform.localRotation;
     }
 }

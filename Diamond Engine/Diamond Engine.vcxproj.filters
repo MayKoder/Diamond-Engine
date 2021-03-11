@@ -115,6 +115,9 @@
     <Filter Include="Externals\FreeType">
       <UniqueIdentifier>{c4e4d1f5-fadb-4402-a089-768ce08d95b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\Bindings">
+      <UniqueIdentifier>{631c7505-17bf-407e-86ce-a4705f3ed055}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -520,9 +523,6 @@
     <ClInclude Include="Source Code\CO_Script.h">
       <Filter>Sources\Components\Derived</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CS_Transform_Bindings.h">
-      <Filter>Sources\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\External Libraries\ImTextEditor\TextEditor.h">
       <Filter>Externals\ImTextEditor</Filter>
     </ClInclude>
@@ -580,9 +580,6 @@
     <ClInclude Include="Source Code\IM_AnimationImporter.h">
       <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CS_Animation_Bindings.h">
-      <Filter>Sources\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\Command.h">
       <Filter>Sources\Editor\Commands\Base</Filter>
     </ClInclude>
@@ -594,9 +591,6 @@
     </ClInclude>
     <ClInclude Include="Source Code\MA_ShortcutManager.h">
       <Filter>Sources\Editor\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\CS_Input_Bindings.h">
-      <Filter>Sources\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\INC_EditorWindows.h">
       <Filter>Sources\INC_Packs</Filter>
@@ -775,8 +769,18 @@
     <ClInclude Include="Source Code\COMM_Transform2D.h">
       <Filter>Sources\Editor\Commands\Derived</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CS_Scene_Bindings.h" />
+    <ClInclude Include="Source Code\CS_Animation_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
     <ClInclude Include="Source Code\CS_Audio_Bindings.h">
-      <Filter>Sources\Tools</Filter>
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_Input_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_Transform_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\CO_Navigation.h">
       <Filter>Sources\Components\Derived\UI</Filter>
