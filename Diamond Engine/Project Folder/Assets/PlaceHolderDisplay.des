@@ -77,7 +77,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.5169296264648438,
+                    "hFOV": 1.4245340824127197,
                     "culling": true
                 }
             ]
@@ -258,6 +258,13 @@
                     "Map": [
                         {
                             "Index": 0,
+                            "UID": 2004513968,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 1,
                             "UID": 2004513968,
                             "Action": 2,
                             "Is Key Down": false,
@@ -448,6 +455,13 @@
                     "Type": 17,
                     "Active": true,
                     "Map": [
+                        {
+                            "Index": 1,
+                            "UID": 700536711,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
                         {
                             "Index": 11,
                             "UID": 2004513968,
@@ -675,6 +689,13 @@
                     "Type": 17,
                     "Active": true,
                     "Map": [
+                        {
+                            "Index": 1,
+                            "UID": 2097601430,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
                         {
                             "Index": 11,
                             "UID": 700536711,
@@ -904,6 +925,13 @@
                     "Map": [
                         {
                             "Index": 0,
+                            "UID": 1000223014,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 1,
                             "UID": 1000223014,
                             "Action": 2,
                             "Is Key Down": false,

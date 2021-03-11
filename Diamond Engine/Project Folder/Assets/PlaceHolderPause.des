@@ -215,6 +215,13 @@
                             "Is Key Up": true
                         },
                         {
+                            "Index": 1,
+                            "UID": 580375958,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
                             "Index": 11,
                             "UID": 683882051,
                             "Action": 1,
@@ -307,7 +314,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
                     "MaterialUID": 744544911
                 },
@@ -407,6 +414,13 @@
                             "Is Key Up": true
                         },
                         {
+                            "Index": 1,
+                            "UID": 1449753613,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
                             "Index": 11,
                             "UID": 580375958,
                             "Action": 1,
@@ -487,11 +501,11 @@
                     "Active": true,
                     "Position": [
                         -14,
-                        27.200000762939453
+                        -3.5
                     ],
                     "Rotation": 0,
                     "Size": [
-                        16.299999237060547,
+                        16.100000381469727,
                         20
                     ]
                 },
@@ -499,7 +513,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
                     "MaterialUID": 744544911
                 },
@@ -599,6 +613,13 @@
                             "Is Key Up": true
                         },
                         {
+                            "Index": 1,
+                            "UID": 1564881673,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
                             "Index": 11,
                             "UID": 1449753613,
                             "Action": 1,
@@ -691,7 +712,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
                     "MaterialUID": 744544911
                 },
@@ -791,6 +812,13 @@
                             "Is Key Up": true
                         },
                         {
+                            "Index": 1,
+                            "UID": 339092682,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
                             "Index": 11,
                             "UID": 1564881673,
                             "Action": 1,
@@ -883,7 +911,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
                     "MaterialUID": 744544911
                 },
@@ -983,6 +1011,13 @@
                             "Is Key Up": true
                         },
                         {
+                            "Index": 1,
+                            "UID": 683882051,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
                             "Index": 11,
                             "UID": 339092682,
                             "Action": 1,
@@ -1075,7 +1110,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
                     "MaterialUID": 744544911
                 },

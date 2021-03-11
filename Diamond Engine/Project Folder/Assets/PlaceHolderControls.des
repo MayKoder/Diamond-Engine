@@ -252,6 +252,13 @@
                             "Action": 2,
                             "Is Key Down": false,
                             "Is Key Up": true
+                        },
+                        {
+                            "Index": 1,
+                            "UID": 2063759004,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
                         }
                     ],
                     "Button Being Used": -1,
