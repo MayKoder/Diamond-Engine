@@ -54,7 +54,10 @@ namespace DiamondEngine
         public static extern int GetLeftTrigger();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern int GetRightTrigger();
+        public static extern int GetRightTrigger();  
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void PlayHaptic(float strength, int length);
     }
     public class SceneManager
     {

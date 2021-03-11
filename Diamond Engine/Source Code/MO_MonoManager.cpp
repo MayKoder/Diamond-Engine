@@ -68,6 +68,7 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Input::GetLeftAxisY", GetLeftAxisY);
 	mono_add_internal_call("DiamondEngine.Input::GetRightAxisY", GetRightAxisY);
 	mono_add_internal_call("DiamondEngine.Input::GetRightAxisX", GetRightAxisX);
+	mono_add_internal_call("DiamondEngine.Input::PlayHaptic", PlayHaptic);
 	// --- Controller gamepad end --- //
 
 	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
