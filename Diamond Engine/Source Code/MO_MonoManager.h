@@ -48,6 +48,7 @@ public:
 
 #ifndef STANDALONE
 	void OnGUI() override;
+	void ReCompileCS();
 #endif // !STANDALONE
 
 	bool CleanUp() override;
@@ -69,7 +70,6 @@ public:
 	MonoObject* Float3ToCS(float3& inVec) const;
 	MonoObject* GoToCSGO(GameObject* inGo) const;
 
-	void ReCompileCS();
 
 public:
 	MonoDomain* domain;

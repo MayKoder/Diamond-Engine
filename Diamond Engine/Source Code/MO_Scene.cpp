@@ -331,7 +331,6 @@ void M_Scene::OnGUI()
 		ImGui::Text("Game state %s", DETime::GetStateString());
 	}
 }
-#endif // !STANDALONE
 
 void M_Scene::SaveScene(const char* name)
 {
@@ -353,6 +352,7 @@ void M_Scene::SaveScene(const char* name)
 	json_value_free(file);
 	LOG(LogType::L_NORMAL, "Scene saved at: %s", name);
 }
+#endif // !STANDALONE
 
 void M_Scene::LoadScene(const char* name)
 {
@@ -372,9 +372,13 @@ void M_Scene::LoadScene(const char* name)
 	RELEASE(root); //Had to remove root to create it later
 
 	JSON_Object* sceneObj = json_value_get_object(scene);
+
+#ifndef STANDALONE
+
 	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.pos.x, &DEJson::ReadVector3(sceneObj, "EditorCameraPosition")[0], 3);
 	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.front.x, &DEJson::ReadVector3(sceneObj, "EditorCameraZ")[0], 3);
 	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.up.x, &DEJson::ReadVector3(sceneObj, "EditorCameraY")[0], 3);
+#endif // !STANDALONE
 
 	JSON_Array* sceneGO = json_object_get_array(sceneObj, "Game Objects");
 	JSON_Object* goJsonObj = json_array_get_object(sceneGO, 0);

@@ -388,7 +388,9 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid,
 		case Resource::Type::MODEL: ret = new Resource(uid, Resource::Type::MODEL); break;
 		case Resource::Type::MESH: ret = (Resource*) new ResourceMesh(uid); break;
 		case Resource::Type::SCENE : ret = new Resource(uid, Resource::Type::SCENE); break;
+#ifndef STANDALONE
 		case Resource::Type::SCRIPT: App->moduleMono->ReCompileCS(); break;
+#endif // !STANDALONE
 		case Resource::Type::SHADER: ret = (Resource*) new ResourceShader(uid); break;
 		case Resource::Type::MATERIAL: ret = (Resource*) new ResourceMaterial(uid); break;
 		case Resource::Type::ANIMATION: ret = (Resource*) new ResourceAnimation(uid); break;
