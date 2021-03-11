@@ -13,7 +13,3 @@ void ParticleEffect::OnEditor()
 {
 }
 #endif // !STANDALONE
-
-void ParticleEffect::Update()
-{
-}

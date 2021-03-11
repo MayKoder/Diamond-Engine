@@ -20,6 +20,7 @@ private:
 	//adds particles to the pool
 	void CreateParticles(unsigned int particlesToAdd);
 	void ThrowParticles(float dt);
+
 private:
 	unsigned int maxParticles;
 	float3 position;
