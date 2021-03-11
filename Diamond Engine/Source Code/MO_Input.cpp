@@ -258,8 +258,10 @@ bool ModuleInput::CleanUp()
 {
 	LOG(LogType::L_NORMAL, "Quitting SDL input event subsystem");
 	SDL_GameControllerClose(controller_player);
+	SDL_HapticClose(haptic);
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
+	SDL_QuitSubSystem(SDL_INIT_HAPTIC);
 	return true;
 }
 
