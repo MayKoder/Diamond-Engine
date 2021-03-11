@@ -1,6 +1,6 @@
 #include "CO_ParticleSystem.h"
 #include "ImGui/imgui.h"
-
+#include "Application.h"
 
 C_ParticleSystem::C_ParticleSystem(GameObject* _gm) : Component(_gm), systemActive(true)
 {
@@ -29,14 +29,24 @@ bool C_ParticleSystem::OnEditor()
 
 void C_ParticleSystem::Update()
 {
+	float dt = EngineExternal->GetDT();
+	for (int i = 0; i < myEmitters.size(); ++i)
+	{
+		myEmitters[i].Update(dt,systemActive);
+	}
 }
 
 void C_ParticleSystem::Draw()
 {
+	for (int i = 0; i < myEmitters.size(); ++i)
+	{
+		myEmitters[i].Draw();
+	}
 }
 
 void C_ParticleSystem::SetActive(bool newActive)
 {
+	systemActive = newActive;
 }
 
 void C_ParticleSystem::SaveData(JSON_Object* nObj)

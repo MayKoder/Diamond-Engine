@@ -8,7 +8,7 @@ public:
 	Emitter();
 	~Emitter();
 
-	void Update(float dt);
+	void Update(float dt, bool systemActive);
 	void Draw();
 
 #ifndef STANDALONE
@@ -16,7 +16,9 @@ public:
 #endif // !STANDALONE
 
 private:
-	void CreateParticles();//TODO does this recieve smth?
+	void SetPoolSize(unsigned int poolSize);
+	//adds particles to the pool
+	void CreateParticles(unsigned int particlesToAdd);
 	void ThrowParticles(float dt);
 private:
 	unsigned int maxParticles;

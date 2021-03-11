@@ -9,7 +9,7 @@ Emitter::~Emitter()
 {
 }
 
-void Emitter::Update(float dt)
+void Emitter::Update(float dt,bool systemActive)
 {
 }
 
@@ -23,8 +23,14 @@ void Emitter::OnEditor()
 }
 #endif // !STANDALONE
 
-void Emitter::CreateParticles()
+void Emitter::SetPoolSize(unsigned int poolSize)
 {
+	myParticles.resize(poolSize);
+}
+
+void Emitter::CreateParticles(unsigned int particlesToAdd)
+{
+	myParticles.resize(myParticles.size() + particlesToAdd);
 }
 
 void Emitter::ThrowParticles(float dt)
