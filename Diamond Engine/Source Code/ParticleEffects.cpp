@@ -9,6 +9,9 @@ ParticleEffect::~ParticleEffect()
 }
 
 #ifndef STANDALONE
+void ParticleEffect::Update(Particle& particle, float dt)
+{
+}
 void ParticleEffect::OnEditor(int emitterIndex)
 {
 }

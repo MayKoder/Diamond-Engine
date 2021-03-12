@@ -10,6 +10,7 @@ C_ParticleSystem::C_ParticleSystem(GameObject* _gm) : Component(_gm), systemActi
 C_ParticleSystem::~C_ParticleSystem()
 {
 	systemActive = false;
+
 }
 
 #ifndef STANDALONE
@@ -22,7 +23,7 @@ bool C_ParticleSystem::OnEditor()
 	ImGui::Checkbox("SystemActive", &systemActive);
 
 	ImGui::Spacing();
-
+	std::string guiName = "";
 	for (int i = 0; i < myEmitters.size(); ++i)
 	{
 		ImGui::Separator();
@@ -30,7 +31,7 @@ bool C_ParticleSystem::OnEditor()
 
 		myEmitters[i].OnEditor(i);
 
-		std::string guiName = "Delete Emitter ##" + i;
+		guiName = "Delete Emitter ##" + i;
 		if(ImGui::Button(guiName.c_str()))
 		{
 			myEmitters[i].toDelete = true;
@@ -51,6 +52,16 @@ bool C_ParticleSystem::OnEditor()
 void C_ParticleSystem::Update()
 {
 	float dt = EngineExternal->GetDT();
+	//delete emitters
+	for (int i = myEmitters.size()-1; i >= 0; --i)
+	{
+		if (myEmitters[i].toDelete)
+		{
+			myEmitters.erase(myEmitters.begin() + i);
+		}
+	}
+
+
 	for (int i = 0; i < myEmitters.size(); ++i)
 	{
 		myEmitters[i].Update(dt,systemActive);

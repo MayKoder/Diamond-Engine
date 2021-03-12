@@ -24,7 +24,11 @@ private:
 	//adds particles to the pool
 	void CreateParticles(unsigned int particlesToAdd);
 	void ThrowParticles(float dt);
+	//returns index if it exists, else returns -1
+	int DoesEffectExist(PARTICLE_EFFECT_TYPE type);
 
+	std::string ParticleEffectEnumToString(PARTICLE_EFFECT_TYPE type);
+	ParticleEffect* CreateEffect(PARTICLE_EFFECT_TYPE type);
 
 public:
 	bool toDelete;

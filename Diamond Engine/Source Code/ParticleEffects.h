@@ -11,6 +11,7 @@ enum class PARTICLE_EFFECT_TYPE : int
     MOVE,
     RANDOM_MOVE,
     ROTATE,
+	MAX
 };
 
 class ParticleEffect 
@@ -21,7 +22,7 @@ public:
 
 
     virtual void Spawn(Particle& particle) = 0;
-    virtual void Update(Particle& particle, float dt) = 0;
+    virtual void Update(Particle& particle, float dt);
 
 #ifndef STANDALONE
     virtual void OnEditor(int emitterIndex);

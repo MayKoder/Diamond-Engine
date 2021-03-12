@@ -1,9 +1,9 @@
-#ifndef __PE_SPAWN_H__
-#define __PE_SPAWN_H__
+#ifndef __PE_MOVE_H__
+#define __PE_MOVE_H__
 
 #include "ParticleEffects.h"
 
-class PE_Move : ParticleEffect
+class PE_Move : public ParticleEffect
 {
 public:
 	PE_Move();
@@ -21,4 +21,4 @@ public:
 	float acceleration[3];
 };
 
-#endif // !__PE_SPAWN_H__
+#endif // !__PE_MOVE_H__
