@@ -1,37 +1,8 @@
 using System;
 using DiamondEngine;
 
-public class StormTrooper : DiamondComponent
+public class StormTrooper : Enemy
 {
-	public GameObject player;
-	public GameObject shootPoint;
-
-	public float wanderSpeed;
-	public float runningSpeed;
-	public int range;
-	public float damage;
-	public float bullet_speed;
-	private int shotTimes = 0;
-
-	private float timeBewteenShots = 5.0f;
-	private float timePassed = 0.0f;
-
-	public float wanderTime = 5.0f;
-	public float idleTime = 5.0f;
-	private Vector3 targetPosition = null;
-	private float stoppingDistance = 1.0f;
-
-	private STATES currentState = STATES.WANDER;
-
-	private enum STATES
-    {
-		IDLE,
-		RUN,
-		WANDER,
-		SHOOT,
-		HIT,
-		DIE
-    }
 
 	public void Start()
     {
@@ -126,32 +97,6 @@ public class StormTrooper : DiamondComponent
 				break;
 		}
 	}
-
-	public bool Shoot()
-    {
-		InternalCalls.CreateBullet(shootPoint.transform.globalPosition, shootPoint.transform.globalRotation, shootPoint.transform.globalScale);
-		timePassed = 0.0f;
-		shotTimes++;
-
-		return true;
-	}
-
-	public bool TakeDamage()
-    {
-		return true;
-    }
-
-	Vector3 CalculateNewPosition()
-    {
-		Vector3 newPosition = new Vector3(0,0,0);
-		Random random = new Random();
-
-        newPosition.x = random.Next(range);
-		newPosition.y = gameObject.transform.localPosition.y;
-		newPosition.z = random.Next(range);
-
-		return newPosition;
-    }
 
 	public void OnTriggerEnter()
 	{
