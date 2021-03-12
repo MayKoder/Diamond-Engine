@@ -11,5 +11,7 @@ namespace DiamondEngine
             Vector3 distance = pointB - pointA;
             return distance.magnitude;
         }
+
+        public const float Rad2Deg = 57.29578f;
     }
 }
