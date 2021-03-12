@@ -63,10 +63,8 @@ Emitter::~Emitter()
 void Emitter::Update(float dt, bool systemActive)
 {
 	if (systemActive)
-	{
 		ThrowParticles(dt);
-	}
-
+	
 	for (int i = 0; i < myParticles.size(); ++i)
 	{
 		myParticles[i].currentLifetime -= dt;
@@ -79,27 +77,29 @@ void Emitter::Update(float dt, bool systemActive)
 
 void Emitter::Draw(unsigned int shaderId)
 {
+	if (texture != nullptr)
+		glBindTexture(GL_TEXTURE_2D, texture->textureID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VAO);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+
+	GLint modelLoc = glGetUniformLocation(shaderId, "view");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ViewMatrixOpenGL().ptr());
+
+	modelLoc = glGetUniformLocation(shaderId, "projection");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
+
 	int particlesCount = myParticles.size();
 	for (int i = 0; i < particlesCount; ++i)	//Need to order particles
 	{
-		glUseProgram(shaderId);
+		if (myParticles[i].currentLifetime > 0)
+		{
+			modelLoc = glGetUniformLocation(shaderId, "model_matrix");
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1, 1, 1)).Transposed().ptr());
 
-		if (texture != nullptr)
-			glBindTexture(GL_TEXTURE_2D, texture->textureID);
-
-		glBindBuffer(GL_ARRAY_BUFFER, VAO);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
-
-		GLint modelLoc = glGetUniformLocation(shaderId, "model_matrix");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1, 1, 1)).Transposed().ptr());
-
-		modelLoc = glGetUniformLocation(shaderId, "view");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ViewMatrixOpenGL().ptr());
-
-		modelLoc = glGetUniformLocation(shaderId, "projection");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+			glDrawArrays(GL_TRIANGLES, 0, 6);
+		}
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
