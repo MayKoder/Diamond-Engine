@@ -67,10 +67,13 @@ void Emitter::Update(float dt, bool systemActive)
 	
 	for (int i = 0; i < myParticles.size(); ++i)
 	{
-		myParticles[i].currentLifetime -= dt;
-		for (int j = 0; j < myEffects.size(); ++j)
+		if (myParticles[i].currentLifetime >= 0.0f)
 		{
-			myEffects[j]->Update(myParticles[i], dt);
+			myParticles[i].currentLifetime -= dt;
+			for (int j = 0; j < myEffects.size(); ++j)
+			{
+				myEffects[j]->Update(myParticles[i], dt);
+			}
 		}
 	}
 }
