@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        21.101537704467773,
-        83.062286376953125,
-        -113.01368713378906
+        13.818270683288574,
+        11.638504981994629,
+        7.7886085510253906
     ],
     "EditorCameraZ": [
-        -0.14877679944038391,
-        -0.58563268184661865,
-        0.79680603742599487
+        -0.88261294364929199,
+        -0.4671245813369751,
+        0.052811145782470703
     ],
     "EditorCameraY": [
-        -0.10748960822820663,
-        0.81057661771774292,
-        0.57568365335464478
+        -0.46629077196121216,
+        0.88419151306152344,
+        0.027897924184799194
     ],
     "Game Objects": [
         {
@@ -47,9 +47,9 @@
             "name": "Player",
             "Active": true,
             "Position": [
-                13.138535499572754,
-                64.621551513671875,
-                -2.2426132773034624e-07
+                0,
+                1,
+                0
             ],
             "Rotation": [
                 0,
@@ -60,7 +60,7 @@
             "Scale": [
                 1,
                 2,
-                0.9999280571937561
+                1
             ],
             "UID": 1661764735,
             "PrefabID": 0,
@@ -82,57 +82,12 @@
                     ]
                 },
                 {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "FPS_Controller",
-                    "reference": 1661764735,
-                    "turret": 1661764735,
-                    "rotationSpeed": 2,
-                    "movementSpeed": 35,
-                    "mouseSens": 1
-                },
-                {
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
                     "MaterialUID": 1051418604
-                },
-                {
-                    "Type": 14,
-                    "Active": true,
-                    "kinematic": false,
-                    "Gravity": true,
-                    "LockLinearX": false,
-                    "LockLinearY": false,
-                    "LockLinearZ": false,
-                    "LockAngularX": false,
-                    "LockAngularY": false,
-                    "LockAngularZ": false,
-                    "Mass": 10,
-                    "Density": 1
-                },
-                {
-                    "Type": 15,
-                    "Active": true,
-                    "isTrigger": true,
-                    "Position": [
-                        1,
-                        1,
-                        1
-                    ],
-                    "Rotation": [
-                        0,
-                        0,
-                        0,
-                        1
-                    ],
-                    "Scale": [
-                        1,
-                        1,
-                        1
-                    ]
                 }
             ]
         },
@@ -339,10 +294,10 @@
                 -37.998661041259766
             ],
             "Rotation": [
-                0.28966298699378967,
-                -0.30951863527297974,
-                0.099594645202159882,
-                0.90020811557769775
+                0.28966295719146729,
+                -0.30951860547065735,
+                0.099594630300998688,
+                0.9002079963684082
             ],
             "Scale": [
                 0.9999997615814209,
@@ -385,9 +340,9 @@
             "name": "Enemy",
             "Active": true,
             "Position": [
-                39.393817901611328,
-                64.621551513671875,
-                -2.2426132773034624e-07
+                0,
+                1,
+                13.670206069946289
             ],
             "Rotation": [
                 0,
@@ -398,7 +353,7 @@
             "Scale": [
                 1,
                 2,
-                0.9999280571937561
+                1
             ],
             "UID": 677924609,
             "PrefabID": 0,
@@ -428,58 +383,9 @@
                     "MaterialUID": 1051418604
                 },
                 {
-                    "Type": 14,
-                    "Active": true,
-                    "kinematic": false,
-                    "Gravity": true,
-                    "LockLinearX": false,
-                    "LockLinearY": false,
-                    "LockLinearZ": false,
-                    "LockAngularX": false,
-                    "LockAngularY": false,
-                    "LockAngularZ": false,
-                    "Mass": 10,
-                    "Density": 1
-                },
-                {
-                    "Type": 15,
-                    "Active": true,
-                    "isTrigger": true,
-                    "Position": [
-                        1,
-                        1,
-                        1
-                    ],
-                    "Rotation": [
-                        0,
-                        0,
-                        0,
-                        1
-                    ],
-                    "Scale": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "StormTrooper",
-                    "player": 677924609,
-                    "shootPoint": 677924609,
-                    "wanderSpeed": 10,
-                    "runningSpeed": 20,
-                    "range": 10,
-                    "damage": 50,
-                    "bullet_speed": 10,
-                    "shotTimes": 2,
-                    "timeBewteenShots": 5,
-                    "timePassed": 0,
-                    "wanderTime": 5,
-                    "idleTime": 5,
-                    "stoppingDistance": 5,
-                    "currentState": 2
+                    "ScriptName": "Stormtrooper"
                 }
             ]
         }
