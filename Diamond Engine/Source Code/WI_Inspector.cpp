@@ -155,13 +155,13 @@ void W_Inspector::Draw()
 				}
 				if (ImGui::Selectable("RigidBody3D"))
 				{
-					if (selectedGO->GetComponent(Component::TYPE::RigidBody) == nullptr)
-						selectedGO->AddComponent(Component::TYPE::RigidBody);
+					if (selectedGO->GetComponent(Component::TYPE::RIGIDBODY) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::RIGIDBODY);
 				}
 				if (ImGui::Selectable("Collider"))
 				{
-					if (selectedGO->GetComponent(Component::TYPE::Collider) == nullptr)
-						selectedGO->AddComponent(Component::TYPE::Collider);
+					if (selectedGO->GetComponent(Component::TYPE::COLLIDER) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::COLLIDER);
 				}
 				if (ImGui::Selectable("AudioListener"))
 				{
@@ -175,8 +175,8 @@ void W_Inspector::Draw()
 				}
 				if (ImGui::Selectable("Animator"))
 				{
-					if (selectedGO->GetComponent(Component::TYPE::Animator) == nullptr)
-						selectedGO->AddComponent(Component::TYPE::Animator);
+					if (selectedGO->GetComponent(Component::TYPE::ANIMATOR) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::ANIMATOR);
 				}
 
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)

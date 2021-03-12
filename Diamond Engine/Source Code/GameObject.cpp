@@ -129,13 +129,13 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 		ret = new C_Camera(this);
 		EngineExternal->moduleScene->SetGameCamera(dynamic_cast<C_Camera*>(ret));
 		break;
-	case Component::TYPE::Animator:
+	case Component::TYPE::ANIMATOR:
 		ret = new C_Animator(this);
       break;
-	case Component::TYPE::RigidBody:
+	case Component::TYPE::RIGIDBODY:
 		ret = new C_RigidBody(this);
 		break;
-	case Component::TYPE::Collider:
+	case Component::TYPE::COLLIDER:
 		ret = new C_Collider(this);
       break;
 	case Component::TYPE::AUDIO_LISTENER:

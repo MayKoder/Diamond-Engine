@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 
 namespace DiamondEngine
 {
-
     public sealed class GameObject
     {
         public string name;
@@ -38,7 +37,7 @@ namespace DiamondEngine
             {
                 retValue = DiamondComponent.componentTable[typeof(T)];
             }
-            return TryGetComponent<T>(typeof(T).ToString(), (int)DiamondComponent.componentTable[typeof(T)]);
+            return TryGetComponent<T>(typeof(T).ToString(), (int)retValue);
         }
 
 

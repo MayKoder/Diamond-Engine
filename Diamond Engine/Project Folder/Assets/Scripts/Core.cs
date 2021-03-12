@@ -18,26 +18,14 @@ public class Core : DiamondComponent
 
     public void Update(/*int x*/)
     {
-        if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT || Input.GetLeftAxisY() < -30000)
-        {
-            Vector3 vectorUp = new Vector3(-0.5f, 0, 0.5f);
-            gameObject.transform.localPosition += vectorUp * movementSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT || Input.GetLeftAxisY() > 30000)
-        {
-            Vector3 vectorDown = new Vector3(0.5f, 0, -0.5f);
-            gameObject.transform.localPosition += vectorDown * movementSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT || Input.GetLeftAxisX() < -30000)
-        {
-            Vector3 vectorLeft = new Vector3(0.5f, 0, 0.5f);
-            gameObject.transform.localPosition += vectorLeft * movementSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT || Input.GetLeftAxisX() > 30000)
-        {
-            Vector3 vectorRight = new Vector3(-0.5f, 0, -0.5f);
-            gameObject.transform.localPosition += vectorRight * movementSpeed * Time.deltaTime;
-        }
+        if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
+            gameObject.transform.localPosition += gameObject.transform.GetForward() * movementSpeed * Time.deltaTime;
+        if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT)
+            gameObject.transform.localPosition += gameObject.transform.GetForward() * -movementSpeed * Time.deltaTime;
+        if (Input.GetKey(DEKeyCode.A) == KeyState.KEY_REPEAT)
+            gameObject.transform.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, rotationSpeed * Time.deltaTime);
+        if (Input.GetKey(DEKeyCode.D) == KeyState.KEY_REPEAT)
+            gameObject.transform.localRotation *= Quaternion.RotateAroundAxis(Vector3.up, -rotationSpeed * Time.deltaTime);
 
         if (Input.GetMouseX() != 0 && gameObject.transform != null)
             gameObject.transform.localRotation = Quaternion.RotateAroundAxis(Vector3.up, -Input.GetMouseX() * mouseSens * Time.deltaTime) * gameObject.transform.localRotation;

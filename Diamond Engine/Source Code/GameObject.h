@@ -45,6 +45,12 @@ public:
 	void RemoveChild(GameObject*);
 	void CollectChilds(std::vector<GameObject*>& vector);
 
+	template<typename A>
+	A* GetComponent()
+	{
+		return (A*)GetComponent(A::GetType());
+	}
+
 	GameObject* parent;
 	C_Transform* transform;
 
