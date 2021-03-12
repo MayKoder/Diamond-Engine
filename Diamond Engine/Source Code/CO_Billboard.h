@@ -20,6 +20,12 @@ public:
 
 	void SetAlignment(BILLBOARD_ALIGNMENT new_alignment);
 	void Draw();
+
+/*public:
+	C_Transform* transform;
+	ResourceMesh* res_mesh;
+
+	float3 pos;*/
 private:
 	void UseAlignment();
 	void ScreenAlign();
@@ -28,4 +34,5 @@ private:
 
 private:
 	BILLBOARD_ALIGNMENT currentAlignment;
+	//ResourceTexture* res_texture;	
 };
