@@ -121,7 +121,7 @@ void Emitter::OnEditor(int emitterIndex)
 		bool poolToEdit = false;
 
 		guiName = "Particle Lifetime ##" + suffixLabel;
-		if (ImGui::DragFloat2(guiName.c_str(), particlesLifeTime))
+		if (ImGui::DragFloatRange2("Lifetime", &particlesLifeTime[0], &particlesLifeTime[1], 0.25f, 0.1f, 100.0f, "Min: %.1f", "Max: %.1f"))
 		{
 			poolToEdit = true;
 		}
