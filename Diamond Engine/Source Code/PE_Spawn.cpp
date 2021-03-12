@@ -25,11 +25,19 @@ void PE_Spawn::Spawn(Particle& particle)
 #ifndef STANDALONE
 void PE_Spawn::OnEditor(int emitterIndex)
 {
-	ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "Particle movement: ");
+	std::string suffixLabel = "Spawn Effect##";
+	suffixLabel += emitterIndex;
+	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
+	{
 
-	int offset = ImGui::CalcTextSize("Particle speed: ").x + 16;
-	ImGui::Text("Particle speed: ");
-	ImGui::SameLine();
-	ImGui::DragFloat3("##lPaSpd", spawnPos, 0.1f);
+		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "Particle movement: ");
+
+		int offset = ImGui::CalcTextSize("Particle speed: ").x + 16;
+		ImGui::Text("Particle speed: ");
+		ImGui::SameLine();
+		suffixLabel = "##lPaSpdSpawn";
+		suffixLabel += emitterIndex;
+		ImGui::DragFloat3(suffixLabel.c_str(), spawnPos, 0.1f);
+	}
 }
 #endif // !STANDALONE

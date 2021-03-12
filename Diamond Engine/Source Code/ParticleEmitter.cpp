@@ -2,7 +2,10 @@
 #include "Globals.h"
 
 #include "PE_Spawn.h"
+#include "PE_Spawn_Area.h"
 #include "PE_Move.h"
+#include "PE_Rotate.h"
+#include <string>
 
 #include "Application.h"
 #include "MO_ResourceManager.h"
@@ -117,7 +120,7 @@ void Emitter::OnEditor(int emitterIndex)
 		}
 
 
-		for (int i = 0; i < (int)PARTICLE_EFFECT_TYPE::MAX; i++)
+		for (int i = (int)PARTICLE_EFFECT_TYPE::NONE+1; i < (int)PARTICLE_EFFECT_TYPE::MAX; ++i)
 		{
 			int index = DoesEffectExist((PARTICLE_EFFECT_TYPE)i);
 			if (index != -1)
@@ -244,7 +247,7 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 		newEffect = new PE_Spawn();
 		break;
 	case PARTICLE_EFFECT_TYPE::AREA_SPAWN:
-		//TODO
+		newEffect = new PE_Spawn_Area();
 		break;
 	case PARTICLE_EFFECT_TYPE::MOVE:
 		newEffect = new PE_Move();
@@ -253,7 +256,7 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 		//TODO
 		break;
 	case PARTICLE_EFFECT_TYPE::ROTATE:
-		//TODO
+		newEffect = new PE_Rotate();
 		break;
 	case PARTICLE_EFFECT_TYPE::MAX:
 		//TODO

@@ -2,7 +2,7 @@
 
 #include "ParticleEffects.h";
 
-class PE_Spawn_Area : ParticleEffect
+class PE_Spawn_Area : public ParticleEffect
 {
 public:
 	PE_Spawn_Area();

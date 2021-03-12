@@ -11,6 +11,7 @@ enum class PARTICLE_EFFECT_TYPE : int
     MOVE,
     RANDOM_MOVE,
     ROTATE,
+    FADE,
 	MAX
 };
 
