@@ -130,6 +130,9 @@
     <Filter Include="Sources\Containers\ParticleSystem\ParticleEffects\Derived">
       <UniqueIdentifier>{07b9d3d2-333e-4609-a6a8-7b0139d23b20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\Bindings">
+      <UniqueIdentifier>{631c7505-17bf-407e-86ce-a4705f3ed055}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -535,9 +538,6 @@
     <ClInclude Include="Source Code\CO_Script.h">
       <Filter>Sources\Components\Derived</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CS_Transform_Bindings.h">
-      <Filter>Sources\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\External Libraries\ImTextEditor\TextEditor.h">
       <Filter>Externals\ImTextEditor</Filter>
     </ClInclude>
@@ -595,9 +595,6 @@
     <ClInclude Include="Source Code\IM_AnimationImporter.h">
       <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CS_Animation_Bindings.h">
-      <Filter>Sources\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\Command.h">
       <Filter>Sources\Editor\Commands\Base</Filter>
     </ClInclude>
@@ -609,9 +606,6 @@
     </ClInclude>
     <ClInclude Include="Source Code\MA_ShortcutManager.h">
       <Filter>Sources\Editor\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\CS_Input_Bindings.h">
-      <Filter>Sources\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\INC_EditorWindows.h">
       <Filter>Sources\INC_Packs</Filter>
@@ -790,10 +784,28 @@
     <ClInclude Include="Source Code\COMM_Transform2D.h">
       <Filter>Sources\Editor\Commands\Derived</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CS_Scene_Bindings.h" />
+    <ClInclude Include="Source Code\CS_Animation_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
     <ClInclude Include="Source Code\CS_Audio_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_Input_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_Transform_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Navigation.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_Scene_Bindings.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CS_Scene_Bindings.h" />
+    <ClInclude Include="Source Code\IM_PrefabImporter.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
     <ClInclude Include="Source Code\CO_ParticleSystem.h">
       <Filter>Sources\Components\Derived\ParticleSystem</Filter>
     </ClInclude>
@@ -1251,6 +1263,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\PE_Fade.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Navigation.cpp">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\IM_PrefabImporter.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

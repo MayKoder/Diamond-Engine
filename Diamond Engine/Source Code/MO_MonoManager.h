@@ -48,6 +48,7 @@ public:
 
 #ifndef STANDALONE
 	void OnGUI() override;
+	void ReCompileCS();
 #endif // !STANDALONE
 
 	bool CleanUp() override;
@@ -64,12 +65,12 @@ public:
 	void RemoveScriptFromSLN(const char* scriptLocalPath);
 
 	GameObject* GameObject_From_CSGO(MonoObject* goObj);
+	GameObject* GameObject_From_CSCOMP(MonoObject* goComponent);
 
 	MonoObject* QuatToCS(Quat& inVec) const;
 	MonoObject* Float3ToCS(float3& inVec) const;
 	MonoObject* GoToCSGO(GameObject* inGo) const;
 
-	void ReCompileCS();
 
 public:
 	MonoDomain* domain;

@@ -35,7 +35,9 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	moduleScene = new M_Scene(this);
 	moduleGui = new M_Gui(this);
 	moduleRenderer3D = new ModuleRenderer3D(this);
+#ifndef STANDALONE
 	moduleCamera = new ModuleCamera3D(this);
+#endif
 	modulePhysics = new ModulePhysics(this);
 	moduleAudio = new ModuleAudioManager(this);
 	moduleMono = new M_MonoManager(this);
@@ -64,8 +66,9 @@ Application::Application() : quitApplicationState(false), fpsCap(60)
 	AddModule(moduleGui);
 
 	// Renderer last!
+#ifndef STANDALONE
 	AddModule(moduleCamera);
-
+#endif
 	AddModule(moduleMono);
 
 	AddModule(moduleResources);

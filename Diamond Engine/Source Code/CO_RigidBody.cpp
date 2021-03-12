@@ -25,7 +25,7 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 
 {
 	goTransform = dynamic_cast<C_Transform*>(_gm->GetComponent(Component::TYPE::TRANSFORM));
-	collider_info = dynamic_cast<C_Collider*>(_gm->GetComponent(Component::TYPE::Collider));
+	collider_info = dynamic_cast<C_Collider*>(_gm->GetComponent(Component::TYPE::COLLIDER));
 	mesh = dynamic_cast<C_MeshRenderer*>(_gm->GetComponent(Component::TYPE::MESH_RENDERER));
 
 	Quat rot;

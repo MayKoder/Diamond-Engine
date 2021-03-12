@@ -13,8 +13,6 @@ namespace StringLogic {
 	std::string GlobalToLocalPath(const char* _globalPath);
 }
 
-
-
 #define ASSETS_PATH "Assets/"
 
 #define LIBRARY_PATH "Library/"
@@ -27,6 +25,7 @@ namespace StringLogic {
 #define MATERIALS_PATH "Library/Materials/"
 #define SOUNDS_PATH "Library/Sounds/"
 #define ANIMATIONS_PATH "Library/Animations/"
+#define PREFABS_PATH "Library/Prefabs/"
 
 namespace FileSystem
 {

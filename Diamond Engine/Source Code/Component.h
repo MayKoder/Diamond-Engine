@@ -26,9 +26,10 @@ public:
 		IMAGE_2D,
 		AUDIO_LISTENER,
 		AUDIO_SOURCE,
-		RigidBody,
-		Collider,
-		Animator,
+		RIGIDBODY,
+		COLLIDER,
+		ANIMATOR,
+		NAVIGATION,
 		PARTICLE_SYSTEM,
 		BILLBOARD,
 		COUNT
@@ -58,6 +59,10 @@ public:
 
 	inline GameObject* GetGO() {
 		return gameObject;
+	}
+
+	inline std::string GetName() {
+		return name;
 	}
 
 	TYPE type;

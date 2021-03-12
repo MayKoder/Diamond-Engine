@@ -18,6 +18,7 @@ public:
 		MATERIAL,
 		ANIMATION,
 		FONT,
+		PREFAB,
 		UNKNOWN
 	};
 
