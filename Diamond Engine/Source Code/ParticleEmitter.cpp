@@ -10,10 +10,10 @@ Emitter::Emitter() :
 	particlesPerSec(0),
 	lastParticeTime(0),
 	myEffects(),
+	myParticles(),
 	toDelete(false)
 {
 	memset(particlesLifeTime, 0.0f, sizeof(particlesLifeTime));
-
 }
 
 Emitter::~Emitter()
@@ -28,6 +28,8 @@ Emitter::~Emitter()
 		}
 		myEffects.erase(myEffects.begin() + i);
 	}
+	myEffects.clear();
+	myParticles.clear();
 }
 
 void Emitter::Update(float dt, bool systemActive)
@@ -143,7 +145,7 @@ int Emitter::DoesEffectExist(PARTICLE_EFFECT_TYPE type)
 {
 	for (int i = 0; i < myEffects.size(); ++i)
 	{
-		if (myEffects[i]!=nullptr && myEffects[i]->type == type)
+		if (myEffects[i] != nullptr && myEffects[i]->type == type)
 		{
 			return i;
 		}
@@ -184,7 +186,7 @@ std::string Emitter::ParticleEffectEnumToString(PARTICLE_EFFECT_TYPE type)
 
 void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 {
-	ParticleEffect* newEffect=nullptr;
+	ParticleEffect* newEffect = nullptr;
 
 	switch (type)
 	{
@@ -214,7 +216,7 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 
 	if (newEffect == nullptr)
 	{
-		LOG(LogType::L_WARNING,"Couldn't create a particle effect of type %i",(int)type);
+		LOG(LogType::L_WARNING, "Couldn't create a particle effect of type %i", (int)type);
 		return;
 	}
 
@@ -223,7 +225,7 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 	{
 		myEffects.push_back(newEffect);
 	}
-	else if(myEffects[0]->type>type) //if type goes before first element in the vector
+	else if (myEffects[0]->type > type) //if type goes before first element in the vector
 	{
 		myEffects.insert(myEffects.begin(), newEffect);
 	}
@@ -231,7 +233,7 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 	{
 		for (int i = 1; i < myEffects.size(); ++i)
 		{
-			if (type > myEffects[i-1]->type && type < myEffects[i]->type)
+			if (type > myEffects[i - 1]->type && type < myEffects[i]->type)
 			{
 				myEffects.insert(myEffects.begin() + i, newEffect);
 			}
