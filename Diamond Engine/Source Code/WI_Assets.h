@@ -19,6 +19,7 @@ public:
 	void Draw() override;
 
 	void DrawFileTree(AssetDir& file);
+	void DrawCreationWindow();
 	void DrawCreationPopup(const char* popName, const char* dotExtension, std::function<void(const char*)> f);
 
 	void DrawPathButtons();
