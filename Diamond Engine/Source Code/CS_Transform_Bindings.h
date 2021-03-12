@@ -232,7 +232,7 @@ void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale)
 	C_Collider* col = dynamic_cast<C_Collider*>(go->AddComponent(Component::TYPE::Collider));
 	col->SetTrigger(true);
 
-	C_RigidBody* rb = dynamic_cast<C_RigidBody*>(go->GetComponent(Component::TYPE::RigidBody));
+	C_RigidBody* rb = dynamic_cast<C_RigidBody*>(go->GetComponent(Component::TYPE::RIGIDBODY));
 	rb->EnableGravity(false);
 	rb->EnableKinematic(false);
 

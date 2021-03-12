@@ -26,9 +26,10 @@ public:
 		IMAGE_2D,
 		AUDIO_LISTENER,
 		AUDIO_SOURCE,
-    RigidBody,
+		RIGIDBODY,
 		Collider,
-    Animator,
+		MeshCollider,
+		Animator,
 		COUNT
 	};
 

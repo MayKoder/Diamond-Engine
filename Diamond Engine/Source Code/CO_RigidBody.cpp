@@ -50,10 +50,10 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 		rigid_dynamic->attachShape(*collider_info->colliderShape);
 		collider_info->rigidbody = this;
 	}
-	else
+	/*else
 	{
-		EngineExternal->modulePhysics->CreateMeshCollider(rigid_dynamic);
-	}
+		EngineExternal->modulePhysics->CreateMeshCollider(rigid_dynamic, this->gameObject);
+	}*/
 
 	name = "Rigidbody";
 
@@ -118,7 +118,7 @@ void C_RigidBody::PostUpdate()
 		float3 pos, scale;	
 		float4x4 pivotrans = goTransform->globalTransform;
 
-		float4x4 worldtrans = pivotrans * global_to_pivot;
+		float4x4 worldtrans = pivotrans; //* global_to_pivot;
 		worldtrans.Decompose(pos, rot, scale);
 
 		if (DETime::state == GameState::PLAY) 
@@ -169,7 +169,7 @@ void C_RigidBody::Step()
 		worldtrans = float4x4::FromTRS(pos, rot, scale);
 
 		//	float4x4 pivotrans =  global_to_pivot.Inverted() * worldtrans;
-		float4x4 pivotrans = worldtrans * global_to_pivot.Inverted();
+		float4x4 pivotrans = worldtrans; //* global_to_pivot.Inverted();
 
 		goTransform->SetTransformWithGlobal(pivotrans);
 

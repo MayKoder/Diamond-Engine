@@ -143,19 +143,20 @@ void W_Inspector::Draw()
 				}
 				if (ImGui::Selectable("RigidBody3D"))
 				{
-					if (selectedGO->GetComponent(Component::TYPE::RigidBody) == nullptr)
-						selectedGO->AddComponent(Component::TYPE::RigidBody);
+					if (selectedGO->GetComponent(Component::TYPE::RIGIDBODY) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::RIGIDBODY);
 				}
 				if (ImGui::Selectable("Collider"))
 				{
 					if (selectedGO->GetComponent(Component::TYPE::Collider) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::Collider);
 				}
-				//if (ImGui::Selectable("MeshCollider"))
-				//{
-				//	//EngineExternal->modulePhysics->CreateMeshCollider();
+				if (ImGui::Selectable("MeshCollider"))
+				{
+					if (selectedGO->GetComponent(Component::TYPE::MeshCollider) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::MeshCollider);
 
-				//}
+				}
 				if (ImGui::Selectable("AudioListener"))
 				{
 					if (selectedGO->GetComponent(Component::TYPE::AUDIO_LISTENER) == nullptr)

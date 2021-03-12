@@ -10,6 +10,10 @@
 
 #include "CO_Collider.h"
 #include "CO_RigidBody.h"
+#include "CO_MeshRenderer.h"
+
+#include "RE_Mesh.h"
+
 
 //todelete
 #include "MO_Renderer3D.h"
@@ -213,7 +217,7 @@ void ModulePhysics::SceneSimulation(double gameTimestep, bool fetchResults) {
 		for (int i = 0; i < actors.size(); i++)
 		{
 			GameObject* contact = static_cast<GameObject*>(actors[i]->userData);
-			C_RigidBody* body = dynamic_cast<C_RigidBody*>(contact->GetComponent(Component::TYPE::RigidBody));
+			C_RigidBody* body = dynamic_cast<C_RigidBody*>(contact->GetComponent(Component::TYPE::RIGIDBODY));
 			body->Step();
 		}
 	}
@@ -293,13 +297,25 @@ physx::PxShape* ModulePhysics::CreateCollider(float3 size, PxMaterial* material)
 	return colliderShape;
 }
 
-physx::PxShape* ModulePhysics::CreateMeshCollider(PxRigidActor* aConvexActor)
+physx::PxShape* ModulePhysics::CreateMeshCollider(PxRigidActor* aConvexActor, GameObject* parent)
 {
-	static const PxVec3 convexVerts[] = { PxVec3(0,1,0),PxVec3(1,0,0),PxVec3(-1,0,0),PxVec3(0,0,1),
-		PxVec3(0,0,-1) };
+	C_MeshRenderer* mesh = dynamic_cast<C_MeshRenderer*>(parent->GetComponent(Component::TYPE::MESH_RENDERER));
+	ResourceMesh* resMesh = mesh->GetRenderMesh();
+
+	PxVec3* convexVerts = new PxVec3[resMesh->vertices_count];
+	for (int i = 0; i < resMesh->vertices_count; i++)
+	{
+		PxVec3 vertex;
+		vertex.x = resMesh->vertices[VERTEX_ATTRIBUTES * i];
+		vertex.y = resMesh->vertices[VERTEX_ATTRIBUTES * i + 1];
+		vertex.z = resMesh->vertices[VERTEX_ATTRIBUTES * i + 2];
+		
+		convexVerts[i] = vertex;
+	}
+
 	
 	PxConvexMeshDesc convexDesc;
-	convexDesc.points.count = 5;
+	convexDesc.points.count = resMesh->vertices_count;
 	convexDesc.points.stride = sizeof(PxVec3);
 	convexDesc.points.data = convexVerts;
 	convexDesc.flags = PxConvexFlag::eCOMPUTE_CONVEX;
@@ -314,7 +330,10 @@ physx::PxShape* ModulePhysics::CreateMeshCollider(PxRigidActor* aConvexActor)
 		mPhysics->getPhysicsInsertionCallback());
 
 	PxShape* aConvexShape = PxRigidActorExt::createExclusiveShape(*aConvexActor, PxConvexMeshGeometry(aConvexMesh), *mMaterial);
+	delete[] convexVerts;
+
 	return aConvexShape;
+	//aConvexShape->getGeometry().convexMesh().convexMesh->getVertices(;
 }
 
 physx::PxMaterial* ModulePhysics::CreateMaterial(float staticFriction, float dynamicFriction, float restitution) {

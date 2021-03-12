@@ -115,6 +115,9 @@
     <Filter Include="Externals\FreeType">
       <UniqueIdentifier>{c4e4d1f5-fadb-4402-a089-768ce08d95b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Components\Derived\Physics">
+      <UniqueIdentifier>{59fc5c3b-3544-4a28-b3b5-586bbbd669c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -559,12 +562,6 @@
     <ClInclude Include="Source Code\MO_Physics.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CO_Collider.h">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\CO_RigidBody.h">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\RE_Material.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
@@ -777,6 +774,20 @@
     </ClInclude>
     <ClInclude Include="Source Code\CS_Audio_Bindings.h">
       <Filter>Sources\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_Scene_Bindings.h" />
+    <ClInclude Include="Source Code\CO_RigidBody.h">
+      <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Collider.h">
+      <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_MeshCollider.h">
+      <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_CubeCollider.h" />
+    <ClInclude Include="Source Code\CO_BoxCollider.h">
+      <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1077,12 +1088,6 @@
     <ClCompile Include="Source Code\MO_Physics.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\CO_Collider.cpp">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\CO_RigidBody.cpp">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\RE_Material.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
@@ -1175,6 +1180,19 @@
     </ClCompile>
     <ClCompile Include="Source Code\COMM_Transform2D.cpp">
       <Filter>Sources\Editor\Commands\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_RigidBody.cpp">
+      <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Collider.cpp">
+      <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_MeshCollider.cpp">
+      <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_CubeCollider.cpp" />
+    <ClCompile Include="Source Code\CO_BoxCollider.cpp">
+      <Filter>Sources\Components\Derived\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
