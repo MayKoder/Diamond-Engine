@@ -4,8 +4,7 @@ using DiamondEngine;
 
 public class BH_Plane : DiamondComponent
 {
-    public GameObject thisReference = null;
-    public float speedIncrement = 0.03f;
+   public float speedIncrement = 0.03f;
 
     float cSpeed = 0.0f;
 

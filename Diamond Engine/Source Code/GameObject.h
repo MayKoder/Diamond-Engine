@@ -20,7 +20,7 @@ public:
 	void PostUpdate();
 
 	Component* AddComponent(Component::TYPE _type, const char* params = nullptr);
-	Component* GetComponent(Component::TYPE _type, const char* name = nullptr);
+	Component* GetComponent(Component::TYPE _type, const char* scriptName = nullptr);
 
 	void RecursiveUIDRegeneration();
 	//void RecursiveUIDRegenerationSavingOldUIDs(std::map<uint, uint>& uids);
@@ -44,6 +44,12 @@ public:
 
 	void RemoveChild(GameObject*);
 	void CollectChilds(std::vector<GameObject*>& vector);
+
+	template<typename A>
+	A* GetComponent()
+	{
+		return (A*)GetComponent(A::GetType());
+	}
 
 	GameObject* parent;
 	C_Transform* transform;
