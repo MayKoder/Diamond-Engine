@@ -25,7 +25,10 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 
 {
 	goTransform = dynamic_cast<C_Transform*>(_gm->GetComponent(Component::TYPE::TRANSFORM));
-	collider_info = dynamic_cast<C_Collider*>(_gm->GetComponent(Component::TYPE::Collider));
+	collider_info = dynamic_cast<C_Collider*>(_gm->GetComponent(Component::TYPE::BOXCOLLIDER));
+	if(!collider_info)
+		collider_info = dynamic_cast<C_Collider*>(_gm->GetComponent(Component::TYPE::MESHCOLLIDER));
+
 	mesh = dynamic_cast<C_MeshRenderer*>(_gm->GetComponent(Component::TYPE::MESH_RENDERER));
 
 	Quat rot;
@@ -116,10 +119,18 @@ void C_RigidBody::PostUpdate()
 		
 		Quat rot;
 		float3 pos, scale;	
-		float4x4 pivotrans = goTransform->globalTransform;
+		
+		if (collider_info && collider_info->shape != ColliderShape::MESH)
+		{
+			float4x4 worldtrans = goTransform->globalTransform * global_to_pivot;
+			worldtrans.Decompose(pos, rot, scale);
+		}
+		else
+			goTransform->globalTransform.Decompose(pos, rot, scale);
 
-		float4x4 worldtrans = pivotrans; //* global_to_pivot;
-		worldtrans.Decompose(pos, rot, scale);
+		
+		
+		
 
 		if (DETime::state == GameState::PLAY) 
 		{
@@ -167,11 +178,15 @@ void C_RigidBody::Step()
 		}
 
 		worldtrans = float4x4::FromTRS(pos, rot, scale);
+		if (collider_info && collider_info->shape != ColliderShape::MESH)
+		{
+			float4x4 pivotrans = global_to_pivot.Inverted() * worldtrans;
+			goTransform->SetTransformWithGlobal(pivotrans);
 
-		//	float4x4 pivotrans =  global_to_pivot.Inverted() * worldtrans;
-		float4x4 pivotrans = worldtrans; //* global_to_pivot.Inverted();
+		}
+		else
+			goTransform->SetTransformWithGlobal(worldtrans);
 
-		goTransform->SetTransformWithGlobal(pivotrans);
 
 
 	}

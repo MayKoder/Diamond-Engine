@@ -17,7 +17,7 @@
 
 C_MeshCollider::C_MeshCollider() : C_Collider(nullptr)
 {
-	name = "Collider";
+	name = "MeshCollider";
 
 
 }
@@ -29,6 +29,7 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 
 	name = "MeshCollider";
 	isTrigger = false;
+	shape = ColliderShape::MESH;
 
 	//Checks if component does have any owner and get additional data to be created
 
@@ -37,29 +38,27 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 		rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RIGIDBODY));
 		mesh = dynamic_cast<C_MeshRenderer*>(_gm->GetComponent(Component::TYPE::MESH_RENDERER));
 
-		
 
 		//We first initialize material to create shape later
 		colliderMaterial = EngineExternal->modulePhysics->CreateMaterial();
 		localTransform = float4x4::identity;
 	
 		//If gameObject does have mesh we apply measures directly to collider from OBB
-		if (mesh != nullptr) {
+		//if (mesh != nullptr) {
 
-			colliderSize = mesh->globalOBB.Size()/2;
-			if (colliderSize.y <= 0.0f) //I do this for plane meshes, but maybe we can remove this once we use mesh shapes
-				colliderSize.y = 0.01f;
-		//	colliderShape = App->physX->CreateCollider(type, colliderSize / 2, colliderMaterial);
-			colliderShape = EngineExternal->modulePhysics->CreateCollider( colliderSize, colliderMaterial);
+		//	colliderSize = mesh->globalOBB.Size()/2;
+		//	if (colliderSize.y <= 0.0f) //I do this for plane meshes, but maybe we can remove this once we use mesh shapes
+		//		colliderSize.y = 0.01f;
+		////	colliderShape = App->physX->CreateCollider(type, colliderSize / 2, colliderMaterial);
+		//	colliderShape = EngineExternal->modulePhysics->CreateCollider( colliderSize, colliderMaterial);
 
-		}
-		else {
-			colliderSize = { 0.5f, 0.5f, 0.5f };
-			colliderShape = EngineExternal->modulePhysics->CreateCollider( colliderSize, colliderMaterial);
-		}
-
-		/*colliderEuler = (transform->euler - owner->RotationOffset).Div(owner->SizeOffset);
-		SetRotation(colliderEuler);*/
+		//}
+		//else {
+		//	colliderSize = { 0.5f, 0.5f, 0.5f };
+		//	colliderShape = EngineExternal->modulePhysics->CreateCollider( colliderSize, colliderMaterial);
+		//}
+		
+		
 
 
 		//If we have a rigid body and doesnt have reference collider we attach the current one
@@ -80,19 +79,34 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 		//	owner->RotationOffset = float3::zero;*/
 		//}
 
+		//if (mesh != nullptr) {
 
-		rigidStatic = nullptr;
+		//	colliderSize = mesh->globalOBB.Size() / 2;
+		//	if (colliderSize.y <= 0.0f) //I do this for plane meshes, but maybe we can remove this once we use mesh shapes
+		//		colliderSize.y = 0.01f;
+		//	//	colliderShape = App->physX->CreateCollider(type, colliderSize / 2, colliderMaterial);
+		//	colliderShape = EngineExternal->modulePhysics->CreateCollider(colliderSize, colliderMaterial);
+
+		//}
+		//else {
+		//	colliderSize = { 0.5f, 0.5f, 0.5f };
+		//	colliderShape = EngineExternal->modulePhysics->CreateCollider(colliderSize, colliderMaterial);
+		//}
 
 		//We attach shape to a static or dynamic rigidbody to be collidable.
 		if (rigidbody != nullptr) {
+			colliderShape = EngineExternal->modulePhysics->CreateMeshCollider(rigidbody->rigid_dynamic, _gm);
 			rigidbody->rigid_dynamic->attachShape(*colliderShape);
+			rigidbody->collider_info = this;
 		}
 		else {
 			_gm->AddComponent(Component::TYPE::RIGIDBODY);
 			rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RIGIDBODY));
 			rigidbody->use_kinematic = true;
 			rigidbody->EnableKinematic(rigidbody->use_kinematic);
+			colliderShape = EngineExternal->modulePhysics->CreateMeshCollider(rigidbody->rigid_dynamic, _gm);
 			rigidbody->rigid_dynamic->attachShape(*colliderShape);
+			rigidbody->collider_info = this;
 
 			
 			//	rigidbody = dynamic_cast<C_RigidBody*>(_gm->AddComponent(Component::Type::RigidBody));
@@ -109,14 +123,20 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 
 C_MeshCollider::~C_MeshCollider()
 {
-	if (rigidStatic != nullptr)
-		EngineExternal->modulePhysics->ReleaseActor(dynamic_cast<physx::PxRigidActor*>(rigidStatic));
 
 	if (colliderMaterial != nullptr)
 		colliderMaterial->release();
 
+	if (rigidbody != nullptr)
+	{
+		rigidbody->rigid_dynamic->detachShape(*colliderShape);
+		rigidbody->collider_info = nullptr;
+	}
+
 	if (colliderShape != nullptr)
 		colliderShape->release();
+
+	
 }
 
 void C_MeshCollider::Update()
@@ -125,58 +145,27 @@ void C_MeshCollider::Update()
 
 	if (colliderShape != nullptr )
 	{
-		//EngineExternal->modulePhysics->DrawCollider(this);
+		////EngineExternal->modulePhysics->DrawCollider(this);
 
-		float4x4 trans;
-		if (rigidbody != nullptr && rigidbody->rigid_dynamic)
-		trans = EngineExternal->modulePhysics->PhysXTransformToF4F(rigidbody->rigid_dynamic->getGlobalPose());
-		else
-			trans = transform->globalTransform;
+		//float4x4 trans;
+		//if (rigidbody != nullptr && rigidbody->rigid_dynamic)
+		//trans = EngineExternal->modulePhysics->PhysXTransformToF4F(rigidbody->rigid_dynamic->getGlobalPose());
+		//else
+		//	trans = transform->globalTransform;
 
-		trans = trans * localTransform;
-		//SetPosition(pos);
-		//trans = EngineExternal->modulePhysics->PhysXTransformToF4F(colliderShape->getLocalPose());
+		//trans = trans * localTransform;
+		////SetPosition(pos);
+		////trans = EngineExternal->modulePhysics->PhysXTransformToF4F(colliderShape->getLocalPose());
 
-		physx::PxBoxGeometry boxCollider;
+		//physx::PxBoxGeometry boxCollider;
 
-		
+		//
 
-		colliderShape->getBoxGeometry(boxCollider);
+		//colliderShape->getBoxGeometry(boxCollider);
 
-		float3 half_size = { boxCollider.halfExtents.x, boxCollider.halfExtents.y, boxCollider.halfExtents.z };
+		//float3 half_size = { boxCollider.halfExtents.x, boxCollider.halfExtents.y, boxCollider.halfExtents.z };
 
-	/*	glPushMatrix();
-		glMultMatrixf(trans.Transposed().ptr());
-
-
-		glColor3f(1.0f, 0.0f, 0.0f);
-		glBegin(GL_LINE_LOOP);
-		glVertex3f(-half_size.x, half_size.y, -half_size.z);
-		glVertex3f(half_size.x, half_size.y, -half_size.z);
-		glVertex3f(half_size.x, half_size.y, half_size.z);
-		glVertex3f(-half_size.x, half_size.y, half_size.z);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
-		glVertex3f(-half_size.x, -half_size.y, -half_size.z);
-		glVertex3f(half_size.x, -half_size.y, -half_size.z);
-		glVertex3f(half_size.x, -half_size.y, half_size.z);
-		glVertex3f(-half_size.x, -half_size.y, half_size.z);
-		glEnd();
-
-		glBegin(GL_LINES);
-		glVertex3f(-half_size.x, half_size.y, -half_size.z);
-		glVertex3f(-half_size.x, -half_size.y, -half_size.z);
-		glVertex3f(half_size.x, half_size.y, -half_size.z);
-		glVertex3f(half_size.x, -half_size.y, -half_size.z);
-		glVertex3f(half_size.x, half_size.y, half_size.z);
-		glVertex3f(half_size.x, -half_size.y, half_size.z);
-		glVertex3f(-half_size.x, half_size.y, half_size.z);
-		glVertex3f(-half_size.x, -half_size.y, half_size.z);
-		glEnd();*/
-
-		glColor3f(1.0f, 1.0f, 1.0f);
-		glPopMatrix();
+	
 	}
 	#endif // !STANDALONE
 	

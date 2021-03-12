@@ -417,7 +417,6 @@
     <ClCompile Include="Source Code\CO_Camera.cpp" />
     <ClCompile Include="Source Code\CO_Canvas.cpp" />
     <ClCompile Include="Source Code\CO_Checkbox.cpp" />
-    <ClCompile Include="Source Code\CO_CubeCollider.cpp" />
     <ClCompile Include="Source Code\CO_Image2D.cpp" />
     <ClCompile Include="Source Code\CO_Collider.cpp" />
     <ClCompile Include="Source Code\CO_Material.cpp" />

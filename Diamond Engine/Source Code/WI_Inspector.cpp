@@ -148,13 +148,13 @@ void W_Inspector::Draw()
 				}
 				if (ImGui::Selectable("Collider"))
 				{
-					if (selectedGO->GetComponent(Component::TYPE::Collider) == nullptr)
-						selectedGO->AddComponent(Component::TYPE::Collider);
+					if (selectedGO->GetComponent(Component::TYPE::BOXCOLLIDER) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::BOXCOLLIDER);
 				}
 				if (ImGui::Selectable("MeshCollider"))
 				{
-					if (selectedGO->GetComponent(Component::TYPE::MeshCollider) == nullptr)
-						selectedGO->AddComponent(Component::TYPE::MeshCollider);
+					if (selectedGO->GetComponent(Component::TYPE::MESHCOLLIDER) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::MESHCOLLIDER);
 
 				}
 				if (ImGui::Selectable("AudioListener"))

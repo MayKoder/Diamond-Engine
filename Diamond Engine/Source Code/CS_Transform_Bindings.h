@@ -229,7 +229,7 @@ void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale)
 
 	go->AddComponent(Component::TYPE::SCRIPT, "BH_Bullet");
 
-	C_Collider* col = dynamic_cast<C_Collider*>(go->AddComponent(Component::TYPE::Collider));
+	C_Collider* col = dynamic_cast<C_Collider*>(go->AddComponent(Component::TYPE::BOXCOLLIDER));
 	col->SetTrigger(true);
 
 	C_RigidBody* rb = dynamic_cast<C_RigidBody*>(go->GetComponent(Component::TYPE::RIGIDBODY));

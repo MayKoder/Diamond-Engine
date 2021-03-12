@@ -159,8 +159,7 @@ bool ModulePhysics::Init() {
 	//Initialize Material with default values staticFric 0.5  DynamicFric 0.5  restitution 0.1
 	mMaterial = CreateMaterial();
 
-//	PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
-//	mScene->addActor(*groundPlane);
+
 
 	mScene->setSimulationEventCallback(&detector);
 	mScene->setGravity(PxVec3(gravity.x, gravity.y, gravity.z));
@@ -261,16 +260,6 @@ void ModulePhysics::RenderGeometry() {
 }
 
 
-physx::PxRigidStatic* ModulePhysics::CreateRigidStatic(float3 pos) {
-
-	PxTransform position(pos.x, pos.y, pos.z);
-
-	PxRigidStatic* staticBody = nullptr;
-	staticBody = mPhysics->createRigidStatic(position);
-
-	mScene->addActor(*staticBody);
-	return staticBody;
-}
 
 physx::PxRigidDynamic* ModulePhysics::CreateRigidDynamic(float3 pos, Quat rot) {
 	
@@ -329,7 +318,7 @@ physx::PxShape* ModulePhysics::CreateMeshCollider(PxRigidActor* aConvexActor, Ga
 	PxConvexMesh* aConvexMesh = mCooking->createConvexMesh(convexDesc,
 		mPhysics->getPhysicsInsertionCallback());
 
-	PxShape* aConvexShape = PxRigidActorExt::createExclusiveShape(*aConvexActor, PxConvexMeshGeometry(aConvexMesh), *mMaterial);
+	PxShape* aConvexShape = mPhysics->createShape(PxConvexMeshGeometry(aConvexMesh), *mMaterial);
 	delete[] convexVerts;
 
 	return aConvexShape;

@@ -27,8 +27,9 @@ public:
 		AUDIO_LISTENER,
 		AUDIO_SOURCE,
 		RIGIDBODY,
-		Collider,
-		MeshCollider,
+		COLLIDER,
+		BOXCOLLIDER,
+		MESHCOLLIDER,
 		Animator,
 		COUNT
 	};

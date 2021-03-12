@@ -107,7 +107,6 @@ public:
 
  
 
-    physx::PxRigidStatic* CreateRigidStatic(float3 pos);
     physx::PxRigidDynamic* CreateRigidDynamic(float3 pos, Quat rot);
     physx::PxShape* CreateCollider(float3 size, physx::PxMaterial* material = nullptr);
     physx::PxShape* CreateMeshCollider(physx::PxRigidActor* aConvexActor, GameObject* parent);
