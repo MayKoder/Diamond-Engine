@@ -35,6 +35,7 @@
                 1
             ],
             "UID": 143570472,
+            "PrefabID": 0,
             "Components": [
                 {
                     "Type": 1,
@@ -62,6 +63,7 @@
                 0.9999280571937561
             ],
             "UID": 1661764735,
+            "PrefabID": 0,
             "ParentUID": 143570472,
             "Components": [
                 {
@@ -119,6 +121,7 @@
                 0.24000000953674316
             ],
             "UID": 1716888692,
+            "PrefabID": 0,
             "ParentUID": 143570472,
             "Components": [
                 {
@@ -147,6 +150,7 @@
                 500
             ],
             "UID": 420350065,
+            "PrefabID": 0,
             "ParentUID": 1716888692,
             "Components": [
                 {
@@ -191,6 +195,7 @@
                 17.39555549621582
             ],
             "UID": 1432217696,
+            "PrefabID": 0,
             "ParentUID": 1716888692,
             "Components": [
                 {
@@ -235,6 +240,7 @@
                 18.083625793457031
             ],
             "UID": 467515712,
+            "PrefabID": 0,
             "ParentUID": 1716888692,
             "Components": [
                 {
@@ -263,10 +269,10 @@
                 -37.998661041259766
             ],
             "Rotation": [
-                0.28966298699378967,
-                -0.30951863527297974,
-                0.099594645202159882,
-                0.90020811557769775
+                0.28966295719146729,
+                -0.30951860547065735,
+                0.099594630300998688,
+                0.9002079963684082
             ],
             "Scale": [
                 0.9999997615814209,
@@ -274,6 +280,7 @@
                 0.999927818775177
             ],
             "UID": 188616957,
+            "PrefabID": 0,
             "ParentUID": 143570472,
             "Components": [
                 {
@@ -324,6 +331,7 @@
                 1
             ],
             "UID": 1747895609,
+            "PrefabID": 0,
             "ParentUID": 143570472,
             "Components": [
                 {
@@ -333,6 +341,77 @@
                 {
                     "Type": 10,
                     "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Button",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1083364916,
+            "PrefabID": 0,
+            "ParentUID": 1747895609,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -89.099998474121094,
+                        -55.599998474121094
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        6.4000000953674316,
+                        9.6000003814697266
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 7,
+                    "Active": true,
+                    "ButtonState": 2,
+                    "Is Selected": false
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/784219460.dds",
+                    "UID": 784219460
+                },
+                {
+                    "Type": 17,
+                    "Active": true,
+                    "Map": [],
+                    "Button Being Used": -1,
+                    "Type Of UI": 7,
+                    "Is Selected": false
                 }
             ]
         },
@@ -355,7 +434,8 @@
                 1,
                 1
             ],
-            "UID": 2144550515,
+            "UID": 1142762498,
+            "PrefabID": 0,
             "ParentUID": 1747895609,
             "Components": [
                 {
@@ -366,13 +446,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -90.400001525878906,
-                        81
+                        87.300003051757813,
+                        -68
                     ],
                     "Rotation": 0,
                     "Size": [
-                        7,
-                        20.200000762939453
+                        7.5,
+                        6.3000001907348633
                     ]
                 },
                 {
@@ -387,8 +467,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/651582956.dds",
-                    "UID": 651582956
+                    "LibraryPath": "Library\/Textures\/1335091055.dds",
+                    "UID": 1335091055
                 }
             ]
         },
@@ -411,8 +491,9 @@
                 1,
                 1
             ],
-            "UID": 1076718357,
-            "ParentUID": 1747895609,
+            "UID": 293719202,
+            "PrefabID": 0,
+            "ParentUID": 1142762498,
             "Components": [
                 {
                     "Type": 1,
@@ -422,13 +503,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        84.300003051757813,
-                        -88.599998474121094
+                        0,
+                        -4.5999999046325684
                     ],
                     "Rotation": 0,
                     "Size": [
-                        19.5,
-                        2.2000000476837158
+                        6.5,
+                        0.69999998807907104
                     ]
                 },
                 {
@@ -467,231 +548,8 @@
                 1,
                 1
             ],
-            "UID": 931853287,
-            "ParentUID": 1747895609,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        84.199996948242188,
-                        -81.400001525878906
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        22.5,
-                        20
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
-                },
-                {
-                    "Type": 11,
-                    "Active": true,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/518783332.dds",
-                    "UID": 518783332
-                }
-            ]
-        },
-        {
-            "name": "Image",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 177995778,
-            "ParentUID": 1747895609,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        -77.400001525878906,
-                        -73.5
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        24.399999618530273,
-                        3.2999999523162842
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
-                },
-                {
-                    "Type": 11,
-                    "Active": true,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/1267649818.dds",
-                    "UID": 1267649818
-                }
-            ]
-        },
-        {
-            "name": "Image",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1950847140,
-            "ParentUID": 1747895609,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        -80,
-                        -73.400001525878906
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        32.400001525878906,
-                        6.6999998092651367
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
-                },
-                {
-                    "Type": 11,
-                    "Active": true,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/412420448.dds",
-                    "UID": 412420448
-                }
-            ]
-        },
-        {
-            "name": "Image",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1263416948,
-            "ParentUID": 1747895609,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        -77.300003051757813,
-                        -85.300003051757813
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        24.399999618530273,
-                        5.5999999046325684
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
-                },
-                {
-                    "Type": 11,
-                    "Active": true,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/1086967891.dds",
-                    "UID": 1086967891
-                }
-            ]
-        },
-        {
-            "name": "Image",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
             "UID": 1568639235,
+            "PrefabID": 0,
             "ParentUID": 1747895609,
             "Components": [
                 {
@@ -702,13 +560,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -80,
+                        -75,
                         -85.300003051757813
                     ],
                     "Rotation": 0,
                     "Size": [
-                        32.400001525878906,
-                        10.899999618530273
+                        20,
+                        6.6999998092651367
                     ]
                 },
                 {
@@ -747,8 +605,9 @@
                 1,
                 1
             ],
-            "UID": 2098795397,
-            "ParentUID": 1747895609,
+            "UID": 1263416948,
+            "PrefabID": 0,
+            "ParentUID": 1568639235,
             "Components": [
                 {
                     "Type": 1,
@@ -758,13 +617,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -91.800003051757813,
-                        -59.099998474121094
+                        3.2999999523162842,
+                        0
                     ],
                     "Rotation": 0,
                     "Size": [
-                        9.6000003814697266,
-                        15.899999618530273
+                        15,
+                        3.4000000953674316
                     ]
                 },
                 {
@@ -779,8 +638,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/110938608.dds",
-                    "UID": 110938608
+                    "LibraryPath": "Library\/Textures\/449336422.dds",
+                    "UID": 449336422
                 }
             ]
         },
@@ -803,7 +662,8 @@
                 1,
                 1
             ],
-            "UID": 1152025363,
+            "UID": 1950847140,
+            "PrefabID": 0,
             "ParentUID": 1747895609,
             "Components": [
                 {
@@ -814,13 +674,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -80.900001525878906,
-                        -59.099998474121094
+                        -75,
+                        -71
                     ],
                     "Rotation": 0,
                     "Size": [
-                        9.6000003814697266,
-                        15.899999618530273
+                        20,
+                        4
                     ]
                 },
                 {
@@ -835,8 +695,298 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/784219460.dds",
-                    "UID": 784219460
+                    "LibraryPath": "Library\/Textures\/26374907.dds",
+                    "UID": 26374907
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 177995778,
+            "PrefabID": 0,
+            "ParentUID": 1950847140,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        3.2999999523162842,
+                        0
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        15,
+                        1.8999999761581421
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/1267649818.dds",
+                    "UID": 1267649818
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 931853287,
+            "PrefabID": 0,
+            "ParentUID": 1747895609,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        82.300003051757813,
+                        -81.400001525878906
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        12.5,
+                        10.5
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/518783332.dds",
+                    "UID": 518783332
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1076718357,
+            "PrefabID": 0,
+            "ParentUID": 931853287,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0.10000000149011612,
+                        -7.5999999046325684
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        10.699999809265137,
+                        1.2000000476837158
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/1834381926.dds",
+                    "UID": 1834381926
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 2144550515,
+            "PrefabID": 0,
+            "ParentUID": 1747895609,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -86.599998474121094,
+                        76.599998474121094
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        4.9000000953674316,
+                        13.199999809265137
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/651582956.dds",
+                    "UID": 651582956
+                }
+            ]
+        },
+        {
+            "name": "Text",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 685275708,
+            "PrefabID": 0,
+            "ParentUID": 2144550515,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -1.2000000476837158,
+                        3.4000000953674316
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        9.1000003814697266,
+                        14.5
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "0",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         }
