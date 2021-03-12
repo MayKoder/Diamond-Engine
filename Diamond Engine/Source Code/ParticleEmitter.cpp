@@ -37,6 +37,8 @@ Emitter::Emitter() :
 	glBufferData(GL_ARRAY_BUFFER, sizeof(particleVAO), particleVAO, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	CalculatePoolSize();
 }
 
 Emitter::~Emitter()
@@ -180,6 +182,10 @@ void Emitter::OnEditor(int emitterIndex)
 void Emitter::CalculatePoolSize()
 {
 	int poolSize = ceilf(particlesPerSec * particlesLifeTime[1]);
+
+	if (poolSize < 0)
+		poolSize = 0;
+
 	SetPoolSize(poolSize);
 }
 

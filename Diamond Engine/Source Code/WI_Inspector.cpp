@@ -14,6 +14,8 @@
 #include"CO_Script.h"
 #include"RE_Material.h"
 
+#include "IM_PrefabImporter.h"
+
 W_Inspector::W_Inspector() : Window(), selectedGO(nullptr), editingRes(nullptr)
 {
 	name = "Inspector";
@@ -108,7 +110,21 @@ void W_Inspector::Draw()
 			if (ImGui::Button("Delete")) {
 				selectedGO->Destroy();}
 
+			ImGui::SameLine();
 			ImGui::Text("UID: %d", selectedGO->UID);
+
+			if (selectedGO->prefabID != 0u) 
+			{
+				ImGui::Text("Prefab ID: %d", selectedGO->prefabID);
+				if (ImGui::Button("Override Prefab")){
+					PrefabImporter::OverridePrefabGameObjects(selectedGO->prefabID, selectedGO);
+				}
+
+				ImGui::SameLine();
+				if (ImGui::Button("Revert Changes")) {
+					PrefabImporter::OverrideGameObject(selectedGO->prefabID, selectedGO);
+				}
+			}
 
 			ImGui::GreySeparator();
 
@@ -139,13 +155,13 @@ void W_Inspector::Draw()
 				}
 				if (ImGui::Selectable("RigidBody3D"))
 				{
-					if (selectedGO->GetComponent(Component::TYPE::RigidBody) == nullptr)
-						selectedGO->AddComponent(Component::TYPE::RigidBody);
+					if (selectedGO->GetComponent(Component::TYPE::RIGIDBODY) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::RIGIDBODY);
 				}
 				if (ImGui::Selectable("Collider"))
 				{
-					if (selectedGO->GetComponent(Component::TYPE::Collider) == nullptr)
-						selectedGO->AddComponent(Component::TYPE::Collider);
+					if (selectedGO->GetComponent(Component::TYPE::COLLIDER) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::COLLIDER);
 				}
 				if (ImGui::Selectable("AudioListener"))
 				{
@@ -159,8 +175,8 @@ void W_Inspector::Draw()
 				}
 				if (ImGui::Selectable("Animator"))
 				{
-					if (selectedGO->GetComponent(Component::TYPE::Animator) == nullptr)
-						selectedGO->AddComponent(Component::TYPE::Animator);
+					if (selectedGO->GetComponent(Component::TYPE::ANIMATOR) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::ANIMATOR);
 				}
 				if (ImGui::Selectable("Particle System"))
 				{

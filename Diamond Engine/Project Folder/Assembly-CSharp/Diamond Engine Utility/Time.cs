@@ -7,18 +7,10 @@ namespace DiamondEngine
 {
     public class Time
     {
-
         public static extern float deltaTime
         {
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
             get;
         }
-
-
-
-
-
-
-
     }
 }

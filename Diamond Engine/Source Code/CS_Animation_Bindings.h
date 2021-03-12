@@ -9,7 +9,7 @@ void Play(MonoObject* goObj,  MonoString* animationString)
 		return;
 
 	GameObject* gameObject = EngineExternal->moduleMono->GameObject_From_CSGO(goObj);
-	C_Animator* animator = dynamic_cast<C_Animator*>(gameObject->GetComponent(Component::TYPE::Animator));
+	C_Animator* animator = dynamic_cast<C_Animator*>(gameObject->GetComponent(Component::TYPE::ANIMATOR));
 
 	if (animator != nullptr)
 	{
@@ -22,7 +22,7 @@ void Play(MonoObject* goObj,  MonoString* animationString)
 void Pause(MonoObject* goObj)
 {
 	GameObject* gameObject = EngineExternal->moduleMono->GameObject_From_CSGO(goObj);
-	C_Animator* animator = dynamic_cast<C_Animator*>(gameObject->GetComponent(Component::TYPE::Animator));
+	C_Animator* animator = dynamic_cast<C_Animator*>(gameObject->GetComponent(Component::TYPE::ANIMATOR));
 
 	if (animator != nullptr)
 	{
@@ -33,7 +33,7 @@ void Pause(MonoObject* goObj)
 void Resume(MonoObject* goObj)
 {
 	GameObject* gameObject = EngineExternal->moduleMono->GameObject_From_CSGO(goObj);
-	C_Animator* animator = dynamic_cast<C_Animator*>(gameObject->GetComponent(Component::TYPE::Animator));
+	C_Animator* animator = dynamic_cast<C_Animator*>(gameObject->GetComponent(Component::TYPE::ANIMATOR));
 
 	if (animator != nullptr)
 	{

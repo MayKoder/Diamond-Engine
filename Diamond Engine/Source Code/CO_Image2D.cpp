@@ -1,6 +1,7 @@
 #include "CO_Image2D.h"
 #include "RE_Texture.h"
 #include "RE_Material.h"
+#include "RE_Shader.h"
 
 #include "Application.h"
 #include "MO_ResourceManager.h"
@@ -72,13 +73,30 @@ bool C_Image2D::OnEditor()
 #endif // !STANDALONE
 
 
-void C_Image2D::RenderImage(float* transform, unsigned int shaderId)
+void C_Image2D::RenderImage(float* transform, ResourceMaterial* material, unsigned int VAO)
 {
+	material->shader->Bind();
+	material->PushUniforms();
+
 	if (texture != nullptr)
 		glBindTexture(GL_TEXTURE_2D, texture->textureID);
 
-	GLint modelLoc = glGetUniformLocation(shaderId, "model_matrix");
+	GLint modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "model_matrix");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, transform);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VAO);
+	//glVertexPointer(2, GL_FLOAT, 0, NULL);
+	glEnableVertexAttribArray(0);            
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	//glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	if (material->shader)
+		material->shader->Unbind();
 }
 
 
