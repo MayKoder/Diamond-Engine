@@ -1,6 +1,6 @@
+#pragma once
 
 #include "ParticleEffects.h"
-#include "MathGeoLib/include/Math/Quat.h"
 
 class PE_Rotate: public ParticleEffect
 {
@@ -16,6 +16,6 @@ public:
 #endif //!STANDALONE
 
 private:
-	Quat rotationQuat;
+	float rotation;
 	float rotationSpeed;
 };
