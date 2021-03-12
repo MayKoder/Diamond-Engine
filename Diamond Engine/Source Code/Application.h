@@ -63,6 +63,8 @@ public:
 	float GetFrameRate() const;
 	
 	int GetRandomInt();
+	int GetRandomInt(int min, int max);
+	float GetRandomFloat(float min, float max);
 
 private:
 
