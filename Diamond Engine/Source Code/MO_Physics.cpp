@@ -188,14 +188,14 @@ update_status ModulePhysics::Update(float gameTimestep) {
 		const PxDebugLine& line = rb.getLines()[i];
 
 
-		glLineWidth(2.0f);
+	/*	glLineWidth(2.0f);
 		glColor3f(0.0f, 1.0f, 0.0f);
 		glBegin(GL_LINES);
 		glVertex3f(line.pos0.x, line.pos0.y, line.pos0.z);
 		glVertex3f(line.pos1.x, line.pos1.y, line.pos1.z);
 		
 		glEnd();
-		glColor3f(1.0f, 1.0f, 1.0f);
+		glColor3f(1.0f, 1.0f, 1.0f);*/
 
 	}
 	return update_status::UPDATE_CONTINUE;

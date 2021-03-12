@@ -145,27 +145,61 @@ void C_MeshCollider::Update()
 
 	if (colliderShape != nullptr )
 	{
-		////EngineExternal->modulePhysics->DrawCollider(this);
+		//EngineExternal->modulePhysics->DrawCollider(this);
 
-		//float4x4 trans;
-		//if (rigidbody != nullptr && rigidbody->rigid_dynamic)
-		//trans = EngineExternal->modulePhysics->PhysXTransformToF4F(rigidbody->rigid_dynamic->getGlobalPose());
-		//else
-		//	trans = transform->globalTransform;
+		float4x4 trans;
+		if (rigidbody != nullptr && rigidbody->rigid_dynamic)
+		trans = EngineExternal->modulePhysics->PhysXTransformToF4F(rigidbody->rigid_dynamic->getGlobalPose());
+		else
+			trans = transform->globalTransform;
 
-		//trans = trans * localTransform;
-		////SetPosition(pos);
-		////trans = EngineExternal->modulePhysics->PhysXTransformToF4F(colliderShape->getLocalPose());
+		trans = trans * localTransform;
+		
 
-		//physx::PxBoxGeometry boxCollider;
+		const physx::PxVec3* convexVerts = colliderShape->getGeometry().convexMesh().convexMesh->getVertices();
+		float size = colliderShape->getGeometry().convexMesh().convexMesh->getNbVertices();
+		const physx::PxU8* indexBuffer = colliderShape->getGeometry().convexMesh().convexMesh->getIndexBuffer();
+		physx::PxU32 nbPolygons = colliderShape->getGeometry().convexMesh().convexMesh->getNbPolygons();
 
-		//
-
-		//colliderShape->getBoxGeometry(boxCollider);
-
-		//float3 half_size = { boxCollider.halfExtents.x, boxCollider.halfExtents.y, boxCollider.halfExtents.z };
-
+		
+		glPushMatrix();
+		glMultMatrixf(trans.Transposed().ptr());
+		glLineWidth(2.0f);
+		glColor3f(0.0f, 1.0f, 0.0f);
 	
+		
+		for (physx::PxU32 i = 0; i < nbPolygons; i++)
+		{
+			physx::PxHullPolygon face;
+			bool status = colliderShape->getGeometry().convexMesh().convexMesh->getPolygonData(i, face);
+			PX_ASSERT(status);
+			PX_UNUSED(status);
+			glBegin(GL_LINES);
+			const physx::PxU8* faceIndices = indexBuffer + face.mIndexBase;
+			for (physx::PxU32 j = 0; j < face.mNbVerts; j++)
+			{
+				physx::PxVec3 vec = convexVerts[faceIndices[j]];
+				glVertex3f(vec.x, vec.y, vec.z);
+				//normals[offset + j] = physx::PxVec3(face.mPlane[0], face.mPlane[1], face.mPlane[2]);
+			}
+			glEnd();
+			/*physx::PxVec3 vec = convexVerts[faceIndices[0]];
+			glVertex3f(vec.x, vec.y, vec.z);*/
+
+			/*glVertex3f(vec[i].x, vec[i].y, vec[i].z);
+			if (i != size - 1)
+				glVertex3f(vec[i + 1].x, vec[i + 1].y, vec[i + 1].z);
+			else
+				glVertex3f(vec[0].x, vec[0].y, vec[0].z);*/
+
+
+
+
+		}
+		
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glPopMatrix();
+
 	}
 	#endif // !STANDALONE
 	
