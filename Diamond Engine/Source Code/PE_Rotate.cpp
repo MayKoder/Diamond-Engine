@@ -3,8 +3,6 @@
 
 #include "ImGui/imgui.h"
 
-#include "MathGeoLib/include/MathGeoLib.h"
-
 PE_Rotate::PE_Rotate() :ParticleEffect(PARTICLE_EFFECT_TYPE::ROTATE)
 {
 	rotation = 0;
@@ -34,5 +32,4 @@ void PE_Rotate::OnEditor(int emitterIndex)
 	{
 
 	}
-
 }
