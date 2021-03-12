@@ -82,6 +82,8 @@ void Emitter::Draw(unsigned int shaderId)
 	int particlesCount = myParticles.size();
 	for (int i = 0; i < particlesCount; ++i)	//Need to order particles
 	{
+		glUseProgram(shaderId);
+
 		if (texture != nullptr)
 			glBindTexture(GL_TEXTURE_2D, texture->textureID);
 

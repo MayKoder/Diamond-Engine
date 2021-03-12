@@ -89,14 +89,13 @@ void C_ParticleSystem::Draw()
 
 	if (mat != nullptr)
 	{
-
 		ResourceMaterial* material = static_cast<C_Material*>(mat)->material;
 		material->shader->Bind();
 		material->PushUniforms();
 
 		for (int i = 0; i < myEmitters.size(); ++i)
 		{
-			myEmitters[i].Draw(material->shader->GetUID());
+			myEmitters[i].Draw(material->shader->shaderProgramID);
 
 			//Draw instanced arrays
 		}
