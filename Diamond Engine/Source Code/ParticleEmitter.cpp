@@ -1,5 +1,6 @@
 #include "ParticleEmitter.h"
 #include "Globals.h"
+#include "Application.h"
 #include "ImGui/imgui.h"
 #include "PE_Spawn.h"
 #include "PE_Spawn_Area.h"
@@ -36,6 +37,19 @@ Emitter::~Emitter()
 
 void Emitter::Update(float dt, bool systemActive)
 {
+	if (systemActive)
+	{
+		ThrowParticles(dt);
+	}
+
+	for (int i = 0; i < myParticles.size(); ++i)
+	{
+		myParticles[i].currentLifetime -= dt;
+		for (int j = 0; j < myEffects.size(); ++j)
+		{
+			myEffects[j]->Update(myParticles[i], dt);
+		}
+	}
 
 }
 
@@ -59,6 +73,7 @@ void Emitter::OnEditor(int emitterIndex)
 		{
 			poolToEdit = true;
 		}
+
 		guiName = "Particles per Second ##" + suffixLabel;
 		if (ImGui::DragInt(guiName.c_str(), &particlesPerSec))
 		{
@@ -71,7 +86,7 @@ void Emitter::OnEditor(int emitterIndex)
 		}
 
 
-		for (int i = (int)PARTICLE_EFFECT_TYPE::NONE+1; i < (int)PARTICLE_EFFECT_TYPE::MAX; ++i)
+		for (int i = (int)PARTICLE_EFFECT_TYPE::NONE + 1; i < (int)PARTICLE_EFFECT_TYPE::MAX; ++i)
 		{
 			int index = DoesEffectExist((PARTICLE_EFFECT_TYPE)i);
 			if (index != -1)
@@ -123,6 +138,7 @@ void Emitter::ThrowParticles(float dt)
 	float timeSinceLastThrow = dt + lastParticeTime;
 	int numberOfParticlesToSpawn = timeSinceLastThrow * particlesPerSec;
 	lastParticeTime = (timeSinceLastThrow * particlesPerSec) - numberOfParticlesToSpawn;
+	//LOG(LogType::L_NORMAL, "PARTICLES SPAWNED THIS FRAME %i", numberOfParticlesToSpawn);
 
 
 	//spawn particles
@@ -132,7 +148,8 @@ void Emitter::ThrowParticles(float dt)
 		{
 			for (int j = 0; j < myEffects.size(); ++j)
 			{
-				myEffects[i]->Spawn(myParticles[j]);
+				myEffects[j]->Spawn(myParticles[i]);
+				myParticles[i].maxLifetime = myParticles[i].currentLifetime = EngineExternal->GetRandomInt(particlesLifeTime[0], particlesLifeTime[1]);
 			}
 			--numberOfParticlesToSpawn;
 		}
