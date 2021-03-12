@@ -41,7 +41,7 @@ private:
 	float particlesLifeTime[2];
 
 	//particles per second
-	int particlesPerSec;
+	float particlesPerSec;
 	//this variable holds the extra time from the particle spawn last frame
 	float lastParticeTime;
 	std::vector<Particle> myParticles;

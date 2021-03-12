@@ -24,7 +24,7 @@
 Emitter::Emitter() :
 	toDelete(false),
 	texture(nullptr),
-	particlesPerSec(0),
+	particlesPerSec(0.0f),
 	lastParticeTime(0),
 	myParticles(),
 	myEffects()
@@ -64,7 +64,7 @@ void Emitter::Update(float dt, bool systemActive)
 {
 	if (systemActive)
 		ThrowParticles(dt);
-	
+
 	for (int i = 0; i < myParticles.size(); ++i)
 	{
 		if (myParticles[i].currentLifetime >= 0.0f)
@@ -127,7 +127,7 @@ void Emitter::OnEditor(int emitterIndex)
 		}
 
 		guiName = "Particles per Second ##" + suffixLabel;
-		if (ImGui::DragInt(guiName.c_str(), &particlesPerSec))
+		if (ImGui::DragFloat(guiName.c_str(), &particlesPerSec))
 		{
 			poolToEdit = true;
 		}
@@ -163,7 +163,7 @@ void Emitter::OnEditor(int emitterIndex)
 
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
+			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
 			{
 				//Drop asset from Asset window to scene window
 				std::string* metaFileDrop = (std::string*)payload->Data;
@@ -186,7 +186,7 @@ void Emitter::OnEditor(int emitterIndex)
 
 void Emitter::CalculatePoolSize()
 {
-	int poolSize = ceilf(particlesPerSec * particlesLifeTime[1]);
+	int poolSize = ceilf(particlesPerSec * max(particlesLifeTime[0], particlesLifeTime[1]));
 
 	if (poolSize < 0)
 		poolSize = 0;
@@ -220,7 +220,16 @@ void Emitter::ThrowParticles(float dt)
 	float numberOfParticlesToSpawnF = timeSinceLastThrow * particlesPerSec;
 	int numberOfParticlesToSpawn = numberOfParticlesToSpawnF;
 	float extraParticle = numberOfParticlesToSpawnF - numberOfParticlesToSpawn;
-	lastParticeTime = extraParticle / particlesPerSec;//TODO optimize division saving inverse particles per sec
+
+	if (particlesPerSec > 0.0f)
+	{
+		lastParticeTime = extraParticle / particlesPerSec; //TODO should we optimize this division?
+	}
+	else
+	{
+		lastParticeTime = 0.0f;
+	}
+
 
 	//LOG(LogType::L_NORMAL, "PARTICLES SPAWNED THIS FRAME %i", numberOfParticlesToSpawn);
 
