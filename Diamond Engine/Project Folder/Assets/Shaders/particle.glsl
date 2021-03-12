@@ -5,9 +5,10 @@ out vec2 textureCoords;
 
 uniform mat4 model_matrix;
 uniform mat4 view;
+uniform mat4 projection;
 
 void main() {
-	gl_Position =  model_matrix * vec4(aPos, 0.0, 1.0);
+	gl_Position = vec4(aPos, 0.0, 1.0);
 	textureCoords = vec2((aPos.x + 1.0) * 0.5,(aPos.y + 1.0) * 0.5);
 
 }
@@ -22,10 +23,14 @@ out vec4 fragmentColor;
 uniform sampler2D ourTexture;
 
 void main() {
-	fragmentColor = texture(ourTexture,textureCoords);
+	fragmentColor = vec4(1.0, 0.0, 0.0, 1.0);
 }
 
 #endif
+
+
+
+
 
 
 

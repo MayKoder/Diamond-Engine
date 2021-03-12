@@ -90,7 +90,7 @@ void Emitter::Draw(unsigned int shaderId)
 		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
 
 		GLint modelLoc = glGetUniformLocation(shaderId, "model_matrix");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(10, 10, 10)).Transposed().ptr());
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1, 1, 1)).Transposed().ptr());
 
 		modelLoc = glGetUniformLocation(shaderId, "view");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ViewMatrixOpenGL().ptr());
