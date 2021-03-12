@@ -67,10 +67,13 @@ void Emitter::Update(float dt, bool systemActive)
 	
 	for (int i = 0; i < myParticles.size(); ++i)
 	{
-		myParticles[i].currentLifetime -= dt;
-		for (int j = 0; j < myEffects.size(); ++j)
+		if (myParticles[i].currentLifetime >= 0.0f)
 		{
-			myEffects[j]->Update(myParticles[i], dt);
+			myParticles[i].currentLifetime -= dt;
+			for (int j = 0; j < myEffects.size(); ++j)
+			{
+				myEffects[j]->Update(myParticles[i], dt);
+			}
 		}
 	}
 }
@@ -213,8 +216,12 @@ void Emitter::ThrowParticles(float dt)
 {
 	//find particles to spawn this frame
 	float timeSinceLastThrow = dt + lastParticeTime;
-	int numberOfParticlesToSpawn = timeSinceLastThrow * particlesPerSec;
-	lastParticeTime = (timeSinceLastThrow * particlesPerSec) - numberOfParticlesToSpawn;
+
+	float numberOfParticlesToSpawnF = timeSinceLastThrow * particlesPerSec;
+	int numberOfParticlesToSpawn = numberOfParticlesToSpawnF;
+	float extraParticle = numberOfParticlesToSpawnF - numberOfParticlesToSpawn;
+	lastParticeTime = extraParticle / particlesPerSec;//TODO optimize division saving inverse particles per sec
+
 	//LOG(LogType::L_NORMAL, "PARTICLES SPAWNED THIS FRAME %i", numberOfParticlesToSpawn);
 
 
