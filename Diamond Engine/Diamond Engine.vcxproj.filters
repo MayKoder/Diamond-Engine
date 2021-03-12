@@ -815,6 +815,9 @@
     <ClInclude Include="Source Code\PE_Spawn.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\PE_Spawn_Area.h">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -1232,6 +1235,9 @@
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\PE_Spawn.cpp">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\PE_Spawn_Area.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
   </ItemGroup>
