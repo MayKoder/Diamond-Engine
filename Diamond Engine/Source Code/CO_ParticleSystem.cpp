@@ -91,7 +91,7 @@ void C_ParticleSystem::Draw()
 
 	for (int i = 0; i < myEmitters.size(); ++i)
 	{
-		myEmitters[i].Draw();
+		myEmitters[i].Draw(material->shader->GetUID());
 
 		//Draw instanced arrays
 	}

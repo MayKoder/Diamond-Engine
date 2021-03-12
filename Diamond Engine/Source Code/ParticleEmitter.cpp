@@ -73,7 +73,7 @@ void Emitter::Update(float dt, bool systemActive)
 			myEffects[j]->Update(myParticles[i], dt);
 		}
 	}
-
+}
 
 void Emitter::Draw(unsigned int shaderId)
 {
@@ -87,13 +87,13 @@ void Emitter::Draw(unsigned int shaderId)
 	GLint modelLoc = glGetUniformLocation(shaderId, "view");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ViewMatrixOpenGL().ptr());
 
-	GLint modelLoc = glGetUniformLocation(shaderId, "projection");
+	modelLoc = glGetUniformLocation(shaderId, "projection");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
 
 	int particlesCount = myParticles.size();
 	for (int i = 0; i < particlesCount; ++i)	//Need to order particles
 	{
-		GLint modelLoc = glGetUniformLocation(shaderId, "model_matrix");
+		modelLoc = glGetUniformLocation(shaderId, "model_matrix");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1, 1, 1)).Transposed().ptr());
 
 		glDrawArrays(GL_TRIANGLES, 0, 6);
