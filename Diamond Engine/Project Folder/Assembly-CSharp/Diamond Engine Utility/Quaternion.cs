@@ -49,6 +49,21 @@ namespace DiamondEngine
             this.x = x; this.y = y; this.z = z; this.w = w; 
         }
 
+        public Quaternion(float yaw, float pitch, float roll)
+        {
+            float cy = (float)Math.Cos(yaw * 0.5);
+            float sy = (float)Math.Sin(yaw * 0.5);
+            float cp = (float)Math.Cos(pitch * 0.5);
+            float sp = (float)Math.Sin(pitch * 0.5);
+            float cr = (float)Math.Cos(roll * 0.5);
+            float sr = (float)Math.Sin(roll * 0.5);
+
+            this.w = cr * cp * cy + sr * sp * sy;
+            this.x = sr * cp * cy - cr * sp * sy;
+            this.y = cr * sp * cy + sr * cp * sy;
+            this.z = cr * cp * sy - sr * sp * cy;
+        }
+
         static readonly Quaternion identityQuaternion = new Quaternion(0F, 0F, 0F, 1F);
         public static Quaternion identity
         {

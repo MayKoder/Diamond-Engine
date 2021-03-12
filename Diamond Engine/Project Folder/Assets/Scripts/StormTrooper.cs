@@ -74,6 +74,13 @@ public class StormTrooper : DiamondComponent
 				{
 					currentState = STATES.SHOOT;
 					timePassed = timeBewteenShots;
+					float rotation = (float)Math.Acos(Vector3.Dot(gameObject.transform.globalPosition, player.transform.globalPosition)
+																		 / (gameObject.transform.globalPosition.magnitude * player.transform.globalPosition.magnitude));
+
+					rotation *= (180 / (float)Math.PI);
+					Debug.Log("Angle: " + rotation);
+
+					gameObject.transform.localRotation = new Quaternion(0, rotation, 0);
 				}
 				else  //if not, keep wandering
                 { 
@@ -94,12 +101,18 @@ public class StormTrooper : DiamondComponent
 
 			case STATES.SHOOT:
 				timePassed += Time.deltaTime;
+
+				float angle = (float)Math.Acos(Vector3.Dot(gameObject.transform.globalPosition, player.transform.globalPosition));
+
+				//add aiming rotation
+
 				if (timePassed > timeBewteenShots)
 					Shoot();
 
 				if(shotTimes > 2)
                 {
 					currentState = STATES.RUN;
+					targetPosition = CalculateNewPosition();
 					shotTimes = 0;
                 }
 
