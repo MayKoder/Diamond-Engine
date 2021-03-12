@@ -226,7 +226,7 @@ void Emitter::ThrowParticles(float dt)
 			for (int j = 0; j < myEffects.size(); ++j)
 			{
 				myEffects[j]->Spawn(myParticles[i]);
-				myParticles[i].maxLifetime = myParticles[i].currentLifetime = particlesLifeTime[0];	//TODO: FIX RANDOM
+				myParticles[i].maxLifetime = myParticles[i].currentLifetime = EngineExternal->GetRandomIntFast(particlesLifeTime[0], particlesLifeTime[1]);
 			}
 			--numberOfParticlesToSpawn;
 		}

@@ -172,7 +172,21 @@ int Application::GetRandomInt() //TODO: We could add iconCount here to make sure
 	return randomizer.Int();
 }
 
-int Application::GetRandomInt(int min, int max)
+int Application::GetRandomInt(int a, int b)
+{
+	int newMin = a;
+	int newMax = b;
+
+	if (a > b)
+	{
+		newMin = b;
+		newMax = a;
+	}
+	
+	return randomizer.Int(newMin, newMax);
+}
+
+int Application::GetRandomIntFast(int min, int max)
 {
 	return randomizer.Int(min, max);
 }
