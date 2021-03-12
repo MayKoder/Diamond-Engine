@@ -5,7 +5,7 @@
 
 #include "MathGeoLib/include/MathGeoLib.h"
 
-PE_Rotate::PE_Rotate():ParticleEffect(PARTICLE_EFFECT_TYPE::ROTATE)
+PE_Rotate::PE_Rotate() :ParticleEffect(PARTICLE_EFFECT_TYPE::ROTATE)
 {
 	rotationQuat = Quat(0, 0, 0, 1);
 	rotationSpeed = 5.0f;
@@ -27,4 +27,11 @@ void PE_Rotate::Update(Particle& particle, float dt)
 
 void PE_Rotate::OnEditor(int emitterIndex)
 {
+	std::string suffixLabel = "Rotate Effect##";
+	suffixLabel += emitterIndex;
+	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
+	{
+
+	}
+
 }

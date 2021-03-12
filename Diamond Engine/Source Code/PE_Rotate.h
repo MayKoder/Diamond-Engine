@@ -2,7 +2,7 @@
 #include "ParticleEffects.h"
 #include "MathGeoLib/include/Math/Quat.h"
 
-class PE_Rotate:ParticleEffect
+class PE_Rotate: public ParticleEffect
 {
 public:
 	PE_Rotate();
