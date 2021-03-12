@@ -33,6 +33,7 @@ private:
 	unsigned int VAO = 0;
 };
 
+
 const float uiVAO[] = {
 -1, -1,
 1, -1,

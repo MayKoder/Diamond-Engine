@@ -3,6 +3,7 @@
 #include "Particle.h"
 #include "ParticleEffects.h"
 
+class ResourceTexture;
 
 class Emitter
 {
@@ -11,7 +12,7 @@ public:
 	~Emitter();
 
 	void Update(float dt, bool systemActive);
-	void Draw();
+	void Draw(unsigned int shaderId);
 
 #ifndef STANDALONE
 	void OnEditor(int emitterIndex);
@@ -33,7 +34,9 @@ private:
 public:
 	bool toDelete;
 private:
-
+	unsigned int VAO = 0u;
+	ResourceTexture* texture = nullptr;
+	
 	//Min - Max particles lifeTime 
 	float particlesLifeTime[2];
 
@@ -43,4 +46,15 @@ private:
 	float lastParticeTime;
 	std::vector<Particle> myParticles;
 	std::vector<ParticleEffect*> myEffects;
+};
+
+
+
+const float particleVAO[] = {
+-1, -1,
+1, -1,
+-1, 1,
+1, -1,
+1, 1,
+-1, 1,
 };

@@ -1,26 +1,48 @@
 #include "ParticleEmitter.h"
 #include "Globals.h"
-#include "Application.h"
-#include "ImGui/imgui.h"
+
 #include "PE_Spawn.h"
 #include "PE_Spawn_Area.h"
 #include "PE_Move.h"
 #include "PE_Rotate.h"
 #include <string>
 
+#include "Application.h"
+#include "MO_ResourceManager.h"
+#include "MO_Renderer3D.h"
+
+#include "RE_Texture.h"
+
+#include "CO_Camera.h"
+
+#include "OpenGL.h"
+#include "ImGui/imgui.h"
+#include "MathGeoLib/include/Math/float4x4.h"
+
+#include <string>
 
 Emitter::Emitter() :
+	toDelete(false),
+	texture(nullptr),
 	particlesPerSec(0),
 	lastParticeTime(0),
-	myEffects(),
 	myParticles(),
-	toDelete(false)
+	myEffects()
 {
 	memset(particlesLifeTime, 0.0f, sizeof(particlesLifeTime));
+
+	glGenBuffers(1, &VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VAO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(particleVAO), particleVAO, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 Emitter::~Emitter()
 {
+	if (texture != nullptr)
+		EngineExternal->moduleResources->UnloadResource(texture->GetUID());
 
 	for (int i = myEffects.size() - 1; i >= 0; --i)
 	{
@@ -34,6 +56,7 @@ Emitter::~Emitter()
 	myEffects.clear();
 	myParticles.clear();
 }
+
 
 void Emitter::Update(float dt, bool systemActive)
 {
@@ -51,11 +74,34 @@ void Emitter::Update(float dt, bool systemActive)
 		}
 	}
 
+
+void Emitter::Draw(unsigned int shaderId)
+{
+	if (texture != nullptr)
+		glBindTexture(GL_TEXTURE_2D, texture->textureID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VAO);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+
+	GLint modelLoc = glGetUniformLocation(shaderId, "view");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ViewMatrixOpenGL().ptr());
+
+	GLint modelLoc = glGetUniformLocation(shaderId, "projection");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
+
+	int particlesCount = myParticles.size();
+	for (int i = 0; i < particlesCount; ++i)	//Need to order particles
+	{
+		GLint modelLoc = glGetUniformLocation(shaderId, "model_matrix");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1, 1, 1)).Transposed().ptr());
+
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Emitter::Draw()
-{
-}
 
 #ifndef STANDALONE
 void Emitter::OnEditor(int emitterIndex)

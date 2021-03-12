@@ -41,7 +41,7 @@ bool M_Gui::Start()
 	glGenBuffers(1, &VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VAO);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 12, uiVAO, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(uiVAO), uiVAO, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 

@@ -18,9 +18,10 @@
 
 #include"GameObject.h"
 
-#include"CO_MeshRenderer.h"
-#include"CO_Camera.h"
-#include"CO_Transform.h"
+#include "CO_MeshRenderer.h"
+#include "CO_Camera.h"
+#include "CO_Transform.h"
+#include "CO_ParticleSystem.h"
 
 #include"Primitive.h"
 #include"MathGeoLib/include/Geometry/Triangle.h"
@@ -575,4 +576,18 @@ void ModuleRenderer3D::ClearAllRenderData()
 {
 	renderQueueMap.clear();
 	renderQueue.clear();
+}
+
+
+void ModuleRenderer3D::DrawParticleSystems()
+{
+	int systemCount = particleSystemQueue.size();
+
+	for (int i = 0; i < systemCount; ++i)
+	{
+		Component* partSy = particleSystemQueue[i]->GetComponent(Component::TYPE::PARTICLE_SYSTEM);
+		
+		if (partSy != nullptr)
+			static_cast<C_ParticleSystem*>(partSy)->Draw();
+	}
 }
