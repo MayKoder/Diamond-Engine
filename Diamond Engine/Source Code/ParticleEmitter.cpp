@@ -77,25 +77,24 @@ void Emitter::Update(float dt, bool systemActive)
 
 void Emitter::Draw(unsigned int shaderId)
 {
-	if (texture != nullptr)
-		glBindTexture(GL_TEXTURE_2D, texture->textureID);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VAO);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
-
-	GLint modelLoc = glGetUniformLocation(shaderId, "view");
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ViewMatrixOpenGL().ptr());
-
-	modelLoc = glGetUniformLocation(shaderId, "projection");
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
-
 	int particlesCount = myParticles.size();
 	for (int i = 0; i < particlesCount; ++i)	//Need to order particles
 	{
-		modelLoc = glGetUniformLocation(shaderId, "model_matrix");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1, 1, 1)).Transposed().ptr());
+		if (texture != nullptr)
+			glBindTexture(GL_TEXTURE_2D, texture->textureID);
 
+		glBindBuffer(GL_ARRAY_BUFFER, VAO);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+
+		GLint modelLoc = glGetUniformLocation(shaderId, "model_matrix");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(10, 10, 10)).Transposed().ptr());
+
+		modelLoc = glGetUniformLocation(shaderId, "view");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ViewMatrixOpenGL().ptr());
+
+		modelLoc = glGetUniformLocation(shaderId, "projection");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
 
@@ -148,6 +147,30 @@ void Emitter::OnEditor(int emitterIndex)
 				}
 			}
 		}
+
+		if (texture != nullptr)
+			ImGui::Image((ImTextureID)texture->textureID, ImVec2(64, 64), ImVec2(0, 1), ImVec2(1, 0));
+
+		else
+			ImGui::Image((ImTextureID)0, ImVec2(64, 64), ImVec2(0, 1), ImVec2(1, 0));
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
+			{
+				//Drop asset from Asset window to scene window
+				std::string* metaFileDrop = (std::string*)payload->Data;
+
+				if (texture != nullptr)
+					EngineExternal->moduleResources->UnloadResource(texture->GetUID());
+
+				std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
+
+				texture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
+				LOG(LogType::L_WARNING, "File %s loaded to scene", (*metaFileDrop).c_str());
+			}
+			ImGui::EndDragDropTarget();
+		}
 		ImGui::Separator();
 		ImGui::Spacing();
 	}
@@ -195,7 +218,7 @@ void Emitter::ThrowParticles(float dt)
 			for (int j = 0; j < myEffects.size(); ++j)
 			{
 				myEffects[j]->Spawn(myParticles[i]);
-				myParticles[i].maxLifetime = myParticles[i].currentLifetime = EngineExternal->GetRandomInt(particlesLifeTime[0], particlesLifeTime[1]);
+				myParticles[i].maxLifetime = myParticles[i].currentLifetime = particlesLifeTime[0];	//TODO: FIX RANDOM
 			}
 			--numberOfParticlesToSpawn;
 		}

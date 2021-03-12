@@ -1,5 +1,6 @@
 #include "CO_ParticleSystem.h"
 #include "Application.h"
+#include "MO_Renderer3D.h"
 
 #include "GameObject.h"
 #include "CO_Billboard.h"
@@ -11,7 +12,7 @@
 #include "OpenGL.h"
 #include "ImGui/imgui.h"
 
-C_ParticleSystem::C_ParticleSystem(GameObject* _gm) : Component(_gm), systemActive(true),myEmitters()
+C_ParticleSystem::C_ParticleSystem(GameObject* _gm) : Component(_gm), systemActive(true), myEmitters()
 {
 	name = "Particle System";
 }
@@ -43,8 +44,8 @@ bool C_ParticleSystem::OnEditor()
 
 		myEmitters[i].OnEditor(i);
 
-		guiName = "Delete Emitter"+suffixLabel;
-		if(ImGui::Button(guiName.c_str()))
+		guiName = "Delete Emitter" + suffixLabel;
+		if (ImGui::Button(guiName.c_str()))
 		{
 			myEmitters[i].toDelete = true;
 		}
@@ -65,7 +66,7 @@ void C_ParticleSystem::Update()
 {
 	float dt = EngineExternal->GetDT();
 	//delete emitters
-	for (int i = myEmitters.size()-1; i >= 0; --i)
+	for (int i = myEmitters.size() - 1; i >= 0; --i)
 	{
 		if (myEmitters[i].toDelete)
 		{
@@ -73,11 +74,12 @@ void C_ParticleSystem::Update()
 		}
 	}
 
-
 	for (int i = 0; i < myEmitters.size(); ++i)
 	{
-		myEmitters[i].Update(dt,systemActive);
+		myEmitters[i].Update(dt, systemActive);
 	}
+
+	EngineExternal->moduleRenderer3D->particleSystemQueue.push_back(gameObject);
 }
 
 void C_ParticleSystem::Draw()
@@ -85,18 +87,22 @@ void C_ParticleSystem::Draw()
 	Component* mat = gameObject->GetComponent(Component::TYPE::MATERIAL);
 	Component* bill = gameObject->GetComponent(Component::TYPE::BILLBOARD);
 
-	ResourceMaterial* material = static_cast<C_Material*>(mat)->material;
-	material->shader->Bind();
-	material->PushUniforms();
-
-	for (int i = 0; i < myEmitters.size(); ++i)
+	if (mat != nullptr)
 	{
-		myEmitters[i].Draw(material->shader->GetUID());
 
-		//Draw instanced arrays
+		ResourceMaterial* material = static_cast<C_Material*>(mat)->material;
+		material->shader->Bind();
+		material->PushUniforms();
+
+		for (int i = 0; i < myEmitters.size(); ++i)
+		{
+			myEmitters[i].Draw(material->shader->GetUID());
+
+			//Draw instanced arrays
+		}
+
+		material->shader->Unbind();
 	}
-
-	material->shader->Unbind();
 }
 
 void C_ParticleSystem::SetActive(bool newActive)

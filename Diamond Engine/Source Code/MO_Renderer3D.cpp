@@ -253,7 +253,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
-
+	DrawParticleSystems();
 	skybox.DrawAsSkybox(&App->moduleCamera->editorCamera);
 
 	DebugLine(pickingDebug);
@@ -281,6 +281,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			RenderWithOrdering(true);
 		}
 
+		DrawParticleSystems();
 		skybox.DrawAsSkybox(gameCamera);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		App->moduleGui->RenderCanvas2D();
@@ -590,4 +591,6 @@ void ModuleRenderer3D::DrawParticleSystems()
 		if (partSy != nullptr)
 			static_cast<C_ParticleSystem*>(partSy)->Draw();
 	}
+
+	particleSystemQueue.clear();
 }
