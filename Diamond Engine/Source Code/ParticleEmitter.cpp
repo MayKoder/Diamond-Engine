@@ -1,18 +1,19 @@
 #include "ParticleEmitter.h"
+#include "Globals.h"
 #include "ImGui/imgui.h"
 #include "PE_Spawn.h"
 #include "PE_Move.h"
+#include <string>
 
 
 Emitter::Emitter() :
 	particlesPerSec(0),
 	lastParticeTime(0),
+	myEffects(),
 	toDelete(false)
 {
 	memset(particlesLifeTime, 0.0f, sizeof(particlesLifeTime));
 
-	//create all effects here (initialized to nullptr)
-	myEffects.resize((int)PARTICLE_EFFECT_TYPE::MAX, nullptr);
 }
 
 Emitter::~Emitter()
@@ -41,17 +42,20 @@ void Emitter::Draw()
 #ifndef STANDALONE
 void Emitter::OnEditor(int emitterIndex)
 {
-	std::string guiName = "Emitter##" + emitterIndex;
+	std::string guiName = "Emitter";
+	std::string suffixLabel = "##";
+	suffixLabel += emitterIndex;
+
 	if (ImGui::CollapsingHeader(guiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		bool poolToEdit = false;
 
-		guiName = "Particle Lifetime##" + emitterIndex;
+		guiName = "Particle Lifetime ##" + suffixLabel;
 		if (ImGui::DragFloat2(guiName.c_str(), particlesLifeTime))
 		{
 			poolToEdit = true;
 		}
-		guiName = "Particles per Second##" + emitterIndex;
+		guiName = "Particles per Second ##" + suffixLabel;
 		if (ImGui::DragInt(guiName.c_str(), &particlesPerSec))
 		{
 			poolToEdit = true;
@@ -72,14 +76,15 @@ void Emitter::OnEditor(int emitterIndex)
 			}
 			else
 			{
-				guiName = (ParticleEffectEnumToString((PARTICLE_EFFECT_TYPE)i)) + "##";
-				guiName += emitterIndex;
+				guiName = (ParticleEffectEnumToString((PARTICLE_EFFECT_TYPE)i)) + suffixLabel;
 				if (ImGui::Button(guiName.c_str()))
 				{
-					myEffects[i] = CreateEffect((PARTICLE_EFFECT_TYPE)i);
+					CreateEffect((PARTICLE_EFFECT_TYPE)i);
 				}
 			}
 		}
+		ImGui::Separator();
+		ImGui::Spacing();
 	}
 }
 #endif // !STANDALONE
@@ -177,7 +182,7 @@ std::string Emitter::ParticleEffectEnumToString(PARTICLE_EFFECT_TYPE type)
 	return ret;
 }
 
-ParticleEffect* Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
+void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 {
 	ParticleEffect* newEffect=nullptr;
 
@@ -207,5 +212,29 @@ ParticleEffect* Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 		break;
 	}
 
-	return newEffect;
+	if (newEffect == nullptr)
+	{
+		LOG(LogType::L_WARNING,"Couldn't create a particle effect of type %i",(int)type);
+		return;
+	}
+
+
+	if (myEffects.empty() || myEffects[myEffects.size() - 1]->type < type) //if vector is empty or type greater than the last element
+	{
+		myEffects.push_back(newEffect);
+	}
+	else if(myEffects[0]->type>type) //if type goes before first element in the vector
+	{
+		myEffects.insert(myEffects.begin(), newEffect);
+	}
+	else//general case
+	{
+		for (int i = 1; i < myEffects.size(); ++i)
+		{
+			if (type > myEffects[i-1]->type && type < myEffects[i]->type)
+			{
+				myEffects.insert(myEffects.begin() + i, newEffect);
+			}
+		}
+	}
 }

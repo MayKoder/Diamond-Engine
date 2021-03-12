@@ -2,7 +2,7 @@
 #include "ImGui/imgui.h"
 #include "Application.h"
 
-C_ParticleSystem::C_ParticleSystem(GameObject* _gm) : Component(_gm), systemActive(true)
+C_ParticleSystem::C_ParticleSystem(GameObject* _gm) : Component(_gm), systemActive(true),myEmitters()
 {
 	name = "Particle System";
 }
@@ -24,14 +24,17 @@ bool C_ParticleSystem::OnEditor()
 
 	ImGui::Spacing();
 	std::string guiName = "";
+	std::string suffixLabel = "";
 	for (int i = 0; i < myEmitters.size(); ++i)
 	{
+		suffixLabel = "##";
+		suffixLabel += i;
 		ImGui::Separator();
 		ImGui::Spacing();
 
 		myEmitters[i].OnEditor(i);
 
-		guiName = "Delete Emitter ##" + i;
+		guiName = "Delete Emitter"+suffixLabel;
 		if(ImGui::Button(guiName.c_str()))
 		{
 			myEmitters[i].toDelete = true;
@@ -43,7 +46,7 @@ bool C_ParticleSystem::OnEditor()
 
 	if (ImGui::Button("Add Emitter"))
 	{
-		myEmitters.resize(myEmitters.size() + 1);
+		myEmitters.push_back(Emitter());
 	}
 	return true;
 }
