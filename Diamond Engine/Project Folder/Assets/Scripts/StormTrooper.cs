@@ -6,12 +6,12 @@ public class StormTrooper : DiamondComponent
 	public GameObject player;
 	public GameObject shootPoint;
 
-	public float speed;
+	public float wanderSpeed;
+	public float runningSpeed;
 	public int range;
 	public float damage;
 	public float bullet_speed;
 	private int shotTimes = 0;
-
 
 	private float timeBewteenShots = 5.0f;
 	private float timePassed = 0.0f;
@@ -21,7 +21,8 @@ public class StormTrooper : DiamondComponent
 	private Vector3 targetPosition = null;
 	private float stoppingDistance = 1.0f;
 
-	private STATES state;
+	private STATES currentState = STATES.WANDER;
+
 	private enum STATES
     {
 		IDLE,
@@ -34,7 +35,7 @@ public class StormTrooper : DiamondComponent
 
 	public void Start()
     {
-		state = STATES.WANDER;
+		currentState = STATES.WANDER;
 		targetPosition = CalculateNewPosition();
 		shotTimes = 0;
 		Debug.Log("Started");
@@ -42,13 +43,13 @@ public class StormTrooper : DiamondComponent
 
 	public void Update()
 	{
-        switch (state)
+        switch (currentState)
         {
 			case STATES.IDLE:
 				timePassed += Time.deltaTime;
 				if(timePassed > idleTime)
                 {
-					state = STATES.WANDER;
+					currentState = STATES.WANDER;
 					timePassed = 0.0f;
 					targetPosition = CalculateNewPosition();
                 }
@@ -57,32 +58,38 @@ public class StormTrooper : DiamondComponent
 			case STATES.RUN:
 				gameObject.transform.localPosition = Vector3.Lerp(gameObject.transform.localPosition, targetPosition, 0.01f);
 				
-				/*
 				if (Mathf.Distance(gameObject.transform.localPosition, targetPosition) < stoppingDistance)
 				{
-					state = STATES.IDLE;
+					currentState = STATES.IDLE;
 				}
-				*/
+				
 				break;
 
 			case STATES.WANDER:
 
-				Debug.Log("Wander");
+				//Debug.Log("Wander");
 
-				if (targetPosition == null)
-					targetPosition = CalculateNewPosition();
-
-				gameObject.transform.localPosition = Vector3.Lerp(gameObject.transform.localPosition, targetPosition, 0.01f);
-				//Vector3 newPosition	= Vector3.Lerp(gameObject.transform.localPosition, targetPosition, 0.01f);
-				//Debug.Log("New Position: " + newPosition.x + " " + newPosition.z);
-
-				/*
-				if (Mathf.Distance(gameObject.transform.localPosition, targetPosition) < stoppingDistance)
+				// If the player is in range attack him
+				if (Mathf.Distance(gameObject.transform.localPosition, player.transform.localPosition) < range)
 				{
-					targetPosition = CalculateNewPosition();
+					currentState = STATES.SHOOT;
+					timePassed = timeBewteenShots;
 				}
-				*/
+				else  //if not, keep wandering
+                { 
+					if (targetPosition == null)
+						targetPosition = CalculateNewPosition();
 
+					Vector3 direction = targetPosition - gameObject.transform.localPosition;
+
+					gameObject.transform.localPosition += direction.normalized * wanderSpeed * Time.deltaTime;
+
+					if (Mathf.Distance(gameObject.transform.localPosition, targetPosition) < stoppingDistance)
+					{
+						targetPosition = CalculateNewPosition();
+					}
+				}
+				
 				break;
 
 			case STATES.SHOOT:
@@ -92,7 +99,7 @@ public class StormTrooper : DiamondComponent
 
 				if(shotTimes > 2)
                 {
-					state = STATES.RUN;
+					currentState = STATES.RUN;
 					shotTimes = 0;
                 }
 
@@ -102,6 +109,7 @@ public class StormTrooper : DiamondComponent
 				break;
 
 			case STATES.DIE:
+				InternalCalls.Destroy(gameObject);
 				break;
 		}
 	}
@@ -123,15 +131,18 @@ public class StormTrooper : DiamondComponent
 	Vector3 CalculateNewPosition()
     {
 		Vector3 newPosition = new Vector3(0,0,0);
-
 		Random random = new Random();
 
         newPosition.x = random.Next(range);
+		newPosition.y = gameObject.transform.localPosition.y;
 		newPosition.z = random.Next(range);
-
-		//Debug.Log("New Position: " + newPosition.x + " " + newPosition.z);
 
 		return newPosition;
     }
+
+	public void OnTriggerEnter()
+	{
+		//state = STATES.HIT;
+	}
 
 }
