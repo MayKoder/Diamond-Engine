@@ -1,8 +1,8 @@
 {
     "EditorCameraPosition": [
-        34.570442199707031,
-        26.550670623779297,
-        4.0971183776855469
+        32.506198883056641,
+        35.957035064697266,
+        -15.80582332611084
     ],
     "EditorCameraZ": [
         -0.63757443428039551,
@@ -49,7 +49,7 @@
             "Position": [
                 0,
                 1,
-                0
+                21.374773025512695
             ],
             "Rotation": [
                 0,
@@ -126,7 +126,7 @@
             "Position": [
                 0,
                 0,
-                0
+                0.91313320398330688
             ],
             "Rotation": [
                 -0.7071068286895752,
@@ -136,8 +136,8 @@
             ],
             "Scale": [
                 500,
-                500,
-                500
+                499.99935913085938,
+                499.99935913085938
             ],
             "UID": 420350065,
             "PrefabID": 0,
@@ -343,9 +343,9 @@
             "name": "Enemy",
             "Active": true,
             "Position": [
+                1.5525643825531006,
                 0,
-                0,
-                -7.4402937889099121
+                -9.853302001953125
             ],
             "Rotation": [
                 0,
@@ -380,16 +380,17 @@
                     "ScriptName": "Stormtrooper",
                     "player": 1661764735,
                     "shootPoint": 1103811902,
-                    "wanderSpeed": 20,
-                    "runningSpeed": 25,
+                    "wanderSpeed": 5,
+                    "runningSpeed": 15,
                     "range": 35,
                     "damage": 20,
-                    "bullet_speed": 5,
+                    "bulletSpeed": 0,
                     "shotTimes": 0,
                     "timeBewteenShots": 0.20000000298023224,
                     "timePassed": 0,
                     "idleTime": 3.5,
                     "stoppingDistance": 1,
+                    "wanderRange": 5,
                     "currentState": 0
                 }
             ]
