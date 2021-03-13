@@ -47,6 +47,19 @@ MonoObject* CS_Component_Get_GO(MonoObject* thisRef)
 	return EngineExternal->moduleMono->GoToCSGO(DECS_Comp_To_GameObject(thisRef));
 }
 
+MonoObject* CS_Get_GO_Parent(MonoObject* go)
+{
+	return EngineExternal->moduleMono->GoToCSGO(
+			EngineExternal->moduleMono->GameObject_From_CSGO(go)->parent);
+}
+
+void CS_EnableGO(MonoObject* go, bool enable)
+{
+	GameObject* ref = EngineExternal->moduleMono->GameObject_From_CSGO(go);
+	if (ref != nullptr)
+		ref->active = enable;
+}
+
 //template<typename A>
 MonoObject* CS_GetComponent(MonoObject* ref, MonoString* type, int inputType)
 {

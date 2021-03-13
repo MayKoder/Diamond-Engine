@@ -52,6 +52,13 @@ namespace DiamondEngine
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
             get;
         }
+        public extern GameObject parent
+        {
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            get;
+        }
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern void Enable(bool enable);
     }
 }
