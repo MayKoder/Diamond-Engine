@@ -308,8 +308,8 @@ void ModuleInput::OnGUI()
 		ImGui::Text("GamePad: Pressing DPad Right: %d", game_pad[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_REPEAT);
 	}
 }
+#endif // !STANDALONE
 void ModuleInput::PlayHaptic(float strength, int length)
 {
 	SDL_HapticRumblePlay(haptic, strength, length);
 }
-#endif // !STANDALONE

@@ -165,6 +165,7 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
+                    "Script_Name": "StartMenu",
                     "ButtonState": 1,
                     "Is Selected": true
                 },
@@ -232,6 +233,11 @@
                     "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": true
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "StartMenu"
                 }
             ]
         },
@@ -357,6 +363,7 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
+                    "Script_Name": "StartMenu",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -424,6 +431,11 @@
                     "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "StartMenu"
                 }
             ]
         },
@@ -549,6 +561,7 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
+                    "Script_Name": "StartMenu",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -616,6 +629,11 @@
                     "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "StartMenu"
                 }
             ]
         },
@@ -715,7 +733,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6578013896942139,
+                    "hFOV": 1.603778600692749,
                     "culling": true
                 }
             ]
