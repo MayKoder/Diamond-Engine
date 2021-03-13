@@ -821,9 +821,6 @@
     <ClInclude Include="Source Code\ParticleEffects.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\PE_Spawn.h">
-      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\PE_Spawn_Area.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
@@ -834,6 +831,9 @@
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\PE_Color_Over_Lifetime.h">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\PE_Size_Over_Lifetime.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1249,9 +1249,6 @@
     <ClCompile Include="Source Code\ParticleEffects.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\PE_Spawn.cpp">
-      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\PE_Spawn_Area.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
@@ -1268,6 +1265,9 @@
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\PE_Color_Over_Lifetime.cpp">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\PE_Size_Over_Lifetime.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
   </ItemGroup>

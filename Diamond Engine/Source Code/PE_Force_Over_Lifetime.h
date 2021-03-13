@@ -1,5 +1,4 @@
-#ifndef __PE_MOVE_H__
-#define __PE_MOVE_H__
+#pragma once
 
 #include "ParticleEffects.h"
 
@@ -20,5 +19,3 @@ public:
 	float gravityModifier;
 	float myGravity;
 };
-
-#endif // !__PE_MOVE_H__

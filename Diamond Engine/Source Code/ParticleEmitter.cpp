@@ -1,10 +1,11 @@
 #include "ParticleEmitter.h"
 #include "Globals.h"
 
-#include "PE_Spawn.h"
 #include "PE_Spawn_Area.h"
 #include "PE_Force_Over_Lifetime.h"
 #include "PE_Rotate_Over_Lifetime.h"
+#include "PE_Size_Over_Lifetime.h"
+#include "PE_Color_Over_Lifetime.h"
 #include <string>
 
 #include "Application.h"
@@ -316,6 +317,12 @@ std::string Emitter::ParticleEffectEnumToString(PARTICLE_EFFECT_TYPE type)
 	case PARTICLE_EFFECT_TYPE::ROTATE_OVER_LIFETIME:
 		ret = "Rotate Over Lifetime Effect";
 		break;
+	case PARTICLE_EFFECT_TYPE::SIZE_OVER_LIFETIME:
+		ret = "Size Over Lifetime Effect";
+		break;
+	case PARTICLE_EFFECT_TYPE::COLOR_OVER_LIFETIME:
+		ret = "Color Over Lifetime Effect";
+		break;
 	case PARTICLE_EFFECT_TYPE::MAX:
 		break;
 	default:
@@ -332,23 +339,22 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 	{
 	case PARTICLE_EFFECT_TYPE::NONE:
 		break;
-		/*case PARTICLE_EFFECT_TYPE::SPAWN:
-			newEffect = new PE_Spawn();
-			break;*/
 	case PARTICLE_EFFECT_TYPE::AREA_SPAWN:
 		newEffect = new PE_SpawnArea();
 		break;
 	case PARTICLE_EFFECT_TYPE::FORCE_OVER_LIFETIME:
 		newEffect = new PE_ForceOverLifetime();
 		break;
-	case PARTICLE_EFFECT_TYPE::RANDOM_MOVE:
-		//TODO
-		break;
 	case PARTICLE_EFFECT_TYPE::ROTATE_OVER_LIFETIME:
 		newEffect = new PE_RotateOverLifetime();
 		break;
+	case PARTICLE_EFFECT_TYPE::SIZE_OVER_LIFETIME:
+		newEffect = new PE_SizeOverLifetime();
+		break;
+	case PARTICLE_EFFECT_TYPE::COLOR_OVER_LIFETIME:
+		newEffect = new PE_ColorOverLifetime();
+		break;
 	case PARTICLE_EFFECT_TYPE::MAX:
-		//TODO
 		break;
 	default:
 		break;

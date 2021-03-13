@@ -35,23 +35,6 @@ void PE_ForceOverLifetime::OnEditor(int emitterIndex)
 	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
 	{
 
-
-	/*	ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "Particle movement: ");
-
-		int offset = ImGui::CalcTextSize("Particle speed: ").x + 16;
-		ImGui::Text("Particle speed: ");
-		ImGui::SameLine();
-		suffixLabel = "##lPaSpdMoveEffect";
-		suffixLabel += emitterIndex;
-		ImGui::DragFloat3(suffixLabel.c_str(), speed, 0.1f);
-
-		ImGui::Text("Part acceleration: ");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(offset);
-		suffixLabel = "##lPaAccMoveEffect";
-		suffixLabel += emitterIndex;
-		ImGui::DragFloat3(suffixLabel.c_str(), acceleration, 0.1f);*/
-
 		suffixLabel = "Force Vector##DirectionalForce";
 		suffixLabel += emitterIndex;
 		ImGui::DragFloat3(suffixLabel.c_str(), acceleration, 0.1f); 

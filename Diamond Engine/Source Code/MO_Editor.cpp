@@ -539,6 +539,13 @@ void M_Editor::DrawCreateMenu()
 		ImGui::EndMenu();
 	}
 
+	if (ImGui::MenuItem("Particle System", nullptr))
+	{
+		GameObject* auxObj= App->moduleScene->CreateGameObject("Particle System", App->moduleScene->root);
+		auxObj->AddComponent(Component::TYPE::MATERIAL);
+		auxObj->AddComponent(Component::TYPE::PARTICLE_SYSTEM);
+	}
+
 	if (ImGui::MenuItem("Game Camera", nullptr))
 		App->moduleScene->CreateGameCamera("Game Camera");
 
