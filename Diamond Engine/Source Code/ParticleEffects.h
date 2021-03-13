@@ -6,11 +6,11 @@ struct Particle;
 enum class PARTICLE_EFFECT_TYPE : int
 {
     NONE = -1,
-    SPAWN,
+    //SPAWN,//DEPRECATED?
     AREA_SPAWN,
-    MOVE,
+    FORCE_OVER_LIFETIME,
     RANDOM_MOVE,
-    ROTATE,
+    ROTATE_OVER_LIFETIME,
     FADE,
 	MAX
 };
@@ -22,7 +22,7 @@ public:
     virtual ~ParticleEffect();
 
 
-    virtual void Spawn(Particle& particle) = 0;
+    virtual void Spawn(Particle& particle);
     virtual void Update(Particle& particle, float dt);
 
 #ifndef STANDALONE

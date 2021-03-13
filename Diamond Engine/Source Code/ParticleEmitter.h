@@ -33,6 +33,7 @@ private:
 	std::string ParticleEffectEnumToString(PARTICLE_EFFECT_TYPE type);
 	void CreateEffect(PARTICLE_EFFECT_TYPE type);
 
+	void PrepareParticleToSpawn(Particle& p, float3& startingPos);
 public:
 	bool toDelete;
 private:
@@ -47,9 +48,6 @@ private:
 
 	//Min - Max Start particles size 
 	float particlesSize[2];
-
-	//Min - Max Start particles rotation 
-	float particlesRotation[2]; //TODO missing particlesRotationSpeed
 
 	//Particles Starting Color
 	float4 particlesColor;

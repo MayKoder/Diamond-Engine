@@ -2,11 +2,11 @@
 
 #include "ParticleEffects.h"
 
-class PE_Rotate: public ParticleEffect
+class PE_RotateOverLifetime: public ParticleEffect
 {
 public:
-	PE_Rotate();
-	~PE_Rotate() override;
+	PE_RotateOverLifetime();
+	~PE_RotateOverLifetime() override;
 
 	void Spawn(Particle& particle) override;
 	void Update(Particle& particle, float dt) override;
@@ -16,6 +16,6 @@ public:
 #endif //!STANDALONE
 
 private:
-	float rotation;
-	float rotationSpeed;
+	float rotation[2];
+	float rotationSpeed[2];
 };

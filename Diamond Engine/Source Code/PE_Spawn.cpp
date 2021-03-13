@@ -3,7 +3,7 @@
 
 #include "ImGui/imgui.h"
 
-PE_Spawn::PE_Spawn() : ParticleEffect(PARTICLE_EFFECT_TYPE::SPAWN)
+PE_Spawn::PE_Spawn() : ParticleEffect(/*PARTICLE_EFFECT_TYPE::SPAWN*/PARTICLE_EFFECT_TYPE::NONE)//placeholder TODO
 {
 	memset(spawnPos, 0.f, sizeof(spawnPos));
 }

@@ -3,13 +3,12 @@
 
 #include "ParticleEffects.h"
 
-class PE_Move : public ParticleEffect
+class PE_ForceOverLifetime : public ParticleEffect
 {
 public:
-	PE_Move();
-	~PE_Move() override;
+	PE_ForceOverLifetime();
+	~PE_ForceOverLifetime() override;
 
-	void Spawn(Particle& particle) override;
 	void Update(Particle& particle, float dt) override;
 
 #ifndef STANDALONE
@@ -17,8 +16,9 @@ public:
 #endif // !STANDALONE
 
 public:
-	float speed[3];
 	float acceleration[3];
+	float gravityModifier;
+	float myGravity;
 };
 
 #endif // !__PE_MOVE_H__

@@ -9,11 +9,15 @@ ParticleEffect::~ParticleEffect()
 {
 }
 
+void ParticleEffect::Spawn(Particle& particle)
+{
+}
+
 void ParticleEffect::Update(Particle& particle, float dt)
 {
 	//Linear downgrade - The particle's visibility goes down linearly with time
-	if(particle.maxLifetime != 0) //Avoid math error
-		particle.color.w = particle.currentLifetime / particle.maxLifetime;
+	//if(particle.maxLifetime != 0) //Avoid math error
+	//	particle.color.w = particle.currentLifetime / particle.maxLifetime;
 }
 
 #ifndef STANDALONE

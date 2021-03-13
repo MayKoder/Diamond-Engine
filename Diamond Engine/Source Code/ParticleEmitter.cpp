@@ -3,8 +3,8 @@
 
 #include "PE_Spawn.h"
 #include "PE_Spawn_Area.h"
-#include "PE_Move.h"
-#include "PE_Rotate.h"
+#include "PE_Force_Over_Lifetime.h"
+#include "PE_Rotate_Over_Lifetime.h"
 #include <string>
 
 #include "Application.h"
@@ -35,7 +35,6 @@ Emitter::Emitter() :
 	memset(particlesLifeTime, 0.1f, sizeof(particlesLifeTime));
 	memset(particlesSpeed, 0.0f, sizeof(particlesSpeed));
 	memset(particlesSize, 1.0f, sizeof(particlesSize));
-	memset(particlesRotation, 0.0f, sizeof(particlesRotation));
 
 
 	glGenBuffers(1, &VAO);
@@ -224,11 +223,7 @@ void Emitter::CreateParticles(unsigned int particlesToAdd)
 
 	for (unsigned int i = lastIndex; i < myParticles.size(); ++i)
 	{
-		myParticles[i].maxLifetime = myParticles[i].currentLifetime = EngineExternal->GetRandomFloat(particlesLifeTime[0], particlesLifeTime[1]);
-		myParticles[i].size = EngineExternal->GetRandomFloat(particlesSize[0], particlesSize[1]);
-		myParticles[i].rotation = EngineExternal->GetRandomFloat(particlesRotation[0], particlesRotation[1]);
-		myParticles[i].color = particlesColor;
-		myParticles[i].pos = startingPos; //particles start at the center of the obj (but spawn methods modify this pos for the moment)
+		PrepareParticleToSpawn(myParticles[i], startingPos);
 
 		for (int j = 0; j < myEffects.size(); ++j)
 		{
@@ -266,11 +261,7 @@ void Emitter::ThrowParticles(float dt)
 	{
 		if (myParticles[i].currentLifetime < 0.0f)
 		{
-			myParticles[i].maxLifetime = myParticles[i].currentLifetime = EngineExternal->GetRandomFloat(particlesLifeTime[0], particlesLifeTime[1]);
-			myParticles[i].size = EngineExternal->GetRandomFloat(particlesSize[0], particlesSize[1]);
-			myParticles[i].rotation = EngineExternal->GetRandomFloat(particlesRotation[0], particlesRotation[1]);
-			myParticles[i].color = particlesColor;
-			myParticles[i].pos = startingPos; //particles start at the center of the obj (but spawn methods modify this pos for the moment)
+			PrepareParticleToSpawn(myParticles[i], startingPos);
 
 			for (int j = 0; j < myEffects.size(); ++j)
 			{
@@ -310,20 +301,20 @@ std::string Emitter::ParticleEffectEnumToString(PARTICLE_EFFECT_TYPE type)
 	{
 	case PARTICLE_EFFECT_TYPE::NONE:
 		break;
-	case PARTICLE_EFFECT_TYPE::SPAWN:
-		ret = "Spawn Effect";
-		break;
+		/*case PARTICLE_EFFECT_TYPE::SPAWN:
+			ret = "Spawn Effect";
+			break;*/
 	case PARTICLE_EFFECT_TYPE::AREA_SPAWN:
-		ret = "Area Spawn Effect";
+		ret = "Spawn Shape Effect";
 		break;
-	case PARTICLE_EFFECT_TYPE::MOVE:
-		ret = "Move Effect";
+	case PARTICLE_EFFECT_TYPE::FORCE_OVER_LIFETIME:
+		ret = "Force Over Lifetime Effect";
 		break;
 	case PARTICLE_EFFECT_TYPE::RANDOM_MOVE:
 		ret = "Random Move Effect";
 		break;
-	case PARTICLE_EFFECT_TYPE::ROTATE:
-		ret = "Rotate Effect";
+	case PARTICLE_EFFECT_TYPE::ROTATE_OVER_LIFETIME:
+		ret = "Rotate Over Lifetime Effect";
 		break;
 	case PARTICLE_EFFECT_TYPE::MAX:
 		break;
@@ -341,20 +332,20 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 	{
 	case PARTICLE_EFFECT_TYPE::NONE:
 		break;
-	case PARTICLE_EFFECT_TYPE::SPAWN:
-		newEffect = new PE_Spawn();
-		break;
+		/*case PARTICLE_EFFECT_TYPE::SPAWN:
+			newEffect = new PE_Spawn();
+			break;*/
 	case PARTICLE_EFFECT_TYPE::AREA_SPAWN:
 		newEffect = new PE_Spawn_Area();
 		break;
-	case PARTICLE_EFFECT_TYPE::MOVE:
-		newEffect = new PE_Move();
+	case PARTICLE_EFFECT_TYPE::FORCE_OVER_LIFETIME:
+		newEffect = new PE_ForceOverLifetime();
 		break;
 	case PARTICLE_EFFECT_TYPE::RANDOM_MOVE:
 		//TODO
 		break;
-	case PARTICLE_EFFECT_TYPE::ROTATE:
-		newEffect = new PE_Rotate();
+	case PARTICLE_EFFECT_TYPE::ROTATE_OVER_LIFETIME:
+		newEffect = new PE_RotateOverLifetime();
 		break;
 	case PARTICLE_EFFECT_TYPE::MAX:
 		//TODO
@@ -388,6 +379,20 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 			}
 		}
 	}
+}
+
+void Emitter::PrepareParticleToSpawn(Particle& p, float3& startingPos)
+{
+	//we reset all particle variables
+	p.accel = { 0.0f,0.0f,0.0f };
+	p.rotation = 0.0f;
+	p.rotationSpeed = 0.0f;
+	p.speed = { 0.0f,0.0f,0.0f };
+	p.maxLifetime = p.currentLifetime = EngineExternal->GetRandomFloat(particlesLifeTime[0], particlesLifeTime[1]);
+	p.size = EngineExternal->GetRandomFloat(particlesSize[0], particlesSize[1]);
+	p.color = particlesColor;
+	p.pos = startingPos; //particles start at the center of the obj (but spawn methods modify this pos for the time being)
+
 }
 
 void Emitter::AssignTransform(C_Transform* objTransform)

@@ -13,7 +13,7 @@ struct Particle
 	float3 accel;
 	float4 color;//RGBA
 
-	float rotation;
+	float rotation;//DEGREES OR RAD? TODO CHECK
 	float rotationSpeed;
 	float maxLifetime;
 	float currentLifetime;//also acts as isAlive bool

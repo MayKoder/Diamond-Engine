@@ -821,19 +821,19 @@
     <ClInclude Include="Source Code\ParticleEffects.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\PE_Move.h">
-      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\PE_Spawn.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\PE_Spawn_Area.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\PE_Rotate.h">
+    <ClInclude Include="Source Code\PE_Fade.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\PE_Fade.h">
+    <ClInclude Include="Source Code\PE_Rotate_Over_Lifetime.h">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\PE_Force_Over_Lifetime.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1249,16 +1249,10 @@
     <ClCompile Include="Source Code\ParticleEffects.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\PE_Move.cpp">
-      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\PE_Spawn.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\PE_Spawn_Area.cpp">
-      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\PE_Rotate.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\PE_Fade.cpp">
@@ -1269,6 +1263,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\IM_PrefabImporter.cpp">
       <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\PE_Rotate_Over_Lifetime.cpp">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\PE_Force_Over_Lifetime.cpp">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
