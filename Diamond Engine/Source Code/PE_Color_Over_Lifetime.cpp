@@ -3,22 +3,14 @@
 
 #include "ImGui/imgui.h"
 
-PE_ColorOverLifetime::PE_ColorOverLifetime() :ParticleEffect(PARTICLE_EFFECT_TYPE::COLOR_OVER_LIFETIME)
+
+PE_ColorOverLifetime::PE_ColorOverLifetime() :ParticleEffect(PARTICLE_EFFECT_TYPE::COLOR_OVER_LIFETIME), editGradient(false)
 {
-	startingColor[0] = 1.0f;
-	startingColor[1] = 1.0f;
-	startingColor[2] = 1.0f;
-	startingColor[3] = 1.0f;
-
-	endingColor[0] = 0.0f;
-	endingColor[1] = 0.0f;
-	endingColor[2] = 0.0f;
-	endingColor[3] = 0.0f;
-
 }
 
 PE_ColorOverLifetime::~PE_ColorOverLifetime()
 {
+	gradient.getMarks().clear();
 }
 
 #ifndef STANDALONE
@@ -29,13 +21,28 @@ void PE_ColorOverLifetime::OnEditor(int emitterIndex)
 	suffixLabel += emitterIndex;
 	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
 	{
-		suffixLabel = "Starting Color##ColorEdit";
-		suffixLabel += emitterIndex;
-		ImGui::ColorEdit4(suffixLabel.c_str(), startingColor);
+		if (editGradient)
+		{
+			suffixLabel = "Save Edited Gradient##ColorGradient";
+			suffixLabel += emitterIndex;
+			if(ImGui::Button(suffixLabel.c_str()))
+			{
+				editGradient = false;
+			}
 
-		suffixLabel = "End Color##ColorEdit";
-		suffixLabel += emitterIndex;
-		ImGui::ColorEdit4(suffixLabel.c_str(), endingColor);
+			static ImGradientMark* draggingMark = nullptr;
+			static ImGradientMark* selectedMark = nullptr;
+
+			ImGui::GradientEditor(&gradient, draggingMark, selectedMark);
+
+		}
+		else
+		{
+			if (ImGui::GradientButton(&gradient))
+			{
+				editGradient = true;
+			}
+		}
 	}
 
 }
@@ -45,10 +52,9 @@ void PE_ColorOverLifetime::Update(Particle& particle, float dt)
 	if (particle.maxLifetime != 0.0f)
 	{
 		float percentatge = particle.currentLifetime / particle.maxLifetime;
-		float4 startColor = { startingColor[0] ,startingColor[1] ,startingColor[2] ,startingColor[3] };
-		float4 endColor = { endingColor[0] ,endingColor[1] ,endingColor[2] ,endingColor[3] };
-
-		particle.color = (1 - percentatge) * endColor + percentatge * startColor;
+		float myColor[4];
+		gradient.getColorAt(percentatge, myColor);
+		particle.color = { myColor[0] ,myColor[1] ,myColor[2] ,myColor[3] };
 	}
 }
 #endif // !STANDALONE

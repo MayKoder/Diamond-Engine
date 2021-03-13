@@ -311,9 +311,6 @@ std::string Emitter::ParticleEffectEnumToString(PARTICLE_EFFECT_TYPE type)
 	case PARTICLE_EFFECT_TYPE::FORCE_OVER_LIFETIME:
 		ret = "Force Over Lifetime Effect";
 		break;
-	case PARTICLE_EFFECT_TYPE::RANDOM_MOVE:
-		ret = "Random Move Effect";
-		break;
 	case PARTICLE_EFFECT_TYPE::ROTATE_OVER_LIFETIME:
 		ret = "Rotate Over Lifetime Effect";
 		break;

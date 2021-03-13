@@ -261,6 +261,7 @@
     <ClInclude Include="Source Code\External Libraries\ImGui\imconfig.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\ImGuiUtils.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_color_gradient.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui_internal.h" />
@@ -448,6 +449,7 @@
     <ClCompile Include="Source Code\External Libraries\ImGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGuizmo\ImSequencer.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_color_gradient.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_demo.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_draw.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.cpp" />

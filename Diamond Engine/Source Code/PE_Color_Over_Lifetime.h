@@ -2,6 +2,8 @@
 
 #include "ParticleEffects.h";
 
+#include "ImGui/imgui_color_gradient.h"
+
 class PE_ColorOverLifetime : public ParticleEffect
 {
 public:
@@ -14,6 +16,6 @@ public:
 
 	void Update(Particle& particle, float dt) override;
 private:
-	float startingColor[4]; //TODO change this to a gradient 
-	float endingColor[4];
+	ImGradient gradient;
+	bool editGradient;
 };
