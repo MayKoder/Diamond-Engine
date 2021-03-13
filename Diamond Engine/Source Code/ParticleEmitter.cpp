@@ -221,7 +221,7 @@ void Emitter::CreateParticles(unsigned int particlesToAdd)
 	myParticles.resize(lastIndex + particlesToAdd);
 	float3 startingPos = objTransform->globalTransform.TranslatePart();
 
-	for (unsigned int i = lastIndex; i < myParticles.size(); ++i)
+	for (int i = lastIndex; i < myParticles.size(); ++i)
 	{
 		PrepareParticleToSpawn(myParticles[i], startingPos);
 
@@ -274,10 +274,10 @@ void Emitter::ThrowParticles(float dt)
 			break;
 	}
 
-	if (numberOfParticlesToSpawn > 0)
+	/*if (numberOfParticlesToSpawn > 0)
 	{
 		CreateParticles(numberOfParticlesToSpawn);
-	}
+	}*/
 
 }
 
