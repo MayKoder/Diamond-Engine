@@ -14,6 +14,7 @@
 #include "RE_Texture.h"
 
 #include "CO_Camera.h"
+#include "CO_Transform.h"
 
 #include "OpenGL.h"
 #include "ImGui/imgui.h"
@@ -26,10 +27,16 @@ Emitter::Emitter() :
 	texture(nullptr),
 	particlesPerSec(0.0f),
 	lastParticeTime(0),
+	particlesColor(1.0f, 1.0f, 1.0f, 1.0f),
 	myParticles(),
-	myEffects()
+	myEffects(),
+	objTransform(nullptr)
 {
-	memset(particlesLifeTime, 0.0f, sizeof(particlesLifeTime));
+	memset(particlesLifeTime, 0.1f, sizeof(particlesLifeTime));
+	memset(particlesSpeed, 0.0f, sizeof(particlesSpeed));
+	memset(particlesSize, 1.0f, sizeof(particlesSize));
+	memset(particlesRotation, 0.0f, sizeof(particlesRotation));
+
 
 	glGenBuffers(1, &VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VAO);
@@ -44,7 +51,11 @@ Emitter::Emitter() :
 Emitter::~Emitter()
 {
 	if (texture != nullptr)
+	{
 		EngineExternal->moduleResources->UnloadResource(texture->GetUID());
+		texture = nullptr;
+	}
+	VAO = 0u;
 
 	for (int i = myEffects.size() - 1; i >= 0; --i)
 	{
@@ -57,6 +68,7 @@ Emitter::~Emitter()
 	}
 	myEffects.clear();
 	myParticles.clear();
+	objTransform = nullptr;
 }
 
 
@@ -74,6 +86,9 @@ void Emitter::Update(float dt, bool systemActive)
 			{
 				myEffects[j]->Update(myParticles[i], dt);
 			}
+
+			myParticles[i].speed += myParticles[i].accel * dt;
+			myParticles[i].pos += myParticles[i].speed * dt;
 		}
 	}
 }
@@ -201,15 +216,27 @@ void Emitter::SetPoolSize(unsigned int poolSize)
 
 void Emitter::CreateParticles(unsigned int particlesToAdd)
 {
+	//TODO this method is too similar to throw particles, consider merging these into a single method
+
 	unsigned int lastIndex = myParticles.size();
 	myParticles.resize(lastIndex + particlesToAdd);
-	for (int i = 0; i < myEffects.size(); ++i)
+	float3 startingPos = objTransform->globalTransform.TranslatePart();
+
+	for (unsigned int i = lastIndex; i < myParticles.size(); ++i)
 	{
-		for (unsigned int j = lastIndex; j < myParticles.size(); ++j)
+		myParticles[i].maxLifetime = myParticles[i].currentLifetime = EngineExternal->GetRandomFloat(particlesLifeTime[0], particlesLifeTime[1]);
+		myParticles[i].size = EngineExternal->GetRandomFloat(particlesSize[0], particlesSize[1]);
+		myParticles[i].rotation = EngineExternal->GetRandomFloat(particlesRotation[0], particlesRotation[1]);
+		myParticles[i].color = particlesColor;
+		myParticles[i].pos = startingPos; //particles start at the center of the obj (but spawn methods modify this pos for the moment)
+
+		for (int j = 0; j < myEffects.size(); ++j)
 		{
-			myEffects[i]->Spawn(myParticles[j]);
+			myEffects[j]->Spawn(myParticles[i]);
 		}
 	}
+
+
 }
 
 void Emitter::ThrowParticles(float dt)
@@ -233,22 +260,32 @@ void Emitter::ThrowParticles(float dt)
 
 	//LOG(LogType::L_NORMAL, "PARTICLES SPAWNED THIS FRAME %i", numberOfParticlesToSpawn);
 
-
+	float3 startingPos = objTransform->globalTransform.TranslatePart();
 	//spawn particles
 	for (int i = 0; i < myParticles.size(); ++i)
 	{
 		if (myParticles[i].currentLifetime < 0.0f)
 		{
+			myParticles[i].maxLifetime = myParticles[i].currentLifetime = EngineExternal->GetRandomFloat(particlesLifeTime[0], particlesLifeTime[1]);
+			myParticles[i].size = EngineExternal->GetRandomFloat(particlesSize[0], particlesSize[1]);
+			myParticles[i].rotation = EngineExternal->GetRandomFloat(particlesRotation[0], particlesRotation[1]);
+			myParticles[i].color = particlesColor;
+			myParticles[i].pos = startingPos; //particles start at the center of the obj (but spawn methods modify this pos for the moment)
+
 			for (int j = 0; j < myEffects.size(); ++j)
 			{
 				myEffects[j]->Spawn(myParticles[i]);
-				myParticles[i].maxLifetime = myParticles[i].currentLifetime = EngineExternal->GetRandomIntFast(particlesLifeTime[0], particlesLifeTime[1]);
 			}
 			--numberOfParticlesToSpawn;
 		}
 
 		if (numberOfParticlesToSpawn == 0)
 			break;
+	}
+
+	if (numberOfParticlesToSpawn > 0)
+	{
+		CreateParticles(numberOfParticlesToSpawn);
 	}
 
 }
@@ -351,4 +388,9 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 			}
 		}
 	}
+}
+
+void Emitter::AssignTransform(C_Transform* objTransform)
+{
+	this->objTransform = objTransform;
 }

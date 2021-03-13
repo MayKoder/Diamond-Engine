@@ -19,6 +19,8 @@ public:
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
 
+
+	void AddEmitter();
 private:
 
 	bool systemActive;

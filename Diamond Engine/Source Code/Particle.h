@@ -10,9 +10,12 @@ struct Particle
 	~Particle();
 	float3 pos;
 	float3 speed;
+	float3 accel;
 	float4 color;//RGBA
+
 	float rotation;
 	float rotationSpeed;
 	float maxLifetime;
 	float currentLifetime;//also acts as isAlive bool
+	float size;
 };

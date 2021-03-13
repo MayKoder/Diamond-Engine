@@ -3,6 +3,7 @@
 #include "Particle.h"
 #include "ParticleEffects.h"
 
+class C_Transform;
 class ResourceTexture;
 
 class Emitter
@@ -18,6 +19,7 @@ public:
 	void OnEditor(int emitterIndex);
 #endif // !STANDALONE
 
+	void AssignTransform(C_Transform* objTransform);
 private:
 	//calculates a new Pool Size from the particle spawn rate & particle lifeTime
 	void CalculatePoolSize();
@@ -37,8 +39,20 @@ private:
 	unsigned int VAO = 0u;
 	ResourceTexture* texture = nullptr;
 	
-	//Min - Max particles lifeTime 
+	//Min - Max Start particles lifeTime 
 	float particlesLifeTime[2];
+
+	//Min - Max Start particles speed 
+	float particlesSpeed[2]; //TODO move to emisison shape component
+
+	//Min - Max Start particles size 
+	float particlesSize[2];
+
+	//Min - Max Start particles rotation 
+	float particlesRotation[2]; //TODO missing particlesRotationSpeed
+
+	//Particles Starting Color
+	float4 particlesColor;
 
 	//particles per second
 	float particlesPerSec;
@@ -46,6 +60,7 @@ private:
 	float lastParticeTime;
 	std::vector<Particle> myParticles;
 	std::vector<ParticleEffect*> myEffects;
+	C_Transform* objTransform;
 };
 
 

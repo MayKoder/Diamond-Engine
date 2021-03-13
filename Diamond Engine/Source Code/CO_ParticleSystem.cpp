@@ -56,7 +56,7 @@ bool C_ParticleSystem::OnEditor()
 
 	if (ImGui::Button("Add Emitter"))
 	{
-		myEmitters.push_back(Emitter());
+		AddEmitter();
 	}
 	return true;
 }
@@ -119,4 +119,10 @@ void C_ParticleSystem::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
 
+}
+
+void C_ParticleSystem::AddEmitter()
+{
+	myEmitters.push_back(Emitter());
+	myEmitters.back().AssignTransform(this->gameObject->transform);
 }
