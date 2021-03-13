@@ -49,6 +49,7 @@ namespace DiamondEngine
             this.x = x; this.y = y; this.z = z; this.w = w; 
         }
 
+        //yaw(Z), pitch(Y), roll(X)
         public Quaternion(float yaw, float pitch, float roll)
         {
             float cy = (float)Math.Cos(yaw * 0.5);

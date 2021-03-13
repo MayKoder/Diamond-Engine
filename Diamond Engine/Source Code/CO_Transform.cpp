@@ -209,6 +209,12 @@ void C_Transform::UpdateBoxes()
 	}
 }
 
+void C_Transform::LookAt(float3 pointToLook)
+{
+	//float4x4 float4x4::LookAt(const float3 & localForward, const float3 & targetDirection, const float3 & localUp, const float3 & worldUp)
+	//localTransform = localTransform.LookAt();
+}
+
 
 void C_Transform::SetTransformMatrix(float3 _position, Quat _rotation, float3 _localScale)
 {

@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        13.818270683288574,
-        11.638504981994629,
-        7.7886085510253906
+        65.504142761230469,
+        42.500705718994141,
+        -30.375482559204102
     ],
     "EditorCameraZ": [
-        -0.88261294364929199,
-        -0.4671245813369751,
-        0.052811145782470703
+        -0.7711448073387146,
+        -0.42814090847969055,
+        0.47120201587677002
     ],
     "EditorCameraY": [
-        -0.46629077196121216,
-        0.88419151306152344,
-        0.027897924184799194
+        -0.3653448224067688,
+        0.90371197462081909,
+        0.22322145104408264
     ],
     "Game Objects": [
         {
@@ -327,6 +327,9 @@
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "CameraController",
+                    "pointer": 0,
+                    "type": 0,
+                    "componentTable": 0,
                     "reference": 188616957,
                     "target": 1661764735,
                     "x": 1,
@@ -342,7 +345,7 @@
             "Position": [
                 0,
                 1,
-                13.670206069946289
+                30.724851608276367
             ],
             "Rotation": [
                 0,
@@ -385,7 +388,49 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "Stormtrooper"
+                    "ScriptName": "Stormtrooper",
+                    "player": 1661764735,
+                    "shootPoint": 1103811902,
+                    "wanderSpeed": 20,
+                    "runningSpeed": 25,
+                    "range": 35,
+                    "damage": 20,
+                    "bullet_speed": 5,
+                    "shotTimes": 0,
+                    "timeBewteenShots": 0.20000000298023224,
+                    "timePassed": 0,
+                    "idleTime": 5,
+                    "stoppingDistance": 1,
+                    "currentState": 0
+                }
+            ]
+        },
+        {
+            "name": "ShootPoint",
+            "Active": true,
+            "Position": [
+                0,
+                0.36309903860092163,
+                -1.2996206283569336
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                0.5,
+                1
+            ],
+            "UID": 1103811902,
+            "PrefabID": 0,
+            "ParentUID": 677924609,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
                 }
             ]
         }
