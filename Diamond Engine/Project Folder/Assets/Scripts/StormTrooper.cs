@@ -6,7 +6,7 @@ public class Stormtrooper : Enemy
 	public void Start()
 	{
 		currentState = STATES.WANDER;
-		targetPosition = CalculateNewPosition();
+		targetPosition = CalculateNewPosition(wanderRange);
 		shotTimes = 0;
 		Debug.Log("Started");
 	}
@@ -19,6 +19,8 @@ public class Stormtrooper : Enemy
 				//Debug.Log("Idle");
 
 				timePassed += Time.deltaTime;
+
+				LookAt(player.transform.globalPosition);
 
 				if (Mathf.Distance(gameObject.transform.globalPosition, player.transform.globalPosition) < range)
 				{
@@ -34,7 +36,7 @@ public class Stormtrooper : Enemy
 					{
 						currentState = STATES.WANDER;
 						timePassed = 0.0f;
-						targetPosition = CalculateNewPosition();
+						targetPosition = CalculateNewPosition(wanderRange);
 					}
 				}
 
@@ -77,13 +79,13 @@ public class Stormtrooper : Enemy
 				else  //if not, keep wandering
 				{
 					if (targetPosition == null)
-						targetPosition = CalculateNewPosition();
+						targetPosition = CalculateNewPosition(wanderRange);
 
 					MoveToPosition(targetPosition, wanderSpeed);
 
 					if (Mathf.Distance(gameObject.transform.localPosition, targetPosition) < stoppingDistance)
 					{
-						targetPosition = CalculateNewPosition();
+						targetPosition = CalculateNewPosition(wanderRange);
 					}
 				}
 				
@@ -98,18 +100,18 @@ public class Stormtrooper : Enemy
 
 				//add aiming rotation
 
-				LookAt(player.transform.globalPosition);
 
 				if (timePassed > timeBewteenShots)
+				{
 					Shoot();
 
-				if (shotTimes > 2)
-				{
-					currentState = STATES.RUN;
-					targetPosition = CalculateNewPosition();
-					shotTimes = 0;
+					if (shotTimes > 2)
+					{
+						currentState = STATES.RUN;
+						targetPosition = CalculateNewPosition(range);
+						shotTimes = 0;
+					}
 				}
-				
 				break;
 
 			case STATES.HIT:

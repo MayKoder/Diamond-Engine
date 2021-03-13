@@ -11,7 +11,7 @@ public class Enemy : DiamondComponent
 	public float runningSpeed;
 	public float range;
 	public float damage;
-	public float bullet_speed;
+	public float bulletSpeed;
 	protected int shotTimes = 0;
 
 	protected float timeBewteenShots = 5.0f;
@@ -21,6 +21,7 @@ public class Enemy : DiamondComponent
 	public float idleTime = 5.0f;
 	protected Vector3 targetPosition = null;
 	protected float stoppingDistance = 1.0f;
+	public float wanderRange = 5.0f;
 
 	protected STATES currentState = STATES.WANDER;
 
@@ -48,14 +49,14 @@ public class Enemy : DiamondComponent
 		return true;
 	}
 
-	public virtual Vector3 CalculateNewPosition()
+	public virtual Vector3 CalculateNewPosition(float maxPos)
 	{
 		Vector3 newPosition = new Vector3(0, 0, 0);
 		Random random = new Random();
 
-		newPosition.x = random.Next((int)range);
+		newPosition.x = random.Next((int)maxPos);
 		newPosition.y = gameObject.transform.localPosition.y;
-		newPosition.z = random.Next((int)range);
+		newPosition.z = random.Next((int)maxPos);
 
 		return newPosition;
 	}
@@ -64,7 +65,7 @@ public class Enemy : DiamondComponent
 	{
 		Vector3 direction = targetPosition - gameObject.transform.localPosition;
 
-		gameObject.transform.localPosition += direction.normalized * wanderSpeed * Time.deltaTime;
+		gameObject.transform.localPosition += direction.normalized * speed * Time.deltaTime;
 	}
 
 	public void LookAt(Vector3 pointToLook)
@@ -75,6 +76,7 @@ public class Enemy : DiamondComponent
 
 		float angle = (float)(Mathf.Rad2Deg * Math.Atan2(direction.x, direction.z));
 
-		gameObject.transform.localRotation = new Quaternion(0, angle, 0);
+		gameObject.transform.localRotation = new Quaternion(0, Mathf.LerpAngle(gameObject.transform.localRotation.y, angle, 0.01f), 0);
+		Debug.Log(angle.ToString());
 	}
 }
