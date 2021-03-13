@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        65.504142761230469,
-        42.500705718994141,
-        -30.375482559204102
+        34.570442199707031,
+        26.550670623779297,
+        4.0971183776855469
     ],
     "EditorCameraZ": [
-        -0.7711448073387146,
-        -0.42814090847969055,
-        0.47120201587677002
+        -0.63757443428039551,
+        -0.70525884628295898,
+        0.31001436710357666
     ],
     "EditorCameraY": [
-        -0.3653448224067688,
-        0.90371197462081909,
-        0.22322145104408264
+        -0.63427186012268066,
+        0.70894992351531982,
+        0.3083653450012207
     ],
     "Game Objects": [
         {
@@ -344,8 +344,8 @@
             "Active": true,
             "Position": [
                 0,
-                1,
-                30.724851608276367
+                0,
+                -7.4402937889099121
             ],
             "Rotation": [
                 0,
@@ -355,7 +355,7 @@
             ],
             "Scale": [
                 1,
-                2,
+                1,
                 1
             ],
             "UID": 677924609,
@@ -365,17 +365,6 @@
                 {
                     "Type": 1,
                     "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1313575480.mmh",
-                    "UID": 1313575480,
-                    "alternColor": [
-                        1,
-                        0.99998998641967773,
-                        0.99998998641967773
-                    ]
                 },
                 {
                     "Type": 3,
@@ -399,7 +388,7 @@
                     "shotTimes": 0,
                     "timeBewteenShots": 0.20000000298023224,
                     "timePassed": 0,
-                    "idleTime": 5,
+                    "idleTime": 3.5,
                     "stoppingDistance": 1,
                     "currentState": 0
                 }
@@ -410,8 +399,8 @@
             "Active": true,
             "Position": [
                 0,
-                0.36309903860092163,
-                -1.2996206283569336
+                2.4630000591278076,
+                1.2929999828338623
             ],
             "Rotation": [
                 0,
@@ -431,6 +420,54 @@
                 {
                     "Type": 1,
                     "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Stormtrooper",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                2,
+                2,
+                2
+            ],
+            "UID": 1608161239,
+            "PrefabID": 0,
+            "ParentUID": 677924609,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/40567950.mmh",
+                    "UID": 40567950,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
                 }
             ]
         }

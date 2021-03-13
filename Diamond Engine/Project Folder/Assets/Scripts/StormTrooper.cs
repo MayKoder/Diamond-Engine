@@ -22,8 +22,11 @@ public class Stormtrooper : Enemy
 
 				if (Mathf.Distance(gameObject.transform.globalPosition, player.transform.globalPosition) < range)
 				{
-					currentState = STATES.SHOOT;
-					timePassed = timeBewteenShots;
+					if(timePassed > idleTime)
+                    {
+						currentState = STATES.SHOOT;
+						timePassed = timeBewteenShots;
+					}
 				}
 				else
                 {
@@ -91,7 +94,7 @@ public class Stormtrooper : Enemy
 				
 				timePassed += Time.deltaTime;
 
-				float angle = (float)Math.Acos(Vector3.Dot(gameObject.transform.globalPosition, player.transform.globalPosition));
+				//float angle = (float)Math.Acos(Vector3.Dot(gameObject.transform.globalPosition, player.transform.globalPosition));
 
 				//add aiming rotation
 

@@ -241,7 +241,7 @@ void LookAt(MonoObject* cs_component, MonoObject* pointObject)
 	
 	if (transform)
 	{
-		//transform->localTransform.LookAt();
+		transform->LookAt(pointToLook);
 	}
 }
 
