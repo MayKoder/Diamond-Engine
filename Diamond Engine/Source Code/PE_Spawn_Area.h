@@ -3,11 +3,11 @@
 #include "ParticleEffects.h";
 class C_Transform;
 
-class PE_Spawn_Area : public ParticleEffect //DEPRECATED CLASS TODO DELETE
+class PE_SpawnArea : public ParticleEffect //DEPRECATED CLASS TODO DELETE
 {
 public:
-	PE_Spawn_Area();
-	~PE_Spawn_Area() override;
+	PE_SpawnArea();
+	~PE_SpawnArea() override;
 
 	void Spawn(Particle& particle) override; //Spawns in area
 

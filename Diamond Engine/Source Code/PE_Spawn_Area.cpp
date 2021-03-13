@@ -5,17 +5,18 @@
 
 #include "ImGui/imgui.h"
 
-PE_Spawn_Area::PE_Spawn_Area() :ParticleEffect(PARTICLE_EFFECT_TYPE::AREA_SPAWN)
+PE_SpawnArea::PE_SpawnArea() :ParticleEffect(PARTICLE_EFFECT_TYPE::AREA_SPAWN)
 {
 	memset(centerOfSphere, 0.f, sizeof(centerOfSphere));
+	radius = 1.0f;
 }
 
-PE_Spawn_Area::~PE_Spawn_Area()
+PE_SpawnArea::~PE_SpawnArea()
 {
 
 }
 
-void PE_Spawn_Area::Spawn(Particle& particle)
+void PE_SpawnArea::Spawn(Particle& particle)
 {
 	//Get a random spawn point inside of a sphere defined by a point and a radius
 	particle.pos.x += centerOfSphere[0] + EngineExternal->GetRandomFloat(-radius, radius);//TODO we take particle.pos. as an imput for the moment because we set the position to the transform origin when we spawn it BUT this won't work when we have different effect.spawn that change postitions
@@ -24,7 +25,7 @@ void PE_Spawn_Area::Spawn(Particle& particle)
 }
 
 #ifndef STANDALONE
-void PE_Spawn_Area::OnEditor(int emitterIndex)
+void PE_SpawnArea::OnEditor(int emitterIndex)
 {
 	std::string suffixLabel = "Area Spawn Effect##";
 	suffixLabel += emitterIndex;

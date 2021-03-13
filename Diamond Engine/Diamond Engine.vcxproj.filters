@@ -827,13 +827,13 @@
     <ClInclude Include="Source Code\PE_Spawn_Area.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\PE_Fade.h">
-      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\PE_Rotate_Over_Lifetime.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\PE_Force_Over_Lifetime.h">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\PE_Color_Over_Lifetime.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1255,9 +1255,6 @@
     <ClCompile Include="Source Code\PE_Spawn_Area.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\PE_Fade.cpp">
-      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\CO_Navigation.cpp">
       <Filter>Sources\Components\Derived\UI</Filter>
     </ClCompile>
@@ -1268,6 +1265,9 @@
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\PE_Force_Over_Lifetime.cpp">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\PE_Color_Over_Lifetime.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
   </ItemGroup>

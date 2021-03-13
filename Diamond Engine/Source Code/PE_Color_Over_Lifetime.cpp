@@ -1,18 +1,18 @@
-#include "PE_Fade.h"
+#include "PE_Color_Over_Lifetime.h"
 #include "Particle.h"
 
 #include "ImGui/imgui.h"
 
-PE_Fade::PE_Fade():ParticleEffect(PARTICLE_EFFECT_TYPE::FADE)
+PE_ColorOverLifetime::PE_ColorOverLifetime():ParticleEffect(PARTICLE_EFFECT_TYPE::COLOR_OVER_LIFETIME)
 {
 }
 
-PE_Fade::~PE_Fade()
+PE_ColorOverLifetime::~PE_ColorOverLifetime()
 {
 }
 
 #ifndef STANDALONE
-void PE_Fade::OnEditor(int emitterIndex)
+void PE_ColorOverLifetime::OnEditor(int emitterIndex)
 {
 	std::string suffixLabel = "Fade Effect##";
 	suffixLabel += emitterIndex;

@@ -336,7 +336,7 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 			newEffect = new PE_Spawn();
 			break;*/
 	case PARTICLE_EFFECT_TYPE::AREA_SPAWN:
-		newEffect = new PE_Spawn_Area();
+		newEffect = new PE_SpawnArea();
 		break;
 	case PARTICLE_EFFECT_TYPE::FORCE_OVER_LIFETIME:
 		newEffect = new PE_ForceOverLifetime();

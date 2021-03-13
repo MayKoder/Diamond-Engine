@@ -367,7 +367,7 @@
     <ClInclude Include="Source Code\Particle.h" />
     <ClInclude Include="Source Code\ParticleEffects.h" />
     <ClInclude Include="Source Code\ParticleEmitter.h" />
-    <ClInclude Include="Source Code\PE_Fade.h" />
+    <ClInclude Include="Source Code\PE_Color_Over_Lifetime.h" />
     <ClInclude Include="Source Code\PE_Force_Over_Lifetime.h" />
     <ClInclude Include="Source Code\PE_Rotate_Over_Lifetime.h" />
     <ClInclude Include="Source Code\PE_Spawn.h" />
@@ -515,7 +515,7 @@
     <ClCompile Include="Source Code\Particle.cpp" />
     <ClCompile Include="Source Code\ParticleEffects.cpp" />
     <ClCompile Include="Source Code\ParticleEmitter.cpp" />
-    <ClCompile Include="Source Code\PE_Fade.cpp" />
+    <ClCompile Include="Source Code\PE_Color_Over_Lifetime.cpp" />
     <ClCompile Include="Source Code\PE_Force_Over_Lifetime.cpp" />
     <ClCompile Include="Source Code\PE_Rotate_Over_Lifetime.cpp" />
     <ClCompile Include="Source Code\PE_Spawn.cpp" />

@@ -2,11 +2,11 @@
 
 #include "ParticleEffects.h";
 
-class PE_Fade : public ParticleEffect
+class PE_ColorOverLifetime : public ParticleEffect
 {
 public:
-	PE_Fade();
-	~PE_Fade();
+	PE_ColorOverLifetime();
+	~PE_ColorOverLifetime();
 
 #ifndef STANDALONE
 	void OnEditor(int emitterIndex) override;
