@@ -77,6 +77,35 @@
             ]
         },
         {
+            "name": "PauseMenu",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 734238138,
+            "PrefabID": 0,
+            "ParentUID": 581109778,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
             "name": "Image",
             "Active": true,
             "Position": [
@@ -97,7 +126,7 @@
             ],
             "UID": 999428305,
             "PrefabID": 0,
-            "ParentUID": 581109778,
+            "ParentUID": 734238138,
             "Components": [
                 {
                     "Type": 1,
@@ -134,7 +163,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "Continue",
             "Active": true,
             "Position": [
                 0,
@@ -333,7 +362,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "Settings",
             "Active": true,
             "Position": [
                 0,
@@ -532,7 +561,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "Display",
             "Active": true,
             "Position": [
                 0,
@@ -731,7 +760,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "Controls",
             "Active": true,
             "Position": [
                 0,
@@ -930,7 +959,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "Quit",
             "Active": true,
             "Position": [
                 0,
@@ -1129,7 +1158,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "QuickReturn",
             "Active": true,
             "Position": [
                 0,
@@ -1242,7 +1271,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4245340824127197,
+                    "hFOV": 1.5443055629730225,
                     "culling": true
                 }
             ]

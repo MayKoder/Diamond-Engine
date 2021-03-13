@@ -77,7 +77,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4245340824127197,
+                    "hFOV": 1.5443055629730225,
                     "culling": true
                 }
             ]
@@ -116,6 +116,35 @@
             ]
         },
         {
+            "name": "InGameQuitConfirmationScreen",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1196069138,
+            "PrefabID": 0,
+            "ParentUID": 2108955262,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
             "name": "Image",
             "Active": true,
             "Position": [
@@ -136,7 +165,7 @@
             ],
             "UID": 1969866665,
             "PrefabID": 0,
-            "ParentUID": 2108955262,
+            "ParentUID": 1196069138,
             "Components": [
                 {
                     "Type": 1,
@@ -159,7 +188,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -173,7 +202,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "QuittoDesktop",
             "Active": true,
             "Position": [
                 0,
@@ -216,7 +245,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -414,7 +443,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "QuittoMenu",
             "Active": true,
             "Position": [
                 0,
@@ -457,7 +486,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -655,7 +684,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "Cancel",
             "Active": true,
             "Position": [
                 0,
@@ -698,7 +727,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -854,7 +883,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "QuickReturn",
             "Active": true,
             "Position": [
                 0,
@@ -897,7 +926,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },

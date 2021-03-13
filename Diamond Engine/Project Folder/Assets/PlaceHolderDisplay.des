@@ -77,7 +77,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4245340824127197,
+                    "hFOV": 1.5443055629730225,
                     "culling": true
                 }
             ]
@@ -116,6 +116,35 @@
             ]
         },
         {
+            "name": "DisplayMenu",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 639838323,
+            "PrefabID": 0,
+            "ParentUID": 1569285633,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
             "name": "Image",
             "Active": true,
             "Position": [
@@ -136,7 +165,7 @@
             ],
             "UID": 174117743,
             "PrefabID": 0,
-            "ParentUID": 1569285633,
+            "ParentUID": 639838323,
             "Components": [
                 {
                     "Type": 1,
@@ -159,7 +188,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -173,7 +202,7 @@
             ]
         },
         {
-            "name": "Checkbox",
+            "name": "Vsync",
             "Active": true,
             "Position": [
                 0,
@@ -216,7 +245,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -382,7 +411,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "Resolution",
             "Active": true,
             "Position": [
                 0,
@@ -425,7 +454,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -616,7 +645,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "ResolutionUp",
             "Active": true,
             "Position": [
                 0,
@@ -659,7 +688,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -696,7 +725,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "ResolutionDown",
             "Active": true,
             "Position": [
                 0,
@@ -739,7 +768,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -776,7 +805,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "WindowMode",
             "Active": true,
             "Position": [
                 0,
@@ -819,7 +848,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -1010,7 +1039,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "WindowModeUp",
             "Active": true,
             "Position": [
                 0,
@@ -1053,7 +1082,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -1090,7 +1119,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "WindowModeDown",
             "Active": true,
             "Position": [
                 0,
@@ -1133,7 +1162,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -1170,7 +1199,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "Return",
             "Active": true,
             "Position": [
                 0,
@@ -1213,7 +1242,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -1369,7 +1398,7 @@
             ]
         },
         {
-            "name": "Button",
+            "name": "QuickReturn",
             "Active": true,
             "Position": [
                 0,
@@ -1412,7 +1441,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },

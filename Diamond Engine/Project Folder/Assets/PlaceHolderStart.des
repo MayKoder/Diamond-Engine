@@ -1,7 +1,7 @@
 {
     "EditorCameraPosition": [
         0.44633039832115173,
-        1.7568979263305664,
+        1.756898045539856,
         -2.3904180526733398
     ],
     "EditorCameraZ": [
@@ -77,7 +77,7 @@
             ]
         },
         {
-            "name": "StartMenu",
+            "name": "MainMenu",
             "Active": true,
             "Position": [
                 0,
@@ -95,7 +95,7 @@
                 1,
                 1
             ],
-            "UID": 449217428,
+            "UID": 1392636434,
             "PrefabID": 0,
             "ParentUID": 456622386,
             "Components": [
@@ -106,7 +106,7 @@
             ]
         },
         {
-            "name": "PlayButton",
+            "name": "Play",
             "Active": true,
             "Position": [
                 0,
@@ -126,7 +126,7 @@
             ],
             "UID": 1306709165,
             "PrefabID": 0,
-            "ParentUID": 449217428,
+            "ParentUID": 1392636434,
             "Components": [
                 {
                     "Type": 1,
@@ -165,7 +165,6 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
-                    "Script_Name": "StartMenu",
                     "ButtonState": 1,
                     "Is Selected": true
                 },
@@ -233,11 +232,6 @@
                     "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": true
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "StartMenu"
                 }
             ]
         },
@@ -304,7 +298,7 @@
             ]
         },
         {
-            "name": "OptionsButton",
+            "name": "Options",
             "Active": true,
             "Position": [
                 0,
@@ -324,7 +318,7 @@
             ],
             "UID": 549038604,
             "PrefabID": 0,
-            "ParentUID": 449217428,
+            "ParentUID": 1392636434,
             "Components": [
                 {
                     "Type": 1,
@@ -363,7 +357,6 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
-                    "Script_Name": "StartMenu",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -431,11 +424,6 @@
                     "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "StartMenu"
                 }
             ]
         },
@@ -502,7 +490,7 @@
             ]
         },
         {
-            "name": "QuitButton",
+            "name": "Quit",
             "Active": true,
             "Position": [
                 0,
@@ -522,7 +510,7 @@
             ],
             "UID": 1555216131,
             "PrefabID": 0,
-            "ParentUID": 449217428,
+            "ParentUID": 1392636434,
             "Components": [
                 {
                     "Type": 1,
@@ -561,7 +549,6 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
-                    "Script_Name": "StartMenu",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -629,11 +616,6 @@
                     "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "StartMenu"
                 }
             ]
         },
@@ -733,7 +715,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6147251129150391,
+                    "hFOV": 1.6578013896942139,
                     "culling": true
                 }
             ]
