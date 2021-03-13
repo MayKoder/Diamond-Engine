@@ -57,6 +57,7 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Input::GetKey", GetKey);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseClick", GetMouseClick);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateGameObject", CSCreateGameObject);
+	mono_add_internal_call("DiamondEngine.InternalCalls::CloseGame", CSCloseGame);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseX", MouseX);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseY", MouseY);
 	
@@ -142,7 +143,7 @@ void M_MonoManager::OnGUI()
 		
 	}
 }
-#endif // !STANDALONE
+
 
 void M_MonoManager::ReCompileCS() 
 {
@@ -168,12 +169,11 @@ void M_MonoManager::ReCompileCS()
 	App->moduleScene->LoadScene("Library/Scenes/tmp.des");
 	App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code from editor, mmove to method
 
-#ifndef STANDALONE
 	W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(App->moduleEditor->GetEditorWindow(EditorWindow::TEXTEDITOR));
 	if (txtEditor != nullptr)
 		txtEditor->SetTextFromFile(txtEditor->txtName.c_str());
-#endif // !STANDALONE
 }
+#endif // !STANDALONE
 
 //ASK: Is this the worst idea ever? TOO SLOW
 float3 M_MonoManager::UnboxVector(MonoObject* _obj)

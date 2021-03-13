@@ -18,6 +18,9 @@ namespace DiamondEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void Destroy(object go);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void CloseGame();
     }
     public class Input
     {

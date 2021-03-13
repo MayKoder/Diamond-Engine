@@ -150,6 +150,17 @@ void CSCreateGameObject(MonoObject* name, MonoObject* position)
 	go->transform->updateTransform = true;
 }
 
+void CSCloseGame()
+{
+	if (EngineExternal == nullptr)
+		return;
+#ifndef STANDALONE
+	DETime::Stop();
+#else
+	EngineExternal->ExitApplication();
+#endif
+}
+
 MonoString* CS_Get_GO_Name(MonoObject* go)
 {
 	if (EngineExternal == nullptr)

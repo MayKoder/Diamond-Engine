@@ -5,8 +5,12 @@ public class StartMenu : DiamondComponent
 {
 	public void OnExecuteButton()
 	{
-		//SceneManager.LoadScene(1482507639);
-		Debug.Log(gameObject.Name);
+		if (gameObject.Name == "PlayButton")
+			SceneManager.LoadScene(1482507639);
+		else if (gameObject.Name == "OptionsButton")
+			SceneManager.LoadScene(950542469);
+		else if (gameObject.Name == "QuitButton")
+			InternalCalls.CloseGame();
 	}
 	public void Update()
 	{
