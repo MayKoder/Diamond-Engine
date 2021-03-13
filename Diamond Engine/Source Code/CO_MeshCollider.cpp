@@ -17,7 +17,7 @@
 
 C_MeshCollider::C_MeshCollider() : C_Collider(nullptr)
 {
-	name = "MeshCollider";
+	name = "Mesh Collider";
 
 
 }
@@ -27,7 +27,7 @@ C_MeshCollider::C_MeshCollider(GameObject* _gm/*, float3 _position, Quat _rotati
 position(_position), rotation(_rotation), localScale(_localScale)*/
 {
 
-	name = "MeshCollider";
+	name = "Mesh Collider";
 	isTrigger = false;
 	shape = ColliderShape::MESH;
 
@@ -180,20 +180,10 @@ void C_MeshCollider::Update()
 			{
 				physx::PxVec3 vec = convexVerts[faceIndices[j]];
 				glVertex3f(vec.x, vec.y, vec.z);
-				//normals[offset + j] = physx::PxVec3(face.mPlane[0], face.mPlane[1], face.mPlane[2]);
+				
 			}
 			glEnd();
-			/*physx::PxVec3 vec = convexVerts[faceIndices[0]];
-			glVertex3f(vec.x, vec.y, vec.z);*/
-
-			/*glVertex3f(vec[i].x, vec[i].y, vec[i].z);
-			if (i != size - 1)
-				glVertex3f(vec[i + 1].x, vec[i + 1].y, vec[i + 1].z);
-			else
-				glVertex3f(vec[0].x, vec[0].y, vec[0].z);*/
-
-
-
+	
 
 		}
 		

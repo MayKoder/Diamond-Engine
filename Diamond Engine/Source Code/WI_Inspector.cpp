@@ -146,12 +146,12 @@ void W_Inspector::Draw()
 					if (selectedGO->GetComponent(Component::TYPE::RIGIDBODY) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::RIGIDBODY);
 				}
-				if (ImGui::Selectable("Collider"))
+				if (ImGui::Selectable("Box Collider"))
 				{
 					if (selectedGO->GetComponent(Component::TYPE::BOXCOLLIDER) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::BOXCOLLIDER);
 				}
-				if (ImGui::Selectable("MeshCollider"))
+				if (ImGui::Selectable("Mesh Collider"))
 				{
 					if (selectedGO->GetComponent(Component::TYPE::MESHCOLLIDER) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::MESHCOLLIDER);

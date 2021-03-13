@@ -18,7 +18,7 @@
 
 C_BoxCollider::C_BoxCollider() : C_Collider(nullptr)
 {
-	name = "BoxCollider";
+	name = "Box Collider";
 
 
 }
@@ -28,7 +28,7 @@ C_BoxCollider::C_BoxCollider(GameObject* _gm/*, float3 _position, Quat _rotation
 position(_position), rotation(_rotation), localScale(_localScale)*/
 {
 
-	name = "BoxCollider";
+	name = "Box Collider";
 	isTrigger = false;
 	shape = ColliderShape::CUBE;
 
@@ -152,6 +152,39 @@ void C_BoxCollider::Update()
 
 		float3 half_size = { boxCollider.halfExtents.x, boxCollider.halfExtents.y, boxCollider.halfExtents.z };
 
+			glPushMatrix();
+			glMultMatrixf(trans.Transposed().ptr());
+
+
+			glLineWidth(2.0f);
+			glColor3f(0.0f, 1.0f, 0.0f);
+			glBegin(GL_LINE_LOOP);
+			glVertex3f(-half_size.x, half_size.y, -half_size.z);
+			glVertex3f(half_size.x, half_size.y, -half_size.z);
+			glVertex3f(half_size.x, half_size.y, half_size.z);
+			glVertex3f(-half_size.x, half_size.y, half_size.z);
+			glEnd();
+
+			glBegin(GL_LINE_LOOP);
+			glVertex3f(-half_size.x, -half_size.y, -half_size.z);
+			glVertex3f(half_size.x, -half_size.y, -half_size.z);
+			glVertex3f(half_size.x, -half_size.y, half_size.z);
+			glVertex3f(-half_size.x, -half_size.y, half_size.z);
+			glEnd();
+
+			glBegin(GL_LINES);
+			glVertex3f(-half_size.x, half_size.y, -half_size.z);
+			glVertex3f(-half_size.x, -half_size.y, -half_size.z);
+			glVertex3f(half_size.x, half_size.y, -half_size.z);
+			glVertex3f(half_size.x, -half_size.y, -half_size.z);
+			glVertex3f(half_size.x, half_size.y, half_size.z);
+			glVertex3f(half_size.x, -half_size.y, half_size.z);
+			glVertex3f(-half_size.x, half_size.y, half_size.z);
+			glVertex3f(-half_size.x, -half_size.y, half_size.z);
+			glEnd();
+
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glPopMatrix();
 
 	}
 #endif // !STANDALONE
