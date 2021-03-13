@@ -34,7 +34,7 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 
 
 		transform = dynamic_cast<C_Transform*>(_gm->GetComponent(Component::TYPE::TRANSFORM));
-		rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RigidBody));
+		rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RIGIDBODY));
 		mesh = dynamic_cast<C_MeshRenderer*>(_gm->GetComponent(Component::TYPE::MESH_RENDERER));
 
 		
@@ -88,8 +88,8 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 			rigidbody->rigid_dynamic->attachShape(*colliderShape);
 		}
 		else {
-			_gm->AddComponent(Component::TYPE::RigidBody);
-			rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RigidBody));
+			_gm->AddComponent(Component::TYPE::RIGIDBODY);
+			rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RIGIDBODY));
 			rigidbody->use_kinematic = true;
 			rigidbody->EnableKinematic(rigidbody->use_kinematic);
 			rigidbody->rigid_dynamic->attachShape(*colliderShape);

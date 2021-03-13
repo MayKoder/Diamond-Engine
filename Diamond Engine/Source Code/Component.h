@@ -26,9 +26,9 @@ public:
 		IMAGE_2D,
 		AUDIO_LISTENER,
 		AUDIO_SOURCE,
-    RigidBody,
-		Collider,
-    Animator,
+		RIGIDBODY,
+		COLLIDER,
+		ANIMATOR,
 		NAVIGATION,
 		COUNT
 	};
