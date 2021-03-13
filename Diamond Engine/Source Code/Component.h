@@ -31,6 +31,8 @@ public:
 		BOXCOLLIDER,
 		MESHCOLLIDER,
 		Animator,
+		ANIMATOR,
+		NAVIGATION,
 		COUNT
 	};
 
@@ -58,6 +60,10 @@ public:
 
 	inline GameObject* GetGO() {
 		return gameObject;
+	}
+
+	inline std::string GetName() {
+		return name;
 	}
 
 	TYPE type;

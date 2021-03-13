@@ -2,98 +2,141 @@
 
 #include "Globals.h"
 
+#include "OpenGL.h"
+
+#include "FreeType/include/freetype/freetype.h"
 #include "FreeType/include/ft2build.h"
 #include FT_FREETYPE_H
 
 #pragma comment (lib, "FreeType/win32/freetype.lib")
 
+Character::Character(unsigned int textureId, unsigned int advanceX, unsigned int advanceY, float sizeX, float sizeY, float bearingX, float bearingY) :
+	textureId(textureId)
+{
+	advance[0] = advanceX;
+	advance[1] = advanceY;
+
+	size[0] = sizeX;
+	size[1] = sizeY;
+
+	bearing[0] = bearingX;
+	bearing[1] = bearingY;
+}
+
+
+Character::~Character()
+{
+}
+
+
+FontDictionary::FontDictionary(const char* name, std::map<char, Character>& characterVec) :
+	name(name),
+	characters(characterVec)
+{
+}
+
+
+FontDictionary::~FontDictionary()
+{
+	characters.clear();
+}
+
+
+void FontDictionary::UnloadCharacterTextures()
+{
+	int charactersCount = characters.size();
+
+	for (std::map<char, Character>::iterator it = characters.begin(); it != characters.end(); ++it)
+	{
+		if (it->second.textureId != 0)
+			glDeleteTextures(1, &it->second.textureId);
+
+		it->second.textureId = 0;
+	}
+}
 
 
 FreeType_Library::FreeType_Library()
 {
-	map_of_faces.clear();
 	FT_Error error = FT_Init_FreeType(&library);
 	if (error)
-	{
 		LOG(LogType::L_ERROR, "Error initializing FreeType");
-	}
 }
 
 FreeType_Library::~FreeType_Library()
 {
-	for (std::map<std::string, FT_Face>::iterator it = map_of_faces.begin(); it != map_of_faces.end(); ++it) {
-		FT_Done_Face(it->second);
-	}
+	for (std::map<std::string, FontDictionary>::iterator it = fontLibrary.begin(); it != fontLibrary.end(); ++it)
+		it->second.UnloadCharacterTextures();
+
+	fontLibrary.clear();
 	FT_Done_FreeType(library);
 }
 
-void FreeType_Library::ImportNewFont(const char* path)
+
+void FreeType_Library::ImportNewFont(const char* path, int size)
 {
 	FT_Face new_face;
 	FT_Error error = FT_New_Face(library, path, 0, &new_face);
-	if (error == FT_Err_Unknown_File_Format)
-	{
-		LOG(LogType::L_ERROR, "The font file could be openedand read, but it appears that its font format is unsupported");
-	}
-	else if (error)
-	{
-		LOG(LogType::L_ERROR, "Another error code means that the font file could not be opened or read, or that it is broken...");
-	}
-	LOG(LogType::L_NORMAL, "The font was loaded correctly");
-	map_of_faces.emplace(std::string(path), new_face);
-	//GetBitmapTextWithFont(total_fonts, 10, "HEHELOLO");
-}
 
-bool FreeType_Library::CheckIfFontExists(const char* path)
-{
-	
-	if (map_of_faces.count(std::string(path)) > 0) {
-		return true;
+	if (error)
+	{
+		LOG(LogType::L_ERROR, "Error while loading font");
 	}
-	return false;
-	
+	else
+	{
+		LOG(LogType::L_NORMAL, "The font was loaded correctly");
+		FT_Set_Pixel_Sizes(new_face, 0, size);
+
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+		InitFontDictionary(new_face, path);
+	}
 }
 
 
-char* FreeType_Library::GetBitmapTextWithFont(const char* index_path, int size_font, const char* text_to_print)
+void FreeType_Library::InitFontDictionary(FT_Face& face, const char* fontName)
 {
-	//FT_UInt       glyph_index;
-	//int           pen_x, pen_y, n;
+	std::map<char, Character> charVector;
 
-	FT_Face face = map_of_faces.find(std::string(index_path))->second;
-	/// ARNAU: THIS FUNCTION BELOW WILL BE REVISED WHEN BEING ABLED TO SEE THE TEXT IN SCREEN
-	FT_Set_Pixel_Sizes(
-		face,   /* handle to face object */
-		0,      /* pixel_width           */
-		16);   /* pixel_height          */
-
-	/*pen_x = 300;
-	pen_y = 200;*/
-	FT_Error error;
-
-	char* buffer=nullptr;
-	for (int n = 0; n < strlen(text_to_print); n++)
+	for (unsigned char c = 0; c < 128; ++c)
 	{
-		/* load glyph image into the slot (erase previous one) */
-		error = FT_Load_Char(face, text_to_print[n], FT_LOAD_RENDER);
-		if (error)
-			continue;  /* ignore errors */
-
-		  /* now, add the buffer of the bitmat to the buffer that will be returned */
-		if (n == 0) {
-			buffer = (char*)face->glyph->bitmap.buffer;
-		}
-		else {
-			strcat(buffer, (char*)face->glyph->bitmap.buffer);
+		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+		{
+			LOG(LogType::L_ERROR, "Could not load gyph %c", c);
+			continue;
 		}
 
-		/// ARNAU: LOOK THESE FUNCTIONS WHEN THE TEXT IS PRINTED IN THE SCREEN, BECAUSE PROBABLY IT WILL BE NEEDED FOR PRINTING IT CORRECTLY
-		/*my_draw_bitmap(&slot->bitmap,
-			pen_x + slot->bitmap_left,
-			pen_y - slot->bitmap_top);*/
+		unsigned int texture = 0;
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width, face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glBindTexture(GL_TEXTURE_2D, 0);
 
-		/* increment pen position */
-		//pen_x += slot->advance.x >> 6;
+		charVector.insert(std::pair<char, Character>(c, Character(texture, face->glyph->advance.x, face->size->metrics.height, face->glyph->bitmap.width, face->glyph->bitmap.rows, face->glyph->bitmap_left, face->glyph->bitmap_top)));
 	}
-	return buffer;
+
+	fontLibrary.emplace(std::pair<std::string, FontDictionary>(fontName, FontDictionary(fontName, charVector)));
+	glBindTexture(GL_TEXTURE_2D, 0);
+	FT_Done_Face(face);
+}
+
+
+FontDictionary* FreeType_Library::GetFont(const char* name)
+{
+	std::map<std::string, FontDictionary>::iterator iterator = fontLibrary.find(name);
+
+	if (iterator != fontLibrary.end())
+		return &iterator->second;
+
+	else
+	{
+		ImportNewFont(name, 48);
+		iterator = fontLibrary.find(name);
+
+		return (iterator != fontLibrary.end() ? &iterator->second : nullptr);
+	}
 }

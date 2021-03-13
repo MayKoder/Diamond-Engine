@@ -17,6 +17,7 @@
 //todelete
 #include "Application.h"
 #include "MO_Physics.h"
+#include "IM_PrefabImporter.h"
 
 W_Inspector::W_Inspector() : Window(), selectedGO(nullptr), editingRes(nullptr)
 {
@@ -112,7 +113,21 @@ void W_Inspector::Draw()
 			if (ImGui::Button("Delete")) {
 				selectedGO->Destroy();}
 
+			ImGui::SameLine();
 			ImGui::Text("UID: %d", selectedGO->UID);
+
+			if (selectedGO->prefabID != 0u) 
+			{
+				ImGui::Text("Prefab ID: %d", selectedGO->prefabID);
+				if (ImGui::Button("Override Prefab")){
+					PrefabImporter::OverridePrefabGameObjects(selectedGO->prefabID, selectedGO);
+				}
+
+				ImGui::SameLine();
+				if (ImGui::Button("Revert Changes")) {
+					PrefabImporter::OverrideGameObject(selectedGO->prefabID, selectedGO);
+				}
+			}
 
 			ImGui::GreySeparator();
 
@@ -169,8 +184,8 @@ void W_Inspector::Draw()
 				}
 				if (ImGui::Selectable("Animator"))
 				{
-					if (selectedGO->GetComponent(Component::TYPE::Animator) == nullptr)
-						selectedGO->AddComponent(Component::TYPE::Animator);
+					if (selectedGO->GetComponent(Component::TYPE::ANIMATOR) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::ANIMATOR);
 				}
 				
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)

@@ -28,13 +28,14 @@ public:
 
 	GameObject* GetGOFromUID(GameObject* n, uint sUID);
 	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
+	void GetAllGameObjects(std::vector<GameObject*>& gameObjects);
 	void LoadScriptsData();
 
 #ifndef STANDALONE
 	void OnGUI() override;
-#endif // !STANDALONE
 
 	void SaveScene(const char* name);
+#endif // !STANDALONE
 	void LoadScene(const char* name);
 
 	void SetGameCamera(C_Camera* cam);

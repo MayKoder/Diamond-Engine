@@ -88,13 +88,13 @@ ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimati
 	char* buffer;
 	uint size = animation->SaveCustomFormat(animation, &buffer);
 
-	FileSystem::Save(library_path.c_str(), buffer, size, false);
+
 	std::string assets_path = "Assets/Animations/" + std::string(importedAnimation->mName.C_Str()) + ".anim";
 	FileSystem::Save(assets_path.c_str(), buffer, size, false);
+	EngineExternal->moduleResources->GenerateMeta(assets_path.c_str(), EngineExternal->moduleResources->GenLibraryPath(UID, Resource::Type::ANIMATION).c_str(),
+												  UID, Resource::Type::PREFAB);
 
-	std::string file_name = std::to_string(UID);
-	file_name += ".anim";
-
+	FileSystem::Save(library_path.c_str(), buffer, size, false);
 	//EngineExternal->moduleResources->UnloadResource(animation->GetUID());
 
 	RELEASE_ARRAY(buffer);
@@ -228,7 +228,7 @@ void AnimationLoader::SetAnimationOnGameObjectRoot(aiAnimation** animArray, std:
 
 		if (importedAnim->mDuration != 0)
 		{
-			C_Animator* animator = dynamic_cast<C_Animator*>(gmRoot->AddComponent(Component::TYPE::Animator));
+			C_Animator* animator = dynamic_cast<C_Animator*>(gmRoot->AddComponent(Component::TYPE::ANIMATOR));
 		}
 	}
 }

@@ -1,0 +1,199 @@
+{
+    "assets_path": "Assets\/Models\/Skeleton_Model\/TestSandbox.prefab",
+    "Game Objects": [
+        {
+            "name": "TestSandbox",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                0.24000000953674316,
+                0.24000000953674316,
+                0.24000000953674316
+            ],
+            "UID": 1716888692,
+            "PrefabID": 0,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Plane",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                500,
+                500,
+                500
+            ],
+            "UID": 420350065,
+            "PrefabID": 0,
+            "ParentUID": 1716888692,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/296489994.mmh",
+                    "UID": 296489994,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true,
+                    "Gravity": true,
+                    "LockLinearX": false,
+                    "LockLinearY": false,
+                    "LockLinearZ": false,
+                    "LockAngularX": false,
+                    "LockAngularY": false,
+                    "LockAngularZ": false,
+                    "Mass": 10,
+                    "Density": 1
+                },
+                {
+                    "Type": 15,
+                    "Active": true,
+                    "isTrigger": true,
+                    "Position": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "Rotation": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "Scale": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Cube",
+            "Active": true,
+            "Position": [
+                -300,
+                0,
+                -300
+            ],
+            "Rotation": [
+                -0.68301278352737427,
+                -0.1830126941204071,
+                -0.1830127090215683,
+                0.68301266431808472
+            ],
+            "Scale": [
+                17.39555549621582,
+                17.39555549621582,
+                17.39555549621582
+            ],
+            "UID": 1432217696,
+            "PrefabID": 0,
+            "ParentUID": 1716888692,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/317057310.mmh",
+                    "UID": 317057310,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true
+                }
+            ]
+        },
+        {
+            "name": "Sphere",
+            "Active": true,
+            "Position": [
+                -287.66519165039063,
+                65.438919067382813,
+                -303.3785400390625
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                18.083625793457031,
+                18.083625793457031,
+                18.083625793457031
+            ],
+            "UID": 467515712,
+            "PrefabID": 0,
+            "ParentUID": 1716888692,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/2010055644.mmh",
+                    "UID": 2010055644,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -17,11 +17,14 @@ public class BH_Bullet : DiamondComponent
     {
         currentLifeTime += Time.deltaTime;
 
-        thisReference.localPosition += thisReference.GetForward() * (speed * Time.deltaTime);
+        gameObject.transform.localPosition += gameObject.transform.GetForward() * (speed * Time.deltaTime);
+
+        yVel -= Time.deltaTime / 15.0f;
+        gameObject.transform.localPosition += (Vector3.up * yVel);
 
         if (currentLifeTime >= maxLifeTime)
         {
-            InternalCalls.Destroy(this.thisReference);
+            InternalCalls.Destroy(this.gameObject);
         }
     }
 

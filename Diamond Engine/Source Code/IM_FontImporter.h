@@ -1,32 +1,58 @@
 #pragma once
-#include "FreeType/include/freetype/freetype.h"
+
 #include <map>
+#include <vector>
 #include <string>
 
+struct FT_FaceRec_;
+typedef FT_FaceRec_* FT_Face;
+struct FT_LibraryRec_;
+typedef FT_LibraryRec_* FT_Library;
 
-namespace FontImporter{
+struct Character
+{
+public:
+	Character(unsigned int textureId, unsigned int advanceX, unsigned int advanceY, float sizeX, float sizeY, float bearingX, float bearingY);
+	~Character();
 
-	
-	
-	
-}
+public:
+	unsigned int textureId;
+	unsigned int advance[2];
+	int lineDistance;
 
-class FreeType_Library {
+	float size[2];
+	float bearing[2];
+};
+
+
+struct FontDictionary
+{
+public:
+	FontDictionary(const char* name, std::map<char, Character>& characterVec);
+	~FontDictionary();
+
+	void UnloadCharacterTextures();
+
+public:
+	std::string name;
+	std::map<char, Character> characters;
+};
+
+
+class FreeType_Library 
+{
 public:
 	FreeType_Library();
 	~FreeType_Library();
 
-	void ImportNewFont(const char* path);
-
-	bool CheckIfFontExists(const char* path);
-
-
-	char* GetBitmapTextWithFont(const char* index_path, int size_font, const char* text_to_print);
+	void ImportNewFont(const char* path, int size);
+	void InitFontDictionary(FT_Face& face, const char* fontName);
+	FontDictionary* GetFont(const char* name);
 
 private:
 	FT_Library library;
 	
-	std::map<std::string, FT_Face> map_of_faces;
-
+	//Font name	---- Leters of the font
+	std::map<std::string, FontDictionary> fontLibrary;
 };
 
