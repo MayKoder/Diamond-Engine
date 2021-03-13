@@ -150,6 +150,16 @@ void CSCreateGameObject(MonoObject* name, MonoObject* position)
 	go->transform->updateTransform = true;
 }
 
+MonoString* CS_Get_GO_Name(MonoObject* go)
+{
+	if (EngineExternal == nullptr)
+		return nullptr;
+
+	return mono_string_new(
+		EngineExternal->moduleMono->domain,
+		EngineExternal->moduleMono->GameObject_From_CSGO(go)->name.c_str());
+}
+
 MonoObject* SendPosition(MonoObject* obj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class
 {
 	//return mono_value_box(EngineExternal->moduleMono->domain, vecClass, EngineExternal->moduleMono->Float3ToCS(C_Script::runningScript->GetGO()->transform->position)); //Use this method to send "object" types

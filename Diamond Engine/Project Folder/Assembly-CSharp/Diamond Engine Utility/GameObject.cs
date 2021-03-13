@@ -47,6 +47,11 @@ namespace DiamondEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void AddComponent(int componentType);
+        public extern string Name
+        {
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            get;
+        }
 
     }
 }
