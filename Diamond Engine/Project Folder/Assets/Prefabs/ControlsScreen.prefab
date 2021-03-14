@@ -3,7 +3,7 @@
     "Game Objects": [
         {
             "name": "ControlsScreen",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -165,13 +165,6 @@
                         {
                             "Index": 0,
                             "UID": 2063759004,
-                            "Action": 2,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 1,
-                            "UID": 1013323906,
                             "Action": 2,
                             "Is Key Down": false,
                             "Is Key Up": true

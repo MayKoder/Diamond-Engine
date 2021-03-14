@@ -342,11 +342,21 @@ void C_Navigation::DoTheAction(GameObject* gameobject_passed, BUTTONSANDJOYSTICK
 
 void C_Navigation::Select()
 {
-	if (EngineExternal->moduleGui->uid_gameobject_of_ui_selected != 0) {
-		GameObject* previous_selected = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, EngineExternal->moduleGui->uid_gameobject_of_ui_selected);
-		static_cast<C_Navigation*>(previous_selected->GetComponent(Component::TYPE::NAVIGATION))->is_selected = false;
+	C_Navigation* aux;
+	std::vector<int>* vec = &EngineExternal->moduleGui->uid_gameobject_of_ui_selected;
+	if ((*vec).size() != 0) {
+		std::vector<GameObject*>::const_iterator it;
+		for (it = gameObject->parent->children.begin(); it != gameObject->parent->children.end(); ++it)
+		{
+			aux = static_cast<C_Navigation*>((*it)->GetComponent(Component::TYPE::NAVIGATION));
+			if (aux != nullptr && aux->is_selected && aux != this)
+			{
+				aux->is_selected = false;
+				(*vec).erase(std::find((*vec).begin(), (*vec).end(),(*it)->UID));
+			}
+		}
 	}
-	EngineExternal->moduleGui->uid_gameobject_of_ui_selected = gameObject->UID;
+	(*vec).push_back(gameObject->UID);
 	is_selected = true;
 
 	switch (type_of_ui) {
@@ -365,8 +375,8 @@ void C_Navigation::Select()
 
 void C_Navigation::Deselect()
 {
-
-	EngineExternal->moduleGui->uid_gameobject_of_ui_selected = 0;
+	std::vector<int>* vec = &EngineExternal->moduleGui->uid_gameobject_of_ui_selected;
+	(*vec).erase(std::find((*vec).begin(), (*vec).end(), gameObject->UID));
 	is_selected = false;
 
 	switch (type_of_ui) {
@@ -421,7 +431,7 @@ void C_Navigation::LoadData(DEConfig& nObj)
 	button_or_joystick_being_used = static_cast<BUTTONSANDJOYSTICKS>(nObj.ReadInt("Button Being Used"));
 	is_selected= nObj.ReadBool("Is Selected");
 	if (is_selected)
-		EngineExternal->moduleGui->uid_gameobject_of_ui_selected = gameObject->UID;
+		EngineExternal->moduleGui->uid_gameobject_of_ui_selected.push_back(gameObject->UID);
 }
 
 void C_Navigation::SaveMapData(JSON_Object* nObj, ActionToRealize& action, BUTTONSANDJOYSTICKS map_index)
@@ -458,14 +468,6 @@ bool C_Navigation::OnEditor()
 
 		if (ImGui::Checkbox("Is this UI component selected?", &is_selected)) {
 			if (is_selected) {
-				if (EngineExternal->moduleGui->uid_gameobject_of_ui_selected != 0) {
-					GameObject* g = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, EngineExternal->moduleGui->uid_gameobject_of_ui_selected);
-					if (g != nullptr) {
-						C_Navigation* nav = static_cast<C_Navigation*>(g->GetComponent(Component::TYPE::NAVIGATION));
-						if (nav != nullptr)
-							nav->Deselect();
-					}
-				}
 				Select();
 			}
 			else

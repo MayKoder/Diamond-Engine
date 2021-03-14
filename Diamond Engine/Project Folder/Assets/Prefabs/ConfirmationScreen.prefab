@@ -3,7 +3,7 @@
     "Game Objects": [
         {
             "name": "ConfirmationScreen",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -165,13 +165,6 @@
                         {
                             "Index": 0,
                             "UID": 326598339,
-                            "Action": 2,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 1,
-                            "UID": 1244267714,
                             "Action": 2,
                             "Is Key Down": false,
                             "Is Key Up": true
@@ -373,13 +366,6 @@
                         {
                             "Index": 0,
                             "UID": 546105083,
-                            "Action": 2,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 1,
-                            "UID": 1244267714,
                             "Action": 2,
                             "Is Key Down": false,
                             "Is Key Up": true
