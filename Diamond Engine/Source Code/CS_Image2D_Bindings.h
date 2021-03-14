@@ -24,6 +24,6 @@ void SwapTwoImages(MonoObject* obj, MonoObject* other_image)
 	int texture_uid = workImag->GetTexture()->textureID;
 	std::string library_path = workImag->GetTexture()->GetLibraryPath();
 	workImag->SetTexture(other_image_module->GetTexture());
-	other_image_module->SetTexture(static_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(texture_uid, library_path.c_str())));
+	other_image_module->SetTexture(texture_uid, library_path.c_str());
 
 }
