@@ -77,6 +77,11 @@ public class Enemy : DiamondComponent
 		float angle = (float)(Mathf.Rad2Deg * Math.Atan2(direction.x, direction.z));
 
 		gameObject.transform.localRotation = new Quaternion(0, Mathf.LerpAngle(gameObject.transform.localRotation.y, angle, 0.01f), 0);
-		Debug.Log(angle.ToString());
+		//Debug.Log(angle.ToString());
+	}
+
+	public bool InRange(Vector3 point, float givenRange)
+    {
+		return Mathf.Distance(gameObject.transform.globalPosition, point) < givenRange;
 	}
 }
