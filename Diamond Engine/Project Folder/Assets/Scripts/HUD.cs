@@ -16,7 +16,29 @@ public class HUD : DiamondComponent
 	public GameObject currency_number_gameobject;
 	public void Update()
 	{
-		currency_number_gameobject.GetComponent<Text>().text = currency_number_gameobject.GetComponent<Text>().text+"0";
+		if(Input.GetKey(DEKeyCode.C) == KeyState.KEY_DOWN)
+        {
+			String curren = currency_number_gameobject.GetComponent<Text>().text;
+			currency = int.Parse(curren);
+			currency++;
+			currency_number_gameobject.GetComponent<Text>().text=currency.ToString();
+        }
+		if (Input.GetKey(DEKeyCode.H) == KeyState.KEY_DOWN)
+		{
+			String hp_get = hp_number_gameobject.GetComponent<Text>().text;
+			hp = int.Parse(hp_get);
+			if(hp<50)
+				hp++;
+			hp_number_gameobject.GetComponent<Text>().text = hp.ToString();
+		}
+		if (Input.GetKey(DEKeyCode.D) == KeyState.KEY_DOWN)
+		{
+			String hp_get = hp_number_gameobject.GetComponent<Text>().text;
+			hp = int.Parse(hp_get);
+			if(hp>0)
+				hp--;
+			hp_number_gameobject.GetComponent<Text>().text = hp.ToString();
+		}
 	}
 
 }
