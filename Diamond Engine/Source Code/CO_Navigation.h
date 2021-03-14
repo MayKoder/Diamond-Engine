@@ -45,7 +45,7 @@ struct ActionToRealize {
 
 
 	ACTIONSNAVIGATION action;
-	int uid_gameobject;
+	GameObject* referenceGO;
     bool is_key_down;
     bool is_key_up;
 };

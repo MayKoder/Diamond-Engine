@@ -4,6 +4,7 @@
 #include "MO_GUI.h"
 #include "MO_Scene.h"
 #include "MO_Input.h"
+#include "MO_Editor.h"
 
 #include "GameObject.h"
 #include "CO_Button.h"
@@ -31,12 +32,12 @@ void C_Navigation::Update()
 		return;
 	KEY_STATE state;
 	for (std::map<BUTTONSANDJOYSTICKS, ActionToRealize>::iterator it = map_of_buttons_and_joysticks.begin(); it != map_of_buttons_and_joysticks.end(); ++it) {
-		if (it->second.uid_gameobject == 0)
+		if (it->second.referenceGO == nullptr)
 			continue;
 		CheckIfButtonOrJoystickIsBeingUsed(it->first,state);
 
 		if (button_or_joystick_being_used == it->first && state == KEY_STATE::KEY_UP) {
-			GameObject* gameobject_to_pass = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, it->second.uid_gameobject);
+			GameObject* gameobject_to_pass = it->second.referenceGO;
 			if (gameobject_to_pass == nullptr || gameobject_to_pass->GetComponent(Component::TYPE::NAVIGATION) == nullptr)
 				continue;
 			button_or_joystick_being_used = BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
@@ -44,7 +45,7 @@ void C_Navigation::Update()
 			return;
 		}
 		else if (button_or_joystick_being_used == BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK && state == KEY_STATE::KEY_DOWN) {
-			GameObject* gameobject_to_pass = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, it->second.uid_gameobject);
+			GameObject* gameobject_to_pass = it->second.referenceGO;
 			if (gameobject_to_pass == nullptr || gameobject_to_pass->GetComponent(Component::TYPE::NAVIGATION) == nullptr)
 				continue;
 			button_or_joystick_being_used = it->first;
@@ -426,7 +427,7 @@ void C_Navigation::LoadData(DEConfig& nObj)
 void C_Navigation::SaveMapData(JSON_Object* nObj, ActionToRealize& action, BUTTONSANDJOYSTICKS map_index)
 {
 	DEJson::WriteInt(nObj, "Index", static_cast<int>(map_index));
-	DEJson::WriteInt(nObj, "UID", action.uid_gameobject);
+	DEJson::WriteInt(nObj, "UID", (action.referenceGO != nullptr) ? action.referenceGO->UID : 0);
 	DEJson::WriteInt(nObj, "Action", static_cast<int>(action.action));
 	DEJson::WriteBool(nObj, "Is Key Down", action.is_key_down);
 	DEJson::WriteBool(nObj, "Is Key Up", action.is_key_up);
@@ -437,10 +438,12 @@ void C_Navigation::LoadMapaData(DEConfig& nObj)
 {
 	ActionToRealize new_action;
 	new_action.action= static_cast<ACTIONSNAVIGATION>(nObj.ReadInt("Action"));
-	new_action.uid_gameobject = nObj.ReadInt("UID");
+
+
 	new_action.is_key_down = nObj.ReadBool("Is Key Down");
 	new_action.is_key_up = nObj.ReadBool("Is Key Up");
 	map_of_buttons_and_joysticks.emplace(static_cast<BUTTONSANDJOYSTICKS>(nObj.ReadInt("Index")), new_action);
+	EngineExternal->moduleScene->navigationReferenceMap.emplace(nObj.ReadInt("UID"), &map_of_buttons_and_joysticks[static_cast<BUTTONSANDJOYSTICKS>(nObj.ReadInt("Index"))]);
 }
 
 
@@ -564,12 +567,14 @@ void C_Navigation::WriteButtonOrJoystickOnEditor(const char* text, BUTTONSANDJOY
 	if (current_item != items[0]) {
 		ImGui::Text("UID:"); 
 		ImGui::SameLine();
-		ImGui::Text(std::to_string(map_of_buttons_and_joysticks[button_or_joystick].uid_gameobject).c_str());
+
+		GameObject* ref = map_of_buttons_and_joysticks[button_or_joystick].referenceGO;
+		ImGui::Text((ref != nullptr) ? ref->name.c_str() : "Empty");
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT"))
 			{
-				map_of_buttons_and_joysticks[button_or_joystick].uid_gameobject = *(int*)payload->Data;
+				map_of_buttons_and_joysticks[button_or_joystick].referenceGO = EngineExternal->moduleEditor->GetDraggingGO();
 			}
 			ImGui::EndDragDropTarget();
 		}
@@ -580,7 +585,7 @@ void C_Navigation::WriteButtonOrJoystickOnEditor(const char* text, BUTTONSANDJOY
 
 #endif // !STANDALONE
 
-ActionToRealize::ActionToRealize() :action(ACTIONSNAVIGATION::NONE), uid_gameobject(0), is_key_down(false), is_key_up(true)
+ActionToRealize::ActionToRealize() :action(ACTIONSNAVIGATION::NONE), referenceGO(nullptr), is_key_down(false), is_key_up(true)
 {
 }
 
