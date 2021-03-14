@@ -23,7 +23,7 @@ public class QuitConfirmation : DiamondComponent
 		if (Input.GetGamepadButton(DEControllerButton.B) == KeyState.KEY_DOWN ||toDisable)
 		{
 			toDisable = false;
-			bigBrother.Enable(true);
+			//bigBrother.Enable(true);
 			confirmScreen.Enable(false);
 		}
 	}

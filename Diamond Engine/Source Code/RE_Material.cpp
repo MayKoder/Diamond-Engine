@@ -14,7 +14,6 @@
 
 ResourceMaterial::ResourceMaterial(unsigned int _uid) : Resource(_uid, Resource::Type::MATERIAL), shader(nullptr) 
 {
-
 }
 
 ResourceMaterial::~ResourceMaterial()
@@ -48,6 +47,13 @@ bool ResourceMaterial::LoadToMemory()
 			{	
 				if(strcmp(val.ReadString("name"), uniforms[k].name) == 0)
 					uniforms[k].data.textureValue = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(val.ReadInt("value"), Resource::Type::TEXTURE));
+			}
+		}
+		else if (val.ReadString("type") == "float") {
+			for (size_t k = 0; k < uniforms.size(); ++k)
+			{
+				if (strcmp(val.ReadString("name"), uniforms[k].name) == 0)
+					uniforms[k].data.floatValue=val.ReadFloat("value");
 			}
 		}
 
