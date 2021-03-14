@@ -62,6 +62,7 @@ GameObject* PrefabImporter::LoadPrefab(const char* libraryPath)
 	//std::vector<GameObject*> gameObjects;
 	//rootObject->CollectChilds(gameObjects);
 
+	EngineExternal->moduleScene->LoadNavigationData();
 	rootObject->RecursiveUIDRegeneration();
 	//std::map<uint, uint> uints;
 	//rootObject->RecursiveUIDRegenerationSavingOldUIDs(uints);

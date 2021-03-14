@@ -20,6 +20,7 @@
 #include"CO_Transform.h"
 #include"CO_Camera.h"
 #include"CO_Script.h"
+#include"CO_Navigation.h"
 
 #include"RE_Texture.h"
 #include"DETime.h"
@@ -124,6 +125,7 @@ update_status M_Scene::Update(float dt)
 
 				gameObjectRoot->RecursiveUIDRegeneration();
 
+				LoadNavigationData();
 				LoadScriptsData();
 
 				//Free memory
@@ -231,6 +233,24 @@ void M_Scene::LoadScriptsData()
 	}
 
 	referenceMap.clear();
+}
+
+void M_Scene::LoadNavigationData()
+{
+	for (auto i = navigationReferenceMap.begin(); i != navigationReferenceMap.end(); ++i)
+	{
+		// Get the range of the current key
+		auto range = navigationReferenceMap.equal_range(i->first);
+		
+		GameObject* ref = GetGOFromUID(EngineExternal->moduleScene->root, i->first);
+		// Now render out that whole range
+		for (auto d = range.first; d != range.second; ++d)
+		{
+			d->second->referenceGO = ref;			
+		}
+	}
+
+	navigationReferenceMap.clear();
 }
 
 void M_Scene::SetGameCamera(C_Camera* cam)
@@ -391,6 +411,7 @@ void M_Scene::LoadScene(const char* name)
 		parent = LoadGOData(json_array_get_object(sceneGO, i), parent);
 	}
 
+	LoadNavigationData();
 	LoadScriptsData();
 
 	//Free memory
