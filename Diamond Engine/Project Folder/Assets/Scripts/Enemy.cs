@@ -13,6 +13,7 @@ public class Enemy : DiamondComponent
 	public float damage;
 	public float bulletSpeed;
 	protected int shotTimes = 0;
+	protected int shotSequences = 0;
 
 	protected float timeBewteenShots = 5.0f;
 	protected float timePassed = 0.0f;
@@ -22,6 +23,7 @@ public class Enemy : DiamondComponent
 	protected Vector3 targetPosition = null;
 	protected float stoppingDistance = 1.0f;
 	public float wanderRange = 5.0f;
+	public float runningRange = 15.0f;
 
 	protected STATES currentState = STATES.WANDER;
 

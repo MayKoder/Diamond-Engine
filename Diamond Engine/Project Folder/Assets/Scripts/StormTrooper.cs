@@ -37,6 +37,10 @@ public class Stormtrooper : Enemy
 						currentState = STATES.WANDER;
 						timePassed = 0.0f;
 						targetPosition = CalculateNewPosition(wanderRange);
+                        if (shotSequences == 1)
+                        {
+							currentState = STATES.SHOOT;
+                        }
 					}
 				}
 
@@ -101,9 +105,19 @@ public class Stormtrooper : Enemy
 
 					if (shotTimes >= 2)
 					{
-						currentState = STATES.RUN;
-						targetPosition = CalculateNewPosition(range);
-						shotTimes = 0;
+						shotSequences++;
+						if (shotSequences >= 2)
+						{
+							currentState = STATES.RUN;
+							targetPosition = CalculateNewPosition(runningRange);
+							shotTimes = 0;
+							shotSequences = 0;
+						}
+						else
+						{
+							currentState = STATES.IDLE;
+							shotTimes = 0;
+                        }
 					}
 				}
 				break;
