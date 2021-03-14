@@ -60,5 +60,8 @@ namespace DiamondEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void Enable(bool enable);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern bool IsEnabled();
     }
 }

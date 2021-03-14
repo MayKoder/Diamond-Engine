@@ -60,6 +60,11 @@ void CS_EnableGO(MonoObject* go, bool enable)
 		ref->active = enable;
 }
 
+bool CS_IsGOEnabled(MonoObject* go)
+{
+	return EngineExternal->moduleMono->GameObject_From_CSGO(go)->isActive();
+}
+
 //template<typename A>
 MonoObject* CS_GetComponent(MonoObject* ref, MonoString* type, int inputType)
 {

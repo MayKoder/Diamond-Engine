@@ -5,6 +5,7 @@ public class FPS_Controller : DiamondComponent
 {
     public GameObject reference = null;
     public GameObject turret = null;
+    public GameObject quitMenu = null;
 
     public float rotationSpeed = 2.0f;
     public float movementSpeed = 35.0f;
@@ -32,5 +33,13 @@ public class FPS_Controller : DiamondComponent
 
         if (Input.GetMouseX() != 0 && turret != null)
             turret.transform.localRotation = Quaternion.RotateAroundAxis(Vector3.up, -Input.GetMouseX() * mouseSens * Time.deltaTime) * turret.transform.localRotation;
+
+        if (Input.GetGamepadButton(DEControllerButton.START) == KeyState.KEY_DOWN)
+        {
+            if (quitMenu.IsEnabled())
+                quitMenu.Enable(false);
+            else
+                quitMenu.Enable(true);
+        }
     }
 }

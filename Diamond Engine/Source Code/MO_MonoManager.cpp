@@ -100,6 +100,7 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.GameObject::get_Name", CS_Get_GO_Name);
 	mono_add_internal_call("DiamondEngine.GameObject::get_parent", CS_Get_GO_Parent);
 	mono_add_internal_call("DiamondEngine.GameObject::Enable", CS_EnableGO);
+	mono_add_internal_call("DiamondEngine.GameObject::IsEnabled", CS_IsGOEnabled);
 
 	mono_add_internal_call("DiamondEngine.Animator::Play", Play);
 	mono_add_internal_call("DiamondEngine.Animator::Pause", Pause);
