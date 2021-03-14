@@ -17,6 +17,9 @@ public:
 
 	void RenderText(C_Transform2D* transform, ResourceMaterial* material, unsigned int VAO, unsigned int VBO);
 
+	const char* GetText();
+	void SetText(const char* new_text);
+
 #ifndef STANDALONE
 	bool OnEditor() override;
 #endif // !STANDALONE
