@@ -34,6 +34,7 @@ namespace DiamondEngine
         public static Dictionary<System.Type, ComponentType> componentTable = new Dictionary<Type, ComponentType> {
             { typeof(Transform), ComponentType.TRANSFORM},
             { typeof(Text), ComponentType.TEXT_UI  },
+            { typeof(Material), ComponentType.MATERIAL  },
         };
 
         public DiamondComponent()

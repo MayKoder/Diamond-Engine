@@ -18,6 +18,7 @@
 #include"CS_Scene_Bindings.h"
 #include "CS_Audio_Bindings.h"
 #include "CS_Text_Bindings.h"
+#include "CS_Material_Bindings.h"
 
 #include <iostream>
 #include <fstream> 
@@ -100,6 +101,10 @@ bool M_MonoManager::Init()
 #pragma region Text
 	mono_add_internal_call("DiamondEngine.Text::get_text", GetText);
 	mono_add_internal_call("DiamondEngine.Text::set_text", SetText);
+#pragma endregion
+
+#pragma region Material
+	mono_add_internal_call("DiamondEngine.Material::SetFloatUniform", SetFloatUniform);
 #pragma endregion
 
 
