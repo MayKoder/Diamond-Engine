@@ -1,81 +1,6 @@
 {
-    "EditorCameraPosition": [
-        12.210494995117188,
-        2.2774577140808105,
-        -0.019244767725467682
-    ],
-    "EditorCameraZ": [
-        -0.98304563760757446,
-        -0.18335409462451935,
-        0.0015493627870455384
-    ],
-    "EditorCameraY": [
-        -0.18335387110710144,
-        0.98304688930511475,
-        0.00028898115851916373
-    ],
+    "assets_path": "Assets\/OptionsMenu.prefab",
     "Game Objects": [
-        {
-            "name": "Scene root",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1828803901,
-            "PrefabID": 0,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                }
-            ]
-        },
-        {
-            "name": "Canvas",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 581109778,
-            "PrefabID": 0,
-            "ParentUID": 1828803901,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 10,
-                    "Active": true
-                }
-            ]
-        },
         {
             "name": "OptionsMenu",
             "Active": true,
@@ -1035,45 +960,6 @@
                     "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
-                }
-            ]
-        },
-        {
-            "name": "Game Camera",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 2099345549,
-            "PrefabID": 0,
-            "ParentUID": 1828803901,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 4,
-                    "Active": true,
-                    "fType": 2,
-                    "nearPlaneDist": 1,
-                    "farPlaneDist": 100,
-                    "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6468831300735474,
-                    "culling": true
                 }
             ]
         }
