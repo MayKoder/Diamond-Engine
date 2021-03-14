@@ -370,6 +370,21 @@
                 {
                     "Type": 1,
                     "Active": true
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "HUD",
+                    "hp": 100,
+                    "force": 100,
+                    "hp_bar": 1263416948,
+                    "hp_number_gameobject": 685408372,
+                    "force_bar": 177995778,
+                    "skill_push": 1083364916,
+                    "weapon_bar": 1076718357,
+                    "primary_weapon": 931853287,
+                    "secondary_weapon": 1142762498,
+                    "currency_number_gameobject": 685275708
                 }
             ]
         },

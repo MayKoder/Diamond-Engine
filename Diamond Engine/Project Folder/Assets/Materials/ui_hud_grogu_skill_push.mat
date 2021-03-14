@@ -1,4 +1,10 @@
 {
-    "ShaderUID": 577511301,
-    "Uniforms": []
+  "ShaderUID": 577511301,
+  "Uniforms": [
+    {
+      "name": "length_used",
+      "type": 5126,
+      "value": 1
+    }
+  ]
 }

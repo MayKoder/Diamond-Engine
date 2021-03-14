@@ -22,7 +22,7 @@ uniform sampler2D ourTexture;
 uniform float length_used;
 
 void main() {
-	if(textureCoords.x<length_used){
+	if(textureCoords.x<1-length_used){
 		fragmentColor=vec4(0,0,0,0);
 		}
 	else{
