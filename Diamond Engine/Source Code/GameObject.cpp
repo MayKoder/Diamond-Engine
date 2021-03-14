@@ -9,6 +9,8 @@
 #include "CO_Animator.h"
 #include "CO_RigidBody.h"
 #include "CO_Collider.h"
+#include "CO_BoxCollider.h"
+#include "CO_MeshCollider.h"
 #include "CO_AudioListener.h"
 #include "CO_AudioSource.h"
 #include "CO_Transform2D.h"
@@ -135,9 +137,12 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 	case Component::TYPE::RIGIDBODY:
 		ret = new C_RigidBody(this);
 		break;
-	case Component::TYPE::COLLIDER:
-		ret = new C_Collider(this);
+	case Component::TYPE::BOXCOLLIDER:
+		ret = new C_BoxCollider(this);
       break;
+	case Component::TYPE::MESHCOLLIDER:
+		ret = new C_MeshCollider(this);
+		break;
 	case Component::TYPE::AUDIO_LISTENER:
 		ret = new C_AudioListener(this);
 		break;
