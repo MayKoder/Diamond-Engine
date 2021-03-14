@@ -839,6 +839,9 @@
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui_color_gradient.h">
       <Filter>Externals\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\PE_Velocity_Over_Lifetime.h">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -1275,6 +1278,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_color_gradient.cpp">
       <Filter>Externals\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\PE_Velocity_Over_Lifetime.cpp">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
