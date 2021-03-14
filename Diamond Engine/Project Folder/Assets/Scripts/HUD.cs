@@ -16,7 +16,7 @@ public class HUD : DiamondComponent
 	public GameObject currency_number_gameobject;
 	public void Update()
 	{
-
+		currency_number_gameobject.GetComponent<Text>().text = currency_number_gameobject.GetComponent<Text>().text+"0";
 	}
 
 }

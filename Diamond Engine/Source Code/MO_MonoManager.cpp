@@ -17,6 +17,7 @@
 #include "CS_Input_Bindings.h"
 #include"CS_Scene_Bindings.h"
 #include "CS_Audio_Bindings.h"
+#include "CS_Text_Bindings.h"
 
 #include <iostream>
 #include <fstream> 
@@ -94,6 +95,13 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Transform::set_localScale", RecieveScale);
 
 #pragma endregion
+
+
+#pragma region Text
+	mono_add_internal_call("DiamondEngine.Text::get_text", GetText);
+	mono_add_internal_call("DiamondEngine.Text::set_text", SetText);
+#pragma endregion
+
 
 	mono_add_internal_call("DiamondEngine.DiamondComponent::get_gameObject", CS_Component_Get_GO);
 	mono_add_internal_call("DiamondEngine.GameObject::TryGetComponent", CS_GetComponent);

@@ -32,7 +32,8 @@ namespace DiamondEngine
         public UIntPtr pointer;
         public ComponentType type;
         public static Dictionary<System.Type, ComponentType> componentTable = new Dictionary<Type, ComponentType> {
-            { typeof(Transform), ComponentType.TRANSFORM },
+            { typeof(Transform), ComponentType.TRANSFORM},
+            { typeof(Text), ComponentType.TEXT_UI  },
         };
 
         public DiamondComponent()
