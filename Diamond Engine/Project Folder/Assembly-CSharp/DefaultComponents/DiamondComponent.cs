@@ -35,6 +35,7 @@ namespace DiamondEngine
             { typeof(Transform), ComponentType.TRANSFORM},
             { typeof(Text), ComponentType.TEXT_UI  },
             { typeof(Material), ComponentType.MATERIAL  },
+            { typeof(Image2D), ComponentType.IMAGE_2D  },
         };
 
         public DiamondComponent()

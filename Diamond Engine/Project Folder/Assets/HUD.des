@@ -375,8 +375,12 @@
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "HUD",
-                    "hp": 100,
-                    "force": 100,
+                    "hp": 50,
+                    "force": 50,
+                    "currency": 0,
+                    "bullets_main_weapon": 10,
+                    "bullets_secondary_weapon": 10,
+                    "main_weapon": true,
                     "hp_bar": 1263416948,
                     "hp_number_gameobject": 685408372,
                     "force_bar": 177995778,
@@ -533,13 +537,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -19.5,
-                        -3.2999999523162842
+                        -19.200000762939453,
+                        -2.7000000476837158
                     ],
                     "Rotation": 0,
                     "Size": [
-                        11,
-                        15.899999618530273
+                        10,
+                        14.899999618530273
                     ]
                 },
                 {

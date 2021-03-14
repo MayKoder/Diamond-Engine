@@ -4,9 +4,11 @@ using DiamondEngine;
 public class HUD : DiamondComponent
 {
 	public int hp;
-	public int force=50;
+	public int force;
 	public int currency;
-	public int bullets;
+	public int bullets_main_weapon;
+	public int bullets_secondary_weapon;
+	public bool main_weapon;
 	public GameObject hp_bar;
 	public GameObject hp_number_gameobject;
 	public GameObject force_bar;
@@ -82,20 +84,66 @@ public class HUD : DiamondComponent
 		}
 		if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_DOWN)
 		{
-			if (bullets > 0)
-			{
-				bullets--;
-				float bullets_float = bullets;
-				bullets_float /= 10;
-				weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
+			if (main_weapon)
+            {
+				if (bullets_main_weapon > 0)
+				{
+					bullets_main_weapon--;
+					float bullets_float = bullets_main_weapon;
+					bullets_float /= 10;
+					weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
+				}
 			}
+            else
+            {
+				if (bullets_secondary_weapon > 0)
+				{
+					bullets_secondary_weapon--;
+					float bullets_float = bullets_secondary_weapon;
+					bullets_float /= 10;
+					weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
+				}
+			}
+			
+			
 		}
 		if (Input.GetKey(DEKeyCode.R) == KeyState.KEY_DOWN)
 		{
-			if (bullets < 10)
+			if (main_weapon)
 			{
-				bullets++;
-				float bullets_float = bullets;
+				if (bullets_main_weapon < 10)
+				{
+					bullets_main_weapon++;
+					float bullets_float = bullets_main_weapon;
+					bullets_float /= 10;
+					weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
+				}
+			}
+            else
+            {
+				if (bullets_secondary_weapon < 10)
+				{
+					bullets_secondary_weapon++;
+					float bullets_float = bullets_secondary_weapon;
+					bullets_float /= 10;
+					weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
+				}
+			}
+				
+		}
+		if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_DOWN)
+		{
+			primary_weapon.GetComponent<Image2D>().SwapTwoImages(secondary_weapon);
+			main_weapon = !main_weapon;
+            if (main_weapon)
+            {
+				float bullets_float = bullets_main_weapon;
+				bullets_float /= 10;
+				weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
+			}
+            else
+            {
+				float bullets_float = bullets_secondary_weapon;
 				bullets_float /= 10;
 				weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
 			}

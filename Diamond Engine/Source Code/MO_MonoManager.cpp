@@ -19,6 +19,7 @@
 #include "CS_Audio_Bindings.h"
 #include "CS_Text_Bindings.h"
 #include "CS_Material_Bindings.h"
+#include "CS_Image2D_Bindings.h"
 
 #include <iostream>
 #include <fstream> 
@@ -105,6 +106,10 @@ bool M_MonoManager::Init()
 
 #pragma region Material
 	mono_add_internal_call("DiamondEngine.Material::SetFloatUniform", SetFloatUniform);
+#pragma endregion
+
+#pragma region Image2D
+	mono_add_internal_call("DiamondEngine.Image2D::SwapTwoImages", SwapTwoImages);
 #pragma endregion
 
 

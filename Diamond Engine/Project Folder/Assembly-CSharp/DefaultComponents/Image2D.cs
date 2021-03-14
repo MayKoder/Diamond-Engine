@@ -5,15 +5,15 @@ using System.Runtime.InteropServices;
 
 namespace DiamondEngine
 {
-    public class Material : DiamondComponent
+    public class Image2D : DiamondComponent
     {
-        public Material()
+        public Image2D()
         {
-            type = ComponentType.MATERIAL;
+            type = ComponentType.IMAGE_2D;
         }
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern void SetFloatUniform(String name_uniform, float value);
+        public extern void SwapTwoImages(GameObject other_image);
 
     }
 

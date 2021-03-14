@@ -13,7 +13,7 @@ void SetFloatUniform(MonoObject* obj, MonoString* name_uniform, float value)
 
 	C_Material* workMat = DECS_CompToComp<C_Material*>(obj);
 
-	if (!workMat)
+	if (workMat == nullptr)
 		return;
 	char* text = mono_string_to_utf8(name_uniform);
 	int i;
@@ -28,6 +28,5 @@ void SetFloatUniform(MonoObject* obj, MonoString* name_uniform, float value)
 		return;
 	workMat->material->uniforms[i].data.floatValue = value;
 	workMat->material->PushUniforms();
-	/*ShaderVariable uniform= workMat->material->uniforms[num_uniform];
-	uniform.data.floatValue = value;*/
+
 }

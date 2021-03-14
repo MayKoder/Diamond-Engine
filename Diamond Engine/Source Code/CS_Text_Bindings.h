@@ -8,6 +8,9 @@ MonoString* GetText(MonoObject* obj)
 
 	C_Text* workText = DECS_CompToComp<C_Text*>(obj);
 
+	if (workText == nullptr)
+		return nullptr;
+
 	const char* text = workText->GetText();
 
 	return mono_string_new(EngineExternal->moduleMono->jitDomain, text);
@@ -23,6 +26,9 @@ void SetText(MonoObject* obj, MonoString* secObj)
 	
 
 	C_Text* workText = DECS_CompToComp<C_Text*>(obj);
+
+	if (workText == nullptr)
+		return;
 
 	if (workText)
 		workText->SetText(text);
