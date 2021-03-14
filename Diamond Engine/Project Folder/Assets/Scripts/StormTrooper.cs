@@ -8,7 +8,6 @@ public class Stormtrooper : Enemy
 		currentState = STATES.WANDER;
 		targetPosition = CalculateNewPosition(wanderRange);
 		shotTimes = 0;
-		Debug.Log("Started");
 	}
 
 	public void Update()
