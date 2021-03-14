@@ -234,6 +234,17 @@ void RecieveScale(MonoObject* obj, MonoObject* secObj)
 	}
 }
 
+void LookAt(MonoObject* cs_component, MonoObject* pointObject)
+{
+	float3 pointToLook = EngineExternal->moduleMono->UnboxVector(pointObject);
+	C_Transform* transform = DECS_CompToComp<C_Transform*>(cs_component);
+	
+	if (transform)
+	{
+		transform->LookAt(pointToLook);
+	}
+}
+
 float GetDT() //TODO: Can we do this without duplicating code? plsssss
 {
 	return DETime::deltaTime;
