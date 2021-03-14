@@ -209,6 +209,11 @@ void C_Transform::UpdateBoxes()
 	}
 }
 
+void C_Transform::LookAt(float3 pointToLook)
+{	
+	localTransform = localTransform.LookAt(GetNormalizeAxis(2), pointToLook, GetNormalizeAxis(1), localTransform.WorldY());
+}
+
 
 void C_Transform::SetTransformMatrix(float3 _position, Quat _rotation, float3 _localScale)
 {
