@@ -19,7 +19,7 @@
 
 #include "GameObject.h"
 
-W_Assets::W_Assets() : Window(), selectedFile(nullptr)
+W_Assets::W_Assets() : Window(), selectedFile(nullptr), tree_window_width(0.2f)
 {
 	name = "Assets";
 
@@ -37,12 +37,15 @@ void W_Assets::Draw()
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/))
 	{
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar;
-		ImGui::BeginChild("Tree", ImVec2(ImGui::GetWindowContentRegionWidth() * 0.2f, ImGui::GetContentRegionAvail().y), false, window_flags);
+		ImGui::BeginChild("Tree", ImVec2(ImGui::GetWindowContentRegionWidth() * tree_window_width, ImGui::GetContentRegionAvail().y), false, window_flags);
 
 		DrawFileTree(*displayFolder);
 		DrawCreationWindow();
 		DrawFileTree(EngineExternal->moduleResources->meshesLibraryRoot);
 		DrawFileTree(EngineExternal->moduleResources->animationsLibraryRoot);
+
+		ImGui::SliderFloat("Width", &tree_window_width, 0.05f, 0.9f);
+
 		ImGui::EndChild();
 
 		if (selectedFile != nullptr && /*ImGui::IsWindowHovered() &&*/ EngineExternal->moduleInput->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) 
