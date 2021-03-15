@@ -137,6 +137,9 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 	case Component::TYPE::RIGIDBODY:
 		ret = new C_RigidBody(this);
 		break;
+	case Component::TYPE::COLLIDER:
+		ret = new C_BoxCollider(this);
+		break;
 	case Component::TYPE::BOXCOLLIDER:
 		ret = new C_BoxCollider(this);
       break;
