@@ -23,6 +23,8 @@ type_of_ui(type_of_ui)
 
 C_Navigation::~C_Navigation()
 {
+	if (is_selected)
+		EngineExternal->moduleGui->uid_gameobject_of_ui_selected.erase(std::find(EngineExternal->moduleGui->uid_gameobject_of_ui_selected.begin(), EngineExternal->moduleGui->uid_gameobject_of_ui_selected.end(), gameObject->UID));
 	map_of_buttons_and_joysticks.clear();
 }
 
