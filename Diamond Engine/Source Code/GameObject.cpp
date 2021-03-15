@@ -9,6 +9,8 @@
 #include "CO_Animator.h"
 #include "CO_RigidBody.h"
 #include "CO_Collider.h"
+#include "CO_BoxCollider.h"
+#include "CO_MeshCollider.h"
 #include "CO_AudioListener.h"
 #include "CO_AudioSource.h"
 #include "CO_Transform2D.h"
@@ -135,9 +137,12 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 	case Component::TYPE::RIGIDBODY:
 		ret = new C_RigidBody(this);
 		break;
-	case Component::TYPE::COLLIDER:
-		ret = new C_Collider(this);
+	case Component::TYPE::BOXCOLLIDER:
+		ret = new C_BoxCollider(this);
       break;
+	case Component::TYPE::MESHCOLLIDER:
+		ret = new C_MeshCollider(this);
+		break;
 	case Component::TYPE::AUDIO_LISTENER:
 		ret = new C_AudioListener(this);
 		break;
@@ -225,19 +230,18 @@ void GameObject::RecursiveUIDRegeneration()
 	}
 }
 
-/*
-void GameObject::RecursiveUIDRegenerationSavingOldUIDs(std::map<uint, uint>& uids)
+
+void GameObject::RecursiveUIDRegenerationSavingReferences(std::map<uint, GameObject*>& gameObjects)
 {
-	uint new_uid = EngineExternal->GetRandomInt();
-	uids[new_uid] = this->UID;
-	this->UID = new_uid;
+	gameObjects[UID] = this;
+	UID = EngineExternal->GetRandomInt();
 
 	for (size_t i = 0; i < this->children.size(); i++)
 	{
-		this->children[i]->RecursiveUIDRegenerationSavingOldUIDs(uids);
+		this->children[i]->RecursiveUIDRegenerationSavingReferences(gameObjects);
 	}
 }
-*/
+
 
 
 bool GameObject::isActive() const
@@ -358,7 +362,8 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 		}
 		Component* comp = AddComponent((Component::TYPE)conf.ReadInt("Type"), scName);
 
-		comp->LoadData(conf);
+		if(comp != nullptr)
+			comp->LoadData(conf);
 	}
 }
 
