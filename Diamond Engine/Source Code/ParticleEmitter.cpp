@@ -149,6 +149,9 @@ void Emitter::Draw(unsigned int shaderId)
 	{
 		if (myParticles[i].currentLifetime > 0)
 		{
+			//TODO: Update that rotation, get from billboard
+			//Quat::FromEulerXYZ(0, 0, myParticles[i].rotation)
+			//EngineExternal->moduleRenderer3D->activeRenderCamera
 			float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1, 1, 1)).Transposed();
 			vboInfo.push_back(matrix[0][0]);
 			vboInfo.push_back(matrix[0][1]);
@@ -344,17 +347,19 @@ void Emitter::ThrowParticles(float dt)
 	float3 startingPos = objTransform->globalTransform.TranslatePart();
 	//spawn particles
 
-
-	for (int i = 0; i < numberOfParticlesToSpawn; ++i)
-	{
-		int unusedIndex = FindUnusedParticle();
-		PrepareParticleToSpawn(myParticles[unusedIndex], startingPos);
-
-		for (int j = 0; j < myEffects.size(); ++j)
+	if (myParticles.empty() == false) {
+		for (int i = 0; i < numberOfParticlesToSpawn; ++i)
 		{
-			myEffects[j]->Spawn(myParticles[unusedIndex]);
+			int unusedIndex = FindUnusedParticle();
+
+			PrepareParticleToSpawn(myParticles[unusedIndex], startingPos);
+
+			for (int j = 0; j < myEffects.size(); ++j)
+			{
+				myEffects[j]->Spawn(myParticles[unusedIndex]);
+			}
 		}
-	}
+	}	
 }
 
 int Emitter::DoesEffectExist(PARTICLE_EFFECT_TYPE type)
