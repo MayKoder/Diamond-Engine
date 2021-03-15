@@ -16,16 +16,16 @@ void Component::Enable()
 }
 
 void Component::Disable()
-{
-}
+{}
 
 void Component::Update()
-{
-}
+{}
 
 void Component::PostUpdate()
-{
-}
+{}
+
+void Component::OnRecursiveUIDChange(std::map<uint, GameObject*> gameObjects)
+{}
 
 #ifndef STANDALONE
 bool Component::OnEditor()

@@ -59,12 +59,21 @@ GameObject* PrefabImporter::LoadPrefab(const char* libraryPath)
 		parent = LoadGOData(json_array_get_object(gameObjectsArray, i), parent);
 	}
 
-	//std::vector<GameObject*> gameObjects;
-	//rootObject->CollectChilds(gameObjects);
+	//rootObject->RecursiveUIDRegeneration();
 
-	rootObject->RecursiveUIDRegeneration();
-	//std::map<uint, uint> uints;
-	//rootObject->RecursiveUIDRegenerationSavingOldUIDs(uints);
+	//Save all references to game objects with their old UID
+	std::map<uint, GameObject*> gameObjects;
+	rootObject->RecursiveUIDRegenerationSavingReferences(gameObjects);
+
+	//replace the components references with the new GameObjects using their old UIDs
+	std::map<uint, GameObject*>::const_iterator it = gameObjects.begin();
+	for(it; it != gameObjects.end(); it++)
+	{
+		for (size_t i = 0; i < it->second->components.size(); i++)
+		{
+			it->second->components[i]->OnRecursiveUIDChange(gameObjects);
+		}
+	}
 	
 	std::string id_string;
 	FileSystem::GetFileName(libraryPath, id_string, false);

@@ -233,19 +233,18 @@ void GameObject::RecursiveUIDRegeneration()
 	}
 }
 
-/*
-void GameObject::RecursiveUIDRegenerationSavingOldUIDs(std::map<uint, uint>& uids)
+
+void GameObject::RecursiveUIDRegenerationSavingReferences(std::map<uint, GameObject*>& gameObjects)
 {
-	uint new_uid = EngineExternal->GetRandomInt();
-	uids[new_uid] = this->UID;
-	this->UID = new_uid;
+	gameObjects[UID] = this;
+	UID = EngineExternal->GetRandomInt();
 
 	for (size_t i = 0; i < this->children.size(); i++)
 	{
-		this->children[i]->RecursiveUIDRegenerationSavingOldUIDs(uids);
+		this->children[i]->RecursiveUIDRegenerationSavingReferences(gameObjects);
 	}
 }
-*/
+
 
 
 bool GameObject::isActive() const
@@ -366,7 +365,8 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 		}
 		Component* comp = AddComponent((Component::TYPE)conf.ReadInt("Type"), scName);
 
-		comp->LoadData(conf);
+		if(comp != nullptr)
+			comp->LoadData(conf);
 	}
 }
 

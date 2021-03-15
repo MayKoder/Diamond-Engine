@@ -1,9 +1,19 @@
 {
+    "name": "animated_material",
     "ShaderUID": 1295639766,
     "Uniforms": [
         {
             "name": "jointTransforms[0]",
             "type": 35676
+        },
+        {
+            "name": "lightPosition",
+            "type": 35665,
+            "value": [
+                0,
+                0,
+                0
+            ]
         }
     ]
 }

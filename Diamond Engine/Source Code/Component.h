@@ -5,6 +5,7 @@ class GameObject;
 //ERROR: Remove this include from here
 #include"DEJsonSupport.h"
 #include<string>
+#include <map>
 
 class Component
 {
@@ -28,11 +29,11 @@ public:
 		AUDIO_SOURCE,
 		RIGIDBODY,
 		COLLIDER,
-		BOXCOLLIDER,
-		MESHCOLLIDER,
 		Animator,
 		ANIMATOR,
 		NAVIGATION,
+		BOXCOLLIDER,
+		MESHCOLLIDER,
 		COUNT
 	};
 
@@ -44,6 +45,8 @@ public:
 
 	virtual void Update();
 	virtual void PostUpdate();
+
+	virtual void OnRecursiveUIDChange(std::map < uint, GameObject*> gameObjects);
 
 #ifndef STANDALONE
 	virtual bool OnEditor();
