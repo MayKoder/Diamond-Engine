@@ -2,6 +2,7 @@
 
 #include<vector>
 #include<string>
+#include <map>
 
 #include "Component.h"
 #include"parson/parson.h"
@@ -23,7 +24,7 @@ public:
 	Component* GetComponent(Component::TYPE _type, const char* scriptName = nullptr);
 
 	void RecursiveUIDRegeneration();
-	//void RecursiveUIDRegenerationSavingOldUIDs(std::map<uint, uint>& uids);
+	void RecursiveUIDRegenerationSavingReferences(std::map<uint, GameObject*>& gameObjects);
 
 	bool isActive() const;
 

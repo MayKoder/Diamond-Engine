@@ -13,9 +13,7 @@
 #include"IM_MaterialImporter.h"
 
 ResourceMaterial::ResourceMaterial(unsigned int _uid) : Resource(_uid, Resource::Type::MATERIAL), shader(nullptr) 
-{
-
-}
+{}
 
 ResourceMaterial::~ResourceMaterial()
 {
@@ -30,6 +28,7 @@ bool ResourceMaterial::LoadToMemory()
 	JSON_Value* file = json_parse_file(this->libraryFile.c_str());
 	DEConfig base(json_value_get_object(file));
 
+	strcpy(name, base.ReadString("name"));
 	int shUID = base.ReadInt("ShaderUID");
 
 	//Request shader [DONE]
@@ -206,6 +205,8 @@ void ResourceMaterial::SetShader(ResourceShader* res)
 #ifndef STANDALONE
 void ResourceMaterial::DrawEditor()
 {
+	ImGui::InputText("Name", name, IM_ARRAYSIZE(name));
+
 	ImGui::Text("Drop here to change shader");
 	if (ImGui::BeginDragDropTarget())
 	{

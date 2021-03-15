@@ -789,6 +789,10 @@
     <ClInclude Include="Source Code\CO_BoxCollider.h">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CO_Navigation.h" />
+    <ClInclude Include="Source Code\IM_PrefabImporter.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -1190,9 +1194,12 @@
     <ClCompile Include="Source Code\CO_MeshCollider.cpp">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\CO_CubeCollider.cpp" />
     <ClCompile Include="Source Code\CO_BoxCollider.cpp">
       <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Navigation.cpp" />
+    <ClCompile Include="Source Code\IM_PrefabImporter.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

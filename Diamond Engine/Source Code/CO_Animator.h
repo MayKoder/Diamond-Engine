@@ -38,6 +38,8 @@ public:
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
 
+	void OnRecursiveUIDChange(std::map < uint, GameObject*> gameObjects) override;
+
 #ifndef STANDALONE
 	bool OnEditor() override;
 	void SaveAnimation(ResourceAnimation* animation, const char* name);
