@@ -78,7 +78,7 @@
         },
         {
             "name": "MainMenu",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -1925,7 +1925,7 @@
                     "Unhovered_AssetsPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/113519198.dds",
                     "Unhovered_UID": 113519198,
-                    "Script_Name": "DisplayOptions",
+                    "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -2032,7 +2032,8 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "DisplayOptions",
+                    "ScriptName": "DisSett",
+                    "displayScreen": 1618442095,
                     "bigBrother": 1311017402,
                     "toDisable": false,
                     "firstFrame": true
@@ -5815,7 +5816,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6608972549438477,
+                    "hFOV": 1.5885645151138306,
                     "culling": true
                 }
             ]
