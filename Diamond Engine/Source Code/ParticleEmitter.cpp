@@ -29,6 +29,7 @@ Emitter::Emitter() :
 	toDelete(false),
 	texture(nullptr),
 	particlesPerSec(0.0f),
+	secPerParticle(0.0f),
 	lastParticeTime(0),
 	particlesColor(1.0f, 1.0f, 1.0f, 1.0f),
 	myParticles(),
@@ -212,25 +213,18 @@ void Emitter::OnEditor(int emitterIndex)
 
 	if (ImGui::CollapsingHeader(guiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		bool poolToEdit = false;
-
 		guiName = "Particle Lifetime ##" + suffixLabel;
 		if (ImGui::DragFloatRange2("Lifetime", &particlesLifeTime[0], &particlesLifeTime[1], 0.25f, 0.1f, 100.0f, "Min: %.1f", "Max: %.1f"))
 		{
-			poolToEdit = true;
+			CalculatePoolSize();
 		}
 
 		guiName = "Particles per Second ##" + suffixLabel;
 		if (ImGui::DragFloat(guiName.c_str(), &particlesPerSec))
 		{
-			poolToEdit = true;
-		}
+			SetParticlesPerSec(particlesPerSec);
 
-		if (poolToEdit)
-		{
-			CalculatePoolSize();
 		}
-
 
 		for (int i = (int)PARTICLE_EFFECT_TYPE::NONE + 1; i < (int)PARTICLE_EFFECT_TYPE::MAX; ++i)
 		{
@@ -317,7 +311,9 @@ void Emitter::CreateParticles(unsigned int particlesToAdd)
 void Emitter::ThrowParticles(float dt)
 {
 	//find particles to spawn this frame
-	float timeSinceLastThrow = dt + lastParticeTime;
+	float myDT = min(dt, 0.016f);
+
+	float timeSinceLastThrow = myDT + lastParticeTime;
 
 	float numberOfParticlesToSpawnF = timeSinceLastThrow * particlesPerSec;
 	int numberOfParticlesToSpawn = numberOfParticlesToSpawnF;
@@ -325,7 +321,7 @@ void Emitter::ThrowParticles(float dt)
 
 	if (particlesPerSec > 0.0f)
 	{
-		lastParticeTime = extraParticle / particlesPerSec; //TODO should we optimize this division?
+		lastParticeTime = extraParticle * secPerParticle;
 	}
 	else
 	{
@@ -341,7 +337,7 @@ void Emitter::ThrowParticles(float dt)
 
 	for (int i = 0; i < numberOfParticlesToSpawn; ++i)
 	{
-		int unusedIndex= FindUnusedParticle();
+		int unusedIndex = FindUnusedParticle();
 		PrepareParticleToSpawn(myParticles[unusedIndex], startingPos);
 
 		for (int j = 0; j < myEffects.size(); ++j)
@@ -494,6 +490,18 @@ int Emitter::FindUnusedParticle()
 	}
 
 	return 0; // All particles are taken, override the first one
+}
+
+void Emitter::SetParticlesPerSec(int newParticlesPerSec)
+{
+	particlesPerSec = max(newParticlesPerSec,0.0f);
+
+	if (particlesPerSec != 0.0f)
+		secPerParticle = 1 / particlesPerSec;
+	else
+		secPerParticle = 0.0f;
+
+	CalculatePoolSize();
 }
 
 void Emitter::AssignTransform(C_Transform* objTransform)

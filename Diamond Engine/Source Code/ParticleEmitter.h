@@ -40,6 +40,7 @@ private:
 
 	void PrepareVBO();
 	int FindUnusedParticle();
+	void SetParticlesPerSec(int newParticlesPerSec);
 public:
 	bool toDelete;
 private:
@@ -62,6 +63,8 @@ private:
 
 	//particles per second
 	float particlesPerSec;
+	//seconds per particle (1/particles per sec)
+	float secPerParticle;
 	//this variable holds the extra time from the particle spawn last frame
 	float lastParticeTime;
 	//index of the last used aprticle
