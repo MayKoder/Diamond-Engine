@@ -28,6 +28,9 @@ public class Stormtrooper : Enemy
                     {
 						currentState = STATES.SHOOT;
 						timePassed = timeBewteenShots;
+						InternalCalls.CreatePrefab("Library/Prefabs/433273876.prefab", gameObject.transform.globalPosition, gameObject.transform.globalRotation,
+							Vector3.one);
+						
 					}
 				}
 				else
