@@ -170,12 +170,14 @@ void Emitter::Draw(unsigned int shaderId)
 			particlesAlive++;
 		}
 	}
+
+	if (vboInfo.empty())
+		return;
+
 	glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * particlesAlive * INSTANCE_DATA_LENGHT, NULL, GL_STREAM_DRAW);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, vboInfo.size() * sizeof(float), &vboInfo[0]);
 
-	if (vboInfo.empty())
-		return;
 
 	glBindVertexArray(VAO);
 
