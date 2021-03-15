@@ -14,6 +14,9 @@
 #include"CO_Script.h"
 #include"RE_Material.h"
 
+//todelete
+#include "Application.h"
+#include "MO_Physics.h"
 #include "IM_PrefabImporter.h"
 
 W_Inspector::W_Inspector() : Window(), selectedGO(nullptr), editingRes(nullptr)
@@ -158,10 +161,16 @@ void W_Inspector::Draw()
 					if (selectedGO->GetComponent(Component::TYPE::RIGIDBODY) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::RIGIDBODY);
 				}
-				if (ImGui::Selectable("Collider"))
+				if (ImGui::Selectable("Box Collider"))
 				{
-					if (selectedGO->GetComponent(Component::TYPE::COLLIDER) == nullptr)
-						selectedGO->AddComponent(Component::TYPE::COLLIDER);
+					if (selectedGO->GetComponent(Component::TYPE::BOXCOLLIDER) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::BOXCOLLIDER);
+				}
+				if (ImGui::Selectable("Mesh Collider"))
+				{
+					if (selectedGO->GetComponent(Component::TYPE::MESHCOLLIDER) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::MESHCOLLIDER);
+
 				}
 				if (ImGui::Selectable("AudioListener"))
 				{
@@ -178,7 +187,7 @@ void W_Inspector::Draw()
 					if (selectedGO->GetComponent(Component::TYPE::ANIMATOR) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::ANIMATOR);
 				}
-
+				
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)
 				{
 					if (ImGui::Selectable(mono_class_get_name(EngineExternal->moduleMono->userScripts[i]))) 

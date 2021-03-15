@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        33.292034149169922,
-        271.10330200195313,
-        279.26467895507813
+        15.287764549255371,
+        11.87192440032959,
+        26.971107482910156
     ],
     "EditorCameraZ": [
-        -0.14877679944038391,
-        -0.58563262224197388,
-        0.79680603742599487
+        -0.46050429344177246,
+        -0.35761097073554993,
+        -0.81243473291397095
     ],
     "EditorCameraY": [
-        -0.10748959332704544,
-        0.81057661771774292,
-        0.57568359375
+        -0.17634283006191254,
+        0.93387067317962646,
+        -0.31110900640487671
     ],
     "Game Objects": [
         {
@@ -34,7 +34,7 @@
                 1,
                 1
             ],
-            "UID": 143570472,
+            "UID": 1717945953,
             "Components": [
                 {
                     "Type": 1,
@@ -43,26 +43,26 @@
             ]
         },
         {
-            "name": "Player",
+            "name": "Cube",
             "Active": true,
             "Position": [
-                -20.743518829345703,
-                64.621551513671875,
-                -2.2426132773034624e-07
+                0,
+                0.025488261133432388,
+                2.5383729934692383
             ],
             "Rotation": [
+                -0.7071068286895752,
                 0,
                 0,
-                0,
-                1
+                0.70710670948028564
             ],
             "Scale": [
-                1,
-                2,
-                0.9999280571937561
+                16.877132415771484,
+                13.970287322998047,
+                0.48130643367767334
             ],
-            "UID": 1661764735,
-            "ParentUID": 143570472,
+            "UID": 1360952076,
+            "ParentUID": 1717945953,
             "Components": [
                 {
                     "Type": 1,
@@ -75,58 +75,44 @@
                     "UID": 1313575480,
                     "alternColor": [
                         1,
-                        0.99998998641967773,
-                        0.99998998641967773
-                    ]
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "FPS_Controller",
-                    "reference": 1661764735,
-                    "turret": 1661764735,
-                    "rotationSpeed": 2,
-                    "movementSpeed": 35,
-                    "mouseSens": 1
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
-                    "MaterialUID": 1051418604
-                },
-                {
-                    "Type": 14,
-                    "Active": true,
-                    "kinematic": false,
-                    "Gravity": true,
-                    "LockLinearX": false,
-                    "LockLinearY": false,
-                    "LockLinearZ": false,
-                    "LockAngularX": true,
-                    "LockAngularY": true,
-                    "LockAngularZ": true,
-                    "Mass": 10,
-                    "Density": 1
-                },
-                {
-                    "Type": 15,
-                    "Active": true,
-                    "isTrigger": false,
-                    "Position": [
-                        0,
-                        0,
-                        0
-                    ],
-                    "Rotation": [
-                        0,
-                        0,
-                        0,
+                        1,
                         1
-                    ],
-                    "Scale": [
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Monkey",
+            "Active": true,
+            "Position": [
+                -7.6332921981811523,
+                5.2009410858154297,
+                2.5110375881195068
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                1,
+                0.99995863437652588,
+                0.99995863437652588
+            ],
+            "UID": 1718493909,
+            "ParentUID": 1717945953,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1293201949.mmh",
+                    "UID": 1293201949,
+                    "alternColor": [
                         1,
                         1,
                         1
@@ -135,7 +121,7 @@
             ]
         },
         {
-            "name": "TestSandbox",
+            "name": "BakerHouse",
             "Active": true,
             "Position": [
                 0,
@@ -149,12 +135,12 @@
                 1
             ],
             "Scale": [
-                0.24000000953674316,
-                0.24000000953674316,
-                0.24000000953674316
+                1,
+                1,
+                1
             ],
-            "UID": 1716888692,
-            "ParentUID": 143570472,
+            "UID": 1047960583,
+            "ParentUID": 1717945953,
             "Components": [
                 {
                     "Type": 1,
@@ -163,26 +149,26 @@
             ]
         },
         {
-            "name": "Plane",
+            "name": "Baker_house",
             "Active": true,
             "Position": [
                 0,
-                0,
-                0
+                3.7594799995422363,
+                1.74387526512146
             ],
             "Rotation": [
-                -0.7071068286895752,
                 0,
                 0,
-                0.70710670948028564
+                0,
+                1
             ],
             "Scale": [
-                500,
-                500,
-                500
+                1,
+                1,
+                1
             ],
-            "UID": 420350065,
-            "ParentUID": 1716888692,
+            "UID": 2062058409,
+            "ParentUID": 1047960583,
             "Components": [
                 {
                     "Type": 1,
@@ -191,18 +177,13 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/296489994.mmh",
-                    "UID": 296489994,
+                    "Path": "Library\/Meshes\/16843009.mmh",
+                    "UID": 16843009,
                     "alternColor": [
                         1,
                         1,
                         1
                     ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true
                 },
                 {
                     "Type": 14,
@@ -215,162 +196,8 @@
                     "LockAngularX": false,
                     "LockAngularY": false,
                     "LockAngularZ": false,
-                    "Mass": 30.799999237060547,
+                    "Mass": 10,
                     "Density": 1
-                },
-                {
-                    "Type": 15,
-                    "Active": true,
-                    "isTrigger": false,
-                    "Position": [
-                        0,
-                        0,
-                        0
-                    ],
-                    "Rotation": [
-                        0,
-                        0,
-                        0,
-                        1
-                    ],
-                    "Scale": [
-                        1,
-                        1,
-                        1
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "Cube",
-            "Active": true,
-            "Position": [
-                -300,
-                0,
-                -300
-            ],
-            "Rotation": [
-                -0.68301278352737427,
-                -0.1830126941204071,
-                -0.1830127090215683,
-                0.68301266431808472
-            ],
-            "Scale": [
-                17.39555549621582,
-                17.39555549621582,
-                17.39555549621582
-            ],
-            "UID": 1432217696,
-            "ParentUID": 1716888692,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/317057310.mmh",
-                    "UID": 317057310,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true
-                }
-            ]
-        },
-        {
-            "name": "Sphere",
-            "Active": true,
-            "Position": [
-                -287.66519165039063,
-                65.438919067382813,
-                -303.3785400390625
-            ],
-            "Rotation": [
-                -0.7071068286895752,
-                0,
-                0,
-                0.70710670948028564
-            ],
-            "Scale": [
-                18.083625793457031,
-                18.083625793457031,
-                18.083625793457031
-            ],
-            "UID": 467515712,
-            "ParentUID": 1716888692,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/2010055644.mmh",
-                    "UID": 2010055644,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "Game Camera",
-            "Active": true,
-            "Position": [
-                28.337120056152344,
-                34.217071533203125,
-                -37.998661041259766
-            ],
-            "Rotation": [
-                0.28966298699378967,
-                -0.30951863527297974,
-                0.099594645202159882,
-                0.90020811557769775
-            ],
-            "Scale": [
-                0.9999997615814209,
-                1.999998927116394,
-                0.999927818775177
-            ],
-            "UID": 188616957,
-            "ParentUID": 143570472,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 4,
-                    "Active": true,
-                    "fType": 1,
-                    "fSize": 13.260000228881836,
-                    "nearPlaneDist": 1,
-                    "farPlaneDist": 5000,
-                    "vFOV": 1.0471975803375244,
-                    "hFOV": 1.5521194934844971,
-                    "culling": false
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "CameraController",
-                    "reference": 188616957,
-                    "target": 1661764735,
-                    "x": 1,
-                    "y": 1,
-                    "z": 1,
-                    "smoothSpeed": 1
                 }
             ]
         }
