@@ -41,6 +41,8 @@ Emitter::Emitter() :
 	memset(particlesSpeed, 0.0f, sizeof(particlesSpeed));
 	memset(particlesSize, 1.0f, sizeof(particlesSize));
 
+	particlesSize[0] = 1.0f;
+	particlesSize[1] = 1.0f;
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &instanceVBO);
@@ -57,23 +59,27 @@ Emitter::Emitter() :
 	glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * MAX_PARTICLES * INSTANCE_DATA_LENGHT, NULL, GL_STREAM_DRAW);
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), 0);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), 0);
 	glVertexAttribDivisor(1, 1);
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), (void*)(4 * sizeof(float)));
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), (void*)(4 * sizeof(float)));
 	glVertexAttribDivisor(2, 1);
 	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), (void*)(8 * sizeof(float)));
+	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), (void*)(8 * sizeof(float)));
 	glVertexAttribDivisor(3, 1);
 	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), (void*)(12 * sizeof(float)));
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), (void*)(12 * sizeof(float)));
 	glVertexAttribDivisor(4, 1);
+	glEnableVertexAttribArray(5);
+	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), (void*)(16 * sizeof(float)));
+	glVertexAttribDivisor(5, 1);
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
 	glDisableVertexAttribArray(3);
 	glDisableVertexAttribArray(4);
+	glDisableVertexAttribArray(5);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -152,7 +158,7 @@ void Emitter::Draw(unsigned int shaderId)
 			//TODO: Update that rotation, get from billboard
 			//Quat::FromEulerXYZ(0, 0, myParticles[i].rotation)
 			//EngineExternal->moduleRenderer3D->activeRenderCamera
-			float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1, 1, 1)).Transposed();
+			float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1 * myParticles[i].size, 1 * myParticles[i].size, 1)).Transposed();
 			vboInfo.push_back(matrix[0][0]);
 			vboInfo.push_back(matrix[0][1]);
 			vboInfo.push_back(matrix[0][2]);
@@ -169,6 +175,11 @@ void Emitter::Draw(unsigned int shaderId)
 			vboInfo.push_back(matrix[3][1]);
 			vboInfo.push_back(matrix[3][2]);
 			vboInfo.push_back(matrix[3][3]);
+
+			vboInfo.push_back(myParticles[i].color.x);
+			vboInfo.push_back(myParticles[i].color.y);
+			vboInfo.push_back(myParticles[i].color.z);
+			vboInfo.push_back(myParticles[i].color.w);
 
 			particlesAlive++;
 		}
@@ -203,16 +214,24 @@ void Emitter::Draw(unsigned int shaderId)
 	glEnableVertexAttribArray(4);
 	//glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), (void*)(12 * sizeof(float)));
 	//glVertexAttribDivisor(4, 1);
+	glEnableVertexAttribArray(5);
 
 	glVertexAttribDivisor(0, 0); // particles vertices : always reuse the same 4 vertices -> 0
 	glVertexAttribDivisor(1, 1); // positions : one per quad (its center) -> 1
 	glVertexAttribDivisor(2, 1);
 	glVertexAttribDivisor(3, 1);
 	glVertexAttribDivisor(4, 1);
+	glVertexAttribDivisor(5, 1);
 
 	glDrawArraysInstanced(GL_TRIANGLES, 0, 6, particlesAlive);
 
-
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(3);
+	glDisableVertexAttribArray(4);
+	glDisableVertexAttribArray(5);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -298,6 +317,7 @@ void Emitter::CalculatePoolSize()
 void Emitter::SetPoolSize(unsigned int poolSize)
 {
 	myParticles.resize(poolSize);
+	lastUsedParticle = 0;
 }
 
 void Emitter::CreateParticles(unsigned int particlesToAdd)

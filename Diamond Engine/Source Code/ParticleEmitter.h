@@ -7,7 +7,7 @@ class C_Transform;
 class ResourceTexture;
 
 #define MAX_PARTICLES 2000
-#define INSTANCE_DATA_LENGHT 16
+#define INSTANCE_DATA_LENGHT 20
 
 class Emitter
 {

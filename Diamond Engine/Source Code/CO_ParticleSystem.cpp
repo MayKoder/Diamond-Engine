@@ -26,9 +26,9 @@ C_ParticleSystem::~C_ParticleSystem()
 #ifndef STANDALONE
 bool C_ParticleSystem::OnEditor()
 {
-
 	if (Component::OnEditor() == false)
 		return false;
+
 	ImGui::Separator();
 	ImGui::Checkbox("SystemActive", &systemActive);
 
@@ -62,6 +62,7 @@ bool C_ParticleSystem::OnEditor()
 }
 #endif // !STANDALONE
 
+
 void C_ParticleSystem::Update()
 {
 	float dt = EngineExternal->GetDT();
@@ -69,9 +70,7 @@ void C_ParticleSystem::Update()
 	for (int i = myEmitters.size() - 1; i >= 0; --i)
 	{
 		if (myEmitters[i].toDelete)
-		{
 			myEmitters.erase(myEmitters.begin() + i);
-		}
 	}
 
 	for (int i = 0; i < myEmitters.size(); ++i)
@@ -92,7 +91,7 @@ void C_ParticleSystem::Draw()
 		ResourceMaterial* material = static_cast<C_Material*>(mat)->material;
 		material->shader->Bind();
 		material->PushUniforms();
-
+		
 		for (int i = 0; i < myEmitters.size(); ++i)
 		{
 			myEmitters[i].Draw(material->shader->shaderProgramID);
