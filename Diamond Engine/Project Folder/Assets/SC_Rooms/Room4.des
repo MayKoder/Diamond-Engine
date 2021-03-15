@@ -88,6 +88,8 @@
                     "reference": 63506331,
                     "turret": 63506331,
                     "quitMenu": 8278228,
+                    "win": 1480717871,
+                    "lose": 1253906303,
                     "rotationSpeed": 2,
                     "movementSpeed": 35,
                     "mouseSens": 1
@@ -171,7 +173,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6608972549438477,
+                    "hFOV": 1.5885645151138306,
                     "culling": false
                 }
             ]
