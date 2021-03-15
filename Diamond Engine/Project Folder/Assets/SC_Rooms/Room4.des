@@ -173,7 +173,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.7724454402923584,
+                    "hFOV": 1.4825314283370972,
                     "culling": false
                 }
             ]
@@ -5003,7 +5003,7 @@
                     "Active": true,
                     "Position": [
                         21.799999237060547,
-                        -2
+                        -1.7000000476837158
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -5029,7 +5029,7 @@
             ]
         },
         {
-            "name": "Image",
+            "name": "Sound Effect Volume Value",
             "Active": true,
             "Position": [
                 0,
@@ -5060,7 +5060,7 @@
                     "Active": true,
                     "Position": [
                         21.799999237060547,
-                        -26.600000381469727
+                        -26.299999237060547
                     ],
                     "Rotation": 0,
                     "Size": [
