@@ -577,6 +577,7 @@ void ModuleRenderer3D::ClearAllRenderData()
 {
 	renderQueueMap.clear();
 	renderQueue.clear();
+	particleSystemQueue.clear();
 }
 
 
@@ -591,6 +592,4 @@ void ModuleRenderer3D::DrawParticleSystems()
 		if (partSy != nullptr)
 			static_cast<C_ParticleSystem*>(partSy)->Draw();
 	}
-
-	particleSystemQueue.clear();
 }
