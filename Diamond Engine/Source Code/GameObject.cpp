@@ -429,3 +429,8 @@ void GameObject::CollectChilds(std::vector<GameObject*>& vector)
 	for (uint i = 0; i < children.size(); i++)
 		children[i]->CollectChilds(vector);
 }
+
+bool GameObject::CompareTag(char* _tag)
+{
+	return strcmp(tag, _tag) == 0;
+}
