@@ -39,7 +39,7 @@ private:
 	void PrepareParticleToSpawn(Particle& p, float3& startingPos);
 
 	void PrepareVBO();
-
+	int FindUnusedParticle();
 public:
 	bool toDelete;
 private:
@@ -64,6 +64,9 @@ private:
 	float particlesPerSec;
 	//this variable holds the extra time from the particle spawn last frame
 	float lastParticeTime;
+	//index of the last used aprticle
+	int lastUsedParticle;
+
 	std::vector<Particle> myParticles;
 	std::vector<ParticleEffect*> myEffects;
 	C_Transform* objTransform;
