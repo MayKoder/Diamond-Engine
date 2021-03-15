@@ -1,7 +1,7 @@
 using System;
 using DiamondEngine;
 
-public class QuitConfirmation : DiamondComponent
+public class OptionsMenu : DiamondComponent
 {
 	public GameObject confirmScreen = null;
 	public GameObject bigBrother = null;
@@ -20,7 +20,7 @@ public class QuitConfirmation : DiamondComponent
 	{
 		if (firstFrame)
 			toDisable = firstFrame = false;
-		if (Input.GetGamepadButton(DEControllerButton.B) == KeyState.KEY_DOWN ||toDisable)
+		if (Input.GetGamepadButton(DEControllerButton.B) == KeyState.KEY_DOWN || toDisable)
 		{
 			toDisable = false;
 			bigBrother.Enable(true);

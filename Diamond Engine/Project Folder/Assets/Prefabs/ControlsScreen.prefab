@@ -3,7 +3,7 @@
     "Game Objects": [
         {
             "name": "ControlsScreen",
-            "Active": true,
+            "Active": false,
             "Position": [
                 0,
                 0,
@@ -20,9 +20,9 @@
                 1,
                 1
             ],
-            "UID": 1297650350,
-            "PrefabID": 0,
-            "ParentUID": 1842676233,
+            "UID": 138730863,
+            "PrefabID": 794533013,
+            "ParentUID": 1221570124,
             "Components": [
                 {
                     "Type": 1,
@@ -49,9 +49,9 @@
                 1,
                 1
             ],
-            "UID": 436429560,
+            "UID": 1347452364,
             "PrefabID": 0,
-            "ParentUID": 1297650350,
+            "ParentUID": 138730863,
             "Components": [
                 {
                     "Type": 1,
@@ -106,9 +106,9 @@
                 1,
                 1
             ],
-            "UID": 2063759004,
+            "UID": 305398496,
             "PrefabID": 0,
-            "ParentUID": 436429560,
+            "ParentUID": 1347452364,
             "Components": [
                 {
                     "Type": 1,
@@ -164,7 +164,7 @@
                     "Map": [
                         {
                             "Index": 0,
-                            "UID": 2063759004,
+                            "UID": 305398496,
                             "Action": 2,
                             "Is Key Down": false,
                             "Is Key Up": true
@@ -178,7 +178,8 @@
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "Return",
-                    "controlsWindow": 1297650350,
+                    "controlsWindow": 138730863,
+                    "bigBrother": 1311017402,
                     "toDisable": false,
                     "firstFrame": true
                 }
@@ -203,9 +204,9 @@
                 1,
                 1
             ],
-            "UID": 1424731302,
+            "UID": 2060584716,
             "PrefabID": 0,
-            "ParentUID": 2063759004,
+            "ParentUID": 305398496,
             "Components": [
                 {
                     "Type": 1,

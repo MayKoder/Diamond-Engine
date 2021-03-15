@@ -3,7 +3,10 @@ using DiamondEngine;
 
 public class DisplayOptions : DiamondComponent
 {
-	public GameObject displayWindow = null;
+	public GameObject optionsWindow = null;
+	public GameObject settings = null;
+	public GameObject display = null;
+	public GameObject controls = null;
 	public GameObject bigBrother = null;
 	private bool toDisable = false;
 	private bool firstFrame = true;
@@ -13,18 +16,21 @@ public class DisplayOptions : DiamondComponent
     }
 	public void OnExecuteButton()
 	{
-		if (gameObject.Name == "Resoltion")
-			Debug.Log("Res");
-		if (gameObject.Name == "ResoltionUp")
-			Debug.Log("ResUp");
-		if (gameObject.Name == "ResoltionDown")
-			Debug.Log("ResDown");
-		if (gameObject.Name == "WindowsMode")
-			Debug.Log("WinMode");
-		if (gameObject.Name == "WindowsModeUp")
-			Debug.Log("WinModeUp");
-		if (gameObject.Name == "WindowsModeDown")
-			Debug.Log("WinModeDown");
+		if (gameObject.Name == "Settings")
+        {
+			settings.Enable(true);
+			optionsWindow.Enable(false);
+        }
+		if (gameObject.Name == "Display")
+		{
+			display.Enable(true);
+			optionsWindow.Enable(false);
+		}
+		if (gameObject.Name == "Controls")
+		{
+			controls.Enable(true);
+			optionsWindow.Enable(false);
+		}
 		if (gameObject.Name == "Return")
 			toDisable = true;
 	}
@@ -36,7 +42,7 @@ public class DisplayOptions : DiamondComponent
 		{
 			toDisable = false;
 			bigBrother.Enable(true);
-			displayWindow.Enable(false);
+			optionsWindow.Enable(false);
 		}
 	}
 
