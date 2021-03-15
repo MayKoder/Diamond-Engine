@@ -33,7 +33,8 @@ Emitter::Emitter() :
 	particlesColor(1.0f, 1.0f, 1.0f, 1.0f),
 	myParticles(),
 	myEffects(),
-	objTransform(nullptr)
+	objTransform(nullptr),
+	lastUsedParticle(0)
 {
 	memset(particlesLifeTime, 0.1f, sizeof(particlesLifeTime));
 	memset(particlesSpeed, 0.0f, sizeof(particlesSpeed));
@@ -167,6 +168,9 @@ void Emitter::Draw(unsigned int shaderId)
 			particlesAlive++;
 		}
 	}
+
+	if (vboInfo.empty())
+		return;
 
 	glBindVertexArray(VAO);
 
@@ -333,28 +337,18 @@ void Emitter::ThrowParticles(float dt)
 
 	float3 startingPos = objTransform->globalTransform.TranslatePart();
 	//spawn particles
-	for (int i = 0; i < myParticles.size(); ++i)
+
+
+	for (int i = 0; i < numberOfParticlesToSpawn; ++i)
 	{
-		if (myParticles[i].currentLifetime < 0.0f)
+		int unusedIndex= FindUnusedParticle();
+		PrepareParticleToSpawn(myParticles[unusedIndex], startingPos);
+
+		for (int j = 0; j < myEffects.size(); ++j)
 		{
-			PrepareParticleToSpawn(myParticles[i], startingPos);
-
-			for (int j = 0; j < myEffects.size(); ++j)
-			{
-				myEffects[j]->Spawn(myParticles[i]);
-			}
-			--numberOfParticlesToSpawn;
+			myEffects[j]->Spawn(myParticles[unusedIndex]);
 		}
-
-		if (numberOfParticlesToSpawn == 0)
-			break;
 	}
-
-	/*if (numberOfParticlesToSpawn > 0)
-	{
-		CreateParticles(numberOfParticlesToSpawn);
-	}*/
-
 }
 
 int Emitter::DoesEffectExist(PARTICLE_EFFECT_TYPE type)
@@ -474,6 +468,32 @@ void Emitter::PrepareParticleToSpawn(Particle& p, float3& startingPos)
 	p.color = particlesColor;
 	p.pos = startingPos; //particles start at the center of the obj (but spawn methods modify this pos for the time being)
 
+}
+
+int Emitter::FindUnusedParticle()
+{
+	// Finds a Particle in ParticlesContainer which isn't used yet.
+// (i.e. life < 0);
+	int maxParticles = myParticles.size();
+
+	for (int i = lastUsedParticle; i < maxParticles; ++i)
+	{
+		if (myParticles[i].currentLifetime < 0.0f) {
+			lastUsedParticle = i;
+			return i;
+		}
+	}
+
+	for (int i = 0; i < lastUsedParticle; ++i)
+	{
+		if (myParticles[i].currentLifetime < 0.0f)
+		{
+			lastUsedParticle = i;
+			return i;
+		}
+	}
+
+	return 0; // All particles are taken, override the first one
 }
 
 void Emitter::AssignTransform(C_Transform* objTransform)
