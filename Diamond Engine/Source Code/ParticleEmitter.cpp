@@ -40,12 +40,40 @@ Emitter::Emitter() :
 	memset(particlesSize, 1.0f, sizeof(particlesSize));
 
 
-	glGenBuffers(1, &VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VAO);
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &instanceVBO);
+	glGenBuffers(1, &vertexVBO);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(particleVAO), particleVAO, GL_STATIC_DRAW);
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(particleVertices), particleVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * MAX_PARTICLES * INSTANCE_DATA_LENGHT, NULL, GL_DYNAMIC_DRAW);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), 0);
+	glVertexAttribDivisor(1, 1);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), (void*)(4 * sizeof(float)));
+	glVertexAttribDivisor(2, 1);
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), (void*)(8 * sizeof(float)));
+	glVertexAttribDivisor(3, 1);
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), (void*)(12 * sizeof(float)));
+	glVertexAttribDivisor(4, 1);
+
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(3);
+	glDisableVertexAttribArray(4);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 
 	CalculatePoolSize();
 }
@@ -97,12 +125,11 @@ void Emitter::Update(float dt, bool systemActive)
 
 void Emitter::Draw(unsigned int shaderId)
 {
+	if (myParticles.empty() == true)
+		return;
+
 	if (texture != nullptr)
 		glBindTexture(GL_TEXTURE_2D, texture->textureID);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VAO);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
 
 	GLint modelLoc = glGetUniformLocation(shaderId, "view");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ViewMatrixOpenGL().ptr());
@@ -110,17 +137,63 @@ void Emitter::Draw(unsigned int shaderId)
 	modelLoc = glGetUniformLocation(shaderId, "projection");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
 
+	int particlesAlive = 0;
+	std::vector<float> vboInfo;
+	vboInfo.reserve(sizeof(float) * myParticles.size() * 16);
+
 	int particlesCount = myParticles.size();
 	for (int i = 0; i < particlesCount; ++i)	//Need to order particles
 	{
 		if (myParticles[i].currentLifetime > 0)
 		{
-			modelLoc = glGetUniformLocation(shaderId, "model_matrix");
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1, 1, 1)).Transposed().ptr());
+			float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1, 1, 1)).Transposed();
+			vboInfo.push_back(matrix[0][0]);
+			vboInfo.push_back(matrix[0][1]);
+			vboInfo.push_back(matrix[0][2]);
+			vboInfo.push_back(matrix[0][3]);
+			vboInfo.push_back(matrix[1][0]);
+			vboInfo.push_back(matrix[1][1]);
+			vboInfo.push_back(matrix[1][2]);
+			vboInfo.push_back(matrix[1][3]);
+			vboInfo.push_back(matrix[2][0]);
+			vboInfo.push_back(matrix[2][1]);
+			vboInfo.push_back(matrix[2][2]);
+			vboInfo.push_back(matrix[2][3]);
+			vboInfo.push_back(matrix[3][0]);
+			vboInfo.push_back(matrix[3][1]);
+			vboInfo.push_back(matrix[3][2]);
+			vboInfo.push_back(matrix[3][3]);
 
-			glDrawArrays(GL_TRIANGLES, 0, 6);
+			particlesAlive++;
 		}
 	}
+
+	glBindVertexArray(VAO);
+
+	//glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
+	glEnableVertexAttribArray(0);
+	//glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, vboInfo.size() * sizeof(float), &vboInfo[0]);
+
+	//glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * MAX_PARTICLES * INSTANCE_DATA_LENGHT, NULL, GL_DYNAMIC_DRAW);
+	glEnableVertexAttribArray(1);
+	//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), 0);
+	//glVertexAttribDivisor(1, 1);
+	glEnableVertexAttribArray(2);
+	//glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), (void*)(4 * sizeof(float)));
+	//glVertexAttribDivisor(2, 1);
+	glEnableVertexAttribArray(3);
+	//glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), (void*)(8 * sizeof(float)));
+	//glVertexAttribDivisor(3, 1);
+	glEnableVertexAttribArray(4);
+	//glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), (void*)(12 * sizeof(float)));
+	//glVertexAttribDivisor(4, 1);
+
+	glDrawArraysInstanced(GL_TRIANGLES, 0, 6, particlesAlive);
+
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

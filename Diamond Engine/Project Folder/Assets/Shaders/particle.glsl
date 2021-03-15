@@ -1,9 +1,9 @@
 #ifdef vertex
 #version 330 core
 layout (location = 0) in vec2 aPos;
+layout (location = 1) in mat4 model_matrix;
 out vec2 textureCoords;
 
-uniform mat4 model_matrix;
 uniform mat4 view;
 uniform mat4 projection;
 
@@ -27,6 +27,7 @@ void main() {
 }
 
 #endif
+
 
 
 

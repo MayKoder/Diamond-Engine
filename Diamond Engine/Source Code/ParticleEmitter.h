@@ -6,6 +6,9 @@
 class C_Transform;
 class ResourceTexture;
 
+#define MAX_PARTICLES 2000
+#define INSTANCE_DATA_LENGHT 16
+
 class Emitter
 {
 public:
@@ -34,10 +37,15 @@ private:
 	void CreateEffect(PARTICLE_EFFECT_TYPE type);
 
 	void PrepareParticleToSpawn(Particle& p, float3& startingPos);
+
+	void PrepareVBO();
+
 public:
 	bool toDelete;
 private:
 	unsigned int VAO = 0u;
+	unsigned int instanceVBO = 0u;
+	unsigned int vertexVBO = 0u;
 	ResourceTexture* texture = nullptr;
 	
 	//Min - Max Start particles lifeTime 
@@ -63,7 +71,7 @@ private:
 
 
 
-const float particleVAO[] = {
+const float particleVertices[] = {
 -1, -1,
 1, -1,
 -1, 1,
