@@ -156,15 +156,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Pressed_UID": 934250681,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Hovered_UID": 481961565,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/white_second_button_hover.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1026421016.dds",
+                    "Pressed_UID": 1026421016,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/white_second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1026421016.dds",
+                    "Hovered_UID": 1026421016,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/white_second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/786971987.dds",
+                    "Unhovered_UID": 786971987,
                     "Script_Name": "StartMenu",
                     "ButtonState": 1,
                     "Is Selected": true
@@ -172,9 +172,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
+                    "AssetPath": "Assets\/UI\/MENU\/white_second_button_hover.png",
+                    "LibraryPath": "Library\/Textures\/1026421016.dds",
+                    "UID": 1026421016
                 },
                 {
                     "Type": 17,
@@ -277,7 +277,7 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
+                        16.899999618530273,
                         20
                     ]
                 },
@@ -296,9 +296,9 @@
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0,
-                        0,
-                        0
+                        1,
+                        1,
+                        1
                     ]
                 }
             ]
@@ -354,15 +354,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Pressed_UID": 934250681,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Hovered_UID": 481961565,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/white_second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/791717364.dds",
+                    "Pressed_UID": 791717364,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/white_second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1026421016.dds",
+                    "Hovered_UID": 1026421016,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/white_second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/786971987.dds",
+                    "Unhovered_UID": 786971987,
                     "Script_Name": "StartMenu",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -370,9 +370,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/white_second_button.png",
+                    "LibraryPath": "Library\/Textures\/786971987.dds",
+                    "UID": 786971987
                 },
                 {
                     "Type": 17,
@@ -477,7 +477,7 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
+                        16.899999618530273,
                         20
                     ]
                 },
@@ -496,9 +496,9 @@
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0,
-                        0,
-                        0
+                        1,
+                        1,
+                        1
                     ]
                 }
             ]
@@ -554,15 +554,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Pressed_UID": 934250681,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Hovered_UID": 481961565,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/white_second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/791717364.dds",
+                    "Pressed_UID": 791717364,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/white_second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1026421016.dds",
+                    "Hovered_UID": 1026421016,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/white_second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/786971987.dds",
+                    "Unhovered_UID": 786971987,
                     "Script_Name": "StartMenu",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -570,9 +570,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/white_second_button.png",
+                    "LibraryPath": "Library\/Textures\/786971987.dds",
+                    "UID": 786971987
                 },
                 {
                     "Type": 17,
@@ -675,7 +675,7 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
+                        16.799999237060547,
                         20
                     ]
                 },
@@ -694,9 +694,9 @@
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0,
-                        0,
-                        0
+                        1,
+                        1,
+                        1
                     ]
                 }
             ]
@@ -5816,7 +5816,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.5885645151138306,
+                    "hFOV": 1.6608972549438477,
                     "culling": true
                 }
             ]
