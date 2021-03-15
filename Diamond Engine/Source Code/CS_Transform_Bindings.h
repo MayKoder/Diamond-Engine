@@ -282,6 +282,26 @@ void CSLog(MonoString* x)
 }
 */
 
+bool CompareTag(MonoObject* cs_gameObject, MonoString* cs_tag)
+{
+	char* cpp_tag = mono_string_to_utf8(cs_tag);
+
+	GameObject* gameObject = EngineExternal->moduleMono->GameObject_From_CSGO(cs_gameObject);
+
+	if (gameObject != nullptr) 
+	{
+		LOG(LogType::L_ERROR, "GameObject's tag to be compared does not exist");
+	}
+	else
+	{
+		bool same_tag = gameObject->CompareTag(cpp_tag);
+		mono_free(cs_tag);
+		return same_tag;
+	}
+
+	return false;
+}
+
 void CreatePrefab(MonoString* prefabPath, MonoObject* position, MonoObject* rotation, MonoObject* scale)
 {
 	if (prefabPath == nullptr)
@@ -289,6 +309,7 @@ void CreatePrefab(MonoString* prefabPath, MonoObject* position, MonoObject* rota
 
 	char* library_path = mono_string_to_utf8(prefabPath);
 	GameObject* prefab_object = PrefabImporter::LoadPrefab(library_path);
+	mono_free(prefabPath);
 
 	if(prefab_object != nullptr)
 	{ 
