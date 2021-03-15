@@ -7,9 +7,12 @@ public class Settings : DiamondComponent
 	public GameObject bigBrother = null;
 	private bool toDisable = false;
 	private bool firstFrame = true;
-	public void onExecuteCheckbox()
+	public void OnExecuteCheckbox(bool active)
 	{
-		Debug.Log("Controller Vibration");
+		if (active)
+			Debug.Log("Controller Vibration ON");
+		else 
+			Debug.Log("Controller Vibration OFF");
 	}
 	public void OnExecuteButton()
 	{

@@ -166,15 +166,15 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
                     "Script_Name": "StartMenu",
-                    "ButtonState": 2,
-                    "Is Selected": false
+                    "ButtonState": 1,
+                    "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
+                    "LibraryPath": "Library\/Textures\/481961565.dds",
+                    "UID": 481961565
                 },
                 {
                     "Type": 17,
@@ -232,7 +232,7 @@
                     ],
                     "Button Being Used": -1,
                     "Type Of UI": 7,
-                    "Is Selected": false
+                    "Is Selected": true
                 },
                 {
                     "Type": 5,
@@ -630,7 +630,7 @@
                     ],
                     "Button Being Used": -1,
                     "Type Of UI": 7,
-                    "Is Selected": true
+                    "Is Selected": false
                 },
                 {
                     "Type": 5,
@@ -1131,7 +1131,7 @@
                     "Unactive_AssetsPath": "Assets\/Pilot\/Material.002_Normal_OpenGL.png",
                     "Unactive_LibraryPath": "Library\/Textures\/580262998.dds",
                     "Unactive_UID": 580262998,
-                    "Script_Name": "DisplayOptions",
+                    "Script_Name": "DisSett",
                     "ButtonState": 4,
                     "Checkbox Active": false,
                     "Is Selected": true
@@ -1204,7 +1204,8 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "DisplayOptions",
+                    "ScriptName": "DisSett",
+                    "displayScreen": 1618442095,
                     "bigBrother": 1311017402,
                     "toDisable": false,
                     "firstFrame": true
@@ -1333,7 +1334,6 @@
                     "Unhovered_AssetsPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/113519198.dds",
                     "Unhovered_UID": 113519198,
-                    "Script_Name": "DisplayOptions",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -1436,14 +1436,6 @@
                     "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "DisplayOptions",
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": true
                 }
             ]
         },
@@ -1569,7 +1561,7 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
-                    "Script_Name": "DisplayOptions",
+                    "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -1683,9 +1675,10 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "DisplayOptions",
+                    "ScriptName": "DisSett",
+                    "displayScreen": 1618442095,
                     "bigBrother": 1311017402,
-                    "toDisable": false,
+                    "toDisable": true,
                     "firstFrame": true
                 }
             ]
@@ -1750,7 +1743,7 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
-                    "Script_Name": "DisplayOptions",
+                    "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -1864,9 +1857,10 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "DisplayOptions",
+                    "ScriptName": "DisSett",
+                    "displayScreen": 1618442095,
                     "bigBrother": 1311017402,
-                    "toDisable": false,
+                    "toDisable": true,
                     "firstFrame": true
                 }
             ]
@@ -2167,7 +2161,7 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
-                    "Script_Name": "DisplayOptions",
+                    "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -2281,9 +2275,10 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "DisplayOptions",
+                    "ScriptName": "DisSett",
+                    "displayScreen": 1618442095,
                     "bigBrother": 1311017402,
-                    "toDisable": false,
+                    "toDisable": true,
                     "firstFrame": true
                 }
             ]
@@ -2348,7 +2343,7 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
-                    "Script_Name": "DisplayOptions",
+                    "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -2462,9 +2457,10 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "DisplayOptions",
+                    "ScriptName": "DisSett",
+                    "displayScreen": 1618442095,
                     "bigBrother": 1311017402,
-                    "toDisable": false,
+                    "toDisable": true,
                     "firstFrame": true
                 }
             ]
@@ -2529,7 +2525,7 @@
                     "Unhovered_AssetsPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/113519198.dds",
                     "Unhovered_UID": 113519198,
-                    "Script_Name": "DisplayOptions",
+                    "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -2601,9 +2597,10 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "DisplayOptions",
+                    "ScriptName": "DisSett",
+                    "displayScreen": 1618442095,
                     "bigBrother": 1311017402,
-                    "toDisable": false,
+                    "toDisable": true,
                     "firstFrame": true
                 }
             ]
@@ -2817,15 +2814,15 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/481961565.dds",
                     "Unhovered_UID": 481961565,
                     "Script_Name": "Settings",
-                    "ButtonState": 2,
-                    "Is Selected": false
+                    "ButtonState": 1,
+                    "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
+                    "AssetPath": "Assets\/Jet\/window.png",
+                    "LibraryPath": "Library\/Textures\/1721814459.dds",
+                    "UID": 1721814459
                 },
                 {
                     "Type": 17,
@@ -2925,7 +2922,7 @@
                     ],
                     "Button Being Used": -1,
                     "Type Of UI": 7,
-                    "Is Selected": false
+                    "Is Selected": true
                 },
                 {
                     "Type": 5,
@@ -4197,7 +4194,7 @@
                     ],
                     "Button Being Used": -1,
                     "Type Of UI": 7,
-                    "Is Selected": true
+                    "Is Selected": false
                 },
                 {
                     "Type": 5,
@@ -4530,16 +4527,16 @@
                     "Unactive_LibraryPath": "Library\/Textures\/580262998.dds",
                     "Unactive_UID": 580262998,
                     "Script_Name": "Settings",
-                    "ButtonState": 3,
+                    "ButtonState": 4,
                     "Checkbox Active": false,
-                    "Is Selected": false
+                    "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Pilot\/Material.002_Normal_OpenGL.png",
-                    "LibraryPath": "Library\/Textures\/580262998.dds",
-                    "UID": 580262998
+                    "AssetPath": "Assets\/Pilot\/Material.002_Roughness.png",
+                    "LibraryPath": "Library\/Textures\/27816394.dds",
+                    "UID": 27816394
                 },
                 {
                     "Type": 17,
@@ -4547,14 +4544,7 @@
                     "Map": [
                         {
                             "Index": 0,
-                            "UID": 0,
-                            "Action": 2,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 1,
-                            "UID": 0,
+                            "UID": 2067450475,
                             "Action": 2,
                             "Is Key Down": false,
                             "Is Key Up": true
@@ -5825,7 +5815,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4237253665924072,
+                    "hFOV": 1.4114309549331665,
                     "culling": true
                 }
             ]
