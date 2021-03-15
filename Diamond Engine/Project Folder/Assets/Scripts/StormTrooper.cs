@@ -3,6 +3,8 @@ using DiamondEngine;
 
 public class Stormtrooper : Enemy
 {
+	protected int shotSequences = 0; 
+	
 	public void Start()
 	{
 		currentState = STATES.WANDER;

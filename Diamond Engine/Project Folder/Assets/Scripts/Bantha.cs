@@ -36,6 +36,7 @@ public class Bantha : Enemy
 					}
 				}
 				break;
+
 			case STATES.RUN:
 				LookAt(targetPosition);
 				MoveToPosition(targetPosition, runningSpeed);
@@ -70,19 +71,18 @@ public class Bantha : Enemy
 					}
 				}
 				break;
+
 			case STATES.SHOOT:
 				timePassed += Time.deltaTime;
 
 				LookAt(player.transform.globalPosition);
 
-				if (timePassed > timeBewteenShots)
-				{
-					Charge();
-				}
+				Charge();
 
 				break;
 			case STATES.HIT:
 				break;
+
 			case STATES.DIE:
 				InternalCalls.Destroy(gameObject);
 				break;
@@ -92,6 +92,8 @@ public class Bantha : Enemy
 	}
 	public void Charge()
     {
+		Debug.Log("Charging");
+
 		MoveToPosition(player.transform.globalPosition, bulletSpeed);
 
 		if (Mathf.Distance(gameObject.transform.localPosition, player.transform.globalPosition) < stoppingDistance)

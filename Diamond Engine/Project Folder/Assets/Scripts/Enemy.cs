@@ -13,7 +13,6 @@ public class Enemy : DiamondComponent
 	public float damage;
 	public float bulletSpeed;
 	protected int shotTimes = 0;
-	protected int shotSequences = 0;
 
 	protected float timeBewteenShots = 5.0f;
 	protected float timePassed = 0.0f;
