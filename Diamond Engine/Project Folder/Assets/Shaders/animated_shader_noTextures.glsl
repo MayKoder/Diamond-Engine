@@ -31,6 +31,7 @@ vec3 lightColor;
 
 void main()
 {
+	lightColor = vec3(0.225, 0.150, 0.120);
 	vec4 totalPosition = vec4(0.0);
 	
 	for(int i= 0; i < MAX_WEIGHTS; i++){
@@ -78,6 +79,7 @@ void main()
  	color = vec4(vertexColor + diffuseColor, 1.0);
 }
 #endif
+
 
 
 

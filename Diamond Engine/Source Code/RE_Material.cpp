@@ -13,9 +13,7 @@
 #include"IM_MaterialImporter.h"
 
 ResourceMaterial::ResourceMaterial(unsigned int _uid) : Resource(_uid, Resource::Type::MATERIAL), shader(nullptr) 
-{
-
-}
+{}
 
 ResourceMaterial::~ResourceMaterial()
 {
