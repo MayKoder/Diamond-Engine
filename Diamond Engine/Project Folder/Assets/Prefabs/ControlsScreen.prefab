@@ -81,9 +81,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-black.png",
-                    "LibraryPath": "Library\/Textures\/934250681.dds",
-                    "UID": 934250681
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/1147771701.dds",
+                    "UID": 1147771701
                 }
             ]
         },
@@ -138,15 +138,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Pressed_UID": 934250681,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Hovered_UID": 481961565,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/main_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/958613711.dds",
+                    "Pressed_UID": 958613711,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/main_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1108163573.dds",
+                    "Hovered_UID": 1108163573,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/main_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/286075631.dds",
+                    "Unhovered_UID": 286075631,
                     "Script_Name": "Return",
                     "ButtonState": 1,
                     "Is Selected": true
@@ -154,9 +154,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
+                    "AssetPath": "Assets\/UI\/MENU\/main_button_hover.png",
+                    "LibraryPath": "Library\/Textures\/1108163573.dds",
+                    "UID": 1108163573
                 },
                 {
                     "Type": 17,
@@ -240,9 +240,9 @@
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0,
-                        0,
-                        0
+                        1,
+                        1,
+                        1
                     ]
                 }
             ]

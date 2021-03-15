@@ -173,7 +173,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.5885645151138306,
+                    "hFOV": 1.7724454402923584,
                     "culling": false
                 }
             ]
@@ -3087,6 +3087,8 @@
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "Settings",
+                    "settingsWindow": 2124754052,
+                    "bigBrother": 8278228,
                     "toDisable": false,
                     "firstFrame": true
                 }
@@ -3175,6 +3177,8 @@
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "Settings",
+                    "settingsWindow": 2124754052,
+                    "bigBrother": 8278228,
                     "toDisable": false,
                     "firstFrame": true
                 }
@@ -3500,6 +3504,8 @@
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "Settings",
+                    "settingsWindow": 2124754052,
+                    "bigBrother": 8278228,
                     "toDisable": false,
                     "firstFrame": true
                 }
@@ -3588,6 +3594,8 @@
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "Settings",
+                    "settingsWindow": 2124754052,
+                    "bigBrother": 8278228,
                     "toDisable": false,
                     "firstFrame": true
                 }
@@ -3913,6 +3921,8 @@
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "Settings",
+                    "settingsWindow": 2124754052,
+                    "bigBrother": 8278228,
                     "toDisable": false,
                     "firstFrame": true
                 }
@@ -4001,6 +4011,8 @@
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "Settings",
+                    "settingsWindow": 2124754052,
+                    "bigBrother": 8278228,
                     "toDisable": false,
                     "firstFrame": true
                 }
@@ -4326,6 +4338,8 @@
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "Settings",
+                    "settingsWindow": 2124754052,
+                    "bigBrother": 8278228,
                     "toDisable": false,
                     "firstFrame": true
                 }
@@ -4422,6 +4436,8 @@
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "Settings",
+                    "settingsWindow": 2124754052,
+                    "bigBrother": 8278228,
                     "toDisable": false,
                     "firstFrame": true
                 }
@@ -5224,7 +5240,7 @@
                     "Unactive_AssetsPath": "Assets\/UI\/MENU\/checkbox_false.png",
                     "Unactive_LibraryPath": "Library\/Textures\/2000271602.dds",
                     "Unactive_UID": 2000271602,
-                    "Script_Name": "DisplayOptions",
+                    "Script_Name": "DisSett",
                     "ButtonState": 4,
                     "Checkbox Active": false,
                     "Is Selected": true
@@ -5297,7 +5313,8 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "DisplayOptions",
+                    "ScriptName": "DisSett",
+                    "displayScreen": 1661904035,
                     "bigBrother": 8278228,
                     "toDisable": false,
                     "firstFrame": true
@@ -5426,7 +5443,7 @@
                     "Unhovered_AssetsPath": "Assets\/UI\/MENU\/white_main_button.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/914926635.dds",
                     "Unhovered_UID": 914926635,
-                    "Script_Name": "DisplayOptions",
+                    "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -5533,7 +5550,8 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "DisplayOptions",
+                    "ScriptName": "DisSett",
+                    "displayScreen": 1661904035,
                     "bigBrother": 8278228,
                     "toDisable": false,
                     "firstFrame": true
@@ -5662,7 +5680,6 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
-                    "Script_Name": "DisplayOptions",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -5680,13 +5697,6 @@
                     "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "DisplayOptions",
-                    "toDisable": false,
-                    "firstFrame": true
                 }
             ]
         },
@@ -5750,7 +5760,6 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
-                    "Script_Name": "DisplayOptions",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -5768,13 +5777,6 @@
                     "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "DisplayOptions",
-                    "toDisable": false,
-                    "firstFrame": true
                 }
             ]
         },
@@ -5900,7 +5902,7 @@
                     "Unhovered_AssetsPath": "Assets\/UI\/MENU\/white_main_button.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/914926635.dds",
                     "Unhovered_UID": 914926635,
-                    "Script_Name": "DisplayOptions",
+                    "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -5916,8 +5918,8 @@
                     "Active": true,
                     "Map": [
                         {
-                            "Index": 1,
-                            "UID": 0,
+                            "Index": 0,
+                            "UID": 2058708561,
                             "Action": 2,
                             "Is Key Down": false,
                             "Is Key Up": true
@@ -6014,7 +6016,8 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "DisplayOptions",
+                    "ScriptName": "DisSett",
+                    "displayScreen": 1661904035,
                     "bigBrother": 8278228,
                     "toDisable": false,
                     "firstFrame": true
@@ -6143,7 +6146,6 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
-                    "Script_Name": "DisplayOptions",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -6161,13 +6163,6 @@
                     "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "DisplayOptions",
-                    "toDisable": false,
-                    "firstFrame": true
                 }
             ]
         },
@@ -6231,7 +6226,6 @@
                     "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
                     "Unhovered_UID": 1721814459,
-                    "Script_Name": "DisplayOptions",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -6249,13 +6243,6 @@
                     "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "DisplayOptions",
-                    "toDisable": false,
-                    "firstFrame": true
                 }
             ]
         },
@@ -6381,7 +6368,7 @@
                     "Unhovered_AssetsPath": "Assets\/UI\/MENU\/white_third_button.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/691831495.dds",
                     "Unhovered_UID": 691831495,
-                    "Script_Name": "DisplayOptions",
+                    "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
                 },
@@ -6453,7 +6440,8 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "DisplayOptions",
+                    "ScriptName": "DisSett",
+                    "displayScreen": 1661904035,
                     "bigBrother": 8278228,
                     "toDisable": false,
                     "firstFrame": true
@@ -6700,7 +6688,7 @@
                     "Active": true,
                     "ScriptName": "Return",
                     "controlsWindow": 385927616,
-                    "bigBrother": 1598806799,
+                    "bigBrother": 8278228,
                     "toDisable": false,
                     "firstFrame": true
                 }
