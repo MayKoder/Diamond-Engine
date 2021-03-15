@@ -5,6 +5,9 @@
 #include "SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+#include "Application.h"
+#include "MO_Renderer3D.h"
+#include "CO_Camera.h"
 //#include "CO_ParticleSystem.h"
 //#include "Application.h"
 //#include "MO_Camera3D.h"
@@ -90,6 +93,26 @@ void C_Billboard::Draw()
 	*/
 }
 
+Quat C_Billboard::GetAlignment()
+{
+	switch (currentAlignment)
+	{
+	case BILLBOARD_ALIGNMENT::SCREEN_ALIGNED:
+		return ScreenAlign();
+		break;
+	case BILLBOARD_ALIGNMENT::WORLD_ALIGNED:
+		WorldAlign();
+		break;
+	case BILLBOARD_ALIGNMENT::AXIS_ALIGNED:
+		AxisAlign();
+		break;
+	default:
+		break;
+	}
+
+	return Quat::identity;
+}
+
 void C_Billboard::UseAlignment()
 {
 	switch (currentAlignment)
@@ -108,20 +131,20 @@ void C_Billboard::UseAlignment()
 	}
 }
 
-void C_Billboard::ScreenAlign()
+Quat C_Billboard::ScreenAlign()
 {
 	//Option 1: Extract the rotation from the view matrix
 
-	/*
-	float3 normal = (App->camera->Position - this->transform->position).Normalized();
+	/*float3 normal = (EngineExternal->moduleRenderer3D->activeRenderCamera->GetPosition() - this->transform->position).Normalized();
+	
 	float3 up = App->camera->camera->frustum.up;
 	float3 right = normal.Cross(up);
 
 	float3x3 mat = float3x3::identity;
 	mat.Set(-right.x, -right.y, -right.z, up.x, up.y, up.z, normal.x, normal.y, normal.z);
 
-	transform->rotation = mat.Inverted().ToQuat();
-	*/
+	transform->rotation = mat.Inverted().ToQuat();*/
+	return Quat::identity;
 }
 
 void C_Billboard::WorldAlign()

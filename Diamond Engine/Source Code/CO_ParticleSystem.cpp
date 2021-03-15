@@ -84,7 +84,8 @@ void C_ParticleSystem::Update()
 void C_ParticleSystem::Draw()
 {
 	Component* mat = gameObject->GetComponent(Component::TYPE::MATERIAL);
-	Component* bill = gameObject->GetComponent(Component::TYPE::BILLBOARD);
+	C_Billboard* bill = static_cast<C_Billboard*>(gameObject->GetComponent(Component::TYPE::BILLBOARD));	
+	//TODO: Get quaternion from billboard
 
 	if (mat != nullptr)
 	{
@@ -94,7 +95,8 @@ void C_ParticleSystem::Draw()
 		
 		for (int i = 0; i < myEmitters.size(); ++i)
 		{
-			myEmitters[i].Draw(material->shader->shaderProgramID);
+			//TODO: Pass the quaternion as parameter
+			myEmitters[i].Draw(material->shader->shaderProgramID, bill->GetAlignment());
 
 			//Draw instanced arrays
 		}
