@@ -144,6 +144,9 @@ Quat C_Billboard::ScreenAlign()
 	mat.Set(-right.x, -right.y, -right.z, up.x, up.y, up.z, normal.x, normal.y, normal.z);
 
 	transform->rotation = mat.Inverted().ToQuat();*/
+
+
+
 	return Quat::identity;
 }
 
