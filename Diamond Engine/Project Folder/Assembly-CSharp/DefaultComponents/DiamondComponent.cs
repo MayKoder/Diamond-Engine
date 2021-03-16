@@ -24,6 +24,7 @@ namespace DiamondEngine
         RIGIDBODY,
         COLLIDER,
         ANIMATOR,
+        NAVIGATION,
         COUNT
     }
 
@@ -36,6 +37,7 @@ namespace DiamondEngine
             { typeof(Text), ComponentType.TEXT_UI  },
             { typeof(Material), ComponentType.MATERIAL  },
             { typeof(Image2D), ComponentType.IMAGE_2D  },
+            { typeof(Navigation), ComponentType.NAVIGATION  },
         };
 
         public DiamondComponent()

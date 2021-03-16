@@ -44,6 +44,7 @@
     <Compile Include="Assembly-CSharp\DefaultComponents\DiamondComponent.cs" />
     <Compile Include="Assembly-CSharp\DefaultComponents\Image2D.cs" />
     <Compile Include="Assembly-CSharp\DefaultComponents\Material.cs" />
+    <Compile Include="Assembly-CSharp\DefaultComponents\Navigation.cs" />
     <Compile Include="Assembly-CSharp\DefaultComponents\Text.cs" />
     <Compile Include="Assembly-CSharp\DefaultComponents\Transform.cs" />
     <Compile Include="Assembly-CSharp\Diamond Engine Utility\Audio.cs" />

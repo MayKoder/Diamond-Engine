@@ -20,6 +20,7 @@
 #include "CS_Text_Bindings.h"
 #include "CS_Material_Bindings.h"
 #include "CS_Image2D_Bindings.h"
+#include "CS_Navigation_Bindings.h"
 
 #include <iostream>
 #include <fstream> 
@@ -110,6 +111,10 @@ bool M_MonoManager::Init()
 
 #pragma region Image2D
 	mono_add_internal_call("DiamondEngine.Image2D::SwapTwoImages", SwapTwoImages);
+#pragma endregion
+
+#pragma region Navigation
+	mono_add_internal_call("DiamondEngine.Navigation::Select", SelectNavigation);
 #pragma endregion
 
 
