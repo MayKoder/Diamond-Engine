@@ -132,6 +132,7 @@
     </Filter>
     <Filter Include="Sources\Tools\Bindings">
       <UniqueIdentifier>{631c7505-17bf-407e-86ce-a4705f3ed055}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Sources\Components\Derived\Physics">
       <UniqueIdentifier>{59fc5c3b-3544-4a28-b3b5-586bbbd669c9}</UniqueIdentifier>
     </Filter>
@@ -579,6 +580,12 @@
     <ClInclude Include="Source Code\MO_Physics.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CO_Collider.h">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_RigidBody.h">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClInclude>
     <ClInclude Include="Source Code\RE_Material.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
@@ -789,10 +796,26 @@
     <ClInclude Include="Source Code\COMM_Transform2D.h">
       <Filter>Sources\Editor\Commands\Derived</Filter>
     </ClInclude>
+     <ClInclude Include="Source Code\CS_Scene_Bindings.h" />
+    <ClInclude Include="Source Code\CS_Animation_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
     <ClInclude Include="Source Code\CS_Audio_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_Input_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_Transform_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
+     <ClInclude Include="Source Code\CO_Navigation.h">
+      <Filter>Sources\Components\Derived\UI</Filter>
+    </ClInclude>
+    
+    <ClInclude Include="Source Code\CS_Scene_Bindings.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CS_Scene_Bindings.h" />
     <ClInclude Include="Source Code\CO_RigidBody.h">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
@@ -1145,6 +1168,12 @@
     <ClCompile Include="Source Code\MO_Physics.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Source Code\CO_Collider.cpp">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_RigidBody.cpp">
+      <Filter>Sources\Components\Derived</Filter>
+    </ClCompile>
     <ClCompile Include="Source Code\RE_Material.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
@@ -1258,6 +1287,7 @@
     </ClCompile>
     <ClCompile Include="Source Code\CO_Navigation.cpp">
       <Filter>Sources\Components\Derived\UI</Filter>
+    </ClCompile>
     <ClCompile Include="Source Code\CO_RigidBody.cpp">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClCompile>
