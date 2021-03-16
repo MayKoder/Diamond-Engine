@@ -15,6 +15,9 @@ public:
 	void OnEditor(int emitterIndex) override;
 #endif //!STANDALONE
 
+	void SaveData(JSON_Object* nObj) override;
+	void LoadData(DEConfig& nObj) override;
+
 private:
 	//TODO change this with a spline that can be edited in the future?
 	float startingSize;

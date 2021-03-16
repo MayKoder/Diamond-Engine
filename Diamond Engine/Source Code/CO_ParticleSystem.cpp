@@ -111,13 +111,39 @@ void C_ParticleSystem::SetActive(bool newActive)
 void C_ParticleSystem::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
+	DEJson::WriteBool(nObj, "systemActive", systemActive);
 
+	JSON_Value* emmitersArray = json_value_init_array();
+	JSON_Array* jsArray = json_value_get_array(emmitersArray);
+
+	int emittersCount = myEmitters.size();
+	for (int i = 0; i < emittersCount; ++i)
+	{
+		JSON_Value* nVal = json_value_init_object();
+		JSON_Object* obj = json_value_get_object(nVal);
+
+		myEmitters[i].SaveData(obj);
+		json_array_append_value(jsArray, nVal);
+	}
+
+	json_object_set_value(nObj, "ParticleEmitters", emmitersArray);
 }
 
 void C_ParticleSystem::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
+	systemActive = nObj.ReadBool("systemActive");
 
+	DEConfig conf(nullptr);
+	JSON_Array* effArray = json_object_get_array(nObj.nObj, "ParticleEmitters");
+
+	for (size_t i = 0; i < json_array_get_count(effArray); ++i)
+	{
+		conf.nObj = json_array_get_object(effArray, i);
+
+		AddEmitter();
+		myEmitters[i].LoadData(conf);
+	}
 }
 
 void C_ParticleSystem::AddEmitter()

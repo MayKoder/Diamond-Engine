@@ -41,3 +41,21 @@ void PE_SizeOverLifetime::OnEditor(int emitterIndex)
 
 }
 #endif // !STANDALONE
+
+
+void PE_SizeOverLifetime::SaveData(JSON_Object* nObj)
+{
+	ParticleEffect::SaveData(nObj);
+
+	DEJson::WriteFloat(nObj, "paSizeOLTStartSize", startingSize);
+	DEJson::WriteFloat(nObj, "paSizeOLTEndSize", endSize);
+}
+
+
+void PE_SizeOverLifetime::LoadData(DEConfig& nObj)
+{
+	ParticleEffect::LoadData(nObj);
+
+	startingSize = nObj.ReadFloat("paSizeOLTStartSize");
+	endSize = nObj.ReadFloat("paSizeOLTEndSize");
+}

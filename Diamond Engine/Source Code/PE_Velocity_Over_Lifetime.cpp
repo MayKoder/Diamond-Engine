@@ -35,3 +35,19 @@ void PE_VelocityOverLifetime::OnEditor(int emitterIndex)
 	}
 }
 #endif // !STANDALONE
+
+
+void PE_VelocityOverLifetime::SaveData(JSON_Object* nObj)
+{
+	ParticleEffect::SaveData(nObj);
+	DEJson::WriteVector3(nObj, "paVelocityOLTVelocity", velocity);
+}
+
+
+void PE_VelocityOverLifetime::LoadData(DEConfig& nObj)
+{
+	float3 vel = nObj.ReadVector3("paVelocityOLTVelocity");
+	velocity[0] = vel.x;
+	velocity[1] = vel.y;
+	velocity[2] = vel.z;
+}

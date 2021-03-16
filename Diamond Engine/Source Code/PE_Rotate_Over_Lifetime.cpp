@@ -43,3 +43,26 @@ void PE_RotateOverLifetime::OnEditor(int emitterIndex)
 		ImGui::DragFloat2(suffixLabel.c_str(), rotationSpeed);
 	}
 }
+
+
+void PE_RotateOverLifetime::SaveData(JSON_Object* nObj)
+{
+	ParticleEffect::SaveData(nObj);
+
+	DEJson::WriteVector2(nObj, "paROLT_rotation", rotation);
+	DEJson::WriteVector2(nObj, "paROLT_rotationSpeed", rotationSpeed);
+}
+
+
+void PE_RotateOverLifetime::LoadData(DEConfig& nObj)
+{
+	ParticleEffect::LoadData(nObj);
+
+	float2 rot = nObj.ReadVector2("paROLT_rotation");
+	rotation[0] = rot.x;
+	rotation[1] = rot.y;
+
+	float2 rotSpd = nObj.ReadVector2("paROLT_rotationSpeed");
+	rotationSpeed[0] = rotSpd.x;
+	rotationSpeed[1] = rotSpd.y;
+}

@@ -15,6 +15,9 @@ public:
 	void OnEditor(int emitterIndex) override;
 #endif //!STANDALONE
 
+	void SaveData(JSON_Object* nObj) override;
+	void LoadData(DEConfig& nObj) override;
+
 private:
 	float rotation[2];
 	float rotationSpeed[2];

@@ -10,11 +10,15 @@ public:
 	PE_ColorOverLifetime();
 	~PE_ColorOverLifetime();
 
+	void Update(Particle& particle, float dt) override;
+
 #ifndef STANDALONE
 	void OnEditor(int emitterIndex) override;
 #endif // !STANDALONE
 
-	void Update(Particle& particle, float dt) override;
+	void SaveData(JSON_Object* nObj) override;
+	void LoadData(DEConfig& nObj) override;
+
 private:
 	ImGradient gradient;
 	bool editGradient;

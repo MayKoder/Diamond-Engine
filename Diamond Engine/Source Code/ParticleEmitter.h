@@ -2,6 +2,7 @@
 #include <vector>
 #include "Particle.h"
 #include "ParticleEffects.h"
+#include"DEJsonSupport.h"
 
 class C_Transform;
 class ResourceTexture;
@@ -23,6 +24,10 @@ public:
 #endif // !STANDALONE
 
 	void AssignTransform(C_Transform* objTransform);
+
+	void SaveData(JSON_Object* nObj);
+	void LoadData(DEConfig& nObj);
+
 private:
 	//calculates a new Pool Size from the particle spawn rate & particle lifeTime
 	void CalculatePoolSize();
@@ -38,7 +43,7 @@ private:
 
 	void PrepareParticleToSpawn(Particle& p, float3& startingPos);
 
-	void PrepareVBO();
+	//void PrepareVBO();
 	int FindUnusedParticle();
 	void SetParticlesPerSec(int newParticlesPerSec);
 public:
@@ -72,7 +77,7 @@ private:
 
 	std::vector<Particle> myParticles;
 	std::vector<ParticleEffect*> myEffects;
-	C_Transform* objTransform;
+	C_Transform* objTransform = nullptr;
 };
 
 

@@ -301,6 +301,89 @@ void Emitter::OnEditor(int emitterIndex)
 }
 #endif // !STANDALONE
 
+
+void Emitter::AssignTransform(C_Transform* objTransform)
+{
+	this->objTransform = objTransform;
+}
+
+
+void Emitter::SaveData(JSON_Object* nObj)
+{
+	if (texture != nullptr)
+	{
+		DEJson::WriteString(nObj, "AssetPath", texture->GetAssetPath());
+		DEJson::WriteString(nObj, "LibraryPath", texture->GetLibraryPath());
+		DEJson::WriteInt(nObj, "texUID", texture->GetUID());
+	}
+
+	DEJson::WriteVector2(nObj, "paLifeTime", particlesLifeTime);
+	DEJson::WriteVector2(nObj, "paSpeed", particlesSpeed);
+	DEJson::WriteVector2(nObj, "paSize", particlesSize);
+	DEJson::WriteVector4(nObj, "paColor", &particlesColor[0]);
+	DEJson::WriteFloat(nObj, "paPerSec", particlesPerSec);
+	
+	JSON_Value* effectsArray = json_value_init_array();
+	JSON_Array* jsArray = json_value_get_array(effectsArray);
+	
+	int effectsCount = myEffects.size();
+	for (int i = 0; i < effectsCount; ++i)
+	{
+		JSON_Value* nVal = json_value_init_object();
+		JSON_Object* obj = json_value_get_object(nVal);
+
+		myEffects[i]->SaveData(obj);
+		json_array_append_value(jsArray, nVal);
+	}
+
+	json_object_set_value(nObj, "ParticleEffects", effectsArray);
+}
+
+
+void Emitter::LoadData(DEConfig& nObj)
+{
+	std::string texPath = nObj.ReadString("AssetPath");
+	std::string texName = nObj.ReadString("LibraryPath");
+
+	if (texName != "")
+		texture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), texName.c_str()));
+
+
+	float2 paLife = nObj.ReadVector2("paLifeTime");
+	particlesLifeTime[0] = paLife.x;
+	particlesLifeTime[1] = paLife.y;
+
+	float2 paSpd = nObj.ReadVector2("paSpeed");
+	particlesSpeed[0] = paSpd.x;
+	particlesSpeed[1] = paSpd.y;
+
+	float2 paSize = nObj.ReadVector2("paSize");
+	particlesSize[0] = paSize.x;
+	particlesSize[1] = paSize.y;
+
+
+	float4 paCol = nObj.ReadVector4("paColor");
+	particlesColor[0] = paCol.x;
+	particlesColor[1] = paCol.y;
+	particlesColor[2] = paCol.z;
+	particlesColor[3] = paCol.w;
+
+	SetParticlesPerSec(nObj.ReadFloat("paPerSec"));
+
+	DEConfig conf(nullptr);
+	JSON_Array* effArray = json_object_get_array(nObj.nObj, "ParticleEffects");
+
+	for (size_t i = 0; i < json_array_get_count(effArray); ++i)
+	{
+		conf.nObj = json_array_get_object(effArray, i);
+		int type = conf.ReadInt("paEffectType");
+
+		CreateEffect(static_cast<PARTICLE_EFFECT_TYPE>(type));
+		myEffects[i]->LoadData(conf);
+	}
+}
+
+
 void Emitter::CalculatePoolSize()
 {
 	int poolSize = ceilf(particlesPerSec * max(particlesLifeTime[0], particlesLifeTime[1]));
@@ -534,7 +617,3 @@ void Emitter::SetParticlesPerSec(int newParticlesPerSec)
 	CalculatePoolSize();
 }
 
-void Emitter::AssignTransform(C_Transform* objTransform)
-{
-	this->objTransform = objTransform;
-}

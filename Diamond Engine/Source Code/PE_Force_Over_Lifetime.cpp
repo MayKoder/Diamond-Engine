@@ -5,12 +5,10 @@
 
 PE_ForceOverLifetime::PE_ForceOverLifetime() : ParticleEffect(PARTICLE_EFFECT_TYPE::FORCE_OVER_LIFETIME)
 {
-
 	memset(acceleration, 0.f, sizeof(acceleration));
 
-	myGravity=-9.8f;
+	myGravity =- 9.8f;
 	gravityModifier = 1.0f;
-
 }
 
 
@@ -49,3 +47,26 @@ void PE_ForceOverLifetime::OnEditor(int emitterIndex)
 	}
 }
 #endif // !STANDALONE
+
+
+void PE_ForceOverLifetime::SaveData(JSON_Object* nObj)
+{
+	ParticleEffect::SaveData(nObj);
+
+	DEJson::WriteVector3(nObj, "paFOLT_acceleration", acceleration);
+	DEJson::WriteFloat(nObj, "paFOLT_gravityMod", gravityModifier);
+	DEJson::WriteFloat(nObj, "paFOLT_gravity", myGravity);
+}
+
+
+void PE_ForceOverLifetime::LoadData(DEConfig& nObj)
+{
+	ParticleEffect::LoadData(nObj);
+	float3 acc = nObj.ReadVector3("paFOLT_acceleration");
+	acceleration[0] = acc.x;
+	acceleration[1] = acc.y;
+	acceleration[2] = acc.z;
+
+	gravityModifier = nObj.ReadFloat("paFOLT_gravityMod");
+	myGravity = nObj.ReadFloat("paFOLT_gravity");
+}

@@ -40,3 +40,24 @@ void PE_SpawnArea::OnEditor(int emitterIndex)
 	}
 }
 #endif // !STANDALONE
+
+
+void PE_SpawnArea::SaveData(JSON_Object* nObj)
+{
+	ParticleEffect::SaveData(nObj);
+
+	DEJson::WriteVector3(nObj, "paSpawnAreaPos", centerOfSphere);
+	DEJson::WriteFloat(nObj, "paSpawnAreaRadius", radius);
+}
+
+
+void PE_SpawnArea::LoadData(DEConfig& nObj)
+{
+	ParticleEffect::LoadData(nObj);
+	float3 pos = nObj.ReadVector3("paSpawnAreaPos");
+	centerOfSphere[0] = pos.x;
+	centerOfSphere[1] = pos.y;
+	centerOfSphere[2] = pos.z;
+
+	radius = nObj.ReadFloat("paSpawnAreaRadius");
+}
