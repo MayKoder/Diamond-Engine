@@ -46,6 +46,8 @@ public:
 	void RemoveChild(GameObject*);
 	void CollectChilds(std::vector<GameObject*>& vector);
 
+	bool CompareTag(char* _tag);
+
 	template<typename A>
 	A* GetComponent()
 	{
@@ -71,6 +73,8 @@ public:
 
 	int UID;
 	uint prefabID;
+
+	char tag[32];
 
 private:
 	Component* dumpComponent;

@@ -32,11 +32,13 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 	mesh = dynamic_cast<C_MeshRenderer*>(_gm->GetComponent(Component::TYPE::MESH_RENDERER));
 
 	Quat rot;
-	float3 pos, scale;
+	float3 pos, scale, objectpos, pivotpos;
 	goTransform->globalTransform.Decompose(pos, rot, scale);
+	objectpos = pos;
 	if(mesh != nullptr)
 	pos = mesh->globalOBB.pos;
-
+	pivotpos = pos;
+	offset = pivotpos - objectpos;
 
 
 	
@@ -122,7 +124,7 @@ void C_RigidBody::PostUpdate()
 		
 		if (collider_info && collider_info->shape != ColliderShape::MESH)
 		{
-			float4x4 worldtrans = goTransform->globalTransform * global_to_pivot;
+			float4x4 worldtrans = goTransform->globalTransform; //* global_to_pivot;
 			worldtrans.Decompose(pos, rot, scale);
 		}
 		else
@@ -139,7 +141,7 @@ void C_RigidBody::PostUpdate()
 				pos[i] = Round(pos[i] * 100) / 100;
 			}
 		}
-
+		pos += offset;
 		physx::PxQuat rotation = { rot.x,  rot.y, rot.z, rot.w };
 		rigid_dynamic->setGlobalPose(physx::PxTransform({ pos.x, pos.y, pos.z }, rotation));
 
@@ -181,7 +183,10 @@ void C_RigidBody::Step()
 		if (collider_info && collider_info->shape != ColliderShape::MESH)
 		{
 			float4x4 pivotrans = global_to_pivot.Inverted() * worldtrans;
-			goTransform->SetTransformWithGlobal(pivotrans);
+
+			worldtrans = float4x4::FromTRS(pos - offset, rot, scale);
+
+			goTransform->SetTransformWithGlobal(worldtrans);
 
 		}
 		else
