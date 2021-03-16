@@ -77,16 +77,44 @@ void W_Inspector::Draw()
 
 			if (ImGui::BeginCombo("##tags", selectedGO->tag))
 			{
-				for (int n = 0; n < tags.size(); n++)
+				for (int t = 0; t < tags.size(); t++)
 				{
-					bool is_selected = strcmp(selectedGO->tag, tags[n]) == 0;
-					if (ImGui::Selectable(tags[n], is_selected)) {
-						strcpy(selectedGO->tag, tags[n]);
+					bool is_selected = strcmp(selectedGO->tag, tags[t]) == 0;
+					if (ImGui::Selectable(tags[t], is_selected)) {
+						strcpy(selectedGO->tag, tags[t]);
 					}
 
 					if (is_selected)
 						ImGui::SetItemDefaultFocus();
 				}
+				if (ImGui::BeginMenu("Add Tag")) 
+				{
+					static char newTag[32];
+					ImGui::InputText("", newTag, 32);
+					
+					if (ImGui::Button("Save Tag")) {
+						EngineExternal->moduleScene->tags.push_back(newTag);
+						newTag[0] = '\0';
+					}
+					ImGui::EndMenu();
+				}
+
+				int tag_to_remove = -1;
+				if (ImGui::BeginMenu("Remove Tag"))
+				{
+					for (int t = 0; t < tags.size(); t++)
+					{
+						if (ImGui::Selectable(tags[t], false)) {
+							tag_to_remove = t;
+							//Remove Tag
+						}
+					}
+					ImGui::EndMenu();
+				}
+
+				if (tag_to_remove != -1)
+					EngineExternal->moduleScene->tags.erase(EngineExternal->moduleScene->tags.begin() + tag_to_remove);
+
 				ImGui::EndCombo();
 			}
 			ImGui::PopItemWidth();
