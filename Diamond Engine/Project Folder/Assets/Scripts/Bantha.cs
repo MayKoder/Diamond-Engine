@@ -14,6 +14,8 @@ public class Bantha : Enemy
         switch (currentState)
         {
 			case STATES.IDLE:
+				Debug.Log("Idle");
+
 				timePassed += Time.deltaTime;
 
 				if (InRange(player.transform.globalPosition, range))
@@ -38,6 +40,8 @@ public class Bantha : Enemy
 				break;
 
 			case STATES.RUN:
+				Debug.Log("Running");
+
 				LookAt(targetPosition);
 				MoveToPosition(targetPosition, runningSpeed);
 
@@ -48,7 +52,8 @@ public class Bantha : Enemy
 				}
 				break;
 			case STATES.WANDER:
-				
+				Debug.Log("Wander");
+
 				// If the player is in range attack him
 				if (InRange(player.transform.globalPosition, range))
 				{
@@ -73,17 +78,32 @@ public class Bantha : Enemy
 				break;
 
 			case STATES.SHOOT:
+				Debug.Log("Charging");
+
 				timePassed += Time.deltaTime;
 
 				LookAt(player.transform.globalPosition);
+				
+				Debug.Log(player.transform.localPosition.ToString());
+				Debug.Log(gameObject.transform.localPosition.ToString());
 
-				Charge();
+				MoveToPosition(player.transform.localPosition, bulletSpeed);
+
+				if (Mathf.Distance(gameObject.transform.localPosition, player.transform.localPosition) < stoppingDistance)
+				{
+					currentState = STATES.IDLE;
+					timePassed = 0.0f;
+				}
 
 				break;
 			case STATES.HIT:
+				Debug.Log("Being Hit");
+
 				break;
 
 			case STATES.DIE:
+				Debug.Log("Dying");
+
 				InternalCalls.Destroy(gameObject);
 				break;
 		}
@@ -92,15 +112,7 @@ public class Bantha : Enemy
 	}
 	public void Charge()
     {
-		Debug.Log("Charging");
 
-		MoveToPosition(player.transform.globalPosition, bulletSpeed);
-
-		if (Mathf.Distance(gameObject.transform.localPosition, player.transform.globalPosition) < stoppingDistance)
-		{
-			currentState = STATES.IDLE;
-			timePassed = 0.0f;
-		}
 	}
 
 }

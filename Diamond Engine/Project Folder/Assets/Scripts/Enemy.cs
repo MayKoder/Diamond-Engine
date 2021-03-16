@@ -64,7 +64,7 @@ public class Enemy : DiamondComponent
 
 	public void MoveToPosition(Vector3 positionToReach, float speed)
 	{
-		Vector3 direction = targetPosition - gameObject.transform.localPosition;
+		Vector3 direction = positionToReach - gameObject.transform.localPosition;
 
 		gameObject.transform.localPosition += direction.normalized * speed * Time.deltaTime;
 	}

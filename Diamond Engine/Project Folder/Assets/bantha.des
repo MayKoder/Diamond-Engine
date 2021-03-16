@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        46.066265106201172,
-        60.977596282958984,
-        -65.203453063964844
+        20.287900924682617,
+        9.7716732025146484,
+        -5.7923378944396973
     ],
     "EditorCameraZ": [
-        -0.54386216402053833,
-        -0.50529581308364868,
-        0.66999268531799316
+        -0.87253880500793457,
+        -0.42025855183601379,
+        0.24911594390869141
     ],
     "EditorCameraY": [
-        -0.31849545240402222,
-        0.86294621229171753,
-        0.39228114485740662
+        -0.40411078929901123,
+        0.90740436315536499,
+        0.11537645757198334
     ],
     "Game Objects": [
         {
@@ -92,6 +92,179 @@
             ]
         },
         {
+            "name": "TestSandbox",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                0.24000000953674316,
+                0.24000000953674316,
+                0.24000000953674316
+            ],
+            "UID": 1716888692,
+            "PrefabID": 0,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Plane",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0.91313320398330688
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                500,
+                499.99935913085938,
+                499.99935913085938
+            ],
+            "UID": 420350065,
+            "PrefabID": 0,
+            "ParentUID": 1716888692,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/296489994.mmh",
+                    "UID": 296489994,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true,
+                    "Gravity": true,
+                    "LockLinearX": false,
+                    "LockLinearY": false,
+                    "LockLinearZ": false,
+                    "LockAngularX": false,
+                    "LockAngularY": false,
+                    "LockAngularZ": false,
+                    "Mass": 10,
+                    "Density": 1
+                }
+            ]
+        },
+        {
+            "name": "Cube",
+            "Active": true,
+            "Position": [
+                -300,
+                0,
+                -300
+            ],
+            "Rotation": [
+                -0.68301278352737427,
+                -0.1830126941204071,
+                -0.1830127090215683,
+                0.68301266431808472
+            ],
+            "Scale": [
+                17.39555549621582,
+                17.39555549621582,
+                17.39555549621582
+            ],
+            "UID": 1432217696,
+            "PrefabID": 0,
+            "ParentUID": 1716888692,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/317057310.mmh",
+                    "UID": 317057310,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true
+                }
+            ]
+        },
+        {
+            "name": "Sphere",
+            "Active": true,
+            "Position": [
+                -287.66519165039063,
+                65.438919067382813,
+                -303.3785400390625
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.70710670948028564
+            ],
+            "Scale": [
+                18.083625793457031,
+                18.083625793457031,
+                18.083625793457031
+            ],
+            "UID": 467515712,
+            "PrefabID": 0,
+            "ParentUID": 1716888692,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/2010055644.mmh",
+                    "UID": 2010055644,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
             "name": "Game Camera",
             "Active": true,
             "Position": [
@@ -150,7 +323,7 @@
             "Active": true,
             "Position": [
                 1.5525643825531006,
-                0,
+                1.0001964569091797,
                 -9.853302001953125
             ],
             "Rotation": [
@@ -192,7 +365,6 @@
                     "damage": 5,
                     "bulletSpeed": 50,
                     "shotTimes": 1,
-                    "shotSequences": 0,
                     "timeBewteenShots": 5,
                     "timePassed": 0,
                     "idleTime": 5,
@@ -237,7 +409,7 @@
             "Active": true,
             "Position": [
                 0,
-                0,
+                -1,
                 0
             ],
             "Rotation": [
