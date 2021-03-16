@@ -63,6 +63,11 @@ public:
 	float GetFrameRate() const;
 	
 	int GetRandomInt();
+	//returns an integer between 2 values (doesn't care about the order)
+	int GetRandomInt(int a, int b);
+	//returns an integer between 2 values (CAUTION! min & max inputs have to be in order)
+	int GetRandomIntFast(int min, int max);
+	float GetRandomFloat(float min, float max);
 
 private:
 
