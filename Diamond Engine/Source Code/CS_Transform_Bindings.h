@@ -295,7 +295,7 @@ bool CompareTag(MonoObject* cs_gameObject, MonoString* cs_tag)
 	else
 	{
 		bool same_tag = gameObject->CompareTag(cpp_tag);
-		mono_free(cs_tag);
+		mono_free(cpp_tag);
 		return same_tag;
 	}
 
@@ -309,7 +309,7 @@ void CreatePrefab(MonoString* prefabPath, MonoObject* position, MonoObject* rota
 
 	char* library_path = mono_string_to_utf8(prefabPath);
 	GameObject* prefab_object = PrefabImporter::LoadPrefab(library_path);
-	mono_free(prefabPath);
+	mono_free(library_path);
 
 	if(prefab_object != nullptr)
 	{ 
