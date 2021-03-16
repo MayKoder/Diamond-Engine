@@ -392,9 +392,14 @@ void CollisionDetector::onContact(const PxContactPairHeader& pairHeader,
 			for (size_t k= 0; k < 2; ++k)
 			{
 				GameObject* contact = static_cast<GameObject*>(pairHeader.actors[k]->userData);
-				C_Script* script =  dynamic_cast<C_Script*>(contact->GetComponent(Component::TYPE::SCRIPT));
-				if (script)
-					script->CollisionCallback(false);
+
+				std::vector< Component*> scripts = contact->GetComponentsOfType(Component::TYPE::SCRIPT);
+				for (size_t i = 0; i < scripts.size(); i++)
+				{
+					C_Script* script = dynamic_cast<C_Script*>(scripts[i]);
+					if (script)
+						script->CollisionCallback(true);
+				}
 			}
 
 			/*if ((pairHeader.actors[0] == mSubmarineActor) ||
@@ -405,7 +410,7 @@ void CollisionDetector::onContact(const PxContactPairHeader& pairHeader,
 
 void CollisionDetector::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 {
-	LOG(LogType::L_NORMAL, "Trigger detected");
+	LOG(LogType::L_NORMAL, "trigger detected");
 	for (PxU32 i = 0; i < count; i++)
 	{
 		const PxTriggerPair& cp = pairs[i];
@@ -415,16 +420,26 @@ void CollisionDetector::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 coun
 
 		if (contact != nullptr) 
 		{
-			C_Script* script = dynamic_cast<C_Script*>(contact->GetComponent(Component::TYPE::SCRIPT));
-			if (script)
-				script->CollisionCallback(true);
+			std::vector< Component*> scripts = contact->GetComponentsOfType(Component::TYPE::SCRIPT);
+			for (size_t i = 0; i < scripts.size(); i++)
+			{
+				C_Script* script = dynamic_cast<C_Script*>(scripts[i]);
+				if (script)
+					script->CollisionCallback(true);
+			}
+		
+			
 		}
 
 		if (contact2 != nullptr) 
 		{
-			C_Script* script = dynamic_cast<C_Script*>(contact2->GetComponent(Component::TYPE::SCRIPT));
-			if (script)
-				script->CollisionCallback(true);
+			std::vector< Component*> scripts = contact2->GetComponentsOfType(Component::TYPE::SCRIPT);
+			for (size_t i = 0; i < scripts.size(); i++)
+			{
+				C_Script* script = dynamic_cast<C_Script*>(scripts[i]);
+				if (script)
+					script->CollisionCallback(true);
+			}
 		}
 		
 	}
