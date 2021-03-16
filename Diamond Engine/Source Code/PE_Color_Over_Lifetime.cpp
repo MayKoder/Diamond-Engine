@@ -67,28 +67,39 @@ void PE_ColorOverLifetime::SaveData(JSON_Object* nObj)
 	
 	std::list<ImGradientMark*> marks = gradient.getMarks();
 
-	std::list<ImGradientMark*>::iterator i = marks.begin();
+	JSON_Value* gradientArray = json_value_init_array();
+	JSON_Array* jsArray = json_value_get_array(gradientArray);
 
-	DEJson::WriteVector4(nObj, "paColorOLTcolor1", i._Ptr->_Myval->color);
-	DEJson::WriteFloat(nObj, "paColorOLTposition1", i._Ptr->_Myval->position);
-	i++;
-
-	DEJson::WriteVector4(nObj, "paColorOLTcolor2", i._Ptr->_Myval->color);
-	DEJson::WriteFloat(nObj, "paColorOLTposition2", i._Ptr->_Myval->position);
 	
+	for (std::list<ImGradientMark*>::iterator i = marks.begin(); i != marks.end(); ++i)
+	{
+		JSON_Value* nVal = json_value_init_object();
+		JSON_Object* obj = json_value_get_object(nVal);
+
+		DEJson::WriteVector4(obj, "paColorOLTcolor", i._Ptr->_Myval->color);
+		DEJson::WriteFloat(obj, "paColorOLTposition", i._Ptr->_Myval->position);
+
+		json_array_append_value(jsArray, nVal);
+	}	
+
+	json_object_set_value(nObj, "Gradients", gradientArray);
 }
 
 
 void PE_ColorOverLifetime::LoadData(DEConfig& nObj)
 {
+	gradient.clearMarks();
 	ParticleEffect::LoadData(nObj);
 
-	float4 col = nObj.ReadVector4("paColorOLTcolor1");
-	float pos = nObj.ReadFloat("paColorOLTposition1");
+	DEConfig conf(nullptr);
+	JSON_Array* effArray = json_object_get_array(nObj.nObj, "Gradients");
+	for (size_t i = 0; i < json_array_get_count(effArray); ++i)
+	{
+		conf.nObj = json_array_get_object(effArray, i);
+		
+		float4 col = conf.ReadVector4("paColorOLTcolor");
+		float pos = conf.ReadFloat("paColorOLTposition");
 
-	gradient.addMark(pos, ImColor(col.x, col.y, col.z, col.w));
-
-	col = nObj.ReadVector4("paColorOLTcolor2");
-	pos = nObj.ReadFloat("paColorOLTposition2");
-	gradient.addMark(pos, ImColor(col.x, col.y, col.z, col.w));
+		gradient.addMark(pos, ImColor(col.x, col.y, col.z, col.w));
+	}
 }
