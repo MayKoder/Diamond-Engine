@@ -96,7 +96,9 @@ bool M_MonoManager::Init()
 #pragma endregion
 
 	mono_add_internal_call("DiamondEngine.DiamondComponent::get_gameObject", CS_Component_Get_GO);
+
 	mono_add_internal_call("DiamondEngine.GameObject::TryGetComponent", CS_GetComponent);
+	mono_add_internal_call("DiamondEngine.GameObject::CompareTag", CompareTag);
 
 	mono_add_internal_call("DiamondEngine.Animator::Play", Play);
 	mono_add_internal_call("DiamondEngine.Animator::Pause", Pause);

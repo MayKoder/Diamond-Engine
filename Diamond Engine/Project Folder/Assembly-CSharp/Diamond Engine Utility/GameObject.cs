@@ -48,5 +48,7 @@ namespace DiamondEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void AddComponent(int componentType);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern bool CompareTag(string tag);
     }
 }

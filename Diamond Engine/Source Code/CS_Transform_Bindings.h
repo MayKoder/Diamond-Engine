@@ -288,14 +288,14 @@ bool CompareTag(MonoObject* cs_gameObject, MonoString* cs_tag)
 
 	GameObject* gameObject = EngineExternal->moduleMono->GameObject_From_CSGO(cs_gameObject);
 
-	if (gameObject != nullptr) 
+	if (gameObject == nullptr) 
 	{
 		LOG(LogType::L_ERROR, "GameObject's tag to be compared does not exist");
 	}
 	else
 	{
 		bool same_tag = gameObject->CompareTag(cpp_tag);
-		mono_free(cs_tag);
+		mono_free(cpp_tag);
 		return same_tag;
 	}
 

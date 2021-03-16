@@ -139,6 +139,5 @@ public class Stormtrooper : Enemy
 
 	public void OnTriggerEnter()
 	{
-		//state = STATES.HIT;
 	}
 }
