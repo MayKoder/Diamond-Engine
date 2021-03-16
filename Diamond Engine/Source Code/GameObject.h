@@ -29,6 +29,10 @@ public:
 
 	void Enable();
 	void Disable();
+
+	void EnableTopDown();
+	void DisableTopDown();
+
 	bool IsRoot();
 
 	void Destroy();

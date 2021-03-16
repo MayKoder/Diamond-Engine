@@ -56,8 +56,15 @@ MonoObject* CS_Get_GO_Parent(MonoObject* go)
 void CS_EnableGO(MonoObject* go, bool enable)
 {
 	GameObject* ref = EngineExternal->moduleMono->GameObject_From_CSGO(go);
-	if (ref != nullptr)
-		ref->active = enable;
+	if (ref != nullptr) {
+		if (enable) {
+			ref->EnableTopDown();
+			
+		}
+		else {
+			ref->DisableTopDown();
+		}
+	}
 }
 
 bool CS_IsGOEnabled(MonoObject* go)

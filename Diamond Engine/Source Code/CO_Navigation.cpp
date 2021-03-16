@@ -28,6 +28,11 @@ C_Navigation::~C_Navigation()
 	map_of_buttons_and_joysticks.clear();
 }
 
+void C_Navigation::Enable()
+{
+	button_or_joystick_being_used = BUTTONSANDJOYSTICKS::BUTTON_OR_JOYSTICK_UNKNOWN;
+}
+
 void C_Navigation::Update()
 {
 	if (!is_selected || map_of_buttons_and_joysticks.size() == 0)
@@ -37,8 +42,11 @@ void C_Navigation::Update()
 		if (it->second.referenceGO == nullptr)
 			continue;
 		CheckIfButtonOrJoystickIsBeingUsed(it->first,state);
-
-		if (button_or_joystick_being_used == it->first && state == KEY_STATE::KEY_UP) {
+		
+		if (button_or_joystick_being_used == BUTTONSANDJOYSTICKS::BUTTON_OR_JOYSTICK_UNKNOWN && (state == KEY_STATE::KEY_DOWN || state == KEY_STATE::KEY_REPEAT)) {
+			button_or_joystick_being_used = it->first;
+		}
+		else if (button_or_joystick_being_used == it->first && state == KEY_STATE::KEY_UP) {
 			GameObject* gameobject_to_pass = it->second.referenceGO;
 			if (gameobject_to_pass == nullptr || gameobject_to_pass->GetComponent(Component::TYPE::NAVIGATION) == nullptr)
 				continue;
@@ -65,6 +73,8 @@ void C_Navigation::Update()
 		}
 
 	}
+	if (button_or_joystick_being_used == BUTTONSANDJOYSTICKS::BUTTON_OR_JOYSTICK_UNKNOWN)
+		button_or_joystick_being_used = BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
 }
 
 void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button_or_joystick_to_check, KEY_STATE& state)
@@ -282,13 +292,13 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 
 void C_Navigation::DoTheAction(GameObject* gameobject_passed, BUTTONSANDJOYSTICKS button_or_joystick_used, ACTIONSNAVIGATION action, bool is_key_released)
 {
-	
+	C_Navigation* nav = static_cast<C_Navigation*>(gameobject_passed->GetComponent(Component::TYPE::NAVIGATION));
 	switch (action)
 	{
 	case ACTIONSNAVIGATION::MOVE: {
 		if (is_key_released)
 			return;
-		C_Navigation* nav = static_cast<C_Navigation*>(gameobject_passed->GetComponent(Component::TYPE::NAVIGATION));
+		
 		nav->Select();
 		if (button_or_joystick_being_used != BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK) {
 			nav->button_or_joystick_being_used = button_or_joystick_being_used;
