@@ -11,22 +11,22 @@ public class DisSett : DiamondComponent
 	public void OnExecuteCheckbox(bool active)
     {
 		if (active)
-			Debug.Log("Vsync ON");
+			Config.VSYNCEnable(true);
 		else
-			Debug.Log("Vsync OFF");
+			Config.VSYNCEnable(false);
 	}
 	public void OnExecuteButton()
 	{
 		if (gameObject.Name == "Return")
 			toDisable = true;
 		if (gameObject.Name == "ResolutionUp")
-			Debug.Log("Res Up");
+			Config.SetResolution(Config.GetResolution() + 1);
 		if (gameObject.Name == "ResolutionDown")
-			Debug.Log("Res Down");
+			Config.SetResolution(Config.GetResolution() - 1);
 		if (gameObject.Name == "WindowModeUp")
-			Debug.Log("Win Up");
+			Config.SetWindowMode(Config.GetWindowMode() + 1);
 		if (gameObject.Name == "WindowModeDown")
-			Debug.Log("Win Down");
+			Config.SetWindowMode(Config.GetWindowMode() - 1);
 	}
 	public void Update()
 	{

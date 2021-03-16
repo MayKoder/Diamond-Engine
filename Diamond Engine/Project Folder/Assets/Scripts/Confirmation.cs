@@ -4,6 +4,7 @@ using DiamondEngine;
 public class Confirmation : DiamondComponent
 {
 	public GameObject confirmationWindow = null;
+	public GameObject mainMenu = null;
 	private bool toDisable = false;
 	private bool firstFrame = true;
 	public void OnExecuteButton()
@@ -20,6 +21,7 @@ public class Confirmation : DiamondComponent
 		if (Input.GetGamepadButton(DEControllerButton.B) == KeyState.KEY_DOWN || toDisable)
 		{
 			toDisable = false;
+			mainMenu.Enable(true);
 			confirmationWindow.Enable(false);
 		}
 	}

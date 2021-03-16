@@ -38,7 +38,7 @@
 
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), str_CAPS(""),
-vsync(false), wireframe(false), gameCamera(nullptr)
+vsync(false), wireframe(false), gameCamera(nullptr),resolution(3)
 {
 	GetCAPS(str_CAPS);
 	/*depth =*/ cull = lightng = color_material = texture_2d = true;

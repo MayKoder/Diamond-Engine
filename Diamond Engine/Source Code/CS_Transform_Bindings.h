@@ -12,10 +12,12 @@
 #include "CO_Transform.h"
 #include "CO_Collider.h"
 #include "CO_RigidBody.h"
+#include "CO_Camera.h"
 
 #include "MO_Input.h"
 #include "MO_Scene.h"
 #include "MO_ResourceManager.h"
+#include "MO_Window.h"
 
 #include "GameObject.h"
 #include "MathGeoLib/include/Math/float3.h"
@@ -349,3 +351,93 @@ MonoObject* SendGlobalScale(MonoObject* transform) //Allows to send float3 as "o
 }
 
 #pragma endregion
+
+#pragma region Config
+void CS_Enable_VSYNC(bool enable)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	EngineExternal->moduleRenderer3D->vsync = enable;
+}
+
+void CS_SetResolution(int resolution)
+{
+	if (EngineExternal == nullptr)
+		return;
+	
+	int aux = resolution;
+	(resolution > 3) ? aux = 3 : aux = resolution;
+	(resolution > 1) ? aux = aux : aux = 1;
+
+	if (aux == 1) // TODO: How to change screen resolution withouth changing window's size nor re-creating the window.
+
+	if (aux == 2)
+
+	if (aux == 3)
+
+
+	EngineExternal->moduleRenderer3D->resolution = aux;
+}
+
+int CS_GetResolution()
+{
+	if (EngineExternal == nullptr)
+		return 0;
+
+	return EngineExternal->moduleRenderer3D->resolution;
+}
+
+void CS_SetWindowMode(int winMode)
+{
+	if (EngineExternal == nullptr)
+		return;
+	int aux = winMode;
+	(winMode > 5) ? aux = 5 : aux = winMode;
+	(winMode > 1) ? aux = aux : aux = 1;
+	
+	int w, h;
+	SDL_GetWindowSize(EngineExternal->moduleWindow->window, &w, &h);
+
+	switch (winMode)
+	{
+	case 1:
+		SDL_SetWindowResizable(EngineExternal->moduleWindow->window, static_cast<SDL_bool>(true));
+		break;
+	case 2:
+		SDL_SetWindowBordered(EngineExternal->moduleWindow->window, static_cast<SDL_bool>(false));
+		EngineExternal->moduleRenderer3D->OnResize(w, h);
+		break;
+	case 3:
+		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, SDL_WINDOW_FULLSCREEN);
+		EngineExternal->moduleRenderer3D->OnResize(w, h);
+		break;
+	case 4:
+		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		EngineExternal->moduleRenderer3D->OnResize(w, h);
+		break;
+	default:
+		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, 0);
+		EngineExternal->moduleRenderer3D->OnResize(w, h);
+		break;
+	}
+	EngineExternal->moduleWindow->windowMode = aux;
+}
+
+int CS_GetWindowMode()
+{
+	if (EngineExternal == nullptr)
+		return 0;
+
+	return EngineExternal->moduleWindow->windowMode;
+}
+#pragma endregion
+
+void BindConfigMethods()
+{
+	mono_add_internal_call("DiamondEngine.Config::VSYNCEnable", CS_Enable_VSYNC);
+	mono_add_internal_call("DiamondEngine.Config::SetResolution", CS_SetResolution);
+	mono_add_internal_call("DiamondEngine.Config::GetResolution", CS_GetResolution);
+	mono_add_internal_call("DiamondEngine.Config::SetWindowMode", CS_SetWindowMode);
+	mono_add_internal_call("DiamondEngine.Config::GetWindowMode", CS_GetWindowMode);
+}

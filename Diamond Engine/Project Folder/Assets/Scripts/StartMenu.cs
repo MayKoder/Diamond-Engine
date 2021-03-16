@@ -14,11 +14,14 @@ public class StartMenu : DiamondComponent
 		{
 			menuButtons.Enable(false);
 			options.Enable(true);
-			if(default_selected!=null)
+			if (default_selected != null)
 				default_selected.GetComponent<Navigation>().Select();
 		}
 		else if (gameObject.Name == "Quit")
-			InternalCalls.CloseGame();
+		{
+			options.Enable(true);
+			menuButtons.Enable(false);
+		}
 	}
 	public void Update()
 	{
