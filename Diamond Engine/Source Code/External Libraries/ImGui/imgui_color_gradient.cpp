@@ -23,7 +23,9 @@ ImGradient::~ImGradient()
 	for (ImGradientMark* mark : m_marks)
 	{
 		delete mark;
+		mark = nullptr;
 	}
+	m_marks.clear();
 }
 
 void ImGradient::addMark(float position, ImColor const color)
