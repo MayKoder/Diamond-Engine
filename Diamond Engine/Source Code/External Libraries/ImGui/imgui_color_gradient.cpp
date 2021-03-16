@@ -4,6 +4,7 @@
 //
 //  Created by David Gallardo on 11/06/16.
 //	Modified by Oscar Pérez on 13/03/21 to account for alpha
+//	Modified by Oscar Pérez on 16/03/21 to solve memory leaks when deleting the gradiend & removing marks
 
 #include "imgui_color_gradient.h"
 #include "imgui_internal.h"
@@ -20,12 +21,7 @@ ImGradient::ImGradient()
 
 ImGradient::~ImGradient()
 {
-	for (ImGradientMark* mark : m_marks)
-	{
-		delete mark;
-		mark = nullptr;
-	}
-	m_marks.clear();
+	clearMarks();
 }
 
 void ImGradient::addMark(float position, ImColor const color)
@@ -45,7 +41,31 @@ void ImGradient::addMark(float position, ImColor const color)
 
 void ImGradient::removeMark(ImGradientMark* mark)
 {
-	m_marks.remove(mark);
+	std::list<ImGradientMark*>::iterator i = m_marks.begin();
+
+	for (i; i != m_marks.end(); ++i)
+	{
+		if (i._Ptr->_Myval == mark)
+		{
+			m_marks.remove(mark);
+			delete(mark);
+			mark = nullptr;
+			refreshCache();
+			return;
+		}
+	}
+
+
+}
+
+void ImGradient::clearMarks()
+{
+	for (ImGradientMark* mark : m_marks) //moved from the gradient destructor
+	{
+		delete mark;
+		mark = nullptr;
+	}
+	m_marks.clear();
 	refreshCache();
 }
 
@@ -96,7 +116,7 @@ void ImGradient::computeColorAt(float position, float* color) const
 	}
 	else if (!lower && !upper)
 	{
-		color[0] = color[1] = color[2]= color[3] = 0;
+		color[0] = color[1] = color[2] = color[3] = 0;
 		return;
 	}
 
@@ -389,7 +409,7 @@ namespace ImGui
 
 		if (selectedMark)
 		{
-			bool colorModified = ImGui::ColorPicker4("", selectedMark->color,ImGuiColorEditFlags_AlphaBar);
+			bool colorModified = ImGui::ColorPicker4("", selectedMark->color, ImGuiColorEditFlags_AlphaBar);
 
 			if (selectedMark && colorModified)
 			{
