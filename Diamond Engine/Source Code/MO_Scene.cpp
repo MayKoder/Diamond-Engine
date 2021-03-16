@@ -33,7 +33,7 @@ defaultMaterial(nullptr), holdUID(0)
 	current_scene[0] = '\0';
 	current_scene_name[0] = '\0';
 
-	tags = { "Untagged", "Player", "Enemy", "Bullet" };
+	tags = { "Untagged"};
 	layers = { "Default" };
 }
 
@@ -41,6 +41,9 @@ M_Scene::~M_Scene()
 {
 	root = nullptr;
 	defaultMaterial = nullptr;
+
+	tags.clear();
+	layers.clear();
 }
 
 bool M_Scene::Init()
@@ -344,6 +347,26 @@ void M_Scene::SaveScene(const char* name)
 	root_object.WriteVector3("EditorCameraZ", &App->moduleCamera->editorCamera.camFrustrum.front.x);
 	root_object.WriteVector3("EditorCameraY", &App->moduleCamera->editorCamera.camFrustrum.up.x);
 
+	//Tags ===================================================================
+	JSON_Value* tagsValue = json_value_init_array();
+	JSON_Array* tagsArray = json_value_get_array(tagsValue);
+	for (size_t t = 0; t < tags.size(); t++)
+	{
+		if(strcmp(tags[t].c_str(), "Untagged") != 0)
+			json_array_append_string(tagsArray, tags[t].c_str());
+	}
+	json_object_set_value(root_object.nObj, "tags", tagsValue);
+
+	//Layers =================================================================
+	JSON_Value* layersValue = json_value_init_array();
+	JSON_Array* layersArray = json_value_get_array(layersValue);
+	for (size_t l = 0; l < layers.size(); l++)
+	{
+		if (strcmp(layers[l].c_str(), "Default") != 0)
+			json_array_append_string(layersArray, layers[l].c_str());
+	}
+	json_object_set_value(root_object.nObj, "layers", layersValue);
+
 	JSON_Value* goArray = json_value_init_array();
 	root->SaveToJson(json_value_get_array(goArray));
 	json_object_set_value(root_object.nObj, "Game Objects", goArray);
@@ -382,6 +405,22 @@ void M_Scene::LoadScene(const char* name)
 	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.front.x, &DEJson::ReadVector3(sceneObj, "EditorCameraZ")[0], 3);
 	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.up.x, &DEJson::ReadVector3(sceneObj, "EditorCameraY")[0], 3);
 #endif // !STANDALONE
+
+	tags.clear();
+	tags = { "Untagged" };
+	JSON_Array* tagsArray = json_object_get_array(sceneObj, "tags");
+	for (size_t t = 0; t < json_array_get_count(tagsArray); t++)
+	{
+		tags.push_back(json_array_get_string(tagsArray, t));
+	}
+
+	layers.clear();
+	layers = { "Default" };
+	JSON_Array* layersArray = json_object_get_array(sceneObj, "layers");
+	for (size_t l = 0; l < json_array_get_count(layersArray); l++)
+	{
+		layers.push_back(json_array_get_string(layersArray, l));
+	}
 
 	JSON_Array* sceneGO = json_object_get_array(sceneObj, "Game Objects");
 	JSON_Object* goJsonObj = json_array_get_object(sceneGO, 0);

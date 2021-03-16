@@ -55,8 +55,8 @@ public:
 	char current_scene[64];
 	char current_scene_name[32];
 
-	std::vector<const char*> tags;
-	std::vector<const char*> layers;
+	std::vector<std::string> tags;
+	std::vector<std::string> layers;
 
 	void LoadHoldScene();
 private:

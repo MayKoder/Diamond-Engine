@@ -73,15 +73,15 @@ void W_Inspector::Draw()
 			float button_sz = ImGui::GetFrameHeight();
 			ImGui::PushItemWidth((w - spacing * 2.0f - button_sz * 2.0f) * 0.5f);
 
-			std::vector<const char*> tags = EngineExternal->moduleScene->tags;
+			std::vector<std::string> tags = EngineExternal->moduleScene->tags;
 
 			if (ImGui::BeginCombo("##tags", selectedGO->tag))
 			{
 				for (int t = 0; t < tags.size(); t++)
 				{
-					bool is_selected = strcmp(selectedGO->tag, tags[t]) == 0;
-					if (ImGui::Selectable(tags[t], is_selected)) {
-						strcpy(selectedGO->tag, tags[t]);
+					bool is_selected = strcmp(selectedGO->tag, tags[t].c_str()) == 0;
+					if (ImGui::Selectable(tags[t].c_str(), is_selected)) {
+						strcpy(selectedGO->tag, tags[t].c_str());
 					}
 
 					if (is_selected)
@@ -90,10 +90,12 @@ void W_Inspector::Draw()
 				if (ImGui::BeginMenu("Add Tag")) 
 				{
 					static char newTag[32];
-					ImGui::InputText("", newTag, 32);
+					ImGui::InputText("", newTag, IM_ARRAYSIZE(newTag));
 					
 					if (ImGui::Button("Save Tag")) {
-						EngineExternal->moduleScene->tags.push_back(newTag);
+						char* tagToAdd = new char[IM_ARRAYSIZE(newTag)];
+						strcpy(tagToAdd, newTag);
+						EngineExternal->moduleScene->tags.push_back(tagToAdd);
 						newTag[0] = '\0';
 					}
 					ImGui::EndMenu();
@@ -104,7 +106,7 @@ void W_Inspector::Draw()
 				{
 					for (int t = 0; t < tags.size(); t++)
 					{
-						if (ImGui::Selectable(tags[t], false)) {
+						if (ImGui::Selectable(tags[t].c_str(), false)) {
 							tag_to_remove = t;
 							//Remove Tag
 						}
@@ -121,7 +123,7 @@ void W_Inspector::Draw()
 
 			ImGui::SameLine();
 
-			std::vector<const char*> layers = EngineExternal->moduleScene->layers;
+			std::vector<std::string> layers = EngineExternal->moduleScene->layers;
 
 			ImGui::Text("Layer"); ImGui::SameLine();
 			style = ImGui::GetStyle();
@@ -133,9 +135,9 @@ void W_Inspector::Draw()
 			{
 				for (int n = 0; n < layers.size(); n++)
 				{
-					bool is_selected = strcmp(selectedGO->layer, layers[n]) == 0;
-					if (ImGui::Selectable(layers[n], is_selected)) {
-						strcpy(selectedGO->layer, layers[n]);
+					bool is_selected = strcmp(selectedGO->layer, layers[n].c_str()) == 0;
+					if (ImGui::Selectable(layers[n].c_str(), is_selected)) {
+						strcpy(selectedGO->layer, layers[n].c_str());
 					}
 
 					if (is_selected)
