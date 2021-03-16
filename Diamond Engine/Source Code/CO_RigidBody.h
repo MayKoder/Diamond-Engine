@@ -94,4 +94,5 @@ public:
 	float angular_damping = 0.0f;
 	
 	float4x4 global_to_pivot;
+	float3 offset;
 };

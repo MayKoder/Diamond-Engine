@@ -9,6 +9,8 @@
 #include "CO_Animator.h"
 #include "CO_RigidBody.h"
 #include "CO_Collider.h"
+#include "CO_BoxCollider.h"
+#include "CO_MeshCollider.h"
 #include "CO_AudioListener.h"
 #include "CO_AudioSource.h"
 #include "CO_Transform2D.h"
@@ -138,8 +140,14 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 		ret = new C_RigidBody(this);
 		break;
 	case Component::TYPE::COLLIDER:
-		ret = new C_Collider(this);
+		ret = new C_BoxCollider(this);
+		break;
+	case Component::TYPE::BOXCOLLIDER:
+		ret = new C_BoxCollider(this);
       break;
+	case Component::TYPE::MESHCOLLIDER:
+		ret = new C_MeshCollider(this);
+		break;
 	case Component::TYPE::AUDIO_LISTENER:
 		ret = new C_AudioListener(this);
 		break;
@@ -220,6 +228,16 @@ Component* GameObject::GetComponent(Component::TYPE _type, const char* scriptNam
 	return nullptr;
 }
 
+std::vector<Component*> GameObject::GetComponentsOfType(Component::TYPE type)
+{
+	std::vector< Component*> ret;
+	for (size_t i = 0; i < components.size(); ++i)
+	{
+		if (components[i]->type == type)
+			ret.push_back(components[i]);
+	}
+	return ret;
+}
 
 //When we load models from model trees the UID should get regenerated
 //because the .model UID are not unique.
@@ -233,19 +251,18 @@ void GameObject::RecursiveUIDRegeneration()
 	}
 }
 
-/*
-void GameObject::RecursiveUIDRegenerationSavingOldUIDs(std::map<uint, uint>& uids)
+
+void GameObject::RecursiveUIDRegenerationSavingReferences(std::map<uint, GameObject*>& gameObjects)
 {
-	uint new_uid = EngineExternal->GetRandomInt();
-	uids[new_uid] = this->UID;
-	this->UID = new_uid;
+	gameObjects[UID] = this;
+	UID = EngineExternal->GetRandomInt();
 
 	for (size_t i = 0; i < this->children.size(); i++)
 	{
-		this->children[i]->RecursiveUIDRegenerationSavingOldUIDs(uids);
+		this->children[i]->RecursiveUIDRegenerationSavingReferences(gameObjects);
 	}
 }
-*/
+
 
 
 bool GameObject::isActive() const
@@ -366,7 +383,8 @@ void GameObject::LoadComponents(JSON_Array* componentArray)
 		}
 		Component* comp = AddComponent((Component::TYPE)conf.ReadInt("Type"), scName);
 
-		comp->LoadData(conf);
+		if(comp != nullptr)
+			comp->LoadData(conf);
 	}
 }
 
@@ -428,4 +446,9 @@ void GameObject::CollectChilds(std::vector<GameObject*>& vector)
 	vector.push_back(this);
 	for (uint i = 0; i < children.size(); i++)
 		children[i]->CollectChilds(vector);
+}
+
+bool GameObject::CompareTag(char* _tag)
+{
+	return strcmp(tag, _tag) == 0;
 }
