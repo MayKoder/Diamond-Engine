@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        20.287900924682617,
-        9.7716732025146484,
-        -5.7923378944396973
+        30.156259536743164,
+        28.017932891845703,
+        -37.1502685546875
     ],
     "EditorCameraZ": [
-        -0.87253880500793457,
-        -0.42025855183601379,
-        0.24911594390869141
+        -0.54386216402053833,
+        -0.50529581308364868,
+        0.66999268531799316
     ],
     "EditorCameraY": [
-        -0.40411078929901123,
-        0.90740436315536499,
-        0.11537645757198334
+        -0.31849545240402222,
+        0.86294621229171753,
+        0.39228114485740662
     ],
     "Game Objects": [
         {
@@ -88,179 +88,18 @@
                     "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
                     "MaterialUID": 1051418604
-                }
-            ]
-        },
-        {
-            "name": "TestSandbox",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                0.24000000953674316,
-                0.24000000953674316,
-                0.24000000953674316
-            ],
-            "UID": 1716888692,
-            "PrefabID": 0,
-            "ParentUID": 143570472,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                }
-            ]
-        },
-        {
-            "name": "Plane",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0.91313320398330688
-            ],
-            "Rotation": [
-                -0.7071068286895752,
-                0,
-                0,
-                0.70710670948028564
-            ],
-            "Scale": [
-                500,
-                499.99935913085938,
-                499.99935913085938
-            ],
-            "UID": 420350065,
-            "PrefabID": 0,
-            "ParentUID": 1716888692,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
                 },
                 {
-                    "Type": 2,
+                    "Type": 5,
                     "Active": true,
-                    "Path": "Library\/Meshes\/296489994.mmh",
-                    "UID": 296489994,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true
-                },
-                {
-                    "Type": 14,
-                    "Active": true,
-                    "kinematic": true,
-                    "Gravity": true,
-                    "LockLinearX": false,
-                    "LockLinearY": false,
-                    "LockLinearZ": false,
-                    "LockAngularX": false,
-                    "LockAngularY": false,
-                    "LockAngularZ": false,
-                    "Mass": 10,
-                    "Density": 1
-                }
-            ]
-        },
-        {
-            "name": "Cube",
-            "Active": true,
-            "Position": [
-                -300,
-                0,
-                -300
-            ],
-            "Rotation": [
-                -0.68301278352737427,
-                -0.1830126941204071,
-                -0.1830127090215683,
-                0.68301266431808472
-            ],
-            "Scale": [
-                17.39555549621582,
-                17.39555549621582,
-                17.39555549621582
-            ],
-            "UID": 1432217696,
-            "PrefabID": 0,
-            "ParentUID": 1716888692,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/317057310.mmh",
-                    "UID": 317057310,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true
-                }
-            ]
-        },
-        {
-            "name": "Sphere",
-            "Active": true,
-            "Position": [
-                -287.66519165039063,
-                65.438919067382813,
-                -303.3785400390625
-            ],
-            "Rotation": [
-                -0.7071068286895752,
-                0,
-                0,
-                0.70710670948028564
-            ],
-            "Scale": [
-                18.083625793457031,
-                18.083625793457031,
-                18.083625793457031
-            ],
-            "UID": 467515712,
-            "PrefabID": 0,
-            "ParentUID": 1716888692,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/2010055644.mmh",
-                    "UID": 2010055644,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
+                    "ScriptName": "Core",
+                    "pointer": 243309464,
+                    "type": 5,
+                    "componentTable": 0,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 35,
+                    "mouseSens": 1,
+                    "delayTime": 0.20000000298023224
                 }
             ]
         },
@@ -273,10 +112,10 @@
                 -37.998661041259766
             ],
             "Rotation": [
-                0.28966298699378967,
-                -0.30951863527297974,
-                0.099594645202159882,
-                0.90020811557769775
+                0.28966295719146729,
+                -0.30951860547065735,
+                0.099594630300998688,
+                0.9002079963684082
             ],
             "Scale": [
                 0.9999997615814209,
@@ -323,7 +162,7 @@
             "Active": true,
             "Position": [
                 1.5525643825531006,
-                1.0001964569091797,
+                0,
                 -9.853302001953125
             ],
             "Rotation": [
@@ -409,7 +248,7 @@
             "Active": true,
             "Position": [
                 0,
-                -1,
+                0,
                 0
             ],
             "Rotation": [

@@ -7,6 +7,8 @@
 #include "DETime.h"
 #include "RE_Mesh.h"
 
+#include "IM_PrefabImporter.h"
+
 #include "CO_MeshRenderer.h"
 #include "CO_Script.h"
 #include "CO_Transform.h"
@@ -268,6 +270,58 @@ void Destroy(MonoObject* go)
 	workGO->Destroy();
 }
 
+/*
+void CSLog(MonoString* x)
+{
+	if (x == NULL)
+		return;
+
+	char* msg = mono_string_to_utf8(x);
+	LOG(LogType::L_WARNING, msg);
+	mono_free(msg);
+}
+*/
+
+bool CompareTag(MonoObject* cs_gameObject, MonoString* cs_tag)
+{
+	char* cpp_tag = mono_string_to_utf8(cs_tag);
+
+	GameObject* gameObject = EngineExternal->moduleMono->GameObject_From_CSGO(cs_gameObject);
+
+	if (gameObject != nullptr) 
+	{
+		LOG(LogType::L_ERROR, "GameObject's tag to be compared does not exist");
+	}
+	else
+	{
+		bool same_tag = gameObject->CompareTag(cpp_tag);
+		mono_free(cs_tag);
+		return same_tag;
+	}
+
+	return false;
+}
+
+void CreatePrefab(MonoString* prefabPath, MonoObject* position, MonoObject* rotation, MonoObject* scale)
+{
+	if (prefabPath == nullptr)
+		return;
+
+	char* library_path = mono_string_to_utf8(prefabPath);
+	GameObject* prefab_object = PrefabImporter::LoadPrefab(library_path);
+	mono_free(prefabPath);
+
+	if(prefab_object != nullptr)
+	{ 
+		C_Transform* object_transform = dynamic_cast<C_Transform*>(prefab_object->GetComponent(Component::TYPE::TRANSFORM));
+
+		float3 posVector = M_MonoManager::UnboxVector(position);
+		Quat rotQuat = M_MonoManager::UnboxQuat(rotation);
+		float3 scaleVector = M_MonoManager::UnboxVector(scale);
+
+		prefab_object->transform->SetTransformMatrix(posVector, rotQuat, scaleVector);
+	}
+}
 
 void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale) //TODO: We really need prefabs
 {

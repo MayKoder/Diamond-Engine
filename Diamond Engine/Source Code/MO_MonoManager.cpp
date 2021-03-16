@@ -74,6 +74,7 @@ bool M_MonoManager::Init()
 
 	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateBullet", CreateBullet);
+	mono_add_internal_call("DiamondEngine.InternalCalls::CreatePrefab", CreatePrefab);
 
 #pragma region Transform
 
@@ -212,7 +213,9 @@ void M_MonoManager::DebugAllFields(const char* className, std::vector<Serialized
 		{
 			SerializedField pushField = SerializedField(field, obj, script);
 
-			_data.push_back(pushField);
+			if(pushField.displayName != "##pointer" && pushField.displayName != "##type" && pushField.displayName != "##componentTable")
+				_data.push_back(pushField);
+
 			//LOG(LogType::L_NORMAL, mono_field_full_name(method2));
 		}
 	}
@@ -473,8 +476,6 @@ void M_MonoManager::InitMono()
 		LOG(LogType::L_ERROR, "ERROR");
 
 	image = mono_assembly_get_image(assembly);
-
-
 
 	const MonoTableInfo* table_info = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
 	int rows = mono_table_info_get_rows(table_info);

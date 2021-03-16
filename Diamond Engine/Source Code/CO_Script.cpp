@@ -231,6 +231,9 @@ void C_Script::LoadData(DEConfig& nObj)
 	{
 		_field = &fields[i];
 
+		//if (_field->displayName == "##pointer")
+			//continue;
+
 		switch (_field->type)
 		{
 		case MonoTypeEnum::MONO_TYPE_BOOLEAN:
@@ -281,7 +284,6 @@ void C_Script::LoadScriptData(const char* scriptName)
 {
 	methods.clear();
 	fields.clear();
-
 
 	MonoClass* klass = mono_class_from_name(EngineExternal->moduleMono->image, USER_SCRIPTS_NAMESPACE, scriptName);
 
