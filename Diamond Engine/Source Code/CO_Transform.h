@@ -43,6 +43,7 @@ public:
 	float3 GetUp();
 	float3 GetRight();
 	void UpdateBoxes();
+	void LookAt(float3 pointToLook);
 
 private: 
 	void UpdateTransform();

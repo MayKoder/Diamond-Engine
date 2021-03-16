@@ -74,6 +74,7 @@ bool M_MonoManager::Init()
 
 	mono_add_internal_call("DiamondEngine.InternalCalls::Destroy", Destroy);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateBullet", CreateBullet);
+	mono_add_internal_call("DiamondEngine.InternalCalls::CreatePrefab", CreatePrefab);
 
 #pragma region Transform
 
@@ -200,17 +201,22 @@ Quat M_MonoManager::UnboxQuat(MonoObject* _obj)
 	return ret;
 }
 
-void M_MonoManager::DebugAllFields(const char* className, std::vector<SerializedField>& _data, MonoObject* obj, C_Script* script)
+void M_MonoManager::DebugAllFields(const char* className, std::vector<SerializedField>& _data, MonoObject* obj, C_Script* script, const char* namespace_name)
 {
 	void* iter = NULL;
 	MonoClassField* field;
-	MonoClass* klass = mono_class_from_name(mono_assembly_get_image(EngineExternal->moduleMono->assembly), USER_SCRIPTS_NAMESPACE, className);
+	MonoClass* klass = mono_class_from_name(mono_assembly_get_image(EngineExternal->moduleMono->assembly), namespace_name, className);
 	
 	while (field = mono_class_get_fields(klass, &iter))
 	{
-		SerializedField pushField = SerializedField(field, obj, script);
-		_data.push_back(pushField);
-		//LOG(LogType::L_NORMAL, mono_field_full_name(method2));
+		if (mono_field_get_flags(field) != 1) // Private = 1, public = 6, static = 22
+		{
+			SerializedField pushField = SerializedField(field, obj, script);
+
+			if (pushField.displayName != "##pointer" && pushField.displayName != "##type" && pushField.displayName != "##componentTable")
+				_data.push_back(pushField);
+			//LOG(LogType::L_NORMAL, mono_field_full_name(method2));
+		}
 	}
 }
 
@@ -364,14 +370,12 @@ SerializedField::SerializedField(MonoClassField* _field, MonoObject* _object, C_
 
 void M_MonoManager::CreateAssetsScript(const char* localPath) 
 {
-	std::string unnormalizedPath("Assets/");
-	unnormalizedPath += localPath;
+	std::string unnormalizedPath(localPath);
 	unnormalizedPath = FileSystem::UnNormalizePath(unnormalizedPath.c_str());
 
 	std::ofstream outfile(unnormalizedPath.c_str());
 
-	std::string className("Assets/");
-	className += localPath;
+	std::string className(localPath);
 	className = className.substr(className.find_last_of("/") + 1);
 	className = className.substr(0, className.find_last_of("."));
 
