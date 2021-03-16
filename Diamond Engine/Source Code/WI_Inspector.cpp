@@ -66,21 +66,24 @@ void W_Inspector::Draw()
 			ImGui::Checkbox("Static", &selectedGO->isStatic);
 
 			ImGui::Text("Tag"); ImGui::SameLine();
-			const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO", "PPPP", "QQQQQQQQQQ", "RRR", "SSSS" };
-			static const char* current_item = NULL;
 
 			ImGuiStyle& style = ImGui::GetStyle();
 			float w = ImGui::CalcItemWidth();
 			float spacing = style.ItemInnerSpacing.x;
 			float button_sz = ImGui::GetFrameHeight();
 			ImGui::PushItemWidth((w - spacing * 2.0f - button_sz * 2.0f) * 0.5f);
-			if (ImGui::BeginCombo("##custom combo", current_item))
+
+			std::vector<const char*> tags = EngineExternal->moduleScene->tags;
+
+			if (ImGui::BeginCombo("##tags", selectedGO->tag))
 			{
-				for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+				for (int n = 0; n < tags.size(); n++)
 				{
-					bool is_selected = (current_item == items[n]);
-					if (ImGui::Selectable(items[n], is_selected))
-						current_item = items[n];
+					bool is_selected = strcmp(selectedGO->tag, tags[n]) == 0;
+					if (ImGui::Selectable(tags[n], is_selected)) {
+						strcpy(selectedGO->tag, tags[n]);
+					}
+
 					if (is_selected)
 						ImGui::SetItemDefaultFocus();
 				}
@@ -90,19 +93,23 @@ void W_Inspector::Draw()
 
 			ImGui::SameLine();
 
+			std::vector<const char*> layers = EngineExternal->moduleScene->layers;
+
 			ImGui::Text("Layer"); ImGui::SameLine();
-			 style = ImGui::GetStyle();
-			 w = ImGui::CalcItemWidth();
-			 spacing = style.ItemInnerSpacing.x;
-			 button_sz = ImGui::GetFrameHeight();
+			style = ImGui::GetStyle();
+			w = ImGui::CalcItemWidth();
+			spacing = style.ItemInnerSpacing.x;
+			button_sz = ImGui::GetFrameHeight();
 			ImGui::PushItemWidth((w - spacing * 2.0f - button_sz * 2.0f) * 0.5f);
-			if (ImGui::BeginCombo("##custom combo 2", current_item))
+			if (ImGui::BeginCombo("##layers", selectedGO->layer))
 			{
-				for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+				for (int n = 0; n < layers.size(); n++)
 				{
-					bool is_selected = (current_item == items[n]);
-					if (ImGui::Selectable(items[n], is_selected))
-						current_item = items[n];
+					bool is_selected = strcmp(selectedGO->layer, layers[n]) == 0;
+					if (ImGui::Selectable(layers[n], is_selected)) {
+						strcpy(selectedGO->layer, layers[n]);
+					}
+
 					if (is_selected)
 						ImGui::SetItemDefaultFocus();
 				}

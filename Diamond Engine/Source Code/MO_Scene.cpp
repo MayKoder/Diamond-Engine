@@ -32,6 +32,9 @@ defaultMaterial(nullptr), holdUID(0)
 {
 	current_scene[0] = '\0';
 	current_scene_name[0] = '\0';
+
+	tags = { "Untagged", "Player", "Enemy", "Bullet" };
+	layers = { "Default" };
 }
 
 M_Scene::~M_Scene()

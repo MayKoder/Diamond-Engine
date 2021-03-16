@@ -75,6 +75,7 @@ public:
 	uint prefabID;
 
 	char tag[32];
+	char layer[32];
 
 private:
 	Component* dumpComponent;
