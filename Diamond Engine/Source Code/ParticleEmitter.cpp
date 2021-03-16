@@ -158,7 +158,10 @@ void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 			//TODO: Update that rotation, get from billboard
 			//Quat::FromEulerXYZ(0, 0, myParticles[i].rotation)
 			//EngineExternal->moduleRenderer3D->activeRenderCamera
-			float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, newRotation, float3(1 * myParticles[i].size, 1 * myParticles[i].size, 1)).Transposed();
+			float3 eulerRot = newRotation.ToEulerXYZ();
+			eulerRot.z += myParticles[i].rotation;
+
+			float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(eulerRot.x, eulerRot.y, eulerRot.z), float3(1 * myParticles[i].size, 1 * myParticles[i].size, 1)).Transposed();
 			//float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1 * myParticles[i].size, 1 * myParticles[i].size, 1)).Transposed();
 			vboInfo.push_back(matrix[0][0]);
 			vboInfo.push_back(matrix[0][1]);
