@@ -8,6 +8,7 @@
 #include "Application.h"
 #include "MO_Renderer3D.h"
 #include "CO_Camera.h"
+#include "CO_Transform.h"
 //#include "CO_ParticleSystem.h"
 //#include "Application.h"
 //#include "MO_Camera3D.h"
@@ -145,9 +146,19 @@ Quat C_Billboard::ScreenAlign()
 
 	transform->rotation = mat.Inverted().ToQuat();*/
 
+	float3 cameraPos = EngineExternal->moduleRenderer3D->activeRenderCamera->GetPosition();
+	C_Transform* transform = static_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM));
+	float3 normal = (cameraPos - transform->position).Normalized();
 
+	float3 up = transform->GetUp();
+	float3 right = normal.Cross(up);
 
-	return Quat::identity;
+	float3x3 mat = float3x3::identity;
+	mat.Set(-right.x, -right.y, -right.z, up.x, up.y, up.z, normal.x, normal.y, normal.z);
+
+	Quat ret = mat.Inverted().ToQuat();
+
+	return ret;
 }
 
 void C_Billboard::WorldAlign()
