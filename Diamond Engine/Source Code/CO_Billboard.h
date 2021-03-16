@@ -22,18 +22,11 @@ public:
 	void SetAlignment(BILLBOARD_ALIGNMENT new_alignment);
 	void Draw();
 	Quat GetAlignment();
-/*public:
-	C_Transform* transform;
-	ResourceMesh* res_mesh;
-
-	float3 pos;*/
 private:
-	void UseAlignment();
 	Quat ScreenAlign();
-	void WorldAlign();
-	void AxisAlign();
+	Quat WorldAlign();
+	Quat AxisAlign();
 
 private:
 	BILLBOARD_ALIGNMENT currentAlignment;
-	//ResourceTexture* res_texture;	
 };
