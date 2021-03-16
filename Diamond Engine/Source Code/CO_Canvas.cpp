@@ -18,12 +18,6 @@ C_Canvas::~C_Canvas()
 	EngineExternal->moduleGui->EraseCanvas();
 }
 
-void C_Canvas::OnRecursiveUIDChange(std::map<uint, GameObject*> gameObjects)
-{
-	EngineExternal->moduleGui->EraseCanvas();
-	EngineExternal->moduleGui->SetCanvas(gameObject->UID);
-}
-
 #ifndef STANDALONE
 bool C_Canvas::OnEditor()
 {

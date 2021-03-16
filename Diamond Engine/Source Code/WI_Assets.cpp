@@ -19,7 +19,7 @@
 
 #include "GameObject.h"
 
-W_Assets::W_Assets() : Window(), selectedFile(nullptr), tree_window_width(0.2f)
+W_Assets::W_Assets() : Window(), selectedFile(nullptr)
 {
 	name = "Assets";
 
@@ -37,14 +37,15 @@ void W_Assets::Draw()
 	if (ImGui::Begin(name.c_str(), NULL/*, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize*/))
 	{
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_AlwaysVerticalScrollbar;
-		ImGui::BeginChild("Tree", ImVec2(ImGui::GetWindowContentRegionWidth() * tree_window_width, ImGui::GetContentRegionAvail().y), false, window_flags);
-
+		ImGui::BeginChild("Tree", ImVec2(ImGui::GetWindowContentRegionWidth() * 0.15f, ImGui::GetContentRegionAvail().y), false, window_flags);
 		DrawFileTree(*displayFolder);
-		DrawCreationWindow();
 		DrawFileTree(EngineExternal->moduleResources->meshesLibraryRoot);
 		DrawFileTree(EngineExternal->moduleResources->animationsLibraryRoot);
+		ImGui::EndChild();
 
-		ImGui::SliderFloat("Width", &tree_window_width, 0.05f, 0.9f);
+		ImGui::SameLine();
+		ImGui::BeginChild("Folder", ImVec2(0, ImGui::GetContentRegionAvail().y), true);
+		DrawCurrentFolder();
 
 		ImGui::EndChild();
 
@@ -61,11 +62,29 @@ void W_Assets::Draw()
 			}
 		}
 
-		ImGui::SameLine();
-		ImGui::BeginChild("Folder", ImVec2(0, ImGui::GetContentRegionAvail().y), true);
-		DrawCurrentFolder();
+		if (ImGui::BeginPopupContextWindow())
+		{
+			if (ImGui::BeginMenu("Create C# Script")) 
+			{
+				DrawCreationPopup("Script path: ", ".cs", std::bind(&M_MonoManager::CreateAssetsScript, EngineExternal->moduleMono, std::placeholders::_1));
+				ImGui::EndMenu();
+			}
 
-		ImGui::EndChild();
+			if (ImGui::BeginMenu("Create GLSL Shader"))
+			{
+				DrawCreationPopup("Shader path: ", ".glsl",  ShaderImporter::CreateBaseShaderFile);
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("Create Material"))
+			{
+				DrawCreationPopup("Material path: ", ".mat", MaterialImporter::CreateBaseMaterialFile);
+				ImGui::EndMenu();
+			}
+
+			ImGui::EndPopup();
+		}
+
 
 	}
 
@@ -151,33 +170,6 @@ void W_Assets::DrawFileTree(AssetDir& file)
 		ImGui::TreePop();
 	}
 }
-
-void W_Assets::DrawCreationWindow()
-{
-	if (ImGui::BeginPopupContextWindow())
-	{
-		if (ImGui::BeginMenu("Create C# Script"))
-		{
-			DrawCreationPopup("Script path: ", ".cs", std::bind(&M_MonoManager::CreateAssetsScript, EngineExternal->moduleMono, std::placeholders::_1));
-			ImGui::EndMenu();
-		}
-
-		if (ImGui::BeginMenu("Create GLSL Shader"))
-		{
-			DrawCreationPopup("Shader path: ", ".glsl", ShaderImporter::CreateBaseShaderFile);
-			ImGui::EndMenu();
-		}
-
-		if (ImGui::BeginMenu("Create Material"))
-		{
-			DrawCreationPopup("Material path: ", ".mat", MaterialImporter::CreateBaseMaterialFile);
-			ImGui::EndMenu();
-		}
-
-		ImGui::EndPopup();
-	}
-}
-
 void W_Assets::DrawCreationPopup(const char* popDisplay, const char* dotExtension, std::function<void(const char*)> f)
 {
 	static char name[50] = "\0";
@@ -204,11 +196,9 @@ void W_Assets::DrawCreationPopup(const char* popDisplay, const char* dotExtensio
 		ImGui::CloseCurrentPopup();
 	}
 }
-
 void W_Assets::DrawPathButtons()
 {
 }
-
 void W_Assets::DrawCurrentFolder()
 {
 	int cellSize = 70 + 20;
@@ -222,8 +212,6 @@ void W_Assets::DrawCurrentFolder()
 	if (bigDisplayFolder->parentDir != nullptr)
 		if (ImGui::Button("Go back"))
 			bigDisplayFolder = bigDisplayFolder->parentDir;
-
-	DrawCreationWindow();
 
 	for (std::vector<AssetDir>::const_iterator it = bigDisplayFolder->childDirs.begin(); it != bigDisplayFolder->childDirs.end(); ++it)
 	{

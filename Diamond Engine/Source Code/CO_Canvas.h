@@ -9,8 +9,6 @@ public:
 	C_Canvas(GameObject* gameObject);
 	~C_Canvas() override;
 
-	void OnRecursiveUIDChange(std::map <uint, GameObject*> gameObjects) override;
-
 #ifndef STANDALONE
 	bool OnEditor() override;
 #endif // !STANDALONE

@@ -16,7 +16,7 @@ out vec3 influenceColor;
 out vec2 TexCoord;
 out vec3 Normal;
 out vec3 fPosition;
-out vec3 diffuseColor;
+out vec3 vertexColor;
 
 uniform mat4 model_matrix;
 uniform mat4 view;
@@ -26,13 +26,8 @@ uniform float time;
 
 uniform mat4 jointTransforms[MAX_JOINTS];
 
-uniform vec3 lightPosition;
-vec3 lightColor;
-
 void main()
 {
-	//lightDirection = vec3(-0.8, -0.6, 0.8);
-	lightColor = vec3(0.225, 0.150, 0.120);
 	vec4 totalPosition = vec4(0.0);
 	
 	for(int i= 0; i < MAX_WEIGHTS; i++){
@@ -57,8 +52,7 @@ void main()
 	TexCoord = texCoord;
 	influenceColor = vec3(weights.x, weights.y, weights.z);
 	//ourColor = vec3(boneIDs.x / 30, boneIDs.y / 30, boneIDs.z / 30);
-	vec3 lightDirection = vec3(lightPosition - totalPosition.xyz);
-	diffuseColor = vec3(max(dot(lightDirection, -normals), 0) * lightColor);
+	vertexColor = colors; 
 }
 #endif
 
@@ -66,7 +60,7 @@ void main()
 #version 330 core
 in vec3 influenceColor;
 in vec2 TexCoord;
-in vec3 diffuseColor; 
+in vec3 vertexColor; 
 
 out vec4 color;
 uniform sampler2D diffuseTexture;
@@ -74,15 +68,11 @@ uniform sampler2D diffuseTexture;
 void main()
 {
 	vec3 textureColor = texture(diffuseTexture, TexCoord).rgb;
- 	color = vec4(textureColor + diffuseColor, 1.0);
+ 	color = vec4(textureColor, 1.0);
  	//color = vec4(influenceColor, 1.0);
  	//color = vec4(vertexColor.x, vertexColor.y, vertexColor.z, 1.0);
 }
 #endif
-
-
-
-
 
 
 

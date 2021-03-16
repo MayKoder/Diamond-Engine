@@ -50,7 +50,7 @@ bool M_Scene::Init()
 bool M_Scene::Start()
 {
 	CreateGameCamera("Main Camera");
-	//LoadScene("Library/Scenes/1085444261.des");
+	LoadScene("Library/Scenes/1085444261.des");
 
 	//LoadScene("Library/Scenes/884741631.des");
 	//LoadScene("Library/Scenes/tmp.des");

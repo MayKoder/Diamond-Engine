@@ -1,19 +1,14 @@
 {
-    "name": "animated_material",
-    "ShaderUID": 1295639766,
+    "ShaderUID": 141429211,
     "Uniforms": [
+        {
+            "name": "diffuseTexture",
+            "type": 35678,
+            "value": 1009676333
+        },
         {
             "name": "jointTransforms[0]",
             "type": 35676
-        },
-        {
-            "name": "lightPosition",
-            "type": 35665,
-            "value": [
-                0,
-                0,
-                0
-            ]
         }
     ]
 }

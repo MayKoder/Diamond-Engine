@@ -74,4 +74,5 @@ public:
 	std::vector<ShaderVariable> uniforms;
 
 	ResourceShader* shader;
+
 };

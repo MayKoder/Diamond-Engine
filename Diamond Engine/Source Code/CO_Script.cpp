@@ -321,11 +321,7 @@ void C_Script::LoadScriptData(const char* scriptName)
 	onExecuteCheckbox = mono_method_desc_search_in_class(oncChck, klass);
 	mono_method_desc_free(oncChck);
 
-	MonoClass* baseClass = mono_class_get_parent(klass);
-	if (baseClass != nullptr)
-		EngineExternal->moduleMono->DebugAllFields(mono_class_get_name(baseClass), fields, mono_gchandle_get_target(noGCobject), this, mono_class_get_namespace(baseClass));
-
-	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject), this, mono_class_get_namespace(goClass));
+	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject), this);
 }
 
 void C_Script::CollisionCallback(bool isTrigger)

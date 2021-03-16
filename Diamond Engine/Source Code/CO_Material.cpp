@@ -97,8 +97,6 @@ bool C_Material::OnEditor()
 		//	}
 		//}
 
-		ImGui::Text("Current material: ");
-
 		ImGui::Text("Drop here to change material");
 		if (ImGui::BeginDragDropTarget())
 		{
@@ -114,10 +112,7 @@ bool C_Material::OnEditor()
 			ImGui::EndDragDropTarget();
 		}
 
-		ImGui::SameLine();
-		if (material == nullptr)
-			ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "No material");
-		else
+		if(material)
 			material->DrawEditor();
 
 		if (material && material->shader) 

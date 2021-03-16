@@ -196,33 +196,6 @@ void C_Animator::LoadData(DEConfig& nObj)
 	}
 }
 
-void C_Animator::OnRecursiveUIDChange(std::map<uint, GameObject*> gameObjects)
-{
-	if (rootBoneUID != 0u)
-	{
-		std::map<uint, GameObject*>::iterator boneIt = gameObjects.find(rootBoneUID);
-		if (boneIt != gameObjects.end())
-		{
-			rootBone = boneIt->second;
-			rootBoneUID = rootBone->UID;
-
-			if (meshRendererUID != 0u) 
-			{
-				std::map<uint, GameObject*>::iterator meshRendererIt = gameObjects.find(meshRendererUID);
-				if (meshRendererIt != gameObjects.end())
-				{
-					C_MeshRenderer* meshRenderer = dynamic_cast<C_MeshRenderer*>(meshRendererIt->second->GetComponent(Component::TYPE::MESH_RENDERER));
-					if (meshRenderer != nullptr) {
-						meshRenderer->rootBone = rootBone;
-						meshRendererUID = meshRendererIt->second->UID;
-					}
-				}
-	
-			}
-		}
-	}
-}
-
 #ifndef STANDALONE
 
 bool C_Animator::OnEditor()
@@ -276,7 +249,6 @@ bool C_Animator::OnEditor()
 				int uid = *(int*)payload->Data;
 
 				GameObject* dropGO = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, uid);
-
 				if (rootBone != nullptr) {
 					C_MeshRenderer* meshRenderer = dynamic_cast<C_MeshRenderer*>(dropGO->GetComponent(Component::TYPE::MESH_RENDERER));
 					if (meshRenderer != nullptr) {

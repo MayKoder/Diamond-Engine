@@ -47,9 +47,6 @@ public:
 	virtual bool LoadToMemory() { return false; }
 	virtual bool UnloadFromMemory() { return false; }
 
-public:
-	char name[32];
-
 protected:
 
 	int uid;
