@@ -220,6 +220,16 @@ Component* GameObject::GetComponent(Component::TYPE _type, const char* scriptNam
 	return nullptr;
 }
 
+std::vector<Component*> GameObject::GetComponentsOfType(Component::TYPE type)
+{
+	std::vector< Component*> ret;
+	for (size_t i = 0; i < components.size(); ++i)
+	{
+		if (components[i]->type == type)
+			ret.push_back(components[i]);
+	}
+	return ret;
+}
 
 //When we load models from model trees the UID should get regenerated
 //because the .model UID are not unique.
