@@ -132,7 +132,7 @@ void Emitter::Update(float dt, bool systemActive)
 	}
 }
 
-void Emitter::Draw(unsigned int shaderId)
+void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 {
 	if (myParticles.empty() == true)
 		return;
@@ -155,7 +155,11 @@ void Emitter::Draw(unsigned int shaderId)
 	{
 		if (myParticles[i].currentLifetime > 0)
 		{
-			float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1 * myParticles[i].size, 1 * myParticles[i].size, 1)).Transposed();
+			//TODO: Update that rotation, get from billboard
+			//Quat::FromEulerXYZ(0, 0, myParticles[i].rotation)
+			//EngineExternal->moduleRenderer3D->activeRenderCamera
+			float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, newRotation, float3(1 * myParticles[i].size, 1 * myParticles[i].size, 1)).Transposed();
+			//float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1 * myParticles[i].size, 1 * myParticles[i].size, 1)).Transposed();
 			vboInfo.push_back(matrix[0][0]);
 			vboInfo.push_back(matrix[0][1]);
 			vboInfo.push_back(matrix[0][2]);
@@ -441,23 +445,24 @@ void Emitter::ThrowParticles(float dt)
 		lastParticeTime = 0.0f;
 	}
 
-
 	//LOG(LogType::L_NORMAL, "PARTICLES SPAWNED THIS FRAME %i", numberOfParticlesToSpawn);
 
 	float3 startingPos = objTransform->globalTransform.TranslatePart();
 	//spawn particles
 
-
-	for (int i = 0; i < numberOfParticlesToSpawn; ++i)
-	{
-		int unusedIndex = FindUnusedParticle();
-		PrepareParticleToSpawn(myParticles[unusedIndex], startingPos);
-
-		for (int j = 0; j < myEffects.size(); ++j)
+	if (myParticles.empty() == false) {
+		for (int i = 0; i < numberOfParticlesToSpawn; ++i)
 		{
-			myEffects[j]->Spawn(myParticles[unusedIndex]);
+			int unusedIndex = FindUnusedParticle();
+
+			PrepareParticleToSpawn(myParticles[unusedIndex], startingPos);
+
+			for (int j = 0; j < myEffects.size(); ++j)
+			{
+				myEffects[j]->Spawn(myParticles[unusedIndex]);
+			}
 		}
-	}
+	}	
 }
 
 int Emitter::DoesEffectExist(PARTICLE_EFFECT_TYPE type)

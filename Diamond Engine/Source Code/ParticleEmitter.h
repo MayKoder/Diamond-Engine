@@ -2,6 +2,7 @@
 #include <vector>
 #include "Particle.h"
 #include "ParticleEffects.h"
+#include "MathGeoLib/include/Math/Quat.h"
 #include"DEJsonSupport.h"
 
 class C_Transform;
@@ -17,7 +18,7 @@ public:
 	~Emitter();
 
 	void Update(float dt, bool systemActive);
-	void Draw(unsigned int shaderId);
+	void Draw(unsigned int shaderId, Quat newRotation);
 
 #ifndef STANDALONE
 	void OnEditor(int emitterIndex);

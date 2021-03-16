@@ -83,10 +83,13 @@ void C_ParticleSystem::Update()
 
 void C_ParticleSystem::Draw()
 {
-	Component* mat = gameObject->GetComponent(Component::TYPE::MATERIAL);
-	Component* bill = gameObject->GetComponent(Component::TYPE::BILLBOARD);
+	if (gameObject->GetComponent(Component::TYPE::BILLBOARD) == nullptr)
+		gameObject->AddComponent(Component::TYPE::BILLBOARD);
 
-	if (mat != nullptr)
+	Component* mat = gameObject->GetComponent(Component::TYPE::MATERIAL);
+	C_Billboard* bill = static_cast<C_Billboard*>(gameObject->GetComponent(Component::TYPE::BILLBOARD));
+
+	if (mat != nullptr && bill != nullptr)
 	{
 		ResourceMaterial* material = static_cast<C_Material*>(mat)->material;
 		material->shader->Bind();
@@ -94,7 +97,7 @@ void C_ParticleSystem::Draw()
 		
 		for (int i = 0; i < myEmitters.size(); ++i)
 		{
-			myEmitters[i].Draw(material->shader->shaderProgramID);
+			myEmitters[i].Draw(material->shader->shaderProgramID, bill->GetAlignment());
 
 			//Draw instanced arrays
 		}

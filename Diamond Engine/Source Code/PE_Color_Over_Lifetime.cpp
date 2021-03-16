@@ -10,7 +10,6 @@ PE_ColorOverLifetime::PE_ColorOverLifetime() :ParticleEffect(PARTICLE_EFFECT_TYP
 
 PE_ColorOverLifetime::~PE_ColorOverLifetime()
 {
-	gradient.getMarks().clear();
 }
 
 
@@ -38,7 +37,7 @@ void PE_ColorOverLifetime::OnEditor(int emitterIndex)
 		{
 			suffixLabel = "Save Edited Gradient##ColorGradient";
 			suffixLabel += emitterIndex;
-			if(ImGui::Button(suffixLabel.c_str()))
+			if (ImGui::Button(suffixLabel.c_str()))
 			{
 				editGradient = false;
 			}

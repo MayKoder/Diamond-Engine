@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "MathGeoLib/include/Math/Quat.h"
 
 enum class BILLBOARD_ALIGNMENT : int
 {
@@ -20,19 +21,12 @@ public:
 
 	void SetAlignment(BILLBOARD_ALIGNMENT new_alignment);
 	void Draw();
-
-/*public:
-	C_Transform* transform;
-	ResourceMesh* res_mesh;
-
-	float3 pos;*/
+	Quat GetAlignment();
 private:
-	void UseAlignment();
-	void ScreenAlign();
-	void WorldAlign();
-	void AxisAlign();
+	Quat ScreenAlign();
+	Quat WorldAlign();
+	Quat AxisAlign();
 
 private:
 	BILLBOARD_ALIGNMENT currentAlignment;
-	//ResourceTexture* res_texture;	
 };
