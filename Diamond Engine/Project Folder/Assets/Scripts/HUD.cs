@@ -3,53 +3,45 @@ using DiamondEngine;
 
 public class HUD : DiamondComponent
 {
-	public int hp;
-	public int force;
-	public int currency;
-	public int bullets_main_weapon;
-	public int bullets_secondary_weapon;
-	public bool main_weapon;
-	public GameObject hp_bar;
-	public GameObject hp_number_gameobject;
-	public GameObject force_bar;
-	public GameObject skill_push;
-	public GameObject weapon_bar;
-	public GameObject primary_weapon;
-	public GameObject secondary_weapon;
-	public GameObject currency_number_gameobject;
+	public int hp = 0;
+	public int max_hp = 0;
+	public int force = 0;
+	public int max_force = 0;
+	public int currency = 10000;
+	public int bullets_main_weapon = 0;
+	public int max_bullets_main_weapon = 0;
+	public int bullets_secondary_weapon = 0;
+	public int max_bullets_secondary_weapon = 0;
+	public bool main_weapon = true;
+	public GameObject hp_bar = null;
+	public GameObject hp_number_gameobject = null;
+	public GameObject force_bar = null;
+	public GameObject skill_push = null;
+	public GameObject weapon_bar = null;
+	public GameObject primary_weapon = null;
+	public GameObject secondary_weapon = null;
+	public GameObject currency_number_gameobject = null;
 	public void Update()
 	{
 		if(Input.GetKey(DEKeyCode.C) == KeyState.KEY_DOWN)
         {
-			String curren = currency_number_gameobject.GetComponent<Text>().text;
-			currency = int.Parse(curren);
 			currency++;
-			currency_number_gameobject.GetComponent<Text>().text=currency.ToString();
+			UpdateCurrency(currency);
         }
 		if (Input.GetKey(DEKeyCode.H) == KeyState.KEY_DOWN)
 		{
-			String hp_get = hp_number_gameobject.GetComponent<Text>().text;
-			hp = int.Parse(hp_get);
-			if (hp < 50)
+			if (hp < max_hp)
 			{
 				hp+=5;
-				float hp_float = hp;
-				hp_float /= 50;
-				hp_bar.GetComponent<Material>().SetFloatUniform("length_used", hp_float);
-				hp_number_gameobject.GetComponent<Text>().text = hp.ToString();
+				UpdateHP(hp, max_hp);
 			}
 		}
 		if (Input.GetKey(DEKeyCode.D) == KeyState.KEY_DOWN)
 		{
-			String hp_get = hp_number_gameobject.GetComponent<Text>().text;
-			hp = int.Parse(hp_get);
 			if (hp > 0)
 			{
 				hp-=5;
-				float hp_float = hp;
-				hp_float /= 50;
-				hp_bar.GetComponent<Material>().SetFloatUniform("length_used", hp_float);
-				hp_number_gameobject.GetComponent<Text>().text = hp.ToString();
+				UpdateHP(hp, max_hp);
 			}
 		}
 		if (Input.GetKey(DEKeyCode.F) == KeyState.KEY_DOWN)
@@ -59,27 +51,24 @@ public class HUD : DiamondComponent
 				force-=10;
                 if (force == 0)
                 {
-					skill_push.GetComponent<Material>().SetFloatUniform("alpha", 0.5f);
+					ChangeAlphaSkillPush(false);
 
 				}
-				float force_float = force;
-				force_float /= 50;
-				force_bar.GetComponent<Material>().SetFloatUniform("length_used", force_float);
+				UpdateForce(force, max_force);
 			}
 		}
 		if (Input.GetKey(DEKeyCode.M) == KeyState.KEY_DOWN)
 		{
-			if (force < 50)
+			if (force < max_force)
 			{
 				if (force == 0)
 				{
-					skill_push.GetComponent<Material>().SetFloatUniform("alpha", 1.0f);
+					ChangeAlphaSkillPush(true);
 
 				}
 				force +=10;
-				float force_float = force;
-				force_float /= 50;
-				force_bar.GetComponent<Material>().SetFloatUniform("length_used", force_float);
+				UpdateForce(force, max_force);
+
 			}
 		}
 		if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_DOWN)
@@ -89,9 +78,7 @@ public class HUD : DiamondComponent
 				if (bullets_main_weapon > 0)
 				{
 					bullets_main_weapon--;
-					float bullets_float = bullets_main_weapon;
-					bullets_float /= 10;
-					weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
+					UpdateBullets(bullets_main_weapon, max_bullets_main_weapon);
 				}
 			}
             else
@@ -99,9 +86,8 @@ public class HUD : DiamondComponent
 				if (bullets_secondary_weapon > 0)
 				{
 					bullets_secondary_weapon--;
-					float bullets_float = bullets_secondary_weapon;
-					bullets_float /= 10;
-					weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
+					UpdateBullets(bullets_secondary_weapon, max_bullets_secondary_weapon);
+
 				}
 			}
 			
@@ -114,9 +100,8 @@ public class HUD : DiamondComponent
 				if (bullets_main_weapon < 10)
 				{
 					bullets_main_weapon++;
-					float bullets_float = bullets_main_weapon;
-					bullets_float /= 10;
-					weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
+					UpdateBullets(bullets_main_weapon, max_bullets_main_weapon);
+
 				}
 			}
             else
@@ -124,30 +109,82 @@ public class HUD : DiamondComponent
 				if (bullets_secondary_weapon < 10)
 				{
 					bullets_secondary_weapon++;
-					float bullets_float = bullets_secondary_weapon;
-					bullets_float /= 10;
-					weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
+					UpdateBullets(bullets_secondary_weapon, max_bullets_secondary_weapon);
 				}
 			}
 				
 		}
 		if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_DOWN)
 		{
-			primary_weapon.GetComponent<Image2D>().SwapTwoImages(secondary_weapon);
-			main_weapon = !main_weapon;
-            if (main_weapon)
-            {
-				float bullets_float = bullets_main_weapon;
-				bullets_float /= 10;
-				weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
-			}
-            else
-            {
-				float bullets_float = bullets_secondary_weapon;
-				bullets_float /= 10;
-				weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
-			}
+			SwapWeapons();
 		}
+	}
+
+	public void UpdateHP(int new_hp, int max_hp)
+    {
+		if(hp_number_gameobject!=null)
+			hp_number_gameobject.GetComponent<Text>().text = new_hp.ToString();
+		if (hp_bar == null)
+			return;
+		float hp_float = new_hp;
+		hp_float /= max_hp;
+		hp_bar.GetComponent<Material>().SetFloatUniform("length_used", hp_float);
+	}
+
+	public void UpdateForce(int new_force, int max_force)
+    {
+		if (force_bar == null)
+			return;
+		float force_float = new_force;
+		force_float /= max_force;
+		force_bar.GetComponent<Material>().SetFloatUniform("length_used", force_float);
+	}
+
+	public void ChangeAlphaSkillPush(bool alpha_full)
+    {
+		if (skill_push == null)
+			return;
+		if(alpha_full)
+			skill_push.GetComponent<Material>().SetFloatUniform("alpha", 1.0f);
+		else
+			skill_push.GetComponent<Material>().SetFloatUniform("alpha", 0.5f);
+	}
+
+	public void SwapWeapons()
+    {
+		if (primary_weapon != null && secondary_weapon != null)
+			primary_weapon.GetComponent<Image2D>().SwapTwoImages(secondary_weapon);
+		main_weapon = !main_weapon;
+		if (weapon_bar == null)
+			return;
+		if (main_weapon)
+		{
+			float bullets_float = bullets_main_weapon;
+			bullets_float /= max_bullets_main_weapon;
+			weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
+		}
+		else
+		{
+			float bullets_float = bullets_secondary_weapon;
+			bullets_float /= max_bullets_secondary_weapon;
+			weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
+		}
+	}
+
+	public void UpdateBullets(int num_bullets, int max_bullets)
+    {
+		if (weapon_bar == null)
+			return;
+		float bullets_float = num_bullets;
+		bullets_float /= max_bullets;
+		weapon_bar.GetComponent<Material>().SetFloatUniform("length_used", bullets_float);
+	}
+
+	public void UpdateCurrency(int total_currency)
+    {
+		if (currency_number_gameobject == null)
+			return;
+		currency_number_gameobject.GetComponent<Text>().text = total_currency.ToString();
 	}
 
 }

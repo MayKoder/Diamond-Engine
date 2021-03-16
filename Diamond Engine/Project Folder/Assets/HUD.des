@@ -376,10 +376,14 @@
                     "Active": true,
                     "ScriptName": "HUD",
                     "hp": 50,
+                    "max_hp": 50,
                     "force": 50,
+                    "max_force": 50,
                     "currency": 0,
                     "bullets_main_weapon": 10,
+                    "max_bullets_main_weapon": 10,
                     "bullets_secondary_weapon": 10,
+                    "max_bullets_secondary_weapon": 10,
                     "main_weapon": true,
                     "hp_bar": 1263416948,
                     "hp_number_gameobject": 685408372,
@@ -969,63 +973,6 @@
                     "AssetPath": "Empty",
                     "LibraryPath": "Library\/Textures\/1335091055.dds",
                     "UID": 1335091055
-                }
-            ]
-        },
-        {
-            "name": "SecondaryWeapon Bar",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 293719202,
-            "PrefabID": 0,
-            "ParentUID": 1142762498,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        0,
-                        -4.5999999046325684
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        6.5,
-                        0.69999998807907104
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
-                },
-                {
-                    "Type": 11,
-                    "Active": true,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/1834381926.dds",
-                    "UID": 1834381926
                 }
             ]
         },
