@@ -1,8 +1,8 @@
 {
     "EditorCameraPosition": [
-        46.066265106201172,
-        60.977596282958984,
-        -65.203453063964844
+        30.156259536743164,
+        28.017932891845703,
+        -37.1502685546875
     ],
     "EditorCameraZ": [
         -0.54386216402053833,
@@ -88,6 +88,18 @@
                     "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
                     "MaterialUID": 1051418604
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "Core",
+                    "pointer": 243309464,
+                    "type": 5,
+                    "componentTable": 0,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 35,
+                    "mouseSens": 1,
+                    "delayTime": 0.20000000298023224
                 }
             ]
         },
@@ -100,10 +112,10 @@
                 -37.998661041259766
             ],
             "Rotation": [
-                0.28966298699378967,
-                -0.30951863527297974,
-                0.099594645202159882,
-                0.90020811557769775
+                0.28966295719146729,
+                -0.30951860547065735,
+                0.099594630300998688,
+                0.9002079963684082
             ],
             "Scale": [
                 0.9999997615814209,
@@ -192,7 +204,6 @@
                     "damage": 5,
                     "bulletSpeed": 50,
                     "shotTimes": 1,
-                    "shotSequences": 0,
                     "timeBewteenShots": 5,
                     "timePassed": 0,
                     "idleTime": 5,
