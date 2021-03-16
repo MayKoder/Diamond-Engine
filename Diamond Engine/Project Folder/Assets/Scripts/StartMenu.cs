@@ -3,8 +3,9 @@ using DiamondEngine;
 
 public class StartMenu : DiamondComponent
 {
-	public GameObject menuButtons;
-	public GameObject options;
+	public GameObject menuButtons = null;
+	public GameObject options = null;
+	public GameObject default_selected = null;
 	public void OnExecuteButton()
 	{
 		if (gameObject.Name == "Play")
@@ -13,6 +14,8 @@ public class StartMenu : DiamondComponent
 		{
 			menuButtons.Enable(false);
 			options.Enable(true);
+			if(default_selected!=null)
+				default_selected.GetComponent<Navigation>().Select();
 		}
 		else if (gameObject.Name == "Quit")
 			InternalCalls.CloseGame();

@@ -8,6 +8,7 @@ public class FPS_Controller : DiamondComponent
     public GameObject quitMenu = null;
     public GameObject win = null;
     public GameObject lose = null;
+    public GameObject default_selected = null;
 
     public float rotationSpeed = 2.0f;
     public float movementSpeed = 35.0f;
@@ -40,8 +41,12 @@ public class FPS_Controller : DiamondComponent
         {
             if (quitMenu.IsEnabled())
                 quitMenu.Enable(false);
-            else
+            else {
                 quitMenu.Enable(true);
+                if (default_selected != null)
+                    default_selected.GetComponent<Navigation>().Select();
+            }
+
         }
 
         if (Input.GetKey(DEKeyCode.F1)== KeyState.KEY_DOWN && !lose.IsEnabled())

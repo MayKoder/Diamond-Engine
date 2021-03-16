@@ -33,6 +33,7 @@ void C_Navigation::Enable()
 	button_or_joystick_being_used = BUTTONSANDJOYSTICKS::BUTTON_OR_JOYSTICK_UNKNOWN;
 }
 
+
 void C_Navigation::Update()
 {
 	if (!is_selected || map_of_buttons_and_joysticks.size() == 0)
@@ -361,10 +362,9 @@ void C_Navigation::Select()
 		for (it = gameObject->parent->children.begin(); it != gameObject->parent->children.end(); ++it)
 		{
 			aux = static_cast<C_Navigation*>((*it)->GetComponent(Component::TYPE::NAVIGATION));
-			if (aux != nullptr && aux->is_selected && aux != this)
+			if (aux != nullptr && aux->is_selected)
 			{
-				aux->is_selected = false;
-				(*vec).erase(std::find((*vec).begin(), (*vec).end(),(*it)->UID));
+				aux->Deselect();
 			}
 		}
 	}
@@ -389,21 +389,25 @@ void C_Navigation::Deselect()
 {
 	std::vector<int>* vec = &EngineExternal->moduleGui->uid_gameobject_of_ui_selected;
 	(*vec).erase(std::find((*vec).begin(), (*vec).end(), gameObject->UID));
+
 	is_selected = false;
 
 	switch (type_of_ui) {
 	case Component::TYPE::BUTTON: {
 		C_Button* button = static_cast<C_Button*>(gameObject->GetComponent(Component::TYPE::BUTTON));
 		button->is_selected = false;
+		button->ReleaseButton();
 		break;
 	}
 	case Component::TYPE::CHECKBOX: {
-		C_Checkbox* checbox = static_cast<C_Checkbox*>(gameObject->GetComponent(Component::TYPE::CHECKBOX));
-		checbox->is_selected = false;
+		C_Checkbox* checkbox = static_cast<C_Checkbox*>(gameObject->GetComponent(Component::TYPE::CHECKBOX));
+		checkbox->is_selected = false;
+		checkbox->UnpressCheckbox();
 		break;
 	}
 	}
 }
+
 
 void C_Navigation::SaveData(JSON_Object* nObj)
 {

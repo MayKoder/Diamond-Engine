@@ -90,6 +90,7 @@
                     "quitMenu": 8278228,
                     "win": 1480717871,
                     "lose": 1253906303,
+                    "default_selected": 1869991841,
                     "rotationSpeed": 2,
                     "movementSpeed": 35,
                     "mouseSens": 1
@@ -173,7 +174,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4825314283370972,
+                    "hFOV": 1.6608972549438477,
                     "culling": false
                 }
             ]
@@ -1154,6 +1155,7 @@
                     "displayWindow": 1661904035,
                     "controlsWindow": 385927616,
                     "quitWindow": 119655247,
+                    "default_selected": 224286902,
                     "toDisable": false,
                     "firstFrame": true
                 }
@@ -1359,6 +1361,7 @@
                     "displayWindow": 1661904035,
                     "controlsWindow": 385927616,
                     "quitWindow": 119655247,
+                    "default_selected": 1813948981,
                     "toDisable": false,
                     "firstFrame": true
                 }
@@ -1564,6 +1567,7 @@
                     "displayWindow": 1661904035,
                     "controlsWindow": 385927616,
                     "quitWindow": 119655247,
+                    "default_selected": 1734537204,
                     "toDisable": false,
                     "firstFrame": true
                 }
@@ -1769,6 +1773,7 @@
                     "displayWindow": 1661904035,
                     "controlsWindow": 385927616,
                     "quitWindow": 119655247,
+                    "default_selected": 704018843,
                     "toDisable": false,
                     "firstFrame": true
                 }

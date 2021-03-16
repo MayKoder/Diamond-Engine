@@ -166,15 +166,15 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/786971987.dds",
                     "Unhovered_UID": 786971987,
                     "Script_Name": "StartMenu",
-                    "ButtonState": 2,
-                    "Is Selected": false
+                    "ButtonState": 1,
+                    "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/white_second_button.png",
-                    "LibraryPath": "Library\/Textures\/786971987.dds",
-                    "UID": 786971987
+                    "AssetPath": "Assets\/UI\/MENU\/white_second_button_hover.png",
+                    "LibraryPath": "Library\/Textures\/1026421016.dds",
+                    "UID": 1026421016
                 },
                 {
                     "Type": 17,
@@ -232,7 +232,7 @@
                     ],
                     "Button Being Used": -1,
                     "Type Of UI": 7,
-                    "Is Selected": false
+                    "Is Selected": true
                 },
                 {
                     "Type": 5,
@@ -364,15 +364,15 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/786971987.dds",
                     "Unhovered_UID": 786971987,
                     "Script_Name": "StartMenu",
-                    "ButtonState": 1,
-                    "Is Selected": true
+                    "ButtonState": 2,
+                    "Is Selected": false
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/white_second_button_hover.png",
-                    "LibraryPath": "Library\/Textures\/1026421016.dds",
-                    "UID": 1026421016
+                    "AssetPath": "Assets\/UI\/MENU\/white_second_button.png",
+                    "LibraryPath": "Library\/Textures\/786971987.dds",
+                    "UID": 786971987
                 },
                 {
                     "Type": 17,
@@ -430,14 +430,15 @@
                     ],
                     "Button Being Used": -1,
                     "Type Of UI": 7,
-                    "Is Selected": true
+                    "Is Selected": false
                 },
                 {
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "StartMenu",
                     "menuButtons": 1392636434,
-                    "options": 1311017402
+                    "options": 1311017402,
+                    "default_selected": 105485055
                 }
             ]
         },
@@ -4400,7 +4401,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1392636434,
+                    "bigBrother": 1311017402,
                     "toDisable": false,
                     "firstFrame": false
                 }
@@ -4692,6 +4693,7 @@
                     "display": 1618442095,
                     "controls": 138730863,
                     "bigBrother": 1392636434,
+                    "default_selected": 2065258024,
                     "toDisable": false,
                     "firstFrame": false
                 }
@@ -4897,6 +4899,7 @@
                     "display": 1618442095,
                     "controls": 138730863,
                     "bigBrother": 1392636434,
+                    "default_selected": 963703211,
                     "toDisable": false,
                     "firstFrame": false
                 }
@@ -5102,6 +5105,7 @@
                     "display": 1618442095,
                     "controls": 138730863,
                     "bigBrother": 1392636434,
+                    "default_selected": 305398496,
                     "toDisable": false,
                     "firstFrame": false
                 }
@@ -5405,7 +5409,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4153039455413818,
+                    "hFOV": 1.6608972549438477,
                     "culling": true
                 }
             ]
