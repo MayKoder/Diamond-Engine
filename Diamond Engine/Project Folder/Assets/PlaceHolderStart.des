@@ -172,18 +172,18 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
                     "Unhovered_UID": 861183043,
                     "Script_Name": "StartMenu",
-                    "ButtonState": 1,
-                    "Is Selected": true
+                    "ButtonState": 2,
+                    "Is Selected": false
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "LibraryPath": "Library\/Textures\/828696110.dds",
-                    "UID": 828696110
+                    "AssetPath": "Assets\/UI\/MENU\/button.png",
+                    "LibraryPath": "Library\/Textures\/861183043.dds",
+                    "UID": 861183043
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -238,7 +238,7 @@
                     ],
                     "Button Being Used": -1,
                     "Type Of UI": 7,
-                    "Is Selected": true
+                    "Is Selected": false
                 },
                 {
                     "Type": 5,
@@ -370,18 +370,18 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
                     "Unhovered_UID": 861183043,
                     "Script_Name": "StartMenu",
-                    "ButtonState": 2,
-                    "Is Selected": false
+                    "ButtonState": 1,
+                    "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button.png",
-                    "LibraryPath": "Library\/Textures\/861183043.dds",
-                    "UID": 861183043
+                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "LibraryPath": "Library\/Textures\/828696110.dds",
+                    "UID": 828696110
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -436,14 +436,15 @@
                     ],
                     "Button Being Used": -1,
                     "Type Of UI": 7,
-                    "Is Selected": false
+                    "Is Selected": true
                 },
                 {
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "StartMenu",
                     "menuButtons": 1392636434,
-                    "options": 1311017402
+                    "options": 1311017402,
+                    "default_selected": 105485055
                 }
             ]
         },
@@ -581,7 +582,7 @@
                     "UID": 861183043
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -634,7 +635,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": 0,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -769,7 +770,7 @@
         },
         {
             "name": "Image",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -826,7 +827,7 @@
         },
         {
             "name": "Return",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -885,18 +886,18 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/834295412.dds",
                     "Unhovered_UID": 834295412,
                     "Script_Name": "Return",
-                    "ButtonState": 0,
+                    "ButtonState": 1,
                     "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_return_pressed.png",
-                    "LibraryPath": "Library\/Textures\/1081671534.dds",
-                    "UID": 1081671534
+                    "AssetPath": "Assets\/UI\/MENU\/button_return_hover.png",
+                    "LibraryPath": "Library\/Textures\/1490678443.dds",
+                    "UID": 1490678443
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -914,7 +915,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": 1,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": true
                 },
@@ -958,7 +959,7 @@
         },
         {
             "name": "Image",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -1015,7 +1016,7 @@
         },
         {
             "name": "Vsync",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -1083,19 +1084,19 @@
                     "Unactive_LibraryPath": "Library\/Textures\/1244819265.dds",
                     "Unactive_UID": 1244819265,
                     "Script_Name": "DisSett",
-                    "ButtonState": 3,
+                    "ButtonState": 4,
                     "Checkbox Active": false,
                     "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/checkbox_empty.png",
-                    "LibraryPath": "Library\/Textures\/1244819265.dds",
-                    "UID": 1244819265
+                    "AssetPath": "Assets\/UI\/MENU\/checkbox_empty_hover.png",
+                    "LibraryPath": "Library\/Textures\/1711990233.dds",
+                    "UID": 1711990233
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -1155,7 +1156,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 8,
                     "Is Selected": true
                 },
@@ -1170,7 +1171,7 @@
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -1232,7 +1233,7 @@
         },
         {
             "name": "Resolution",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -1298,7 +1299,7 @@
                     "UID": 216871503
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -1393,7 +1394,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 }
@@ -1401,7 +1402,7 @@
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -1463,7 +1464,7 @@
         },
         {
             "name": "ResolutionUp",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -1533,10 +1534,10 @@
                     "UID": 1346482548
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -1551,7 +1552,7 @@
         },
         {
             "name": "ResolutionDown",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -1621,10 +1622,10 @@
                     "UID": 1148197231
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -1639,7 +1640,7 @@
         },
         {
             "name": "Resolution Value",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -1701,7 +1702,7 @@
         },
         {
             "name": "WindowMode",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -1768,7 +1769,7 @@
                     "UID": 216871503
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -1863,7 +1864,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": 1,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -1878,7 +1879,7 @@
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -1940,7 +1941,7 @@
         },
         {
             "name": "WindowModeUp",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -2010,10 +2011,10 @@
                     "UID": 1346482548
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -2028,7 +2029,7 @@
         },
         {
             "name": "WindowModeDown",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -2098,10 +2099,10 @@
                     "UID": 1148197231
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -2116,7 +2117,7 @@
         },
         {
             "name": "Window Mode Value",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -2178,7 +2179,7 @@
         },
         {
             "name": "Return",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -2237,18 +2238,18 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/834295412.dds",
                     "Unhovered_UID": 834295412,
                     "Script_Name": "DisSett",
-                    "ButtonState": 0,
+                    "ButtonState": 2,
                     "Is Selected": false
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_return_pressed.png",
-                    "LibraryPath": "Library\/Textures\/1081671534.dds",
-                    "UID": 1081671534
+                    "AssetPath": "Assets\/UI\/MENU\/button_return.png",
+                    "LibraryPath": "Library\/Textures\/834295412.dds",
+                    "UID": 834295412
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -2323,7 +2324,7 @@
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -2414,7 +2415,7 @@
         },
         {
             "name": "Image",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -2471,7 +2472,7 @@
         },
         {
             "name": "Brightness",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -2530,18 +2531,18 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/2001046214.dds",
                     "Unhovered_UID": 2001046214,
                     "Script_Name": "Settings",
-                    "ButtonState": 2,
+                    "ButtonState": 1,
                     "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/bar_empty_borderless.png",
-                    "LibraryPath": "Library\/Textures\/2001046214.dds",
-                    "UID": 2001046214
+                    "AssetPath": "Assets\/UI\/MENU\/bar_hover.png",
+                    "LibraryPath": "Library\/Textures\/1884509864.dds",
+                    "UID": 1884509864
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -2636,7 +2637,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": true
                 },
@@ -2651,7 +2652,7 @@
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -2713,7 +2714,7 @@
         },
         {
             "name": "BrightnessUp",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -2783,10 +2784,10 @@
                     "UID": 1346482548
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -2801,7 +2802,7 @@
         },
         {
             "name": "BrightnessDown",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -2871,10 +2872,10 @@
                     "UID": 1148197231
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -2889,7 +2890,7 @@
         },
         {
             "name": "Brightness Bar",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -2946,7 +2947,7 @@
         },
         {
             "name": "MasterVolume",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -3016,7 +3017,7 @@
                     "UID": 2001046214
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -3111,7 +3112,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -3125,7 +3126,7 @@
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -3187,7 +3188,7 @@
         },
         {
             "name": "MasterVolumeUp",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -3257,10 +3258,10 @@
                     "UID": 1346482548
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -3275,7 +3276,7 @@
         },
         {
             "name": "MasterVolumeDown",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -3345,10 +3346,10 @@
                     "UID": 1148197231
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -3363,7 +3364,7 @@
         },
         {
             "name": "Master Volume Bar",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -3420,7 +3421,7 @@
         },
         {
             "name": "MusicVolume",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -3490,7 +3491,7 @@
                     "UID": 2001046214
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -3585,7 +3586,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -3600,7 +3601,7 @@
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -3662,7 +3663,7 @@
         },
         {
             "name": "MusicVolumeDown",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -3732,10 +3733,10 @@
                     "UID": 1148197231
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -3750,7 +3751,7 @@
         },
         {
             "name": "MusicVolumeUp",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -3820,10 +3821,10 @@
                     "UID": 1346482548
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -3838,7 +3839,7 @@
         },
         {
             "name": "Music Volume Bar",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -3895,7 +3896,7 @@
         },
         {
             "name": "SFXVolume",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -3965,7 +3966,7 @@
                     "UID": 2001046214
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -4075,7 +4076,7 @@
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -4137,7 +4138,7 @@
         },
         {
             "name": "SFXVolumeUp",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -4207,10 +4208,10 @@
                     "UID": 1346482548
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -4225,7 +4226,7 @@
         },
         {
             "name": "SFXVolumeDown",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -4295,10 +4296,10 @@
                     "UID": 1148197231
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -4313,7 +4314,7 @@
         },
         {
             "name": "Sound Effect Volume Bar",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -4370,7 +4371,7 @@
         },
         {
             "name": "ControllerVibration",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -4450,7 +4451,7 @@
                     "UID": 1244819265
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -4510,7 +4511,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": 1,
+                    "Button Being Used": -1,
                     "Type Of UI": 8,
                     "Is Selected": false
                 },
@@ -4525,7 +4526,7 @@
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -4587,7 +4588,7 @@
         },
         {
             "name": "Return",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -4646,29 +4647,22 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/834295412.dds",
                     "Unhovered_UID": 834295412,
                     "Script_Name": "Settings",
-                    "ButtonState": 0,
+                    "ButtonState": 2,
                     "Is Selected": false
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_return_pressed.png",
-                    "LibraryPath": "Library\/Textures\/1081671534.dds",
-                    "UID": 1081671534
+                    "AssetPath": "Assets\/UI\/MENU\/button_return.png",
+                    "LibraryPath": "Library\/Textures\/834295412.dds",
+                    "UID": 834295412
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
                             "Index": 0,
-                            "UID": 1684588818,
-                            "Action": 2,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 1,
                             "UID": 1684588818,
                             "Action": 2,
                             "Is Key Down": false,
@@ -4732,7 +4726,7 @@
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -4823,7 +4817,7 @@
         },
         {
             "name": "Image",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -4880,7 +4874,7 @@
         },
         {
             "name": "Settings",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -4939,18 +4933,18 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
                     "Unhovered_UID": 861183043,
                     "Script_Name": "DisplayOptions",
-                    "ButtonState": 0,
+                    "ButtonState": 1,
                     "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "LibraryPath": "Library\/Textures\/356214008.dds",
-                    "UID": 356214008
+                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "LibraryPath": "Library\/Textures\/828696110.dds",
+                    "UID": 828696110
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -5010,7 +5004,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": 1,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": true
                 },
@@ -5022,13 +5016,14 @@
                     "settings": 1637315784,
                     "display": 1618442095,
                     "controls": 138730863,
-                    "bigBrother": 1392636434
+                    "bigBrother": 1392636434,
+                    "default_selected": 2065258024
                 }
             ]
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -5090,7 +5085,7 @@
         },
         {
             "name": "Display",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -5160,7 +5155,7 @@
                     "UID": 861183043
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -5220,7 +5215,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -5232,13 +5227,14 @@
                     "settings": 1637315784,
                     "display": 1618442095,
                     "controls": 138730863,
-                    "bigBrother": 1392636434
+                    "bigBrother": 1392636434,
+                    "default_selected": 963703211
                 }
             ]
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -5300,7 +5296,7 @@
         },
         {
             "name": "Controls",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -5370,7 +5366,7 @@
                     "UID": 861183043
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -5430,7 +5426,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -5442,13 +5438,14 @@
                     "settings": 1637315784,
                     "display": 1618442095,
                     "controls": 138730863,
-                    "bigBrother": 1392636434
+                    "bigBrother": 1392636434,
+                    "default_selected": 305398496
                 }
             ]
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -5510,7 +5507,7 @@
         },
         {
             "name": "Return",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -5569,29 +5566,22 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/834295412.dds",
                     "Unhovered_UID": 834295412,
                     "Script_Name": "Return",
-                    "ButtonState": 0,
+                    "ButtonState": 2,
                     "Is Selected": false
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_return_pressed.png",
-                    "LibraryPath": "Library\/Textures\/1081671534.dds",
-                    "UID": 1081671534
+                    "AssetPath": "Assets\/UI\/MENU\/button_return.png",
+                    "LibraryPath": "Library\/Textures\/834295412.dds",
+                    "UID": 834295412
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
                             "Index": 0,
-                            "UID": 1861823368,
-                            "Action": 2,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 1,
                             "UID": 1861823368,
                             "Action": 2,
                             "Is Key Down": false,
@@ -5640,7 +5630,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": false
                 },
@@ -5811,7 +5801,7 @@
                     "UID": 828696110
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -6011,7 +6001,7 @@
                     "UID": 861183043
                 },
                 {
-                    "Type": 18,
+                    "Type": 17,
                     "Active": true,
                     "Map": [
                         {
@@ -6235,7 +6225,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4385160207748413,
+                    "hFOV": 1.4812965393066406,
                     "culling": true
                 }
             ]

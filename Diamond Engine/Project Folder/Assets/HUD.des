@@ -992,55 +992,63 @@
             "UID": 1083364916,
             "PrefabID": 0,
             "ParentUID": 1948140038,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        -89.099998474121094,
-                        -55.599998474121094
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        6.4000000953674316,
-                        9.6000003814697266
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/38453201.mat",
-                    "MaterialUID": 38453201
-                },
-                {
-                    "Type": 7,
-                    "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/HUD\/ability3.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/784219460.dds",
-                    "Pressed_UID": 784219460,
-                    "Hovered_AssetsPath": "Assets\/UI\/HUD\/ability3.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/784219460.dds",
-                    "Hovered_UID": 784219460,
-                    "Unhovered_AssetsPath": "Assets\/UI\/HUD\/ability3.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/784219460.dds",
-                    "Unhovered_UID": 784219460,
-                    "ButtonState": 2,
-                    "Is Selected": false
-                },
-                {
-                    "Type": 11,
-                    "Active": true,
-                    "AssetPath": "Assets\/UI\/HUD\/ability3.png",
-                    "LibraryPath": "Library\/Textures\/784219460.dds",
-                    "UID": 784219460
-                }
-            ]
+          "Components": [
+            {
+              "Type": 1,
+              "Active": true
+            },
+            {
+              "Type": 6,
+              "Active": true,
+              "Position": [
+                -89.099998474121094,
+                -55.599998474121094
+              ],
+              "Rotation": 0,
+              "Size": [
+                6.4000000953674316,
+                9.6000003814697266
+              ]
+            },
+            {
+              "Type": 3,
+              "Active": true,
+              "IsEmpty": true,
+              "MaterialAssetPath": "Empty",
+              "MaterialLibraryPath": "Library\/Materials\/38453201.mat",
+              "MaterialUID": 38453201
+            },
+            {
+              "Type": 7,
+              "Active": true,
+              "Pressed_AssetsPath": "Assets\/UI\/HUD\/ability3.png",
+              "Pressed_LibraryPath": "Library\/Textures\/784219460.dds",
+              "Pressed_UID": 784219460,
+              "Hovered_AssetsPath": "Assets\/UI\/HUD\/ability3.png",
+              "Hovered_LibraryPath": "Library\/Textures\/784219460.dds",
+              "Hovered_UID": 784219460,
+              "Unhovered_AssetsPath": "Assets\/UI\/HUD\/ability3.png",
+              "Unhovered_LibraryPath": "Library\/Textures\/784219460.dds",
+              "Unhovered_UID": 784219460,
+              "ButtonState": 2,
+              "Is Selected": false
+            },
+            {
+              "Type": 11,
+              "Active": true,
+              "AssetPath": "Assets\/UI\/HUD\/ability3.png",
+              "LibraryPath": "Library\/Textures\/784219460.dds",
+              "UID": 784219460
+            },
+            {
+              "Type": 17,
+              "Active": true,
+              "Map": [],
+              "Button Being Used": -1,
+              "Type Of UI": 7,
+              "Is Selected": false
+            }
+          ]
         }
     ]
 }
