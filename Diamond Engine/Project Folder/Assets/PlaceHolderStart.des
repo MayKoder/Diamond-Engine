@@ -272,13 +272,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -6.6999998092651367,
+                        -7.0999999046325684,
                         -1.2999999523162842
                     ],
                     "Rotation": 0,
                     "Size": [
-                        13.300000190734863,
-                        15.800000190734863
+                        15.300000190734863,
+                        21.299999237060547
                     ]
                 },
                 {
@@ -294,7 +294,7 @@
                     "Active": true,
                     "text": "Play",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -472,13 +472,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -11.300000190734863,
+                        -11.199999809265137,
                         -1.7000000476837158
                     ],
                     "Rotation": 0,
                     "Size": [
-                        13.100000381469727,
-                        20
+                        13.600000381469727,
+                        21.700000762939453
                     ]
                 },
                 {
@@ -494,7 +494,7 @@
                     "Active": true,
                     "text": "Options",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -672,13 +672,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -7.3000001907348633,
+                        -7.0999999046325684,
                         -2.4000000953674316
                     ],
                     "Rotation": 0,
                     "Size": [
-                        14.199999809265137,
-                        17.899999618530273
+                        13.5,
+                        21.700000762939453
                     ]
                 },
                 {
@@ -694,7 +694,7 @@
                     "Active": true,
                     "text": "Quit",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -1205,7 +1205,7 @@
                     "Active": true,
                     "text": "Vsync",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -1410,13 +1410,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -15.300000190734863,
-                        10.699999809265137
+                        -16.899999618530273,
+                        8.1999998092651367
                     ],
                     "Rotation": 0,
                     "Size": [
-                        13.5,
-                        17.799999237060547
+                        15.5,
+                        21.700000762939453
                     ]
                 },
                 {
@@ -1432,7 +1432,7 @@
                     "Active": true,
                     "text": "Resolution",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -1652,8 +1652,8 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -17.600000381469727,
-                        -3.2999999523162842
+                        -17.299999237060547,
+                        -3.5999999046325684
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -1674,7 +1674,7 @@
                     "Active": true,
                     "text": "1920 x 1080",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -1889,7 +1889,7 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -18.299999237060547,
+                        -19.799999237060547,
                         7.5999999046325684
                     ],
                     "Rotation": 0,
@@ -1911,7 +1911,7 @@
                     "Active": true,
                     "text": "Window Mode",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -2131,7 +2131,7 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -15.100000381469727,
+                        -14.600000381469727,
                         -3.7999999523162842
                     ],
                     "Rotation": 0,
@@ -2153,7 +2153,7 @@
                     "Active": true,
                     "text": "Full Screen",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -2334,12 +2334,12 @@
                     "Active": true,
                     "Position": [
                         -29.299999237060547,
-                        60.599998474121094
+                        59.599998474121094
                     ],
                     "Rotation": 0,
                     "Size": [
-                        17.299999237060547,
-                        21.799999237060547
+                        18,
+                        28.700000762939453
                     ]
                 },
                 {
@@ -2355,7 +2355,7 @@
                     "Active": true,
                     "text": "Display",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -2661,8 +2661,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        13.5,
-                        20
+                        15.600000381469727,
+                        24.700000762939453
                     ]
                 },
                 {
@@ -2678,7 +2678,7 @@
                     "Active": true,
                     "text": "Brightness",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -3152,7 +3152,7 @@
                     "Active": true,
                     "text": "Master Volume",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -3609,7 +3609,7 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        12.199999809265137,
+                        12.600000381469727,
                         18.600000381469727
                     ]
                 },
@@ -3626,7 +3626,7 @@
                     "Active": true,
                     "text": "Music Volume",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -4083,8 +4083,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        9,
-                        17.899999618530273
+                        9.3000001907348633,
+                        18.799999237060547
                     ]
                 },
                 {
@@ -4100,7 +4100,7 @@
                     "Active": true,
                     "text": "Sound Effect Volume",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -4549,7 +4549,7 @@
                     "Active": true,
                     "text": "Controller Vibration",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -5020,8 +5020,8 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -12.300000190734863,
-                        -2.4000000953674316
+                        -11.5,
+                        -1.2000000476837158
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -5042,7 +5042,7 @@
                     "Active": true,
                     "text": "Settings",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -5225,13 +5225,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -11.100000381469727,
-                        -1.8999999761581421
+                        -9.8000001907348633,
+                        -1.2999999523162842
                     ],
                     "Rotation": 0,
                     "Size": [
-                        13.5,
-                        19.299999237060547
+                        13,
+                        18.399999618530273
                     ]
                 },
                 {
@@ -5247,7 +5247,7 @@
                     "Active": true,
                     "text": "Display",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -5430,7 +5430,7 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -12,
+                        -11.800000190734863,
                         -2.5999999046325684
                     ],
                     "Rotation": 0,
@@ -5452,7 +5452,7 @@
                     "Active": true,
                     "text": "Controls",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -5858,12 +5858,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -7.5,
+                        -6.4000000953674316,
                         -2.2000000476837158
                     ],
                     "Rotation": 0,
                     "Size": [
-                        16.5,
+                        15,
                         20
                     ]
                 },
@@ -5880,7 +5880,7 @@
                     "Active": true,
                     "text": "Yes",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -6060,12 +6060,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -5.3000001907348633,
+                        -5.0999999046325684,
                         -2.4000000953674316
                     ],
                     "Rotation": 0,
                     "Size": [
-                        16.299999237060547,
+                        14,
                         20
                     ]
                 },
@@ -6082,7 +6082,7 @@
                     "Active": true,
                     "text": "No",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
@@ -6122,7 +6122,7 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -39.400001525878906,
+                        -38.400001525878906,
                         10.300000190734863
                     ],
                     "Rotation": 0,
@@ -6144,7 +6144,7 @@
                     "Active": true,
                     "text": "Are you sure you want to quit?",
                     "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
                         1,
                         1,
