@@ -174,7 +174,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4812965393066406,
+                    "hFOV": 1.4683090448379517,
                     "culling": false
                 }
             ]
@@ -5485,6 +5485,9 @@
                 {
                     "Type": 7,
                     "Active": true,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/bar_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/947828079.dds",
+                    "Pressed_UID": 947828079,
                     "Hovered_AssetsPath": "Assets\/UI\/MENU\/bar_hover.png",
                     "Hovered_LibraryPath": "Library\/Textures\/1884509864.dds",
                     "Hovered_UID": 1884509864,
@@ -5946,6 +5949,9 @@
                 {
                     "Type": 7,
                     "Active": true,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/bar_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/947828079.dds",
+                    "Pressed_UID": 947828079,
                     "Hovered_AssetsPath": "Assets\/UI\/MENU\/bar_hover.png",
                     "Hovered_LibraryPath": "Library\/Textures\/1884509864.dds",
                     "Hovered_UID": 1884509864,
