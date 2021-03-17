@@ -113,6 +113,17 @@ Emitter::~Emitter()
 
 void Emitter::Update(float dt, bool systemActive)
 {
+	for (std::vector<ParticleEffect*>::iterator it = myEffects.begin(); it != myEffects.end(); ++it) {
+		
+	}
+	for (int i = 0; i < myEffects.size(); i++) {
+		if (myEffects[i]->toDelete) {
+			myEffects[i]->~ParticleEffect();
+			myEffects.erase(myEffects.begin() + i);
+			i--;
+		}
+	}
+
 	if (systemActive)
 		ThrowParticles(dt);
 

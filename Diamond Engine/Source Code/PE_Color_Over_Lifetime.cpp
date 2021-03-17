@@ -33,6 +33,9 @@ void PE_ColorOverLifetime::OnEditor(int emitterIndex)
 	suffixLabel += emitterIndex;
 	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
 	{
+		if (ImGui::Button("Delete Color Effect"))
+			this->toDelete = true;
+
 		if (editGradient)
 		{
 			suffixLabel = "Save Edited Gradient##ColorGradient";

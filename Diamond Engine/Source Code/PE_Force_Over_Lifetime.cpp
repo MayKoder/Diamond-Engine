@@ -32,6 +32,8 @@ void PE_ForceOverLifetime::OnEditor(int emitterIndex)
 	suffixLabel += emitterIndex;
 	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
 	{
+		if (ImGui::Button("Delete Force Effect"))
+			this->toDelete = true;
 
 		suffixLabel = "Force Vector##DirectionalForce";
 		suffixLabel += emitterIndex;
