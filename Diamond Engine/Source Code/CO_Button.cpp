@@ -177,7 +177,12 @@ void C_Button::LoadData(DEConfig& nObj)
 
 	if (texName != "") {
 		sprite_button_pressed = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Pressed_UID"), texName.c_str()));
-		sprite_button_pressed->SetAssetsPath(assetsName.c_str());
+		if (sprite_button_pressed == nullptr) {
+			LOG(LogType::L_ERROR, "the sprite button pressed couldn't be created");
+		}
+		else {
+			sprite_button_pressed->SetAssetsPath(assetsName.c_str());
+		}
 	}
 
 	texName = nObj.ReadString("Hovered_LibraryPath");
@@ -185,7 +190,12 @@ void C_Button::LoadData(DEConfig& nObj)
 
 	if (texName != "") {
 		sprite_button_hovered = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Hovered_UID"), texName.c_str()));
-		sprite_button_hovered->SetAssetsPath(assetsName.c_str());
+		if (sprite_button_hovered == nullptr) {
+			LOG(LogType::L_ERROR, "the sprite button hovered couldn't be created");
+		}
+		else {
+			sprite_button_hovered->SetAssetsPath(assetsName.c_str());
+		}
 	}
 
 
@@ -194,7 +204,12 @@ void C_Button::LoadData(DEConfig& nObj)
 
 	if (texName != "") {
 		sprite_button_unhovered = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Unhovered_UID"), texName.c_str()));
-		sprite_button_unhovered->SetAssetsPath(assetsName.c_str());
+		if (sprite_button_unhovered == nullptr) {
+			LOG(LogType::L_ERROR, "the sprite button unhovered couldn't be created");
+		}
+		else {
+			sprite_button_unhovered->SetAssetsPath(assetsName.c_str());
+		}
 	}
 
 	texName = nObj.ReadString("Script_Name");
