@@ -2,7 +2,7 @@
   "ShaderUID": 577511301,
   "Uniforms": [
     {
-      "name": "length_used",
+      "name": "alpha",
       "type": 5126,
       "value": 1
     }
