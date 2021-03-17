@@ -331,15 +331,15 @@
                     "damage": 10,
                     "bulletSpeed": 0,
                     "shotTimes": 0,
-                    "timeBewteenShots": 0.5,
+                    "timeBewteenShots": 0.20000000298023224,
                     "timePassed": 0,
                     "idleTime": 2,
                     "stoppingDistance": 1,
                     "wanderRange": 15,
                     "runningRange": 20,
                     "currentState": 2,
-                    "shotSequences": 2,
-                    "maxShots": 2
+                    "maxShots": 2,
+                    "maxSequences": 2
                 },
                 {
                     "Type": 17,

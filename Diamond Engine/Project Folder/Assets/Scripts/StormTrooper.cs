@@ -3,8 +3,9 @@ using DiamondEngine;
 
 public class Stormtrooper : Enemy
 {
-	protected int shotSequences = 0;
+	private int shotSequences = 0;
 	public int maxShots = 2;
+	public int maxSequences = 2;
 
 	public void Start()
 	{
@@ -39,12 +40,10 @@ public class Stormtrooper : Enemy
 						currentState = STATES.WANDER;
 						timePassed = 0.0f;
 						targetPosition = CalculateNewPosition(wanderRange);
-						/*
                         if (shotSequences == 1)
                         {
 							currentState = STATES.SHOOT;
                         }
-						*/
 					}
 				}
 
@@ -112,28 +111,21 @@ public class Stormtrooper : Enemy
 
 					if (shotTimes >= maxShots)
 					{
-						currentState = STATES.RUN;
-						targetPosition = CalculateNewPosition(runningRange);
 						shotTimes = 0;
-						shotSequences = 0;
-						Animator.Play(gameObject, "Run");
-
-						/*
 						shotSequences++;
-						if (shotSequences >= 2)
+						
+						if (shotSequences >= maxSequences)
 						{
 							currentState = STATES.RUN;
-							targetPosition = CalculateNewPosition(runningRange);
-							shotTimes = 0;
-							shotSequences = 0;
 							Animator.Play(gameObject, "Run");
+							targetPosition = CalculateNewPosition(runningRange);
+							shotSequences = 0;
 						}
 						else
 						{
+							Animator.Play(gameObject, "Idle");
 							currentState = STATES.IDLE;
-							shotTimes = 0;
                         }
-						*/
 					}
 				}
 				break;
