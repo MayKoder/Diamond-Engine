@@ -151,7 +151,7 @@ public class Stormtrooper : Enemy
 
 	public void OnCollisionEnter(GameObject collidedGameObject)
 	{
-		Debug.Log("Tag: " + collidedGameObject.tag);
+		Debug.Log("Collided by tag: " + collidedGameObject.tag);
 	}
 
 	public void OnTriggerEnter(GameObject triggeredGameObject)
@@ -161,6 +161,6 @@ public class Stormtrooper : Enemy
 			InternalCalls.Destroy(gameObject);
         }
 
-		Debug.Log("Tag: " + triggeredGameObject.tag);
+		Debug.Log("Triggered by tag: " + triggeredGameObject.tag);
 	}
 }

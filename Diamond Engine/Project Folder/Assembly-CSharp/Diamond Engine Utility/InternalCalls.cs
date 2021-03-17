@@ -20,7 +20,7 @@ namespace DiamondEngine
         public static extern void Destroy(object go);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern void CreatePrefab(object prefab_path, object position, object rotation, object scale);
+        public static extern GameObject CreatePrefab(object prefab_path, object position, object rotation, object scale);
     }
     public class Input
     {
