@@ -1,0 +1,11 @@
+{
+    "name": "",
+    "ShaderUID": 577511301,
+    "Uniforms": [
+        {
+            "name": "alpha",
+            "type": 5126,
+            "value": 1
+        }
+    ]
+}

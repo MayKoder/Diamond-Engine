@@ -160,8 +160,6 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/296489994.mmh",
-                    "UID": 296489994,
                     "alternColor": [
                         1,
                         1,
@@ -205,8 +203,6 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/317057310.mmh",
-                    "UID": 317057310,
                     "alternColor": [
                         1,
                         1,
@@ -250,8 +246,6 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/2010055644.mmh",
-                    "UID": 2010055644,
                     "alternColor": [
                         1,
                         1,
@@ -997,7 +991,7 @@
             ],
             "UID": 1083364916,
             "PrefabID": 0,
-            "ParentUID": 1747895609,
+            "ParentUID": 1948140038,
             "Components": [
                 {
                     "Type": 1,
@@ -1049,10 +1043,9 @@
                 {
                     "Type": 17,
                     "Active": true,
-                    "Map": [],
-                    "Button Being Used": -1,
-                    "Type Of UI": 7,
-                    "Is Selected": false
+                    "RootBone UID": 0,
+                    "MeshRendererUID": 0,
+                    "Animations": []
                 }
             ]
         }
