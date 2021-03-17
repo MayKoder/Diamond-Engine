@@ -3,8 +3,9 @@ using DiamondEngine;
 
 public class Stormtrooper : Enemy
 {
-	protected int shotSequences = 0; 
-	
+	protected int shotSequences = 0;
+	public int maxShots = 2;
+
 	public void Start()
 	{
 		currentState = STATES.WANDER;
@@ -28,10 +29,7 @@ public class Stormtrooper : Enemy
 					if(timePassed > idleTime)
                     {
 						currentState = STATES.SHOOT;
-						timePassed = timeBewteenShots;
-						InternalCalls.CreatePrefab("Library/Prefabs/433273876.prefab", gameObject.transform.globalPosition, gameObject.transform.globalRotation,
-							Vector3.one);
-						
+						timePassed = timeBewteenShots;					
 					}
 				}
 				else
@@ -41,10 +39,12 @@ public class Stormtrooper : Enemy
 						currentState = STATES.WANDER;
 						timePassed = 0.0f;
 						targetPosition = CalculateNewPosition(wanderRange);
+						/*
                         if (shotSequences == 1)
                         {
 							currentState = STATES.SHOOT;
                         }
+						*/
 					}
 				}
 
@@ -58,6 +58,7 @@ public class Stormtrooper : Enemy
 
 				if (Mathf.Distance(gameObject.transform.localPosition, targetPosition) < stoppingDistance)
 				{
+					Animator.Play(gameObject, "Idle");
 					currentState = STATES.IDLE;
 					timePassed = 0.0f;
 				}
@@ -71,11 +72,11 @@ public class Stormtrooper : Enemy
 				if (player == null)
 					Debug.Log("Null player");
 
-				
 				// If the player is in range attack him
 				if (InRange(player.transform.globalPosition, range))
 				{
 					currentState = STATES.SHOOT;
+					Animator.Play(gameObject, "Shoot");
 					timePassed = timeBewteenShots;
 				}
 				else  //if not, keep wandering
@@ -90,6 +91,7 @@ public class Stormtrooper : Enemy
 					{
 						//targetPosition = CalculateNewPosition(wanderRange);
 						currentState = STATES.IDLE;
+						Animator.Play(gameObject, "Idle");
 						timePassed = 0.0f;
 					}
 				}
@@ -106,9 +108,17 @@ public class Stormtrooper : Enemy
 				if (timePassed > timeBewteenShots)
 				{
 					Shoot();
+					Animator.Play(gameObject, "Shoot");
 
-					if (shotTimes >= 2)
+					if (shotTimes >= maxShots)
 					{
+						currentState = STATES.RUN;
+						targetPosition = CalculateNewPosition(runningRange);
+						shotTimes = 0;
+						shotSequences = 0;
+						Animator.Play(gameObject, "Run");
+
+						/*
 						shotSequences++;
 						if (shotSequences >= 2)
 						{
@@ -116,12 +126,14 @@ public class Stormtrooper : Enemy
 							targetPosition = CalculateNewPosition(runningRange);
 							shotTimes = 0;
 							shotSequences = 0;
+							Animator.Play(gameObject, "Run");
 						}
 						else
 						{
 							currentState = STATES.IDLE;
 							shotTimes = 0;
                         }
+						*/
 					}
 				}
 				break;

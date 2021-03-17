@@ -7,16 +7,15 @@ public class Enemy : DiamondComponent
 	public GameObject player;
 	public GameObject shootPoint;
 
-	public float wanderSpeed;
-	public float runningSpeed;
-	public float range;
-	public float damage;
-	public float bulletSpeed;
+	public float wanderSpeed = 3.5f;
+	public float runningSpeed = 12.5f;
+	public float range = 20.0f;
+	public float damage = 20.0f;
+	public float bulletSpeed = 10.0f;
 	protected int shotTimes = 0;
 
-	protected float timeBewteenShots = 5.0f;
+	protected float timeBewteenShots = 0.5f;
 	protected float timePassed = 0.0f;
-
 
 	public float idleTime = 5.0f;
 	protected Vector3 targetPosition = null;
@@ -38,7 +37,7 @@ public class Enemy : DiamondComponent
 
 	public virtual bool Shoot()
 	{
-		InternalCalls.CreateBullet(shootPoint.transform.globalPosition, shootPoint.transform.globalRotation, shootPoint.transform.globalScale);
+		InternalCalls.CreateBullet(shootPoint.transform.globalPosition, shootPoint.transform.globalRotation, new Vector3(1.0f, 1.0f, 1.0f));
 		timePassed = 0.0f;
 		shotTimes++;
 
