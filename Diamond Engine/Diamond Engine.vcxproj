@@ -213,6 +213,7 @@
     <ClInclude Include="Source Code\COMM_Transform2D.h" />
     <ClInclude Include="Source Code\Component.h" />
     <ClInclude Include="Source Code\CO_Animator.h" />
+    <ClInclude Include="Source Code\CO_Billboard.h" />
     <ClInclude Include="Source Code\CO_BoxCollider.h" />
     <ClInclude Include="Source Code\CO_Button.h" />
     <ClInclude Include="Source Code\CO_AudioListener.h" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Source Code\CO_MeshCollider.h" />
     <ClInclude Include="Source Code\CO_MeshRenderer.h" />
     <ClInclude Include="Source Code\CO_Material.h" />
+    <ClInclude Include="Source Code\CO_ParticleSystem.h" />
     <ClInclude Include="Source Code\CO_Navigation.h" />
     <ClInclude Include="Source Code\CO_RigidBody.h" />
     <ClInclude Include="Source Code\CO_Script.h" />
@@ -262,6 +264,7 @@
     <ClInclude Include="Source Code\External Libraries\ImGui\imconfig.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\ImGuiUtils.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_color_gradient.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui_internal.h" />
@@ -365,6 +368,15 @@
     <ClInclude Include="Source Code\MO_GUI.h" />
     <ClInclude Include="Source Code\MO_AudioManager.h" />
     <ClInclude Include="Source Code\MO_MonoManager.h" />
+    <ClInclude Include="Source Code\Particle.h" />
+    <ClInclude Include="Source Code\ParticleEffects.h" />
+    <ClInclude Include="Source Code\ParticleEmitter.h" />
+    <ClInclude Include="Source Code\PE_Color_Over_Lifetime.h" />
+    <ClInclude Include="Source Code\PE_Force_Over_Lifetime.h" />
+    <ClInclude Include="Source Code\PE_Rotate_Over_Lifetime.h" />
+    <ClInclude Include="Source Code\PE_Size_Over_Lifetime.h" />
+    <ClInclude Include="Source Code\PE_Spawn_Area.h" />
+    <ClInclude Include="Source Code\PE_Velocity_Over_Lifetime.h" />
     <ClInclude Include="Source Code\RE_Animation.h" />
     <ClInclude Include="Source Code\MO_Physics.h" />
     <ClInclude Include="Source Code\MO_Physics\Header.h" />
@@ -413,6 +425,7 @@
     <ClCompile Include="Source Code\Component.cpp" />
     <ClCompile Include="Source Code\CO_Animator.cpp" />
     <ClCompile Include="Source Code\CO_BoxCollider.cpp" />
+    <ClCompile Include="Source Code\CO_Billboard.cpp" />
     <ClCompile Include="Source Code\CO_Button.cpp" />
     <ClCompile Include="Source Code\CO_AudioListener.cpp" />
     <ClCompile Include="Source Code\CO_AudioSource.cpp" />
@@ -424,6 +437,7 @@
     <ClCompile Include="Source Code\CO_Material.cpp" />
     <ClCompile Include="Source Code\CO_MeshCollider.cpp" />
     <ClCompile Include="Source Code\CO_MeshRenderer.cpp" />
+    <ClCompile Include="Source Code\CO_ParticleSystem.cpp" />
     <ClCompile Include="Source Code\CO_Navigation.cpp" />
     <ClCompile Include="Source Code\CO_RigidBody.cpp" />
     <ClCompile Include="Source Code\CO_Script.cpp" />
@@ -441,6 +455,7 @@
     <ClCompile Include="Source Code\External Libraries\ImGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGuizmo\ImSequencer.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_color_gradient.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_demo.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_draw.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.cpp" />
@@ -505,6 +520,15 @@
     <ClCompile Include="Source Code\MO_GUI.cpp" />
     <ClCompile Include="Source Code\MO_AudioManager.cpp" />
     <ClCompile Include="Source Code\MO_MonoManager.cpp" />
+    <ClCompile Include="Source Code\Particle.cpp" />
+    <ClCompile Include="Source Code\ParticleEffects.cpp" />
+    <ClCompile Include="Source Code\ParticleEmitter.cpp" />
+    <ClCompile Include="Source Code\PE_Color_Over_Lifetime.cpp" />
+    <ClCompile Include="Source Code\PE_Force_Over_Lifetime.cpp" />
+    <ClCompile Include="Source Code\PE_Rotate_Over_Lifetime.cpp" />
+    <ClCompile Include="Source Code\PE_Size_Over_Lifetime.cpp" />
+    <ClCompile Include="Source Code\PE_Spawn_Area.cpp" />
+    <ClCompile Include="Source Code\PE_Velocity_Over_Lifetime.cpp" />
     <ClCompile Include="Source Code\RE_Animation.cpp" />
     <ClCompile Include="Source Code\MO_Physics.cpp" />
     <ClCompile Include="Source Code\RE_Material.cpp" />

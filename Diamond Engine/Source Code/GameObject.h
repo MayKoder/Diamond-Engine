@@ -22,6 +22,7 @@ public:
 
 	Component* AddComponent(Component::TYPE _type, const char* params = nullptr);
 	Component* GetComponent(Component::TYPE _type, const char* scriptName = nullptr);
+	std::vector<Component*> GetComponentsOfType(Component::TYPE type);
 
 	void RecursiveUIDRegeneration();
 	void RecursiveUIDRegenerationSavingReferences(std::map<uint, GameObject*>& gameObjects);

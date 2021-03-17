@@ -217,7 +217,6 @@ void M_MonoManager::DebugAllFields(const char* className, std::vector<Serialized
 
 			if (pushField.displayName != "##pointer" && pushField.displayName != "##type" && pushField.displayName != "##componentTable")
 				_data.push_back(pushField);
-
 			//LOG(LogType::L_NORMAL, mono_field_full_name(method2));
 		}
 	}
@@ -373,14 +372,12 @@ SerializedField::SerializedField(MonoClassField* _field, MonoObject* _object, C_
 
 void M_MonoManager::CreateAssetsScript(const char* localPath) 
 {
-	std::string unnormalizedPath("Assets/");
-	unnormalizedPath += localPath;
+	std::string unnormalizedPath(localPath);
 	unnormalizedPath = FileSystem::UnNormalizePath(unnormalizedPath.c_str());
 
 	std::ofstream outfile(unnormalizedPath.c_str());
 
-	std::string className("Assets/");
-	className += localPath;
+	std::string className(localPath);
 	className = className.substr(className.find_last_of("/") + 1);
 	className = className.substr(0, className.find_last_of("."));
 
