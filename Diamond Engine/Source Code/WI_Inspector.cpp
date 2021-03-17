@@ -225,6 +225,17 @@ void W_Inspector::Draw()
 						selectedGO->AddComponent(Component::TYPE::ANIMATOR);
 				}
 				
+				if (ImGui::Selectable("Particle System"))
+				{
+					if (selectedGO->GetComponent(Component::TYPE::PARTICLE_SYSTEM) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::PARTICLE_SYSTEM);
+				}
+				if (ImGui::Selectable("Billboard"))
+				{
+					if (selectedGO->GetComponent(Component::TYPE::BILLBOARD) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::BILLBOARD);
+				}
+
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)
 				{
 					if (ImGui::Selectable(mono_class_get_name(EngineExternal->moduleMono->userScripts[i]))) 

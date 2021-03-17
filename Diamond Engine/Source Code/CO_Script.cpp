@@ -315,6 +315,7 @@ void C_Script::LoadScriptData(const char* scriptName)
 	oncDesc = mono_method_desc_new(":OnTriggerEnter", false);
 	onTriggerEnter = mono_method_desc_search_in_class(oncDesc, klass);
 	mono_method_desc_free(oncDesc);
+
 	MonoMethodDesc* oncBut = mono_method_desc_new(":OnExecuteButton", false);
 	onExecuteButton = mono_method_desc_search_in_class(oncBut, klass);
 	mono_method_desc_free(oncBut);
