@@ -137,6 +137,12 @@
                     "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/715565838.mat",
                     "MaterialUID": 715565838
+                },
+                {
+                    "Type": 12,
+                    "Active": true,
+                    "isDefaultListener": true,
+                    "masterVolume": 50
                 }
             ]
         },
@@ -174,7 +180,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4683090448379517,
+                    "hFOV": 1.4255937337875366,
                     "culling": false
                 }
             ]
