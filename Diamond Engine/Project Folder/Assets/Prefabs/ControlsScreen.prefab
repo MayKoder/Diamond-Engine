@@ -20,9 +20,9 @@
                 1,
                 1
             ],
-            "UID": 385927616,
+            "UID": 138730863,
             "PrefabID": 794533013,
-            "ParentUID": 1598806799,
+            "ParentUID": 1221570124,
             "Components": [
                 {
                     "Type": 1,
@@ -49,9 +49,9 @@
                 1,
                 1
             ],
-            "UID": 1498645919,
+            "UID": 1347452364,
             "PrefabID": 0,
-            "ParentUID": 385927616,
+            "ParentUID": 138730863,
             "Components": [
                 {
                     "Type": 1,
@@ -82,8 +82,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/124612374.dds",
-                    "UID": 124612374
+                    "LibraryPath": "Library\/Textures\/1147771701.dds",
+                    "UID": 1147771701
                 }
             ]
         },
@@ -106,9 +106,9 @@
                 1,
                 1
             ],
-            "UID": 1734537204,
+            "UID": 305398496,
             "PrefabID": 0,
-            "ParentUID": 1498645919,
+            "ParentUID": 1347452364,
             "Components": [
                 {
                     "Type": 1,
@@ -119,12 +119,12 @@
                     "Active": true,
                     "Position": [
                         0,
-                        -67.099998474121094
+                        -76
                     ],
                     "Rotation": 0,
                     "Size": [
-                        5.6999998092651367,
-                        9
+                        11.5,
+                        7.4000000953674316
                     ]
                 },
                 {
@@ -138,15 +138,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_return_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/570273064.dds",
-                    "Pressed_UID": 570273064,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_return_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1177961007.dds",
-                    "Hovered_UID": 1177961007,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button_return.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1583215856.dds",
-                    "Unhovered_UID": 1583215856,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/main_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/958613711.dds",
+                    "Pressed_UID": 958613711,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/main_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1108163573.dds",
+                    "Hovered_UID": 1108163573,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/main_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/286075631.dds",
+                    "Unhovered_UID": 286075631,
                     "Script_Name": "Return",
                     "ButtonState": 1,
                     "Is Selected": true
@@ -154,9 +154,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_return_hover.png",
-                    "LibraryPath": "Library\/Textures\/1177961007.dds",
-                    "UID": 1177961007
+                    "AssetPath": "Assets\/UI\/MENU\/main_button_hover.png",
+                    "LibraryPath": "Library\/Textures\/1108163573.dds",
+                    "UID": 1108163573
                 },
                 {
                     "Type": 17,
@@ -164,7 +164,7 @@
                     "Map": [
                         {
                             "Index": 0,
-                            "UID": 1734537204,
+                            "UID": 305398496,
                             "Action": 2,
                             "Is Key Down": false,
                             "Is Key Up": true
@@ -178,10 +178,72 @@
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "Return",
-                    "controlsWindow": 385927616,
-                    "bigBrother": 8278228,
+                    "controlsWindow": 138730863,
+                    "bigBrother": 1311017402,
                     "toDisable": false,
                     "firstFrame": true
+                }
+            ]
+        },
+        {
+            "name": "Text",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 2060584716,
+            "PrefabID": 0,
+            "ParentUID": 305398496,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -11.100000381469727,
+                        -2.9000000953674316
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        15.5,
+                        20
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "Return",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         }

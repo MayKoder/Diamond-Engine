@@ -1,9 +1,9 @@
 {
-    "assets_path": "Assets\/Prefabs\/You Win.prefab",
+    "assets_path": "Assets\/You Win.prefab",
     "Game Objects": [
         {
             "name": "You Win",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -21,7 +21,7 @@
                 1
             ],
             "UID": 1480717871,
-            "PrefabID": 0,
+            "PrefabID": 118442154,
             "ParentUID": 116952909,
             "Components": [
                 {
@@ -66,8 +66,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        38.200000762939453,
-                        30
+                        30,
+                        29.200000762939453
                     ]
                 },
                 {
@@ -81,9 +81,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/124612374.dds",
-                    "UID": 124612374
+                    "AssetPath": "Assets\/Jet\/atlasjet-black.png",
+                    "LibraryPath": "Library\/Textures\/934250681.dds",
+                    "UID": 934250681
                 }
             ]
         },
@@ -131,7 +131,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
                     "MaterialUID": 744544911
                 },
