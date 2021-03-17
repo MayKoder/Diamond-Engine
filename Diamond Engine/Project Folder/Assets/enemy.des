@@ -1,20 +1,22 @@
 {
     "EditorCameraPosition": [
-        26.321243286132813,
-        3.8503012657165527,
-        7.5294275283813477
+        38.052707672119141,
+        14.879830360412598,
+        31.648292541503906
     ],
     "EditorCameraZ": [
-        -0.58924025297164917,
-        -0.34781938791275024,
-        -0.72925823926925659
+        -0.40453529357910156,
+        -0.38032820820808411,
+        -0.83168601989746094
     ],
     "EditorCameraY": [
-        -0.21851453185081482,
-        0.93756157159805298,
-        -0.27060991525650024
+        -0.16625949740409851,
+        0.92485159635543823,
+        -0.34206333756446838
     ],
-    "tags": [],
+    "tags": [
+        "Enemy"
+    ],
     "layers": [],
     "Game Objects": [
         {
@@ -108,10 +110,10 @@
                 -37.998661041259766
             ],
             "Rotation": [
-                0.28966298699378967,
-                -0.30951863527297974,
-                0.099594645202159882,
-                0.90020811557769775
+                0.28966295719146729,
+                -0.30951860547065735,
+                0.099594630300998688,
+                0.9002079963684082
             ],
             "Scale": [
                 0.9999997615814209,
@@ -151,148 +153,8 @@
             ]
         },
         {
-            "name": "Bantha",
-            "tag": "Untagged",
-            "layer": "Default",
-            "Active": true,
-            "Position": [
-                1.5525643825531006,
-                0,
-                -9.853302001953125
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 677924609,
-            "PrefabID": 0,
-            "ParentUID": 143570472,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
-                    "MaterialUID": 1051418604
-                },
-                {
-                    "Type": 5,
-                    "Active": true,
-                    "ScriptName": "Bantha",
-                    "player": 1661764735,
-                    "shootPoint": 1661764735,
-                    "wanderSpeed": 5,
-                    "runningSpeed": 15,
-                    "range": 20,
-                    "damage": 5,
-                    "bulletSpeed": 50,
-                    "shotTimes": 1,
-                    "timeBewteenShots": 5,
-                    "timePassed": 0,
-                    "idleTime": 5,
-                    "stoppingDistance": 1,
-                    "wanderRange": 5,
-                    "runningRange": 15,
-                    "currentState": 2
-                }
-            ]
-        },
-        {
-            "name": "ShootPoint",
-            "tag": "Untagged",
-            "layer": "Default",
-            "Active": true,
-            "Position": [
-                0,
-                2.4630000591278076,
-                1.2929999828338623
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                0.5,
-                1
-            ],
-            "UID": 1103811902,
-            "PrefabID": 0,
-            "ParentUID": 677924609,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                }
-            ]
-        },
-        {
-            "name": "Mesh",
-            "tag": "Untagged",
-            "layer": "Default",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                2,
-                2,
-                2
-            ],
-            "UID": 1608161239,
-            "PrefabID": 0,
-            "ParentUID": 677924609,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/40567950.mmh",
-                    "UID": 40567950,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
-                    "MaterialUID": 1051418604
-                }
-            ]
-        },
-        {
             "name": "Stormtrooper",
-            "tag": "Untagged",
+            "tag": "Enemy",
             "layer": "Default",
             "Active": true,
             "Position": [

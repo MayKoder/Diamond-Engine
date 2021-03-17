@@ -239,20 +239,20 @@ void M_Scene::LoadScriptsData()
 	referenceMap.clear();
 }
 
-GameObject* M_Scene::FindObjectWithTag(const char* tag)
+GameObject* M_Scene::FindObjectWithTag(GameObject* rootGameObject, const char* tag)
 {
-	std::vector<GameObject*> gameObjects;
-	root->CollectChilds(gameObjects);
+	if (rootGameObject->CompareTag(tag))
+		return rootGameObject;
 
-	for (size_t i = 0; i < gameObjects.size(); i++)
+	GameObject* ret = nullptr;
+	for (size_t i = 0; i < rootGameObject->children.size(); i++)
 	{
-		if (gameObjects[i]->CompareTag(tag))
-		{
-			GameObject* foundGameObject = gameObjects[i];
-			gameObjects.clear();
-			return foundGameObject;
-		}
+		ret = FindObjectWithTag(rootGameObject->children[i], tag);
+		if (ret != nullptr)
+			return ret;
 	}
+
+	return nullptr;
 }
 
 void M_Scene::FindGameObjectsWithTag(const char* tag, std::vector<GameObject*>& taggedObjects)

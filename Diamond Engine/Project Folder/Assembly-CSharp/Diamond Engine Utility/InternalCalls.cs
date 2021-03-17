@@ -62,6 +62,13 @@ namespace DiamondEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void PlayHaptic(float strength, int length);
     }
+
+    public class Scene
+    {
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern GameObject FindObjectWithTag(string tag);
+    }
+
     public class SceneManager
     {
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
