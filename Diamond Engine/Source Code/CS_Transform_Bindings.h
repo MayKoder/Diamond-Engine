@@ -437,13 +437,12 @@ void CS_SetBrightness(float brightLevel)
 	if (EngineExternal == nullptr)
 		return;
 
-	int aux = brightLevel;
+	float aux = brightLevel;
 	(brightLevel > 1.f) ? aux = 1.f : aux = brightLevel;
 	(brightLevel > 0.0f) ? aux = aux : aux = 0.05f;
 
-	SDL_SetWindowBrightness(EngineExternal->moduleWindow->window, brightLevel);
-	EngineExternal->moduleWindow->brightness = brightLevel;
-	//if (brightLevel == 1.0f)delete EngineExternal; EngineExternal->fpsCap;
+	SDL_SetWindowBrightness(EngineExternal->moduleWindow->window, aux);
+	EngineExternal->moduleWindow->brightness = aux;
 }
 
 float CS_GetBrightness()
