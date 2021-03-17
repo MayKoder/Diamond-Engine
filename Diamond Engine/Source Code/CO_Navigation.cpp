@@ -362,7 +362,7 @@ void C_Navigation::Select()
 		for (it = gameObject->parent->children.begin(); it != gameObject->parent->children.end(); ++it)
 		{
 			aux = static_cast<C_Navigation*>((*it)->GetComponent(Component::TYPE::NAVIGATION));
-			if (aux != nullptr && aux->is_selected)
+			if (aux != nullptr && aux->is_selected && aux != this)
 			{
 				aux->Deselect();
 			}
@@ -387,6 +387,7 @@ void C_Navigation::Select()
 
 void C_Navigation::Deselect()
 {
+
 	std::vector<int>* vec = &EngineExternal->moduleGui->uid_gameobject_of_ui_selected;
 	(*vec).erase(std::find((*vec).begin(), (*vec).end(), gameObject->UID));
 
