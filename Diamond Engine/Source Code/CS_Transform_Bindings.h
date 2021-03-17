@@ -458,7 +458,7 @@ void CS_ControllerEnableVibration(bool enable)
 	if (EngineExternal == nullptr)
 		return;
 
-	//EngineExternal->moduleRenderer3D->vsync = enable;			TODO: Link with controls itself
+	EngineExternal->moduleInput->hapticEnabled = enable;
 }
 #pragma endregion
 

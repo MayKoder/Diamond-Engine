@@ -10,9 +10,15 @@ public class Settings : DiamondComponent
 	public void OnExecuteCheckbox(bool active)
 	{
 		if (active)
-			Debug.Log("Controller Vibration ON");
-		else 
-			Debug.Log("Controller Vibration OFF");
+		{
+			Config.ControllerVibrationEnable(true); 
+			Input.PlayHaptic(0.5f, 1);
+		}
+		else
+		{
+			Config.ControllerVibrationEnable(false);
+			Input.PlayHaptic(0.5f, 5);
+		}
 	}
 	public void OnExecuteButton()
 	{

@@ -10,7 +10,7 @@
 
 #define MAX_KEYS 300
 
-ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, start_enabled), haptic(nullptr)
+ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, start_enabled), haptic(nullptr), hapticEnabled(true)
 {
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
@@ -311,5 +311,6 @@ void ModuleInput::OnGUI()
 #endif // !STANDALONE
 void ModuleInput::PlayHaptic(float strength, int length)
 {
-	SDL_HapticRumblePlay(haptic, strength, length);
+	if (hapticEnabled)
+		SDL_HapticRumblePlay(haptic, strength, length);
 }
