@@ -125,6 +125,7 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Config::GetWindowMode", CS_GetWindowMode);
 	mono_add_internal_call("DiamondEngine.Config::SetBrightness", CS_SetBrightness);
 	mono_add_internal_call("DiamondEngine.Config::GetBrightness", CS_GetBrightness);
+	mono_add_internal_call("DiamondEngine.Config::ControllerVibrationEnable", CS_ControllerEnableVibration);
 #pragma endregion
 
 

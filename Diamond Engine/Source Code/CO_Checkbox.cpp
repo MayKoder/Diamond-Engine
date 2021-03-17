@@ -5,6 +5,7 @@
 #include "RE_Texture.h"
 
 #include "GameObject.h"
+#include "CO_AudioSource.h"
 
 #include "Application.h"
 #include "MO_ResourceManager.h"
@@ -19,6 +20,7 @@ sprite_checkbox_unactive(nullptr), sprite_checkbox_unactive_hovered(nullptr), sp
 checkbox_active(false), is_selected(false)
 {
 	name = "Checkbox";
+	thisAudSource = new C_AudioSource(gameObject);
 #ifndef STANDALONE
 	sprites_freezed = false;
 #endif // !STANDALONE
@@ -44,6 +46,8 @@ C_Checkbox::~C_Checkbox()
 	if (sprite_checkbox_unactive_pressed != nullptr) {
 		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_unactive_pressed->GetUID());
 	}
+	delete thisAudSource;
+	thisAudSource = nullptr;
 }
 
 void C_Checkbox::Update()
@@ -61,7 +65,11 @@ void C_Checkbox::Update()
 	{
 	case CHECKBOXSTATE::CHECKBOXACTIVE:
 		if (is_selected)
+		{
+			thisAudSource->SetEventName(std::string("Play_UI_Button_Hover"));
+			thisAudSource->PlayEvent();
 			ChangeTexture(CHECKBOXSTATE::CHECKBOXACTIVEHOVERED);
+		}
 		break;
 	case CHECKBOXSTATE::CHECKBOXACTIVEHOVERED:
 		if (!is_selected)
@@ -69,7 +77,11 @@ void C_Checkbox::Update()
 		break;
 	case CHECKBOXSTATE::CHECKBOXUNACTIVE:
 		if (is_selected)
+		{
+			thisAudSource->SetEventName(std::string("Play_UI_Button_Hover"));
+			thisAudSource->PlayEvent();
 			ChangeTexture(CHECKBOXSTATE::CHECKBOXUNACTIVEHOVERED);
+		}
 		break;
 	case CHECKBOXSTATE::CHECKBOXUNACTIVEHOVERED:
 		if (!is_selected)
@@ -81,6 +93,8 @@ void C_Checkbox::Update()
 
 void C_Checkbox::PressCheckbox()
 {
+	thisAudSource->SetEventName(std::string("Play_UI_Button_Play"));
+	thisAudSource->PlayEvent();
 	checkbox_active = !checkbox_active;
 	if (checkbox_active) {
 		ChangeTexture(CHECKBOXSTATE::CHECKBOXACTIVEPRESSED);

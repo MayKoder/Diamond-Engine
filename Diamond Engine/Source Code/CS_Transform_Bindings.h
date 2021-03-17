@@ -452,5 +452,13 @@ float CS_GetBrightness()
 
 	return EngineExternal->moduleWindow->brightness;
 }
+
+void CS_ControllerEnableVibration(bool enable)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	//EngineExternal->moduleRenderer3D->vsync = enable;			TODO: Link with controls itself
+}
 #pragma endregion
 
