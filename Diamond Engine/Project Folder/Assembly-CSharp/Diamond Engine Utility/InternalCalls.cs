@@ -21,6 +21,9 @@ namespace DiamondEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void CloseGame();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void CreatePrefab(object prefab_path, object position, object rotation, object scale);
     }
     public class Config
     {
@@ -80,8 +83,6 @@ namespace DiamondEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void ControllerVibrationEnable(bool enable);
 
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern void CreatePrefab(object prefab_path, object position, object rotation, object scale);
     }
     public class Input
     {
