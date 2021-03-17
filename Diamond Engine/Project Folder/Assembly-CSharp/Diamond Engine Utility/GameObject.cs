@@ -40,6 +40,11 @@ namespace DiamondEngine
             return TryGetComponent<T>(typeof(T).ToString(), (int)retValue);
         }
 
+        public extern string tag
+        {
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            get;
+        }
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         extern internal T TryGetComponent<T>(string type, int inputType = 0);
@@ -48,5 +53,7 @@ namespace DiamondEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void AddComponent(int componentType);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern bool CompareTag(string tag);
     }
 }

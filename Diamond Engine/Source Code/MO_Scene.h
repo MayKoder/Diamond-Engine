@@ -31,6 +31,9 @@ public:
 	void GetAllGameObjects(std::vector<GameObject*>& gameObjects);
 	void LoadScriptsData();
 
+	GameObject* FindObjectWithTag(GameObject* rootGameObject, const char* tag);
+	void FindGameObjectsWithTag(const char* tag, std::vector<GameObject*>& taggedObjects);
+
 #ifndef STANDALONE
 	void OnGUI() override;
 
@@ -55,6 +58,8 @@ public:
 	char current_scene[64];
 	char current_scene_name[32];
 
+	std::vector<std::string> tags;
+	std::vector<std::string> layers;
 
 	void LoadHoldScene();
 private:
@@ -65,4 +70,5 @@ private:
 	void RecursiveUpdate(GameObject* parent);
 
 	void RecursivePostUpdate(GameObject* parent);
+
 };

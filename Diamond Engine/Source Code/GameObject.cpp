@@ -34,7 +34,7 @@
 
 
 GameObject::GameObject(const char* _name, GameObject* parent, int _uid) : parent(parent), name(_name), showChildren(false),
-active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr), prefabID(0u)
+active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr), prefabID(0u), tag("Untagged"), layer("Default")
 {
 
 	if(parent != nullptr)
@@ -47,7 +47,7 @@ active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), d
 	{
 		UID = EngineExternal->GetRandomInt();
 	}
-		//UID = MaykMath::Random(0, INT_MAX);
+	//UID = MaykMath::Random(0, INT_MAX);
 }
 
 
@@ -315,6 +315,8 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 
 	//Save all gameObject data
 	json_object_set_string(goData, "name", name.c_str());
+	json_object_set_string(goData, "tag", tag);
+	json_object_set_string(goData, "layer", layer);
 
 	DEJson::WriteBool(goData, "Active", active);
 	DEJson::WriteVector3(goData, "Position", &transform->position[0]);
@@ -358,6 +360,16 @@ void GameObject::LoadFromJson(JSON_Object* _obj)
 	transform->SetTransformMatrix(DEJson::ReadVector3(_obj, "Position"), DEJson::ReadQuat(_obj, "Rotation"), DEJson::ReadVector3(_obj, "Scale"));
 	prefabID = DEJson::ReadInt(_obj, "PrefabID");
 	LoadComponents(json_object_get_array(_obj, "Components"));
+
+	const char* json_tag = DEJson::ReadString(_obj, "tag");
+
+	if (json_tag == nullptr) sprintf_s(tag, "Untagged");
+	else sprintf_s(tag, json_tag);
+
+	const char* json_layer = DEJson::ReadString(_obj, "layer");
+
+	if (json_layer == nullptr) sprintf_s(layer, "Default");
+	else sprintf_s(layer, json_layer);
 }
 
 
@@ -448,7 +460,7 @@ void GameObject::CollectChilds(std::vector<GameObject*>& vector)
 		children[i]->CollectChilds(vector);
 }
 
-bool GameObject::CompareTag(char* _tag)
+bool GameObject::CompareTag(const char* _tag)
 {
 	return strcmp(tag, _tag) == 0;
 }

@@ -15,7 +15,6 @@ void MaterialImporter::CreateBaseMaterialFile(const char* path)
 	JSON_Value* file = json_value_init_object();
 	DEConfig root_object(json_value_get_object(file));
 
-
 	std::string name;
 	FileSystem::GetFileName(path, name, false);
 	root_object.WriteString("name", name.c_str());
