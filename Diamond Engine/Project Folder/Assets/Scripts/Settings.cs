@@ -84,7 +84,7 @@ public class Settings : DiamondComponent
 			toDisable = firstFrame = false;
 
 		}
-		if (Input.GetGamepadButton(DEControllerButton.B) == KeyState.KEY_DOWN || toDisable)
+		if (toDisable)
 		{
 
 			toDisable = false;
