@@ -431,6 +431,28 @@ int CS_GetWindowMode()
 
 	return EngineExternal->moduleWindow->windowMode;
 }
+
+void CS_SetBrightness(float brightLevel)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	int aux = brightLevel;
+	(brightLevel > 1.f) ? aux = 1.f : aux = brightLevel;
+	(brightLevel > 0.0f) ? aux = aux : aux = 0.05f;
+
+	SDL_SetWindowBrightness(EngineExternal->moduleWindow->window, brightLevel);
+	EngineExternal->moduleWindow->brightness = brightLevel;
+	//if (brightLevel == 1.0f)delete EngineExternal; EngineExternal->fpsCap;
+}
+
+float CS_GetBrightness()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleWindow->brightness;
+}
 #pragma endregion
 
 void BindConfigMethods()
@@ -440,4 +462,6 @@ void BindConfigMethods()
 	mono_add_internal_call("DiamondEngine.Config::GetResolution", CS_GetResolution);
 	mono_add_internal_call("DiamondEngine.Config::SetWindowMode", CS_SetWindowMode);
 	mono_add_internal_call("DiamondEngine.Config::GetWindowMode", CS_GetWindowMode);
+	mono_add_internal_call("DiamondEngine.Config::SetBrightness", CS_SetBrightness);
+	mono_add_internal_call("DiamondEngine.Config::GetBrightness", CS_GetBrightness);
 }

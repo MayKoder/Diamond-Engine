@@ -17,16 +17,19 @@ public class DisSett : DiamondComponent
 	}
 	public void OnExecuteButton()
 	{
+		Debug.Log("Enter button");
 		if (gameObject.Name == "Return")
 			toDisable = true;
-		if (gameObject.Name == "ResolutionUp")
+		else if (gameObject.Name == "ResolutionUp")
 			Config.SetResolution(Config.GetResolution() + 1);
-		if (gameObject.Name == "ResolutionDown")
+		else if (gameObject.Name == "ResolutionDown")
 			Config.SetResolution(Config.GetResolution() - 1);
-		if (gameObject.Name == "WindowModeUp")
+		else  if (gameObject.Name == "WindowModeUp")
 			Config.SetWindowMode(Config.GetWindowMode() + 1);
-		if (gameObject.Name == "WindowModeDown")
+		else if (gameObject.Name == "WindowModeDown")
 			Config.SetWindowMode(Config.GetWindowMode() - 1);
+		
+		Debug.Log("Executed");
 	}
 	public void Update()
 	{

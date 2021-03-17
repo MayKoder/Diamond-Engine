@@ -16,12 +16,10 @@ public class Settings : DiamondComponent
 	}
 	public void OnExecuteButton()
 	{
-		if (gameObject.Name == "Brightness")
-			Debug.Log("Brightness");
 		if (gameObject.Name == "BrightnessUp")
-			Debug.Log("BrightnessUp");
+			Config.SetBrightness(Config.GetBrightness() + 0.05f); Debug.Log(Config.GetBrightness());
 		if (gameObject.Name == "BrightnessDown")
-			Debug.Log("BrightnessDown");
+			Config.SetBrightness(Config.GetBrightness() - 0.05f); Debug.Log(Config.GetBrightness());
 
 		if (gameObject.Name == "MasterVolume")
 			Debug.Log("MasterVolume");
