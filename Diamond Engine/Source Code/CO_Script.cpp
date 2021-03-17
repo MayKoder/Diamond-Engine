@@ -334,9 +334,12 @@ void C_Script::LoadScriptData(const char* scriptName)
 void C_Script::CollisionCallback(bool isTrigger, GameObject* collidedGameObject, C_Script* script)
 {
 	void* params[1];
+	LOG(LogType::L_WARNING, "Collided object: %s, Collider object: %s", gameObject->tag, collidedGameObject->tag);
+	
 	if (script != nullptr)
 	{
-		params[0] = mono_gchandle_get_target(script->noGCobject);
+		params[0] = EngineExternal->moduleMono->GoToCSGO(collidedGameObject);
+		//params[0] = mono_gchandle_get_target(script->noGCobject);
 	}
 	else
 	{

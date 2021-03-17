@@ -7,7 +7,7 @@
 
 MonoString* GetTag(MonoObject* cs_Object)
 {
-	GameObject* cpp_gameObject = DECS_Comp_To_GameObject(cs_Object);
+	GameObject* cpp_gameObject = EngineExternal->moduleMono->GameObject_From_CSGO(cs_Object);
 
 	return mono_string_new(EngineExternal->moduleMono->domain, cpp_gameObject->tag);
 }
