@@ -156,15 +156,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/white_second_button_hover.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/1026421016.dds",
-                    "Pressed_UID": 1026421016,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/white_second_button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1026421016.dds",
-                    "Hovered_UID": 1026421016,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/white_second_button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/786971987.dds",
-                    "Unhovered_UID": 786971987,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
+                    "Pressed_UID": 356214008,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
+                    "Hovered_UID": 828696110,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
+                    "Unhovered_UID": 861183043,
                     "Script_Name": "StartMenu",
                     "ButtonState": 1,
                     "Is Selected": true
@@ -172,9 +172,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/white_second_button_hover.png",
-                    "LibraryPath": "Library\/Textures\/1026421016.dds",
-                    "UID": 1026421016
+                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "LibraryPath": "Library\/Textures\/828696110.dds",
+                    "UID": 828696110
                 },
                 {
                     "Type": 17,
@@ -272,13 +272,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -16.299999237060547,
-                        -3.9000000953674316
+                        -6.6999998092651367,
+                        -1.2999999523162842
                     ],
                     "Rotation": 0,
                     "Size": [
-                        16.899999618530273,
-                        20
+                        13.300000190734863,
+                        15.800000190734863
                     ]
                 },
                 {
@@ -354,25 +354,25 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/white_second_button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/791717364.dds",
-                    "Pressed_UID": 791717364,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/white_second_button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1026421016.dds",
-                    "Hovered_UID": 1026421016,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/white_second_button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/786971987.dds",
-                    "Unhovered_UID": 786971987,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
+                    "Pressed_UID": 356214008,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
+                    "Hovered_UID": 828696110,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
+                    "Unhovered_UID": 861183043,
                     "Script_Name": "StartMenu",
-                    "ButtonState": 1,
-                    "Is Selected": true
+                    "ButtonState": 2,
+                    "Is Selected": false
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/white_second_button_hover.png",
-                    "LibraryPath": "Library\/Textures\/1026421016.dds",
-                    "UID": 1026421016
+                    "AssetPath": "Assets\/UI\/MENU\/button.png",
+                    "LibraryPath": "Library\/Textures\/861183043.dds",
+                    "UID": 861183043
                 },
                 {
                     "Type": 17,
@@ -472,12 +472,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -16.5,
-                        -3.9000000953674316
+                        -11.300000190734863,
+                        -1.7000000476837158
                     ],
                     "Rotation": 0,
                     "Size": [
-                        16.899999618530273,
+                        13.100000381469727,
                         20
                     ]
                 },
@@ -554,15 +554,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/white_second_button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/791717364.dds",
-                    "Pressed_UID": 791717364,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/white_second_button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1026421016.dds",
-                    "Hovered_UID": 1026421016,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/white_second_button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/786971987.dds",
-                    "Unhovered_UID": 786971987,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
+                    "Pressed_UID": 356214008,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
+                    "Hovered_UID": 828696110,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
+                    "Unhovered_UID": 861183043,
                     "Script_Name": "StartMenu",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -570,9 +570,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/white_second_button.png",
-                    "LibraryPath": "Library\/Textures\/786971987.dds",
-                    "UID": 786971987
+                    "AssetPath": "Assets\/UI\/MENU\/button.png",
+                    "LibraryPath": "Library\/Textures\/861183043.dds",
+                    "UID": 861183043
                 },
                 {
                     "Type": 17,
@@ -672,13 +672,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -15.600000381469727,
-                        -3.5
+                        -7.3000001907348633,
+                        -2.4000000953674316
                     ],
                     "Rotation": 0,
                     "Size": [
-                        16.799999237060547,
-                        20
+                        14.199999809265137,
+                        17.899999618530273
                     ]
                 },
                 {
@@ -812,9 +812,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-black.png",
-                    "LibraryPath": "Library\/Textures\/934250681.dds",
-                    "UID": 934250681
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/124612374.dds",
+                    "UID": 124612374
                 }
             ]
         },
@@ -850,12 +850,12 @@
                     "Active": true,
                     "Position": [
                         0,
-                        -76
+                        -67.099998474121094
                     ],
                     "Rotation": 0,
                     "Size": [
-                        11.5,
-                        7.4000000953674316
+                        5.6999998092651367,
+                        9
                     ]
                 },
                 {
@@ -869,15 +869,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Pressed_UID": 934250681,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Hovered_UID": 481961565,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_return_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/570273064.dds",
+                    "Pressed_UID": 570273064,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_return_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1177961007.dds",
+                    "Hovered_UID": 1177961007,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button_return.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1583215856.dds",
+                    "Unhovered_UID": 1583215856,
                     "Script_Name": "Return",
                     "ButtonState": 1,
                     "Is Selected": true
@@ -885,9 +885,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
+                    "AssetPath": "Assets\/UI\/MENU\/button_return_hover.png",
+                    "LibraryPath": "Library\/Textures\/1177961007.dds",
+                    "UID": 1177961007
                 },
                 {
                     "Type": 17,
@@ -913,68 +913,6 @@
                     "bigBrother": 1311017402,
                     "toDisable": false,
                     "firstFrame": true
-                }
-            ]
-        },
-        {
-            "name": "Text",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 2060584716,
-            "PrefabID": 0,
-            "ParentUID": 305398496,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        -11.100000381469727,
-                        -2.9000000953674316
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        15.5,
-                        20
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
-                    "MaterialUID": 744544911
-                },
-                {
-                    "Type": 9,
-                    "Active": true,
-                    "text": "Return",
-                    "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
-                    "textColor": [
-                        0,
-                        0,
-                        0
-                    ]
                 }
             ]
         },
@@ -1043,8 +981,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        35.700000762939453,
-                        68.699996948242188
+                        39.099998474121094,
+                        80.699996948242188
                     ]
                 },
                 {
@@ -1058,9 +996,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-black.png",
-                    "LibraryPath": "Library\/Textures\/934250681.dds",
-                    "UID": 934250681
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/723448472.dds",
+                    "UID": 723448472
                 }
             ]
         },
@@ -1096,12 +1034,12 @@
                     "Active": true,
                     "Position": [
                         13.399999618530273,
-                        44.900001525878906
+                        37.099998474121094
                     ],
                     "Rotation": 0,
                     "Size": [
-                        6.3000001907348633,
-                        7
+                        6,
+                        8.5
                     ]
                 },
                 {
@@ -1115,24 +1053,24 @@
                 {
                     "Type": 8,
                     "Active": true,
-                    "Active_Pressed_AssetsPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
-                    "Active_Pressed_LibraryPath": "Library\/Textures\/113519198.dds",
-                    "Active_Pressed_UID": 113519198,
-                    "Active_Hovered_AssetsPath": "Assets\/Pilot\/Material.002_Metallic.png",
-                    "Active_Hovered_LibraryPath": "Library\/Textures\/1001549928.dds",
-                    "Active_Hovered_UID": 1001549928,
-                    "Active_AssetsPath": "Assets\/Pilot\/Material.002_Base_Color.png",
-                    "Active_LibraryPath": "Library\/Textures\/1907274499.dds",
-                    "Active_UID": 1907274499,
-                    "Unactive_Pressed_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Unactive_Pressed_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Unactive_Pressed_UID": 481961565,
-                    "Unactive_Hovered_AssetsPath": "Assets\/Pilot\/Material.002_Roughness.png",
-                    "Unactive_Hovered_LibraryPath": "Library\/Textures\/27816394.dds",
-                    "Unactive_Hovered_UID": 27816394,
-                    "Unactive_AssetsPath": "Assets\/Pilot\/Material.002_Normal_OpenGL.png",
-                    "Unactive_LibraryPath": "Library\/Textures\/580262998.dds",
-                    "Unactive_UID": 580262998,
+                    "Active_Pressed_AssetsPath": "Assets\/UI\/MENU\/checkbox_full_pressed.png",
+                    "Active_Pressed_LibraryPath": "Library\/Textures\/1600050027.dds",
+                    "Active_Pressed_UID": 1600050027,
+                    "Active_Hovered_AssetsPath": "Assets\/UI\/MENU\/checkbox_full_hover.png",
+                    "Active_Hovered_LibraryPath": "Library\/Textures\/1899417533.dds",
+                    "Active_Hovered_UID": 1899417533,
+                    "Active_AssetsPath": "Assets\/UI\/MENU\/checkbox_full.png",
+                    "Active_LibraryPath": "Library\/Textures\/1567896083.dds",
+                    "Active_UID": 1567896083,
+                    "Unactive_Pressed_AssetsPath": "Assets\/UI\/MENU\/checkbox_empty_pressed.png",
+                    "Unactive_Pressed_LibraryPath": "Library\/Textures\/924580841.dds",
+                    "Unactive_Pressed_UID": 924580841,
+                    "Unactive_Hovered_AssetsPath": "Assets\/UI\/MENU\/checkbox_empty_hover.png",
+                    "Unactive_Hovered_LibraryPath": "Library\/Textures\/1444439017.dds",
+                    "Unactive_Hovered_UID": 1444439017,
+                    "Unactive_AssetsPath": "Assets\/UI\/MENU\/checkbox_empty.png",
+                    "Unactive_LibraryPath": "Library\/Textures\/303323008.dds",
+                    "Unactive_UID": 303323008,
                     "Script_Name": "DisSett",
                     "ButtonState": 4,
                     "Checkbox Active": false,
@@ -1141,9 +1079,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Pilot\/Material.002_Roughness.png",
-                    "LibraryPath": "Library\/Textures\/27816394.dds",
-                    "UID": 27816394
+                    "AssetPath": "Assets\/UI\/MENU\/checkbox_empty_hover.png",
+                    "LibraryPath": "Library\/Textures\/1444439017.dds",
+                    "UID": 1444439017
                 },
                 {
                     "Type": 17,
@@ -1250,7 +1188,7 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
+                        15,
                         20
                     ]
                 },
@@ -1269,7 +1207,7 @@
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0.36000001430511475,
+                        1,
                         1,
                         1
                     ]
@@ -1308,7 +1246,7 @@
                     "Active": true,
                     "Position": [
                         0,
-                        -0.80000001192092896
+                        -3.7999999523162842
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -1330,21 +1268,21 @@
                     "Pressed_AssetsPath": "Assets\/Pilot\/Material.002_Base_Color.png",
                     "Pressed_LibraryPath": "Library\/Textures\/1907274499.dds",
                     "Pressed_UID": 1907274499,
-                    "Hovered_AssetsPath": "Assets\/Pilot\/Material.002_Metallic.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1001549928.dds",
-                    "Hovered_UID": 1001549928,
-                    "Unhovered_AssetsPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/113519198.dds",
-                    "Unhovered_UID": 113519198,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/bar_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1884509864.dds",
+                    "Hovered_UID": 1884509864,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/bar_empty.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/216871503.dds",
+                    "Unhovered_UID": 216871503,
                     "ButtonState": 2,
                     "Is Selected": false
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
-                    "LibraryPath": "Library\/Textures\/113519198.dds",
-                    "UID": 113519198
+                    "AssetPath": "Assets\/UI\/MENU\/bar_empty.png",
+                    "LibraryPath": "Library\/Textures\/216871503.dds",
+                    "UID": 216871503
                 },
                 {
                     "Type": 17,
@@ -1472,12 +1410,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -19.899999618530273,
-                        8.1999998092651367
+                        -15.300000190734863,
+                        10.699999809265137
                     ],
                     "Rotation": 0,
                     "Size": [
-                        17.299999237060547,
+                        13.5,
                         17.799999237060547
                     ]
                 },
@@ -1496,7 +1434,7 @@
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0.51999998092651367,
+                        1,
                         1,
                         1
                     ]
@@ -1539,8 +1477,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        4,
-                        3
+                        3.4000000953674316,
+                        5.6999998092651367
                     ]
                 },
                 {
@@ -1554,15 +1492,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Pressed_UID": 934250681,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Hovered_UID": 481961565,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_right_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/998041583.dds",
+                    "Pressed_UID": 998041583,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/986664332.dds",
+                    "Hovered_UID": 986664332,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/530646613.dds",
+                    "Unhovered_UID": 530646613,
                     "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -1570,9 +1508,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/arrow_right.png",
+                    "LibraryPath": "Library\/Textures\/530646613.dds",
+                    "UID": 530646613
                 },
                 {
                     "Type": 17,
@@ -1629,8 +1567,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        4,
-                        3
+                        3.4000000953674316,
+                        5.6999998092651367
                     ]
                 },
                 {
@@ -1644,15 +1582,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Pressed_UID": 934250681,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Hovered_UID": 481961565,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_left_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/106300675.dds",
+                    "Pressed_UID": 106300675,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1055159031.dds",
+                    "Hovered_UID": 1055159031,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/387000833.dds",
+                    "Unhovered_UID": 387000833,
                     "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -1660,9 +1598,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/arrow_left.png",
+                    "LibraryPath": "Library\/Textures\/387000833.dds",
+                    "UID": 387000833
                 },
                 {
                     "Type": 17,
@@ -1680,6 +1618,68 @@
                     "bigBrother": 1311017402,
                     "toDisable": true,
                     "firstFrame": true
+                }
+            ]
+        },
+        {
+            "name": "Resolution Value",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 220507385,
+            "PrefabID": 0,
+            "ParentUID": 571186766,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -17.600000381469727,
+                        -3.2999999523162842
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        13.5,
+                        20
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "1920 x 1080",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         },
@@ -1715,7 +1715,7 @@
                     "Active": true,
                     "Position": [
                         0,
-                        -36.200000762939453
+                        -38.5
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -1737,12 +1737,12 @@
                     "Pressed_AssetsPath": "Assets\/Pilot\/Material.002_Base_Color.png",
                     "Pressed_LibraryPath": "Library\/Textures\/1907274499.dds",
                     "Pressed_UID": 1907274499,
-                    "Hovered_AssetsPath": "Assets\/Pilot\/Material.002_Metallic.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1001549928.dds",
-                    "Hovered_UID": 1001549928,
-                    "Unhovered_AssetsPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/113519198.dds",
-                    "Unhovered_UID": 113519198,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/bar_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1884509864.dds",
+                    "Hovered_UID": 1884509864,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/bar_empty.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/216871503.dds",
+                    "Unhovered_UID": 216871503,
                     "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -1750,9 +1750,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
-                    "LibraryPath": "Library\/Textures\/113519198.dds",
-                    "UID": 113519198
+                    "AssetPath": "Assets\/UI\/MENU\/bar_empty.png",
+                    "LibraryPath": "Library\/Textures\/216871503.dds",
+                    "UID": 216871503
                 },
                 {
                     "Type": 17,
@@ -1889,12 +1889,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -30.100000381469727,
+                        -18.299999237060547,
                         7.5999999046325684
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
+                        13.5,
                         20
                     ]
                 },
@@ -1913,7 +1913,7 @@
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0.40000000596046448,
+                        1,
                         1,
                         1
                     ]
@@ -1956,8 +1956,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        4,
-                        3
+                        3.4000000953674316,
+                        5.6999998092651367
                     ]
                 },
                 {
@@ -1971,15 +1971,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Pressed_UID": 934250681,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Hovered_UID": 481961565,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_right_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/998041583.dds",
+                    "Pressed_UID": 998041583,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/986664332.dds",
+                    "Hovered_UID": 986664332,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/530646613.dds",
+                    "Unhovered_UID": 530646613,
                     "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -1987,9 +1987,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/arrow_right.png",
+                    "LibraryPath": "Library\/Textures\/530646613.dds",
+                    "UID": 530646613
                 },
                 {
                     "Type": 17,
@@ -2046,8 +2046,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        4,
-                        3
+                        3.4000000953674316,
+                        5.6999998092651367
                     ]
                 },
                 {
@@ -2061,15 +2061,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Pressed_UID": 934250681,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Hovered_UID": 481961565,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_left_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/106300675.dds",
+                    "Pressed_UID": 106300675,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1055159031.dds",
+                    "Hovered_UID": 1055159031,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/387000833.dds",
+                    "Unhovered_UID": 387000833,
                     "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -2077,9 +2077,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/arrow_left.png",
+                    "LibraryPath": "Library\/Textures\/387000833.dds",
+                    "UID": 387000833
                 },
                 {
                     "Type": 17,
@@ -2097,6 +2097,68 @@
                     "bigBrother": 1311017402,
                     "toDisable": true,
                     "firstFrame": true
+                }
+            ]
+        },
+        {
+            "name": "Window Mode Value",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1731542329,
+            "PrefabID": 0,
+            "ParentUID": 1675214331,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -15.100000381469727,
+                        -3.7999999523162842
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        13.5,
+                        20
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "Full Screen",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/arial.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         },
@@ -2131,13 +2193,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        0,
-                        -74.400001525878906
+                        27.799999237060547,
+                        -71.599998474121094
                     ],
                     "Rotation": 0,
                     "Size": [
-                        15.100000381469727,
-                        8.3000001907348633
+                        5.6999998092651367,
+                        9
                     ]
                 },
                 {
@@ -2151,15 +2213,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Pilot\/Material.002_Base_Color.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/1907274499.dds",
-                    "Pressed_UID": 1907274499,
-                    "Hovered_AssetsPath": "Assets\/Pilot\/Material.002_Metallic.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1001549928.dds",
-                    "Hovered_UID": 1001549928,
-                    "Unhovered_AssetsPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/113519198.dds",
-                    "Unhovered_UID": 113519198,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_return_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/570273064.dds",
+                    "Pressed_UID": 570273064,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_return_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1177961007.dds",
+                    "Hovered_UID": 1177961007,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button_return.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1583215856.dds",
+                    "Unhovered_UID": 1583215856,
                     "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -2167,9 +2229,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
-                    "LibraryPath": "Library\/Textures\/113519198.dds",
-                    "UID": 113519198
+                    "AssetPath": "Assets\/UI\/MENU\/button_return.png",
+                    "LibraryPath": "Library\/Textures\/1583215856.dds",
+                    "UID": 1583215856
                 },
                 {
                     "Type": 17,
@@ -2259,9 +2321,9 @@
                 1,
                 1
             ],
-            "UID": 437071187,
+            "UID": 1224022411,
             "PrefabID": 0,
-            "ParentUID": 883108457,
+            "ParentUID": 1237621552,
             "Components": [
                 {
                     "Type": 1,
@@ -2271,13 +2333,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -14,
-                        -2.7000000476837158
+                        -29.299999237060547,
+                        60.599998474121094
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
-                        20
+                        17.299999237060547,
+                        21.799999237060547
                     ]
                 },
                 {
@@ -2291,13 +2353,13 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Return",
+                    "text": "Display",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0,
-                        0,
-                        0
+                        1,
+                        1,
+                        1
                     ]
                 }
             ]
@@ -2367,8 +2429,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        35.700000762939453,
-                        68.699996948242188
+                        49.700000762939453,
+                        78.599998474121094
                     ]
                 },
                 {
@@ -2382,9 +2444,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-black.png",
-                    "LibraryPath": "Library\/Textures\/934250681.dds",
-                    "UID": 934250681
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/723448472.dds",
+                    "UID": 723448472
                 }
             ]
         },
@@ -2419,13 +2481,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        0,
-                        39.400001525878906
+                        21.799999237060547,
+                        41
                     ],
                     "Rotation": 0,
                     "Size": [
-                        25.200000762939453,
-                        4.6999998092651367
+                        20.899999618530273,
+                        5.1999998092651367
                     ]
                 },
                 {
@@ -2442,12 +2504,12 @@
                     "Pressed_AssetsPath": "Assets\/Baker_house.png",
                     "Pressed_LibraryPath": "Library\/Textures\/366394407.dds",
                     "Pressed_UID": 366394407,
-                    "Hovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Hovered_UID": 1721814459,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Unhovered_UID": 481961565,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/bar_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1884509864.dds",
+                    "Hovered_UID": 1884509864,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/bar_empty_borderless.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/2001046214.dds",
+                    "Unhovered_UID": 2001046214,
                     "Script_Name": "Settings",
                     "ButtonState": 1,
                     "Is Selected": true
@@ -2455,9 +2517,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/bar_hover.png",
+                    "LibraryPath": "Library\/Textures\/1884509864.dds",
+                    "UID": 1884509864
                 },
                 {
                     "Type": 17,
@@ -2594,12 +2656,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -22.200000762939453,
-                        6.9000000953674316
+                        -67.300003051757813,
+                        -2.7999999523162842
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
+                        13.5,
                         20
                     ]
                 },
@@ -2618,7 +2680,7 @@
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0.33000001311302185,
+                        1,
                         1,
                         1
                     ]
@@ -2656,13 +2718,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        30.399999618530273,
+                        23,
                         0
                     ],
                     "Rotation": 0,
                     "Size": [
-                        4,
-                        3.5
+                        2.0999999046325684,
+                        5
                     ]
                 },
                 {
@@ -2676,15 +2738,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Pressed_UID": 481961565,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Hovered_UID": 934250681,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_right_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/70978250.dds",
+                    "Pressed_UID": 70978250,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1505315464.dds",
+                    "Hovered_UID": 1505315464,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1346482548.dds",
+                    "Unhovered_UID": 1346482548,
                     "Script_Name": "Settings",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -2692,9 +2754,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/arrow_right.png",
+                    "LibraryPath": "Library\/Textures\/1346482548.dds",
+                    "UID": 1346482548
                 },
                 {
                     "Type": 17,
@@ -2746,13 +2808,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -30.399999618530273,
+                        -23,
                         0
                     ],
                     "Rotation": 0,
                     "Size": [
-                        4,
-                        3.5
+                        2.0999999046325684,
+                        5
                     ]
                 },
                 {
@@ -2766,15 +2828,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Pressed_UID": 481961565,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Hovered_UID": 934250681,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_left_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1878130604.dds",
+                    "Pressed_UID": 1878130604,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/708143523.dds",
+                    "Hovered_UID": 708143523,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1148197231.dds",
+                    "Unhovered_UID": 1148197231,
                     "Script_Name": "Settings",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -2782,9 +2844,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/arrow_left.png",
+                    "LibraryPath": "Library\/Textures\/1148197231.dds",
+                    "UID": 1148197231
                 },
                 {
                     "Type": 17,
@@ -2802,6 +2864,63 @@
                     "bigBrother": 1311017402,
                     "toDisable": false,
                     "firstFrame": false
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1105870439,
+            "PrefabID": 0,
+            "ParentUID": 2065258024,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        0
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        20,
+                        3.7999999523162842
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/2000871953.dds",
+                    "UID": 2000871953
                 }
             ]
         },
@@ -2836,13 +2955,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        0,
-                        16.200000762939453
+                        21.799999237060547,
+                        18
                     ],
                     "Rotation": 0,
                     "Size": [
-                        25.200000762939453,
-                        4.6999998092651367
+                        20.899999618530273,
+                        5.1999998092651367
                     ]
                 },
                 {
@@ -2859,12 +2978,12 @@
                     "Pressed_AssetsPath": "Assets\/Baker_house.png",
                     "Pressed_LibraryPath": "Library\/Textures\/366394407.dds",
                     "Pressed_UID": 366394407,
-                    "Hovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Hovered_UID": 1721814459,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Unhovered_UID": 481961565,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/bar_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1884509864.dds",
+                    "Hovered_UID": 1884509864,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/bar_empty_borderless.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/2001046214.dds",
+                    "Unhovered_UID": 2001046214,
                     "Script_Name": "Settings",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -2872,9 +2991,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
+                    "AssetPath": "Assets\/UI\/MENU\/bar_empty_borderless.png",
+                    "LibraryPath": "Library\/Textures\/2001046214.dds",
+                    "UID": 2001046214
                 },
                 {
                     "Type": 17,
@@ -3011,12 +3130,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -27.700000762939453,
-                        7.0999999046325684
+                        -67.300003051757813,
+                        -3.2999999523162842
                     ],
                     "Rotation": 0,
                     "Size": [
-                        17.5,
+                        12.199999809265137,
                         18.600000381469727
                     ]
                 },
@@ -3035,7 +3154,7 @@
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0.25999999046325684,
+                        1,
                         1,
                         1
                     ]
@@ -3073,13 +3192,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        30.299999237060547,
+                        23,
                         0
                     ],
                     "Rotation": 0,
                     "Size": [
-                        4,
-                        3.5
+                        2.0999999046325684,
+                        5
                     ]
                 },
                 {
@@ -3093,15 +3212,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Pressed_UID": 481961565,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Hovered_UID": 934250681,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_right_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/70978250.dds",
+                    "Pressed_UID": 70978250,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1505315464.dds",
+                    "Hovered_UID": 1505315464,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1346482548.dds",
+                    "Unhovered_UID": 1346482548,
                     "Script_Name": "Settings",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -3109,9 +3228,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/arrow_right.png",
+                    "LibraryPath": "Library\/Textures\/1346482548.dds",
+                    "UID": 1346482548
                 },
                 {
                     "Type": 17,
@@ -3163,13 +3282,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -30.299999237060547,
+                        -23,
                         0
                     ],
                     "Rotation": 0,
                     "Size": [
-                        4,
-                        3.5
+                        2.0999999046325684,
+                        5
                     ]
                 },
                 {
@@ -3183,15 +3302,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Pressed_UID": 481961565,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Hovered_UID": 934250681,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_left_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1878130604.dds",
+                    "Pressed_UID": 1878130604,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/708143523.dds",
+                    "Hovered_UID": 708143523,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1148197231.dds",
+                    "Unhovered_UID": 1148197231,
                     "Script_Name": "Settings",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -3199,9 +3318,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/arrow_left.png",
+                    "LibraryPath": "Library\/Textures\/1148197231.dds",
+                    "UID": 1148197231
                 },
                 {
                     "Type": 17,
@@ -3219,6 +3338,63 @@
                     "bigBrother": 1311017402,
                     "toDisable": false,
                     "firstFrame": false
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1752632962,
+            "PrefabID": 0,
+            "ParentUID": 2058544448,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        0
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        20,
+                        3.7999999523162842
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/2000871953.dds",
+                    "UID": 2000871953
                 }
             ]
         },
@@ -3253,13 +3429,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        0,
-                        -7.5
+                        21.799999237060547,
+                        -4.0999999046325684
                     ],
                     "Rotation": 0,
                     "Size": [
-                        25.200000762939453,
-                        4.6999998092651367
+                        20.899999618530273,
+                        5.1999998092651367
                     ]
                 },
                 {
@@ -3276,12 +3452,12 @@
                     "Pressed_AssetsPath": "Assets\/Baker_house.png",
                     "Pressed_LibraryPath": "Library\/Textures\/366394407.dds",
                     "Pressed_UID": 366394407,
-                    "Hovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Hovered_UID": 1721814459,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Unhovered_UID": 481961565,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/bar_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1884509864.dds",
+                    "Hovered_UID": 1884509864,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/bar_empty_borderless.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/2001046214.dds",
+                    "Unhovered_UID": 2001046214,
                     "Script_Name": "Settings",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -3289,9 +3465,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
+                    "AssetPath": "Assets\/UI\/MENU\/bar_empty_borderless.png",
+                    "LibraryPath": "Library\/Textures\/2001046214.dds",
+                    "UID": 2001046214
                 },
                 {
                     "Type": 17,
@@ -3428,13 +3604,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -22.5,
-                        5.4000000953674316
+                        -67.300003051757813,
+                        -3.2999999523162842
                     ],
                     "Rotation": 0,
                     "Size": [
-                        15.399999618530273,
-                        16.299999237060547
+                        12.199999809265137,
+                        18.600000381469727
                     ]
                 },
                 {
@@ -3452,7 +3628,7 @@
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0.2800000011920929,
+                        1,
                         1,
                         1
                     ]
@@ -3490,13 +3666,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -30.299999237060547,
+                        -23,
                         0
                     ],
                     "Rotation": 0,
                     "Size": [
-                        4,
-                        3.5
+                        2.0999999046325684,
+                        5
                     ]
                 },
                 {
@@ -3510,15 +3686,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Pressed_UID": 481961565,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Hovered_UID": 934250681,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_left_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1878130604.dds",
+                    "Pressed_UID": 1878130604,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/708143523.dds",
+                    "Hovered_UID": 708143523,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1148197231.dds",
+                    "Unhovered_UID": 1148197231,
                     "Script_Name": "Settings",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -3526,9 +3702,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/arrow_left.png",
+                    "LibraryPath": "Library\/Textures\/1148197231.dds",
+                    "UID": 1148197231
                 },
                 {
                     "Type": 17,
@@ -3580,13 +3756,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        30.399999618530273,
+                        23,
                         0
                     ],
                     "Rotation": 0,
                     "Size": [
-                        4,
-                        3.5
+                        2.0999999046325684,
+                        5
                     ]
                 },
                 {
@@ -3600,15 +3776,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Pressed_UID": 481961565,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Hovered_UID": 934250681,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_right_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/70978250.dds",
+                    "Pressed_UID": 70978250,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1505315464.dds",
+                    "Hovered_UID": 1505315464,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1346482548.dds",
+                    "Unhovered_UID": 1346482548,
                     "Script_Name": "Settings",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -3616,9 +3792,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/arrow_right.png",
+                    "LibraryPath": "Library\/Textures\/1346482548.dds",
+                    "UID": 1346482548
                 },
                 {
                     "Type": 17,
@@ -3636,6 +3812,63 @@
                     "bigBrother": 1311017402,
                     "toDisable": false,
                     "firstFrame": false
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 38624862,
+            "PrefabID": 0,
+            "ParentUID": 691744878,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        0
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        20,
+                        3.7999999523162842
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/2000871953.dds",
+                    "UID": 2000871953
                 }
             ]
         },
@@ -3670,13 +3903,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        0,
-                        -30.600000381469727
+                        21.799999237060547,
+                        -28.100000381469727
                     ],
                     "Rotation": 0,
                     "Size": [
-                        25.200000762939453,
-                        4.6999998092651367
+                        20.899999618530273,
+                        5.1999998092651367
                     ]
                 },
                 {
@@ -3693,22 +3926,22 @@
                     "Pressed_AssetsPath": "Assets\/Baker_house.png",
                     "Pressed_LibraryPath": "Library\/Textures\/366394407.dds",
                     "Pressed_UID": 366394407,
-                    "Hovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Hovered_UID": 1721814459,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Unhovered_UID": 481961565,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/bar_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1884509864.dds",
+                    "Hovered_UID": 1884509864,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/bar_empty_borderless.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/2001046214.dds",
+                    "Unhovered_UID": 2001046214,
                     "Script_Name": "Settings",
-                    "ButtonState": 1,
-                    "Is Selected": true
+                    "ButtonState": 2,
+                    "Is Selected": false
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/bar_empty_borderless.png",
+                    "LibraryPath": "Library\/Textures\/2001046214.dds",
+                    "UID": 2001046214
                 },
                 {
                     "Type": 17,
@@ -3845,13 +4078,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -30,
-                        7
+                        -67.300003051757813,
+                        -1.8999999761581421
                     ],
                     "Rotation": 0,
                     "Size": [
-                        13.5,
-                        18.200000762939453
+                        9,
+                        17.899999618530273
                     ]
                 },
                 {
@@ -3869,7 +4102,7 @@
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0,
+                        1,
                         1,
                         1
                     ]
@@ -3907,13 +4140,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        30.399999618530273,
+                        23,
                         0
                     ],
                     "Rotation": 0,
                     "Size": [
-                        4,
-                        3.5
+                        2.0999999046325684,
+                        5
                     ]
                 },
                 {
@@ -3927,15 +4160,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Pressed_UID": 481961565,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Hovered_UID": 934250681,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_right_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/70978250.dds",
+                    "Pressed_UID": 70978250,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1505315464.dds",
+                    "Hovered_UID": 1505315464,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1346482548.dds",
+                    "Unhovered_UID": 1346482548,
                     "Script_Name": "Settings",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -3943,9 +4176,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/arrow_right.png",
+                    "LibraryPath": "Library\/Textures\/1346482548.dds",
+                    "UID": 1346482548
                 },
                 {
                     "Type": 17,
@@ -3997,13 +4230,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -30.5,
+                        -23,
                         0
                     ],
                     "Rotation": 0,
                     "Size": [
-                        4,
-                        3.5
+                        2.0999999046325684,
+                        5
                     ]
                 },
                 {
@@ -4017,15 +4250,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Pressed_UID": 481961565,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Hovered_UID": 934250681,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_left_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1878130604.dds",
+                    "Pressed_UID": 1878130604,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/708143523.dds",
+                    "Hovered_UID": 708143523,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1148197231.dds",
+                    "Unhovered_UID": 1148197231,
                     "Script_Name": "Settings",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -4033,9 +4266,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/arrow_left.png",
+                    "LibraryPath": "Library\/Textures\/1148197231.dds",
+                    "UID": 1148197231
                 },
                 {
                     "Type": 17,
@@ -4053,6 +4286,63 @@
                     "bigBrother": 1311017402,
                     "toDisable": false,
                     "firstFrame": false
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 451991258,
+            "PrefabID": 0,
+            "ParentUID": 451674247,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        0
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        20,
+                        3.7999999523162842
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/2000871953.dds",
+                    "UID": 2000871953
                 }
             ]
         },
@@ -4087,13 +4377,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        22.100000381469727,
-                        -51.400001525878906
+                        21.899999618530273,
+                        -49.299999237060547
                     ],
                     "Rotation": 0,
                     "Size": [
-                        5.5,
-                        6.6999998092651367
+                        5.1999998092651367,
+                        8.1000003814697266
                     ]
                 },
                 {
@@ -4107,35 +4397,35 @@
                 {
                     "Type": 8,
                     "Active": true,
-                    "Active_Pressed_AssetsPath": "Assets\/Pilot\/Material.002_Mixed_AO.png",
-                    "Active_Pressed_LibraryPath": "Library\/Textures\/113519198.dds",
-                    "Active_Pressed_UID": 113519198,
-                    "Active_Hovered_AssetsPath": "Assets\/Pilot\/Material.002_Metallic.png",
-                    "Active_Hovered_LibraryPath": "Library\/Textures\/1001549928.dds",
-                    "Active_Hovered_UID": 1001549928,
-                    "Active_AssetsPath": "Assets\/Pilot\/Material.002_Base_Color.png",
-                    "Active_LibraryPath": "Library\/Textures\/1907274499.dds",
-                    "Active_UID": 1907274499,
-                    "Unactive_Pressed_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unactive_Pressed_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unactive_Pressed_UID": 1721814459,
-                    "Unactive_Hovered_AssetsPath": "Assets\/Pilot\/Material.002_Roughness.png",
-                    "Unactive_Hovered_LibraryPath": "Library\/Textures\/27816394.dds",
-                    "Unactive_Hovered_UID": 27816394,
-                    "Unactive_AssetsPath": "Assets\/Pilot\/Material.002_Normal_OpenGL.png",
-                    "Unactive_LibraryPath": "Library\/Textures\/580262998.dds",
-                    "Unactive_UID": 580262998,
+                    "Active_Pressed_AssetsPath": "Assets\/UI\/MENU\/checkbox_full_pressed.png",
+                    "Active_Pressed_LibraryPath": "Library\/Textures\/742073871.dds",
+                    "Active_Pressed_UID": 742073871,
+                    "Active_Hovered_AssetsPath": "Assets\/UI\/MENU\/checkbox_full_hover.png",
+                    "Active_Hovered_LibraryPath": "Library\/Textures\/949337790.dds",
+                    "Active_Hovered_UID": 949337790,
+                    "Active_AssetsPath": "Assets\/UI\/MENU\/checkbox_full.png",
+                    "Active_LibraryPath": "Library\/Textures\/1573403753.dds",
+                    "Active_UID": 1573403753,
+                    "Unactive_Pressed_AssetsPath": "Assets\/UI\/MENU\/checkbox_empty_pressed.png",
+                    "Unactive_Pressed_LibraryPath": "Library\/Textures\/834635899.dds",
+                    "Unactive_Pressed_UID": 834635899,
+                    "Unactive_Hovered_AssetsPath": "Assets\/UI\/MENU\/checkbox_empty_hover.png",
+                    "Unactive_Hovered_LibraryPath": "Library\/Textures\/1711990233.dds",
+                    "Unactive_Hovered_UID": 1711990233,
+                    "Unactive_AssetsPath": "Assets\/UI\/MENU\/checkbox_empty.png",
+                    "Unactive_LibraryPath": "Library\/Textures\/1244819265.dds",
+                    "Unactive_UID": 1244819265,
                     "Script_Name": "Settings",
-                    "ButtonState": 4,
+                    "ButtonState": 3,
                     "Checkbox Active": false,
-                    "Is Selected": true
+                    "Is Selected": false
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Pilot\/Material.002_Roughness.png",
-                    "LibraryPath": "Library\/Textures\/27816394.dds",
-                    "UID": 27816394
+                    "AssetPath": "Assets\/UI\/MENU\/checkbox_empty.png",
+                    "LibraryPath": "Library\/Textures\/1244819265.dds",
+                    "UID": 1244819265
                 },
                 {
                     "Type": 17,
@@ -4299,13 +4589,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        0,
+                        36.5,
                         -68.599998474121094
                     ],
                     "Rotation": 0,
                     "Size": [
-                        12.199999809265137,
-                        7.9000000953674316
+                        5.6999998092651367,
+                        9
                     ]
                 },
                 {
@@ -4319,15 +4609,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Pressed_UID": 934250681,
-                    "Hovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Hovered_UID": 1721814459,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Unhovered_UID": 481961565,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_return_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1081671534.dds",
+                    "Pressed_UID": 1081671534,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_return_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1490678443.dds",
+                    "Hovered_UID": 1490678443,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button_return.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/834295412.dds",
+                    "Unhovered_UID": 834295412,
                     "Script_Name": "Settings",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -4335,9 +4625,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
+                    "AssetPath": "Assets\/UI\/MENU\/button_return.png",
+                    "LibraryPath": "Library\/Textures\/834295412.dds",
+                    "UID": 834295412
                 },
                 {
                     "Type": 17,
@@ -4429,7 +4719,7 @@
             ],
             "UID": 86200720,
             "PrefabID": 0,
-            "ParentUID": 1684588818,
+            "ParentUID": 982731457,
             "Components": [
                 {
                     "Type": 1,
@@ -4439,13 +4729,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -10.899999618530273,
-                        -2.7999999523162842
+                        -39.099998474121094,
+                        57
                     ],
                     "Rotation": 0,
                     "Size": [
-                        15.5,
-                        18.799999237060547
+                        20,
+                        29.700000762939453
                     ]
                 },
                 {
@@ -4459,13 +4749,13 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Return",
+                    "text": "Settings",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0,
-                        0,
-                        0
+                        1,
+                        1,
+                        1
                     ]
                 }
             ]
@@ -4551,8 +4841,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/1147771701.dds",
-                    "UID": 1147771701
+                    "LibraryPath": "Library\/Textures\/124612374.dds",
+                    "UID": 124612374
                 }
             ]
         },
@@ -4592,8 +4882,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        15.100000381469727,
-                        8
+                        19,
+                        9
                     ]
                 },
                 {
@@ -4607,15 +4897,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/white_main_button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/339926987.dds",
-                    "Pressed_UID": 339926987,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/white_main_button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1594801668.dds",
-                    "Hovered_UID": 1594801668,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/white_main_button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/914926635.dds",
-                    "Unhovered_UID": 914926635,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
+                    "Pressed_UID": 356214008,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
+                    "Hovered_UID": 828696110,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
+                    "Unhovered_UID": 861183043,
                     "Script_Name": "DisplayOptions",
                     "ButtonState": 1,
                     "Is Selected": true
@@ -4623,9 +4913,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/white_main_button_hover.png",
-                    "LibraryPath": "Library\/Textures\/1594801668.dds",
-                    "UID": 1594801668
+                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "LibraryPath": "Library\/Textures\/828696110.dds",
+                    "UID": 828696110
                 },
                 {
                     "Type": 17,
@@ -4731,7 +5021,7 @@
                     "Active": true,
                     "Position": [
                         -12.300000190734863,
-                        -3.2000000476837158
+                        -2.4000000953674316
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -4797,8 +5087,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        15.100000381469727,
-                        8
+                        19,
+                        9
                     ]
                 },
                 {
@@ -4812,15 +5102,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/white_main_button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/339926987.dds",
-                    "Pressed_UID": 339926987,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/white_main_button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1594801668.dds",
-                    "Hovered_UID": 1594801668,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/white_main_button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/914926635.dds",
-                    "Unhovered_UID": 914926635,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
+                    "Pressed_UID": 356214008,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
+                    "Hovered_UID": 828696110,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
+                    "Unhovered_UID": 861183043,
                     "Script_Name": "DisplayOptions",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -4828,9 +5118,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/white_main_button.png",
-                    "LibraryPath": "Library\/Textures\/914926635.dds",
-                    "UID": 914926635
+                    "AssetPath": "Assets\/UI\/MENU\/button.png",
+                    "LibraryPath": "Library\/Textures\/861183043.dds",
+                    "UID": 861183043
                 },
                 {
                     "Type": 17,
@@ -4936,7 +5226,7 @@
                     "Active": true,
                     "Position": [
                         -11.100000381469727,
-                        -3.2000000476837158
+                        -1.8999999761581421
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -5002,8 +5292,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        15.100000381469727,
-                        8
+                        19,
+                        9
                     ]
                 },
                 {
@@ -5017,15 +5307,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/white_main_button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/339926987.dds",
-                    "Pressed_UID": 339926987,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/white_main_button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1594801668.dds",
-                    "Hovered_UID": 1594801668,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/white_main_button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/914926635.dds",
-                    "Unhovered_UID": 914926635,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
+                    "Pressed_UID": 356214008,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
+                    "Hovered_UID": 828696110,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
+                    "Unhovered_UID": 861183043,
                     "Script_Name": "DisplayOptions",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -5033,9 +5323,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/white_main_button.png",
-                    "LibraryPath": "Library\/Textures\/914926635.dds",
-                    "UID": 914926635
+                    "AssetPath": "Assets\/UI\/MENU\/button.png",
+                    "LibraryPath": "Library\/Textures\/861183043.dds",
+                    "UID": 861183043
                 },
                 {
                     "Type": 17,
@@ -5141,7 +5431,7 @@
                     "Active": true,
                     "Position": [
                         -12,
-                        -3.5999999046325684
+                        -2.5999999046325684
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -5203,12 +5493,12 @@
                     "Active": true,
                     "Position": [
                         0,
-                        -67.400001525878906
+                        -68.199996948242188
                     ],
                     "Rotation": 0,
                     "Size": [
-                        10.699999809265137,
-                        7
+                        5.6999998092651367,
+                        9
                     ]
                 },
                 {
@@ -5222,15 +5512,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/white_third_button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/281102255.dds",
-                    "Pressed_UID": 281102255,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/white_third_button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/89794832.dds",
-                    "Hovered_UID": 89794832,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/white_third_button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/691831495.dds",
-                    "Unhovered_UID": 691831495,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_return_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/570273064.dds",
+                    "Pressed_UID": 570273064,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_return_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1177961007.dds",
+                    "Hovered_UID": 1177961007,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button_return.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1583215856.dds",
+                    "Unhovered_UID": 1583215856,
                     "Script_Name": "Return",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -5238,9 +5528,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/white_third_button.png",
-                    "LibraryPath": "Library\/Textures\/691831495.dds",
-                    "UID": 691831495
+                    "AssetPath": "Assets\/UI\/MENU\/button_return.png",
+                    "LibraryPath": "Library\/Textures\/1583215856.dds",
+                    "UID": 1583215856
                 },
                 {
                     "Type": 17,
@@ -5308,68 +5598,6 @@
                     "bigBrother": 1392636434,
                     "toDisable": false,
                     "firstFrame": false
-                }
-            ]
-        },
-        {
-            "name": "Text",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 2039254255,
-            "PrefabID": 0,
-            "ParentUID": 1861823368,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        -9.8000001907348633,
-                        -3.4000000953674316
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        13.5,
-                        18.200000762939453
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
-                    "MaterialUID": 744544911
-                },
-                {
-                    "Type": 9,
-                    "Active": true,
-                    "text": "Return",
-                    "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
-                    "textColor": [
-                        1,
-                        1,
-                        1
-                    ]
                 }
             ]
         },
@@ -5453,9 +5681,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-black.png",
-                    "LibraryPath": "Library\/Textures\/934250681.dds",
-                    "UID": 934250681
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/1381190712.dds",
+                    "UID": 1381190712
                 }
             ]
         },
@@ -5490,13 +5718,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -17.799999237060547,
+                        -18.399999618530273,
                         -9.1000003814697266
                     ],
                     "Rotation": 0,
                     "Size": [
-                        13.899999618530273,
-                        7.5999999046325684
+                        18.100000381469727,
+                        9.5
                     ]
                 },
                 {
@@ -5510,15 +5738,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Pressed_UID": 934250681,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Hovered_UID": 481961565,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
+                    "Pressed_UID": 356214008,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
+                    "Hovered_UID": 828696110,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
+                    "Unhovered_UID": 861183043,
                     "Script_Name": "Confirmation",
                     "ButtonState": 1,
                     "Is Selected": true
@@ -5526,9 +5754,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
+                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "LibraryPath": "Library\/Textures\/828696110.dds",
+                    "UID": 828696110
                 },
                 {
                     "Type": 17,
@@ -5630,12 +5858,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -8.6999998092651367,
-                        -3.2999999523162842
+                        -7.5,
+                        -2.2000000476837158
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
+                        16.5,
                         20
                     ]
                 },
@@ -5654,9 +5882,9 @@
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0,
-                        0,
-                        0
+                        1,
+                        1,
+                        1
                     ]
                 }
             ]
@@ -5692,13 +5920,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        18.100000381469727,
+                        19.600000381469727,
                         -9.1000003814697266
                     ],
                     "Rotation": 0,
                     "Size": [
-                        13.899999618530273,
-                        7.5999999046325684
+                        18.100000381469727,
+                        9.5
                     ]
                 },
                 {
@@ -5712,15 +5940,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Pressed_UID": 934250681,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Hovered_UID": 481961565,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
+                    "Pressed_UID": 356214008,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
+                    "Hovered_UID": 828696110,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
+                    "Unhovered_UID": 861183043,
                     "Script_Name": "Confirmation",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -5728,9 +5956,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/window.png",
-                    "LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "UID": 1721814459
+                    "AssetPath": "Assets\/UI\/MENU\/button.png",
+                    "LibraryPath": "Library\/Textures\/861183043.dds",
+                    "UID": 861183043
                 },
                 {
                     "Type": 17,
@@ -5832,12 +6060,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -6.6999998092651367,
-                        -3.7999999523162842
+                        -5.3000001907348633,
+                        -2.4000000953674316
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
+                        16.299999237060547,
                         20
                     ]
                 },
@@ -5856,9 +6084,9 @@
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
-                        0,
-                        0,
-                        0
+                        1,
+                        1,
+                        1
                     ]
                 }
             ]
@@ -5959,7 +6187,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6178297996520996,
+                    "hFOV": 1.6002448797225952,
                     "culling": true
                 }
             ]
