@@ -4669,6 +4669,13 @@
                             "Is Key Up": true
                         },
                         {
+                            "Index": 1,
+                            "UID": 1684588818,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
                             "Index": 11,
                             "UID": 2067450475,
                             "Action": 1,
@@ -5588,6 +5595,13 @@
                             "Is Key Up": true
                         },
                         {
+                            "Index": 1,
+                            "UID": 1861823368,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
                             "Index": 11,
                             "UID": 618830332,
                             "Action": 1,
@@ -6225,7 +6239,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4812965393066406,
+                    "hFOV": 1.4403502941131592,
                     "culling": true
                 }
             ]
