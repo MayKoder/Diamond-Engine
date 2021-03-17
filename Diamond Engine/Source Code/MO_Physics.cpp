@@ -394,11 +394,14 @@ void CollisionDetector::onContact(const PxContactPairHeader& pairHeader,
 				GameObject* contact = static_cast<GameObject*>(pairHeader.actors[k]->userData);
 
 				std::vector< Component*> scripts = contact->GetComponentsOfType(Component::TYPE::SCRIPT);
-				for (size_t i = 0; i < scripts.size(); i++)
+				for (size_t l = 0; l < scripts.size(); l++)
 				{
-					C_Script* script = dynamic_cast<C_Script*>(scripts[i]);
+					C_Script* script = dynamic_cast<C_Script*>(scripts[l]);
 					if (script)
-						script->CollisionCallback(true);
+					{
+						GameObject* contact2 = static_cast<GameObject*>(pairHeader.actors[ k == 0 ? 1 : 0]->userData);
+						script->CollisionCallback(true, contact2, script);
+					}
 				}
 			}
 
@@ -425,7 +428,7 @@ void CollisionDetector::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 coun
 			{
 				C_Script* script = dynamic_cast<C_Script*>(scripts[i]);
 				if (script)
-					script->CollisionCallback(true);
+					script->CollisionCallback(true, contact2, script);
 			}
 		
 			
@@ -438,7 +441,7 @@ void CollisionDetector::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 coun
 			{
 				C_Script* script = dynamic_cast<C_Script*>(scripts[i]);
 				if (script)
-					script->CollisionCallback(true);
+					script->CollisionCallback(true, contact, script);
 			}
 		}
 		
