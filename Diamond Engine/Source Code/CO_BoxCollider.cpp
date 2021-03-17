@@ -65,8 +65,9 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 
 
 	//If we have a rigid body and doesnt have reference collider we attach the current one
-	if (rigidbody != nullptr && rigidbody->collider_info == nullptr)
-		rigidbody->collider_info = this;
+	
+	//if (rigidbody != nullptr)
+	//	rigidbody->collider_info.push_back(this);
 
 	//if (mesh != nullptr) {
 	//	colliderPos = (mesh->globalOBB.pos);
@@ -88,6 +89,8 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 	//We attach shape to a static or dynamic rigidbody to be collidable.
 	if (rigidbody != nullptr) {
 		rigidbody->rigid_dynamic->attachShape(*colliderShape);
+		rigidbody->collider_info.push_back(this);
+
 	}
 	else {
 		_gm->AddComponent(Component::TYPE::RIGIDBODY);
@@ -95,7 +98,7 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 		rigidbody->use_kinematic = true;
 		rigidbody->EnableKinematic(rigidbody->use_kinematic);
 		rigidbody->rigid_dynamic->attachShape(*colliderShape);
-		rigidbody->collider_info = this;
+		rigidbody->collider_info.push_back(this);
 
 		//	rigidbody = dynamic_cast<C_RigidBody*>(_gm->AddComponent(Component::Type::RigidBody));
 
@@ -118,7 +121,12 @@ C_BoxCollider::~C_BoxCollider()
 	if (rigidbody != nullptr)
 	{
 		rigidbody->rigid_dynamic->detachShape(*colliderShape);
-		rigidbody->collider_info = nullptr;
+		for (int i = 0; i < rigidbody->collider_info.size(); i++)
+		{
+			if(rigidbody->collider_info[i] == this)
+			rigidbody->collider_info.erase(rigidbody->collider_info.begin() + i);
+
+		}
 	}
 
 	if (colliderShape != nullptr)
