@@ -42,6 +42,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assembly-CSharp\DefaultComponents\DiamondComponent.cs" />
+    <Compile Include="Assembly-CSharp\DefaultComponents\Image2D.cs" />
+    <Compile Include="Assembly-CSharp\DefaultComponents\Material.cs" />
+    <Compile Include="Assembly-CSharp\DefaultComponents\Navigation.cs" />
+    <Compile Include="Assembly-CSharp\DefaultComponents\Text.cs" />
     <Compile Include="Assembly-CSharp\DefaultComponents\Transform.cs" />
     <Compile Include="Assembly-CSharp\Diamond Engine Utility\Audio.cs" />
     <Compile Include="Assembly-CSharp\Diamond Engine Utility\GameObject.cs" />
@@ -54,6 +58,7 @@
     <Compile Include="Assets\Scripts\BH_Bullet.cs" />
     <Compile Include="Assets\Scripts\BH_Plane.cs" />
     <Compile Include="Assets\Scripts\Core.cs" />
+    <Compile Include="Assets\Scripts\DisSett.cs" />
     <Compile Include="Assets\Scripts\main.cs" />
     <Compile Include="Assets\Scripts\Hello.cs" />
     <Compile Include="Assets\Scripts\HumanWalk.cs" />
@@ -62,9 +67,18 @@
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\RoomSwitch.cs" />
     <Compile Include="Assets\Scripts\BH_DestructBox.cs" />
+    <Compile Include="Assets\Scripts\StormTrooper.cs" />
+    <Compile Include="Assets\Scripts\StartMenu.cs" />
+    <Compile Include="Assets\Scripts\QuitConfirmation.cs" />
+    <Compile Include="Assets\Scripts\Confirmation.cs" />
+    <Compile Include="Assets\Scripts\Return.cs" />
+    <Compile Include="Assets\Scripts\DisplayOptions.cs" />
+    <Compile Include="Assets\Scripts\Settings.cs" />
+    <Compile Include="Assets\Scripts\Pause.cs" />
+    <Compile Include="Assets\Scripts\HUD.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\Stormtrooper.cs" />
-	<Compile Include="Assets\Scripts\Bantha.cs" />
+	  <Compile Include="Assets\Scripts\Bantha.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

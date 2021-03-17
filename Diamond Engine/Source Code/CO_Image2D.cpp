@@ -116,6 +116,16 @@ void C_Image2D::SetTexture(ResourceTexture* tex)
 	texture = tex;
 }
 
+void C_Image2D::SetTexture(int UID, const char* library_path)
+{
+	ResourceTexture* tex=static_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(UID, library_path));
+
+	if (texture != nullptr)
+		EngineExternal->moduleResources->UnloadResource(texture->GetUID());
+
+	texture = tex;
+}
+
 
 void C_Image2D::SaveData(JSON_Object* nObj)
 {

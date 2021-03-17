@@ -868,6 +868,18 @@
     <ClInclude Include="Source Code\PE_Velocity_Over_Lifetime.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CS_Text_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_Material_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_Image2D_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_Navigation_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
     <ClInclude Include="Source Code\CS_GameObject_Bindings.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>

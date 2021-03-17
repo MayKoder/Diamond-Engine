@@ -2,6 +2,7 @@
 #include "Component.h"
 
 class ResourceTexture;
+class C_AudioSource;
 
 enum class BUTTONSTATE {
 	BUTTONPRESSED,
@@ -41,4 +42,5 @@ private:
 	ResourceTexture* sprite_button_unhovered;
 	BUTTONSTATE num_sprite_used;
 	std::string script_name;
+	C_AudioSource* thisAudSource;
 };
