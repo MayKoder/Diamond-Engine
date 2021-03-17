@@ -5,7 +5,7 @@ using DiamondEngine;
 public class BH_Bullet : DiamondComponent
 {
     public float speed = 60.0f;
-    public float maxLifeTime = 10.0f;
+    public float maxLifeTime = 5.0f;
 
     public float currentLifeTime = 0.0f;
 

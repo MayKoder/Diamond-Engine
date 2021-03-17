@@ -141,7 +141,19 @@ public class Stormtrooper : Enemy
 		
 	}
 
-	public void OnTriggerEnter()
+	public void OnCollisionEnter(GameObject collidedObject)
 	{
+		if (collidedObject.CompareTag("Bullet"))
+		{
+			InternalCalls.Destroy(gameObject);
+		}
+	}
+
+	public void OnTriggerEnter(GameObject triggeredObject)
+	{
+		if(triggeredObject.CompareTag("Bullet"))
+        {
+			InternalCalls.Destroy(gameObject);
+        }
 	}
 }

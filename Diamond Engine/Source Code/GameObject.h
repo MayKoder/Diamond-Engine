@@ -47,7 +47,7 @@ public:
 	void RemoveChild(GameObject*);
 	void CollectChilds(std::vector<GameObject*>& vector);
 
-	bool CompareTag(char* _tag);
+	bool CompareTag(const char* _tag);
 
 	template<typename A>
 	A* GetComponent()
