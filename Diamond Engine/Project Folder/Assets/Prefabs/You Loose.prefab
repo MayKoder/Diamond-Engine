@@ -1,9 +1,9 @@
 {
-    "assets_path": "Assets\/You Loose.prefab",
+    "assets_path": "Assets\/Prefabs\/You Loose.prefab",
     "Game Objects": [
         {
             "name": "You Loose",
-            "Active": true,
+            "Active": false,
             "Position": [
                 0,
                 0,
@@ -66,8 +66,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        32.5,
-                        22.600000381469727
+                        38.200000762939453,
+                        30
                     ]
                 },
                 {
@@ -81,9 +81,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-black.png",
-                    "LibraryPath": "Library\/Textures\/934250681.dds",
-                    "UID": 934250681
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/124612374.dds",
+                    "UID": 124612374
                 }
             ]
         },
@@ -131,7 +131,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
+                    "MaterialAssetPath": "Assets\/Materials\/text.mat",
                     "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
                     "MaterialUID": 744544911
                 },
