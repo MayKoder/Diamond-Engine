@@ -211,7 +211,7 @@ Component* GameObject::GetComponent(Component::TYPE _type, const char* scriptNam
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
-		if (components[i]->type == _type)
+		if (components[i] && components[i]->type == _type)
 		{
 			if (_type == Component::TYPE::SCRIPT)
 			{

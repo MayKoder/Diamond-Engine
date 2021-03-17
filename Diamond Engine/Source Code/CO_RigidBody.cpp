@@ -25,12 +25,28 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 
 {
 	goTransform = dynamic_cast<C_Transform*>(_gm->GetComponent(Component::TYPE::TRANSFORM));
+	mesh = dynamic_cast<C_MeshRenderer*>(_gm->GetComponent(Component::TYPE::MESH_RENDERER));
 	collider_info = _gm->GetComponentsOfType(Component::TYPE::BOXCOLLIDER);
+
+	std::vector<Component*> meshCollider_info;
+
+	meshCollider_info = _gm->GetComponentsOfType(Component::TYPE::MESHCOLLIDER);
+
+	for (int i = 0; i < meshCollider_info.size(); i++)
+	{
+		collider_info.push_back(meshCollider_info[i]);
+	}
+	
+	for (int i = 0; i < collider_info.size(); i++)
+	{
+		C_Collider* collider = dynamic_cast<C_Collider*>(collider_info[i]);
+		collider->rigidbody = this;
+	}
+
 
 	//if(!collider_info)
 	//	collider_info = dynamic_cast<C_Collider*>(_gm->GetComponent(Component::TYPE::MESHCOLLIDER));
 
-	mesh = dynamic_cast<C_MeshRenderer*>(_gm->GetComponent(Component::TYPE::MESH_RENDERER));
 
 	Quat rot;
 	float3 pos, scale, objectpos, pivotpos;
@@ -106,6 +122,7 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 
 C_RigidBody::~C_RigidBody()
 {
+	LOG(LogType::L_NORMAL, "Deleting Rigidbody");
 	for (int i = 0; i < collider_info.size(); i++)
 	{
 		C_Collider* colliderComponent = dynamic_cast<C_Collider*>(collider_info[i]);

@@ -123,9 +123,11 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 
 C_MeshCollider::~C_MeshCollider()
 {
+	LOG(LogType::L_NORMAL, "Deleting Mesh Collider");
 
 	if (colliderMaterial != nullptr)
 		colliderMaterial->release();
+	rigidbody = dynamic_cast<C_RigidBody*>(gameObject->GetComponent(Component::TYPE::RIGIDBODY));
 
 	if (rigidbody != nullptr)
 	{
@@ -133,7 +135,11 @@ C_MeshCollider::~C_MeshCollider()
 		for (int i = 0; i < rigidbody->collider_info.size(); i++)
 		{
 			if (rigidbody->collider_info[i] == this)
+			{
 				rigidbody->collider_info.erase(rigidbody->collider_info.begin() + i);
+				i--;
+			}
+				
 
 		}
 	}

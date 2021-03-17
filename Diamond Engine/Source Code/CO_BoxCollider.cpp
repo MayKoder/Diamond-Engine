@@ -114,18 +114,23 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 
 C_BoxCollider::~C_BoxCollider()
 {
-	
+	LOG(LogType::L_NORMAL, "Deleting Box Collider");
+
 	if (colliderMaterial != nullptr)
 		colliderMaterial->release();
+	rigidbody = dynamic_cast<C_RigidBody*>(gameObject->GetComponent(Component::TYPE::RIGIDBODY));
 
 	if (rigidbody != nullptr)
 	{
 		rigidbody->rigid_dynamic->detachShape(*colliderShape);
 		for (int i = 0; i < rigidbody->collider_info.size(); i++)
 		{
-			if(rigidbody->collider_info[i] == this)
-			rigidbody->collider_info.erase(rigidbody->collider_info.begin() + i);
-
+			if (rigidbody->collider_info[i] == this)
+			{
+				rigidbody->collider_info.erase(rigidbody->collider_info.begin() + i);
+				i--;
+			}
+			
 		}
 	}
 

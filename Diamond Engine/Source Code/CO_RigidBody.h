@@ -71,8 +71,9 @@ public:
 
 	C_Transform* goTransform;
 	std::vector<Component*> collider_info;
-	C_MeshRenderer* mesh;
 
+	C_MeshRenderer* mesh;
+	
 	physx::PxRigidDynamic* rigid_dynamic;
 
 	bool use_gravity = true;
