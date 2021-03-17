@@ -29,6 +29,9 @@ public:
 	AssetDir* selectedFile;
 	AssetDir* bigDisplayFolder;
 	AssetDir* displayFolder;
+
+private:
+	float tree_window_width;
 };
 
 

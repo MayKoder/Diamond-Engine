@@ -17,6 +17,7 @@ class ResourceMesh;
 class C_MeshRenderer;
 class ResourceTexture;
 class C_Camera;
+class GameObject;
 
 #define MAX_LIGHTS 1
 
@@ -53,7 +54,8 @@ private:
 	void RenderWithOrdering(bool rTex = false);
 	void DebugLine(LineSegment& line);
 	void GetCAPS(std::string& caps);
-	std::string str_CAPS;
+
+	void DrawParticleSystems();
 
 public:
 	bool vsync, wireframe, cull, lightng, color_material, texture_2d;
@@ -63,6 +65,8 @@ public:
 
 	std::vector<C_MeshRenderer*> renderQueue;
 	std::multimap<float, C_MeshRenderer*> renderQueueMap;
+
+	std::vector<GameObject*> particleSystemQueue;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
@@ -74,4 +78,5 @@ public:
 private:
 	C_Camera* gameCamera;
 	LineSegment pickingDebug;
+	std::string str_CAPS;
 };

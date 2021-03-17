@@ -403,6 +403,10 @@ Resource* M_ResourceManager::CreateNewResource(const char* assetsFile, uint uid,
 		ret->SetAssetsPath(assetsFile);
 		ret->SetLibraryPath(GenLibraryPath(ret->GetUID(), type).c_str());
 		ret->IncreaseReferenceCount();
+
+		std::string name;
+		FileSystem::GetFileName(assetsFile, name, false);
+		sprintf_s(ret->name, name.c_str());
 	}
 
 	return ret;

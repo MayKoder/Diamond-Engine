@@ -1,12 +1,12 @@
 {
     "Game Objects": [
         {
-            "name": "Play",
+            "name": "Player",
             "Active": true,
             "Position": [
-                0,
-                0,
-                0
+                13.138535499572754,
+                64.621551513671875,
+                -2.2426132773034624e-07
             ],
             "Rotation": [
                 0,
@@ -16,184 +16,79 @@
             ],
             "Scale": [
                 1,
-                1,
-                1
+                2,
+                0.9999280571937561
             ],
-            "UID": 1306709165,
+            "UID": 1661764735,
             "PrefabID": 0,
-            "ParentUID": 1392636434,
+            "ParentUID": 143570472,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
                 },
                 {
-                    "Type": 6,
+                    "Type": 2,
                     "Active": true,
-                    "Position": [
-                        -68.599998474121094,
-                        -10
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        20,
-                        8.6000003814697266
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        1,
+                        0.99998998641967773,
+                        0.99998998641967773
                     ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui_hud.mat",
-                    "MaterialLibraryPath": "Library\/Materials\/444429509.mat",
-                    "MaterialUID": 444429509
-                },
-                {
-                    "Type": 7,
-                    "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Jet\/atlasjet-black.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/934250681.dds",
-                    "Pressed_UID": 934250681,
-                    "Hovered_AssetsPath": "Assets\/Jet\/atlasjet-white.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/481961565.dds",
-                    "Hovered_UID": 481961565,
-                    "Unhovered_AssetsPath": "Assets\/Jet\/window.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1721814459.dds",
-                    "Unhovered_UID": 1721814459,
-                    "Script_Name": "StartMenu",
-                    "ButtonState": 1,
-                    "Is Selected": true
-                },
-                {
-                    "Type": 11,
-                    "Active": true,
-                    "AssetPath": "Assets\/Jet\/atlasjet-white.png",
-                    "LibraryPath": "Library\/Textures\/481961565.dds",
-                    "UID": 481961565
-                },
-                {
-                    "Type": 17,
-                    "Active": true,
-                    "Map": [
-                        {
-                            "Index": 0,
-                            "UID": 1306709165,
-                            "Action": 2,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 11,
-                            "UID": 1555216131,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 12,
-                            "UID": 549038604,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 15,
-                            "UID": 1555216131,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 16,
-                            "UID": 549038604,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 19,
-                            "UID": 1555216131,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        },
-                        {
-                            "Index": 20,
-                            "UID": 549038604,
-                            "Action": 1,
-                            "Is Key Down": false,
-                            "Is Key Up": true
-                        }
-                    ],
-                    "Button Being Used": -1,
-                    "Type Of UI": 7,
-                    "Is Selected": true
                 },
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "StartMenu"
-                }
-            ]
-        },
-        {
-            "name": "Text",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1724258258,
-            "PrefabID": 0,
-            "ParentUID": 1306709165,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        -16.299999237060547,
-                        -3.9000000953674316
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        20,
-                        20
-                    ]
+                    "ScriptName": "FPS_Controller",
+                    "reference": 1661764735,
+                    "turret": 1661764735,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 35,
+                    "mouseSens": 1
                 },
                 {
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
-                    "MaterialUID": 744544911
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
                 },
                 {
-                    "Type": 9,
+                    "Type": 14,
                     "Active": true,
-                    "text": "Play",
-                    "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/arial.ttf",
-                    "textColor": [
+                    "kinematic": false,
+                    "Gravity": true,
+                    "LockLinearX": false,
+                    "LockLinearY": false,
+                    "LockLinearZ": false,
+                    "LockAngularX": false,
+                    "LockAngularY": false,
+                    "LockAngularZ": false,
+                    "Mass": 10,
+                    "Density": 1
+                },
+                {
+                    "Type": 15,
+                    "Active": true,
+                    "isTrigger": true,
+                    "Position": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "Rotation": [
                         0,
                         0,
-                        0
+                        0,
+                        1
+                    ],
+                    "Scale": [
+                        1,
+                        1,
+                        1
                     ]
                 }
             ]

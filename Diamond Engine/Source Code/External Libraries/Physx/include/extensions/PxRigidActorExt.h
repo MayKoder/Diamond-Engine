@@ -34,9 +34,9 @@
   @{
 */
 
-#include "PxPhysXConfig.h"
-#include "PxPhysics.h"
-#include "PxRigidActor.h"
+#include "Physx/include/PxPhysXConfig.h"
+#include "Physx/include/PxPhysics.h"
+#include "Physx/include/PxRigidActor.h"
 
 #if !PX_DOXYGEN
 namespace physx

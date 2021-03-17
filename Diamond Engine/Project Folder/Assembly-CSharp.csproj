@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\Settings.cs" />
     <Compile Include="Assets\Scripts\Pause.cs" />
     <Compile Include="Assets\Scripts\HUD.cs" />
+    <Compile Include="Assets\Scripts\Enemy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

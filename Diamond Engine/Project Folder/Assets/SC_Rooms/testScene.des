@@ -1,0 +1,96 @@
+{
+    "EditorCameraPosition": [
+        -2.2028467655181885,
+        7.1843981742858887,
+        26.980173110961914
+    ],
+    "EditorCameraZ": [
+        -0.1282726377248764,
+        -0.38836559653282166,
+        -0.91253399848937988
+    ],
+    "EditorCameraY": [
+        -0.054048072546720505,
+        0.9215053915977478,
+        -0.38458630442619324
+    ],
+    "Game Objects": [
+        {
+            "name": "Scene root",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 654496423,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Main Camera",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1387443637,
+            "ParentUID": 654496423,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 4,
+                    "Active": true,
+                    "fType": 2,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 100,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.4147653579711914,
+                    "culling": true
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/715565838.mat",
+                    "MaterialUID": 715565838
+                },
+                {
+                    "Type": 17,
+                    "Active": true
+                }
+            ]
+        }
+    ]
+}

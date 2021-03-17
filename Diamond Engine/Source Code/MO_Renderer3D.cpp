@@ -18,9 +18,10 @@
 
 #include"GameObject.h"
 
-#include"CO_MeshRenderer.h"
-#include"CO_Camera.h"
-#include"CO_Transform.h"
+#include "CO_MeshRenderer.h"
+#include "CO_Camera.h"
+#include "CO_Transform.h"
+#include "CO_ParticleSystem.h"
 
 #include"Primitive.h"
 #include"MathGeoLib/include/Geometry/Triangle.h"
@@ -252,7 +253,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
-
+	DrawParticleSystems();
 	skybox.DrawAsSkybox(&App->moduleCamera->editorCamera);
 
 	DebugLine(pickingDebug);
@@ -280,6 +281,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			RenderWithOrdering(true);
 		}
 
+		DrawParticleSystems();
 		skybox.DrawAsSkybox(gameCamera);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		App->moduleGui->RenderCanvas2D();
@@ -575,4 +577,19 @@ void ModuleRenderer3D::ClearAllRenderData()
 {
 	renderQueueMap.clear();
 	renderQueue.clear();
+	particleSystemQueue.clear();
+}
+
+
+void ModuleRenderer3D::DrawParticleSystems()
+{
+	int systemCount = particleSystemQueue.size();
+
+	for (int i = 0; i < systemCount; ++i)
+	{
+		Component* partSy = particleSystemQueue[i]->GetComponent(Component::TYPE::PARTICLE_SYSTEM);
+		
+		if (partSy != nullptr)
+			static_cast<C_ParticleSystem*>(partSy)->Draw();
+	}
 }

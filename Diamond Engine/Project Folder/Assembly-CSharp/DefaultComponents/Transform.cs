@@ -63,6 +63,8 @@ namespace DiamondEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern Vector3 GetRight();
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern void LookAt(Vector3 pointToLook);       
     }
 
 
