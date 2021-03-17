@@ -28,6 +28,7 @@ void PE_RotateOverLifetime::Update(Particle& particle, float dt)
 	particle.rotation += particle.rotationSpeed * dt;
 }
 
+#ifndef STANDALONE
 void PE_RotateOverLifetime::OnEditor(int emitterIndex)
 {
 	if (ImGui::Button("Delete Rotation Effect"))
@@ -46,7 +47,7 @@ void PE_RotateOverLifetime::OnEditor(int emitterIndex)
 		ImGui::DragFloat2(suffixLabel.c_str(), rotationSpeed);
 	}
 }
-
+#endif //!STANDALONE
 
 void PE_RotateOverLifetime::SaveData(JSON_Object* nObj)
 {
