@@ -17,33 +17,59 @@ public class Settings : DiamondComponent
 	public void OnExecuteButton()
 	{
 		if (gameObject.Name == "BrightnessUp")
-			Config.SetBrightness(Config.GetBrightness() + 0.05f); Debug.Log(Config.GetBrightness());
-		if (gameObject.Name == "BrightnessDown")
-			Config.SetBrightness(Config.GetBrightness() - 0.05f); Debug.Log(Config.GetBrightness());
+        {
+			Config.SetBrightness(Config.GetBrightness() + 0.05f); 
+			Debug.Log(Config.GetBrightness().ToString());
+        }
+		else if (gameObject.Name == "BrightnessDown")
+        {
+			Config.SetBrightness(Config.GetBrightness() - 0.05f); 
+			Debug.Log(Config.GetBrightness().ToString());
+        }
 
-		if (gameObject.Name == "MasterVolume")
+		else if (gameObject.Name == "MasterVolume")
+        {
 			Debug.Log("MasterVolume");
-		if (gameObject.Name == "MasterVolumeUp")
+        }
+		else if (gameObject.Name == "MasterVolumeUp")
+        {
 			Debug.Log("MasterVolumeUp");
-		if (gameObject.Name == "MasterVolumeDown")
+        }
+		else if (gameObject.Name == "MasterVolumeDown")
+        {
 			Debug.Log("MasterVolumeDown");
+        }
 
-		if (gameObject.Name == "MusicVolume")
+		else if (gameObject.Name == "MusicVolume")
+        {
 			Debug.Log("MusicVolume");
-		if (gameObject.Name == "MusicVolumeUp")
+        }
+		else if (gameObject.Name == "MusicVolumeUp")
+        {
 			Debug.Log("MusicVolumeUp");
-		if (gameObject.Name == "MusicVolumeDown")
+        }
+		else if (gameObject.Name == "MusicVolumeDown")
+        {
 			Debug.Log("MusicVolumeDown");
+        }
 
-		if (gameObject.Name == "SFXVolume")
+		else if (gameObject.Name == "SFXVolume")
+        {
 			Debug.Log("SFXVolume");
-		if (gameObject.Name == "SFXVolumeUp")
+        }
+		else if (gameObject.Name == "SFXVolumeUp")
+        {
 			Debug.Log("SFXVolumeUp");
-		if (gameObject.Name == "SFXVolumeDown")
+        }
+		else if (gameObject.Name == "SFXVolumeDown")
+        {
 			Debug.Log("SFXVolumeDown");
+        }
 
-		if (gameObject.Name == "Return")
+		else if (gameObject.Name == "Return")
+        {
 			toDisable = true;
+        }
 	}
 	public void Update()
 	{

@@ -455,13 +455,3 @@ float CS_GetBrightness()
 }
 #pragma endregion
 
-void BindConfigMethods()
-{
-	mono_add_internal_call("DiamondEngine.Config::VSYNCEnable", CS_Enable_VSYNC);
-	mono_add_internal_call("DiamondEngine.Config::SetResolution", CS_SetResolution);
-	mono_add_internal_call("DiamondEngine.Config::GetResolution", CS_GetResolution);
-	mono_add_internal_call("DiamondEngine.Config::SetWindowMode", CS_SetWindowMode);
-	mono_add_internal_call("DiamondEngine.Config::GetWindowMode", CS_GetWindowMode);
-	mono_add_internal_call("DiamondEngine.Config::SetBrightness", CS_SetBrightness);
-	mono_add_internal_call("DiamondEngine.Config::GetBrightness", CS_GetBrightness);
-}

@@ -117,6 +117,16 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Navigation::Select", SelectNavigation);
 #pragma endregion
 
+#pragma region Settings
+	mono_add_internal_call("DiamondEngine.Config::VSYNCEnable", CS_Enable_VSYNC);
+	mono_add_internal_call("DiamondEngine.Config::SetResolution", CS_SetResolution);
+	mono_add_internal_call("DiamondEngine.Config::GetResolution", CS_GetResolution);
+	mono_add_internal_call("DiamondEngine.Config::SetWindowMode", CS_SetWindowMode);
+	mono_add_internal_call("DiamondEngine.Config::GetWindowMode", CS_GetWindowMode);
+	mono_add_internal_call("DiamondEngine.Config::SetBrightness", CS_SetBrightness);
+	mono_add_internal_call("DiamondEngine.Config::GetBrightness", CS_GetBrightness);
+#pragma endregion
+
 
 	mono_add_internal_call("DiamondEngine.DiamondComponent::get_gameObject", CS_Component_Get_GO);
 	mono_add_internal_call("DiamondEngine.GameObject::TryGetComponent", CS_GetComponent);
@@ -143,7 +153,6 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Audio::SetPitch", SetPitch);
 	mono_add_internal_call("DiamondEngine.Audio::GetMuted", GetMuted);
 	mono_add_internal_call("DiamondEngine.Audio::SetMuted", SetMuted);
-	BindConfigMethods();
 
 	InitMono();
 
