@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        -15.100000381469727,
-        11.488767623901367,
-        21.670358657836914
+        -6.2322826385498047,
+        8.8157777786254883,
+        14.230354309082031
     ],
     "EditorCameraZ": [
-        0.76215469837188721,
-        -0.15648140013217926,
-        -0.62819880247116089
+        0.74644023180007935,
+        -0.22499783337116241,
+        -0.62626111507415771
     ],
     "EditorCameraY": [
-        0.1207386702299118,
-        0.98768091201782227,
-        -0.099541977047920227
+        0.17235454916954041,
+        0.97435927391052246,
+        -0.14463032782077789
     ],
     "tags": [
         "Enemy",
@@ -86,7 +86,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.5370032787322998,
+                    "hFOV": 1.6656678915023804,
                     "culling": true
                 }
             ]
@@ -148,7 +148,7 @@
                     "kinematic": false,
                     "Gravity": true,
                     "LockLinearX": false,
-                    "LockLinearY": true,
+                    "LockLinearY": false,
                     "LockLinearZ": false,
                     "LockAngularX": false,
                     "LockAngularY": false,
@@ -195,8 +195,8 @@
             "Active": true,
             "Position": [
                 0,
-                0,
-                -4.9331345558166504
+                1.2410588264465332,
+                1.0173721313476563
             ],
             "Rotation": [
                 0,
@@ -571,10 +571,10 @@
                 -9.3132257461547852e-10
             ],
             "Rotation": [
-                0.99998879432678223,
-                -0.0032769155222922564,
-                -0.0034126036334782839,
-                1.8575312424218282e-05
+                0.99998891353607178,
+                -0.0032769159879535437,
+                -0.0034126040991395712,
+                1.8575314243207686e-05
             ],
             "Scale": [
                 1,
@@ -1098,10 +1098,10 @@
                 0.0011344235390424728
             ],
             "Rotation": [
-                -3.7840106159592324e-08,
-                0.13653638958930969,
-                -4.230570027630165e-08,
-                0.99063503742218018
+                -3.7840109712306003e-08,
+                0.13653640449047089,
+                -4.2305703829015329e-08,
+                0.99063515663146973
             ],
             "Scale": [
                 1,
@@ -2235,6 +2235,83 @@
                     "Type": 14,
                     "Active": true,
                     "kinematic": false,
+                    "Gravity": true,
+                    "LockLinearX": false,
+                    "LockLinearY": false,
+                    "LockLinearZ": false,
+                    "LockAngularX": false,
+                    "LockAngularY": false,
+                    "LockAngularZ": false,
+                    "Mass": 10,
+                    "Density": 1
+                },
+                {
+                    "Type": 18,
+                    "Active": true,
+                    "isTrigger": false,
+                    "Position": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "Rotation": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "Scale": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Plane",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                100,
+                1,
+                100
+            ],
+            "UID": 1629112423,
+            "PrefabID": 0,
+            "ParentUID": 1817011724,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1342727876.mmh",
+                    "UID": 1342727876,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": true,
                     "Gravity": true,
                     "LockLinearX": false,
                     "LockLinearY": false,

@@ -151,18 +151,18 @@ public class Stormtrooper : Enemy
 
 	public void OnCollisionEnter(GameObject collidedGameObject)
 	{
-		Debug.Log("CS: Collided object: " + gameObject.tag + ", Collider: " + collidedGameObject.tag);
-		Debug.Log("Collided by tag: " + collidedGameObject.tag);
+		//Debug.Log("CS: Collided object: " + gameObject.tag + ", Collider: " + collidedGameObject.tag);
+		//Debug.Log("Collided by tag: " + collidedGameObject.tag);
 	}
 
 	public void OnTriggerEnter(GameObject triggeredGameObject)
 	{
-		Debug.Log("CS: Collided object: " + gameObject.tag + ", Collider: " + triggeredGameObject.tag);
+		//Debug.Log("CS: Collided object: " + gameObject.tag + ", Collider: " + triggeredGameObject.tag);
 		if(triggeredGameObject.CompareTag("Bullet"))
         {
 			InternalCalls.Destroy(gameObject);
         }
 
-		Debug.Log("Triggered by tag: " + triggeredGameObject.tag);
+		//Debug.Log("Triggered by tag: " + triggeredGameObject.tag);
 	}
 }
