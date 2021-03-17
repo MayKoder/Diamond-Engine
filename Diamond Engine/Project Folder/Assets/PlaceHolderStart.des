@@ -172,15 +172,15 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
                     "Unhovered_UID": 861183043,
                     "Script_Name": "StartMenu",
-                    "ButtonState": 2,
-                    "Is Selected": false
+                    "ButtonState": 1,
+                    "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button.png",
-                    "LibraryPath": "Library\/Textures\/861183043.dds",
-                    "UID": 861183043
+                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "LibraryPath": "Library\/Textures\/828696110.dds",
+                    "UID": 828696110
                 },
                 {
                     "Type": 17,
@@ -238,7 +238,7 @@
                     ],
                     "Button Being Used": -1,
                     "Type Of UI": 7,
-                    "Is Selected": false
+                    "Is Selected": true
                 },
                 {
                     "Type": 5,
@@ -370,15 +370,15 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
                     "Unhovered_UID": 861183043,
                     "Script_Name": "StartMenu",
-                    "ButtonState": 1,
-                    "Is Selected": true
+                    "ButtonState": 2,
+                    "Is Selected": false
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "LibraryPath": "Library\/Textures\/828696110.dds",
-                    "UID": 828696110
+                    "AssetPath": "Assets\/UI\/MENU\/button.png",
+                    "LibraryPath": "Library\/Textures\/861183043.dds",
+                    "UID": 861183043
                 },
                 {
                     "Type": 17,
@@ -436,7 +436,7 @@
                     ],
                     "Button Being Used": -1,
                     "Type Of UI": 7,
-                    "Is Selected": true
+                    "Is Selected": false
                 },
                 {
                     "Type": 5,

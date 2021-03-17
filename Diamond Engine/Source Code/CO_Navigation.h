@@ -57,6 +57,7 @@ public:
 	~C_Navigation() override;
 
     void Enable() override;
+    void Disable() override;
 
 	void Update() override;
 

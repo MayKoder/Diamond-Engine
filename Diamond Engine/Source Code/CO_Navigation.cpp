@@ -33,6 +33,22 @@ void C_Navigation::Enable()
 	button_or_joystick_being_used = BUTTONSANDJOYSTICKS::BUTTON_OR_JOYSTICK_UNKNOWN;
 }
 
+void C_Navigation::Disable()
+{
+	switch (type_of_ui) {
+	case Component::TYPE::BUTTON: {
+		C_Button* button = static_cast<C_Button*>(gameObject->GetComponent(Component::TYPE::BUTTON));
+		button->ReleaseButton();
+		break;
+	}
+	case Component::TYPE::CHECKBOX: {
+		C_Checkbox* checkbox = static_cast<C_Checkbox*>(gameObject->GetComponent(Component::TYPE::CHECKBOX));
+		checkbox->UnpressCheckbox();
+		break;
+	}
+	}
+}
+
 
 void C_Navigation::Update()
 {
@@ -75,18 +91,7 @@ void C_Navigation::Update()
 
 	}
 	if (button_or_joystick_being_used == BUTTONSANDJOYSTICKS::BUTTON_OR_JOYSTICK_UNKNOWN) {
-		switch (type_of_ui) {
-		case Component::TYPE::BUTTON: {
-			C_Button* button = static_cast<C_Button*>(gameObject->GetComponent(Component::TYPE::BUTTON));
-			button->ReleaseButton();
-			break;
-		}
-		case Component::TYPE::CHECKBOX: {
-			C_Checkbox* checkbox = static_cast<C_Checkbox*>(gameObject->GetComponent(Component::TYPE::CHECKBOX));
-			checkbox->UnpressCheckbox();
-			break;
-		}
-		}
+		Disable();
 		button_or_joystick_being_used = BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
 	}
 }

@@ -47,7 +47,7 @@ C_Button::~C_Button()
 void C_Button::Update()
 {
 #ifndef STANDALONE
-	ChangeTexture(num_sprite_used);
+	//ChangeTexture(num_sprite_used);
 	if (gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()) == nullptr)
 		script_name = "";
 	if (sprites_freezed)
