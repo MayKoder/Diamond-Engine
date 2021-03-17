@@ -21,9 +21,10 @@ namespace DiamondEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void CloseGame();
-
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void CreatePrefab(object prefab_path, object position, object rotation, object scale);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern GameObject CreatePrefab(object prefab_path, object position, object rotation, object scale);
     }
     public class Config
     {
@@ -124,6 +125,13 @@ namespace DiamondEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void PlayHaptic(float strength, int length);
     }
+
+    public class Scene
+    {
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern GameObject FindObjectWithTag(string tag);
+    }
+
     public class SceneManager
     {
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -280,7 +288,7 @@ namespace DiamondEngine
             mat[8] = 0; mat[9] = 0; mat[10] = 1; mat[11] = pos.z;
             mat[12] = 0; mat[13] = 0; mat[14] = 0; mat[15] = 1;
 
-            Debug.Log("Position: " + mat.ToString());
+            //Debug.Log("Position: " + mat.ToString());
 
             return mat;
         }
@@ -298,7 +306,7 @@ namespace DiamondEngine
             mat[8] = 2 * (x * z - y * w); mat[9] = 2 * (y * z + x * w); mat[10] = 1 - 2 * (x * x + y * y); mat[11] = 0;
             mat[12] = 0; mat[13] = 0; mat[14] = 0; mat[15] = 1;
 
-            Debug.Log("Rotation: " +mat.ToString());
+            //Debug.Log("Rotation: " +mat.ToString());
 
             return mat;
         }
@@ -311,7 +319,7 @@ namespace DiamondEngine
             mat[8] = 0; mat[9] = 0; mat[10] = scale.z; mat[11] = 0;
             mat[12] = 0; mat[13] = 0; mat[14] = 0; mat[15] = 1;
 
-            Debug.Log("Scale: "+mat.ToString());
+            //Debug.Log("Scale: "+mat.ToString());
 
 
             return mat;

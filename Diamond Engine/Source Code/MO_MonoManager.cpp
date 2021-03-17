@@ -12,6 +12,7 @@
 
 #include"GameObject.h"
 #include"CO_Script.h"
+#include "CS_GameObject_Bindings.h"
 #include"CS_Transform_Bindings.h"
 #include "CS_Animation_Bindings.h"
 #include "CS_Input_Bindings.h"
@@ -131,11 +132,14 @@ bool M_MonoManager::Init()
 
 
 	mono_add_internal_call("DiamondEngine.DiamondComponent::get_gameObject", CS_Component_Get_GO);
+
 	mono_add_internal_call("DiamondEngine.GameObject::TryGetComponent", CS_GetComponent);
 	mono_add_internal_call("DiamondEngine.GameObject::get_Name", CS_Get_GO_Name);
 	mono_add_internal_call("DiamondEngine.GameObject::get_parent", CS_Get_GO_Parent);
 	mono_add_internal_call("DiamondEngine.GameObject::Enable", CS_EnableGO);
 	mono_add_internal_call("DiamondEngine.GameObject::IsEnabled", CS_IsGOEnabled);
+	mono_add_internal_call("DiamondEngine.GameObject::CompareTag", CompareTag);
+	mono_add_internal_call("DiamondEngine.GameObject::get_tag", GetTag);
 
 	mono_add_internal_call("DiamondEngine.Animator::Play", Play);
 	mono_add_internal_call("DiamondEngine.Animator::Pause", Pause);
@@ -143,6 +147,7 @@ bool M_MonoManager::Init()
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
 	
+	mono_add_internal_call("DiamondEngine.Scene::FindObjectWithTag", FindObjectWithTag);
 
 	mono_add_internal_call("DiamondEngine.SceneManager::LoadScene", CS_LoadScene);
 	mono_add_internal_call("DiamondEngine.Audio::PlayAudio", PlayAudio);
@@ -511,8 +516,6 @@ void M_MonoManager::InitMono()
 		LOG(LogType::L_ERROR, "ERROR");
 
 	image = mono_assembly_get_image(assembly);
-
-
 
 	const MonoTableInfo* table_info = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
 	int rows = mono_table_info_get_rows(table_info);

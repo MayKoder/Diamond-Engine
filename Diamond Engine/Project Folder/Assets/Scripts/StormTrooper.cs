@@ -3,16 +3,27 @@ using DiamondEngine;
 
 public class Stormtrooper : Enemy
 {
+	private int shotSequences = 0;
+	public int maxShots = 2;
+	public int maxSequences = 2;
+
 	public void Start()
 	{
 		currentState = STATES.WANDER;
 		targetPosition = CalculateNewPosition(wanderRange);
 		shotTimes = 0;
-		Debug.Log("Started");
 	}
 
 	public void Update()
 	{
+		if (player == null)
+        {
+			player = Scene.FindObjectWithTag("Player");
+			
+			if (player == null)
+				Debug.Log("Null player");
+        }
+
 		switch (currentState)
 		{
 			case STATES.IDLE:
@@ -27,10 +38,7 @@ public class Stormtrooper : Enemy
 					if(timePassed > idleTime)
                     {
 						currentState = STATES.SHOOT;
-						timePassed = timeBewteenShots;
-						InternalCalls.CreatePrefab("Library/Prefabs/433273876.prefab", gameObject.transform.globalPosition, gameObject.transform.globalRotation,
-							Vector3.one);
-						
+						timePassed = timeBewteenShots;					
 					}
 				}
 				else
@@ -40,6 +48,10 @@ public class Stormtrooper : Enemy
 						currentState = STATES.WANDER;
 						timePassed = 0.0f;
 						targetPosition = CalculateNewPosition(wanderRange);
+                        if (shotSequences == 1)
+                        {
+							currentState = STATES.SHOOT;
+                        }
 					}
 				}
 
@@ -53,6 +65,7 @@ public class Stormtrooper : Enemy
 
 				if (Mathf.Distance(gameObject.transform.localPosition, targetPosition) < stoppingDistance)
 				{
+					Animator.Play(gameObject, "Idle");
 					currentState = STATES.IDLE;
 					timePassed = 0.0f;
 				}
@@ -66,11 +79,11 @@ public class Stormtrooper : Enemy
 				if (player == null)
 					Debug.Log("Null player");
 
-				
 				// If the player is in range attack him
 				if (InRange(player.transform.globalPosition, range))
 				{
 					currentState = STATES.SHOOT;
+					Animator.Play(gameObject, "Shoot");
 					timePassed = timeBewteenShots;
 				}
 				else  //if not, keep wandering
@@ -85,6 +98,7 @@ public class Stormtrooper : Enemy
 					{
 						//targetPosition = CalculateNewPosition(wanderRange);
 						currentState = STATES.IDLE;
+						Animator.Play(gameObject, "Idle");
 						timePassed = 0.0f;
 					}
 				}
@@ -101,12 +115,25 @@ public class Stormtrooper : Enemy
 				if (timePassed > timeBewteenShots)
 				{
 					Shoot();
+					Animator.Play(gameObject, "Shoot");
 
-					if (shotTimes >= 2)
+					if (shotTimes >= maxShots)
 					{
-						currentState = STATES.RUN;
-						targetPosition = CalculateNewPosition(range);
 						shotTimes = 0;
+						shotSequences++;
+						
+						if (shotSequences >= maxSequences)
+						{
+							currentState = STATES.RUN;
+							Animator.Play(gameObject, "Run");
+							targetPosition = CalculateNewPosition(runningRange);
+							shotSequences = 0;
+						}
+						else
+						{
+							Animator.Play(gameObject, "Idle");
+							currentState = STATES.IDLE;
+                        }
 					}
 				}
 				break;
@@ -122,8 +149,20 @@ public class Stormtrooper : Enemy
 		
 	}
 
-	public void OnTriggerEnter()
+	public void OnCollisionEnter(GameObject collidedGameObject)
 	{
-		//state = STATES.HIT;
+		//Debug.Log("CS: Collided object: " + gameObject.tag + ", Collider: " + collidedGameObject.tag);
+		//Debug.Log("Collided by tag: " + collidedGameObject.tag);
+	}
+
+	public void OnTriggerEnter(GameObject triggeredGameObject)
+	{
+		//Debug.Log("CS: Collided object: " + gameObject.tag + ", Collider: " + triggeredGameObject.tag);
+		if(triggeredGameObject.CompareTag("Bullet"))
+        {
+			InternalCalls.Destroy(gameObject);
+        }
+
+		//Debug.Log("Triggered by tag: " + triggeredGameObject.tag);
 	}
 }

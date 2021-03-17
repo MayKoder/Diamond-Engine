@@ -1,0 +1,295 @@
+{
+    "EditorCameraPosition": [
+        30.156259536743164,
+        28.017932891845703,
+        -37.1502685546875
+    ],
+    "EditorCameraZ": [
+        -0.54386216402053833,
+        -0.50529581308364868,
+        0.66999268531799316
+    ],
+    "EditorCameraY": [
+        -0.31849545240402222,
+        0.86294621229171753,
+        0.39228114485740662
+    ],
+    "Game Objects": [
+        {
+            "name": "Scene root",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 143570472,
+            "PrefabID": 0,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Player",
+            "Active": true,
+            "Position": [
+                0,
+                1,
+                21.374773025512695
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                2,
+                1
+            ],
+            "UID": 1661764735,
+            "PrefabID": 0,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        1,
+                        0.99998998641967773,
+                        0.99998998641967773
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "Core",
+                    "pointer": 243309464,
+                    "type": 5,
+                    "componentTable": 0,
+                    "rotationSpeed": 2,
+                    "movementSpeed": 35,
+                    "mouseSens": 1,
+                    "delayTime": 0.20000000298023224
+                }
+            ]
+        },
+        {
+            "name": "Game Camera",
+            "Active": true,
+            "Position": [
+                28.337120056152344,
+                34.217071533203125,
+                -37.998661041259766
+            ],
+            "Rotation": [
+                0.28966295719146729,
+                -0.30951860547065735,
+                0.099594630300998688,
+                0.9002079963684082
+            ],
+            "Scale": [
+                0.9999997615814209,
+                1.999998927116394,
+                0.999927818775177
+            ],
+            "UID": 188616957,
+            "PrefabID": 0,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 4,
+                    "Active": true,
+                    "fType": 1,
+                    "fSize": 13.260000228881836,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 5000,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.5521194934844971,
+                    "culling": false
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "CameraController",
+                    "pointer": 0,
+                    "type": 0,
+                    "componentTable": 0,
+                    "reference": 188616957,
+                    "target": 1661764735,
+                    "x": 1,
+                    "y": 1,
+                    "z": 1,
+                    "smoothSpeed": 1
+                }
+            ]
+        },
+        {
+            "name": "Enemy",
+            "Active": true,
+            "Position": [
+                1.5525643825531006,
+                0,
+                -9.853302001953125
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 677924609,
+            "PrefabID": 0,
+            "ParentUID": 143570472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "Bantha",
+                    "player": 1661764735,
+                    "shootPoint": 1661764735,
+                    "wanderSpeed": 5,
+                    "runningSpeed": 15,
+                    "range": 20,
+                    "damage": 5,
+                    "bulletSpeed": 50,
+                    "shotTimes": 1,
+                    "timeBewteenShots": 5,
+                    "timePassed": 0,
+                    "idleTime": 5,
+                    "stoppingDistance": 1,
+                    "wanderRange": 5,
+                    "runningRange": 15,
+                    "currentState": 2
+                }
+            ]
+        },
+        {
+            "name": "ShootPoint",
+            "Active": true,
+            "Position": [
+                0,
+                2.4630000591278076,
+                1.2929999828338623
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                0.5,
+                1
+            ],
+            "UID": 1103811902,
+            "PrefabID": 0,
+            "ParentUID": 677924609,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Stormtrooper",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                2,
+                2,
+                2
+            ],
+            "UID": 1608161239,
+            "PrefabID": 0,
+            "ParentUID": 677924609,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/40567950.mmh",
+                    "UID": 40567950,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        }
+    ]
+}

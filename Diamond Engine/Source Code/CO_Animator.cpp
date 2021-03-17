@@ -490,14 +490,21 @@ void C_Animator::SaveAnimation(ResourceAnimation* animation, const char* name)
 	char* buffer;
 	uint size = currentAnimation->SaveCustomFormat(currentAnimation, &buffer);
 
-	//Save in Library
-	FileSystem::Save(currentAnimation->GetLibraryPath(), buffer, size, false);
-
 	//Save a copy in Assets 
 	std::string old_assets_path = "Assets/Animations/" + old_name + ".anim";
 	std::string new_assets_path = "Assets/Animations/" + std::string(name) + ".anim";
 
-	EngineExternal->moduleResources->RenameAsset(old_assets_path.c_str(), new_assets_path.c_str(), buffer, size, animation);
+	if (FileSystem::Exists(old_assets_path.c_str()))
+	{
+		//Save in Library
+		FileSystem::Save(currentAnimation->GetLibraryPath(), buffer, size, false);
+		EngineExternal->moduleResources->RenameAsset(old_assets_path.c_str(), new_assets_path.c_str(), buffer, size, animation);
+	}
+	else
+	{
+		FileSystem::Save(new_assets_path.c_str(), buffer, size, false);
+		EngineExternal->moduleResources->GenerateMeta(new_assets_path.c_str(), currentAnimation->GetLibraryPath(), currentAnimation->GetUID(), Resource::Type::ANIMATION);
+	}
 
 	old_assets_path.clear();
 	new_assets_path.clear();

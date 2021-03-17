@@ -336,7 +336,7 @@ bool CompareTag(MonoObject* cs_gameObject, MonoString* cs_tag)
 
 	GameObject* gameObject = EngineExternal->moduleMono->GameObject_From_CSGO(cs_gameObject);
 
-	if (gameObject != nullptr) 
+	if (gameObject == nullptr) 
 	{
 		LOG(LogType::L_ERROR, "GameObject's tag to be compared does not exist");
 	}
@@ -350,10 +350,10 @@ bool CompareTag(MonoObject* cs_gameObject, MonoString* cs_tag)
 	return false;
 }
 
-void CreatePrefab(MonoString* prefabPath, MonoObject* position, MonoObject* rotation, MonoObject* scale)
+MonoObject* CreatePrefab(MonoString* prefabPath, MonoObject* position, MonoObject* rotation, MonoObject* scale)
 {
 	if (prefabPath == nullptr)
-		return;
+		return nullptr;
 
 	char* library_path = mono_string_to_utf8(prefabPath);
 	GameObject* prefab_object = PrefabImporter::LoadPrefab(library_path);
@@ -369,6 +369,8 @@ void CreatePrefab(MonoString* prefabPath, MonoObject* position, MonoObject* rota
 
 		prefab_object->transform->SetTransformMatrix(posVector, rotQuat, scaleVector);
 	}
+
+	return EngineExternal->moduleMono->GoToCSGO(prefab_object);
 }
 
 void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale) //TODO: We really need prefabs
