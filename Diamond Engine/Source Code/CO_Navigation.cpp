@@ -375,7 +375,7 @@ void C_Navigation::Select()
 		for (it = gameObject->parent->children.begin(); it != gameObject->parent->children.end(); ++it)
 		{
 			aux = static_cast<C_Navigation*>((*it)->GetComponent(Component::TYPE::NAVIGATION));
-			if (aux != nullptr && aux->is_selected && aux != this)
+			if (aux != nullptr && aux->is_selected)
 			{
 				aux->Deselect();
 			}
@@ -498,6 +498,7 @@ bool C_Navigation::OnEditor()
 
 		if (ImGui::Checkbox("Is this UI component selected?", &is_selected)) {
 			if (is_selected) {
+				is_selected = false;
 				Select();
 			}
 			else

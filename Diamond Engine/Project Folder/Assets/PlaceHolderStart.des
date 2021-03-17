@@ -84,7 +84,7 @@
         },
         {
             "name": "MainMenu",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -113,7 +113,7 @@
         },
         {
             "name": "Play",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -172,15 +172,15 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
                     "Unhovered_UID": 861183043,
                     "Script_Name": "StartMenu",
-                    "ButtonState": 2,
+                    "ButtonState": 1,
                     "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button.png",
-                    "LibraryPath": "Library\/Textures\/861183043.dds",
-                    "UID": 861183043
+                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
+                    "LibraryPath": "Library\/Textures\/828696110.dds",
+                    "UID": 828696110
                 },
                 {
                     "Type": 18,
@@ -236,7 +236,7 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": -2,
+                    "Button Being Used": -1,
                     "Type Of UI": 7,
                     "Is Selected": true
                 },
@@ -249,7 +249,7 @@
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -311,7 +311,7 @@
         },
         {
             "name": "Options",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -449,7 +449,7 @@
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -511,7 +511,7 @@
         },
         {
             "name": "Quit",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -649,7 +649,7 @@
         },
         {
             "name": "Text",
-            "Active": false,
+            "Active": true,
             "Position": [
                 0,
                 0,
@@ -5655,7 +5655,7 @@
         },
         {
             "name": "ConfirmationScreen",
-            "Active": true,
+            "Active": false,
             "Position": [
                 0,
                 0,
