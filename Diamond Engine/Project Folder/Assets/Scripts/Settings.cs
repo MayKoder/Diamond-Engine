@@ -3,7 +3,7 @@ using DiamondEngine;
 
 public class Settings : DiamondComponent
 {
-	private GameObject settingsWindow = null;
+	public GameObject settingsWindow = null;
 	public GameObject bigBrother = null;
 	private bool toDisable = false;
 	private bool firstFrame = true;
@@ -86,6 +86,7 @@ public class Settings : DiamondComponent
 		}
 		if (Input.GetGamepadButton(DEControllerButton.B) == KeyState.KEY_DOWN || toDisable)
 		{
+
 			toDisable = false;
 			bigBrother.Enable(true);
 			settingsWindow.Enable(false);

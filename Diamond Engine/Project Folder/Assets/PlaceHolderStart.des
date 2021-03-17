@@ -910,9 +910,7 @@
                     "Active": true,
                     "ScriptName": "Return",
                     "controlsWindow": 138730863,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": true
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -1146,9 +1144,7 @@
                     "Active": true,
                     "ScriptName": "DisSett",
                     "displayScreen": 1618442095,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": true
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -1265,9 +1261,6 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Pilot\/Material.002_Base_Color.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/1907274499.dds",
-                    "Pressed_UID": 1907274499,
                     "Hovered_AssetsPath": "Assets\/UI\/MENU\/bar_hover.png",
                     "Hovered_LibraryPath": "Library\/Textures\/1884509864.dds",
                     "Hovered_UID": 1884509864,
@@ -1525,9 +1518,7 @@
                     "Active": true,
                     "ScriptName": "DisSett",
                     "displayScreen": 1618442095,
-                    "bigBrother": 1311017402,
-                    "toDisable": true,
-                    "firstFrame": true
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -1615,9 +1606,7 @@
                     "Active": true,
                     "ScriptName": "DisSett",
                     "displayScreen": 1618442095,
-                    "bigBrother": 1311017402,
-                    "toDisable": true,
-                    "firstFrame": true
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -1734,9 +1723,6 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/Pilot\/Material.002_Base_Color.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/1907274499.dds",
-                    "Pressed_UID": 1907274499,
                     "Hovered_AssetsPath": "Assets\/UI\/MENU\/bar_hover.png",
                     "Hovered_LibraryPath": "Library\/Textures\/1884509864.dds",
                     "Hovered_UID": 1884509864,
@@ -1852,9 +1838,7 @@
                     "Active": true,
                     "ScriptName": "DisSett",
                     "displayScreen": 1618442095,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": true
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -2004,9 +1988,7 @@
                     "Active": true,
                     "ScriptName": "DisSett",
                     "displayScreen": 1618442095,
-                    "bigBrother": 1311017402,
-                    "toDisable": true,
-                    "firstFrame": true
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -2094,9 +2076,7 @@
                     "Active": true,
                     "ScriptName": "DisSett",
                     "displayScreen": 1618442095,
-                    "bigBrother": 1311017402,
-                    "toDisable": true,
-                    "firstFrame": true
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -2296,9 +2276,7 @@
                     "Active": true,
                     "ScriptName": "DisSett",
                     "displayScreen": 1618442095,
-                    "bigBrother": 1311017402,
-                    "toDisable": true,
-                    "firstFrame": true
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -2619,9 +2597,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -2771,9 +2747,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -2861,9 +2835,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -3092,10 +3064,7 @@
                     "Type": 5,
                     "Active": true,
                     "ScriptName": "Settings",
-                    "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -3245,9 +3214,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -3335,9 +3302,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -3567,9 +3532,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -3719,9 +3682,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -3809,9 +3770,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -4041,9 +4000,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -4193,9 +4150,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -4283,9 +4238,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -4490,9 +4443,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -4692,9 +4643,7 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1311017402
                 }
             ]
         },
@@ -4983,9 +4932,7 @@
                     "settings": 1637315784,
                     "display": 1618442095,
                     "controls": 138730863,
-                    "bigBrother": 1392636434,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1392636434
                 }
             ]
         },
@@ -5188,9 +5135,7 @@
                     "settings": 1637315784,
                     "display": 1618442095,
                     "controls": 138730863,
-                    "bigBrother": 1392636434,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1392636434
                 }
             ]
         },
@@ -5393,9 +5338,7 @@
                     "settings": 1637315784,
                     "display": 1618442095,
                     "controls": 138730863,
-                    "bigBrother": 1392636434,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1392636434
                 }
             ]
         },
@@ -5595,9 +5538,7 @@
                     "Active": true,
                     "ScriptName": "Return",
                     "controlsWindow": 1311017402,
-                    "bigBrother": 1392636434,
-                    "toDisable": false,
-                    "firstFrame": false
+                    "bigBrother": 1392636434
                 }
             ]
         },
@@ -5821,9 +5762,7 @@
                     "Active": true,
                     "ScriptName": "Confirmation",
                     "confirmationWindow": 839126900,
-                    "mainMenu": 1392636434,
-                    "toDisable": false,
-                    "firstFrame": true
+                    "mainMenu": 1392636434
                 }
             ]
         },
@@ -6023,9 +5962,7 @@
                     "Active": true,
                     "ScriptName": "Confirmation",
                     "confirmationWindow": 839126900,
-                    "mainMenu": 1392636434,
-                    "toDisable": false,
-                    "firstFrame": true
+                    "mainMenu": 1392636434
                 }
             ]
         },
@@ -6187,7 +6124,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6002448797225952,
+                    "hFOV": 1.4812965393066406,
                     "culling": true
                 }
             ]
