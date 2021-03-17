@@ -813,8 +813,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/124612374.dds",
-                    "UID": 124612374
+                    "LibraryPath": "Library\/Textures\/1381190712.dds",
+                    "UID": 1381190712
                 }
             ]
         },
@@ -870,14 +870,14 @@
                     "Type": 7,
                     "Active": true,
                     "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_return_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/570273064.dds",
-                    "Pressed_UID": 570273064,
+                    "Pressed_LibraryPath": "Library\/Textures\/1081671534.dds",
+                    "Pressed_UID": 1081671534,
                     "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_return_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1177961007.dds",
-                    "Hovered_UID": 1177961007,
+                    "Hovered_LibraryPath": "Library\/Textures\/1490678443.dds",
+                    "Hovered_UID": 1490678443,
                     "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button_return.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1583215856.dds",
-                    "Unhovered_UID": 1583215856,
+                    "Unhovered_LibraryPath": "Library\/Textures\/834295412.dds",
+                    "Unhovered_UID": 834295412,
                     "Script_Name": "Return",
                     "ButtonState": 1,
                     "Is Selected": true
@@ -886,8 +886,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Assets\/UI\/MENU\/button_return_hover.png",
-                    "LibraryPath": "Library\/Textures\/1177961007.dds",
-                    "UID": 1177961007
+                    "LibraryPath": "Library\/Textures\/1490678443.dds",
+                    "UID": 1490678443
                 },
                 {
                     "Type": 17,
@@ -997,8 +997,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/723448472.dds",
-                    "UID": 723448472
+                    "LibraryPath": "Library\/Textures\/2126775415.dds",
+                    "UID": 2126775415
                 }
             ]
         },
@@ -1053,24 +1053,24 @@
                 {
                     "Type": 8,
                     "Active": true,
-                    "Active_Pressed_AssetsPath": "Assets\/UI\/MENU\/checkbox_full_pressed.png",
-                    "Active_Pressed_LibraryPath": "Library\/Textures\/1600050027.dds",
-                    "Active_Pressed_UID": 1600050027,
+                    "Active_Pressed_AssetsPath": "Assets\/UI\/MENU\/checkbox_full_hover.png",
+                    "Active_Pressed_LibraryPath": "Library\/Textures\/949337790.dds",
+                    "Active_Pressed_UID": 949337790,
                     "Active_Hovered_AssetsPath": "Assets\/UI\/MENU\/checkbox_full_hover.png",
-                    "Active_Hovered_LibraryPath": "Library\/Textures\/1899417533.dds",
-                    "Active_Hovered_UID": 1899417533,
+                    "Active_Hovered_LibraryPath": "Library\/Textures\/949337790.dds",
+                    "Active_Hovered_UID": 949337790,
                     "Active_AssetsPath": "Assets\/UI\/MENU\/checkbox_full.png",
-                    "Active_LibraryPath": "Library\/Textures\/1567896083.dds",
-                    "Active_UID": 1567896083,
+                    "Active_LibraryPath": "Library\/Textures\/1573403753.dds",
+                    "Active_UID": 1573403753,
                     "Unactive_Pressed_AssetsPath": "Assets\/UI\/MENU\/checkbox_empty_pressed.png",
-                    "Unactive_Pressed_LibraryPath": "Library\/Textures\/924580841.dds",
-                    "Unactive_Pressed_UID": 924580841,
+                    "Unactive_Pressed_LibraryPath": "Library\/Textures\/834635899.dds",
+                    "Unactive_Pressed_UID": 834635899,
                     "Unactive_Hovered_AssetsPath": "Assets\/UI\/MENU\/checkbox_empty_hover.png",
-                    "Unactive_Hovered_LibraryPath": "Library\/Textures\/1444439017.dds",
-                    "Unactive_Hovered_UID": 1444439017,
+                    "Unactive_Hovered_LibraryPath": "Library\/Textures\/1711990233.dds",
+                    "Unactive_Hovered_UID": 1711990233,
                     "Unactive_AssetsPath": "Assets\/UI\/MENU\/checkbox_empty.png",
-                    "Unactive_LibraryPath": "Library\/Textures\/303323008.dds",
-                    "Unactive_UID": 303323008,
+                    "Unactive_LibraryPath": "Library\/Textures\/1244819265.dds",
+                    "Unactive_UID": 1244819265,
                     "Script_Name": "DisSett",
                     "ButtonState": 4,
                     "Checkbox Active": false,
@@ -1080,8 +1080,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Assets\/UI\/MENU\/checkbox_empty_hover.png",
-                    "LibraryPath": "Library\/Textures\/1444439017.dds",
-                    "UID": 1444439017
+                    "LibraryPath": "Library\/Textures\/1711990233.dds",
+                    "UID": 1711990233
                 },
                 {
                     "Type": 17,
@@ -1493,14 +1493,14 @@
                     "Type": 7,
                     "Active": true,
                     "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_right_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/998041583.dds",
-                    "Pressed_UID": 998041583,
+                    "Pressed_LibraryPath": "Library\/Textures\/70978250.dds",
+                    "Pressed_UID": 70978250,
                     "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/986664332.dds",
-                    "Hovered_UID": 986664332,
+                    "Hovered_LibraryPath": "Library\/Textures\/1505315464.dds",
+                    "Hovered_UID": 1505315464,
                     "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/530646613.dds",
-                    "Unhovered_UID": 530646613,
+                    "Unhovered_LibraryPath": "Library\/Textures\/1346482548.dds",
+                    "Unhovered_UID": 1346482548,
                     "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -1509,8 +1509,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Assets\/UI\/MENU\/arrow_right.png",
-                    "LibraryPath": "Library\/Textures\/530646613.dds",
-                    "UID": 530646613
+                    "LibraryPath": "Library\/Textures\/1346482548.dds",
+                    "UID": 1346482548
                 },
                 {
                     "Type": 17,
@@ -1583,14 +1583,14 @@
                     "Type": 7,
                     "Active": true,
                     "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_left_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/106300675.dds",
-                    "Pressed_UID": 106300675,
+                    "Pressed_LibraryPath": "Library\/Textures\/1878130604.dds",
+                    "Pressed_UID": 1878130604,
                     "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1055159031.dds",
-                    "Hovered_UID": 1055159031,
+                    "Hovered_LibraryPath": "Library\/Textures\/708143523.dds",
+                    "Hovered_UID": 708143523,
                     "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/387000833.dds",
-                    "Unhovered_UID": 387000833,
+                    "Unhovered_LibraryPath": "Library\/Textures\/1148197231.dds",
+                    "Unhovered_UID": 1148197231,
                     "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -1599,8 +1599,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Assets\/UI\/MENU\/arrow_left.png",
-                    "LibraryPath": "Library\/Textures\/387000833.dds",
-                    "UID": 387000833
+                    "LibraryPath": "Library\/Textures\/1148197231.dds",
+                    "UID": 1148197231
                 },
                 {
                     "Type": 17,
@@ -1972,14 +1972,14 @@
                     "Type": 7,
                     "Active": true,
                     "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_right_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/998041583.dds",
-                    "Pressed_UID": 998041583,
+                    "Pressed_LibraryPath": "Library\/Textures\/70978250.dds",
+                    "Pressed_UID": 70978250,
                     "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/986664332.dds",
-                    "Hovered_UID": 986664332,
+                    "Hovered_LibraryPath": "Library\/Textures\/1505315464.dds",
+                    "Hovered_UID": 1505315464,
                     "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_right.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/530646613.dds",
-                    "Unhovered_UID": 530646613,
+                    "Unhovered_LibraryPath": "Library\/Textures\/1346482548.dds",
+                    "Unhovered_UID": 1346482548,
                     "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -1988,8 +1988,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Assets\/UI\/MENU\/arrow_right.png",
-                    "LibraryPath": "Library\/Textures\/530646613.dds",
-                    "UID": 530646613
+                    "LibraryPath": "Library\/Textures\/1346482548.dds",
+                    "UID": 1346482548
                 },
                 {
                     "Type": 17,
@@ -2062,14 +2062,14 @@
                     "Type": 7,
                     "Active": true,
                     "Pressed_AssetsPath": "Assets\/UI\/MENU\/arrow_left_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/106300675.dds",
-                    "Pressed_UID": 106300675,
+                    "Pressed_LibraryPath": "Library\/Textures\/1878130604.dds",
+                    "Pressed_UID": 1878130604,
                     "Hovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1055159031.dds",
-                    "Hovered_UID": 1055159031,
+                    "Hovered_LibraryPath": "Library\/Textures\/708143523.dds",
+                    "Hovered_UID": 708143523,
                     "Unhovered_AssetsPath": "Assets\/UI\/MENU\/arrow_left.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/387000833.dds",
-                    "Unhovered_UID": 387000833,
+                    "Unhovered_LibraryPath": "Library\/Textures\/1148197231.dds",
+                    "Unhovered_UID": 1148197231,
                     "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -2078,8 +2078,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Assets\/UI\/MENU\/arrow_left.png",
-                    "LibraryPath": "Library\/Textures\/387000833.dds",
-                    "UID": 387000833
+                    "LibraryPath": "Library\/Textures\/1148197231.dds",
+                    "UID": 1148197231
                 },
                 {
                     "Type": 17,
@@ -2214,14 +2214,14 @@
                     "Type": 7,
                     "Active": true,
                     "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_return_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/570273064.dds",
-                    "Pressed_UID": 570273064,
+                    "Pressed_LibraryPath": "Library\/Textures\/1081671534.dds",
+                    "Pressed_UID": 1081671534,
                     "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_return_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1177961007.dds",
-                    "Hovered_UID": 1177961007,
+                    "Hovered_LibraryPath": "Library\/Textures\/1490678443.dds",
+                    "Hovered_UID": 1490678443,
                     "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button_return.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1583215856.dds",
-                    "Unhovered_UID": 1583215856,
+                    "Unhovered_LibraryPath": "Library\/Textures\/834295412.dds",
+                    "Unhovered_UID": 834295412,
                     "Script_Name": "DisSett",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -2230,8 +2230,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Assets\/UI\/MENU\/button_return.png",
-                    "LibraryPath": "Library\/Textures\/1583215856.dds",
-                    "UID": 1583215856
+                    "LibraryPath": "Library\/Textures\/834295412.dds",
+                    "UID": 834295412
                 },
                 {
                     "Type": 17,
@@ -2445,8 +2445,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/723448472.dds",
-                    "UID": 723448472
+                    "LibraryPath": "Library\/Textures\/2126775415.dds",
+                    "UID": 2126775415
                 }
             ]
         },
@@ -2868,7 +2868,7 @@
             ]
         },
         {
-            "name": "Image",
+            "name": "Brightness Bar",
             "Active": true,
             "Position": [
                 0,
@@ -3342,7 +3342,7 @@
             ]
         },
         {
-            "name": "Image",
+            "name": "Master Volume Bar",
             "Active": true,
             "Position": [
                 0,
@@ -3816,7 +3816,7 @@
             ]
         },
         {
-            "name": "Image",
+            "name": "Music Volume Bar",
             "Active": true,
             "Position": [
                 0,
@@ -4290,7 +4290,7 @@
             ]
         },
         {
-            "name": "Image",
+            "name": "Sound Effect Volume Bar",
             "Active": true,
             "Position": [
                 0,
@@ -4841,8 +4841,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/124612374.dds",
-                    "UID": 124612374
+                    "LibraryPath": "Library\/Textures\/1381190712.dds",
+                    "UID": 1381190712
                 }
             ]
         },
@@ -5513,14 +5513,14 @@
                     "Type": 7,
                     "Active": true,
                     "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_return_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/570273064.dds",
-                    "Pressed_UID": 570273064,
+                    "Pressed_LibraryPath": "Library\/Textures\/1081671534.dds",
+                    "Pressed_UID": 1081671534,
                     "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_return_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/1177961007.dds",
-                    "Hovered_UID": 1177961007,
+                    "Hovered_LibraryPath": "Library\/Textures\/1490678443.dds",
+                    "Hovered_UID": 1490678443,
                     "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button_return.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/1583215856.dds",
-                    "Unhovered_UID": 1583215856,
+                    "Unhovered_LibraryPath": "Library\/Textures\/834295412.dds",
+                    "Unhovered_UID": 834295412,
                     "Script_Name": "Return",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -5529,8 +5529,8 @@
                     "Type": 11,
                     "Active": true,
                     "AssetPath": "Assets\/UI\/MENU\/button_return.png",
-                    "LibraryPath": "Library\/Textures\/1583215856.dds",
-                    "UID": 1583215856
+                    "LibraryPath": "Library\/Textures\/834295412.dds",
+                    "UID": 834295412
                 },
                 {
                     "Type": 17,
