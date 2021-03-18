@@ -10,6 +10,7 @@
 #include "CO_RigidBody.h"
 #include "CO_Collider.h"
 #include "CO_BoxCollider.h"
+#include "CO_SphereCollider.h"
 #include "CO_MeshCollider.h"
 #include "CO_AudioListener.h"
 #include "CO_AudioSource.h"
@@ -145,6 +146,9 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 	case Component::TYPE::BOXCOLLIDER:
 		ret = new C_BoxCollider(this);
       break;
+	case Component::TYPE::SPHERECOLLIDER:
+		ret = new C_SphereCollider(this);
+		break;
 	case Component::TYPE::MESHCOLLIDER:
 		ret = new C_MeshCollider(this);
 		break;

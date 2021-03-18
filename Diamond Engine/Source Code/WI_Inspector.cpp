@@ -205,8 +205,12 @@ void W_Inspector::Draw()
 				}
 				if (ImGui::Selectable("Mesh Collider"))
 				{
-					if (selectedGO->GetComponent(Component::TYPE::MESHCOLLIDER) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::MESHCOLLIDER);
+
+				}
+				if (ImGui::Selectable("Sphere Collider"))
+				{
+					selectedGO->AddComponent(Component::TYPE::SPHERECOLLIDER);
 
 				}
 				if (ImGui::Selectable("AudioListener"))

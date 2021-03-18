@@ -29,14 +29,19 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 	collider_info = _gm->GetComponentsOfType(Component::TYPE::BOXCOLLIDER);
 
 	std::vector<Component*> meshCollider_info;
+	std::vector<Component*> sphereCollider_info;
 
 	meshCollider_info = _gm->GetComponentsOfType(Component::TYPE::MESHCOLLIDER);
+	sphereCollider_info = _gm->GetComponentsOfType(Component::TYPE::SPHERECOLLIDER);
 
 	for (int i = 0; i < meshCollider_info.size(); i++)
 	{
 		collider_info.push_back(meshCollider_info[i]);
 	}
-	
+	for (int i = 0; i < sphereCollider_info.size(); i++)
+	{
+		collider_info.push_back(sphereCollider_info[i]);
+	}
 	/*for (int i = 0; i < collider_info.size(); i++)
 	{
 		C_Collider* collider = dynamic_cast<C_Collider*>(collider_info[i]);

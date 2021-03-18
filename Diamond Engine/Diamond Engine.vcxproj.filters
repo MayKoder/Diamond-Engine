@@ -871,6 +871,9 @@
     <ClInclude Include="Source Code\CO_RigidBody.h">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CO_SphereCollider.h">
+      <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -1322,6 +1325,9 @@
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\CO_RigidBody.cpp">
+      <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_SphereCollider.cpp">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClCompile>
   </ItemGroup>
