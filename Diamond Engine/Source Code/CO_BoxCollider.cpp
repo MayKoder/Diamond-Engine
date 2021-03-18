@@ -44,6 +44,7 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 	//We first initialize material to create shape later
 	colliderMaterial = EngineExternal->modulePhysics->CreateMaterial();
 	localTransform = float4x4::identity;
+	colliderShape = nullptr;
 
 	//If gameObject does have mesh we apply measures directly to collider from OBB
 	if (mesh != nullptr) {
@@ -87,7 +88,7 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 	
 
 	//We attach shape to a static or dynamic rigidbody to be collidable.
-	if (rigidbody != nullptr) {
+	if (rigidbody != nullptr && colliderShape != nullptr) {
 		rigidbody->rigid_dynamic->attachShape(*colliderShape);
 		rigidbody->collider_info.push_back(this);
 
