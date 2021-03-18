@@ -24,10 +24,11 @@ public:
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
 #ifndef STANDALONE
+	bool OnEditor()override;
 
 #endif // !STANDALONE
 public:
-
+	float radius;
 
 
 

@@ -52,12 +52,12 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 		if (colliderSize.y <= 0.0f) //I do this for plane meshes, but maybe we can remove this once we use mesh shapes
 			colliderSize.y = 0.01f;
 		//	colliderShape = App->physX->CreateCollider(type, colliderSize / 2, colliderMaterial);
-		colliderShape = EngineExternal->modulePhysics->CreateCollider(colliderSize, colliderMaterial);
+		colliderShape = EngineExternal->modulePhysics->CreateBoxCollider(colliderSize, colliderMaterial);
 
 	}
 	else {
 		colliderSize = { 0.5f, 0.5f, 0.5f };
-		colliderShape = EngineExternal->modulePhysics->CreateCollider(colliderSize, colliderMaterial);
+		colliderShape = EngineExternal->modulePhysics->CreateBoxCollider(colliderSize, colliderMaterial);
 	}
 
 	/*colliderEuler = (transform->euler - owner->RotationOffset).Div(owner->SizeOffset);

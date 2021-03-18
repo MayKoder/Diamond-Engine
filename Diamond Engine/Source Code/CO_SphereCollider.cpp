@@ -31,7 +31,7 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 
 	name = "Sphere Collider";
 	isTrigger = false;
-	shape = ColliderShape::CUBE;
+	shape = ColliderShape::SPHERE;
 
 	//Checks if component does have any owner and get additional data to be created
 
@@ -50,42 +50,26 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 	if (mesh != nullptr) {
 
 		colliderSize = mesh->globalOBB.Size() / 2;
-		if (colliderSize.y <= 0.0f) //I do this for plane meshes, but maybe we can remove this once we use mesh shapes
+		
+		radius = 0;
+		for (int i = 0; i < 3; i++)
+		{
+			if (radius < colliderSize[i])
+				radius = colliderSize[i];
+		}
+
+		if (colliderSize.y <= 0.0f) 
 			colliderSize.y = 0.01f;
-		//	colliderShape = App->physX->CreateCollider(type, colliderSize / 2, colliderMaterial);
-		colliderShape = EngineExternal->modulePhysics->CreateCollider(colliderSize, colliderMaterial);
+		colliderShape = EngineExternal->modulePhysics->CreateSphereCollider(radius, colliderMaterial);
 
 	}
 	else {
 		colliderSize = { 0.5f, 0.5f, 0.5f };
-		colliderShape = EngineExternal->modulePhysics->CreateCollider(colliderSize, colliderMaterial);
+		radius = radius = 0.5;
+		colliderShape = EngineExternal->modulePhysics->CreateSphereCollider(radius, colliderMaterial);
 	}
 
-	/*colliderEuler = (transform->euler - owner->RotationOffset).Div(owner->SizeOffset);
-	SetRotation(colliderEuler);*/
-
-
-	//If we have a rigid body and doesnt have reference collider we attach the current one
-
-	//if (rigidbody != nullptr)
-	//	rigidbody->collider_info.push_back(this);
-
-	//if (mesh != nullptr) {
-	//	colliderPos = (mesh->globalOBB.pos);
-	//	colliderPos.Set(0, 0, 0);
-	//	SetPosition(colliderPos);
-	//	
-	//}
-	//else {
-	//	/*colliderPos = (transform->position - owner->PositionOffset).Div(owner->SizeOffset);
-	//	SetPosition(colliderPos);
-	//	owner->PositionOffset = float3::zero;
-	//	owner->SizeOffset = float3::one;
-	//	owner->RotationOffset = float3::zero;*/
-	//}
-
-
-
+	
 
 	//We attach shape to a static or dynamic rigidbody to be collidable.
 	if (rigidbody != nullptr) {
@@ -93,21 +77,7 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 		rigidbody->collider_info.push_back(this);
 
 	}
-	//else {
-	//	_gm->AddComponent(Component::TYPE::RIGIDBODY);
-	//	rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RIGIDBODY));
-	//	rigidbody->use_kinematic = true;
-	//	rigidbody->EnableKinematic(rigidbody->use_kinematic);
-	//	rigidbody->rigid_dynamic->attachShape(*colliderShape);
-	//	rigidbody->collider_info.push_back(this);
-
-	//	//	rigidbody = dynamic_cast<C_RigidBody*>(_gm->AddComponent(Component::Type::RigidBody));
-
-	////	rigidbody->rigid_dynamic->attachShape(*colliderShape);
-
-	//}
-
-
+	
 
 	colliderShape->setFlag(physx::PxShapeFlag::eVISUALIZATION, true);
 
@@ -158,51 +128,49 @@ void C_SphereCollider::Update()
 			trans = transform->globalTransform;
 
 		trans = trans * localTransform;
+		float3 pos, scale;
+		Quat rot;
+		trans.Decompose(pos, rot, scale);
+		scale.Set(radius, radius, radius);
+		trans = trans.FromTRS(pos, rot, scale);
 		//SetPosition(pos);
 		//trans = EngineExternal->modulePhysics->PhysXTransformToF4F(colliderShape->getLocalPose());
 
-		physx::PxBoxGeometry boxCollider;
-
-
-
-		colliderShape->getBoxGeometry(boxCollider);
-
-		float3 half_size = { boxCollider.halfExtents.x, boxCollider.halfExtents.y, boxCollider.halfExtents.z };
+		GLfloat x, y, z, alpha, beta; // Storage for coordinates and angles        
+		int gradation = 10;
 
 		glPushMatrix();
 		glMultMatrixf(trans.Transposed().ptr());
-
-
 		glLineWidth(2.0f);
 		glColor3f(0.0f, 1.0f, 0.0f);
-		glBegin(GL_LINE_LOOP);
-		glVertex3f(-half_size.x, half_size.y, -half_size.z);
-		glVertex3f(half_size.x, half_size.y, -half_size.z);
-		glVertex3f(half_size.x, half_size.y, half_size.z);
-		glVertex3f(-half_size.x, half_size.y, half_size.z);
-		glEnd();
+		for (alpha = 0.0; alpha < PI; alpha += PI / gradation)
+		{
+			
+			
+			glBegin(GL_LINE_STRIP);
+			
 
-		glBegin(GL_LINE_LOOP);
-		glVertex3f(-half_size.x, -half_size.y, -half_size.z);
-		glVertex3f(half_size.x, -half_size.y, -half_size.z);
-		glVertex3f(half_size.x, -half_size.y, half_size.z);
-		glVertex3f(-half_size.x, -half_size.y, half_size.z);
-		glEnd();
+			for (beta = 0.0; beta < 2.01 * PI; beta += PI / gradation)
+			{
+				x = cos(beta) * sin(alpha);
+				y = sin(beta) * sin(alpha);
+				z = cos(alpha);
+				glVertex3f(x, y, z);
+				x = cos(beta) * sin(alpha + PI / gradation);
+				y = sin(beta) * sin(alpha + PI / gradation);
+				z = cos(alpha + PI / gradation);
+				glVertex3f(x, y, z);
+			}
 
-		glBegin(GL_LINES);
-		glVertex3f(-half_size.x, half_size.y, -half_size.z);
-		glVertex3f(-half_size.x, -half_size.y, -half_size.z);
-		glVertex3f(half_size.x, half_size.y, -half_size.z);
-		glVertex3f(half_size.x, -half_size.y, -half_size.z);
-		glVertex3f(half_size.x, half_size.y, half_size.z);
-		glVertex3f(half_size.x, -half_size.y, half_size.z);
-		glVertex3f(-half_size.x, half_size.y, half_size.z);
-		glVertex3f(-half_size.x, -half_size.y, half_size.z);
-		glEnd();
+			glTranslatef(pos.x, 0.0f, 0.0f);
+			glScalef(radius, radius, radius);
+			glEnd();
 
+			
+		}
 		glColor3f(1.0f, 1.0f, 1.0f);
-		glPopMatrix();
 
+		glPopMatrix();
 	}
 #endif // !STANDALONE
 
@@ -227,14 +195,14 @@ void C_SphereCollider::SaveData(JSON_Object* nObj)
 
 	DEJson::WriteVector3(nObj, "Position", pos.ptr());
 	DEJson::WriteQuat(nObj, "Rotation", rot.ptr());
-	DEJson::WriteVector3(nObj, "Scale", scale.ptr());
+	DEJson::WriteFloat(nObj, "Radius", radius);
 
 }
 
 void C_SphereCollider::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
-	float3 pos, scale;
+	float3 pos;
 	Quat rot;
 	bool trigger;
 
@@ -247,22 +215,125 @@ void C_SphereCollider::LoadData(DEConfig& nObj)
 
 	pos = nObj.ReadVector3("Position");
 	rot = nObj.ReadQuat("Rotation");
-	scale = nObj.ReadVector3("Scale");
+	radius = nObj.ReadFloat("Radius");
 
 
 	physx::PxTransform physTrans;
 	physTrans.p = physx::PxVec3(pos.x, pos.y, pos.z);
 	physTrans.q = physx::PxQuat(rot.x, rot.y, rot.z, rot.w);
 	float3 newSize;
-	newSize.x = colliderSize.x * scale.x;
-	newSize.y = colliderSize.y * scale.y;
-	newSize.z = colliderSize.z * scale.z;
-	colliderShape->setGeometry(physx::PxBoxGeometry(newSize.x, newSize.y, newSize.z));
+	
+	
+	colliderShape->setGeometry(physx::PxSphereGeometry(radius));
 	colliderShape->setLocalPose(physTrans);
 
-	localTransform = float4x4::FromTRS(pos, rot, scale);
+	localTransform = float4x4::FromTRS(pos, rot, float3(1, 1, 1));
 
 }
+
+
+#ifndef STANDALONE
+bool C_SphereCollider::OnEditor()
+{
+	if (Component::OnEditor() == true)
+	{
+		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+
+		bool trigger = isTrigger;
+		ImGui::Checkbox("isTrigger", &trigger);
+
+		if (trigger != isTrigger)
+		{
+			SetTrigger(trigger);
+			isTrigger = trigger;
+		}
+
+		ImGui::Separator();
+		if (ImGui::TreeNodeEx("Edit Collider", node_flags))
+		{
+
+
+			ImGui::Columns(4, "Collidercolumns");
+			ImGui::Separator();
+
+			ImGui::Text("Position"); ImGui::Spacing(); ImGui::Spacing();// ImGui::NextColumn();
+		
+			ImGui::Text("Scale"); ImGui::NextColumn();
+
+			// Position
+			float3 pos, scale;
+			Quat rot;
+			localTransform.Decompose(pos, rot, scale);
+			float3 rotation = rot.ToEulerXYZ();
+
+			float t = pos.x;
+			ImGui::SetNextItemWidth(50);
+			ImGui::DragFloat(" ", &t);
+			if (ImGui::IsItemActive())
+			{
+				pos.x = t;
+				localTransform = float4x4::FromTRS(pos, rot, scale);
+
+				SetPosition(pos);
+
+
+			}
+			ImGui::SetNextItemWidth(50);
+			
+			float rad = radius;
+			ImGui::DragFloat("  ", &rad);
+			if (ImGui::IsItemActive())
+			{
+				radius = rad;
+				colliderShape->setGeometry(physx::PxSphereGeometry(radius));
+			}
+			ImGui::NextColumn();
+
+			// Position
+
+			float t1 = pos.y;
+			ImGui::SetNextItemWidth(50);
+			ImGui::DragFloat("    ", &t1);
+			if (ImGui::IsItemActive())
+			{
+				pos.y = t1;
+				localTransform = float4x4::FromTRS(pos, rot, scale);
+
+				SetPosition(pos);
+			}
+		
+		
+			
+			ImGui::NextColumn();
+
+			// Position
+			float t2 = pos.z;
+			ImGui::SetNextItemWidth(50);
+			ImGui::DragFloat("       ", &t2);
+			if (ImGui::IsItemActive())
+			{
+				pos.z = t2;
+				localTransform = float4x4::FromTRS(pos, rot, scale);
+
+				SetPosition(pos);
+			}
+			
+			ImGui::NextColumn();
+
+			ImGui::Columns(1);
+			ImGui::TreePop();
+
+		}
+		ImGui::Separator();
+
+		//Editar materiales
+		//colliderMaterial
+
+		return true;
+	}
+	return false;
+}
+#endif // !STANDALONE
 
 
 

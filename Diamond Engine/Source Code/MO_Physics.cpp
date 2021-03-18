@@ -273,7 +273,7 @@ physx::PxRigidDynamic* ModulePhysics::CreateRigidDynamic(float3 pos, Quat rot) {
 	return dynamicBody;
 }
 //
-physx::PxShape* ModulePhysics::CreateCollider(float3 size, PxMaterial* material) {
+physx::PxShape* ModulePhysics::CreateBoxCollider(float3 size, PxMaterial* material) {
 
 	PxShape* colliderShape = nullptr;
 
@@ -282,6 +282,19 @@ physx::PxShape* ModulePhysics::CreateCollider(float3 size, PxMaterial* material)
 
 	
 	colliderShape = mPhysics->createShape(PxBoxGeometry(size.x, size.y, size.z), *material, true);
+
+	return colliderShape;
+}
+
+physx::PxShape* ModulePhysics::CreateSphereCollider(float radius, PxMaterial* material) {
+
+	PxShape* colliderShape = nullptr;
+
+	if (material == nullptr)
+		material = mMaterial;
+
+
+	colliderShape = mPhysics->createShape(PxSphereGeometry(radius), *material, true);
 
 	return colliderShape;
 }
