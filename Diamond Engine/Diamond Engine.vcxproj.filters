@@ -580,12 +580,6 @@
     <ClInclude Include="Source Code\MO_Physics.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CO_Collider.h">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\CO_RigidBody.h">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\RE_Material.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
@@ -882,6 +876,15 @@
     </ClInclude>
     <ClInclude Include="Source Code\CS_GameObject_Bindings.h">
       <Filter>Sources\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_Collider.h">
+      <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_RigidBody.h">
+      <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_SphereCollider.h">
+      <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1182,12 +1185,6 @@
     <ClCompile Include="Source Code\MO_Physics.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\CO_Collider.cpp">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\CO_RigidBody.cpp">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\RE_Material.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
@@ -1335,6 +1332,15 @@
     </ClCompile>
     <ClCompile Include="Source Code\PE_Velocity_Over_Lifetime.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Collider.cpp">
+      <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_RigidBody.cpp">
+      <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_SphereCollider.cpp">
+      <Filter>Sources\Components\Derived\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
