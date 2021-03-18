@@ -200,7 +200,7 @@ void W_Inspector::Draw()
 				}
 				if (ImGui::Selectable("Box Collider"))
 				{
-					if (selectedGO->GetComponent(Component::TYPE::BOXCOLLIDER) == nullptr)
+					//if (selectedGO->GetComponent(Component::TYPE::BOXCOLLIDER) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::BOXCOLLIDER);
 				}
 				if (ImGui::Selectable("Mesh Collider"))

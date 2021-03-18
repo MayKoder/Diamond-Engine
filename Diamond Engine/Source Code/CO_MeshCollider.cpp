@@ -99,21 +99,21 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 			rigidbody->rigid_dynamic->attachShape(*colliderShape);
 			rigidbody->collider_info.push_back(this);
 		}
-		else {
+	/*	else {
 			_gm->AddComponent(Component::TYPE::RIGIDBODY);
 			rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RIGIDBODY));
 			rigidbody->use_kinematic = true;
 			rigidbody->EnableKinematic(rigidbody->use_kinematic);
 			colliderShape = EngineExternal->modulePhysics->CreateMeshCollider(rigidbody->rigid_dynamic, _gm);
 			rigidbody->rigid_dynamic->attachShape(*colliderShape);
-			rigidbody->collider_info.push_back(this);
+			rigidbody->collider_info.push_back(this);*/
 
 			
 			//	rigidbody = dynamic_cast<C_RigidBody*>(_gm->AddComponent(Component::Type::RigidBody));
 
 		//	rigidbody->rigid_dynamic->attachShape(*colliderShape);
 
-		}
+		//}
 
 	
 

@@ -12,16 +12,16 @@ public class ColliderTest : DiamondComponent
 	{
 		//Debug.Log("CS: Collided object: " + gameObject.tag + ", Collider: " + collidedGameObject.tag);
 		//Debug.Log("Collided by tag: " + collidedGameObject.tag);
-		Debug.Log("Collision detected");
+		Debug.Log("Collision detected with: " + collidedGameObject.tag);
 	}
 
 	public void OnTriggerEnter(GameObject triggeredGameObject)
 	{
 		//Debug.Log("CS: Collided object: " + gameObject.tag + ", Collider: " + triggeredGameObject.tag);
-		if (triggeredGameObject.CompareTag("Bullet"))
-		{
-			Debug.Log("Trigger detected");
-		}
+		//if (triggeredGameObject.CompareTag("Bullet"))
+		//{
+			Debug.Log("Trigger detecte dwith: " + triggeredGameObject.tag);
+		//}
 
 		//Debug.Log("Triggered by tag: " + triggeredGameObject.tag);
 	}

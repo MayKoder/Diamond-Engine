@@ -37,11 +37,11 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 		collider_info.push_back(meshCollider_info[i]);
 	}
 	
-	for (int i = 0; i < collider_info.size(); i++)
+	/*for (int i = 0; i < collider_info.size(); i++)
 	{
 		C_Collider* collider = dynamic_cast<C_Collider*>(collider_info[i]);
 		collider->rigidbody = this;
-	}
+	}*/
 
 
 	//if(!collider_info)
@@ -118,6 +118,14 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 	rigid_dynamic->userData = this->gameObject;
 
 	rigid_dynamic->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
+
+	LockLinearX(lock_linearX);
+	LockLinearY(lock_linearY);
+	LockLinearZ(lock_linearZ);
+	LockAngularX(lock_angularX);
+	LockAngularY(lock_angularY);
+	LockAngularY(lock_angularZ);
+
 }
 
 C_RigidBody::~C_RigidBody()
@@ -212,7 +220,6 @@ void C_RigidBody::Step()
 		for (int i = 0; i < collider_info.size(); i++)
 		{
 			C_Collider* colliderComponent = dynamic_cast<C_Collider*>(collider_info[i]);
-			colliderComponent->rigidbody = nullptr;
 
 			if (colliderComponent && colliderComponent->shape != ColliderShape::MESH)
 			{

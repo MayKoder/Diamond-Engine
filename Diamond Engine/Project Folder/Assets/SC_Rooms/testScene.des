@@ -38,53 +38,12 @@
                 1,
                 1
             ],
-            "UID": 226985610,
+            "UID": 621070814,
             "PrefabID": 0,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
-                }
-            ]
-        },
-        {
-            "name": "Main Camera",
-            "tag": "Untagged",
-            "layer": "Default",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1780479184,
-            "PrefabID": 0,
-            "ParentUID": 226985610,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 4,
-                    "Active": true,
-                    "fType": 2,
-                    "nearPlaneDist": 1,
-                    "farPlaneDist": 100,
-                    "vFOV": 1.0471975803375244,
-                    "hFOV": 1.7953383922576904,
-                    "culling": true
                 }
             ]
         },
@@ -109,9 +68,9 @@
                 1,
                 1
             ],
-            "UID": 1690197130,
+            "UID": 1509501198,
             "PrefabID": 0,
-            "ParentUID": 226985610,
+            "ParentUID": 621070814,
             "Components": [
                 {
                     "Type": 1,
@@ -150,7 +109,7 @@
                     ]
                 },
                 {
-                    "Type": 19,
+                    "Type": 18,
                     "Active": true,
                     "isTrigger": false,
                     "Position": [

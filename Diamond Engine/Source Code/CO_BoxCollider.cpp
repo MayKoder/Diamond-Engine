@@ -92,19 +92,19 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 		rigidbody->collider_info.push_back(this);
 
 	}
-	else {
-		_gm->AddComponent(Component::TYPE::RIGIDBODY);
-		rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RIGIDBODY));
-		rigidbody->use_kinematic = true;
-		rigidbody->EnableKinematic(rigidbody->use_kinematic);
-		rigidbody->rigid_dynamic->attachShape(*colliderShape);
-		rigidbody->collider_info.push_back(this);
-
-		//	rigidbody = dynamic_cast<C_RigidBody*>(_gm->AddComponent(Component::Type::RigidBody));
-
+	//else {
+	//	_gm->AddComponent(Component::TYPE::RIGIDBODY);
+	//	rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RIGIDBODY));
+	//	rigidbody->use_kinematic = true;
+	//	rigidbody->EnableKinematic(rigidbody->use_kinematic);
 	//	rigidbody->rigid_dynamic->attachShape(*colliderShape);
+	//	rigidbody->collider_info.push_back(this);
 
-	}
+	//	//	rigidbody = dynamic_cast<C_RigidBody*>(_gm->AddComponent(Component::Type::RigidBody));
+
+	////	rigidbody->rigid_dynamic->attachShape(*colliderShape);
+
+	//}
 
 
 
@@ -142,6 +142,9 @@ C_BoxCollider::~C_BoxCollider()
 void C_BoxCollider::Update()
 {
 #ifndef STANDALONE
+
+	if(rigidbody == nullptr)
+		rigidbody = dynamic_cast<C_RigidBody*>(gameObject->GetComponent(Component::TYPE::RIGIDBODY));
 
 	if (colliderShape != nullptr)
 	{

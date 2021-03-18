@@ -399,7 +399,7 @@ void CollisionDetector::onContact(const PxContactPairHeader& pairHeader,
 					if (script)
 					{
 						GameObject* contact2 = static_cast<GameObject*>(pairHeader.actors[ k == 0 ? 1 : 0]->userData);
-						script->CollisionCallback(true, contact2);
+						script->CollisionCallback(false, contact2);
 					}
 				}
 			}
@@ -427,7 +427,7 @@ void CollisionDetector::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 coun
 			{
 				C_Script* script = dynamic_cast<C_Script*>(scripts[i]);
 				if (script)
-					script->CollisionCallback(true, contact);
+					script->CollisionCallback(true, contact2);
 			}
 		
 			
@@ -440,7 +440,7 @@ void CollisionDetector::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 coun
 			{
 				C_Script* script = dynamic_cast<C_Script*>(scripts[i]);
 				if (script)
-					script->CollisionCallback(true, contact2);
+					script->CollisionCallback(true, contact);
 			}
 		}
 		
