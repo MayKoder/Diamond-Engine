@@ -25,6 +25,10 @@ public class HUD : DiamondComponent
 	public GameObject currency_number_gameobject = null;
 	public GameObject combo_bar = null;
 	public GameObject combo_text = null;
+	public GameObject combo_gameobject = null;
+
+	private float combo_time_limit;
+	private float combo_time;
 	public void Update()
 	{
 		if(Input.GetKey(DEKeyCode.C) == KeyState.KEY_DOWN)
@@ -124,14 +128,51 @@ public class HUD : DiamondComponent
 		}
         if (Input.GetKey(DEKeyCode.B) == KeyState.KEY_DOWN)
         {
+            if (combo_number == 0)
+            {
+				combo_gameobject.Enable(true);
+            }
 			combo_number++;
+			combo_time_limit = Time.totalTime + combo_seconds;
             if (combo_bar != null)
             {
 				combo_bar.GetComponent<Material>().SetIntUniform("combo_number", combo_number);
+				combo_bar.GetComponent<Material>().SetFloatUniform("length_used", combo_time_limit / combo_seconds) ;
             }
 			if (combo_text == null)
 				return;
 			combo_text.GetComponent<Text>().text= "x" + combo_number.ToString();
+			if (combo_number == 10)
+			{
+
+			}
+			else if (combo_number == 25)
+            {
+
+            }
+			else if(combo_number == 45)
+
+			{
+
+			}
+			else if (combo_number == 77)
+
+			{
+
+			}
+		}
+        if (combo_bar != null && combo_number > 0)
+        {
+			combo_time = Time.totalTime;
+            if (combo_time > combo_time_limit)
+            {
+				combo_number = 0;
+				combo_bar.GetComponent<Material>().SetIntUniform("combo_number", combo_number);
+				combo_gameobject.Enable(false);
+				return;
+            }
+			combo_bar.GetComponent<Material>().SetFloatUniform("length_used", (combo_time_limit - combo_time) / combo_seconds);
+
 		}
 	}
 

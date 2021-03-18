@@ -147,6 +147,7 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Animator::Resume", Resume);
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
+	mono_add_internal_call("DiamondEngine.Time::get_totalTime", GetTotalTime);
 	mono_add_internal_call("DiamondEngine.Time::PauseGame", CS_PauseGame);
 	mono_add_internal_call("DiamondEngine.Time::ResumeGame", CS_ResumeGame);
 	

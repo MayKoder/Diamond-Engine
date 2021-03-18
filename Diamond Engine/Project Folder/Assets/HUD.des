@@ -410,7 +410,8 @@
                     "secondary_weapon": 1142762498,
                     "currency_number_gameobject": 685275708,
                     "combo_bar": 751315337,
-                    "combo_text": 1065887298
+                    "combo_text": 1065887298,
+                    "combo_gameobject": 810407947
                 }
             ]
         },
@@ -1100,7 +1101,7 @@
             "name": "Combo ",
             "tag": "Untagged",
             "layer": "Default",
-            "Active": true,
+            "Active": false,
             "Position": [
                 0,
                 0,

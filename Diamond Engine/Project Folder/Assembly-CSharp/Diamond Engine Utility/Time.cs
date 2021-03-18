@@ -13,6 +13,12 @@ namespace DiamondEngine
             get;
         }
 
+        public static extern float totalTime
+        {
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            get;
+        }
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void PauseGame();
 

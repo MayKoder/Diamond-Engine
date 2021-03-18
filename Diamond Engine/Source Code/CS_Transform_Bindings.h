@@ -300,6 +300,11 @@ float GetDT() //TODO: Can we do this without duplicating code? plsssss
 	return DETime::deltaTime;
 }
 
+float GetTotalTime()
+{
+	return DETime::time;
+}
+
 void CS_PauseGame()
 {
 	DETime::Pause();
