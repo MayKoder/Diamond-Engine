@@ -1,16 +1,16 @@
 {
     "EditorCameraPosition": [
         2.8461647033691406,
-        0.93966042995452881,
+        0.93966031074523926,
         0.12800532579421997
     ],
     "EditorCameraZ": [
-        -0.94872152805328369,
+        -0.94872158765792847,
         -0.31322011351585388,
-        -0.042668439447879791
+        -0.04266844317317009
     ],
     "EditorCameraY": [
-        -0.31290382146835327,
+        -0.31290379166603088,
         0.94968056678771973,
         -0.01407274603843689
     ],
@@ -188,7 +188,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6763339042663574,
+                    "hFOV": 1.6463055610656738,
                     "culling": false
                 }
             ]
@@ -960,15 +960,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "Pause",
                     "ButtonState": 1,
                     "Is Selected": true
@@ -976,9 +976,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "LibraryPath": "Library\/Textures\/828696110.dds",
-                    "UID": 828696110
+                    "AssetPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "UID": 1345927926
                 },
                 {
                     "Type": 17,
@@ -1091,7 +1091,7 @@
                     "Active": true,
                     "Position": [
                         -13.100000381469727,
-                        -2.2000000476837158
+                        -3.9000000953674316
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -1174,15 +1174,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "Pause",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -1190,9 +1190,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button.png",
-                    "LibraryPath": "Library\/Textures\/861183043.dds",
-                    "UID": 861183043
+                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
+                    "LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "UID": 1618474496
                 },
                 {
                     "Type": 17,
@@ -1306,7 +1306,7 @@
                     "Active": true,
                     "Position": [
                         -11.600000381469727,
-                        -2
+                        -3.5999999046325684
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -1389,15 +1389,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "Pause",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -1405,9 +1405,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button.png",
-                    "LibraryPath": "Library\/Textures\/861183043.dds",
-                    "UID": 861183043
+                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
+                    "LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "UID": 1618474496
                 },
                 {
                     "Type": 17,
@@ -1521,7 +1521,7 @@
                     "Active": true,
                     "Position": [
                         -10.100000381469727,
-                        -1.8999999761581421
+                        -3.7999999523162842
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -1604,15 +1604,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "Pause",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -1620,9 +1620,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button.png",
-                    "LibraryPath": "Library\/Textures\/861183043.dds",
-                    "UID": 861183043
+                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
+                    "LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "UID": 1618474496
                 },
                 {
                     "Type": 17,
@@ -1736,7 +1736,7 @@
                     "Active": true,
                     "Position": [
                         -12.5,
-                        -2.2000000476837158
+                        -4.5
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -1819,15 +1819,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "Pause",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -1835,9 +1835,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button.png",
-                    "LibraryPath": "Library\/Textures\/861183043.dds",
-                    "UID": 861183043
+                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
+                    "LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "UID": 1618474496
                 },
                 {
                     "Type": 17,
@@ -1951,7 +1951,7 @@
                     "Active": true,
                     "Position": [
                         -6.6999998092651367,
-                        -1.8999999761581421
+                        -4.1999998092651367
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -6757,25 +6757,25 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "QuitConfirmation",
-                    "ButtonState": 1,
-                    "Is Selected": true
+                    "ButtonState": 2,
+                    "Is Selected": false
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "LibraryPath": "Library\/Textures\/828696110.dds",
-                    "UID": 828696110
+                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
+                    "LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "UID": 1618474496
                 },
                 {
                     "Type": 17,
@@ -6882,7 +6882,7 @@
                     ],
                     "Button Being Used": -1,
                     "Type Of UI": 7,
-                    "Is Selected": true
+                    "Is Selected": false
                 },
                 {
                     "Type": 5,
@@ -6927,7 +6927,7 @@
                     "Active": true,
                     "Position": [
                         -16.399999618530273,
-                        -1.5
+                        -4
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -7010,15 +7010,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "QuitConfirmation",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -7026,9 +7026,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button.png",
-                    "LibraryPath": "Library\/Textures\/861183043.dds",
-                    "UID": 861183043
+                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
+                    "LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "UID": 1618474496
                 },
                 {
                     "Type": 17,
@@ -7180,7 +7180,7 @@
                     "Active": true,
                     "Position": [
                         -15,
-                        -1.6000000238418579
+                        -3.7999999523162842
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -7273,15 +7273,15 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
                     "Unhovered_UID": 1618474496,
                     "Script_Name": "QuitConfirmation",
-                    "ButtonState": 2,
-                    "Is Selected": false
+                    "ButtonState": 1,
+                    "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
-                    "LibraryPath": "Library\/Textures\/1618474496.dds",
-                    "UID": 1618474496
+                    "AssetPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "UID": 1345927926
                 },
                 {
                     "Type": 17,
@@ -7346,7 +7346,7 @@
                     ],
                     "Button Being Used": -1,
                     "Type Of UI": 7,
-                    "Is Selected": false
+                    "Is Selected": true
                 },
                 {
                     "Type": 5,
