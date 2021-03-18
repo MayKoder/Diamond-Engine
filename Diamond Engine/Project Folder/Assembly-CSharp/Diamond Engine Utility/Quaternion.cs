@@ -44,6 +44,9 @@ namespace DiamondEngine
             }
         }
 
+        public static Quaternion operator *(Quaternion a, float d) { return new Quaternion(a.w*d, a.x * d, a.y * d, a.z * d); }
+        public static Quaternion operator +(Quaternion a, Quaternion b) { return new Quaternion(a.w + b.w, a.x + b.x, a.y + b.y, a.z + b.z); }
+
         public Quaternion(float x, float y, float z, float w) 
         { 
             this.x = x; this.y = y; this.z = z; this.w = w; 
@@ -96,6 +99,14 @@ namespace DiamondEngine
             //ret = ret.normalized;
 
             return ret;
+        }
+
+        public static Quaternion Slerp(Quaternion q1, Quaternion q2, float t)
+        {
+            float omega = (float)Math.Acos(Dot(q1, q2));
+            Quaternion p1 = q1 * (float)(Math.Sin((1 - t) * omega) / Math.Sin(omega));
+            Quaternion p2 = q2 * (float)(Math.Sin(t * omega) / Math.Sin(omega));
+            return p1 + p2;
         }
 
         public static float Dot(Quaternion a, Quaternion b)

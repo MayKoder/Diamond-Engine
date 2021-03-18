@@ -108,6 +108,15 @@ namespace DiamondEngine
             return (a+ (b - a)*t);
         }
 
+        public static Vector3 SlerpVector(Vector3 start, Vector3 end, float percent)
+        {
+            float dot = Vector3.Dot(start, end);
+            Mathf.Clamp(dot, -1.0f, 1.0f);
+            float theta = (float)Math.Acos(dot) * percent;
+            Vector3 RelativeVec = end - start * dot;
+            return ((start * (float)Math.Cos(theta)) + (RelativeVec.normalized * (float)Math.Sin(theta)));
+        }
+
         //public void Normalize()
         //{
         //    float mag = Magnitude(this);
