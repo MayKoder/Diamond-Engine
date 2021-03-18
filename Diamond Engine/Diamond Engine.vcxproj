@@ -231,6 +231,7 @@
     <ClInclude Include="Source Code\CO_Navigation.h" />
     <ClInclude Include="Source Code\CO_RigidBody.h" />
     <ClInclude Include="Source Code\CO_Script.h" />
+    <ClInclude Include="Source Code\CO_SphereCollider.h" />
     <ClInclude Include="Source Code\CO_Text.h" />
     <ClInclude Include="Source Code\CO_Transform.h" />
     <ClInclude Include="Source Code\CS_Animation_Bindings.h" />
@@ -446,6 +447,7 @@
     <ClCompile Include="Source Code\CO_Navigation.cpp" />
     <ClCompile Include="Source Code\CO_RigidBody.cpp" />
     <ClCompile Include="Source Code\CO_Script.cpp" />
+    <ClCompile Include="Source Code\CO_SphereCollider.cpp" />
     <ClCompile Include="Source Code\CO_Text.cpp" />
     <ClCompile Include="Source Code\CO_Transform.cpp" />
     <ClCompile Include="Source Code\DEJsonSupport.cpp" />
