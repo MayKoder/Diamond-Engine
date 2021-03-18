@@ -103,6 +103,16 @@ void C_Text::RenderText(C_Transform2D* transform, ResourceMaterial* material, un
 		material->shader->Unbind();
 }
 
+const char* C_Text::GetText()
+{
+	return text.c_str();
+}
+
+void C_Text::SetText(const char* new_text)
+{
+	text = new_text;
+}
+
 
 #ifndef STANDALONE
 bool C_Text::OnEditor()

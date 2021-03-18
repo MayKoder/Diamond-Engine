@@ -12,6 +12,7 @@ enum class ACTIONSNAVIGATION {
 };
 
 enum class BUTTONSANDJOYSTICKS {
+    BUTTON_OR_JOYSTICK_UNKNOWN = -2,
     NO_BUTTON_OR_JOYSTICK = -1,
 	BUTTON_A,
     BUTTON_B,
@@ -36,7 +37,7 @@ enum class BUTTONSANDJOYSTICKS {
     LEFT_JOYSTICK_DOWN,
     LEFT_JOYSTICK_LEFT,
     LEFT_JOYSTICK_RIGHT,
-    TOTAL_BUTTONS_AND_JOYSTICKS
+    TOTAL_BUTTONS_AND_JOYSTICKS,
 };
 
 struct ActionToRealize {
@@ -45,7 +46,7 @@ struct ActionToRealize {
 
 
 	ACTIONSNAVIGATION action;
-	int uid_gameobject;
+	GameObject* referenceGO;
     bool is_key_down;
     bool is_key_up;
 };
@@ -54,6 +55,9 @@ class C_Navigation :public Component {
 public:
 	C_Navigation(GameObject* gameObject, Component::TYPE type_of_ui);
 	~C_Navigation() override;
+
+    void Enable() override;
+    void Disable() override;
 
 	void Update() override;
 
