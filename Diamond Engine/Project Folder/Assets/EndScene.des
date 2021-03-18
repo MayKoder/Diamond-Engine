@@ -83,7 +83,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6763339042663574,
+                    "hFOV": 1.5906102657318115,
                     "culling": true
                 }
             ]
@@ -214,6 +214,457 @@
             ]
         },
         {
+            "name": "Continue",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1022745932,
+            "PrefabID": 0,
+            "ParentUID": 682318534,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        -64.800003051757813
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        14.199999809265137,
+                        7.3000001907348633
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 7,
+                    "Active": true,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
+                    "ButtonState": 1,
+                    "Is Selected": true
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "UID": 1345927926
+                },
+                {
+                    "Type": 17,
+                    "Active": true,
+                    "Map": [
+                        {
+                            "Index": 0,
+                            "UID": 1022745932,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 11,
+                            "UID": 726965814,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 12,
+                            "UID": 726965814,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 15,
+                            "UID": 726965814,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 16,
+                            "UID": 726965814,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 19,
+                            "UID": 726965814,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 20,
+                            "UID": 726965814,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        }
+                    ],
+                    "Button Being Used": -1,
+                    "Type Of UI": 7,
+                    "Is Selected": true
+                }
+            ]
+        },
+        {
+            "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 192343998,
+            "PrefabID": 0,
+            "ParentUID": 1022745932,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -11.5,
+                        -3.7000000476837158
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        9.8000001907348633,
+                        18.600000381469727
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "CONTINUE",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Quit",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 726965814,
+            "PrefabID": 0,
+            "ParentUID": 682318534,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        -84.599998474121094
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        14.199999809265137,
+                        7.3000001907348633
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 7,
+                    "Active": true,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
+                    "ButtonState": 2,
+                    "Is Selected": false
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
+                    "LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "UID": 1618474496
+                },
+                {
+                    "Type": 17,
+                    "Active": true,
+                    "Map": [
+                        {
+                            "Index": 0,
+                            "UID": 726965814,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 11,
+                            "UID": 1022745932,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 12,
+                            "UID": 1022745932,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 15,
+                            "UID": 1022745932,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 16,
+                            "UID": 1022745932,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 19,
+                            "UID": 1022745932,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        },
+                        {
+                            "Index": 20,
+                            "UID": 1022745932,
+                            "Action": 1,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        }
+                    ],
+                    "Button Being Used": -1,
+                    "Type Of UI": 7,
+                    "Is Selected": false
+                }
+            ]
+        },
+        {
+            "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1620945713,
+            "PrefabID": 0,
+            "ParentUID": 726965814,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -6.5999999046325684,
+                        -3.7000000476837158
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        12,
+                        18.700000762939453
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "QUIT",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1595834923,
+            "PrefabID": 0,
+            "ParentUID": 682318534,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -44.099998474121094,
+                        65.699996948242188
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        38.700000762939453,
+                        16.799999237060547
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/1848582122.dds",
+                    "UID": 1848582122
+                }
+            ]
+        },
+        {
             "name": "Screen ",
             "tag": "Untagged",
             "layer": "Default",
@@ -236,7 +687,7 @@
             ],
             "UID": 917288620,
             "PrefabID": 0,
-            "ParentUID": 682318534,
+            "ParentUID": 1595834923,
             "Components": [
                 {
                     "Type": 1,
@@ -246,13 +697,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -90.900001525878906,
-                        76.300003051757813
+                        -35.900001525878906,
+                        -5.1999998092651367
                     ],
                     "Rotation": 0,
                     "Size": [
-                        15.699999809265137,
-                        20
+                        13.899999618530273,
+                        29.600000381469727
                     ]
                 },
                 {
@@ -266,7 +717,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Placeholder Screen",
+                    "text": "PLACEHOLDER SCREEN",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -278,7 +729,7 @@
             ]
         },
         {
-            "name": "Boon Counter 1",
+            "name": "Image",
             "tag": "Untagged",
             "layer": "Default",
             "Active": true,
@@ -298,7 +749,7 @@
                 1,
                 1
             ],
-            "UID": 2074402502,
+            "UID": 1409212991,
             "PrefabID": 0,
             "ParentUID": 682318534,
             "Components": [
@@ -310,13 +761,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        0,
+                        -44.799999237060547,
                         0
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
-                        20
+                        38.700000762939453,
+                        46.799999237060547
                     ]
                 },
                 {
@@ -324,84 +775,15 @@
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
-                    "MaterialUID": 744544911
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
                 },
                 {
-                    "Type": 9,
+                    "Type": 11,
                     "Active": true,
-                    "text": "boon counter 1",
-                    "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
-                    "textColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "Boon Counter 2",
-            "tag": "Untagged",
-            "layer": "Default",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1553847345,
-            "PrefabID": 0,
-            "ParentUID": 682318534,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                },
-                {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        0,
-                        -19.700000762939453
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        20,
-                        20
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
-                    "MaterialUID": 744544911
-                },
-                {
-                    "Type": 9,
-                    "Active": true,
-                    "text": "boon counter 2",
-                    "maxTextLenght": 0,
-                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
-                    "textColor": [
-                        1,
-                        1,
-                        1
-                    ]
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/1381190712.dds",
+                    "UID": 1381190712
                 }
             ]
         },
@@ -428,7 +810,7 @@
             ],
             "UID": 1693006496,
             "PrefabID": 0,
-            "ParentUID": 682318534,
+            "ParentUID": 1409212991,
             "Components": [
                 {
                     "Type": 1,
@@ -438,12 +820,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -90.199996948242188,
-                        35.099998474121094
+                        -32.900001525878906,
+                        16.600000381469727
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
+                        16.600000381469727,
                         20
                     ]
                 },
@@ -492,7 +874,7 @@
             ],
             "UID": 2017808774,
             "PrefabID": 0,
-            "ParentUID": 682318534,
+            "ParentUID": 1409212991,
             "Components": [
                 {
                     "Type": 1,
@@ -502,12 +884,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -48.799999237060547,
-                        35.099998474121094
+                        -32.900001525878906,
+                        -18.299999237060547
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
+                        16.600000381469727,
                         20
                     ]
                 },
@@ -534,6 +916,65 @@
             ]
         },
         {
+            "name": "Image",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1932758148,
+            "PrefabID": 0,
+            "ParentUID": 682318534,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        42.299999237060547,
+                        65.699996948242188
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        38.700000762939453,
+                        16.799999237060547
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/1848582122.dds",
+                    "UID": 1848582122
+                }
+            ]
+        },
+        {
             "name": "Findings",
             "tag": "Untagged",
             "layer": "Default",
@@ -556,7 +997,7 @@
             ],
             "UID": 1360383974,
             "PrefabID": 0,
-            "ParentUID": 682318534,
+            "ParentUID": 1932758148,
             "Components": [
                 {
                     "Type": 1,
@@ -566,13 +1007,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        0,
-                        53.900001525878906
+                        -30,
+                        -6
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
-                        32.299999237060547
+                        27.399999618530273,
+                        36.200000762939453
                     ]
                 },
                 {
@@ -587,6 +1028,439 @@
                     "Type": 9,
                     "Active": true,
                     "text": "FINDINGS",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 114639979,
+            "PrefabID": 0,
+            "ParentUID": 682318534,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        42.400001525878906,
+                        0
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        38.700000762939453,
+                        46.799999237060547
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/1997051888.dds",
+                    "UID": 1997051888
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 663647262,
+            "PrefabID": 0,
+            "ParentUID": 114639979,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        1.2000000476837158,
+                        8.8999996185302734
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        8.1999998092651367,
+                        20
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/1143141246.dds",
+                    "UID": 1143141246
+                }
+            ]
+        },
+        {
+            "name": "Boon Counter 2",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1553847345,
+            "PrefabID": 0,
+            "ParentUID": 663647262,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        8.3999996185302734,
+                        15
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        17,
+                        25.5
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "x",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1657758998,
+            "PrefabID": 0,
+            "ParentUID": 663647262,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        12.199999809265137,
+                        15
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        17.200000762939453,
+                        26.399999618530273
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "1",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 675362497,
+            "PrefabID": 0,
+            "ParentUID": 114639979,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -27.200000762939453,
+                        8.8999996185302734
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        8.1999998092651367,
+                        18.5
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/1240646973.dds",
+                    "UID": 1240646973
+                }
+            ]
+        },
+        {
+            "name": "Boon Counter 1",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 2074402502,
+            "PrefabID": 0,
+            "ParentUID": 675362497,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        8.3999996185302734,
+                        15
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        17,
+                        25
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "x",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 257952572,
+            "PrefabID": 0,
+            "ParentUID": 675362497,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        12.199999809265137,
+                        15
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        17.200000762939453,
+                        26.399999618530273
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "1",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
