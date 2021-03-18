@@ -8,6 +8,7 @@ public class Pause : DiamondComponent
 	public GameObject displayWindow = null;
 	public GameObject controlsWindow = null;
 	public GameObject quitWindow = null;
+	public GameObject background = null;
 	public GameObject default_selected = null;
 
 	public void OnExecuteButton()
@@ -15,6 +16,7 @@ public class Pause : DiamondComponent
 		if (gameObject.Name == "Continue")
 		{
 			Time.ResumeGame();
+			background.Enable(false);
 			pauseWindow.Enable(false);
 		}
 		if (gameObject.Name == "Settings")
@@ -50,5 +52,4 @@ public class Pause : DiamondComponent
 	{
 
 	}
-
 }

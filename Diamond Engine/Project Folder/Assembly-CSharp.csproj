@@ -48,6 +48,7 @@
     <Compile Include="Assembly-CSharp\DefaultComponents\Text.cs" />
     <Compile Include="Assembly-CSharp\DefaultComponents\Transform.cs" />
     <Compile Include="Assembly-CSharp\Diamond Engine Utility\Audio.cs" />
+    <Compile Include="Assembly-CSharp\Diamond Engine Utility\GameCounters.cs" />
     <Compile Include="Assembly-CSharp\Diamond Engine Utility\GameObject.cs" />
     <Compile Include="Assembly-CSharp\Diamond Engine Utility\InternalCalls.cs" />
     <Compile Include="Assembly-CSharp\Diamond Engine Utility\Mathf.cs" />
@@ -78,7 +79,7 @@
     <Compile Include="Assets\Scripts\HUD.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\Stormtrooper.cs" />
-	  <Compile Include="Assets\Scripts\Bantha.cs" />
+    <Compile Include="Assets\Scripts\Bantha.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

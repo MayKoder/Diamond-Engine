@@ -97,6 +97,7 @@
                     "win": 1480717871,
                     "lose": 1253906303,
                     "default_selected": 1869991841,
+                    "background": 1712249114,
                     "rotationSpeed": 2,
                     "movementSpeed": 35,
                     "mouseSens": 1
@@ -188,7 +189,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6447387933731079,
+                    "hFOV": 1.6227388381958008,
                     "culling": false
                 }
             ]
@@ -1224,8 +1225,8 @@
                     "displayWindow": 1661904035,
                     "controlsWindow": 385927616,
                     "quitWindow": 119655247,
-                    "default_selected": 224286902,
-                    "background": 1712249114
+                    "background": 1712249114,
+                    "default_selected": 224286902
                 }
             ]
         },
@@ -1447,8 +1448,8 @@
                     "displayWindow": 1661904035,
                     "controlsWindow": 385927616,
                     "quitWindow": 119655247,
-                    "default_selected": 1813948981,
-                    "background": 1712249114
+                    "background": 1712249114,
+                    "default_selected": 1813948981
                 }
             ]
         },
@@ -1670,8 +1671,8 @@
                     "displayWindow": 1661904035,
                     "controlsWindow": 385927616,
                     "quitWindow": 119655247,
-                    "default_selected": 1734537204,
-                    "background": 1712249114
+                    "background": 1712249114,
+                    "default_selected": 1734537204
                 }
             ]
         },
@@ -1893,8 +1894,8 @@
                     "displayWindow": 1661904035,
                     "controlsWindow": 385927616,
                     "quitWindow": 119655247,
-                    "default_selected": 704018843,
-                    "background": 1712249114
+                    "background": 1712249114,
+                    "default_selected": 704018843
                 }
             ]
         },

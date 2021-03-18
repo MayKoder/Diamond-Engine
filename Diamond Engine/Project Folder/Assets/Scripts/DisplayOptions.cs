@@ -8,12 +8,9 @@ public class DisplayOptions : DiamondComponent
 	public GameObject display = null;
 	public GameObject controls = null;
 	public GameObject bigBrother = null;
+	public GameObject background = null;
 	public GameObject default_selected = null;
 
-	public void onExecuteCheckbox()
-    {
-		Debug.Log("Vsync");
-    }
 	public void OnExecuteButton()
 	{
 		if (gameObject.Name == "Settings")
@@ -41,6 +38,7 @@ public class DisplayOptions : DiamondComponent
 		{
 			bigBrother.Enable(true);
 			optionsWindow.Enable(false);
+			background.Enable(false);
 		}
 	}
 	public void Update()
