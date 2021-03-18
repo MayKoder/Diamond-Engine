@@ -12,6 +12,8 @@ public class HUD : DiamondComponent
 	public int max_bullets_main_weapon = 0;
 	public int bullets_secondary_weapon = 0;
 	public int max_bullets_secondary_weapon = 0;
+	public int combo_number = 0;
+	public int combo_seconds = 0;
 	public bool main_weapon = true;
 	public GameObject hp_bar = null;
 	public GameObject hp_number_gameobject = null;
@@ -21,6 +23,8 @@ public class HUD : DiamondComponent
 	public GameObject primary_weapon = null;
 	public GameObject secondary_weapon = null;
 	public GameObject currency_number_gameobject = null;
+	public GameObject combo_bar = null;
+	public GameObject combo_text = null;
 	public void Update()
 	{
 		if(Input.GetKey(DEKeyCode.C) == KeyState.KEY_DOWN)
@@ -117,6 +121,17 @@ public class HUD : DiamondComponent
 		if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_DOWN)
 		{
 			SwapWeapons();
+		}
+        if (Input.GetKey(DEKeyCode.B) == KeyState.KEY_DOWN)
+        {
+			combo_number++;
+            if (combo_bar != null)
+            {
+				combo_bar.GetComponent<Material>().SetIntUniform("combo_number", combo_number);
+            }
+			if (combo_text == null)
+				return;
+			combo_text.GetComponent<Text>().text= "x" + combo_number.ToString();
 		}
 	}
 

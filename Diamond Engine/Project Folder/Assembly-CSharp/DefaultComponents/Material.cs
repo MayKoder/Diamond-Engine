@@ -15,6 +15,9 @@ namespace DiamondEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void SetFloatUniform(String name_uniform, float value);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern void SetIntUniform(String name_uniform, int value);
+
     }
 
 
