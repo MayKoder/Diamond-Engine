@@ -456,7 +456,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -638,7 +638,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -756,7 +756,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -874,7 +874,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -997,7 +997,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -1125,20 +1125,20 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        69.699996948242188,
+                        76.800003051757813,
                         88.599998474121094
                     ],
                     "Rotation": 0,
                     "Size": [
-                        25.100000381469727,
-                        4.5
+                        20.200000762939453,
+                        3.7999999523162842
                     ]
                 },
                 {
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -1184,20 +1184,20 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -10.5,
+                        -5.9000000953674316,
                         0
                     ],
                     "Rotation": 0,
                     "Size": [
                         14,
-                        1.5
+                        2.0999999046325684
                     ]
                 },
                 {
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
                     "MaterialUID": 457052853
                 },
@@ -1243,13 +1243,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        7.8000001907348633,
-                        -20.899999618530273
+                        0.40000000596046448,
+                        -18.200000762939453
                     ],
                     "Rotation": 0,
                     "Size": [
-                        35.5,
-                        46.200000762939453
+                        24.399999618530273,
+                        38.5
                     ]
                 },
                 {
@@ -1263,7 +1263,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "x0",
+                    "text": "x150",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/teko-semibold.ttf",
                     "textColor": [
