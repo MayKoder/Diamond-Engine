@@ -239,6 +239,38 @@ void M_Scene::LoadScriptsData()
 	referenceMap.clear();
 }
 
+GameObject* M_Scene::FindObjectWithTag(GameObject* rootGameObject, const char* tag)
+{
+	if (rootGameObject->CompareTag(tag))
+		return rootGameObject;
+
+	GameObject* ret = nullptr;
+	for (size_t i = 0; i < rootGameObject->children.size(); i++)
+	{
+		ret = FindObjectWithTag(rootGameObject->children[i], tag);
+		if (ret != nullptr)
+			return ret;
+	}
+
+	return nullptr;
+}
+
+void M_Scene::FindGameObjectsWithTag(const char* tag, std::vector<GameObject*>& taggedObjects)
+{
+	std::vector<GameObject*> gameObjects;
+	root->CollectChilds(gameObjects);
+
+	for (size_t i = 0; i < gameObjects.size(); i++)
+	{
+		if (gameObjects[i]->CompareTag(tag))
+		{
+			taggedObjects.push_back(gameObjects[i]);
+		}
+	}
+
+	gameObjects.clear();
+}
+
 void M_Scene::SetGameCamera(C_Camera* cam)
 {
 	App->moduleRenderer3D->SetGameRenderTarget(cam);

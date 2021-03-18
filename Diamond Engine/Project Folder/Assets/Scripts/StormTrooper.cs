@@ -16,6 +16,14 @@ public class Stormtrooper : Enemy
 
 	public void Update()
 	{
+		if (player == null)
+        {
+			player = Scene.FindObjectWithTag("Player");
+			
+			if (player == null)
+				Debug.Log("Null player");
+        }
+
 		switch (currentState)
 		{
 			case STATES.IDLE:
@@ -141,7 +149,20 @@ public class Stormtrooper : Enemy
 		
 	}
 
-	public void OnTriggerEnter()
+	public void OnCollisionEnter(GameObject collidedGameObject)
 	{
+		//Debug.Log("CS: Collided object: " + gameObject.tag + ", Collider: " + collidedGameObject.tag);
+		//Debug.Log("Collided by tag: " + collidedGameObject.tag);
+	}
+
+	public void OnTriggerEnter(GameObject triggeredGameObject)
+	{
+		//Debug.Log("CS: Collided object: " + gameObject.tag + ", Collider: " + triggeredGameObject.tag);
+		if(triggeredGameObject.CompareTag("Bullet"))
+        {
+			InternalCalls.Destroy(gameObject);
+        }
+
+		//Debug.Log("Triggered by tag: " + triggeredGameObject.tag);
 	}
 }

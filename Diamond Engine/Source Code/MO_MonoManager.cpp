@@ -12,6 +12,7 @@
 
 #include"GameObject.h"
 #include"CO_Script.h"
+#include "CS_GameObject_Bindings.h"
 #include"CS_Transform_Bindings.h"
 #include "CS_Animation_Bindings.h"
 #include "CS_Input_Bindings.h"
@@ -99,6 +100,7 @@ bool M_MonoManager::Init()
 
 	mono_add_internal_call("DiamondEngine.GameObject::TryGetComponent", CS_GetComponent);
 	mono_add_internal_call("DiamondEngine.GameObject::CompareTag", CompareTag);
+	mono_add_internal_call("DiamondEngine.GameObject::get_tag", GetTag);
 
 	mono_add_internal_call("DiamondEngine.Animator::Play", Play);
 	mono_add_internal_call("DiamondEngine.Animator::Pause", Pause);
@@ -106,6 +108,7 @@ bool M_MonoManager::Init()
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
 	
+	mono_add_internal_call("DiamondEngine.Scene::FindObjectWithTag", FindObjectWithTag);
 
 	mono_add_internal_call("DiamondEngine.SceneManager::LoadScene", CS_LoadScene);
 	mono_add_internal_call("DiamondEngine.Audio::PlayAudio", PlayAudio);

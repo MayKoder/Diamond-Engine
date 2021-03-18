@@ -460,7 +460,7 @@ void GameObject::CollectChilds(std::vector<GameObject*>& vector)
 		children[i]->CollectChilds(vector);
 }
 
-bool GameObject::CompareTag(char* _tag)
+bool GameObject::CompareTag(const char* _tag)
 {
 	return strcmp(tag, _tag) == 0;
 }

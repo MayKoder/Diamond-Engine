@@ -796,7 +796,7 @@
     <ClInclude Include="Source Code\COMM_Transform2D.h">
       <Filter>Sources\Editor\Commands\Derived</Filter>
     </ClInclude>
-     <ClInclude Include="Source Code\CS_Scene_Bindings.h" />
+    <ClInclude Include="Source Code\CS_Scene_Bindings.h" />
     <ClInclude Include="Source Code\CS_Animation_Bindings.h">
       <Filter>Sources\Tools\Bindings</Filter>
     </ClInclude>
@@ -809,10 +809,9 @@
     <ClInclude Include="Source Code\CS_Transform_Bindings.h">
       <Filter>Sources\Tools\Bindings</Filter>
     </ClInclude>
-     <ClInclude Include="Source Code\CO_Navigation.h">
+    <ClInclude Include="Source Code\CO_Navigation.h">
       <Filter>Sources\Components\Derived\UI</Filter>
     </ClInclude>
-    
     <ClInclude Include="Source Code\CS_Scene_Bindings.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
@@ -868,6 +867,9 @@
     </ClInclude>
     <ClInclude Include="Source Code\PE_Velocity_Over_Lifetime.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_GameObject_Bindings.h">
+      <Filter>Sources\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

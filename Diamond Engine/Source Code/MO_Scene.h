@@ -31,6 +31,9 @@ public:
 	void GetAllGameObjects(std::vector<GameObject*>& gameObjects);
 	void LoadScriptsData();
 
+	GameObject* FindObjectWithTag(GameObject* rootGameObject, const char* tag);
+	void FindGameObjectsWithTag(const char* tag, std::vector<GameObject*>& taggedObjects);
+
 #ifndef STANDALONE
 	void OnGUI() override;
 
