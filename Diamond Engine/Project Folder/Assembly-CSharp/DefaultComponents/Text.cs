@@ -20,6 +20,32 @@ namespace DiamondEngine
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
             set;
         }
+        public extern float color_red
+        {
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            get;
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            set;
+        }
+
+        public extern float color_green
+        {
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            get;
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            set;
+        }
+
+        public extern float color_blue
+        {
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            get;
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            set;
+        }
 
     }
 

@@ -105,6 +105,12 @@ bool M_MonoManager::Init()
 #pragma region Text
 	mono_add_internal_call("DiamondEngine.Text::get_text", GetText);
 	mono_add_internal_call("DiamondEngine.Text::set_text", SetText);
+	mono_add_internal_call("DiamondEngine.Text::get_color_red", GetTextRed);
+	mono_add_internal_call("DiamondEngine.Text::set_color_red", SetTextRed);
+	mono_add_internal_call("DiamondEngine.Text::get_color_green", GetTextGreen);
+	mono_add_internal_call("DiamondEngine.Text::set_color_green", SetTextGreen);
+	mono_add_internal_call("DiamondEngine.Text::get_color_blue", GetTextBlue);
+	mono_add_internal_call("DiamondEngine.Text::set_color_blue", SetTextBlue);
 #pragma endregion
 
 #pragma region Material

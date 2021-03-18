@@ -131,7 +131,10 @@ public class HUD : DiamondComponent
             if (combo_number == 0)
             {
 				combo_gameobject.Enable(true);
-            }
+				combo_text.GetComponent<Text>().color_red = 0;
+				combo_text.GetComponent<Text>().color_green = 0.8f;
+				combo_text.GetComponent<Text>().color_blue = 1;
+			}
 			combo_number++;
 			combo_time_limit = Time.totalTime + combo_seconds;
             if (combo_bar != null)
@@ -144,21 +147,27 @@ public class HUD : DiamondComponent
 			combo_text.GetComponent<Text>().text= "x" + combo_number.ToString();
 			if (combo_number == 10)
 			{
-
+				combo_text.GetComponent<Text>().color_red = 0;
+				combo_text.GetComponent<Text>().color_green = 1;
+				combo_text.GetComponent<Text>().color_blue = 0;
 			}
 			else if (combo_number == 25)
             {
-
-            }
+				combo_text.GetComponent<Text>().color_red = 1;
+				combo_text.GetComponent<Text>().color_green = 1;
+				combo_text.GetComponent<Text>().color_blue = 0;
+			}
 			else if(combo_number == 45)
-
 			{
-
+				combo_text.GetComponent<Text>().color_red = 0.79f;
+				combo_text.GetComponent<Text>().color_green = 0.28f;
+				combo_text.GetComponent<Text>().color_blue = 0.96f;
 			}
 			else if (combo_number == 77)
-
 			{
-
+				combo_text.GetComponent<Text>().color_red = 1;
+				combo_text.GetComponent<Text>().color_green = 1;
+				combo_text.GetComponent<Text>().color_blue = 1;
 			}
 		}
         if (combo_bar != null && combo_number > 0)
