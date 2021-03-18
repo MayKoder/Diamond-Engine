@@ -75,4 +75,6 @@ private:
 
 	void RecursivePostUpdate(GameObject* parent);
 
+	void RecursiveDontDestroy(GameObject* parent, std::vector<GameObject*>& dontDestroyList);
+
 };

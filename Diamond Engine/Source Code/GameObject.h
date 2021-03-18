@@ -75,6 +75,7 @@ public:
 	//TODO: Temporal tree display bool
 	bool showChildren;
 	bool toDelete;
+	bool dontDestroy;
 
 	int UID;
 	uint prefabID;
