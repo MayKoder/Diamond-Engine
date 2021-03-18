@@ -43,6 +43,7 @@ public class FPS_Controller : DiamondComponent
                 quitMenu.Enable(false);
             else {
                 quitMenu.Enable(true);
+                Time.PauseGame();
                 if (default_selected != null)
                     default_selected.GetComponent<Navigation>().Select();
             }

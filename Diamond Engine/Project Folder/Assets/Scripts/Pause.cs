@@ -52,6 +52,7 @@ public class Pause : DiamondComponent
 		if (toDisable)
 		{
 			toDisable = false;
+			Time.ResumeGame();
 			pauseWindow.Enable(false);
 		}
 	}
