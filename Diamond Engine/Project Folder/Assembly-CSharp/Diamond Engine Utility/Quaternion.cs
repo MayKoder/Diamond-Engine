@@ -101,12 +101,46 @@ namespace DiamondEngine
             return ret;
         }
 
-        public static Quaternion Slerp(Quaternion q1, Quaternion q2, float t)
+        public static Quaternion Slerp(Quaternion q, Quaternion p, float t)
         {
-            float omega = (float)Math.Acos(Dot(q1, q2));
-            Quaternion p1 = q1 * (float)(Math.Sin((1 - t) * omega) / Math.Sin(omega));
-            Quaternion p2 = q2 * (float)(Math.Sin(t * omega) / Math.Sin(omega));
-            return p1 + p2;
+            Quaternion ret = new Quaternion(0,0,0);
+
+            float fCos = Quaternion.Dot(p, q);
+
+            if ((1.0f + fCos) > 0.00001)
+            {
+                float fCoeff0, fCoeff1;
+
+                if ((1.0f - fCos) > 0.00001)
+                {
+                    float omega = (float)Math.Acos(fCos);
+                    float invSin = 1.0f / (float)Math.Sin(omega);
+                    fCoeff0 = (float)Math.Sin((1.0f - t) * omega) * invSin;
+                    fCoeff1 = (float)Math.Sin(t * omega) * invSin;
+                }
+                else
+                {
+                    fCoeff0 = 1.0f - t;
+                    fCoeff1 = t;
+                }
+
+                ret.x = fCoeff0 * p.x + fCoeff1 * q.x;
+                ret.y = fCoeff0 * p.y + fCoeff1 * q.y;
+                ret.z = fCoeff0 * p.z + fCoeff1 * q.z;
+                ret.w = fCoeff0 * p.w + fCoeff1 * q.w;
+            }
+            else
+            {
+                float fCoeff0 = (float)Math.Sin((1.0f - t) * Math.PI * 0.5f);
+                float fCoeff1 = (float)Math.Sin(t * Math.PI * 0.5f);
+
+                ret.x = fCoeff0 * p.x - fCoeff1 * p.y;
+                ret.y = fCoeff0 * p.y + fCoeff1 * p.x;
+                ret.z = fCoeff0 * p.z - fCoeff1 * p.w;
+                ret.w = p.z;
+            }
+
+            return ret;
         }
 
         public static float Dot(Quaternion a, Quaternion b)
