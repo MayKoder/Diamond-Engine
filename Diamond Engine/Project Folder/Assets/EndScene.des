@@ -1,0 +1,601 @@
+{
+    "EditorCameraPosition": [
+        123.02468872070313,
+        43.976943969726563,
+        -38.491603851318359
+    ],
+    "EditorCameraZ": [
+        -0.94872152805328369,
+        -0.31322014331817627,
+        -0.04266844317317009
+    ],
+    "EditorCameraY": [
+        -0.31290385127067566,
+        0.94968056678771973,
+        -0.014072748832404613
+    ],
+    "tags": [],
+    "layers": [],
+    "Game Objects": [
+        {
+            "name": "Scene root",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 2076234472,
+            "PrefabID": 0,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Game Camera",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1530138418,
+            "PrefabID": 0,
+            "ParentUID": 2076234472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 4,
+                    "Active": true,
+                    "fType": 2,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 100,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.6763339042663574,
+                    "culling": true
+                }
+            ]
+        },
+        {
+            "name": "Canvas",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 248411895,
+            "PrefabID": 0,
+            "ParentUID": 2076234472,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 10,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "End Scene",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 998732504,
+            "PrefabID": 0,
+            "ParentUID": 248411895,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 682318534,
+            "PrefabID": 0,
+            "ParentUID": 998732504,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        0
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        107.40000915527344,
+                        106.69999694824219
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/153313718.dds",
+                    "UID": 153313718
+                }
+            ]
+        },
+        {
+            "name": "Screen ",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 917288620,
+            "PrefabID": 0,
+            "ParentUID": 682318534,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -90.900001525878906,
+                        76.300003051757813
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        15.699999809265137,
+                        20
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "Placeholder Screen",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Boon Counter 1",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 2074402502,
+            "PrefabID": 0,
+            "ParentUID": 682318534,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        0
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        20,
+                        20
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "boon counter 1",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Boon Counter 2",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1553847345,
+            "PrefabID": 0,
+            "ParentUID": 682318534,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        -19.700000762939453
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        20,
+                        20
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "boon counter 2",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Kills 1",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1693006496,
+            "PrefabID": 0,
+            "ParentUID": 682318534,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -90.199996948242188,
+                        35.099998474121094
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        20,
+                        20
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "KILLS",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Kills 2",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 2017808774,
+            "PrefabID": 0,
+            "ParentUID": 682318534,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        -48.799999237060547,
+                        35.099998474121094
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        20,
+                        20
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "KILLS 2",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Findings",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1360383974,
+            "PrefabID": 0,
+            "ParentUID": 682318534,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        53.900001525878906
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        20,
+                        32.299999237060547
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/744544911.mat",
+                    "MaterialUID": 744544911
+                },
+                {
+                    "Type": 9,
+                    "Active": true,
+                    "text": "FINDINGS",
+                    "maxTextLenght": 0,
+                    "fontName": "Assets\/Fonts\/renner-medium.ttf",
+                    "textColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        }
+    ]
+}
