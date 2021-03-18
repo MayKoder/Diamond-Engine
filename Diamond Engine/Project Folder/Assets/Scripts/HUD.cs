@@ -128,63 +128,78 @@ public class HUD : DiamondComponent
 		}
         if (Input.GetKey(DEKeyCode.B) == KeyState.KEY_DOWN)
         {
-            if (combo_number == 0)
-            {
-				combo_gameobject.Enable(true);
-				combo_text.GetComponent<Text>().color_red = 0;
-				combo_text.GetComponent<Text>().color_green = 0.8f;
-				combo_text.GetComponent<Text>().color_blue = 1;
-			}
 			combo_number++;
-			combo_time_limit = Time.totalTime + combo_seconds;
-            if (combo_bar != null)
-            {
-				combo_bar.GetComponent<Material>().SetIntUniform("combo_number", combo_number);
-				combo_bar.GetComponent<Material>().SetFloatUniform("length_used", combo_time_limit / combo_seconds) ;
-            }
-			if (combo_text == null)
-				return;
-			combo_text.GetComponent<Text>().text= "x" + combo_number.ToString();
-			if (combo_number == 10)
-			{
-				combo_text.GetComponent<Text>().color_red = 0;
-				combo_text.GetComponent<Text>().color_green = 1;
-				combo_text.GetComponent<Text>().color_blue = 0;
-			}
-			else if (combo_number == 25)
-            {
-				combo_text.GetComponent<Text>().color_red = 1;
-				combo_text.GetComponent<Text>().color_green = 1;
-				combo_text.GetComponent<Text>().color_blue = 0;
-			}
-			else if(combo_number == 45)
-			{
-				combo_text.GetComponent<Text>().color_red = 0.79f;
-				combo_text.GetComponent<Text>().color_green = 0.28f;
-				combo_text.GetComponent<Text>().color_blue = 0.96f;
-			}
-			else if (combo_number == 77)
-			{
-				combo_text.GetComponent<Text>().color_red = 1;
-				combo_text.GetComponent<Text>().color_green = 1;
-				combo_text.GetComponent<Text>().color_blue = 1;
-			}
+			ComboIncrease(combo_number, combo_seconds);
 		}
         if (combo_bar != null && combo_number > 0)
         {
-			combo_time = Time.totalTime;
-            if (combo_time > combo_time_limit)
+			if(!UpdateCombo(combo_number, combo_seconds, combo_time_limit))
             {
 				combo_number = 0;
-				combo_bar.GetComponent<Material>().SetIntUniform("combo_number", combo_number);
-				combo_gameobject.Enable(false);
-				return;
             }
-			combo_bar.GetComponent<Material>().SetFloatUniform("length_used", (combo_time_limit - combo_time) / combo_seconds);
 
 		}
 	}
 
+	public void ComboIncrease(int number_combo, int seconds)
+    {
+		if (number_combo == 1)
+		{
+			combo_gameobject.Enable(true);
+			combo_text.GetComponent<Text>().color_red = 0;
+			combo_text.GetComponent<Text>().color_green = 0.8f;
+			combo_text.GetComponent<Text>().color_blue = 1;
+		}
+
+		combo_time_limit = Time.totalTime + seconds;
+
+		if (combo_bar != null)
+		{
+			combo_bar.GetComponent<Material>().SetIntUniform("combo_number", number_combo);
+			combo_bar.GetComponent<Material>().SetFloatUniform("length_used", combo_time_limit / seconds);
+		}
+		if (combo_text == null)
+			return;
+		combo_text.GetComponent<Text>().text = "x" + number_combo.ToString();
+		if (number_combo == 10)
+		{
+			combo_text.GetComponent<Text>().color_red = 0;
+			combo_text.GetComponent<Text>().color_green = 1;
+			combo_text.GetComponent<Text>().color_blue = 0;
+		}
+		else if (number_combo == 25)
+		{
+			combo_text.GetComponent<Text>().color_red = 1;
+			combo_text.GetComponent<Text>().color_green = 1;
+			combo_text.GetComponent<Text>().color_blue = 0;
+		}
+		else if (number_combo == 45)
+		{
+			combo_text.GetComponent<Text>().color_red = 0.79f;
+			combo_text.GetComponent<Text>().color_green = 0.28f;
+			combo_text.GetComponent<Text>().color_blue = 0.96f;
+		}
+		else if (number_combo == 77)
+		{
+			combo_text.GetComponent<Text>().color_red = 1;
+			combo_text.GetComponent<Text>().color_green = 1;
+			combo_text.GetComponent<Text>().color_blue = 1;
+		}
+	}
+
+	public bool UpdateCombo(int number_combo, int seconds, float limit)
+    {
+		combo_time = Time.totalTime;
+		if (combo_time > limit)
+		{
+			number_combo = 0;
+			combo_bar.GetComponent<Material>().SetIntUniform("combo_number", number_combo);
+			combo_gameobject.Enable(false);
+			return false;
+		}
+		combo_bar.GetComponent<Material>().SetFloatUniform("length_used", (limit - combo_time) / seconds);
+		return true;
+	}
 	public void UpdateHP(int new_hp, int max_hp)
     {
 		if(hp_number_gameobject!=null)
