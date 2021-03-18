@@ -175,7 +175,8 @@ void C_MeshCollider::Update()
 		
 		glPushMatrix();
 		glMultMatrixf(trans.Transposed().ptr());
-
+		glLineWidth(2.0f);
+		glColor3f(0.0f, 1.0f, 0.0f);
 	
 		
 		for (physx::PxU32 i = 0; i < nbPolygons; i++)
