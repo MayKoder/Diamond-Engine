@@ -24,7 +24,10 @@ public class Pause : DiamondComponent
 			settingsWindow.Enable(true);
 			pauseWindow.Enable(false);
 			if (default_selected != null)
+            {
 				default_selected.GetComponent<Navigation>().Select();
+				default_selected.GetComponent<Settings>().FirstFrame();
+			}
 		}
 		if (gameObject.Name == "Display")
 		{
