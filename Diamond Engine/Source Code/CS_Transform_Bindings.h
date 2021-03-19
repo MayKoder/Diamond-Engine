@@ -520,7 +520,7 @@ void CS_SetMasterVolume(float vol)
 	(vol > 99.0f) ? aux = 98.9f : aux = vol;
 	(vol > 0.0f) ? aux = aux : aux = 0.5f;
 
-	return EngineExternal->moduleAudio->SetBusVolume(vol);
+	return EngineExternal->moduleAudio->SetBusVolume(aux);
 }
 
 float CS_GetMasterVolume()
@@ -540,7 +540,7 @@ void CS_SetMusicVolume(float vol)
 	(vol > 99.0f) ? aux = 98.9f : aux = vol;
 	(vol > 0.0f) ? aux = aux : aux = 0.5f;
 
-	EngineExternal->moduleAudio->SetMusicVolume(vol);
+	EngineExternal->moduleAudio->SetMusicVolume(aux);
 }
 
 float CS_GetMusicVolume()
@@ -560,7 +560,7 @@ void CS_SetSFXVolume(float vol)
 	(vol > 99.0f) ? aux = 98.9f : aux = vol;
 	(vol > 0.0f) ? aux = aux : aux = 0.5f;
 
-	EngineExternal->moduleAudio->SetSFXVolume(vol);
+	EngineExternal->moduleAudio->SetSFXVolume(aux);
 }
 
 float CS_GetSFXVolume()
