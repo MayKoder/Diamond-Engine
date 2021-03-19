@@ -56,7 +56,7 @@ public:
 	Quat	GetChannelRotation(const Channel& channel, float currentKey, Quat default) const;
 	float3	GetChannelScale(const Channel& channel, float currentKey, float3 default) const;
 
-
+	bool FindRootBone();
 
 private:
 	void DrawBones(GameObject*);
