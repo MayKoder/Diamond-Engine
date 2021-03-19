@@ -29,4 +29,5 @@ private:
 
 private:
 	BILLBOARD_ALIGNMENT currentAlignment;
+	bool horizontalAligned; //For axis alignment only
 };

@@ -10,7 +10,7 @@
 #include "CO_Camera.h"
 #include "CO_Transform.h"
 
-C_Billboard::C_Billboard(GameObject* _gm):Component(_gm), currentAlignment(BILLBOARD_ALIGNMENT::SCREEN_ALIGNED)
+C_Billboard::C_Billboard(GameObject* _gm):Component(_gm), currentAlignment(BILLBOARD_ALIGNMENT::SCREEN_ALIGNED), horizontalAligned(true)
 {
 	name = "Billboard";
 }
@@ -41,6 +41,17 @@ bool C_Billboard::OnEditor()
 		if (ImGui::MenuItem("Axis Aligned")) SetAlignment(BILLBOARD_ALIGNMENT::AXIS_ALIGNED);
 
 		ImGui::EndMenu();
+	}
+
+	if (currentAlignment == BILLBOARD_ALIGNMENT::AXIS_ALIGNED) {
+		std::string tempName = (horizontalAligned ? "Horizontal" : "Vertical");
+		ImGui::Text("Current Aligned Axis: %s", tempName.c_str());
+		if (ImGui::BeginMenu("Change aligned axis")) {
+			if (ImGui::MenuItem("Horizontal")) horizontalAligned = true;
+			if (ImGui::MenuItem("Vertical")) horizontalAligned = false;
+
+			ImGui::EndMenu();
+		}
 	}
 
 	return true;
@@ -118,5 +129,8 @@ Quat C_Billboard::WorldAlign()
 Quat C_Billboard::AxisAlign()
 {
 	//Use the global y-axis
-	return Quat::identity;
+	if(horizontalAligned)
+		return Quat(0.701, 0, 0, -0.713);
+	else
+		return Quat::identity;
 }
