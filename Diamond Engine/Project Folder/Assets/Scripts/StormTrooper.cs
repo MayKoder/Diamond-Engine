@@ -52,6 +52,10 @@ public class Stormtrooper : Enemy
                         {
 							currentState = STATES.SHOOT;
                         }
+						else
+                        {
+							Animator.Play(gameObject, "ST_Run");
+                        }
 					}
 				}
 
@@ -89,7 +93,10 @@ public class Stormtrooper : Enemy
 				else  //if not, keep wandering
 				{
 					if (targetPosition == null)
+                    {
 						targetPosition = CalculateNewPosition(wanderRange);
+						Animator.Play(gameObject, "ST_Run");
+                    }
 
 					LookAt(targetPosition);
 					MoveToPosition(targetPosition, wanderSpeed);

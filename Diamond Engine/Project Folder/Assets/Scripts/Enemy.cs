@@ -85,7 +85,7 @@ public class Enemy : DiamondComponent
 		direction = direction.normalized;
 		float angle = (float)Math.Atan2(direction.x, direction.z);
 
-		Debug.Log("Desired angle: " + (angle * Mathf.Rad2Deg).ToString());
+		//Debug.Log("Desired angle: " + (angle * Mathf.Rad2Deg).ToString());
 
 		if (Math.Abs(angle * Mathf.Rad2Deg) < 1.0f)
 			return;
@@ -93,7 +93,7 @@ public class Enemy : DiamondComponent
 		Quaternion dir = Quaternion.RotateAroundAxis(Vector3.up, angle);
 
 		float rotationSpeed = Time.deltaTime * slerpSpeed * 1000.0f;
-		Debug.Log("Rotation speed: " + rotationSpeed.ToString());
+		//Debug.Log("Rotation speed: " + rotationSpeed.ToString());
 
 		Quaternion desiredRotation = Quaternion.Slerp(gameObject.transform.localRotation, dir, rotationSpeed);
 
