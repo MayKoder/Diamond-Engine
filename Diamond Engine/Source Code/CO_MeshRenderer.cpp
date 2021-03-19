@@ -31,7 +31,10 @@ faceNormals(false), vertexNormals(false), showAABB(false), showOBB(false), drawD
 
 C_MeshRenderer::~C_MeshRenderer()
 {
-	if (_mesh != nullptr) 
+	rootBone = nullptr;
+	bonesMap.clear();
+
+	if (_mesh != nullptr)
 	{
 		EngineExternal->moduleResources->UnloadResource(_mesh->GetUID());
 		_mesh = nullptr;
@@ -40,20 +43,20 @@ C_MeshRenderer::~C_MeshRenderer()
 
 void C_MeshRenderer::Update()
 {
-	if (EngineExternal->moduleRenderer3D->GetGameRenderTarget() != nullptr && EngineExternal->moduleRenderer3D->GetGameRenderTarget()->cullingState == true && !IsInsideFrustum(&EngineExternal->moduleRenderer3D->GetGameRenderTarget()->camFrustrum)) 
+	if (EngineExternal->moduleRenderer3D->GetGameRenderTarget() != nullptr && EngineExternal->moduleRenderer3D->GetGameRenderTarget()->cullingState == true && !IsInsideFrustum(&EngineExternal->moduleRenderer3D->GetGameRenderTarget()->camFrustrum))
 		return;
-	
+
 	EngineExternal->moduleRenderer3D->renderQueue.push_back(this);
 
 #ifndef STANDALONE
-	if (showAABB ==true) 
+	if (showAABB == true)
 	{
 		float3 points[8];
 		globalAABB.GetCornerPoints(points);
 		ModuleRenderer3D::DrawBox(points, float3(0.2f, 1.f, 0.101f));
 	}
 
-	if (showOBB == true) 
+	if (showOBB == true)
 	{
 
 		float3 points[8];
@@ -79,22 +82,8 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 		id = material->GetTextureID();
 
 	//Mesh array with transform matrix of each bone
-	if (rootBone != nullptr) {
-		//Get all the bones
-		std::map<std::string, GameObject*> bonesMap;
-		GetBoneMapping(bonesMap);
-
-		//Set bone Transforms array size using original bones transform array size
-		_mesh->boneTransforms.resize(_mesh->bonesOffsets.size());
-
-		if(bonesMap.size() != _mesh->bonesMap.size())
-		{
-			for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
-			{
-				_mesh->boneTransforms[i] = float4x4::identity;
-			}
-		}
-
+	if (rootBone != nullptr)
+	{
 		//Get each bone
 		for (std::map<std::string, uint>::iterator it = _mesh->bonesMap.begin(); it != _mesh->bonesMap.end(); ++it)
 		{
@@ -109,26 +98,6 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 				//Storage of Delta Matrix (Transformation applied to each bone)
 				_mesh->boneTransforms[it->second] = Delta.Transposed();
 			}
-		}
-
-		/*
-		if (bonesMap.size() != _mesh->bonesMap.size())
-		{
-			for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
-			{
-				if (_mesh->boneTransforms[i].Equals(float4x4::identity) && i > 0)
-				{
-					_mesh->boneTransforms[i] = _mesh->boneTransforms[i - 1];
-				}
-			}
-		}
-		*/
-		bonesMap.clear();
-	}
-	else
-	{
-		for (size_t i = 0; i < _mesh->boneTransforms.size(); i++) {
-			_mesh->boneTransforms[i] = float4x4::identity;
 		}
 	}
 
@@ -155,7 +124,6 @@ void C_MeshRenderer::SaveData(JSON_Object* nObj)
 	DEJson::WriteVector3(nObj, "alternColor", &alternColor.x);
 }
 
-
 void C_MeshRenderer::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
@@ -179,7 +147,7 @@ bool C_MeshRenderer::OnEditor()
 	{
 		ImGui::Separator();
 
-		if (_mesh != nullptr) 
+		if (_mesh != nullptr)
 		{
 			//ImGui::Image((ImTextureID)_mesh->textureID, ImVec2(128, 128));
 			ImGui::Text("Vertices: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", _mesh->vertices_count);
@@ -249,7 +217,7 @@ bool C_MeshRenderer::IsInsideFrustum(Frustum* camFrustum)
 		for (size_t k = 0; k < 8; k++)
 		{
 			//Is "IsOnPositiveSide" slow?
-			if (frustumPlanes[i].IsOnPositiveSide(obbPoints[k])) 
+			if (frustumPlanes[i].IsOnPositiveSide(obbPoints[k]))
 			{
 				iPtIn = 0;
 				--inCount;
@@ -267,8 +235,32 @@ bool C_MeshRenderer::IsInsideFrustum(Frustum* camFrustum)
 	return true;
 }
 
+void C_MeshRenderer::SetRootBone(GameObject* _rootBone)
+{
+	if (_rootBone == nullptr) {
+		LOG(LogType::L_ERROR, "Trying to assign null root bone");
+		return;
+	}
+
+	rootBone = _rootBone;
+
+	//Get all the bones
+	GetBoneMapping(bonesMap);
+
+	//Set bone Transforms array size using original bones transform array size
+	_mesh->boneTransforms.resize(_mesh->bonesOffsets.size());
+
+	if (bonesMap.size() != _mesh->bonesMap.size())
+	{
+		for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
+		{
+			_mesh->boneTransforms[i] = float4x4::identity;
+		}
+	}
+}
+
 void C_MeshRenderer::SetRenderMesh(ResourceMesh* mesh)
-{ 
+{
 	_mesh = mesh;
 	//_mesh->LoadCustomFormat(_mesh->GetLibraryPath());
 
