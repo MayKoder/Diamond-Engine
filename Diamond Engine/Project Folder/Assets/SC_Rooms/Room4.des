@@ -189,7 +189,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6227388381958008,
+                    "hFOV": 1.6763339042663574,
                     "culling": false
                 }
             ]
@@ -4496,9 +4496,9 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialAssetPath": "Assets\/Materials\/ui_menu_brightness_bar.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1163903408.mat",
+                    "MaterialUID": 1163903408
                 },
                 {
                     "Type": 11,
@@ -4978,9 +4978,9 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialAssetPath": "Assets\/Materials\/ui_menu_master_volume_bar.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1118716117.mat",
+                    "MaterialUID": 1118716117
                 },
                 {
                     "Type": 11,
@@ -5463,9 +5463,9 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialAssetPath": "Assets\/Materials\/ui_menu_music_volume_bar.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/141689081.mat",
+                    "MaterialUID": 141689081
                 },
                 {
                     "Type": 11,
@@ -5956,9 +5956,9 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialAssetPath": "Assets\/Materials\/ui_menu_sfx_volume_bar.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1684735483.mat",
+                    "MaterialUID": 1684735483
                 },
                 {
                     "Type": 11,
