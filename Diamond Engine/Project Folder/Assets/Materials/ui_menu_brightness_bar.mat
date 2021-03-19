@@ -1,0 +1,11 @@
+{
+    "name": "ui_menu_brightness_bar",
+    "ShaderUID": 1143117630,
+    "Uniforms": [
+        {
+            "name": "length_used",
+            "type": 5126,
+            "value": 1
+        }
+    ]
+}

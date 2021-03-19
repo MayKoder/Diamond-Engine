@@ -20,6 +20,7 @@
 #include "MO_Scene.h"
 #include "MO_ResourceManager.h"
 #include "MO_Window.h"
+#include "MO_AudioManager.h"
 
 #include "GameObject.h"
 #include "MathGeoLib/include/Math/float3.h"
@@ -480,18 +481,30 @@ int CS_GetResolution()
 
 void CS_SetWindowMode(int winMode)
 {
-	//if (EngineExternal == nullptr)
-	//	return;
-	//int aux = winMode;
-	//(winMode > 2) ? aux = 2 : aux = winMode;
-	//(winMode > 1) ? aux = aux : aux = 1;
-	//
-	//int w, h;
-	//SDL_GetWindowSize(EngineExternal->moduleWindow->window, &w, &h);
+	if (EngineExternal == nullptr)
+		return;
+	int aux = winMode;
+	(winMode > 2) ? aux = 2 : aux = winMode;
+	(winMode > 1) ? aux = aux : aux = 1;
+	int w, h;
 
-	//// Add functionality later
+	if (aux == 1)
+	{
+		SDL_SetWindowResizable(EngineExternal->moduleWindow->window, static_cast<SDL_bool>(true));
+		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, 0);
+	}
+	if (aux == 2)
+	{
+		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		SDL_SetWindowResizable(EngineExternal->moduleWindow->window, static_cast<SDL_bool>(false));
 
-	//EngineExternal->moduleWindow->windowMode = aux;
+	}
+
+	// Add functionality later
+
+	EngineExternal->moduleWindow->windowMode = aux;
+	SDL_GetWindowSize(EngineExternal->moduleWindow->window, &w, &h);
+	EngineExternal->moduleRenderer3D->OnResize(w, h);
 }
 
 int CS_GetWindowMode()
@@ -521,6 +534,66 @@ float CS_GetBrightness()
 		return NULL;
 
 	return EngineExternal->moduleWindow->brightness;
+}
+
+void CS_SetMasterVolume(float vol)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float aux = vol;
+	(vol > 99.0f) ? aux = 99.0f : aux = vol;
+	(vol > 0.0f) ? aux = aux : aux = 0.5f;
+
+	return EngineExternal->moduleAudio->SetBusVolume(aux);
+}
+
+float CS_GetMasterVolume()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleAudio->masterVolume;
+}
+
+void CS_SetMusicVolume(float vol)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float aux = vol;
+	(vol > 99.0f) ? aux = 99.0f : aux = vol;
+	(vol > 0.0f) ? aux = aux : aux = 0.5f;
+
+	EngineExternal->moduleAudio->SetMusicVolume(aux);
+}
+
+float CS_GetMusicVolume()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleAudio->musicVolume;
+}
+
+void CS_SetSFXVolume(float vol)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float aux = vol;
+	(vol > 99.0f) ? aux = 99.0f : aux = vol;
+	(vol > 0.0f) ? aux = aux : aux = 0.5f;
+
+	EngineExternal->moduleAudio->SetSFXVolume(aux);
+}
+
+float CS_GetSFXVolume()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleAudio->fxVolume;
 }
 
 void CS_ControllerEnableVibration(bool enable)

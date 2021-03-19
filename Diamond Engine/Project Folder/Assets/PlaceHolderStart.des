@@ -458,6 +458,7 @@
                     "ScriptName": "StartMenu",
                     "menuButtons": 1392636434,
                     "options": 1311017402,
+                    "background": 560716722,
                     "default_selected": 105485055
                 }
             ]
@@ -2712,7 +2713,11 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 1105870439,
+                    "aux_bar_1": 1752632962,
+                    "aux_bar_2": 38624862,
+                    "aux_bar_3": 451991258
                 }
             ]
         },
@@ -2866,7 +2871,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 1105870439
                 }
             ]
         },
@@ -2956,7 +2962,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 1105870439
                 }
             ]
         },
@@ -3007,8 +3014,8 @@
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialLibraryPath": "Library\/Materials\/1163903408.mat",
+                    "MaterialUID": 1163903408
                 },
                 {
                     "Type": 11,
@@ -3350,7 +3357,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 1752632962
                 }
             ]
         },
@@ -3440,7 +3448,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 1752632962
                 }
             ]
         },
@@ -3491,8 +3500,8 @@
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialLibraryPath": "Library\/Materials\/1118716117.mat",
+                    "MaterialUID": 1118716117
                 },
                 {
                     "Type": 11,
@@ -3835,7 +3844,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 38624862
                 }
             ]
         },
@@ -3925,7 +3935,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 38624862
                 }
             ]
         },
@@ -3976,8 +3987,8 @@
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialLibraryPath": "Library\/Materials\/141689081.mat",
+                    "MaterialUID": 141689081
                 },
                 {
                     "Type": 11,
@@ -4320,7 +4331,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 451991258
                 }
             ]
         },
@@ -4410,7 +4422,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 451991258
                 }
             ]
         },
@@ -4461,8 +4474,8 @@
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialLibraryPath": "Library\/Materials\/1684735483.mat",
+                    "MaterialUID": 1684735483
                 },
                 {
                     "Type": 11,
@@ -5142,6 +5155,7 @@
                     "display": 1618442095,
                     "controls": 138730863,
                     "bigBrother": 1392636434,
+                    "background": 560716722,
                     "default_selected": 2065258024
                 }
             ]
@@ -5357,6 +5371,7 @@
                     "display": 1618442095,
                     "controls": 138730863,
                     "bigBrother": 1392636434,
+                    "background": 560716722,
                     "default_selected": 963703211
                 }
             ]
@@ -5572,6 +5587,7 @@
                     "display": 1618442095,
                     "controls": 138730863,
                     "bigBrother": 1392636434,
+                    "background": 560716722,
                     "default_selected": 305398496
                 }
             ]
@@ -5702,7 +5718,7 @@
                     "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button_return.png",
                     "Unhovered_LibraryPath": "Library\/Textures\/834295412.dds",
                     "Unhovered_UID": 834295412,
-                    "Script_Name": "Return",
+                    "Script_Name": "DisplayOptions",
                     "ButtonState": 1,
                     "Is Selected": true
                 },
@@ -5781,9 +5797,13 @@
                 {
                     "Type": 5,
                     "Active": true,
-                    "ScriptName": "Return",
-                    "controlsWindow": 1311017402,
-                    "bigBrother": 1392636434
+                    "ScriptName": "DisplayOptions",
+                    "optionsWindow": 1311017402,
+                    "settings": 1637315784,
+                    "display": 1618442095,
+                    "controls": 138730863,
+                    "bigBrother": 1392636434,
+                    "background": 560716722
                 }
             ]
         },
@@ -6444,7 +6464,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6463055610656738,
+                    "hFOV": 1.6656678915023804,
                     "culling": true
                 }
             ]
