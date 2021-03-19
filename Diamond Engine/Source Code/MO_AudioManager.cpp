@@ -11,7 +11,7 @@
 CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 
 
-ModuleAudioManager::ModuleAudioManager(Application* app, bool start_enabled) : Module(app, start_enabled), wwiseListenerHasToUpdate(false), defaultListener(nullptr), masterVolume(100.0f), musicVolume(100.0f), fxVolume(100.0f), musicSource(nullptr)
+ModuleAudioManager::ModuleAudioManager(Application* app, bool start_enabled) : Module(app, start_enabled), wwiseListenerHasToUpdate(false), defaultListener(nullptr), masterVolume(50.0f), musicVolume(100.0f), fxVolume(100.0f), musicSource(nullptr)
 {
 	//TODO listener code here
 #ifdef STANDALONE
@@ -355,12 +355,12 @@ bool ModuleAudioManager::LoadBank(std::string& name)
 	eResult = AK::SoundEngine::LoadBank(name.c_str(), id);
 	if (eResult == AK_Success)
 	{
-		LOG(LogType::L_NORMAL, "Bank' '%s' has been loaded successfully", name);
+		LOG(LogType::L_NORMAL, "Bank' '%s' has been loaded successfully", name.c_str());
 		return true;
 	}
 	else
 	{
-		LOG(LogType::L_ERROR, "Error loading '%s'", name);
+		LOG(LogType::L_ERROR, "Error loading '%s'", name.c_str());
 		return false;
 	}
 
