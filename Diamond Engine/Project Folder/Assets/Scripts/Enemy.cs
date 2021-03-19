@@ -80,14 +80,12 @@ public class Enemy : DiamondComponent
 
 		//gameObject.transform.localRotation = new Quaternion(0, Mathf.LerpAngle(gameObject.transform.localRotation.y, angle, 0.01f), 0);
 
-		timeCount += Time.deltaTime;
 
-		Vector3 direction = pointToLook - gameObject.transform.localPosition;
+		Vector3 direction = pointToLook - gameObject.transform.globalPosition;
 		direction = direction.normalized;
 		float angle = (float)(Mathf.Rad2Deg * Math.Atan2(direction.x, direction.z));
 		Quaternion dir = new Quaternion(0, angle, 0);
-		Debug.Log(angle.ToString());
-		Quaternion desiredRotation = Quaternion.Slerp(gameObject.transform.globalRotation, dir, timeCount*slerpSpeed);
+		Quaternion desiredRotation = Quaternion.Slerp(gameObject.transform.localRotation, dir, Time.deltaTime*slerpSpeed);
 
 		gameObject.transform.localRotation = desiredRotation;
 
