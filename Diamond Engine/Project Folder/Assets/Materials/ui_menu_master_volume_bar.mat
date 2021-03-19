@@ -1,5 +1,11 @@
 {
     "name": "ui_menu_master_volume_bar",
-    "ShaderUID": 1741187670,
-    "Uniforms": []
+    "ShaderUID": 1396044057,
+    "Uniforms": [
+        {
+            "name": "length_used",
+            "type": 5126,
+            "value": 1
+        }
+    ]
 }

@@ -2867,7 +2867,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 1105870439
                 }
             ]
         },
@@ -2957,7 +2958,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 1105870439
                 }
             ]
         },
@@ -3008,8 +3010,8 @@
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialLibraryPath": "Library\/Materials\/1163903408.mat",
+                    "MaterialUID": 1163903408
                 },
                 {
                     "Type": 11,
@@ -3351,7 +3353,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 1752632962
                 }
             ]
         },
@@ -3441,7 +3444,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 1752632962
                 }
             ]
         },
@@ -3492,8 +3496,8 @@
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialLibraryPath": "Library\/Materials\/1118716117.mat",
+                    "MaterialUID": 1118716117
                 },
                 {
                     "Type": 11,
@@ -3836,7 +3840,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 38624862
                 }
             ]
         },
@@ -3926,7 +3931,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 38624862
                 }
             ]
         },
@@ -3977,8 +3983,8 @@
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialLibraryPath": "Library\/Materials\/141689081.mat",
+                    "MaterialUID": 141689081
                 },
                 {
                     "Type": 11,
@@ -4321,7 +4327,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 451991258
                 }
             ]
         },
@@ -4411,7 +4418,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 451991258
                 }
             ]
         },
@@ -4462,8 +4470,8 @@
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialLibraryPath": "Library\/Materials\/1684735483.mat",
+                    "MaterialUID": 1684735483
                 },
                 {
                     "Type": 11,
@@ -6452,7 +6460,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6334410905838013,
+                    "hFOV": 1.6763339042663574,
                     "culling": true
                 }
             ]
