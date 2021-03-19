@@ -127,6 +127,12 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Config::GetWindowMode", CS_GetWindowMode);
 	mono_add_internal_call("DiamondEngine.Config::SetBrightness", CS_SetBrightness);
 	mono_add_internal_call("DiamondEngine.Config::GetBrightness", CS_GetBrightness);
+	mono_add_internal_call("DiamondEngine.Config::SetMasterVolume", CS_SetMasterVolume);
+	mono_add_internal_call("DiamondEngine.Config::GetMasterVolume", CS_GetMasterVolume);
+	mono_add_internal_call("DiamondEngine.Config::SetMusciVolume", CS_SetMusicVolume);
+	mono_add_internal_call("DiamondEngine.Config::GetMusicVolume", CS_GetMusicVolume);
+	mono_add_internal_call("DiamondEngine.Config::SetSFXVolume", CS_SetSFXVolume);
+	mono_add_internal_call("DiamondEngine.Config::GetSFXVolume", CS_GetSFXVolume);
 	mono_add_internal_call("DiamondEngine.Config::ControllerVibrationEnable", CS_ControllerEnableVibration);
 #pragma endregion
 

@@ -16,7 +16,6 @@ public class Settings : DiamondComponent
 		else
 		{
 			Config.ControllerVibrationEnable(false);
-			Input.PlayHaptic(0.5f, 5);
 		}
 	}
 	public void OnExecuteButton()
@@ -31,45 +30,30 @@ public class Settings : DiamondComponent
 			Config.SetBrightness(Config.GetBrightness() - 0.05f); 
 			Debug.Log(Config.GetBrightness().ToString());
         }
-
-		else if (gameObject.Name == "MasterVolume")
-        {
-			Debug.Log("MasterVolume");
-        }
 		else if (gameObject.Name == "MasterVolumeUp")
         {
-			Debug.Log("MasterVolumeUp");
+			Config.SetMasterVolume(Config.GetMasterVolume() + 5.0f);
         }
 		else if (gameObject.Name == "MasterVolumeDown")
         {
-			Debug.Log("MasterVolumeDown");
-        }
-
-		else if (gameObject.Name == "MusicVolume")
-        {
-			Debug.Log("MusicVolume");
-        }
+			Config.SetMasterVolume(Config.GetMasterVolume() - 5.0f);
+		}
 		else if (gameObject.Name == "MusicVolumeUp")
         {
-			Debug.Log("MusicVolumeUp");
-        }
+			Config.SetMusciVolume(Config.GetMusicVolume() + 5.0f);
+		}
 		else if (gameObject.Name == "MusicVolumeDown")
         {
-			Debug.Log("MusicVolumeDown");
-        }
-
-		else if (gameObject.Name == "SFXVolume")
-        {
-			Debug.Log("SFXVolume");
-        }
+			Config.SetMusciVolume(Config.GetMusicVolume() - 5.0f);
+		}
 		else if (gameObject.Name == "SFXVolumeUp")
         {
-			Debug.Log("SFXVolumeUp");
-        }
+			Config.SetSFXVolume(Config.GetSFXVolume() + 5.0f);
+		}
 		else if (gameObject.Name == "SFXVolumeDown")
         {
-			Debug.Log("SFXVolumeDown");
-        }
+			Config.SetSFXVolume(Config.GetSFXVolume() - 5.0f);
+		}
 
 		else if (gameObject.Name == "Return")
         {

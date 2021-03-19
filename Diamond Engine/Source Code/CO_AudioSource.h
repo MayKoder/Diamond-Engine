@@ -39,6 +39,8 @@ public:
 	void ResumeEvent();
 	void StopEvent();
 
+	unsigned int GetWwiseID();
+
 	bool IsMuted();
 	void SetMuted(bool muted);
 

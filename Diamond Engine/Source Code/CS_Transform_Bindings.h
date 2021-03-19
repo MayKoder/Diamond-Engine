@@ -20,6 +20,7 @@
 #include "MO_Scene.h"
 #include "MO_ResourceManager.h"
 #include "MO_Window.h"
+#include "MO_AudioManager.h"
 
 #include "GameObject.h"
 #include "MathGeoLib/include/Math/float3.h"
@@ -508,6 +509,66 @@ float CS_GetBrightness()
 		return NULL;
 
 	return EngineExternal->moduleWindow->brightness;
+}
+
+void CS_SetMasterVolume(float vol)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float aux = vol;
+	(vol > 99.0f) ? aux = 98.9f : aux = vol;
+	(vol > 0.0f) ? aux = aux : aux = 0.5f;
+
+	return EngineExternal->moduleAudio->SetBusVolume(vol);
+}
+
+float CS_GetMasterVolume()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleAudio->masterVolume;
+}
+
+void CS_SetMusicVolume(float vol)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float aux = vol;
+	(vol > 99.0f) ? aux = 98.9f : aux = vol;
+	(vol > 0.0f) ? aux = aux : aux = 0.5f;
+
+	EngineExternal->moduleAudio->SetMusicVolume(vol);
+}
+
+float CS_GetMusicVolume()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleAudio->musicVolume;
+}
+
+void CS_SetSFXVolume(float vol)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float aux = vol;
+	(vol > 99.0f) ? aux = 98.9f : aux = vol;
+	(vol > 0.0f) ? aux = aux : aux = 0.5f;
+
+	EngineExternal->moduleAudio->SetSFXVolume(vol);
+}
+
+float CS_GetSFXVolume()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleAudio->fxVolume;
 }
 
 void CS_ControllerEnableVibration(bool enable)

@@ -11,7 +11,7 @@
 CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 
 
-ModuleAudioManager::ModuleAudioManager(Application* app, bool start_enabled) : Module(app, start_enabled), wwiseListenerHasToUpdate(false), defaultListener(nullptr), masterVolume(100.0f), musicVolume(100.0f), fxVolume(100.0f)
+ModuleAudioManager::ModuleAudioManager(Application* app, bool start_enabled) : Module(app, start_enabled), wwiseListenerHasToUpdate(false), defaultListener(nullptr), masterVolume(100.0f), musicVolume(100.0f), fxVolume(100.0f), musicSource(nullptr)
 {
 	//TODO listener code here
 #ifdef STANDALONE
@@ -250,6 +250,16 @@ void ModuleAudioManager::PlayOnAwake()
 void ModuleAudioManager::PlayEvent(unsigned int id, std::string& eventName)
 {
 	AK::SoundEngine::PostEvent(eventName.c_str(), id);
+	if (musicSource != nullptr && id == musicSource->GetWwiseID())
+	{
+		ChangeRTPCValue(id, std::string("SourceVolume"), musicVolume);
+		return;
+	}
+	else
+	{
+		ChangeRTPCValue(id, std::string("SourceVolume"), fxVolume);
+		return;
+	}
 }
 
 void ModuleAudioManager::StopEvent(unsigned int id, std::string& eventName) const
@@ -345,12 +355,12 @@ bool ModuleAudioManager::LoadBank(std::string& name)
 	eResult = AK::SoundEngine::LoadBank(name.c_str(), id);
 	if (eResult == AK_Success)
 	{
-		LOG(LogType::L_NORMAL, "Bank 'Main.bnk' has been loaded successfully");
+		LOG(LogType::L_NORMAL, "Bank' '%s' has been loaded successfully", name);
 		return true;
 	}
 	else
 	{
-		LOG(LogType::L_ERROR, "Error loading 'Main.bnk'");
+		LOG(LogType::L_ERROR, "Error loading '%s'", name);
 		return false;
 	}
 
@@ -413,6 +423,20 @@ void ModuleAudioManager::SetBusVolume(float volume)
 {
 	if (defaultListener != nullptr)
 		ChangeRTPCValue(defaultListener->GetID(), std::string("BusVolume"), volume);
+
+	masterVolume = volume;
+}
+
+void ModuleAudioManager::SetMusicVolume(float volume)
+{
+	if (musicSource != nullptr)
+		musicSource->SetVolume(volume);
+	musicVolume = volume;
+}
+
+void ModuleAudioManager::SetSFXVolume(float volume)
+{
+	fxVolume = volume;
 }
 
 //this updates the listener that Wwise uses to be the Module Audio default listener
