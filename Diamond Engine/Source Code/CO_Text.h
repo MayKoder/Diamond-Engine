@@ -18,6 +18,8 @@ public:
 	void RenderText(C_Transform2D* transform, ResourceMaterial* material, unsigned int VAO, unsigned int VBO);
 
 	const char* GetText();
+	float GetColorText(int index);
+	void SetColorText(int index, float value);
 	void SetText(const char* new_text);
 
 #ifndef STANDALONE

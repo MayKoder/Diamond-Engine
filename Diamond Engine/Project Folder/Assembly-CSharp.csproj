@@ -68,7 +68,6 @@
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\RoomSwitch.cs" />
     <Compile Include="Assets\Scripts\BH_DestructBox.cs" />
-    <Compile Include="Assets\Scripts\StormTrooper.cs" />
     <Compile Include="Assets\Scripts\StartMenu.cs" />
     <Compile Include="Assets\Scripts\QuitConfirmation.cs" />
     <Compile Include="Assets\Scripts\Confirmation.cs" />
@@ -78,8 +77,9 @@
     <Compile Include="Assets\Scripts\Pause.cs" />
     <Compile Include="Assets\Scripts\HUD.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
-    <Compile Include="Assets\Scripts\Stormtrooper.cs" />
     <Compile Include="Assets\Scripts\Bantha.cs" />
+    <Compile Include="Assets\Scripts\ColliderTest.cs" />
+    <Compile Include="Assets\Scripts\StormTrooper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

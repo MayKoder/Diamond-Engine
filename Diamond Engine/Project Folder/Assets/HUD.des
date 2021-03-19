@@ -279,10 +279,10 @@
                 -37.998661041259766
             ],
             "Rotation": [
-                0.28966295719146729,
-                -0.30951860547065735,
-                0.099594630300998688,
-                0.9002079963684082
+                0.28966298699378967,
+                -0.30951863527297974,
+                0.099594645202159882,
+                0.90020811557769775
             ],
             "Scale": [
                 0.9999997615814209,
@@ -398,6 +398,8 @@
                     "max_bullets_main_weapon": 10,
                     "bullets_secondary_weapon": 10,
                     "max_bullets_secondary_weapon": 10,
+                    "combo_number": 0,
+                    "combo_seconds": 5,
                     "main_weapon": true,
                     "hp_bar": 1263416948,
                     "hp_number_gameobject": 685408372,
@@ -406,7 +408,10 @@
                     "weapon_bar": 1076718357,
                     "primary_weapon": 931853287,
                     "secondary_weapon": 1142762498,
-                    "currency_number_gameobject": 685275708
+                    "currency_number_gameobject": 685275708,
+                    "combo_bar": 751315337,
+                    "combo_text": 1065887298,
+                    "combo_gameobject": 810407947
                 }
             ]
         },
@@ -1096,7 +1101,7 @@
             "name": "Combo ",
             "tag": "Untagged",
             "layer": "Default",
-            "Active": true,
+            "Active": false,
             "Position": [
                 0,
                 0,
@@ -1198,8 +1203,8 @@
                     "Active": true,
                     "IsEmpty": true,
                     "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
-                    "MaterialUID": 457052853
+                    "MaterialLibraryPath": "Library\/Materials\/1816860359.mat",
+                    "MaterialUID": 1816860359
                 },
                 {
                     "Type": 11,
@@ -1263,7 +1268,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "x150",
+                    "text": "x0",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/teko-semibold.ttf",
                     "textColor": [

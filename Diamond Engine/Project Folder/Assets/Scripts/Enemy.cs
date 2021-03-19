@@ -23,6 +23,9 @@ public class Enemy : DiamondComponent
 	public float wanderRange = 5.0f;
 	public float runningRange = 15.0f;
 
+	public float slerpSpeed = 1000.5f;
+	//private float timeCount = 0.0f;
+
 	protected STATES currentState = STATES.WANDER;
 
 	protected enum STATES
@@ -70,14 +73,32 @@ public class Enemy : DiamondComponent
 
 	public void LookAt(Vector3 pointToLook)
 	{
+		//Vector3 direction = pointToLook - gameObject.transform.globalPosition;
+
+		//direction = direction.normalized;
+
+
+		//gameObject.transform.localRotation = new Quaternion(0, Mathf.LerpAngle(gameObject.transform.localRotation.y, angle, 0.01f), 0);
+
+
 		Vector3 direction = pointToLook - gameObject.transform.globalPosition;
-
 		direction = direction.normalized;
+		float angle = (float)Math.Atan2(direction.x, direction.z);
 
-		float angle = (float)(Mathf.Rad2Deg * Math.Atan2(direction.x, direction.z));
+		//Debug.Log("Desired angle: " + (angle * Mathf.Rad2Deg).ToString());
 
-		gameObject.transform.localRotation = new Quaternion(0, Mathf.LerpAngle(gameObject.transform.localRotation.y, angle, 0.01f), 0);
-		//Debug.Log(angle.ToString());
+		if (Math.Abs(angle * Mathf.Rad2Deg) < 1.0f)
+			return;
+
+		Quaternion dir = Quaternion.RotateAroundAxis(Vector3.up, angle);
+
+		float rotationSpeed = Time.deltaTime * slerpSpeed * 1000.0f;
+		//Debug.Log("Rotation speed: " + rotationSpeed.ToString());
+
+		Quaternion desiredRotation = Quaternion.Slerp(gameObject.transform.localRotation, dir, rotationSpeed);
+
+		gameObject.transform.localRotation = desiredRotation;
+
 	}
 
 	public bool InRange(Vector3 point, float givenRange)

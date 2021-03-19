@@ -44,6 +44,9 @@ namespace DiamondEngine
             }
         }
 
+        public static Quaternion operator *(Quaternion a, float d) { return new Quaternion(a.w*d, a.x * d, a.y * d, a.z * d); }
+        public static Quaternion operator +(Quaternion a, Quaternion b) { return new Quaternion(a.w + b.w, a.x + b.x, a.y + b.y, a.z + b.z); }
+
         public Quaternion(float x, float y, float z, float w) 
         { 
             this.x = x; this.y = y; this.z = z; this.w = w; 
@@ -77,7 +80,7 @@ namespace DiamondEngine
         public void Set(float newX, float newY, float newZ, float newW)
         {
             x = newX; y = newY; z = newZ; w = newW;
-        }
+        }     
 
         //Rotate an angle(radiants) aroun an axis
         public static Quaternion RotateAroundAxis(Vector3 axis, float angle)
@@ -97,6 +100,50 @@ namespace DiamondEngine
 
             return ret;
         }
+
+        /*
+        public static Quaternion Slerp(Quaternion q, Quaternion p, float t)
+        {
+            Quaternion ret = new Quaternion(0,0,0);
+
+            float fCos = Quaternion.Dot(p, q);
+
+            if ((1.0f + fCos) > 0.00001)
+            {
+                float fCoeff0, fCoeff1;
+
+                if ((1.0f - fCos) > 0.00001)
+                {
+                    float omega = (float)Math.Acos(fCos);
+                    float invSin = 1.0f / (float)Math.Sin(omega);
+                    fCoeff0 = (float)Math.Sin((1.0f - t) * omega) * invSin;
+                    fCoeff1 = (float)Math.Sin(t * omega) * invSin;
+                }
+                else
+                {
+                    fCoeff0 = 1.0f - t;
+                    fCoeff1 = t;
+                }
+
+                ret.x = fCoeff0 * p.x + fCoeff1 * q.x;
+                ret.y = fCoeff0 * p.y + fCoeff1 * q.y;
+                ret.z = fCoeff0 * p.z + fCoeff1 * q.z;
+                ret.w = fCoeff0 * p.w + fCoeff1 * q.w;
+            }
+            else
+            {
+                float fCoeff0 = (float)Math.Sin((1.0f - t) * Math.PI * 0.5f);
+                float fCoeff1 = (float)Math.Sin(t * Math.PI * 0.5f);
+
+                ret.x = fCoeff0 * p.x - fCoeff1 * p.y;
+                ret.y = fCoeff0 * p.y + fCoeff1 * p.x;
+                ret.z = fCoeff0 * p.z - fCoeff1 * p.w;
+                ret.w = p.z;
+            }
+
+            return ret;
+        }
+        */
 
         public static float Dot(Quaternion a, Quaternion b)
         {
@@ -145,5 +192,7 @@ namespace DiamondEngine
             return x.ToString() + ", " + y.ToString() + ", " + z.ToString() + ", " + w.ToString();
         }
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern Quaternion Slerp(object q1, object q2, float t);
     }
 }

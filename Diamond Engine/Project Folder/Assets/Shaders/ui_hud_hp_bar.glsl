@@ -28,7 +28,7 @@ void main() {
 	else if(length_used<0.15){
 		fragmentColor = texture(ourTexture,textureCoords)*vec4(1,0,0,1);
 	}
-	else if(length_used<0.5){
+	else if(length_used<=0.5){
 		fragmentColor = texture(ourTexture,textureCoords)-vec4(0,0.3,0,1)+vec4(0.7,0.2,0,1);
 	}
 	
@@ -38,5 +38,6 @@ void main() {
 }
 
 #endif
+
 
 

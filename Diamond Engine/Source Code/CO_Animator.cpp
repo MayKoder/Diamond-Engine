@@ -55,8 +55,11 @@ C_Animator::~C_Animator()
 
 void C_Animator::Start()
 {
-	if (rootBone == nullptr) 
-		return;
+	if (rootBone == nullptr)
+	{
+		if (!FindRootBone())
+			return;
+	}
 
 	boneMapping.clear();
 
@@ -88,21 +91,7 @@ void C_Animator::Update()
 	else {
 		if (rootBone == nullptr)
 		{
-			if (rootBoneUID != 0u)
-			{
-				rootBone = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, rootBoneUID);
-
-				if (meshRendererUID != 0u)
-				{
-					GameObject* meshRendererObject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, meshRendererUID);
-					if (meshRendererObject != nullptr)
-					{
-						dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::TYPE::MESH_RENDERER))->rootBone = rootBone;
-					}
-				}
-				if (rootBone == nullptr)
-					rootBoneUID = 0u;
-			}
+			FindRootBone();
 		}
 		return;
 	}
@@ -688,6 +677,32 @@ float3 C_Animator::GetChannelScale(const Channel & channel, float currentKey, fl
 		}
 	}
 	return scale;
+}
+
+bool C_Animator::FindRootBone()
+{
+	bool ret = true;
+	if (rootBoneUID != 0u)
+	{
+		rootBone = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, rootBoneUID);
+
+		if (meshRendererUID != 0u)
+		{
+			GameObject* meshRendererObject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, meshRendererUID);
+			if (meshRendererObject != nullptr)
+			{
+				dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::TYPE::MESH_RENDERER))->SetRootBone(rootBone);
+			}
+		}
+
+		if (rootBone == nullptr)
+		{
+			rootBoneUID = 0u;
+			ret = false;
+		}
+	}
+
+	return ret;
 }
 
 void C_Animator::DrawBones(GameObject* gameObject)

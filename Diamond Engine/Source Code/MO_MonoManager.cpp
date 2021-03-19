@@ -105,10 +105,17 @@ bool M_MonoManager::Init()
 #pragma region Text
 	mono_add_internal_call("DiamondEngine.Text::get_text", GetText);
 	mono_add_internal_call("DiamondEngine.Text::set_text", SetText);
+	mono_add_internal_call("DiamondEngine.Text::get_color_red", GetTextRed);
+	mono_add_internal_call("DiamondEngine.Text::set_color_red", SetTextRed);
+	mono_add_internal_call("DiamondEngine.Text::get_color_green", GetTextGreen);
+	mono_add_internal_call("DiamondEngine.Text::set_color_green", SetTextGreen);
+	mono_add_internal_call("DiamondEngine.Text::get_color_blue", GetTextBlue);
+	mono_add_internal_call("DiamondEngine.Text::set_color_blue", SetTextBlue);
 #pragma endregion
 
 #pragma region Material
 	mono_add_internal_call("DiamondEngine.Material::SetFloatUniform", SetFloatUniform);
+	mono_add_internal_call("DiamondEngine.Material::SetIntUniform", SetIntUniform);
 #pragma endregion
 
 #pragma region Image2D
@@ -152,9 +159,12 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Animator::Resume", Resume);
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
+	mono_add_internal_call("DiamondEngine.Time::get_totalTime", GetTotalTime);
 	mono_add_internal_call("DiamondEngine.Time::PauseGame", CS_PauseGame);
 	mono_add_internal_call("DiamondEngine.Time::ResumeGame", CS_ResumeGame);
-	
+  
+	mono_add_internal_call("DiamondEngine.Quaternion::Slerp", MonoSlerp);
+  
 	mono_add_internal_call("DiamondEngine.Scene::FindObjectWithTag", FindObjectWithTag);
 
 	mono_add_internal_call("DiamondEngine.SceneManager::LoadScene", CS_LoadScene);
