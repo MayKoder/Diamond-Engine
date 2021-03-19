@@ -61,6 +61,7 @@ GameObject* PrefabImporter::LoadPrefab(const char* libraryPath)
 	}
 
 	//rootObject->RecursiveUIDRegeneration();
+	EngineExternal->moduleScene->LoadScriptsData();
 
 	//Save all references to game objects with their old UID
 	std::map<uint, GameObject*> gameObjects;
