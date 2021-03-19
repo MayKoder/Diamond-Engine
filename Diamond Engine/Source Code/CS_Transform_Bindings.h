@@ -468,18 +468,30 @@ int CS_GetResolution()
 
 void CS_SetWindowMode(int winMode)
 {
-	//if (EngineExternal == nullptr)
-	//	return;
-	//int aux = winMode;
-	//(winMode > 2) ? aux = 2 : aux = winMode;
-	//(winMode > 1) ? aux = aux : aux = 1;
-	//
-	//int w, h;
-	//SDL_GetWindowSize(EngineExternal->moduleWindow->window, &w, &h);
+	if (EngineExternal == nullptr)
+		return;
+	int aux = winMode;
+	(winMode > 2) ? aux = 2 : aux = winMode;
+	(winMode > 1) ? aux = aux : aux = 1;
+	int w, h;
 
-	//// Add functionality later
+	if (aux == 1)
+	{
+		SDL_SetWindowResizable(EngineExternal->moduleWindow->window, static_cast<SDL_bool>(true));
+		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, 0);
+	}
+	if (aux == 2)
+	{
+		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		SDL_SetWindowResizable(EngineExternal->moduleWindow->window, static_cast<SDL_bool>(false));
 
-	//EngineExternal->moduleWindow->windowMode = aux;
+	}
+
+	// Add functionality later
+
+	EngineExternal->moduleWindow->windowMode = aux;
+	SDL_GetWindowSize(EngineExternal->moduleWindow->window, &w, &h);
+	EngineExternal->moduleRenderer3D->OnResize(w, h);
 }
 
 int CS_GetWindowMode()
@@ -517,7 +529,7 @@ void CS_SetMasterVolume(float vol)
 		return;
 
 	float aux = vol;
-	(vol > 99.0f) ? aux = 98.9f : aux = vol;
+	(vol > 99.0f) ? aux = 99.0f : aux = vol;
 	(vol > 0.0f) ? aux = aux : aux = 0.5f;
 
 	return EngineExternal->moduleAudio->SetBusVolume(aux);
@@ -537,7 +549,7 @@ void CS_SetMusicVolume(float vol)
 		return;
 
 	float aux = vol;
-	(vol > 99.0f) ? aux = 98.9f : aux = vol;
+	(vol > 99.0f) ? aux = 99.0f : aux = vol;
 	(vol > 0.0f) ? aux = aux : aux = 0.5f;
 
 	EngineExternal->moduleAudio->SetMusicVolume(aux);
@@ -557,7 +569,7 @@ void CS_SetSFXVolume(float vol)
 		return;
 
 	float aux = vol;
-	(vol > 99.0f) ? aux = 98.9f : aux = vol;
+	(vol > 99.0f) ? aux = 99.0f : aux = vol;
 	(vol > 0.0f) ? aux = aux : aux = 0.5f;
 
 	EngineExternal->moduleAudio->SetSFXVolume(aux);

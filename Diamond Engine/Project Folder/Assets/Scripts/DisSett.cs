@@ -16,7 +16,7 @@ public class DisSett : DiamondComponent
 	public void OnExecuteButton()
 	{
 		if (gameObject.Name == "Return")
-        {
+		{
 			bigBrother.Enable(true);
 			displayScreen.Enable(false);
 		}
@@ -24,11 +24,11 @@ public class DisSett : DiamondComponent
 			Config.SetResolution(Config.GetResolution() + 1);
 		else if (gameObject.Name == "ResolutionDown")
 			Config.SetResolution(Config.GetResolution() - 1);
-		else  if (gameObject.Name == "WindowModeUp")
-			Config.SetWindowMode(Config.GetWindowMode() + 1);
+		else if (gameObject.Name == "WindowModeUp")
+		{ Config.SetWindowMode(Config.GetWindowMode() + 1); Debug.Log("Res should go up"); }
 		else if (gameObject.Name == "WindowModeDown")
-			Config.SetWindowMode(Config.GetWindowMode() - 1);
-		
+		{ Config.SetWindowMode(Config.GetWindowMode() - 1); Debug.Log("Res should go down"); }
+
 		Debug.Log("Executed");
 	}
 	public void Update()
