@@ -14,9 +14,13 @@
         0.81057661771774292,
         0.57568365335464478
     ],
+    "tags": [],
+    "layers": [],
     "Game Objects": [
         {
             "name": "Scene root",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -45,6 +49,8 @@
         },
         {
             "name": "Canvas",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -84,6 +90,8 @@
         },
         {
             "name": "MainMenu",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -113,6 +121,8 @@
         },
         {
             "name": "Play",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -162,15 +172,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "StartMenu",
                     "ButtonState": 1,
                     "Is Selected": true
@@ -178,9 +188,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "LibraryPath": "Library\/Textures\/828696110.dds",
-                    "UID": 828696110
+                    "AssetPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "UID": 1345927926
                 },
                 {
                     "Type": 17,
@@ -249,6 +259,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -278,13 +290,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -7.0999999046325684,
-                        -1.2999999523162842
+                        -8.1999998092651367,
+                        -4.0999999046325684
                     ],
                     "Rotation": 0,
                     "Size": [
-                        15.300000190734863,
-                        21.299999237060547
+                        13.800000190734863,
+                        20.299999237060547
                     ]
                 },
                 {
@@ -298,7 +310,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Play",
+                    "text": "PLAY",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -311,6 +323,8 @@
         },
         {
             "name": "Options",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -360,15 +374,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "StartMenu",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -376,9 +390,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button.png",
-                    "LibraryPath": "Library\/Textures\/861183043.dds",
-                    "UID": 861183043
+                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
+                    "LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "UID": 1618474496
                 },
                 {
                     "Type": 17,
@@ -450,6 +464,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -479,13 +495,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -11.199999809265137,
-                        -1.7000000476837158
+                        -13.199999809265137,
+                        -3.7000000476837158
                     ],
                     "Rotation": 0,
                     "Size": [
-                        13.600000381469727,
-                        21.700000762939453
+                        12.899999618530273,
+                        21
                     ]
                 },
                 {
@@ -499,7 +515,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Options",
+                    "text": "OPTIONS",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -512,6 +528,8 @@
         },
         {
             "name": "Quit",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -561,15 +579,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "StartMenu",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -577,9 +595,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button.png",
-                    "LibraryPath": "Library\/Textures\/861183043.dds",
-                    "UID": 861183043
+                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
+                    "LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "UID": 1618474496
                 },
                 {
                     "Type": 17,
@@ -650,6 +668,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -679,8 +699,8 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -7.0999999046325684,
-                        -2.4000000953674316
+                        -7.4000000953674316,
+                        -4.0999999046325684
                     ],
                     "Rotation": 0,
                     "Size": [
@@ -699,7 +719,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Quit",
+                    "text": "QUIT",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -712,6 +732,8 @@
         },
         {
             "name": "OptionsWindow",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -741,6 +763,8 @@
         },
         {
             "name": "ControlsScreen",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": false,
             "Position": [
                 0,
@@ -770,6 +794,8 @@
         },
         {
             "name": "Image",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -827,6 +853,8 @@
         },
         {
             "name": "Return",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -930,6 +958,8 @@
         },
         {
             "name": "DisplayMenu",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": false,
             "Position": [
                 0,
@@ -959,6 +989,8 @@
         },
         {
             "name": "Image",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -1016,6 +1048,8 @@
         },
         {
             "name": "Vsync",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -1171,6 +1205,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -1220,7 +1256,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Vsync",
+                    "text": "VSYNC",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -1233,6 +1269,8 @@
         },
         {
             "name": "Resolution",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -1402,6 +1440,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -1431,7 +1471,7 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -16.899999618530273,
+                        -21.799999237060547,
                         8.1999998092651367
                     ],
                     "Rotation": 0,
@@ -1451,7 +1491,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Resolution",
+                    "text": "RESOLUTION",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -1464,6 +1504,8 @@
         },
         {
             "name": "ResolutionUp",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -1552,6 +1594,8 @@
         },
         {
             "name": "ResolutionDown",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -1640,6 +1684,8 @@
         },
         {
             "name": "Resolution Value",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -1702,6 +1748,8 @@
         },
         {
             "name": "WindowMode",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -1879,6 +1927,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -1908,7 +1958,7 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -19.799999237060547,
+                        -24.200000762939453,
                         7.5999999046325684
                     ],
                     "Rotation": 0,
@@ -1928,7 +1978,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Window Mode",
+                    "text": "WINDOW MODE",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -1941,6 +1991,8 @@
         },
         {
             "name": "WindowModeUp",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -2029,6 +2081,8 @@
         },
         {
             "name": "WindowModeDown",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -2117,6 +2171,8 @@
         },
         {
             "name": "Window Mode Value",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -2179,6 +2235,8 @@
         },
         {
             "name": "Return",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -2324,6 +2382,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -2353,7 +2413,7 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -29.299999237060547,
+                        -32.099998474121094,
                         59.599998474121094
                     ],
                     "Rotation": 0,
@@ -2373,7 +2433,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Display",
+                    "text": "DISPLAY",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -2386,6 +2446,8 @@
         },
         {
             "name": "SettingsMenu",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": false,
             "Position": [
                 0,
@@ -2415,6 +2477,8 @@
         },
         {
             "name": "Image",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -2472,6 +2536,8 @@
         },
         {
             "name": "Brightness",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -2652,6 +2718,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -2682,12 +2750,12 @@
                     "Active": true,
                     "Position": [
                         -67.300003051757813,
-                        -2.7999999523162842
+                        -4.4000000953674316
                     ],
                     "Rotation": 0,
                     "Size": [
-                        15.600000381469727,
-                        24.700000762939453
+                        12.100000381469727,
+                        21.700000762939453
                     ]
                 },
                 {
@@ -2701,7 +2769,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Brightness",
+                    "text": "BRIGHTNESS",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -2714,6 +2782,8 @@
         },
         {
             "name": "BrightnessUp",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -2802,6 +2872,8 @@
         },
         {
             "name": "BrightnessDown",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -2890,6 +2962,8 @@
         },
         {
             "name": "Brightness Bar",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -2947,6 +3021,8 @@
         },
         {
             "name": "MasterVolume",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -3126,6 +3202,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -3156,12 +3234,12 @@
                     "Active": true,
                     "Position": [
                         -67.300003051757813,
-                        -3.2999999523162842
+                        -4.0999999046325684
                     ],
                     "Rotation": 0,
                     "Size": [
-                        12.199999809265137,
-                        18.600000381469727
+                        10.899999618530273,
+                        21.200000762939453
                     ]
                 },
                 {
@@ -3175,7 +3253,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Master Volume",
+                    "text": "MASTER VOLUME",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -3188,6 +3266,8 @@
         },
         {
             "name": "MasterVolumeUp",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -3276,6 +3356,8 @@
         },
         {
             "name": "MasterVolumeDown",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -3364,6 +3446,8 @@
         },
         {
             "name": "Master Volume Bar",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -3421,6 +3505,8 @@
         },
         {
             "name": "MusicVolume",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -3601,6 +3687,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -3635,8 +3723,8 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        12.600000381469727,
-                        18.600000381469727
+                        11.199999809265137,
+                        20.200000762939453
                     ]
                 },
                 {
@@ -3650,7 +3738,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Music Volume",
+                    "text": "MUSIC VOLUME",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -3663,6 +3751,8 @@
         },
         {
             "name": "MusicVolumeDown",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -3751,6 +3841,8 @@
         },
         {
             "name": "MusicVolumeUp",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -3839,6 +3931,8 @@
         },
         {
             "name": "Music Volume Bar",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -3896,6 +3990,8 @@
         },
         {
             "name": "SFXVolume",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -4076,6 +4172,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -4106,12 +4204,12 @@
                     "Active": true,
                     "Position": [
                         -67.300003051757813,
-                        -1.8999999761581421
+                        -3.0999999046325684
                     ],
                     "Rotation": 0,
                     "Size": [
-                        9.3000001907348633,
-                        18.799999237060547
+                        11.399999618530273,
+                        22.700000762939453
                     ]
                 },
                 {
@@ -4125,7 +4223,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Sound Effect Volume",
+                    "text": "SFX VOLUME",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -4138,6 +4236,8 @@
         },
         {
             "name": "SFXVolumeUp",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -4226,6 +4326,8 @@
         },
         {
             "name": "SFXVolumeDown",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -4314,6 +4416,8 @@
         },
         {
             "name": "Sound Effect Volume Bar",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -4371,6 +4475,8 @@
         },
         {
             "name": "ControllerVibration",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -4526,6 +4632,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -4560,7 +4668,7 @@
                     ],
                     "Rotation": 0,
                     "Size": [
-                        10.300000190734863,
+                        7.4000000953674316,
                         15.600000381469727
                     ]
                 },
@@ -4575,7 +4683,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Controller Vibration",
+                    "text": "CONTROLLER VIBRATION",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -4588,6 +4696,8 @@
         },
         {
             "name": "Return",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -4733,6 +4843,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -4762,12 +4874,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -39.099998474121094,
+                        -40.900001525878906,
                         57
                     ],
                     "Rotation": 0,
                     "Size": [
-                        20,
+                        17,
                         29.700000762939453
                     ]
                 },
@@ -4782,7 +4894,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Settings",
+                    "text": "SETTINGS",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/arial.ttf",
                     "textColor": [
@@ -4795,6 +4907,8 @@
         },
         {
             "name": "OptionsMenu",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": false,
             "Position": [
                 0,
@@ -4824,7 +4938,9 @@
         },
         {
             "name": "Image",
-            "Active": true,
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": false,
             "Position": [
                 0,
                 0,
@@ -4881,7 +4997,9 @@
         },
         {
             "name": "Settings",
-            "Active": true,
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": false,
             "Position": [
                 0,
                 0,
@@ -4930,25 +5048,25 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "DisplayOptions",
-                    "ButtonState": 1,
-                    "Is Selected": true
+                    "ButtonState": 2,
+                    "Is Selected": false
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "LibraryPath": "Library\/Textures\/828696110.dds",
-                    "UID": 828696110
+                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
+                    "LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "UID": 1618474496
                 },
                 {
                     "Type": 17,
@@ -5013,7 +5131,7 @@
                     ],
                     "Button Being Used": -1,
                     "Type Of UI": 7,
-                    "Is Selected": true
+                    "Is Selected": false
                 },
                 {
                     "Type": 5,
@@ -5030,7 +5148,9 @@
         },
         {
             "name": "Text",
-            "Active": true,
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": false,
             "Position": [
                 0,
                 0,
@@ -5059,12 +5179,12 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -11.5,
-                        -1.2000000476837158
+                        -13.399999618530273,
+                        -3.7000000476837158
                     ],
                     "Rotation": 0,
                     "Size": [
-                        13.5,
+                        12,
                         20
                     ]
                 },
@@ -5079,7 +5199,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Settings",
+                    "text": "SETTINGS",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -5092,7 +5212,9 @@
         },
         {
             "name": "Display",
-            "Active": true,
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": false,
             "Position": [
                 0,
                 0,
@@ -5141,15 +5263,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "DisplayOptions",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -5157,9 +5279,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button.png",
-                    "LibraryPath": "Library\/Textures\/861183043.dds",
-                    "UID": 861183043
+                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
+                    "LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "UID": 1618474496
                 },
                 {
                     "Type": 17,
@@ -5241,7 +5363,9 @@
         },
         {
             "name": "Text",
-            "Active": true,
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": false,
             "Position": [
                 0,
                 0,
@@ -5271,11 +5395,11 @@
                     "Active": true,
                     "Position": [
                         -9.8000001907348633,
-                        -1.2999999523162842
+                        -3.9000000953674316
                     ],
                     "Rotation": 0,
                     "Size": [
-                        13,
+                        10.899999618530273,
                         18.399999618530273
                     ]
                 },
@@ -5290,7 +5414,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Display",
+                    "text": "DISPLAY",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -5303,7 +5427,9 @@
         },
         {
             "name": "Controls",
-            "Active": true,
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": false,
             "Position": [
                 0,
                 0,
@@ -5352,15 +5478,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "DisplayOptions",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -5368,9 +5494,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button.png",
-                    "LibraryPath": "Library\/Textures\/861183043.dds",
-                    "UID": 861183043
+                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
+                    "LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "UID": 1618474496
                 },
                 {
                     "Type": 17,
@@ -5452,7 +5578,9 @@
         },
         {
             "name": "Text",
-            "Active": true,
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": false,
             "Position": [
                 0,
                 0,
@@ -5482,12 +5610,12 @@
                     "Active": true,
                     "Position": [
                         -11.800000190734863,
-                        -2.5999999046325684
+                        -3.5
                     ],
                     "Rotation": 0,
                     "Size": [
-                        13.5,
-                        20
+                        9.6999998092651367,
+                        18.299999237060547
                     ]
                 },
                 {
@@ -5501,7 +5629,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Controls",
+                    "text": "CONTROLS",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -5514,7 +5642,9 @@
         },
         {
             "name": "Return",
-            "Active": true,
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": false,
             "Position": [
                 0,
                 0,
@@ -5573,15 +5703,15 @@
                     "Unhovered_LibraryPath": "Library\/Textures\/834295412.dds",
                     "Unhovered_UID": 834295412,
                     "Script_Name": "Return",
-                    "ButtonState": 2,
-                    "Is Selected": false
+                    "ButtonState": 1,
+                    "Is Selected": true
                 },
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_return.png",
-                    "LibraryPath": "Library\/Textures\/834295412.dds",
-                    "UID": 834295412
+                    "AssetPath": "Assets\/UI\/MENU\/button_return_hover.png",
+                    "LibraryPath": "Library\/Textures\/1490678443.dds",
+                    "UID": 1490678443
                 },
                 {
                     "Type": 17,
@@ -5644,9 +5774,9 @@
                             "Is Key Up": true
                         }
                     ],
-                    "Button Being Used": -1,
+                    "Button Being Used": 0,
                     "Type Of UI": 7,
-                    "Is Selected": false
+                    "Is Selected": true
                 },
                 {
                     "Type": 5,
@@ -5658,7 +5788,68 @@
             ]
         },
         {
+            "name": "Background",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": false,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 560716722,
+            "PrefabID": 0,
+            "ParentUID": 1221570124,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        0
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        100.30000305175781,
+                        105.09999847412109
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/153313718.dds",
+                    "UID": 153313718
+                }
+            ]
+        },
+        {
             "name": "ConfirmationScreen",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": false,
             "Position": [
                 0,
@@ -5688,6 +5879,8 @@
         },
         {
             "name": "Image",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -5745,6 +5938,8 @@
         },
         {
             "name": "Yes",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -5794,15 +5989,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "Confirmation",
                     "ButtonState": 1,
                     "Is Selected": true
@@ -5810,9 +6005,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "LibraryPath": "Library\/Textures\/828696110.dds",
-                    "UID": 828696110
+                    "AssetPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "UID": 1345927926
                 },
                 {
                     "Type": 17,
@@ -5883,6 +6078,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -5912,13 +6109,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -6.4000000953674316,
-                        -2.2000000476837158
+                        -6.0999999046325684,
+                        -3.5
                     ],
                     "Rotation": 0,
                     "Size": [
-                        15,
-                        20
+                        14.100000381469727,
+                        20.799999237060547
                     ]
                 },
                 {
@@ -5932,7 +6129,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Yes",
+                    "text": "YES",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -5945,6 +6142,8 @@
         },
         {
             "name": "No",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -5994,15 +6193,15 @@
                 {
                     "Type": 7,
                     "Active": true,
-                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_pressed.png",
-                    "Pressed_LibraryPath": "Library\/Textures\/356214008.dds",
-                    "Pressed_UID": 356214008,
-                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_hover.png",
-                    "Hovered_LibraryPath": "Library\/Textures\/828696110.dds",
-                    "Hovered_UID": 828696110,
-                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button.png",
-                    "Unhovered_LibraryPath": "Library\/Textures\/861183043.dds",
-                    "Unhovered_UID": 861183043,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/second_button_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/1546682848.dds",
+                    "Pressed_UID": 1546682848,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/second_button_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1345927926.dds",
+                    "Hovered_UID": 1345927926,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/second_button.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "Unhovered_UID": 1618474496,
                     "Script_Name": "Confirmation",
                     "ButtonState": 2,
                     "Is Selected": false
@@ -6010,9 +6209,9 @@
                 {
                     "Type": 11,
                     "Active": true,
-                    "AssetPath": "Assets\/UI\/MENU\/button.png",
-                    "LibraryPath": "Library\/Textures\/861183043.dds",
-                    "UID": 861183043
+                    "AssetPath": "Assets\/UI\/MENU\/second_button.png",
+                    "LibraryPath": "Library\/Textures\/1618474496.dds",
+                    "UID": 1618474496
                 },
                 {
                     "Type": 17,
@@ -6083,6 +6282,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -6112,13 +6313,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -5.0999999046325684,
-                        -2.4000000953674316
+                        -4.6999998092651367,
+                        -4.0999999046325684
                     ],
                     "Rotation": 0,
                     "Size": [
-                        14,
-                        20
+                        12.300000190734863,
+                        20.5
                     ]
                 },
                 {
@@ -6132,7 +6333,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "No",
+                    "text": "NO",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -6145,6 +6346,8 @@
         },
         {
             "name": "Text",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -6174,13 +6377,13 @@
                     "Type": 6,
                     "Active": true,
                     "Position": [
-                        -38.400001525878906,
+                        -38.799999237060547,
                         10.300000190734863
                     ],
                     "Rotation": 0,
                     "Size": [
-                        12.300000190734863,
-                        21.899999618530273
+                        10.199999809265137,
+                        20.700000762939453
                     ]
                 },
                 {
@@ -6194,7 +6397,7 @@
                 {
                     "Type": 9,
                     "Active": true,
-                    "text": "Are you sure you want to quit?",
+                    "text": "ARE YOU SURE YOU WANT TO QUIT",
                     "maxTextLenght": 0,
                     "fontName": "Assets\/Fonts\/renner-medium.ttf",
                     "textColor": [
@@ -6207,6 +6410,8 @@
         },
         {
             "name": "Game Camera",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -6239,7 +6444,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4403502941131592,
+                    "hFOV": 1.6463055610656738,
                     "culling": true
                 }
             ]

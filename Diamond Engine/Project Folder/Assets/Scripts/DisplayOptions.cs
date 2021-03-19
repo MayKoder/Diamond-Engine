@@ -9,8 +9,6 @@ public class DisplayOptions : DiamondComponent
 	public GameObject controls = null;
 	public GameObject bigBrother = null;
 	public GameObject default_selected = null;
-	private bool toDisable = false;
-	private bool firstFrame = true;
 
 	public void onExecuteCheckbox()
     {
@@ -40,18 +38,14 @@ public class DisplayOptions : DiamondComponent
 				default_selected.GetComponent<Navigation>().Select();
 		}
 		if (gameObject.Name == "Return")
-			toDisable = true;
-	}
-	public void Update()
-	{
-		if (firstFrame)
-			toDisable = firstFrame = false;
-		if (toDisable)
 		{
-			toDisable = false;
 			bigBrother.Enable(true);
 			optionsWindow.Enable(false);
 		}
+	}
+	public void Update()
+	{
+
 	}
 
 }

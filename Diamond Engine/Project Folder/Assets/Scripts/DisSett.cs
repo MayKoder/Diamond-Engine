@@ -5,8 +5,6 @@ public class DisSett : DiamondComponent
 {
 	public GameObject displayScreen = null;
 	public GameObject bigBrother = null;
-	private bool toDisable = false;
-	private bool firstFrame = true;
 
 	public void OnExecuteCheckbox(bool active)
     {
@@ -17,9 +15,11 @@ public class DisSett : DiamondComponent
 	}
 	public void OnExecuteButton()
 	{
-		Debug.Log("Enter button");
 		if (gameObject.Name == "Return")
-			toDisable = true;
+        {
+			bigBrother.Enable(true);
+			displayScreen.Enable(false);
+		}
 		else if (gameObject.Name == "ResolutionUp")
 			Config.SetResolution(Config.GetResolution() + 1);
 		else if (gameObject.Name == "ResolutionDown")
@@ -33,14 +33,7 @@ public class DisSett : DiamondComponent
 	}
 	public void Update()
 	{
-		if (firstFrame)
-			toDisable = firstFrame = false;
-		if (toDisable)
-		{
-			toDisable = false;
-			bigBrother.Enable(true);
-			displayScreen.Enable(false);
-		}
+
 	}
 
 }

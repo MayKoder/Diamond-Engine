@@ -5,8 +5,7 @@ public class Settings : DiamondComponent
 {
 	public GameObject settingsWindow = null;
 	public GameObject bigBrother = null;
-	private bool toDisable = false;
-	private bool firstFrame = true;
+
 	public void OnExecuteCheckbox(bool active)
 	{
 		if (active)
@@ -74,23 +73,13 @@ public class Settings : DiamondComponent
 
 		else if (gameObject.Name == "Return")
         {
-			toDisable = true;
-        }
-	}
-	public void Update()
-	{
-		if (firstFrame)
-		{
-			toDisable = firstFrame = false;
-
-		}
-		if (toDisable)
-		{
-
-			toDisable = false;
 			bigBrother.Enable(true);
 			settingsWindow.Enable(false);
 		}
+	}
+	public void Update()
+	{
+
 	}
 
 }

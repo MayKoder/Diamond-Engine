@@ -9,13 +9,14 @@ public class Pause : DiamondComponent
 	public GameObject controlsWindow = null;
 	public GameObject quitWindow = null;
 	public GameObject default_selected = null;
-	private bool toDisable = false;
-	private bool firstFrame = true;
 
 	public void OnExecuteButton()
 	{
 		if (gameObject.Name == "Continue")
-			toDisable = true;
+		{
+			Time.ResumeGame();
+			pauseWindow.Enable(false);
+		}
 		if (gameObject.Name == "Settings")
         {
 			settingsWindow.Enable(true);
@@ -47,13 +48,7 @@ public class Pause : DiamondComponent
 	}
 	public void Update()
 	{
-		if (firstFrame)
-			toDisable = firstFrame = false;
-		if (toDisable)
-		{
-			toDisable = false;
-			pauseWindow.Enable(false);
-		}
+
 	}
 
 }
