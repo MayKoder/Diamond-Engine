@@ -80,7 +80,7 @@ namespace DiamondEngine
         public void Set(float newX, float newY, float newZ, float newW)
         {
             x = newX; y = newY; z = newZ; w = newW;
-        }
+        }     
 
         //Rotate an angle(radiants) aroun an axis
         public static Quaternion RotateAroundAxis(Vector3 axis, float angle)
@@ -101,6 +101,7 @@ namespace DiamondEngine
             return ret;
         }
 
+        /*
         public static Quaternion Slerp(Quaternion q, Quaternion p, float t)
         {
             Quaternion ret = new Quaternion(0,0,0);
@@ -142,6 +143,7 @@ namespace DiamondEngine
 
             return ret;
         }
+        */
 
         public static float Dot(Quaternion a, Quaternion b)
         {
@@ -190,5 +192,7 @@ namespace DiamondEngine
             return x.ToString() + ", " + y.ToString() + ", " + z.ToString() + ", " + w.ToString();
         }
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern Quaternion Slerp(object q1, object q2, float t);
     }
 }
