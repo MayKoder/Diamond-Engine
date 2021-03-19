@@ -108,7 +108,8 @@ public:
  
 
     physx::PxRigidDynamic* CreateRigidDynamic(float3 pos, Quat rot);
-    physx::PxShape* CreateCollider(float3 size, physx::PxMaterial* material = nullptr);
+    physx::PxShape* CreateBoxCollider(float3 size, physx::PxMaterial* material = nullptr);
+    physx::PxShape* CreateSphereCollider(float radius, physx::PxMaterial* material = nullptr);
     physx::PxShape* CreateMeshCollider(physx::PxRigidActor* aConvexActor, GameObject* parent);
     physx::PxMaterial* CreateMaterial(float staticFriction = 0.5f, float dynamicFriction = 0.5f, float restitution = 0.1f);
 

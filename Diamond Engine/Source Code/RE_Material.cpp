@@ -49,6 +49,13 @@ bool ResourceMaterial::LoadToMemory()
 					uniforms[k].data.textureValue = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(val.ReadInt("value"), Resource::Type::TEXTURE));
 			}
 		}
+		else if (val.ReadInt("type") == GL_FLOAT) {
+			for (size_t k = 0; k < uniforms.size(); ++k)
+			{
+				if (strcmp(val.ReadString("name"), uniforms[k].name) == 0)
+					uniforms[k].data.floatValue=val.ReadFloat("value");
+			}
+		}
 
 	}
 

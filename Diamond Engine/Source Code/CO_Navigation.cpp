@@ -4,6 +4,7 @@
 #include "MO_GUI.h"
 #include "MO_Scene.h"
 #include "MO_Input.h"
+#include "MO_Editor.h"
 
 #include "GameObject.h"
 #include "CO_Button.h"
@@ -22,8 +23,32 @@ type_of_ui(type_of_ui)
 
 C_Navigation::~C_Navigation()
 {
+	if (is_selected)
+		EngineExternal->moduleGui->uid_gameobject_of_ui_selected.erase(std::find(EngineExternal->moduleGui->uid_gameobject_of_ui_selected.begin(), EngineExternal->moduleGui->uid_gameobject_of_ui_selected.end(), gameObject->UID));
 	map_of_buttons_and_joysticks.clear();
 }
+
+void C_Navigation::Enable()
+{
+	button_or_joystick_being_used = BUTTONSANDJOYSTICKS::BUTTON_OR_JOYSTICK_UNKNOWN;
+}
+
+void C_Navigation::Disable()
+{
+	switch (type_of_ui) {
+	case Component::TYPE::BUTTON: {
+		C_Button* button = static_cast<C_Button*>(gameObject->GetComponent(Component::TYPE::BUTTON));
+		button->ReleaseButton();
+		break;
+	}
+	case Component::TYPE::CHECKBOX: {
+		C_Checkbox* checkbox = static_cast<C_Checkbox*>(gameObject->GetComponent(Component::TYPE::CHECKBOX));
+		checkbox->UnpressCheckbox();
+		break;
+	}
+	}
+}
+
 
 void C_Navigation::Update()
 {
@@ -31,12 +56,15 @@ void C_Navigation::Update()
 		return;
 	KEY_STATE state;
 	for (std::map<BUTTONSANDJOYSTICKS, ActionToRealize>::iterator it = map_of_buttons_and_joysticks.begin(); it != map_of_buttons_and_joysticks.end(); ++it) {
-		if (it->second.uid_gameobject == 0)
+		if (it->second.referenceGO == nullptr)
 			continue;
 		CheckIfButtonOrJoystickIsBeingUsed(it->first,state);
-
-		if (button_or_joystick_being_used == it->first && state == KEY_STATE::KEY_UP) {
-			GameObject* gameobject_to_pass = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, it->second.uid_gameobject);
+		
+		if (button_or_joystick_being_used == BUTTONSANDJOYSTICKS::BUTTON_OR_JOYSTICK_UNKNOWN && (state == KEY_STATE::KEY_DOWN || state == KEY_STATE::KEY_REPEAT)) {
+			button_or_joystick_being_used = it->first;
+		}
+		else if (button_or_joystick_being_used == it->first && state == KEY_STATE::KEY_UP) {
+			GameObject* gameobject_to_pass = it->second.referenceGO;
 			if (gameobject_to_pass == nullptr || gameobject_to_pass->GetComponent(Component::TYPE::NAVIGATION) == nullptr)
 				continue;
 			button_or_joystick_being_used = BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
@@ -44,7 +72,7 @@ void C_Navigation::Update()
 			return;
 		}
 		else if (button_or_joystick_being_used == BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK && state == KEY_STATE::KEY_DOWN) {
-			GameObject* gameobject_to_pass = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, it->second.uid_gameobject);
+			GameObject* gameobject_to_pass = it->second.referenceGO;
 			if (gameobject_to_pass == nullptr || gameobject_to_pass->GetComponent(Component::TYPE::NAVIGATION) == nullptr)
 				continue;
 			button_or_joystick_being_used = it->first;
@@ -61,6 +89,10 @@ void C_Navigation::Update()
 			it->second.is_key_up = true;
 		}
 
+	}
+	if (button_or_joystick_being_used == BUTTONSANDJOYSTICKS::BUTTON_OR_JOYSTICK_UNKNOWN) {
+		Disable();
+		button_or_joystick_being_used = BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
 	}
 }
 
@@ -115,7 +147,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 		break;
 	case BUTTONSANDJOYSTICKS::RIGHT_JOYSTICK_UP: {
 		int value_of_axis = EngineExternal->moduleInput->GetRightAxisY();
-		if (value_of_axis >= -1000) {
+		if (value_of_axis >= -30000) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -135,7 +167,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::RIGHT_JOYSTICK_DOWN: {
 		int value_of_axis = EngineExternal->moduleInput->GetRightAxisY();
-		if (value_of_axis <= 1000) {
+		if (value_of_axis <= 30000) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -155,7 +187,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::RIGHT_JOYSTICK_LEFT: {
 		int value_of_axis = EngineExternal->moduleInput->GetRightAxisX();
-		if (value_of_axis >= -1000) {
+		if (value_of_axis >= -30000) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -175,7 +207,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::RIGHT_JOYSTICK_RIGHT: {
 		int value_of_axis = EngineExternal->moduleInput->GetRightAxisX();
-		if (value_of_axis <= 1000) {
+		if (value_of_axis <= 30000) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -195,7 +227,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::LEFT_JOYSTICK_UP: {
 		int value_of_axis = EngineExternal->moduleInput->GetLeftAxisY();
-		if (value_of_axis >= -1000) {
+		if (value_of_axis >= -30000) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -215,7 +247,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::LEFT_JOYSTICK_DOWN: {
 		int value_of_axis = EngineExternal->moduleInput->GetLeftAxisY();
-		if (value_of_axis <= 1000) {
+		if (value_of_axis <= 30000) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -235,7 +267,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::LEFT_JOYSTICK_LEFT: {
 		int value_of_axis = EngineExternal->moduleInput->GetLeftAxisX();
-		if (value_of_axis >= -1000) {
+		if (value_of_axis >= -30000) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -255,7 +287,7 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 	}
 	case BUTTONSANDJOYSTICKS::LEFT_JOYSTICK_RIGHT: {
 		int value_of_axis = EngineExternal->moduleInput->GetLeftAxisX();
-		if (value_of_axis <= 1000) {
+		if (value_of_axis <= 30000) {
 			if (map_of_buttons_and_joysticks[button_or_joystick_to_check].is_key_down) {
 				state = KEY_UP;
 			}
@@ -279,13 +311,13 @@ void C_Navigation::CheckIfButtonOrJoystickIsBeingUsed(BUTTONSANDJOYSTICKS button
 
 void C_Navigation::DoTheAction(GameObject* gameobject_passed, BUTTONSANDJOYSTICKS button_or_joystick_used, ACTIONSNAVIGATION action, bool is_key_released)
 {
-	
+	C_Navigation* nav = static_cast<C_Navigation*>(gameobject_passed->GetComponent(Component::TYPE::NAVIGATION));
 	switch (action)
 	{
 	case ACTIONSNAVIGATION::MOVE: {
 		if (is_key_released)
 			return;
-		C_Navigation* nav = static_cast<C_Navigation*>(gameobject_passed->GetComponent(Component::TYPE::NAVIGATION));
+		
 		nav->Select();
 		if (button_or_joystick_being_used != BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK) {
 			nav->button_or_joystick_being_used = button_or_joystick_being_used;
@@ -309,8 +341,8 @@ void C_Navigation::DoTheAction(GameObject* gameobject_passed, BUTTONSANDJOYSTICK
 			nav->button_or_joystick_being_used= BUTTONSANDJOYSTICKS::NO_BUTTON_OR_JOYSTICK;
 			return;
 		}
-		nav->map_of_buttons_and_joysticks[button_or_joystick_being_used].is_key_down = true;
-		nav->map_of_buttons_and_joysticks[button_or_joystick_being_used].is_key_up = false;
+		nav->map_of_buttons_and_joysticks[nav->button_or_joystick_being_used].is_key_down = true;
+		nav->map_of_buttons_and_joysticks[nav->button_or_joystick_being_used].is_key_up = false;
 		break; }
 
 	case ACTIONSNAVIGATION::EXECUTE:
@@ -341,11 +373,20 @@ void C_Navigation::DoTheAction(GameObject* gameobject_passed, BUTTONSANDJOYSTICK
 
 void C_Navigation::Select()
 {
-	if (EngineExternal->moduleGui->uid_gameobject_of_ui_selected != 0) {
-		GameObject* previous_selected = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, EngineExternal->moduleGui->uid_gameobject_of_ui_selected);
-		static_cast<C_Navigation*>(previous_selected->GetComponent(Component::TYPE::NAVIGATION))->is_selected = false;
+	C_Navigation* aux;
+	std::vector<int>* vec = &EngineExternal->moduleGui->uid_gameobject_of_ui_selected;
+	if ((*vec).size() != 0) {
+		std::vector<GameObject*>::const_iterator it;
+		for (it = gameObject->parent->children.begin(); it != gameObject->parent->children.end(); ++it)
+		{
+			aux = static_cast<C_Navigation*>((*it)->GetComponent(Component::TYPE::NAVIGATION));
+			if (aux != nullptr && aux->is_selected)
+			{
+				aux->Deselect();
+			}
+		}
 	}
-	EngineExternal->moduleGui->uid_gameobject_of_ui_selected = gameObject->UID;
+	(*vec).push_back(gameObject->UID);
 	is_selected = true;
 
 	switch (type_of_ui) {
@@ -365,22 +406,27 @@ void C_Navigation::Select()
 void C_Navigation::Deselect()
 {
 
-	EngineExternal->moduleGui->uid_gameobject_of_ui_selected = 0;
+	std::vector<int>* vec = &EngineExternal->moduleGui->uid_gameobject_of_ui_selected;
+	(*vec).erase(std::find((*vec).begin(), (*vec).end(), gameObject->UID));
+
 	is_selected = false;
 
 	switch (type_of_ui) {
 	case Component::TYPE::BUTTON: {
 		C_Button* button = static_cast<C_Button*>(gameObject->GetComponent(Component::TYPE::BUTTON));
 		button->is_selected = false;
+		button->ReleaseButton();
 		break;
 	}
 	case Component::TYPE::CHECKBOX: {
-		C_Checkbox* checbox = static_cast<C_Checkbox*>(gameObject->GetComponent(Component::TYPE::CHECKBOX));
-		checbox->is_selected = false;
+		C_Checkbox* checkbox = static_cast<C_Checkbox*>(gameObject->GetComponent(Component::TYPE::CHECKBOX));
+		checkbox->is_selected = false;
+		checkbox->UnpressCheckbox();
 		break;
 	}
 	}
 }
+
 
 void C_Navigation::SaveData(JSON_Object* nObj)
 {
@@ -419,12 +465,14 @@ void C_Navigation::LoadData(DEConfig& nObj)
 
 	button_or_joystick_being_used = static_cast<BUTTONSANDJOYSTICKS>(nObj.ReadInt("Button Being Used"));
 	is_selected= nObj.ReadBool("Is Selected");
+	if (is_selected)
+		EngineExternal->moduleGui->uid_gameobject_of_ui_selected.push_back(gameObject->UID);
 }
 
 void C_Navigation::SaveMapData(JSON_Object* nObj, ActionToRealize& action, BUTTONSANDJOYSTICKS map_index)
 {
 	DEJson::WriteInt(nObj, "Index", static_cast<int>(map_index));
-	DEJson::WriteInt(nObj, "UID", action.uid_gameobject);
+	DEJson::WriteInt(nObj, "UID", (action.referenceGO != nullptr) ? action.referenceGO->UID : 0);
 	DEJson::WriteInt(nObj, "Action", static_cast<int>(action.action));
 	DEJson::WriteBool(nObj, "Is Key Down", action.is_key_down);
 	DEJson::WriteBool(nObj, "Is Key Up", action.is_key_up);
@@ -435,10 +483,12 @@ void C_Navigation::LoadMapaData(DEConfig& nObj)
 {
 	ActionToRealize new_action;
 	new_action.action= static_cast<ACTIONSNAVIGATION>(nObj.ReadInt("Action"));
-	new_action.uid_gameobject = nObj.ReadInt("UID");
+
+
 	new_action.is_key_down = nObj.ReadBool("Is Key Down");
 	new_action.is_key_up = nObj.ReadBool("Is Key Up");
 	map_of_buttons_and_joysticks.emplace(static_cast<BUTTONSANDJOYSTICKS>(nObj.ReadInt("Index")), new_action);
+	EngineExternal->moduleScene->navigationReferenceMap.emplace(nObj.ReadInt("UID"), &map_of_buttons_and_joysticks[static_cast<BUTTONSANDJOYSTICKS>(nObj.ReadInt("Index"))]);
 }
 
 
@@ -453,14 +503,7 @@ bool C_Navigation::OnEditor()
 
 		if (ImGui::Checkbox("Is this UI component selected?", &is_selected)) {
 			if (is_selected) {
-				if (EngineExternal->moduleGui->uid_gameobject_of_ui_selected != 0) {
-					GameObject* g = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, EngineExternal->moduleGui->uid_gameobject_of_ui_selected);
-					if (g != nullptr) {
-						C_Navigation* nav = static_cast<C_Navigation*>(g->GetComponent(Component::TYPE::NAVIGATION));
-						if (nav != nullptr)
-							nav->Deselect();
-					}
-				}
+				is_selected = false;
 				Select();
 			}
 			else
@@ -562,12 +605,14 @@ void C_Navigation::WriteButtonOrJoystickOnEditor(const char* text, BUTTONSANDJOY
 	if (current_item != items[0]) {
 		ImGui::Text("UID:"); 
 		ImGui::SameLine();
-		ImGui::Text(std::to_string(map_of_buttons_and_joysticks[button_or_joystick].uid_gameobject).c_str());
+
+		GameObject* ref = map_of_buttons_and_joysticks[button_or_joystick].referenceGO;
+		ImGui::Text((ref != nullptr) ? ref->name.c_str() : "Empty");
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_GAMEOBJECT"))
 			{
-				map_of_buttons_and_joysticks[button_or_joystick].uid_gameobject = *(int*)payload->Data;
+				map_of_buttons_and_joysticks[button_or_joystick].referenceGO = EngineExternal->moduleEditor->GetDraggingGO();
 			}
 			ImGui::EndDragDropTarget();
 		}
@@ -578,7 +623,7 @@ void C_Navigation::WriteButtonOrJoystickOnEditor(const char* text, BUTTONSANDJOY
 
 #endif // !STANDALONE
 
-ActionToRealize::ActionToRealize() :action(ACTIONSNAVIGATION::NONE), uid_gameobject(0), is_key_down(false), is_key_up(true)
+ActionToRealize::ActionToRealize() :action(ACTIONSNAVIGATION::NONE), referenceGO(nullptr), is_key_down(false), is_key_up(true)
 {
 }
 

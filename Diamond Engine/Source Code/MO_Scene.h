@@ -10,6 +10,7 @@ class C_Camera;
 typedef unsigned int uint;
 struct SerializedField;
 class ResourceMaterial;
+struct ActionToRealize;
 
 class M_Scene : public Module
 {
@@ -29,7 +30,9 @@ public:
 	GameObject* GetGOFromUID(GameObject* n, uint sUID);
 	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
 	void GetAllGameObjects(std::vector<GameObject*>& gameObjects);
+
 	void LoadScriptsData();
+	void LoadNavigationData();
 
 	GameObject* FindObjectWithTag(GameObject* rootGameObject, const char* tag);
 	void FindGameObjectsWithTag(const char* tag, std::vector<GameObject*>& taggedObjects);
@@ -54,6 +57,7 @@ public:
 	GameObject* root;
 	std::vector<GameObject*> destroyList;
 	std::multimap<uint, SerializedField*> referenceMap;
+	std::multimap<uint, ActionToRealize*> navigationReferenceMap;
 	ResourceMaterial* defaultMaterial;
 	char current_scene[64];
 	char current_scene_name[32];

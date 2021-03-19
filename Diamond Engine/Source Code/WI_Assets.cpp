@@ -326,6 +326,9 @@ void W_Assets::SetFilePayload(AssetDir& file)
 	case  Resource::Type::PREFAB:
 		ImGui::SetDragDropPayload("_PREFAB", &file.metaFileDir, file.metaFileDir.length());
 		break;
+	case  Resource::Type::SCRIPT:
+		ImGui::SetDragDropPayload("_SCRIPT", &file.importPath, file.importPath.length());
+		break;
 	default:
 		break;
 	}
