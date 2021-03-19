@@ -16,6 +16,7 @@ public class DisplayOptions : DiamondComponent
 		if (gameObject.Name == "Settings")
         {
 			settings.Enable(true);
+			settings.GetComponent<Settings>().FirstFrame();
 			optionsWindow.Enable(false);
 			if (default_selected != null)
 				default_selected.GetComponent<Navigation>().Select();

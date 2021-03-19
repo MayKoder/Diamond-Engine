@@ -7,7 +7,6 @@ public class Settings : DiamondComponent
 	public GameObject bigBrother = null;
 	public GameObject bar = null;
 
-	private bool first_frame = true;
 
 	public void OnExecuteCheckbox(bool active)
 	{
@@ -20,6 +19,17 @@ public class Settings : DiamondComponent
 		{
 			Config.ControllerVibrationEnable(false);
 		}
+	}
+	public void FirstFrame()
+    {
+		if ((gameObject.Name == "BrightnessDown" || gameObject.Name == "BrightnessUp") && bar != null)
+			bar.GetComponent<Material>().SetFloatUniform("length_used", Config.GetBrightness());
+		if ((gameObject.Name == "MasterVolumeUp" || gameObject.Name == "MasterVolumeDown") && bar != null)
+			bar.GetComponent<Material>().SetFloatUniform("length_used", Config.GetMasterVolume() / 99);
+		if ((gameObject.Name == "MusicVolumeUp" || gameObject.Name == "MusicVolumeDown") && bar != null)
+			bar.GetComponent<Material>().SetFloatUniform("length_used", Config.GetMusicVolume() / 99);
+		if ((gameObject.Name == "SFXVolumeUp" || gameObject.Name == "SFXVolumeDown") && bar != null)
+			bar.GetComponent<Material>().SetFloatUniform("length_used", Config.GetSFXVolume() / 99);
 	}
 	public void OnExecuteButton()
 	{
@@ -90,19 +100,7 @@ public class Settings : DiamondComponent
 	}
 	public void Update()
 	{
-        if (first_frame)
-        {
-			first_frame = false;
-			if ((gameObject.Name == "BrightnessDown" || gameObject.Name == "BrightnessUp") && bar != null)	
-				bar.GetComponent<Material>().SetFloatUniform("length_used", Config.GetBrightness());
-			if ((gameObject.Name == "MasterVolumeUp" || gameObject.Name == "MasterVolumeDown") && bar != null)
-				bar.GetComponent<Material>().SetFloatUniform("length_used", Config.GetMasterVolume()/99);
-			if ((gameObject.Name == "MusicVolumeUp" || gameObject.Name == "MusicVolumeDown") && bar != null)
-				bar.GetComponent<Material>().SetFloatUniform("length_used", Config.GetMusicVolume()/99);
-			if ((gameObject.Name == "SFXVolumeUp" || gameObject.Name == "SFXVolumeDown") && bar != null)
-				bar.GetComponent<Material>().SetFloatUniform("length_used", Config.GetSFXVolume()/99);
-
-		}
+       
 	}
 
 }
