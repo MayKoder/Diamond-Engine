@@ -18,17 +18,16 @@
 
 C_BoxCollider::C_BoxCollider() : C_Collider(nullptr)
 {
-	name = "Box Collider";
 
-
+	name = "Box Collider_" + std::to_string(-1);
 }
 
 
 C_BoxCollider::C_BoxCollider(GameObject* _gm/*, float3 _position, Quat _rotation, float3 _localScale*/) : C_Collider(_gm)/*,
 position(_position), rotation(_rotation), localScale(_localScale)*/
 {
-
-	name = "Box Collider";
+	int indexNum = _gm != nullptr ?_gm->GetComponentsOfType(Component::TYPE::BOXCOLLIDER).size() + _gm->GetComponentsOfType(Component::TYPE::COLLIDER).size() : 0;
+	name = "Box Collider_" + std::to_string(indexNum);
 	isTrigger = false;
 	shape = ColliderShape::CUBE;
 

@@ -19,7 +19,7 @@
 
 C_SphereCollider::C_SphereCollider() : C_Collider(nullptr)
 {
-	name = "Box Collider";
+	name = "Sphere Collider_" + std::to_string(-1);
 
 
 }
@@ -29,7 +29,8 @@ C_SphereCollider::C_SphereCollider(GameObject* _gm/*, float3 _position, Quat _ro
 position(_position), rotation(_rotation), localScale(_localScale)*/
 {
 
-	name = "Sphere Collider";
+	int indexNum = _gm != nullptr ? _gm->GetComponentsOfType(Component::TYPE::SPHERECOLLIDER).size() + _gm->GetComponentsOfType(Component::TYPE::COLLIDER).size() : 0;
+	name = "Sphere Collider_" + std::to_string(indexNum);
 	isTrigger = false;
 	shape = ColliderShape::SPHERE;
 

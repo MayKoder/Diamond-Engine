@@ -156,7 +156,9 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Time::get_totalTime", GetTotalTime);
 	mono_add_internal_call("DiamondEngine.Time::PauseGame", CS_PauseGame);
 	mono_add_internal_call("DiamondEngine.Time::ResumeGame", CS_ResumeGame);
-	
+  
+	mono_add_internal_call("DiamondEngine.Quaternion::Slerp", MonoSlerp);
+  
 	mono_add_internal_call("DiamondEngine.Scene::FindObjectWithTag", FindObjectWithTag);
 
 	mono_add_internal_call("DiamondEngine.SceneManager::LoadScene", CS_LoadScene);

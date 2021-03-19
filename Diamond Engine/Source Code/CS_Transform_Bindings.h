@@ -434,6 +434,14 @@ MonoObject* SendGlobalScale(MonoObject* transform) //Allows to send float3 as "o
 
 #pragma endregion
 
+
+MonoObject* MonoSlerp(MonoObject* cs_q1, MonoObject* cs_q2, float t)
+{
+	Quat q1 = M_MonoManager::UnboxQuat(cs_q1);
+	Quat q2 = M_MonoManager::UnboxQuat(cs_q2);
+	return  EngineExternal->moduleMono->QuatToCS(Slerp(q1, q2, t)); 
+}
+
 #pragma region Config
 void CS_Enable_VSYNC(bool enable)
 {

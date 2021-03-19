@@ -25,6 +25,7 @@ public:
 
 	bool IsInsideFrustum(Frustum* camFrustum);
 
+	void SetRootBone(GameObject* _rootBone);
 	void SetRenderMesh(ResourceMesh* mesh);
 	ResourceMesh* GetRenderMesh();
 	float4x4 CalculateDeltaMatrix(float4x4 globalMat, float4x4 invertMat);
@@ -41,4 +42,5 @@ private:
 	ResourceMesh* _mesh;
 	float3 alternColor;
 	bool drawDebugVertices;
+	std::map<std::string, GameObject*> bonesMap;
 };
