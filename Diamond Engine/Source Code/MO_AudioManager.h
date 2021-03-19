@@ -77,6 +77,10 @@ public:
 	std::vector<C_AudioSource*> audio_sources;
 	C_AudioListener* defaultListener;
 
+	float masterVolume;
+	float musicVolume;
+	float fxVolume;
+
 private:
 	bool wwiseListenerHasToUpdate;
 #ifdef  STANDALONE

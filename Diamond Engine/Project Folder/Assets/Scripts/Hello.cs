@@ -15,7 +15,7 @@ public class Hello : DiamondComponent
     }
     public void OnExecuteButton()
     {
-        Debug.Log("Button executed");
+        SceneManager.LoadScene(1076838722);
     }
     public void Update()
 	{

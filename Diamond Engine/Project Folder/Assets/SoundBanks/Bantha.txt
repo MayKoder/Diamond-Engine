@@ -1,0 +1,27 @@
+Event	ID	Name			Wwise Object Path	Notes
+	192623117	Pause_Object			\Default Work Unit\Pause_Object	
+	1931338186	Resume_Object			\Default Work Unit\Resume_Object	
+	3318621861	Stop_Object			\Default Work Unit\Stop_Object	
+	3912954324	Play_Growl_Bantha			\Default Work Unit\Play_Growl_Bantha	
+
+Switch Group	ID	Name			Wwise Object Path	Notes
+	1957821939	Growls			\Default Work Unit\Growls	
+
+Switch	ID	Name	Switch Group			Notes
+	779278001	Death	Growls			
+	1116398592	Hit	Growls			
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	467158820	SourceVolume			\Default Work Unit\SourceVolume	
+	2704707011	BusVolume			\Default Work Unit\BusVolume	
+
+Audio Bus	ID	Name			Wwise Object Path	Notes
+	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	197876092	Bantha hit 4	C:\Users\admin\Documents\GitHub\Wwise-project\Virtual Ragnarok Audio\.cache\Windows\SFX\Bantha hit 4_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Bantha\Growls_Bantha\Hit_Bantha\Bantha hit 4		46186
+	210317130	Bantha Dead Roar	C:\Users\admin\Documents\GitHub\Wwise-project\Virtual Ragnarok Audio\.cache\Windows\SFX\Bantha Dead Roar_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Bantha\Growls_Bantha\Bantha Dead Roar		99228
+	787605823	Bantha hit	C:\Users\admin\Documents\GitHub\Wwise-project\Virtual Ragnarok Audio\.cache\Windows\SFX\Bantha hit_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Bantha\Growls_Bantha\Hit_Bantha\Bantha hit		43960
+	927501018	Bantha hit 2	C:\Users\admin\Documents\GitHub\Wwise-project\Virtual Ragnarok Audio\.cache\Windows\SFX\Bantha hit 2_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Bantha\Growls_Bantha\Hit_Bantha\Bantha hit 2		41466
+	1062067289	Bantha hit 3	C:\Users\admin\Documents\GitHub\Wwise-project\Virtual Ragnarok Audio\.cache\Windows\SFX\Bantha hit 3_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Bantha\Growls_Bantha\Hit_Bantha\Bantha hit 3		38972
+

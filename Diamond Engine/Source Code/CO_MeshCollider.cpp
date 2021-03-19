@@ -43,94 +43,42 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 		colliderMaterial = EngineExternal->modulePhysics->CreateMaterial();
 		localTransform = float4x4::identity;
 	
-		//If gameObject does have mesh we apply measures directly to collider from OBB
-		//if (mesh != nullptr) {
-
-		//	colliderSize = mesh->globalOBB.Size()/2;
-		//	if (colliderSize.y <= 0.0f) //I do this for plane meshes, but maybe we can remove this once we use mesh shapes
-		//		colliderSize.y = 0.01f;
-		////	colliderShape = App->physX->CreateCollider(type, colliderSize / 2, colliderMaterial);
-		//	colliderShape = EngineExternal->modulePhysics->CreateCollider( colliderSize, colliderMaterial);
-
-		//}
-		//else {
-		//	colliderSize = { 0.5f, 0.5f, 0.5f };
-		//	colliderShape = EngineExternal->modulePhysics->CreateCollider( colliderSize, colliderMaterial);
-		//}
 		
-		
-
-
-		//If we have a rigid body and doesnt have reference collider we attach the current one
-		if (rigidbody != nullptr && rigidbody->collider_info == nullptr)
-			rigidbody->collider_info = this;
-
-		//if (mesh != nullptr) {
-		//	colliderPos = (mesh->globalOBB.pos);
-		//	colliderPos.Set(0, 0, 0);
-		//	SetPosition(colliderPos);
-		//	
-		//}
-		//else {
-		//	/*colliderPos = (transform->position - owner->PositionOffset).Div(owner->SizeOffset);
-		//	SetPosition(colliderPos);
-		//	owner->PositionOffset = float3::zero;
-		//	owner->SizeOffset = float3::one;
-		//	owner->RotationOffset = float3::zero;*/
-		//}
-
-		//if (mesh != nullptr) {
-
-		//	colliderSize = mesh->globalOBB.Size() / 2;
-		//	if (colliderSize.y <= 0.0f) //I do this for plane meshes, but maybe we can remove this once we use mesh shapes
-		//		colliderSize.y = 0.01f;
-		//	//	colliderShape = App->physX->CreateCollider(type, colliderSize / 2, colliderMaterial);
-		//	colliderShape = EngineExternal->modulePhysics->CreateCollider(colliderSize, colliderMaterial);
-
-		//}
-		//else {
-		//	colliderSize = { 0.5f, 0.5f, 0.5f };
-		//	colliderShape = EngineExternal->modulePhysics->CreateCollider(colliderSize, colliderMaterial);
-		//}
-
 		//We attach shape to a static or dynamic rigidbody to be collidable.
+		colliderShape = nullptr;
 		if (rigidbody != nullptr) {
 			colliderShape = EngineExternal->modulePhysics->CreateMeshCollider(rigidbody->rigid_dynamic, _gm);
 			rigidbody->rigid_dynamic->attachShape(*colliderShape);
-			rigidbody->collider_info = this;
+			rigidbody->collider_info.push_back(this);
 		}
-		else {
-			_gm->AddComponent(Component::TYPE::RIGIDBODY);
-			rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RIGIDBODY));
-			rigidbody->use_kinematic = true;
-			rigidbody->EnableKinematic(rigidbody->use_kinematic);
-			colliderShape = EngineExternal->modulePhysics->CreateMeshCollider(rigidbody->rigid_dynamic, _gm);
-			rigidbody->rigid_dynamic->attachShape(*colliderShape);
-			rigidbody->collider_info = this;
-
-			
-			//	rigidbody = dynamic_cast<C_RigidBody*>(_gm->AddComponent(Component::Type::RigidBody));
-
-		//	rigidbody->rigid_dynamic->attachShape(*colliderShape);
-
-		}
-
 	
-
+	
+		if(colliderShape != nullptr)
 		colliderShape->setFlag(physx::PxShapeFlag::eVISUALIZATION, true);
 
 }
 
 C_MeshCollider::~C_MeshCollider()
 {
+	LOG(LogType::L_NORMAL, "Deleting Mesh Collider");
 
 	if (colliderMaterial != nullptr)
 		colliderMaterial->release();
+	rigidbody = dynamic_cast<C_RigidBody*>(gameObject->GetComponent(Component::TYPE::RIGIDBODY));
 
 	if (rigidbody != nullptr)
 	{
 		rigidbody->rigid_dynamic->detachShape(*colliderShape);
-		rigidbody->collider_info = nullptr;
+		for (int i = 0; i < rigidbody->collider_info.size(); i++)
+		{
+			if (rigidbody->collider_info[i] == this)
+			{
+				rigidbody->collider_info.erase(rigidbody->collider_info.begin() + i);
+				i--;
+			}
+				
+
+		}
 	}
 
 	if (colliderShape != nullptr)

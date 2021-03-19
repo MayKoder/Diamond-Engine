@@ -1,5 +1,8 @@
 Event	ID	Name			Wwise Object Path	Notes
+	192623117	Pause_Object			\Default Work Unit\Pause_Object	
+	1931338186	Resume_Object			\Default Work Unit\Resume_Object	
 	2932040671	Play_Music			\Default Work Unit\Play_Music	
+	3318621861	Stop_Object			\Default Work Unit\Stop_Object	
 	4068124964	Play_Music_2			\Default Work Unit\Play_Music_2	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
@@ -11,6 +14,6 @@ Audio Bus	ID	Name			Wwise Object Path	Notes
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	209390670	Empire Music	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Empire Music_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Music\Empire Music		18249568
-	739659711	Hud	C:\Users\admin\Documents\WwiseProjects\Virtual Ragnarok Audio\.cache\Windows\SFX\Hud_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Music\Hud		13893676
+	209390670	Empire Music	C:\Users\admin\Documents\GitHub\Wwise-project\Virtual Ragnarok Audio\.cache\Windows\SFX\Empire Music_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Music\Empire Music		18249568
+	739659711	Hud	C:\Users\admin\Documents\GitHub\Wwise-project\Virtual Ragnarok Audio\.cache\Windows\SFX\Hud_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Music\Hud		13893676
 

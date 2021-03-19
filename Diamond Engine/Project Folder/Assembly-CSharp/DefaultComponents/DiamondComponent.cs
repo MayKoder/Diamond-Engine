@@ -24,6 +24,7 @@ namespace DiamondEngine
         RIGIDBODY,
         COLLIDER,
         ANIMATOR,
+        NAVIGATION,
         COUNT
     }
 
@@ -32,7 +33,11 @@ namespace DiamondEngine
         public UIntPtr pointer;
         public ComponentType type;
         public static Dictionary<System.Type, ComponentType> componentTable = new Dictionary<Type, ComponentType> {
-            { typeof(Transform), ComponentType.TRANSFORM },
+            { typeof(Transform), ComponentType.TRANSFORM},
+            { typeof(Text), ComponentType.TEXT_UI  },
+            { typeof(Material), ComponentType.MATERIAL  },
+            { typeof(Image2D), ComponentType.IMAGE_2D  },
+            { typeof(Navigation), ComponentType.NAVIGATION  },
         };
 
         public DiamondComponent()

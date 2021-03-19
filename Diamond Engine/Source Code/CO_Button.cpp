@@ -6,6 +6,7 @@
 #include "RE_Texture.h"
 
 #include "GameObject.h"
+#include "CO_AudioSource.h"
 
 #include "Application.h"
 #include "MO_ResourceManager.h"
@@ -16,10 +17,11 @@
 
 
 
-C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite_button_pressed(nullptr), sprite_button_hovered(nullptr), sprite_button_unhovered(nullptr), script_name(""), 
+C_Button::C_Button(GameObject* gameObject) :Component(gameObject), sprite_button_pressed(nullptr), sprite_button_hovered(nullptr), sprite_button_unhovered(nullptr), script_name(""),
 num_sprite_used(BUTTONSTATE::BUTTONUNHOVERED), is_selected(false)
 {
 	name = "Button";
+	thisAudSource = new C_AudioSource(gameObject);
 #ifndef STANDALONE
 	sprites_freezed = false;
 #endif // !STANDALONE
@@ -38,12 +40,14 @@ C_Button::~C_Button()
 	if (sprite_button_unhovered != nullptr) {
 		EngineExternal->moduleResources->UnloadResource(sprite_button_unhovered->GetUID());
 	}
+	delete thisAudSource;
+	thisAudSource = nullptr;
 }
 
 void C_Button::Update()
 {
 #ifndef STANDALONE
-	ChangeTexture(num_sprite_used);
+	//ChangeTexture(num_sprite_used);
 	if (gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()) == nullptr)
 		script_name = "";
 	if (sprites_freezed)
@@ -58,7 +62,11 @@ void C_Button::Update()
 		break;
 	case BUTTONSTATE::BUTTONUNHOVERED:
 		if (is_selected)
+		{
+			thisAudSource->SetEventName(std::string("Play_UI_Button_Hover"));
+			thisAudSource->PlayEvent();
 			ChangeTexture(BUTTONSTATE::BUTTONHOVERED);
+		}
 		break;
 	}
 	
@@ -66,6 +74,8 @@ void C_Button::Update()
 
 void C_Button::ExecuteButton()
 {
+	thisAudSource->SetEventName(std::string("Play_UI_Button_Play"));
+	thisAudSource->PlayEvent();
 	ChangeTexture(BUTTONSTATE::BUTTONPRESSED);
 	C_Script* script=static_cast<C_Script*>(gameObject->GetComponent(Component::TYPE::SCRIPT, script_name.c_str()));
 	if(script!=nullptr)
@@ -167,7 +177,12 @@ void C_Button::LoadData(DEConfig& nObj)
 
 	if (texName != "") {
 		sprite_button_pressed = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Pressed_UID"), texName.c_str()));
-		sprite_button_pressed->SetAssetsPath(assetsName.c_str());
+		if (sprite_button_pressed == nullptr) {
+			LOG(LogType::L_ERROR, "the sprite button pressed couldn't be created");
+		}
+		else {
+			sprite_button_pressed->SetAssetsPath(assetsName.c_str());
+		}
 	}
 
 	texName = nObj.ReadString("Hovered_LibraryPath");
@@ -175,7 +190,12 @@ void C_Button::LoadData(DEConfig& nObj)
 
 	if (texName != "") {
 		sprite_button_hovered = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Hovered_UID"), texName.c_str()));
-		sprite_button_hovered->SetAssetsPath(assetsName.c_str());
+		if (sprite_button_hovered == nullptr) {
+			LOG(LogType::L_ERROR, "the sprite button hovered couldn't be created");
+		}
+		else {
+			sprite_button_hovered->SetAssetsPath(assetsName.c_str());
+		}
 	}
 
 
@@ -184,7 +204,12 @@ void C_Button::LoadData(DEConfig& nObj)
 
 	if (texName != "") {
 		sprite_button_unhovered = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Unhovered_UID"), texName.c_str()));
-		sprite_button_unhovered->SetAssetsPath(assetsName.c_str());
+		if (sprite_button_unhovered == nullptr) {
+			LOG(LogType::L_ERROR, "the sprite button unhovered couldn't be created");
+		}
+		else {
+			sprite_button_unhovered->SetAssetsPath(assetsName.c_str());
+		}
 	}
 
 	texName = nObj.ReadString("Script_Name");

@@ -20,7 +20,70 @@ namespace DiamondEngine
         public static extern void Destroy(object go);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void CloseGame();
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void CreatePrefab(object prefab_path, object position, object rotation, object scale);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern GameObject CreatePrefab(object prefab_path, object position, object rotation, object scale);
+    }
+    public class Config
+    {
+        // Enable or disable vsync
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void VSYNCEnable(bool enable);
+
+        // Change resolution, use Resolution enum
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void SetResolution(int resolutionEnum);
+
+        // Get current resolution
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetResolution();
+
+        // Change window mode, use Window mode enum
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void SetWindowMode(int winMode);
+
+        // Get current window mode
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern int GetWindowMode();
+
+        // Change brightness, use values between 0.0 and 1.0
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void SetBrightness(float brightness);
+
+        // Get current brightness
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern float GetBrightness();
+
+        // Change master volume, use values between 0.0 and 100.0
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void SetMasterVolume(float volume);
+
+        // Get master volume
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern float GetMasterVolume();
+
+        // Change music volume, use values between 0.0 and 100.0
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void SetMusciVolume(float volume);
+
+        // Get Music Volume
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern float GetMusicVolume();
+
+        // Change SFX volume, use values between 0.0 and 100.0
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void SetSFXVolume(float volume);
+
+        // Get SFX volume
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern float GetSFXVolume();
+
+        // Enable or disable controller vibration
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void ControllerVibrationEnable(bool enable);
+
     }
     public class Input
     {

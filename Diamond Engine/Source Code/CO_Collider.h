@@ -13,6 +13,7 @@ enum class ColliderShape
 {
 	CUBE,
 	MESH,
+	SPHERE,
 };
 
 class C_Collider : public Component
