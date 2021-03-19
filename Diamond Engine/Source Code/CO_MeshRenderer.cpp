@@ -84,20 +84,6 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 	//Mesh array with transform matrix of each bone
 	if (rootBone != nullptr)
 	{
-		//Get all the bones
-		GetBoneMapping(bonesMap);
-
-		//Set bone Transforms array size using original bones transform array size
-		_mesh->boneTransforms.resize(_mesh->bonesOffsets.size());
-
-		if (bonesMap.size() != _mesh->bonesMap.size())
-		{
-			for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
-			{
-				_mesh->boneTransforms[i] = float4x4::identity;
-			}
-		}
-
 		//Get each bone
 		for (std::map<std::string, uint>::iterator it = _mesh->bonesMap.begin(); it != _mesh->bonesMap.end(); ++it)
 		{
@@ -112,13 +98,6 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 				//Storage of Delta Matrix (Transformation applied to each bone)
 				_mesh->boneTransforms[it->second] = Delta.Transposed();
 			}
-		}
-	}
-	else
-	{
-		for (size_t i = 0; i < _mesh->boneTransforms.size(); i++)
-		{
-			_mesh->boneTransforms[i] = float4x4::identity;
 		}
 	}
 
@@ -144,7 +123,6 @@ void C_MeshRenderer::SaveData(JSON_Object* nObj)
 
 	DEJson::WriteVector3(nObj, "alternColor", &alternColor.x);
 }
-
 
 void C_MeshRenderer::LoadData(DEConfig& nObj)
 {
@@ -266,7 +244,6 @@ void C_MeshRenderer::SetRootBone(GameObject* _rootBone)
 
 	rootBone = _rootBone;
 
-	/*
 	//Get all the bones
 	GetBoneMapping(bonesMap);
 
@@ -280,7 +257,6 @@ void C_MeshRenderer::SetRootBone(GameObject* _rootBone)
 			_mesh->boneTransforms[i] = float4x4::identity;
 		}
 	}
-	*/
 }
 
 void C_MeshRenderer::SetRenderMesh(ResourceMesh* mesh)
