@@ -473,6 +473,7 @@ void CS_SetWindowMode(int winMode)
 	int aux = winMode;
 	(winMode > 2) ? aux = 2 : aux = winMode;
 	(winMode > 1) ? aux = aux : aux = 1;
+	int w, h;
 
 	if (aux == 1)
 	{
@@ -483,11 +484,14 @@ void CS_SetWindowMode(int winMode)
 	{
 		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		SDL_SetWindowResizable(EngineExternal->moduleWindow->window, static_cast<SDL_bool>(false));
+
 	}
 
 	// Add functionality later
 
 	EngineExternal->moduleWindow->windowMode = aux;
+	SDL_GetWindowSize(EngineExternal->moduleWindow->window, &w, &h);
+	EngineExternal->moduleRenderer3D->OnResize(w, h);
 }
 
 int CS_GetWindowMode()
