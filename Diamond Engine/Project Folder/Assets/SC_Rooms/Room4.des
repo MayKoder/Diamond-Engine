@@ -189,7 +189,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 5000,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6763339042663574,
+                    "hFOV": 1.6656678915023804,
                     "culling": false
                 }
             ]
@@ -4356,7 +4356,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 2124754052,
-                    "bigBrother": 8278228
+                    "bigBrother": 8278228,
+                    "bar": 101002529
                 }
             ]
         },
@@ -4446,7 +4447,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 2124754052,
-                    "bigBrother": 8278228
+                    "bigBrother": 8278228,
+                    "bar": 101002529
                 }
             ]
         },
@@ -4496,7 +4498,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui_menu_brightness_bar.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/1163903408.mat",
                     "MaterialUID": 1163903408
                 },
@@ -4838,7 +4840,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 2124754052,
-                    "bigBrother": 8278228
+                    "bigBrother": 8278228,
+                    "bar": 1035611231
                 }
             ]
         },
@@ -4928,7 +4931,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 2124754052,
-                    "bigBrother": 8278228
+                    "bigBrother": 8278228,
+                    "bar": 1035611231
                 }
             ]
         },
@@ -4978,7 +4982,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui_menu_master_volume_bar.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/1118716117.mat",
                     "MaterialUID": 1118716117
                 },
@@ -5323,7 +5327,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 2124754052,
-                    "bigBrother": 8278228
+                    "bigBrother": 8278228,
+                    "bar": 673549073
                 }
             ]
         },
@@ -5413,7 +5418,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 2124754052,
-                    "bigBrother": 8278228
+                    "bigBrother": 8278228,
+                    "bar": 673549073
                 }
             ]
         },
@@ -5463,7 +5469,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui_menu_music_volume_bar.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/141689081.mat",
                     "MaterialUID": 141689081
                 },
@@ -5808,7 +5814,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 2124754052,
-                    "bigBrother": 8278228
+                    "bigBrother": 8278228,
+                    "bar": 707095441
                 }
             ]
         },
@@ -5906,7 +5913,8 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 2124754052,
-                    "bigBrother": 8278228
+                    "bigBrother": 8278228,
+                    "bar": 707095441
                 }
             ]
         },
@@ -5956,7 +5964,7 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui_menu_sfx_volume_bar.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/1684735483.mat",
                     "MaterialUID": 1684735483
                 },
