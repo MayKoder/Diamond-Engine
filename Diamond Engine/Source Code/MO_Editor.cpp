@@ -413,7 +413,7 @@ void M_Editor::DrawTopBar()
 					EngineExternal->moduleAudio->StopAllSounds();
 					EngineExternal->moduleAudio->UnLoadAllBanks();
 					App->moduleScene->LoadScene("Library/Scenes/tmp.des");
-					App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code, mmove to method
+					//App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code, mmove to method
 				}
 			}
 			ImGui::SameLine();
@@ -433,7 +433,7 @@ void M_Editor::DrawTopBar()
 					App->moduleScene->LoadScene("Library/Scenes/tmp.des");
 					strcpy(App->moduleScene->current_scene_name, scene_name);
 
-					App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des");
+					//App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des");
 				}
 			}
 			ImGui::SameLine();
