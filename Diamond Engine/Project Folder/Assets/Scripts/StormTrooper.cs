@@ -1,7 +1,7 @@
 using System;
 using DiamondEngine;
 
-public class Stormtrooper : Enemy
+public class StormTrooper : Enemy
 {
 	private int shotSequences = 0;
 	public int maxShots = 2;

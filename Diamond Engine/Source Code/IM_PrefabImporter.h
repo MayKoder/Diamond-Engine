@@ -11,5 +11,5 @@ namespace PrefabImporter
 	GameObject* LoadGOData(JSON_Object* goJsonObj, GameObject* parent);
 
 	void OverridePrefabGameObjects(uint prefabID, GameObject* gameObject);
-	void OverrideGameObject(uint prefabID, GameObject* objectToReplace);
+	void OverrideGameObject(uint prefabID, GameObject* objectToReplace, GameObject* referenceObject = nullptr);
 }

@@ -6,6 +6,7 @@
 #include "IM_FileSystem.h"
 #include "MO_Scene.h"
 #include "CO_Transform.h"
+#include "CO_Script.h"
 
 #include <string>
 
@@ -139,11 +140,13 @@ void PrefabImporter::OverridePrefabGameObjects(uint prefabID, GameObject* gameOb
 	for (size_t i = 0; i < prefabObjects.size(); i++)
 	{
 		if(prefabObjects[i] != gameObject)
-			OverrideGameObject(prefabID, prefabObjects[i]);
+			OverrideGameObject(prefabID, prefabObjects[i], gameObject);
 	}
+
+	EngineExternal->moduleScene->LoadScriptsData();
 }
 
-void PrefabImporter::OverrideGameObject(uint prefabID, GameObject* objectToReplace)
+void PrefabImporter::OverrideGameObject(uint prefabID, GameObject* objectToReplace, GameObject* referenceObject)
 {
 	std::string libraryPath = EngineExternal->moduleResources->GenLibraryPath(prefabID, Resource::Type::PREFAB);
 
