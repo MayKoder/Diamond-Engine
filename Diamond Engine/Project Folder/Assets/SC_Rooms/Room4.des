@@ -4202,7 +4202,11 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 2124754052,
-                    "bigBrother": 8278228
+                    "bigBrother": 8278228,
+                    "bar": 101002529,
+                    "aux_bar_1": 1035611231,
+                    "aux_bar_2": 673549073,
+                    "aux_bar_3": 707095441
                 }
             ]
         },

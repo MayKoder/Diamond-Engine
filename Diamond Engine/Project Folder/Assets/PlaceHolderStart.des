@@ -2713,7 +2713,11 @@
                     "Active": true,
                     "ScriptName": "Settings",
                     "settingsWindow": 1637315784,
-                    "bigBrother": 1311017402
+                    "bigBrother": 1311017402,
+                    "bar": 1105870439,
+                    "aux_bar_1": 1752632962,
+                    "aux_bar_2": 38624862,
+                    "aux_bar_3": 451991258
                 }
             ]
         },
@@ -6460,7 +6464,7 @@
                     "nearPlaneDist": 1,
                     "farPlaneDist": 100,
                     "vFOV": 1.0471975803375244,
-                    "hFOV": 1.6763339042663574,
+                    "hFOV": 1.6656678915023804,
                     "culling": true
                 }
             ]

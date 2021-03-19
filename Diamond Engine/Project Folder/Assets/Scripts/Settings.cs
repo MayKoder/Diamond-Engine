@@ -6,6 +6,9 @@ public class Settings : DiamondComponent
 	public GameObject settingsWindow = null;
 	public GameObject bigBrother = null;
 	public GameObject bar = null;
+	public GameObject aux_bar_1 = null;
+	public GameObject aux_bar_2 = null;
+	public GameObject aux_bar_3 = null;
 
 
 	public void OnExecuteCheckbox(bool active)
@@ -22,14 +25,14 @@ public class Settings : DiamondComponent
 	}
 	public void FirstFrame()
     {
-		if ((gameObject.Name == "BrightnessDown" || gameObject.Name == "BrightnessUp") && bar != null)
+		if (bar != null)
 			bar.GetComponent<Material>().SetFloatUniform("length_used", Config.GetBrightness());
-		if ((gameObject.Name == "MasterVolumeUp" || gameObject.Name == "MasterVolumeDown") && bar != null)
-			bar.GetComponent<Material>().SetFloatUniform("length_used", Config.GetMasterVolume() / 99);
-		if ((gameObject.Name == "MusicVolumeUp" || gameObject.Name == "MusicVolumeDown") && bar != null)
-			bar.GetComponent<Material>().SetFloatUniform("length_used", Config.GetMusicVolume() / 99);
-		if ((gameObject.Name == "SFXVolumeUp" || gameObject.Name == "SFXVolumeDown") && bar != null)
-			bar.GetComponent<Material>().SetFloatUniform("length_used", Config.GetSFXVolume() / 99);
+		if (aux_bar_1 != null)
+			aux_bar_1.GetComponent<Material>().SetFloatUniform("length_used", Config.GetMasterVolume() / 99);
+		if (aux_bar_2 != null)
+			aux_bar_2.GetComponent<Material>().SetFloatUniform("length_used", Config.GetMusicVolume() / 99);
+		if (aux_bar_3 != null)
+			aux_bar_3.GetComponent<Material>().SetFloatUniform("length_used", Config.GetSFXVolume() / 99);
 	}
 	public void OnExecuteButton()
 	{
