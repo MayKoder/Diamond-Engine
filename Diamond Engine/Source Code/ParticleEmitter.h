@@ -47,6 +47,7 @@ private:
 	//void PrepareVBO();
 	int FindUnusedParticle();
 	void SetParticlesPerSec(int newParticlesPerSec);
+	void SetColor(float* newColor);
 public:
 	bool toDelete;
 private:
@@ -66,6 +67,7 @@ private:
 
 	//Particles Starting Color
 	float4 particlesColor;
+	float* colorAux;
 
 	//particles per second
 	float particlesPerSec;

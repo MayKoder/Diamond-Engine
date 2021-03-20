@@ -49,7 +49,6 @@ void PE_ColorOverLifetime::OnEditor(int emitterIndex)
 			static ImGradientMark* selectedMark = nullptr;
 
 			ImGui::GradientEditor(&gradient, draggingMark, selectedMark);
-
 		}
 		else
 		{
@@ -59,7 +58,6 @@ void PE_ColorOverLifetime::OnEditor(int emitterIndex)
 			}
 		}
 	}
-
 }
 #endif // !STANDALONE
 
