@@ -22,17 +22,6 @@ C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), no
 
 	//EngineExternal->moduleMono->DebugAllMethods(DE_SCRIPTS_NAMESPACE, "GameObject", methods);
 	LoadScriptData(scriptName);
-
-	for (unsigned int i = 0; i < fields.size(); i++)
-	{
-		const char* name = mono_field_get_name(fields[i].field);
-		if (strcmp(mono_field_get_name(fields[i].field), "thisReference") == 0) 
-		{
-			fields[i].fiValue.goValue = _gm;
-			SetField(fields[i].field, _gm);
-		}
-	}
-
 }
 
 C_Script::~C_Script()

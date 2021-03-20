@@ -31,7 +31,7 @@ public:
 	GameObject* CreateGameObject(const char* name, GameObject* parent, int _uid = -1);
 	void GetAllGameObjects(std::vector<GameObject*>& gameObjects);
 
-	void LoadScriptsData();
+	void LoadScriptsData(GameObject* rootObject = nullptr);
 	void LoadNavigationData();
 
 	GameObject* FindObjectWithTag(GameObject* rootGameObject, const char* tag);

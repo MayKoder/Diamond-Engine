@@ -217,7 +217,7 @@ void M_Scene::GetAllGameObjects(std::vector<GameObject*>& gameObjects)
 	root->CollectChilds(gameObjects);
 }
 
-void M_Scene::LoadScriptsData()
+void M_Scene::LoadScriptsData(GameObject* rootObject)
 {
 	for (auto i = referenceMap.begin(); i != referenceMap.end(); ++i)
 	{
@@ -227,7 +227,20 @@ void M_Scene::LoadScriptsData()
 		// Now render out that whole range
 		for (auto d = range.first; d != range.second; ++d)
 		{
-			d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
+			if (rootObject != nullptr)
+			{
+				GameObject* gameObject = GetGOFromUID(rootObject, d->first);
+
+				if (gameObject != nullptr)
+					d->second->fiValue.goValue = gameObject;
+
+				else
+					d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
+			}
+			else
+			{
+				d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
+			}
 
 			if (d->second->fiValue.goValue)
 			{
