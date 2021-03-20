@@ -108,6 +108,20 @@ const char* C_Text::GetText()
 	return text.c_str();
 }
 
+float C_Text::GetColorText(int index)
+{
+	if (index < 0 || index>2)
+		return 0.0f;
+	return textColor[index];
+}
+
+void C_Text::SetColorText(int index, float value)
+{
+	if (index < 0 || index>2 || value < 0 || value>1)
+		return;
+	textColor[index] = value;
+}
+
 void C_Text::SetText(const char* new_text)
 {
 	text = new_text;

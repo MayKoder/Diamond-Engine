@@ -8,14 +8,9 @@ public class DisplayOptions : DiamondComponent
 	public GameObject display = null;
 	public GameObject controls = null;
 	public GameObject bigBrother = null;
+	public GameObject background = null;
 	public GameObject default_selected = null;
-	private bool toDisable = false;
-	private bool firstFrame = true;
 
-	public void onExecuteCheckbox()
-    {
-		Debug.Log("Vsync");
-    }
 	public void OnExecuteButton()
 	{
 		if (gameObject.Name == "Settings")
@@ -23,7 +18,11 @@ public class DisplayOptions : DiamondComponent
 			settings.Enable(true);
 			optionsWindow.Enable(false);
 			if (default_selected != null)
+            {
 				default_selected.GetComponent<Navigation>().Select();
+				default_selected.GetComponent<Settings>().FirstFrame();
+
+            }
 		}
 		if (gameObject.Name == "Display")
 		{
@@ -40,18 +39,15 @@ public class DisplayOptions : DiamondComponent
 				default_selected.GetComponent<Navigation>().Select();
 		}
 		if (gameObject.Name == "Return")
-			toDisable = true;
+		{
+			bigBrother.Enable(true);
+			optionsWindow.Enable(false);
+			background.Enable(false);
+		}
 	}
 	public void Update()
 	{
-		if (firstFrame)
-			toDisable = firstFrame = false;
-		if (toDisable)
-		{
-			toDisable = false;
-			bigBrother.Enable(true);
-			optionsWindow.Enable(false);
-		}
+
 	}
 
 }

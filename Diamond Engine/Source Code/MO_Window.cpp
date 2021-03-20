@@ -5,7 +5,7 @@
 #include "ImGui/imgui.h"
 #include "MO_Renderer3D.h"
 
-ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled), s_width(0), s_height(0), brightness(1.f), windowMode(1)
+ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled), s_width(0), s_height(0), brightness(1.f), windowMode(2)
 , fullScreen(false), borderless(false), resizable(true), fullScreenDesktop(false)
 {
 	window = NULL;

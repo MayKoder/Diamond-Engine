@@ -195,7 +195,7 @@ bool C_Collider::OnEditor()
 		}
 
 		ImGui::Separator();
-		if (ImGui::TreeNodeEx("Edit Collider", node_flags))
+		if (ImGui::TreeNodeEx(std::string("Edit Collider: " + name).c_str(), node_flags))
 		{
 
 

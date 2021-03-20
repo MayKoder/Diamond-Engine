@@ -5,6 +5,7 @@ public class StartMenu : DiamondComponent
 {
 	public GameObject menuButtons = null;
 	public GameObject options = null;
+	public GameObject background = null;
 	public GameObject default_selected = null;
 	public void OnExecuteButton()
 	{
@@ -14,6 +15,7 @@ public class StartMenu : DiamondComponent
 		{
 			menuButtons.Enable(false);
 			options.Enable(true);
+			background.Enable(true);
 			if (default_selected != null)
 				default_selected.GetComponent<Navigation>().Select();
 		}

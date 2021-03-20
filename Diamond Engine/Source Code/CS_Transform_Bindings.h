@@ -20,6 +20,7 @@
 #include "MO_Scene.h"
 #include "MO_ResourceManager.h"
 #include "MO_Window.h"
+#include "MO_AudioManager.h"
 
 #include "GameObject.h"
 #include "MathGeoLib/include/Math/float3.h"
@@ -300,6 +301,21 @@ float GetDT() //TODO: Can we do this without duplicating code? plsssss
 	return DETime::deltaTime;
 }
 
+float GetTotalTime()
+{
+	return DETime::time;
+}
+
+void CS_PauseGame()
+{
+	DETime::Pause();
+}
+
+void CS_ResumeGame()
+{
+	DETime::Resume();
+}
+
 void Destroy(MonoObject* go)
 {
 	if (go == NULL)
@@ -419,6 +435,14 @@ MonoObject* SendGlobalScale(MonoObject* transform) //Allows to send float3 as "o
 
 #pragma endregion
 
+
+MonoObject* MonoSlerp(MonoObject* cs_q1, MonoObject* cs_q2, float t)
+{
+	Quat q1 = M_MonoManager::UnboxQuat(cs_q1);
+	Quat q2 = M_MonoManager::UnboxQuat(cs_q2);
+	return  EngineExternal->moduleMono->QuatToCS(Slerp(q1, q2, t)); 
+}
+
 #pragma region Config
 void CS_Enable_VSYNC(bool enable)
 {
@@ -430,21 +454,21 @@ void CS_Enable_VSYNC(bool enable)
 
 void CS_SetResolution(int resolution)
 {
-	if (EngineExternal == nullptr)
-		return;
-	
-	int aux = resolution;
-	(resolution > 3) ? aux = 3 : aux = resolution;
-	(resolution > 1) ? aux = aux : aux = 1;
+	//if (EngineExternal == nullptr)
+	//	return;
+	//
+	//int aux = resolution;
+	//(resolution > 3) ? aux = 3 : aux = resolution;
+	//(resolution > 1) ? aux = aux : aux = 1;
 
-	if (aux == 1) // TODO: How to change screen resolution withouth changing window's size nor re-creating the window.
+	//if (aux == 1) // TODO: How to change screen resolution withouth changing window's size nor re-creating the window.
 
-	if (aux == 2)
+	//if (aux == 2)
 
-	if (aux == 3)
+	//if (aux == 3)
 
 
-	EngineExternal->moduleRenderer3D->resolution = aux;
+	//EngineExternal->moduleRenderer3D->resolution = aux;
 }
 
 int CS_GetResolution()
@@ -460,35 +484,27 @@ void CS_SetWindowMode(int winMode)
 	if (EngineExternal == nullptr)
 		return;
 	int aux = winMode;
-	(winMode > 5) ? aux = 5 : aux = winMode;
+	(winMode > 2) ? aux = 2 : aux = winMode;
 	(winMode > 1) ? aux = aux : aux = 1;
-	
 	int w, h;
-	SDL_GetWindowSize(EngineExternal->moduleWindow->window, &w, &h);
 
-	switch (winMode)
+	if (aux == 1)
 	{
-	case 1:
 		SDL_SetWindowResizable(EngineExternal->moduleWindow->window, static_cast<SDL_bool>(true));
-		break;
-	case 2:
-		SDL_SetWindowBordered(EngineExternal->moduleWindow->window, static_cast<SDL_bool>(false));
-		EngineExternal->moduleRenderer3D->OnResize(w, h);
-		break;
-	case 3:
-		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, SDL_WINDOW_FULLSCREEN);
-		EngineExternal->moduleRenderer3D->OnResize(w, h);
-		break;
-	case 4:
-		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-		EngineExternal->moduleRenderer3D->OnResize(w, h);
-		break;
-	default:
 		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, 0);
-		EngineExternal->moduleRenderer3D->OnResize(w, h);
-		break;
 	}
+	if (aux == 2)
+	{
+		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		SDL_SetWindowResizable(EngineExternal->moduleWindow->window, static_cast<SDL_bool>(false));
+
+	}
+
+	// Add functionality later
+
 	EngineExternal->moduleWindow->windowMode = aux;
+	SDL_GetWindowSize(EngineExternal->moduleWindow->window, &w, &h);
+	EngineExternal->moduleRenderer3D->OnResize(w, h);
 }
 
 int CS_GetWindowMode()
@@ -518,6 +534,66 @@ float CS_GetBrightness()
 		return NULL;
 
 	return EngineExternal->moduleWindow->brightness;
+}
+
+void CS_SetMasterVolume(float vol)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float aux = vol;
+	(vol > 99.0f) ? aux = 99.0f : aux = vol;
+	(vol > 0.0f) ? aux = aux : aux = 0.5f;
+
+	return EngineExternal->moduleAudio->SetBusVolume(aux);
+}
+
+float CS_GetMasterVolume()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleAudio->masterVolume;
+}
+
+void CS_SetMusicVolume(float vol)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float aux = vol;
+	(vol > 99.0f) ? aux = 99.0f : aux = vol;
+	(vol > 0.0f) ? aux = aux : aux = 0.5f;
+
+	EngineExternal->moduleAudio->SetMusicVolume(aux);
+}
+
+float CS_GetMusicVolume()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleAudio->musicVolume;
+}
+
+void CS_SetSFXVolume(float vol)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float aux = vol;
+	(vol > 99.0f) ? aux = 99.0f : aux = vol;
+	(vol > 0.0f) ? aux = aux : aux = 0.5f;
+
+	EngineExternal->moduleAudio->SetSFXVolume(aux);
+}
+
+float CS_GetSFXVolume()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleAudio->fxVolume;
 }
 
 void CS_ControllerEnableVibration(bool enable)

@@ -20,7 +20,8 @@ C_Camera::C_Camera() : Component(nullptr),
 	msaaSamples(4), 
 	orthoSize(0.0f),
 	windowWidth(0),
-	windowHeight(0)
+	windowHeight(0),
+	drawSkybox(true)
 {
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
@@ -37,7 +38,7 @@ C_Camera::C_Camera() : Component(nullptr),
 }
 
 C_Camera::C_Camera(GameObject* _gm) : Component(_gm), fov(60.0f), cullingState(true),
-msaaSamples(4), orthoSize(0.0f)
+msaaSamples(4), orthoSize(0.0f), drawSkybox(true)
 {
 
 	name = "Camera";
@@ -112,6 +113,9 @@ bool C_Camera::OnEditor()
 		ImGui::Text("Camera Culling: "); ImGui::SameLine();
 		ImGui::Checkbox("##cameraCulling", &cullingState);
 
+		ImGui::Text("Draw Skybox: "); ImGui::SameLine();
+		ImGui::Checkbox("##drawSkybox", &drawSkybox);
+
 		ImGui::Text("MSAA Samples: "); ImGui::SameLine(); 
 		if (ImGui::SliderInt("##msaasamp", &msaaSamples, 1, 4)) 
 		{
@@ -163,6 +167,8 @@ void C_Camera::SaveData(JSON_Object* nObj)
 	DEJson::WriteFloat(nObj, "vFOV", camFrustrum.verticalFov);
 	DEJson::WriteFloat(nObj, "hFOV", camFrustrum.horizontalFov);
 	DEJson::WriteBool(nObj, "culling", cullingState);
+
+	DEJson::WriteBool(nObj, "drawSkybox", drawSkybox);
 }
 
 void C_Camera::LoadData(DEConfig& nObj)
@@ -180,6 +186,8 @@ void C_Camera::LoadData(DEConfig& nObj)
 	camFrustrum.verticalFov = nObj.ReadFloat("vFOV");
 	camFrustrum.horizontalFov = nObj.ReadFloat("hFOV");
 	cullingState = nObj.ReadBool("culling");
+
+	drawSkybox = nObj.ReadBool("drawSkybox");
 
 	EngineExternal->moduleScene->SetGameCamera(this);
 }

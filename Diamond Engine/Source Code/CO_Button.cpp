@@ -12,6 +12,7 @@
 #include "MO_ResourceManager.h"
 
 #include "IM_FileSystem.h"
+#include "DETime.h"
 
 #include "ImGui/imgui.h"
 
@@ -64,7 +65,8 @@ void C_Button::Update()
 		if (is_selected)
 		{
 			thisAudSource->SetEventName(std::string("Play_UI_Button_Hover"));
-			thisAudSource->PlayEvent();
+			if (thisAudSource != nullptr)
+				thisAudSource->PlayEvent();
 			ChangeTexture(BUTTONSTATE::BUTTONHOVERED);
 		}
 		break;

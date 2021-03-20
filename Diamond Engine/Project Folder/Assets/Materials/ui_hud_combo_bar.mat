@@ -1,0 +1,16 @@
+{
+    "name": "ui_hud_combo_bar",
+    "ShaderUID": 377481006,
+    "Uniforms": [
+        {
+            "name": "combo_number",
+            "type": 5124,
+            "value": 0
+        },
+        {
+            "name": "length_used",
+            "type": 5126,
+            "value": 1
+        }
+    ]
+}
