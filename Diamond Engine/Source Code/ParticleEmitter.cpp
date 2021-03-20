@@ -23,6 +23,8 @@
 #include "ImGui/imgui.h"
 #include "MathGeoLib/include/Math/float4x4.h"
 
+#include "MO_Editor.h"
+
 #include <string>
 
 Emitter::Emitter() :
@@ -34,7 +36,9 @@ Emitter::Emitter() :
 	myParticles(),
 	myEffects(),
 	objTransform(nullptr),
-	lastUsedParticle(0)
+	lastUsedParticle(0),
+	maxDuration(1.0f),
+	playing(false)
 {
 	memset(particlesLifeTime, 0.1f, sizeof(particlesLifeTime));
 	memset(particlesSpeed, 0.0f, sizeof(particlesSpeed));
@@ -115,9 +119,9 @@ Emitter::~Emitter()
 	particlesColor = nullptr;
 }
 
-
 void Emitter::Update(float dt, bool systemActive)
 {
+	//Delete effects
 	for (int i = 0; i < myEffects.size(); i++) {
 		if (myEffects[i]->toDelete) {
 			myEffects[i]->~ParticleEffect();
@@ -126,21 +130,40 @@ void Emitter::Update(float dt, bool systemActive)
 		}
 	}
 
-	if (systemActive)
-		ThrowParticles(dt);
+	/*if (EngineExternal->moduleEditor->GetSelectedGO() == objTransform->GetGO()) {
+		playing = true;
+		duration.Start();
+	}*/
 
-	for (int i = 0; i < myParticles.size(); ++i)
+	if (duration.Read() >= maxDuration * 1000) {
+		playing = false;
+		duration.Stop();
+	}
+
+	if (playing)
 	{
-		if (myParticles[i].currentLifetime >= 0.0f)
-		{
-			myParticles[i].currentLifetime -= dt;
-			for (int j = 0; j < myEffects.size(); ++j)
-			{
-				myEffects[j]->Update(myParticles[i], dt);
-			}
+		if (systemActive)
+			ThrowParticles(dt);
 
-			myParticles[i].speed += myParticles[i].accel * dt;
-			myParticles[i].pos += myParticles[i].speed * dt;
+		for (int i = 0; i < myParticles.size(); ++i)
+		{
+			if (myParticles[i].currentLifetime >= 0.0f)
+			{
+				myParticles[i].currentLifetime -= dt;
+				for (int j = 0; j < myEffects.size(); ++j)
+				{
+					myEffects[j]->Update(myParticles[i], dt);
+				}
+
+				myParticles[i].speed += myParticles[i].accel * dt;
+				myParticles[i].pos += myParticles[i].speed * dt;
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < myParticles.size(); ++i)
+		{
+			myParticles[i].currentLifetime = -1.0f;
 		}
 	}
 }
@@ -262,6 +285,20 @@ void Emitter::OnEditor(int emitterIndex)
 
 	if (ImGui::CollapsingHeader(guiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		guiName = playing ? "Pause" : "Play";
+		if(ImGui::Button(guiName.c_str())){			
+			if (playing) {
+				playing = false;
+				duration.Stop();
+			}
+			else {
+				playing = true;
+				duration.Start();
+			}
+		}
+		ImGui::SameLine();
+		ImGui::Text("Playback time: %d", duration.Read()/1000);
+
 		guiName = "Particle Lifetime ##" + suffixLabel;
 		if (ImGui::DragFloatRange2("Lifetime", &particlesLifeTime[0], &particlesLifeTime[1], 0.25f, 0.1f, 100.0f, "Min: %.1f", "Max: %.1f"))
 			CalculatePoolSize();
@@ -269,6 +306,8 @@ void Emitter::OnEditor(int emitterIndex)
 		guiName = "Particles per Second ##" + suffixLabel;
 		if (ImGui::DragFloat(guiName.c_str(), &particlesPerSec))
 			SetParticlesPerSec(particlesPerSec);
+
+		ImGui::DragFloat("Duration", &maxDuration, 0.01f);
 
 		guiName = "Start Size" + suffixLabel;
 		ImGui::DragFloatRange2(guiName.c_str(), &particlesSize[0], &particlesSize[1], 0.25f, 0.1f, 5.0f, "Min: %.1f", "Max: %.1f");			
@@ -440,8 +479,6 @@ void Emitter::CreateParticles(unsigned int particlesToAdd)
 			myEffects[j]->Spawn(myParticles[i]);
 		}
 	}
-
-
 }
 
 void Emitter::ThrowParticles(float dt)

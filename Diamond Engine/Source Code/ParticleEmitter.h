@@ -3,7 +3,8 @@
 #include "Particle.h"
 #include "ParticleEffects.h"
 #include "MathGeoLib/include/Math/Quat.h"
-#include"DEJsonSupport.h"
+#include "DEJsonSupport.h"
+#include "Timer.h"
 
 class C_Transform;
 class ResourceTexture;
@@ -79,9 +80,11 @@ private:
 	std::vector<Particle> myParticles;
 	std::vector<ParticleEffect*> myEffects;
 	C_Transform* objTransform = nullptr;
+
+	bool playing;
+	float maxDuration;
+	Timer duration;
 };
-
-
 
 const float particleVertices[] = {
 -1, -1,
