@@ -5,6 +5,7 @@
 #include "RE_Texture.h"
 
 #include "GameObject.h"
+#include "CO_AudioSource.h"
 
 #include "Application.h"
 #include "MO_ResourceManager.h"
@@ -19,6 +20,7 @@ sprite_checkbox_unactive(nullptr), sprite_checkbox_unactive_hovered(nullptr), sp
 checkbox_active(false), is_selected(false)
 {
 	name = "Checkbox";
+	thisAudSource = new C_AudioSource(gameObject);
 #ifndef STANDALONE
 	sprites_freezed = false;
 #endif // !STANDALONE
@@ -44,6 +46,8 @@ C_Checkbox::~C_Checkbox()
 	if (sprite_checkbox_unactive_pressed != nullptr) {
 		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_unactive_pressed->GetUID());
 	}
+	delete thisAudSource;
+	thisAudSource = nullptr;
 }
 
 void C_Checkbox::Update()
@@ -61,7 +65,11 @@ void C_Checkbox::Update()
 	{
 	case CHECKBOXSTATE::CHECKBOXACTIVE:
 		if (is_selected)
+		{
+			thisAudSource->SetEventName(std::string("Play_UI_Button_Hover"));
+			thisAudSource->PlayEvent();
 			ChangeTexture(CHECKBOXSTATE::CHECKBOXACTIVEHOVERED);
+		}
 		break;
 	case CHECKBOXSTATE::CHECKBOXACTIVEHOVERED:
 		if (!is_selected)
@@ -69,7 +77,11 @@ void C_Checkbox::Update()
 		break;
 	case CHECKBOXSTATE::CHECKBOXUNACTIVE:
 		if (is_selected)
+		{
+			thisAudSource->SetEventName(std::string("Play_UI_Button_Hover"));
+			thisAudSource->PlayEvent();
 			ChangeTexture(CHECKBOXSTATE::CHECKBOXUNACTIVEHOVERED);
+		}
 		break;
 	case CHECKBOXSTATE::CHECKBOXUNACTIVEHOVERED:
 		if (!is_selected)
@@ -81,6 +93,8 @@ void C_Checkbox::Update()
 
 void C_Checkbox::PressCheckbox()
 {
+	thisAudSource->SetEventName(std::string("Play_UI_Button_Play"));
+	thisAudSource->PlayEvent();
 	checkbox_active = !checkbox_active;
 	if (checkbox_active) {
 		ChangeTexture(CHECKBOXSTATE::CHECKBOXACTIVEPRESSED);
@@ -255,7 +269,12 @@ void C_Checkbox::LoadData(DEConfig& nObj)
 
 	if (texName != "") {
 		sprite_checkbox_active_pressed = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Active_Pressed_UID"), texName.c_str()));
-		sprite_checkbox_active_pressed->SetAssetsPath(assetsName.c_str());
+		if (sprite_checkbox_active_pressed == nullptr) {
+			LOG(LogType::L_ERROR, "the sprite checkbox active pressed couldn't be created");
+		}
+		else {
+			sprite_checkbox_active_pressed->SetAssetsPath(assetsName.c_str());
+		}
 	}
 
 	texName = nObj.ReadString("Active_Hovered_LibraryPath");
@@ -263,7 +282,12 @@ void C_Checkbox::LoadData(DEConfig& nObj)
 
 	if (texName != "") {
 		sprite_checkbox_active_hovered = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Active_Hovered_UID"), texName.c_str()));
-		sprite_checkbox_active_hovered->SetAssetsPath(assetsName.c_str());
+		if (sprite_checkbox_active_hovered == nullptr) {
+			LOG(LogType::L_ERROR, "the sprite checkbox active hovered couldn't be created");
+		}
+		else {
+			sprite_checkbox_active_hovered->SetAssetsPath(assetsName.c_str());
+		}
 	}
 
 
@@ -272,7 +296,12 @@ void C_Checkbox::LoadData(DEConfig& nObj)
 
 	if (texName != "") {
 		sprite_checkbox_active = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Active_UID"), texName.c_str()));
-		sprite_checkbox_active->SetAssetsPath(assetsName.c_str());
+		if (sprite_checkbox_active == nullptr) {
+			LOG(LogType::L_ERROR, "the sprite checkbox active couldn't be created");
+		}
+		else {
+			sprite_checkbox_active->SetAssetsPath(assetsName.c_str());
+		}
 	}
 
 	texName = nObj.ReadString("Unactive_Pressed_LibraryPath");
@@ -280,7 +309,12 @@ void C_Checkbox::LoadData(DEConfig& nObj)
 
 	if (texName != "") {
 		sprite_checkbox_unactive_pressed = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Unactive_Pressed_UID"), texName.c_str()));
-		sprite_checkbox_unactive_pressed->SetAssetsPath(assetsName.c_str());
+		if (sprite_checkbox_unactive_pressed == nullptr) {
+			LOG(LogType::L_ERROR, "the sprite checkbox unactive pressed couldn't be created");
+		}
+		else {
+			sprite_checkbox_unactive_pressed->SetAssetsPath(assetsName.c_str());
+		}
 	}
 
 	texName = nObj.ReadString("Unactive_Hovered_LibraryPath");
@@ -288,7 +322,12 @@ void C_Checkbox::LoadData(DEConfig& nObj)
 
 	if (texName != "") {
 		sprite_checkbox_unactive_hovered = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Unactive_Hovered_UID"), texName.c_str()));
-		sprite_checkbox_unactive_hovered->SetAssetsPath(assetsName.c_str());
+		if (sprite_checkbox_unactive_hovered == nullptr) {
+			LOG(LogType::L_ERROR, "the sprite checkbox unactive hovered couldn't be created");
+		}
+		else {
+			sprite_checkbox_unactive_hovered->SetAssetsPath(assetsName.c_str());
+		}
 	}
 
 
@@ -297,7 +336,12 @@ void C_Checkbox::LoadData(DEConfig& nObj)
 
 	if (texName != "") {
 		sprite_checkbox_unactive = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("Unactive_UID"), texName.c_str()));
-		sprite_checkbox_unactive->SetAssetsPath(assetsName.c_str());
+		if (sprite_checkbox_unactive == nullptr) {
+			LOG(LogType::L_ERROR, "the sprite checkbox unactive couldn't be created");
+		}
+		else {
+			sprite_checkbox_unactive->SetAssetsPath(assetsName.c_str());
+		}
 	}
 
 	texName = nObj.ReadString("Script_Name");

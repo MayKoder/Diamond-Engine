@@ -87,11 +87,14 @@ void M_Gui::RenderCanvas2D()
 			{
 				node = stack.top();
 				stack.pop();
-				stackToDraw.push(node);
+				if (node->active)
+				{
+					stackToDraw.push(node);
 
-				int childNumber = node->children.size();
-				for (int i = 0; i < childNumber; ++i)
-					stack.push(node->children[i]);
+					int childNumber = node->children.size();
+					for (int i = 0; i < childNumber; ++i)
+						stack.push(node->children[i]);
+				}
 			}
 		}
 
@@ -121,7 +124,7 @@ void M_Gui::RenderUiElement(GameObject* uiElement)
 		C_Transform2D* transform = static_cast<C_Transform2D*>(trans2D);
 		ResourceMaterial* material = static_cast<C_Material*>(mat)->material;
 
-		if (material->shader)
+		if (material != nullptr && material->shader)
 		{
 			if (img2D != nullptr)
 				static_cast<C_Image2D*>(img2D)->RenderImage(transform->GetGlobal2DTransform().ptr(), material, VAO);

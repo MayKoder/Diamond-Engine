@@ -2,6 +2,7 @@
 #include "Component.h"
 
 class ResourceTexture;
+class C_AudioSource;
 
 enum class CHECKBOXSTATE {
 	CHECKBOXACTIVE,
@@ -48,5 +49,6 @@ private:
 	ResourceTexture* sprite_checkbox_unactive_pressed;
 	CHECKBOXSTATE num_sprite_used;
 	std::string script_name;
+	C_AudioSource* thisAudSource;
 	bool checkbox_active;
 };

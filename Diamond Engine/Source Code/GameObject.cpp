@@ -10,6 +10,7 @@
 #include "CO_RigidBody.h"
 #include "CO_Collider.h"
 #include "CO_BoxCollider.h"
+#include "CO_SphereCollider.h"
 #include "CO_MeshCollider.h"
 #include "CO_AudioListener.h"
 #include "CO_AudioSource.h"
@@ -34,7 +35,7 @@
 
 
 GameObject::GameObject(const char* _name, GameObject* parent, int _uid) : parent(parent), name(_name), showChildren(false),
-active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), dumpComponent(nullptr), prefabID(0u)
+active(true), isStatic(false), toDelete(false),dontDestroy(false), UID(_uid), transform(nullptr), dumpComponent(nullptr), prefabID(0u), tag("Untagged"), layer("Default")
 {
 
 	if(parent != nullptr)
@@ -47,7 +48,7 @@ active(true), isStatic(false), toDelete(false), UID(_uid), transform(nullptr), d
 	{
 		UID = EngineExternal->GetRandomInt();
 	}
-		//UID = MaykMath::Random(0, INT_MAX);
+	//UID = MaykMath::Random(0, INT_MAX);
 }
 
 
@@ -145,6 +146,9 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 	case Component::TYPE::BOXCOLLIDER:
 		ret = new C_BoxCollider(this);
       break;
+	case Component::TYPE::SPHERECOLLIDER:
+		ret = new C_SphereCollider(this);
+		break;
 	case Component::TYPE::MESHCOLLIDER:
 		ret = new C_MeshCollider(this);
 		break;
@@ -211,7 +215,7 @@ Component* GameObject::GetComponent(Component::TYPE _type, const char* scriptNam
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
-		if (components[i]->type == _type)
+		if (components[i] && components[i]->type == _type)
 		{
 			if (_type == Component::TYPE::SCRIPT)
 			{
@@ -295,6 +299,28 @@ void GameObject::Disable()
 	//}
 }
 
+void GameObject::EnableTopDown()
+{
+	Enable();
+	for (int i = 0;i< children.size(); i++) {
+		children[i]->EnableTopDown();
+	}
+	for (int i = 0; i < components.size(); i++) {
+		components[i]->Enable();
+	}
+}
+
+void GameObject::DisableTopDown()
+{
+	Disable();
+	for (int i = 0; i < children.size(); i++) {
+		children[i]->DisableTopDown();
+	}
+	for (int i = 0; i < components.size(); i++) {
+		components[i]->Disable();
+	}
+}
+
 
 bool GameObject::IsRoot()
 {
@@ -315,6 +341,8 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 
 	//Save all gameObject data
 	json_object_set_string(goData, "name", name.c_str());
+	json_object_set_string(goData, "tag", tag);
+	json_object_set_string(goData, "layer", layer);
 
 	DEJson::WriteBool(goData, "Active", active);
 	DEJson::WriteVector3(goData, "Position", &transform->position[0]);
@@ -323,6 +351,8 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 
 	DEJson::WriteInt(goData, "UID", UID);
 	DEJson::WriteInt(goData, "PrefabID", prefabID);
+
+	DEJson::WriteBool(goData, "DontDestroy", dontDestroy);
 
 	if (parent)
 		DEJson::WriteInt(goData, "ParentUID", parent->UID);
@@ -358,6 +388,17 @@ void GameObject::LoadFromJson(JSON_Object* _obj)
 	transform->SetTransformMatrix(DEJson::ReadVector3(_obj, "Position"), DEJson::ReadQuat(_obj, "Rotation"), DEJson::ReadVector3(_obj, "Scale"));
 	prefabID = DEJson::ReadInt(_obj, "PrefabID");
 	LoadComponents(json_object_get_array(_obj, "Components"));
+	dontDestroy = DEJson::ReadBool(_obj, "DontDestroy");
+
+	const char* json_tag = DEJson::ReadString(_obj, "tag");
+
+	if (json_tag == nullptr) sprintf_s(tag, "Untagged");
+	else sprintf_s(tag, json_tag);
+
+	const char* json_layer = DEJson::ReadString(_obj, "layer");
+
+	if (json_layer == nullptr) sprintf_s(layer, "Default");
+	else sprintf_s(layer, json_layer);
 }
 
 
@@ -404,7 +445,9 @@ void GameObject::ChangeParent(GameObject* newParent)
 	if (IsChild(newParent))
 		return;
 
-	parent->RemoveChild(this);	
+	if (parent != nullptr)
+		parent->RemoveChild(this);
+	
 	parent = newParent;
 	parent->children.push_back(this);
 
@@ -438,6 +481,7 @@ bool GameObject::IsChild(GameObject* _toFind)
 
 void GameObject::RemoveChild(GameObject* child)
 {
+	child->parent = nullptr;
 	children.erase(std::find(children.begin(), children.end(), child));
 }
 
@@ -448,7 +492,7 @@ void GameObject::CollectChilds(std::vector<GameObject*>& vector)
 		children[i]->CollectChilds(vector);
 }
 
-bool GameObject::CompareTag(char* _tag)
+bool GameObject::CompareTag(const char* _tag)
 {
 	return strcmp(tag, _tag) == 0;
 }

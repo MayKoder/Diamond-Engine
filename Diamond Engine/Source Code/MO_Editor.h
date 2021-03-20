@@ -68,6 +68,7 @@ public:
 	AssetDir* GetSelectedAsset();
 	void SetSelectedAsset(AssetDir* _file);
 
+	void ClearConsole();
 	void LogToConsole(const char* msg, LogType _type = LogType::L_NORMAL);
 
 	IconManager editorIcons;

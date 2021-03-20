@@ -2,6 +2,7 @@
 #define __MO_GUI_H__
 
 #include "Module.h"
+#include <vector>
 
 class GameObject;
 
@@ -28,7 +29,7 @@ public:
 	void EraseCanvas();
 
 public:
-	int uid_gameobject_of_ui_selected;
+	std::vector<int> uid_gameobject_of_ui_selected;
 
 private:
 	int canvas = -1;

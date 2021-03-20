@@ -14,10 +14,13 @@
 #include "CO_Transform.h"
 #include "CO_Collider.h"
 #include "CO_RigidBody.h"
+#include "CO_Camera.h"
 
 #include "MO_Input.h"
 #include "MO_Scene.h"
 #include "MO_ResourceManager.h"
+#include "MO_Window.h"
+#include "MO_AudioManager.h"
 
 #include "GameObject.h"
 #include "MathGeoLib/include/Math/float3.h"
@@ -47,6 +50,31 @@ GameObject* DECS_Comp_To_GameObject(MonoObject* component)
 MonoObject* CS_Component_Get_GO(MonoObject* thisRef)
 {
 	return EngineExternal->moduleMono->GoToCSGO(DECS_Comp_To_GameObject(thisRef));
+}
+
+MonoObject* CS_Get_GO_Parent(MonoObject* go)
+{
+	return EngineExternal->moduleMono->GoToCSGO(
+			EngineExternal->moduleMono->GameObject_From_CSGO(go)->parent);
+}
+
+void CS_EnableGO(MonoObject* go, bool enable)
+{
+	GameObject* ref = EngineExternal->moduleMono->GameObject_From_CSGO(go);
+	if (ref != nullptr) {
+		if (enable) {
+			ref->EnableTopDown();
+			
+		}
+		else {
+			ref->DisableTopDown();
+		}
+	}
+}
+
+bool CS_IsGOEnabled(MonoObject* go)
+{
+	return EngineExternal->moduleMono->GameObject_From_CSGO(go)->isActive();
 }
 
 //template<typename A>
@@ -152,6 +180,27 @@ void CSCreateGameObject(MonoObject* name, MonoObject* position)
 	go->transform->updateTransform = true;
 }
 
+void CSCloseGame()
+{
+	if (EngineExternal == nullptr)
+		return;
+#ifndef STANDALONE
+	DETime::Stop();
+#else
+	EngineExternal->ExitApplication();
+#endif
+}
+
+MonoString* CS_Get_GO_Name(MonoObject* go)
+{
+	if (EngineExternal == nullptr)
+		return nullptr;
+
+	return mono_string_new(
+		EngineExternal->moduleMono->domain,
+		EngineExternal->moduleMono->GameObject_From_CSGO(go)->name.c_str());
+}
+
 MonoObject* SendPosition(MonoObject* obj) //Allows to send float3 as "objects" in C#, should find a way to move Vector3 as class
 {
 	//return mono_value_box(EngineExternal->moduleMono->domain, vecClass, EngineExternal->moduleMono->Float3ToCS(C_Script::runningScript->GetGO()->transform->position)); //Use this method to send "object" types
@@ -252,6 +301,21 @@ float GetDT() //TODO: Can we do this without duplicating code? plsssss
 	return DETime::deltaTime;
 }
 
+float GetTotalTime()
+{
+	return DETime::time;
+}
+
+void CS_PauseGame()
+{
+	DETime::Pause();
+}
+
+void CS_ResumeGame()
+{
+	DETime::Resume();
+}
+
 void Destroy(MonoObject* go)
 {
 	if (go == NULL)
@@ -288,7 +352,7 @@ bool CompareTag(MonoObject* cs_gameObject, MonoString* cs_tag)
 
 	GameObject* gameObject = EngineExternal->moduleMono->GameObject_From_CSGO(cs_gameObject);
 
-	if (gameObject != nullptr) 
+	if (gameObject == nullptr) 
 	{
 		LOG(LogType::L_ERROR, "GameObject's tag to be compared does not exist");
 	}
@@ -302,10 +366,10 @@ bool CompareTag(MonoObject* cs_gameObject, MonoString* cs_tag)
 	return false;
 }
 
-void CreatePrefab(MonoString* prefabPath, MonoObject* position, MonoObject* rotation, MonoObject* scale)
+MonoObject* CreatePrefab(MonoString* prefabPath, MonoObject* position, MonoObject* rotation, MonoObject* scale)
 {
 	if (prefabPath == nullptr)
-		return;
+		return nullptr;
 
 	char* library_path = mono_string_to_utf8(prefabPath);
 	GameObject* prefab_object = PrefabImporter::LoadPrefab(library_path);
@@ -321,6 +385,8 @@ void CreatePrefab(MonoString* prefabPath, MonoObject* position, MonoObject* rota
 
 		prefab_object->transform->SetTransformMatrix(posVector, rotQuat, scaleVector);
 	}
+
+	return EngineExternal->moduleMono->GoToCSGO(prefab_object);
 }
 
 void CreateBullet(MonoObject* position, MonoObject* rotation, MonoObject* scale) //TODO: We really need prefabs
@@ -368,3 +434,174 @@ MonoObject* SendGlobalScale(MonoObject* transform) //Allows to send float3 as "o
 }
 
 #pragma endregion
+
+
+MonoObject* MonoSlerp(MonoObject* cs_q1, MonoObject* cs_q2, float t)
+{
+	Quat q1 = M_MonoManager::UnboxQuat(cs_q1);
+	Quat q2 = M_MonoManager::UnboxQuat(cs_q2);
+	return  EngineExternal->moduleMono->QuatToCS(Slerp(q1, q2, t)); 
+}
+
+#pragma region Config
+void CS_Enable_VSYNC(bool enable)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	EngineExternal->moduleRenderer3D->vsync = enable;
+}
+
+void CS_SetResolution(int resolution)
+{
+	//if (EngineExternal == nullptr)
+	//	return;
+	//
+	//int aux = resolution;
+	//(resolution > 3) ? aux = 3 : aux = resolution;
+	//(resolution > 1) ? aux = aux : aux = 1;
+
+	//if (aux == 1) // TODO: How to change screen resolution withouth changing window's size nor re-creating the window.
+
+	//if (aux == 2)
+
+	//if (aux == 3)
+
+
+	//EngineExternal->moduleRenderer3D->resolution = aux;
+}
+
+int CS_GetResolution()
+{
+	if (EngineExternal == nullptr)
+		return 0;
+
+	return EngineExternal->moduleRenderer3D->resolution;
+}
+
+void CS_SetWindowMode(int winMode)
+{
+	if (EngineExternal == nullptr)
+		return;
+	int aux = winMode;
+	(winMode > 2) ? aux = 2 : aux = winMode;
+	(winMode > 1) ? aux = aux : aux = 1;
+	int w, h;
+
+	if (aux == 1)
+	{
+		SDL_SetWindowResizable(EngineExternal->moduleWindow->window, static_cast<SDL_bool>(true));
+		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, 0);
+	}
+	if (aux == 2)
+	{
+		SDL_SetWindowFullscreen(EngineExternal->moduleWindow->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		SDL_SetWindowResizable(EngineExternal->moduleWindow->window, static_cast<SDL_bool>(false));
+
+	}
+
+	// Add functionality later
+
+	EngineExternal->moduleWindow->windowMode = aux;
+	SDL_GetWindowSize(EngineExternal->moduleWindow->window, &w, &h);
+	EngineExternal->moduleRenderer3D->OnResize(w, h);
+}
+
+int CS_GetWindowMode()
+{
+	if (EngineExternal == nullptr)
+		return 0;
+
+	return EngineExternal->moduleWindow->windowMode;
+}
+
+void CS_SetBrightness(float brightLevel)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float aux = brightLevel;
+	(brightLevel > 1.f) ? aux = 1.f : aux = brightLevel;
+	(brightLevel > 0.0f) ? aux = aux : aux = 0.05f;
+
+	SDL_SetWindowBrightness(EngineExternal->moduleWindow->window, aux);
+	EngineExternal->moduleWindow->brightness = aux;
+}
+
+float CS_GetBrightness()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleWindow->brightness;
+}
+
+void CS_SetMasterVolume(float vol)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float aux = vol;
+	(vol > 99.0f) ? aux = 99.0f : aux = vol;
+	(vol > 0.0f) ? aux = aux : aux = 0.5f;
+
+	return EngineExternal->moduleAudio->SetBusVolume(aux);
+}
+
+float CS_GetMasterVolume()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleAudio->masterVolume;
+}
+
+void CS_SetMusicVolume(float vol)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float aux = vol;
+	(vol > 99.0f) ? aux = 99.0f : aux = vol;
+	(vol > 0.0f) ? aux = aux : aux = 0.5f;
+
+	EngineExternal->moduleAudio->SetMusicVolume(aux);
+}
+
+float CS_GetMusicVolume()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleAudio->musicVolume;
+}
+
+void CS_SetSFXVolume(float vol)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	float aux = vol;
+	(vol > 99.0f) ? aux = 99.0f : aux = vol;
+	(vol > 0.0f) ? aux = aux : aux = 0.5f;
+
+	EngineExternal->moduleAudio->SetSFXVolume(aux);
+}
+
+float CS_GetSFXVolume()
+{
+	if (EngineExternal == nullptr)
+		return NULL;
+
+	return EngineExternal->moduleAudio->fxVolume;
+}
+
+void CS_ControllerEnableVibration(bool enable)
+{
+	if (EngineExternal == nullptr)
+		return;
+
+	EngineExternal->moduleInput->hapticEnabled = enable;
+}
+#pragma endregion
+

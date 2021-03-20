@@ -20,6 +20,7 @@
 #include"CO_Transform.h"
 #include"CO_Camera.h"
 #include"CO_Script.h"
+#include"CO_Navigation.h"
 
 #include"RE_Texture.h"
 #include"DETime.h"
@@ -32,12 +33,18 @@ defaultMaterial(nullptr), holdUID(0)
 {
 	current_scene[0] = '\0';
 	current_scene_name[0] = '\0';
+
+	tags = { "Untagged"};
+	layers = { "Default" };
 }
 
 M_Scene::~M_Scene()
 {
 	root = nullptr;
 	defaultMaterial = nullptr;
+
+	tags.clear();
+	layers.clear();
 }
 
 bool M_Scene::Init()
@@ -50,7 +57,8 @@ bool M_Scene::Init()
 bool M_Scene::Start()
 {
 	CreateGameCamera("Main Camera");
-	//LoadScene("Library/Scenes/1085444261.des");
+	//LoadScene("Library/Scenes/1726826608.des");
+	LoadScene("Library/Scenes/1482507639.des");
 
 	//LoadScene("Library/Scenes/884741631.des");
 	//LoadScene("Library/Scenes/tmp.des");
@@ -124,6 +132,7 @@ update_status M_Scene::Update(float dt)
 
 				gameObjectRoot->RecursiveUIDRegeneration();
 
+				LoadNavigationData();
 				LoadScriptsData();
 
 				//Free memory
@@ -208,7 +217,7 @@ void M_Scene::GetAllGameObjects(std::vector<GameObject*>& gameObjects)
 	root->CollectChilds(gameObjects);
 }
 
-void M_Scene::LoadScriptsData()
+void M_Scene::LoadScriptsData(GameObject* rootObject)
 {
 	for (auto i = referenceMap.begin(); i != referenceMap.end(); ++i)
 	{
@@ -218,7 +227,20 @@ void M_Scene::LoadScriptsData()
 		// Now render out that whole range
 		for (auto d = range.first; d != range.second; ++d)
 		{
-			d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
+			if (rootObject != nullptr)
+			{
+				GameObject* gameObject = GetGOFromUID(rootObject, d->first);
+
+				if (gameObject != nullptr)
+					d->second->fiValue.goValue = gameObject;
+
+				else
+					d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
+			}
+			else
+			{
+				d->second->fiValue.goValue = GetGOFromUID(EngineExternal->moduleScene->root, d->first);
+			}
 
 			if (d->second->fiValue.goValue)
 			{
@@ -231,6 +253,57 @@ void M_Scene::LoadScriptsData()
 	}
 
 	referenceMap.clear();
+}
+
+
+void M_Scene::LoadNavigationData()
+{
+	for (auto i = navigationReferenceMap.begin(); i != navigationReferenceMap.end(); ++i)
+	{
+		// Get the range of the current key
+		auto range = navigationReferenceMap.equal_range(i->first);
+		
+		GameObject* ref = GetGOFromUID(EngineExternal->moduleScene->root, i->first);
+		// Now render out that whole range
+		for (auto d = range.first; d != range.second; ++d)
+		{
+			d->second->referenceGO = ref;			
+		}
+	}
+
+	navigationReferenceMap.clear();
+}
+
+GameObject* M_Scene::FindObjectWithTag(GameObject* rootGameObject, const char* tag)
+{
+	if (rootGameObject->CompareTag(tag))
+		return rootGameObject;
+
+	GameObject* ret = nullptr;
+	for (size_t i = 0; i < rootGameObject->children.size(); i++)
+	{
+		ret = FindObjectWithTag(rootGameObject->children[i], tag);
+		if (ret != nullptr)
+			return ret;
+	}
+
+	return nullptr;
+}
+
+void M_Scene::FindGameObjectsWithTag(const char* tag, std::vector<GameObject*>& taggedObjects)
+{
+	std::vector<GameObject*> gameObjects;
+	root->CollectChilds(gameObjects);
+
+	for (size_t i = 0; i < gameObjects.size(); i++)
+	{
+		if (gameObjects[i]->CompareTag(tag))
+		{
+			taggedObjects.push_back(gameObjects[i]);
+		}
+	}
+
+	gameObjects.clear();
 }
 
 void M_Scene::SetGameCamera(C_Camera* cam)
@@ -316,6 +389,21 @@ void M_Scene::RecursivePostUpdate(GameObject* parent)
 	}
 }
 
+void M_Scene::RecursiveDontDestroy(GameObject* child, std::vector<GameObject*>& dontDestroyList)
+{
+	if (child->dontDestroy) {
+		dontDestroyList.push_back(child);
+		child->parent->RemoveChild(child);
+	}
+	else {
+		for (size_t i = 0; i < child->children.size(); ++i)
+		{
+			RecursiveDontDestroy(child->children[i],dontDestroyList);
+		}
+	}
+
+}
+
 #ifndef STANDALONE
 void M_Scene::OnGUI()
 {
@@ -341,6 +429,26 @@ void M_Scene::SaveScene(const char* name)
 	root_object.WriteVector3("EditorCameraZ", &App->moduleCamera->editorCamera.camFrustrum.front.x);
 	root_object.WriteVector3("EditorCameraY", &App->moduleCamera->editorCamera.camFrustrum.up.x);
 
+	//Tags ===================================================================
+	JSON_Value* tagsValue = json_value_init_array();
+	JSON_Array* tagsArray = json_value_get_array(tagsValue);
+	for (size_t t = 0; t < tags.size(); t++)
+	{
+		if(strcmp(tags[t].c_str(), "Untagged") != 0)
+			json_array_append_string(tagsArray, tags[t].c_str());
+	}
+	json_object_set_value(root_object.nObj, "tags", tagsValue);
+
+	//Layers =================================================================
+	JSON_Value* layersValue = json_value_init_array();
+	JSON_Array* layersArray = json_value_get_array(layersValue);
+	for (size_t l = 0; l < layers.size(); l++)
+	{
+		if (strcmp(layers[l].c_str(), "Default") != 0)
+			json_array_append_string(layersArray, layers[l].c_str());
+	}
+	json_object_set_value(root_object.nObj, "layers", layersValue);
+
 	JSON_Value* goArray = json_value_init_array();
 	root->SaveToJson(json_value_get_array(goArray));
 	json_object_set_value(root_object.nObj, "Game Objects", goArray);
@@ -364,8 +472,16 @@ void M_Scene::LoadScene(const char* name)
 
 #ifndef STANDALONE
 	App->moduleEditor->shortcutManager.DeleteCommandHistory();
+	App->moduleEditor->ClearConsole();
 #endif // !STANDALONE
 
+	//TODO Save gameobjects to dont destroy list
+	std::vector<GameObject*> dontDestroyList;
+
+	if (DETime::state == GameState::PLAY) {
+
+		RecursiveDontDestroy(root, dontDestroyList);
+	}
 	//Clear all current scene memory
 	destroyList.clear();
 	CleanScene();
@@ -380,6 +496,22 @@ void M_Scene::LoadScene(const char* name)
 	MaykMath::GeneralDataSet(&App->moduleCamera->editorCamera.camFrustrum.up.x, &DEJson::ReadVector3(sceneObj, "EditorCameraY")[0], 3);
 #endif // !STANDALONE
 
+	tags.clear();
+	tags = { "Untagged" };
+	JSON_Array* tagsArray = json_object_get_array(sceneObj, "tags");
+	for (size_t t = 0; t < json_array_get_count(tagsArray); t++)
+	{
+		tags.push_back(json_array_get_string(tagsArray, t));
+	}
+
+	layers.clear();
+	layers = { "Default" };
+	JSON_Array* layersArray = json_object_get_array(sceneObj, "layers");
+	for (size_t l = 0; l < json_array_get_count(layersArray); l++)
+	{
+		layers.push_back(json_array_get_string(layersArray, l));
+	}
+
 	JSON_Array* sceneGO = json_object_get_array(sceneObj, "Game Objects");
 	JSON_Object* goJsonObj = json_array_get_object(sceneGO, 0);
 	
@@ -391,7 +523,15 @@ void M_Scene::LoadScene(const char* name)
 		parent = LoadGOData(json_array_get_object(sceneGO, i), parent);
 	}
 
+	LoadNavigationData();
 	LoadScriptsData();
+
+	//Insert Dont destroy objects to new scene
+	for (size_t i = 0; i < dontDestroyList.size(); i++)
+	{
+		dontDestroyList[i]->ChangeParent(root);
+	}
+
 
 	//Free memory
 	json_value_free(scene);
@@ -401,6 +541,7 @@ void M_Scene::LoadScene(const char* name)
 	FileSystem::GetFileName(name, scene_name, false);
 
 	strcpy(current_scene_name, scene_name.c_str());
+
 }
 
 void M_Scene::LoadModelTree(const char* modelPath)

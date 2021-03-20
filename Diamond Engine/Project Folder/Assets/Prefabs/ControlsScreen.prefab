@@ -1,0 +1,189 @@
+{
+    "assets_path": "Assets\/Prefabs\/ControlsScreen.prefab",
+    "Game Objects": [
+        {
+            "name": "ControlsScreen",
+            "Active": false,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 385927616,
+            "PrefabID": 794533013,
+            "ParentUID": 1598806799,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1498645919,
+            "PrefabID": 0,
+            "ParentUID": 385927616,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        0
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        56,
+                        67.900001525878906
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Empty",
+                    "LibraryPath": "Library\/Textures\/124612374.dds",
+                    "UID": 124612374
+                }
+            ]
+        },
+        {
+            "name": "Return",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1734537204,
+            "PrefabID": 0,
+            "ParentUID": 1498645919,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "Position": [
+                        0,
+                        -67.099998474121094
+                    ],
+                    "Rotation": 0,
+                    "Size": [
+                        5.6999998092651367,
+                        9
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/457052853.mat",
+                    "MaterialUID": 457052853
+                },
+                {
+                    "Type": 7,
+                    "Active": true,
+                    "Pressed_AssetsPath": "Assets\/UI\/MENU\/button_return_pressed.png",
+                    "Pressed_LibraryPath": "Library\/Textures\/570273064.dds",
+                    "Pressed_UID": 570273064,
+                    "Hovered_AssetsPath": "Assets\/UI\/MENU\/button_return_hover.png",
+                    "Hovered_LibraryPath": "Library\/Textures\/1177961007.dds",
+                    "Hovered_UID": 1177961007,
+                    "Unhovered_AssetsPath": "Assets\/UI\/MENU\/button_return.png",
+                    "Unhovered_LibraryPath": "Library\/Textures\/1583215856.dds",
+                    "Unhovered_UID": 1583215856,
+                    "Script_Name": "Return",
+                    "ButtonState": 1,
+                    "Is Selected": true
+                },
+                {
+                    "Type": 11,
+                    "Active": true,
+                    "AssetPath": "Assets\/UI\/MENU\/button_return_hover.png",
+                    "LibraryPath": "Library\/Textures\/1177961007.dds",
+                    "UID": 1177961007
+                },
+                {
+                    "Type": 17,
+                    "Active": true,
+                    "Map": [
+                        {
+                            "Index": 0,
+                            "UID": 1734537204,
+                            "Action": 2,
+                            "Is Key Down": false,
+                            "Is Key Up": true
+                        }
+                    ],
+                    "Button Being Used": -1,
+                    "Type Of UI": 7,
+                    "Is Selected": true
+                },
+                {
+                    "Type": 5,
+                    "Active": true,
+                    "ScriptName": "Return",
+                    "controlsWindow": 385927616,
+                    "bigBrother": 8278228,
+                    "toDisable": false,
+                    "firstFrame": true
+                }
+            ]
+        }
+    ]
+}

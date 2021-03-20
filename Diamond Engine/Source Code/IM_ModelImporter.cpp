@@ -122,6 +122,10 @@ void ModelImporter::ImportAnimations(const aiScene* scene, std::vector<uint>& an
 	{
 		for (unsigned int i = 0; i < scene->mNumAnimations; i++)
 		{
+			if (animationsUIDs.size() > 0 && FileSystem::Exists(EngineExternal->moduleResources->GenLibraryPath(animationsUIDs[i], Resource::Type::ANIMATION).c_str())) {
+				continue;
+			}
+
 			aiAnimation* anim = scene->mAnimations[i];
 			if (animationsUIDs.size() != 0)
 				animationsOnModelUIDs.push_back(AnimationLoader::ImportAnimation(anim, animationsUIDs[i]));

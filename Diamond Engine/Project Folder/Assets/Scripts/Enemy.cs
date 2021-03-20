@@ -7,21 +7,24 @@ public class Enemy : DiamondComponent
 	public GameObject player;
 	public GameObject shootPoint;
 
-	public float wanderSpeed;
-	public float runningSpeed;
-	public float range;
-	public float damage;
-	public float bulletSpeed;
+	public float wanderSpeed = 3.5f;
+	public float runningSpeed = 12.5f;
+	public float range = 20.0f;
+	public float damage = 20.0f;
+	public float bulletSpeed = 10.0f;
 	protected int shotTimes = 0;
 
-	protected float timeBewteenShots = 5.0f;
+	protected float timeBewteenShots = 0.5f;
 	protected float timePassed = 0.0f;
-
 
 	public float idleTime = 5.0f;
 	protected Vector3 targetPosition = null;
 	protected float stoppingDistance = 1.0f;
 	public float wanderRange = 5.0f;
+	public float runningRange = 15.0f;
+
+	public float slerpSpeed = 1000.5f;
+	//private float timeCount = 0.0f;
 
 	protected STATES currentState = STATES.WANDER;
 
@@ -37,7 +40,7 @@ public class Enemy : DiamondComponent
 
 	public virtual bool Shoot()
 	{
-		InternalCalls.CreateBullet(shootPoint.transform.globalPosition, shootPoint.transform.globalRotation, shootPoint.transform.globalScale);
+		InternalCalls.CreateBullet(shootPoint.transform.globalPosition, shootPoint.transform.globalRotation, new Vector3(1.0f, 1.0f, 1.0f));
 		timePassed = 0.0f;
 		shotTimes++;
 
@@ -63,21 +66,39 @@ public class Enemy : DiamondComponent
 
 	public void MoveToPosition(Vector3 positionToReach, float speed)
 	{
-		Vector3 direction = targetPosition - gameObject.transform.localPosition;
+		Vector3 direction = positionToReach - gameObject.transform.localPosition;
 
 		gameObject.transform.localPosition += direction.normalized * speed * Time.deltaTime;
 	}
 
 	public void LookAt(Vector3 pointToLook)
 	{
+		//Vector3 direction = pointToLook - gameObject.transform.globalPosition;
+
+		//direction = direction.normalized;
+
+
+		//gameObject.transform.localRotation = new Quaternion(0, Mathf.LerpAngle(gameObject.transform.localRotation.y, angle, 0.01f), 0);
+
+
 		Vector3 direction = pointToLook - gameObject.transform.globalPosition;
-
 		direction = direction.normalized;
+		float angle = (float)Math.Atan2(direction.x, direction.z);
 
-		float angle = (float)(Mathf.Rad2Deg * Math.Atan2(direction.x, direction.z));
+		//Debug.Log("Desired angle: " + (angle * Mathf.Rad2Deg).ToString());
 
-		gameObject.transform.localRotation = new Quaternion(0, Mathf.LerpAngle(gameObject.transform.localRotation.y, angle, 0.01f), 0);
-		//Debug.Log(angle.ToString());
+		if (Math.Abs(angle * Mathf.Rad2Deg) < 1.0f)
+			return;
+
+		Quaternion dir = Quaternion.RotateAroundAxis(Vector3.up, angle);
+
+		float rotationSpeed = Time.deltaTime * slerpSpeed * 1000.0f;
+		//Debug.Log("Rotation speed: " + rotationSpeed.ToString());
+
+		Quaternion desiredRotation = Quaternion.Slerp(gameObject.transform.localRotation, dir, rotationSpeed);
+
+		gameObject.transform.localRotation = desiredRotation;
+
 	}
 
 	public bool InRange(Vector3 point, float givenRange)

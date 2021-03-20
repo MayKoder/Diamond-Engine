@@ -39,7 +39,7 @@
 
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), str_CAPS(""),
-vsync(false), wireframe(false), gameCamera(nullptr)
+vsync(false), wireframe(false), gameCamera(nullptr),resolution(2)
 {
 	GetCAPS(str_CAPS);
 	/*depth =*/ cull = lightng = color_material = texture_2d = true;
@@ -254,7 +254,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	}
 
 	DrawParticleSystems();
-	skybox.DrawAsSkybox(&App->moduleCamera->editorCamera);
+	if(App->moduleCamera->editorCamera.drawSkybox)
+		skybox.DrawAsSkybox(&App->moduleCamera->editorCamera);
 
 	DebugLine(pickingDebug);
 	App->moduleCamera->editorCamera.EndDraw();
@@ -282,7 +283,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		}
 
 		DrawParticleSystems();
-		skybox.DrawAsSkybox(gameCamera);
+
+		if (gameCamera->drawSkybox)
+			skybox.DrawAsSkybox(gameCamera);
+
 		glClear(GL_DEPTH_BUFFER_BIT);
 		App->moduleGui->RenderCanvas2D();
 		gameCamera->EndDraw();

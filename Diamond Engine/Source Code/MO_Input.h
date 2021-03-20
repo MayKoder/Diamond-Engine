@@ -103,6 +103,9 @@ public:
 	//Execute haptic
 	void PlayHaptic(float strength, int length);
 
+public:
+	bool hapticEnabled;
+
 private:
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];

@@ -1,22 +1,26 @@
 {
     "EditorCameraPosition": [
-        -2.2028467655181885,
-        7.1843981742858887,
-        26.980173110961914
+        0,
+        0,
+        -3
     ],
     "EditorCameraZ": [
-        -0.1282726377248764,
-        -0.38836559653282166,
-        -0.91253399848937988
+        0,
+        0,
+        1
     ],
     "EditorCameraY": [
-        -0.054048072546720505,
-        0.9215053915977478,
-        -0.38458630442619324
+        0,
+        1,
+        0
     ],
+    "tags": [],
+    "layers": [],
     "Game Objects": [
         {
             "name": "Scene root",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -34,7 +38,8 @@
                 1,
                 1
             ],
-            "UID": 654496423,
+            "UID": 621070814,
+            "PrefabID": 0,
             "Components": [
                 {
                     "Type": 1,
@@ -43,7 +48,9 @@
             ]
         },
         {
-            "name": "Main Camera",
+            "name": "Cube",
+            "tag": "Untagged",
+            "layer": "Default",
             "Active": true,
             "Position": [
                 0,
@@ -51,44 +58,90 @@
                 0
             ],
             "Rotation": [
+                -0.7071068286895752,
                 0,
                 0,
-                0,
-                1
+                0.70710670948028564
             ],
             "Scale": [
                 1,
                 1,
                 1
             ],
-            "UID": 1387443637,
-            "ParentUID": 654496423,
+            "UID": 1509501198,
+            "PrefabID": 0,
+            "ParentUID": 621070814,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
                 },
                 {
-                    "Type": 4,
+                    "Type": 2,
                     "Active": true,
-                    "fType": 2,
-                    "nearPlaneDist": 1,
-                    "farPlaneDist": 100,
-                    "vFOV": 1.0471975803375244,
-                    "hFOV": 1.4147653579711914,
-                    "culling": true
+                    "Path": "Library\/Meshes\/1313575480.mmh",
+                    "UID": 1313575480,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 },
                 {
-                    "Type": 3,
+                    "Type": 18,
                     "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/715565838.mat",
-                    "MaterialUID": 715565838
+                    "isTrigger": false,
+                    "Position": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "Rotation": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "Scale": [
+                        1,
+                        1,
+                        1
+                    ]
                 },
                 {
-                    "Type": 17,
-                    "Active": true
+                    "Type": 18,
+                    "Active": true,
+                    "isTrigger": false,
+                    "Position": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "Rotation": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "Scale": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 14,
+                    "Active": true,
+                    "kinematic": false,
+                    "Gravity": true,
+                    "LockLinearX": false,
+                    "LockLinearY": false,
+                    "LockLinearZ": false,
+                    "LockAngularX": false,
+                    "LockAngularY": false,
+                    "LockAngularZ": false,
+                    "Mass": 10,
+                    "Density": 1
                 }
             ]
         }

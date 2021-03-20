@@ -55,8 +55,11 @@ C_Animator::~C_Animator()
 
 void C_Animator::Start()
 {
-	if (rootBone == nullptr) 
-		return;
+	if (rootBone == nullptr)
+	{
+		if (!FindRootBone())
+			return;
+	}
 
 	boneMapping.clear();
 
@@ -88,21 +91,7 @@ void C_Animator::Update()
 	else {
 		if (rootBone == nullptr)
 		{
-			if (rootBoneUID != 0u)
-			{
-				rootBone = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, rootBoneUID);
-
-				if (meshRendererUID != 0u)
-				{
-					GameObject* meshRendererObject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, meshRendererUID);
-					if (meshRendererObject != nullptr)
-					{
-						dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::TYPE::MESH_RENDERER))->rootBone = rootBone;
-					}
-				}
-				if (rootBone == nullptr)
-					rootBoneUID = 0u;
-			}
+			FindRootBone();
 		}
 		return;
 	}
@@ -490,14 +479,21 @@ void C_Animator::SaveAnimation(ResourceAnimation* animation, const char* name)
 	char* buffer;
 	uint size = currentAnimation->SaveCustomFormat(currentAnimation, &buffer);
 
-	//Save in Library
-	FileSystem::Save(currentAnimation->GetLibraryPath(), buffer, size, false);
-
 	//Save a copy in Assets 
 	std::string old_assets_path = "Assets/Animations/" + old_name + ".anim";
 	std::string new_assets_path = "Assets/Animations/" + std::string(name) + ".anim";
 
-	EngineExternal->moduleResources->RenameAsset(old_assets_path.c_str(), new_assets_path.c_str(), buffer, size, animation);
+	if (FileSystem::Exists(old_assets_path.c_str()))
+	{
+		//Save in Library
+		FileSystem::Save(currentAnimation->GetLibraryPath(), buffer, size, false);
+		EngineExternal->moduleResources->RenameAsset(old_assets_path.c_str(), new_assets_path.c_str(), buffer, size, animation);
+	}
+	else
+	{
+		FileSystem::Save(new_assets_path.c_str(), buffer, size, false);
+		EngineExternal->moduleResources->GenerateMeta(new_assets_path.c_str(), currentAnimation->GetLibraryPath(), currentAnimation->GetUID(), Resource::Type::ANIMATION);
+	}
 
 	old_assets_path.clear();
 	new_assets_path.clear();
@@ -681,6 +677,32 @@ float3 C_Animator::GetChannelScale(const Channel & channel, float currentKey, fl
 		}
 	}
 	return scale;
+}
+
+bool C_Animator::FindRootBone()
+{
+	bool ret = true;
+	if (rootBoneUID != 0u)
+	{
+		rootBone = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, rootBoneUID);
+
+		if (meshRendererUID != 0u)
+		{
+			GameObject* meshRendererObject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, meshRendererUID);
+			if (meshRendererObject != nullptr)
+			{
+				dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::TYPE::MESH_RENDERER))->SetRootBone(rootBone);
+			}
+		}
+
+		if (rootBone == nullptr)
+		{
+			rootBoneUID = 0u;
+			ret = false;
+		}
+	}
+
+	return ret;
 }
 
 void C_Animator::DrawBones(GameObject* gameObject)

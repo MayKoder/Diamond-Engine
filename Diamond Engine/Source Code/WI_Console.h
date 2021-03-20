@@ -29,6 +29,7 @@ public:
 	void AddLog(const char*, LogType);
 	void FilterLogs();
 
+	void ClearLogs();
 	ImTextureID GetMsgType(LogType);
 
 	std::vector<LogMessage> logs;

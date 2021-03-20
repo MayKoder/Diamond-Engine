@@ -1,0 +1,11 @@
+{
+    "name": "ui_menu_sfx_volume_bar",
+    "ShaderUID": 1705454945,
+    "Uniforms": [
+        {
+            "name": "length_used",
+            "type": 5126,
+            "value": 1
+        }
+    ]
+}

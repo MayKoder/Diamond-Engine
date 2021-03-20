@@ -18,17 +18,16 @@
 
 C_BoxCollider::C_BoxCollider() : C_Collider(nullptr)
 {
-	name = "Box Collider";
 
-
+	name = "Box Collider_" + std::to_string(-1);
 }
 
 
 C_BoxCollider::C_BoxCollider(GameObject* _gm/*, float3 _position, Quat _rotation, float3 _localScale*/) : C_Collider(_gm)/*,
 position(_position), rotation(_rotation), localScale(_localScale)*/
 {
-
-	name = "Box Collider";
+	int indexNum = _gm != nullptr ?_gm->GetComponentsOfType(Component::TYPE::BOXCOLLIDER).size() + _gm->GetComponentsOfType(Component::TYPE::COLLIDER).size() : 0;
+	name = "Box Collider_" + std::to_string(indexNum);
 	isTrigger = false;
 	shape = ColliderShape::CUBE;
 
@@ -44,6 +43,7 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 	//We first initialize material to create shape later
 	colliderMaterial = EngineExternal->modulePhysics->CreateMaterial();
 	localTransform = float4x4::identity;
+	colliderShape = nullptr;
 
 	//If gameObject does have mesh we apply measures directly to collider from OBB
 	if (mesh != nullptr) {
@@ -52,12 +52,12 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 		if (colliderSize.y <= 0.0f) //I do this for plane meshes, but maybe we can remove this once we use mesh shapes
 			colliderSize.y = 0.01f;
 		//	colliderShape = App->physX->CreateCollider(type, colliderSize / 2, colliderMaterial);
-		colliderShape = EngineExternal->modulePhysics->CreateCollider(colliderSize, colliderMaterial);
+		colliderShape = EngineExternal->modulePhysics->CreateBoxCollider(colliderSize, colliderMaterial);
 
 	}
 	else {
 		colliderSize = { 0.5f, 0.5f, 0.5f };
-		colliderShape = EngineExternal->modulePhysics->CreateCollider(colliderSize, colliderMaterial);
+		colliderShape = EngineExternal->modulePhysics->CreateBoxCollider(colliderSize, colliderMaterial);
 	}
 
 	/*colliderEuler = (transform->euler - owner->RotationOffset).Div(owner->SizeOffset);
@@ -65,8 +65,9 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 
 
 	//If we have a rigid body and doesnt have reference collider we attach the current one
-	if (rigidbody != nullptr && rigidbody->collider_info == nullptr)
-		rigidbody->collider_info = this;
+	
+	//if (rigidbody != nullptr)
+	//	rigidbody->collider_info.push_back(this);
 
 	//if (mesh != nullptr) {
 	//	colliderPos = (mesh->globalOBB.pos);
@@ -86,22 +87,24 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 	
 
 	//We attach shape to a static or dynamic rigidbody to be collidable.
-	if (rigidbody != nullptr) {
+	if (rigidbody != nullptr && colliderShape != nullptr) {
 		rigidbody->rigid_dynamic->attachShape(*colliderShape);
+		rigidbody->collider_info.push_back(this);
+
 	}
-	else {
-		_gm->AddComponent(Component::TYPE::RIGIDBODY);
-		rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RIGIDBODY));
-		rigidbody->use_kinematic = true;
-		rigidbody->EnableKinematic(rigidbody->use_kinematic);
-		rigidbody->rigid_dynamic->attachShape(*colliderShape);
-		rigidbody->collider_info = this;
-
-		//	rigidbody = dynamic_cast<C_RigidBody*>(_gm->AddComponent(Component::Type::RigidBody));
-
+	//else {
+	//	_gm->AddComponent(Component::TYPE::RIGIDBODY);
+	//	rigidbody = dynamic_cast<C_RigidBody*>(_gm->GetComponent(Component::TYPE::RIGIDBODY));
+	//	rigidbody->use_kinematic = true;
+	//	rigidbody->EnableKinematic(rigidbody->use_kinematic);
 	//	rigidbody->rigid_dynamic->attachShape(*colliderShape);
+	//	rigidbody->collider_info.push_back(this);
 
-	}
+	//	//	rigidbody = dynamic_cast<C_RigidBody*>(_gm->AddComponent(Component::Type::RigidBody));
+
+	////	rigidbody->rigid_dynamic->attachShape(*colliderShape);
+
+	//}
 
 
 
@@ -111,14 +114,24 @@ position(_position), rotation(_rotation), localScale(_localScale)*/
 
 C_BoxCollider::~C_BoxCollider()
 {
-	
+	LOG(LogType::L_NORMAL, "Deleting Box Collider");
+
 	if (colliderMaterial != nullptr)
 		colliderMaterial->release();
+	rigidbody = dynamic_cast<C_RigidBody*>(gameObject->GetComponent(Component::TYPE::RIGIDBODY));
 
 	if (rigidbody != nullptr)
 	{
 		rigidbody->rigid_dynamic->detachShape(*colliderShape);
-		rigidbody->collider_info = nullptr;
+		for (int i = 0; i < rigidbody->collider_info.size(); i++)
+		{
+			if (rigidbody->collider_info[i] == this)
+			{
+				rigidbody->collider_info.erase(rigidbody->collider_info.begin() + i);
+				i--;
+			}
+			
+		}
 	}
 
 	if (colliderShape != nullptr)
@@ -129,6 +142,9 @@ C_BoxCollider::~C_BoxCollider()
 void C_BoxCollider::Update()
 {
 #ifndef STANDALONE
+
+	if(rigidbody == nullptr)
+		rigidbody = dynamic_cast<C_RigidBody*>(gameObject->GetComponent(Component::TYPE::RIGIDBODY));
 
 	if (colliderShape != nullptr)
 	{

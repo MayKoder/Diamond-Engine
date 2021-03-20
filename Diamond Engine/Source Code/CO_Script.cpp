@@ -22,17 +22,6 @@ C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), no
 
 	//EngineExternal->moduleMono->DebugAllMethods(DE_SCRIPTS_NAMESPACE, "GameObject", methods);
 	LoadScriptData(scriptName);
-
-	for (unsigned int i = 0; i < fields.size(); i++)
-	{
-		const char* name = mono_field_get_name(fields[i].field);
-		if (strcmp(mono_field_get_name(fields[i].field), "thisReference") == 0) 
-		{
-			fields[i].fiValue.goValue = _gm;
-			SetField(fields[i].field, _gm);
-		}
-	}
-
 }
 
 C_Script::~C_Script()
@@ -231,6 +220,9 @@ void C_Script::LoadData(DEConfig& nObj)
 	{
 		_field = &fields[i];
 
+		//if (_field->displayName == "##pointer")
+			//continue;
+
 		switch (_field->type)
 		{
 		case MonoTypeEnum::MONO_TYPE_BOOLEAN:
@@ -282,7 +274,6 @@ void C_Script::LoadScriptData(const char* scriptName)
 	methods.clear();
 	fields.clear();
 
-
 	MonoClass* klass = mono_class_from_name(EngineExternal->moduleMono->image, USER_SCRIPTS_NAMESPACE, scriptName);
 
 	if (klass == nullptr)
@@ -313,6 +304,7 @@ void C_Script::LoadScriptData(const char* scriptName)
 	oncDesc = mono_method_desc_new(":OnTriggerEnter", false);
 	onTriggerEnter = mono_method_desc_search_in_class(oncDesc, klass);
 	mono_method_desc_free(oncDesc);
+
 	MonoMethodDesc* oncBut = mono_method_desc_new(":OnExecuteButton", false);
 	onExecuteButton = mono_method_desc_search_in_class(oncBut, klass);
 	mono_method_desc_free(oncBut);
@@ -328,20 +320,26 @@ void C_Script::LoadScriptData(const char* scriptName)
 	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject), this, mono_class_get_namespace(goClass));
 }
 
-void C_Script::CollisionCallback(bool isTrigger)
+void C_Script::CollisionCallback(bool isTrigger, GameObject* collidedGameObject)
 {
+	void* params[1];
+	//LOG(LogType::L_WARNING, "Collided object: %s, Collider object: %s", gameObject->tag, collidedGameObject->tag);
+	
+	params[0] = EngineExternal->moduleMono->GoToCSGO(collidedGameObject);
+
 	if (onCollisionEnter != nullptr)
-		mono_runtime_invoke(onCollisionEnter, mono_gchandle_get_target(noGCobject), NULL, NULL);
+		mono_runtime_invoke(onCollisionEnter, mono_gchandle_get_target(noGCobject), params, NULL);
+	
 	if (isTrigger)
 	{
 		if (onTriggerEnter != nullptr)
-			mono_runtime_invoke(onTriggerEnter, mono_gchandle_get_target(noGCobject), NULL, NULL);
+			mono_runtime_invoke(onTriggerEnter, mono_gchandle_get_target(noGCobject), params, NULL);
 	}
-	else
-	{
-		if (onCollisionEnter != nullptr)
-			mono_runtime_invoke(onCollisionEnter, mono_gchandle_get_target(noGCobject), NULL, NULL);
-	}
+	//else
+	//{
+	//	if (onCollisionEnter != nullptr)
+	//		mono_runtime_invoke(onCollisionEnter, mono_gchandle_get_target(noGCobject), NULL, NULL);
+	//}
 }
 
 void C_Script::ExecuteButton()

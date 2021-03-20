@@ -273,7 +273,7 @@ physx::PxRigidDynamic* ModulePhysics::CreateRigidDynamic(float3 pos, Quat rot) {
 	return dynamicBody;
 }
 //
-physx::PxShape* ModulePhysics::CreateCollider(float3 size, PxMaterial* material) {
+physx::PxShape* ModulePhysics::CreateBoxCollider(float3 size, PxMaterial* material) {
 
 	PxShape* colliderShape = nullptr;
 
@@ -282,6 +282,19 @@ physx::PxShape* ModulePhysics::CreateCollider(float3 size, PxMaterial* material)
 
 	
 	colliderShape = mPhysics->createShape(PxBoxGeometry(size.x, size.y, size.z), *material, true);
+
+	return colliderShape;
+}
+
+physx::PxShape* ModulePhysics::CreateSphereCollider(float radius, PxMaterial* material) {
+
+	PxShape* colliderShape = nullptr;
+
+	if (material == nullptr)
+		material = mMaterial;
+
+
+	colliderShape = mPhysics->createShape(PxSphereGeometry(radius), *material, true);
 
 	return colliderShape;
 }
@@ -388,17 +401,19 @@ void CollisionDetector::onContact(const PxContactPairHeader& pairHeader,
 
 		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
-
 			for (size_t k= 0; k < 2; ++k)
 			{
 				GameObject* contact = static_cast<GameObject*>(pairHeader.actors[k]->userData);
 
 				std::vector< Component*> scripts = contact->GetComponentsOfType(Component::TYPE::SCRIPT);
-				for (size_t i = 0; i < scripts.size(); i++)
+				for (size_t l = 0; l < scripts.size(); l++)
 				{
-					C_Script* script = dynamic_cast<C_Script*>(scripts[i]);
+					C_Script* script = dynamic_cast<C_Script*>(scripts[l]);
 					if (script)
-						script->CollisionCallback(true);
+					{
+						GameObject* contact2 = static_cast<GameObject*>(pairHeader.actors[ k == 0 ? 1 : 0]->userData);
+						script->CollisionCallback(false, contact2);
+					}
 				}
 			}
 
@@ -425,7 +440,7 @@ void CollisionDetector::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 coun
 			{
 				C_Script* script = dynamic_cast<C_Script*>(scripts[i]);
 				if (script)
-					script->CollisionCallback(true);
+					script->CollisionCallback(true, contact2);
 			}
 		
 			
@@ -438,7 +453,7 @@ void CollisionDetector::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 coun
 			{
 				C_Script* script = dynamic_cast<C_Script*>(scripts[i]);
 				if (script)
-					script->CollisionCallback(true);
+					script->CollisionCallback(true, contact);
 			}
 		}
 		

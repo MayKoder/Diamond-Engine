@@ -30,7 +30,7 @@ public:
 
 	void LoadScriptData(const char*);
 
-	void CollisionCallback(bool);
+	void CollisionCallback(bool isTrigger, GameObject* collidedGameObject);
 
 	void ExecuteButton();
 	void ExecuteCheckbox(bool checkbox_active);

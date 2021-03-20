@@ -12,11 +12,16 @@
 
 #include"GameObject.h"
 #include"CO_Script.h"
+#include "CS_GameObject_Bindings.h"
 #include"CS_Transform_Bindings.h"
 #include "CS_Animation_Bindings.h"
 #include "CS_Input_Bindings.h"
 #include"CS_Scene_Bindings.h"
 #include "CS_Audio_Bindings.h"
+#include "CS_Text_Bindings.h"
+#include "CS_Material_Bindings.h"
+#include "CS_Image2D_Bindings.h"
+#include "CS_Navigation_Bindings.h"
 
 #include <iostream>
 #include <fstream> 
@@ -57,6 +62,7 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Input::GetKey", GetKey);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseClick", GetMouseClick);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateGameObject", CSCreateGameObject);
+	mono_add_internal_call("DiamondEngine.InternalCalls::CloseGame", CSCloseGame);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseX", MouseX);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseY", MouseY);
 	
@@ -95,15 +101,71 @@ bool M_MonoManager::Init()
 
 #pragma endregion
 
+
+#pragma region Text
+	mono_add_internal_call("DiamondEngine.Text::get_text", GetText);
+	mono_add_internal_call("DiamondEngine.Text::set_text", SetText);
+	mono_add_internal_call("DiamondEngine.Text::get_color_red", GetTextRed);
+	mono_add_internal_call("DiamondEngine.Text::set_color_red", SetTextRed);
+	mono_add_internal_call("DiamondEngine.Text::get_color_green", GetTextGreen);
+	mono_add_internal_call("DiamondEngine.Text::set_color_green", SetTextGreen);
+	mono_add_internal_call("DiamondEngine.Text::get_color_blue", GetTextBlue);
+	mono_add_internal_call("DiamondEngine.Text::set_color_blue", SetTextBlue);
+#pragma endregion
+
+#pragma region Material
+	mono_add_internal_call("DiamondEngine.Material::SetFloatUniform", SetFloatUniform);
+	mono_add_internal_call("DiamondEngine.Material::SetIntUniform", SetIntUniform);
+#pragma endregion
+
+#pragma region Image2D
+	mono_add_internal_call("DiamondEngine.Image2D::SwapTwoImages", SwapTwoImages);
+#pragma endregion
+
+#pragma region Navigation
+	mono_add_internal_call("DiamondEngine.Navigation::Select", SelectNavigation);
+#pragma endregion
+
+#pragma region Settings
+	mono_add_internal_call("DiamondEngine.Config::VSYNCEnable", CS_Enable_VSYNC);
+	mono_add_internal_call("DiamondEngine.Config::SetResolution", CS_SetResolution);
+	mono_add_internal_call("DiamondEngine.Config::GetResolution", CS_GetResolution);
+	mono_add_internal_call("DiamondEngine.Config::SetWindowMode", CS_SetWindowMode);
+	mono_add_internal_call("DiamondEngine.Config::GetWindowMode", CS_GetWindowMode);
+	mono_add_internal_call("DiamondEngine.Config::SetBrightness", CS_SetBrightness);
+	mono_add_internal_call("DiamondEngine.Config::GetBrightness", CS_GetBrightness);
+	mono_add_internal_call("DiamondEngine.Config::SetMasterVolume", CS_SetMasterVolume);
+	mono_add_internal_call("DiamondEngine.Config::GetMasterVolume", CS_GetMasterVolume);
+	mono_add_internal_call("DiamondEngine.Config::SetMusciVolume", CS_SetMusicVolume);
+	mono_add_internal_call("DiamondEngine.Config::GetMusicVolume", CS_GetMusicVolume);
+	mono_add_internal_call("DiamondEngine.Config::SetSFXVolume", CS_SetSFXVolume);
+	mono_add_internal_call("DiamondEngine.Config::GetSFXVolume", CS_GetSFXVolume);
+	mono_add_internal_call("DiamondEngine.Config::ControllerVibrationEnable", CS_ControllerEnableVibration);
+#pragma endregion
+
+
 	mono_add_internal_call("DiamondEngine.DiamondComponent::get_gameObject", CS_Component_Get_GO);
+
 	mono_add_internal_call("DiamondEngine.GameObject::TryGetComponent", CS_GetComponent);
+	mono_add_internal_call("DiamondEngine.GameObject::get_Name", CS_Get_GO_Name);
+	mono_add_internal_call("DiamondEngine.GameObject::get_parent", CS_Get_GO_Parent);
+	mono_add_internal_call("DiamondEngine.GameObject::Enable", CS_EnableGO);
+	mono_add_internal_call("DiamondEngine.GameObject::IsEnabled", CS_IsGOEnabled);
+	mono_add_internal_call("DiamondEngine.GameObject::CompareTag", CompareTag);
+	mono_add_internal_call("DiamondEngine.GameObject::get_tag", GetTag);
 
 	mono_add_internal_call("DiamondEngine.Animator::Play", Play);
 	mono_add_internal_call("DiamondEngine.Animator::Pause", Pause);
 	mono_add_internal_call("DiamondEngine.Animator::Resume", Resume);
 
 	mono_add_internal_call("DiamondEngine.Time::get_deltaTime", GetDT);
-	
+	mono_add_internal_call("DiamondEngine.Time::get_totalTime", GetTotalTime);
+	mono_add_internal_call("DiamondEngine.Time::PauseGame", CS_PauseGame);
+	mono_add_internal_call("DiamondEngine.Time::ResumeGame", CS_ResumeGame);
+  
+	mono_add_internal_call("DiamondEngine.Quaternion::Slerp", MonoSlerp);
+  
+	mono_add_internal_call("DiamondEngine.Scene::FindObjectWithTag", FindObjectWithTag);
 
 	mono_add_internal_call("DiamondEngine.SceneManager::LoadScene", CS_LoadScene);
 	mono_add_internal_call("DiamondEngine.Audio::PlayAudio", PlayAudio);
@@ -142,7 +204,7 @@ void M_MonoManager::OnGUI()
 		
 	}
 }
-#endif // !STANDALONE
+
 
 void M_MonoManager::ReCompileCS() 
 {
@@ -168,12 +230,11 @@ void M_MonoManager::ReCompileCS()
 	App->moduleScene->LoadScene("Library/Scenes/tmp.des");
 	App->moduleFileSystem->DeleteAssetFile("Library/Scenes/tmp.des"); //TODO: Duplicated code from editor, mmove to method
 
-#ifndef STANDALONE
 	W_TextEditor* txtEditor = dynamic_cast<W_TextEditor*>(App->moduleEditor->GetEditorWindow(EditorWindow::TEXTEDITOR));
 	if (txtEditor != nullptr)
 		txtEditor->SetTextFromFile(txtEditor->txtName.c_str());
-#endif // !STANDALONE
 }
+#endif // !STANDALONE
 
 //ASK: Is this the worst idea ever? TOO SLOW
 float3 M_MonoManager::UnboxVector(MonoObject* _obj)
@@ -473,8 +534,6 @@ void M_MonoManager::InitMono()
 		LOG(LogType::L_ERROR, "ERROR");
 
 	image = mono_assembly_get_image(assembly);
-
-
 
 	const MonoTableInfo* table_info = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
 	int rows = mono_table_info_get_rows(table_info);

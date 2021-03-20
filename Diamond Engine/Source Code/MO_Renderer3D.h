@@ -73,6 +73,7 @@ public:
 
 	C_Camera* activeRenderCamera = nullptr; //TODO: This is temporal
 	DE_Cubemap skybox;
+	unsigned int resolution;
 
 private:
 	C_Camera* gameCamera;
