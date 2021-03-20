@@ -1,7 +1,7 @@
 #include "ParticleEffects.h"
 #include "Particle.h"
 
-ParticleEffect::ParticleEffect(PARTICLE_EFFECT_TYPE type):type(type)
+ParticleEffect::ParticleEffect(PARTICLE_EFFECT_TYPE type):type(type),toDelete(false)
 {
 }
 

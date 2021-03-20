@@ -36,6 +36,7 @@ public:
 
 public:
     PARTICLE_EFFECT_TYPE type;
+    bool toDelete;
 };
 
 #endif // !__PARTICLE_EFFECTS

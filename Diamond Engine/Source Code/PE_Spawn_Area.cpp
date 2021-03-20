@@ -31,6 +31,9 @@ void PE_SpawnArea::OnEditor(int emitterIndex)
 	suffixLabel += emitterIndex;
 	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
 	{
+		if (ImGui::Button("Delete Area Spawn Effect"))
+			this->toDelete = true;
+
 		suffixLabel = "Offset##lPaSpdAreaSpawn";
 		suffixLabel += emitterIndex;
 		ImGui::DragFloat3(suffixLabel.c_str(), centerOfSphere);

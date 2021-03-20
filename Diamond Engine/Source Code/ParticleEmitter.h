@@ -65,7 +65,7 @@ private:
 	float particlesSize[2];
 
 	//Particles Starting Color
-	float4 particlesColor;
+	float* particlesColor;
 
 	//particles per second
 	float particlesPerSec;

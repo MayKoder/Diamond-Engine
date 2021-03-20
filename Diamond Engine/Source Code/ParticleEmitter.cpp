@@ -31,7 +31,6 @@ Emitter::Emitter() :
 	particlesPerSec(0.0f),
 	secPerParticle(0.0f),
 	lastParticeTime(0),
-	particlesColor(1.0f, 1.0f, 1.0f, 1.0f),
 	myParticles(),
 	myEffects(),
 	objTransform(nullptr),
@@ -43,6 +42,11 @@ Emitter::Emitter() :
 
 	particlesSize[0] = 1.0f;
 	particlesSize[1] = 1.0f;
+	particlesColor = new float[4];
+	particlesColor[0] = 1;
+	particlesColor[1] = 1;
+	particlesColor[2] = 1;
+	particlesColor[3] = 1;
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &instanceVBO);
@@ -108,11 +112,20 @@ Emitter::~Emitter()
 	myEffects.clear();
 	myParticles.clear();
 	objTransform = nullptr;
+	particlesColor = nullptr;
 }
 
 
 void Emitter::Update(float dt, bool systemActive)
 {
+	for (int i = 0; i < myEffects.size(); i++) {
+		if (myEffects[i]->toDelete) {
+			myEffects[i]->~ParticleEffect();
+			myEffects.erase(myEffects.begin() + i);
+			i--;
+		}
+	}
+
 	if (systemActive)
 		ThrowParticles(dt);
 
@@ -251,16 +264,21 @@ void Emitter::OnEditor(int emitterIndex)
 	{
 		guiName = "Particle Lifetime ##" + suffixLabel;
 		if (ImGui::DragFloatRange2("Lifetime", &particlesLifeTime[0], &particlesLifeTime[1], 0.25f, 0.1f, 100.0f, "Min: %.1f", "Max: %.1f"))
-		{
 			CalculatePoolSize();
-		}
 
 		guiName = "Particles per Second ##" + suffixLabel;
 		if (ImGui::DragFloat(guiName.c_str(), &particlesPerSec))
-		{
 			SetParticlesPerSec(particlesPerSec);
 
-		}
+		guiName = "Start Size" + suffixLabel;
+		ImGui::DragFloatRange2(guiName.c_str(), &particlesSize[0], &particlesSize[1], 0.25f, 0.1f, 5.0f, "Min: %.1f", "Max: %.1f");			
+
+		//It doesn't make sense to have Start Speed when we have the velocity effect
+		//guiName = "Start Speed" + suffixLabel;
+		//ImGui::DragFloatRange2(guiName.c_str(), &particlesSpeed[0], &particlesSpeed[1], 0.25f, 0.1f, 5.0f, "Min: %.1f", "Max: %.1f");			
+
+		guiName = "Start Color (RGBA)" + suffixLabel;
+		ImGui::ColorPicker4(guiName.c_str(), particlesColor);
 
 		for (int i = (int)PARTICLE_EFFECT_TYPE::NONE + 1; i < (int)PARTICLE_EFFECT_TYPE::MAX; ++i)
 		{
@@ -355,7 +373,6 @@ void Emitter::LoadData(DEConfig& nObj)
 	if (texName != "")
 		texture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), texName.c_str()));
 
-
 	float2 paLife = nObj.ReadVector2("paLifeTime");
 	particlesLifeTime[0] = paLife.x;
 	particlesLifeTime[1] = paLife.y;
@@ -367,7 +384,6 @@ void Emitter::LoadData(DEConfig& nObj)
 	float2 paSize = nObj.ReadVector2("paSize");
 	particlesSize[0] = paSize.x;
 	particlesSize[1] = paSize.y;
-
 
 	float4 paCol = nObj.ReadVector4("paColor");
 	particlesColor[0] = paCol.x;
@@ -582,9 +598,11 @@ void Emitter::PrepareParticleToSpawn(Particle& p, float3& startingPos)
 	p.speed = { 0.0f,0.0f,0.0f };
 	p.maxLifetime = p.currentLifetime = EngineExternal->GetRandomFloat(particlesLifeTime[0], particlesLifeTime[1]);
 	p.size = EngineExternal->GetRandomFloat(particlesSize[0], particlesSize[1]);
-	p.color = particlesColor;
+	p.color[0] = particlesColor[0]; 
+	p.color[1] = particlesColor[1];
+	p.color[2] = particlesColor[2];
+	p.color[3] = particlesColor[3];
 	p.pos = startingPos; //particles start at the center of the obj (but spawn methods modify this pos for the time being)
-
 }
 
 int Emitter::FindUnusedParticle()
@@ -624,4 +642,3 @@ void Emitter::SetParticlesPerSec(int newParticlesPerSec)
 
 	CalculatePoolSize();
 }
-
