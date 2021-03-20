@@ -457,6 +457,7 @@ void M_Scene::LoadScene(const char* name)
 
 #ifndef STANDALONE
 	App->moduleEditor->shortcutManager.DeleteCommandHistory();
+	App->moduleEditor->ClearConsole();
 #endif // !STANDALONE
 
 	//Clear all current scene memory
