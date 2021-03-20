@@ -31,7 +31,6 @@ Emitter::Emitter() :
 	particlesPerSec(0.0f),
 	secPerParticle(0.0f),
 	lastParticeTime(0),
-	particlesColor(1.0f, 1.0f, 1.0f, 1.0f),
 	myParticles(),
 	myEffects(),
 	objTransform(nullptr),
@@ -43,11 +42,11 @@ Emitter::Emitter() :
 
 	particlesSize[0] = 1.0f;
 	particlesSize[1] = 1.0f;
-	colorAux = new float[4];
-	colorAux[0] = particlesColor[0];
-	colorAux[1] = particlesColor[1];
-	colorAux[2] = particlesColor[2];
-	colorAux[3] = particlesColor[3];
+	particlesColor = new float[4];
+	particlesColor[0] = 1;
+	particlesColor[1] = 1;
+	particlesColor[2] = 1;
+	particlesColor[3] = 1;
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &instanceVBO);
@@ -113,7 +112,7 @@ Emitter::~Emitter()
 	myEffects.clear();
 	myParticles.clear();
 	objTransform = nullptr;
-	colorAux = nullptr;
+	particlesColor = nullptr;
 }
 
 
@@ -279,8 +278,7 @@ void Emitter::OnEditor(int emitterIndex)
 		//ImGui::DragFloatRange2(guiName.c_str(), &particlesSpeed[0], &particlesSpeed[1], 0.25f, 0.1f, 5.0f, "Min: %.1f", "Max: %.1f");			
 
 		guiName = "Start Color (RGBA)" + suffixLabel;
-		ImGui::ColorPicker4(guiName.c_str(), colorAux);
-			SetColor(colorAux);
+		ImGui::ColorPicker4(guiName.c_str(), particlesColor);
 
 		for (int i = (int)PARTICLE_EFFECT_TYPE::NONE + 1; i < (int)PARTICLE_EFFECT_TYPE::MAX; ++i)
 		{
@@ -600,9 +598,11 @@ void Emitter::PrepareParticleToSpawn(Particle& p, float3& startingPos)
 	p.speed = { 0.0f,0.0f,0.0f };
 	p.maxLifetime = p.currentLifetime = EngineExternal->GetRandomFloat(particlesLifeTime[0], particlesLifeTime[1]);
 	p.size = EngineExternal->GetRandomFloat(particlesSize[0], particlesSize[1]);
-	p.color = particlesColor;
+	p.color[0] = particlesColor[0]; 
+	p.color[1] = particlesColor[1];
+	p.color[2] = particlesColor[2];
+	p.color[3] = particlesColor[3];
 	p.pos = startingPos; //particles start at the center of the obj (but spawn methods modify this pos for the time being)
-
 }
 
 int Emitter::FindUnusedParticle()
@@ -641,12 +641,4 @@ void Emitter::SetParticlesPerSec(int newParticlesPerSec)
 		secPerParticle = 0.0f;
 
 	CalculatePoolSize();
-}
-
-void Emitter::SetColor(float* newColor)
-{
-	particlesColor[0] = newColor[0];
-	particlesColor[1] = newColor[1];
-	particlesColor[2] = newColor[2];
-	particlesColor[3] = newColor[3];
 }
