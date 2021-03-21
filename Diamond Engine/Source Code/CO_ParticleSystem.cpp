@@ -21,6 +21,14 @@ C_ParticleSystem::~C_ParticleSystem()
 {
 	systemActive = false;
 
+	int emittersCount = myEmitters.size();
+	for (int i = 0; i < emittersCount; ++i)
+	{
+		delete myEmitters[i];
+		myEmitters[i] = nullptr;
+	}
+	
+	myEmitters.clear();
 }
 
 #ifndef STANDALONE
@@ -42,12 +50,12 @@ bool C_ParticleSystem::OnEditor()
 		ImGui::Separator();
 		ImGui::Spacing();
 
-		myEmitters[i].OnEditor(i);
+		myEmitters[i]->OnEditor(i);
 
 		guiName = "Delete Emitter" + suffixLabel;
 		if (ImGui::Button(guiName.c_str()))
 		{
-			myEmitters[i].toDelete = true;
+			myEmitters[i]->toDelete = true;
 		}
 	}
 
@@ -69,13 +77,16 @@ void C_ParticleSystem::Update()
 	//delete emitters
 	for (int i = myEmitters.size() - 1; i >= 0; --i)
 	{
-		if (myEmitters[i].toDelete)
+		if (myEmitters[i]->toDelete)
+		{
+			delete myEmitters[i];
 			myEmitters.erase(myEmitters.begin() + i);
+		}
 	}
 
 	for (int i = 0; i < myEmitters.size(); ++i)
 	{
-		myEmitters[i].Update(dt, systemActive);
+		myEmitters[i]->Update(dt, systemActive);
 	}
 
 	EngineExternal->moduleRenderer3D->particleSystemQueue.push_back(gameObject);
@@ -97,8 +108,7 @@ void C_ParticleSystem::Draw()
 		
 		for (int i = 0; i < myEmitters.size(); ++i)
 		{
-			myEmitters[i].Draw(material->shader->shaderProgramID, bill->GetAlignment());
-
+			myEmitters[i]->Draw(material->shader->shaderProgramID, bill->GetAlignment());
 			//Draw instanced arrays
 		}
 
@@ -125,7 +135,7 @@ void C_ParticleSystem::SaveData(JSON_Object* nObj)
 		JSON_Value* nVal = json_value_init_object();
 		JSON_Object* obj = json_value_get_object(nVal);
 
-		myEmitters[i].SaveData(obj);
+		myEmitters[i]->SaveData(obj);
 		json_array_append_value(jsArray, nVal);
 	}
 
@@ -145,12 +155,12 @@ void C_ParticleSystem::LoadData(DEConfig& nObj)
 		conf.nObj = json_array_get_object(effArray, i);
 
 		AddEmitter();
-		myEmitters[i].LoadData(conf);
+		myEmitters[i]->LoadData(conf);
 	}
 }
 
 void C_ParticleSystem::AddEmitter()
 {
-	myEmitters.push_back(Emitter());
-	myEmitters.back().AssignTransform(this->gameObject->transform);
+	myEmitters.push_back(new Emitter());
+	myEmitters.back()->AssignTransform(this->gameObject->transform);
 }

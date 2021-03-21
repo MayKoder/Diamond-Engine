@@ -25,5 +25,5 @@ private:
 
 	bool systemActive;
 	//emitter vector
-	std::vector<Emitter> myEmitters;
+	std::vector<Emitter*> myEmitters;
 };
