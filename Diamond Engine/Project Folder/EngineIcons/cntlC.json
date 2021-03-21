@@ -1,13 +1,13 @@
 {
     "Game Objects": [
         {
-            "name": "circles",
+            "name": "stormtropper",
             "tag": "Untagged",
             "layer": "Default",
             "Active": true,
             "Position": [
                 0,
-                -4.6566128730773926e-10,
+                0,
                 0
             ],
             "Rotation": [
@@ -21,10 +21,10 @@
                 1,
                 1
             ],
-            "UID": 2112430985,
+            "UID": 1383351044,
             "PrefabID": 0,
             "DontDestroy": false,
-            "ParentUID": 1492980581,
+            "ParentUID": 1316098133,
             "Components": [
                 {
                     "Type": 1,
@@ -34,21 +34,21 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/Particle.mat",
+                    "MaterialAssetPath": "Empty",
                     "MaterialLibraryPath": "Library\/Materials\/355756108.mat",
                     "MaterialUID": 355756108
                 },
                 {
                     "Type": 20,
                     "Active": true,
-                    "systemActive": true,
+                    "systemActive": false,
                     "looping": true,
-                    "maxDuration": 1.7070000171661377,
+                    "maxDuration": 2.0559999942779541,
                     "ParticleEmitters": [
                         {
                             "AssetPath": "Empty",
-                            "LibraryPath": "Library\/Textures\/481592650.dds",
-                            "texUID": 481592650,
+                            "LibraryPath": "Library\/Textures\/627670173.dds",
+                            "texUID": 627670173,
                             "paLifeTime": [
                                 1,
                                 1
@@ -58,8 +58,8 @@
                                 0
                             ],
                             "paSize": [
-                                5,
-                                5
+                                3,
+                                3
                             ],
                             "paColor": [
                                 0.9686274528503418,
@@ -88,7 +88,7 @@
                                                 0,
                                                 0,
                                                 0,
-                                                0.20784313976764679
+                                                0.20866143703460693
                                             ],
                                             "paColorOLTposition": 0
                                         },
@@ -99,7 +99,7 @@
                                                 0.015686275437474251,
                                                 1
                                             ],
-                                            "paColorOLTposition": 0.50483089685440063
+                                            "paColorOLTposition": 0.50966185331344604
                                         },
                                         {
                                             "paColorOLTcolor": [
@@ -114,8 +114,8 @@
                                 },
                                 {
                                     "paEffectType": 4,
-                                    "paSizeOLTStartSize": 2.2999999523162842,
-                                    "paSizeOLTEndSize": 2.5999999046325684
+                                    "paSizeOLTStartSize": 1.7000000476837158,
+                                    "paSizeOLTEndSize": 2.5
                                 }
                             ]
                         }
@@ -123,7 +123,9 @@
                 },
                 {
                     "Type": 21,
-                    "Active": true
+                    "Active": true,
+                    "billboardAlignment": 2,
+                    "horizantalAligned": true
                 }
             ]
         }
