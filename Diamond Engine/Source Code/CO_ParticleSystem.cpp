@@ -12,7 +12,7 @@
 #include "OpenGL.h"
 #include "ImGui/imgui.h"
 
-C_ParticleSystem::C_ParticleSystem(GameObject* _gm) : Component(_gm), systemActive(true), myEmitters()
+C_ParticleSystem::C_ParticleSystem(GameObject* _gm) : Component(_gm), systemActive(false), myEmitters(), looping(false), maxDuration(0.0f), playTimer()
 {
 	name = "Particle System";
 }
@@ -38,7 +38,25 @@ bool C_ParticleSystem::OnEditor()
 		return false;
 
 	ImGui::Separator();
-	ImGui::Checkbox("SystemActive", &systemActive);
+
+	std::string playButtonName = systemActive ? "Pause: " : "Play: ";
+	if (ImGui::Button(playButtonName.c_str())) {
+		if (systemActive)
+		{
+			playTimer.Stop();
+			systemActive = false;
+		}
+		else 
+		{
+			playTimer.Start();
+			systemActive = true;
+		}
+	}
+	ImGui::SameLine();
+	ImGui::Text("Playback time: %.2f", playTimer.Read() * 0.001f);
+
+	ImGui::Checkbox("Looping", &looping);
+	ImGui::SliderFloat("Play Duration", &maxDuration, 0.0f, 10.0f);
 
 	ImGui::Spacing();
 	std::string guiName = "";
@@ -84,12 +102,22 @@ void C_ParticleSystem::Update()
 		}
 	}
 
-	for (int i = 0; i < myEmitters.size(); ++i)
+	if (systemActive == true)
 	{
-		myEmitters[i]->Update(dt, systemActive);
-	}
+		if (playTimer.Read() >=  maxDuration * 1000)
+		{
+			playTimer.Stop();
+			if (looping) playTimer.Start();
+			else systemActive = false;
+		}
 
-	EngineExternal->moduleRenderer3D->particleSystemQueue.push_back(gameObject);
+		for (int i = 0; i < myEmitters.size(); ++i)
+		{
+			myEmitters[i]->Update(dt, systemActive);
+		}
+
+		EngineExternal->moduleRenderer3D->particleSystemQueue.push_back(gameObject);
+	}
 }
 
 void C_ParticleSystem::Draw()

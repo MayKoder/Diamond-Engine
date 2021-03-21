@@ -40,10 +40,7 @@ Emitter::Emitter() :
 	myParticles(),
 	myEffects(),
 	objTransform(nullptr),
-	playing(false),
 	delaying(false),
-	looping(false),
-	maxPlayDuration(1.0f),
 	maxDelay(0.0f)
 {
 	memset(particlesLifeTime, 0.1f, sizeof(particlesLifeTime));
@@ -156,20 +153,11 @@ void Emitter::Update(float dt, bool systemActive)
 		{
 			delay.Stop();
 			delaying = false;
-			playing = true; //The delay ended, so we can start playing the animations
-			playDuration.Start();
 		}
 	}
 
-	if (playing)
+	if (delaying == false)
 	{
-		if (playDuration.Read() >= maxPlayDuration * 1000)
-		{
-			playDuration.Stop();
-			if (looping) playDuration.Start();
-			else playing = false;
-		}
-
 		if (systemActive)
 			ThrowParticles(dt);
 
@@ -301,6 +289,7 @@ void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 	glDisableVertexAttribArray(3);
 	glDisableVertexAttribArray(4);
 	glDisableVertexAttribArray(5);
+	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -314,42 +303,17 @@ void Emitter::OnEditor(int emitterIndex)
 
 	if (ImGui::CollapsingHeader(guiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		guiName = playing ? "Pause" : "Play";
-		if(ImGui::Button(guiName.c_str())){
-			if (playing) 
-			{ 
-				playDuration.Stop(); 
-				playing = false;
-			}
-			else {
-				if (maxDelay > 0)
-				{
-					delaying = true;
-					delay.Start();
-				}
-				else { //We only start playing if there is no delay
-					playDuration.Start();
-					playing = true;
-				}
-				
-			}
-		}
 		ImGui::SameLine();
-		ImGui::Text("Playback time: %.2f", playDuration.Read() * 0.001f);
 		ImGui::Text("Delay time: %.2f", delay.Read() * 0.001f);
 		
-		guiName = "Looping ##" + suffixLabel;
-		ImGui::Checkbox(guiName.c_str(), &looping);
-		guiName = "Play Duration ##" + suffixLabel;
-		ImGui::SliderFloat(guiName.c_str(), &maxPlayDuration, 0.0f, 10.0f);
-		guiName = "Delay ##" + suffixLabel;
+		guiName = "Delay" + suffixLabel;
 		ImGui::SliderFloat(guiName.c_str(), &maxDelay, 0.0f, 10.0f);
 
-		guiName = "Particle Lifetime ##" + suffixLabel;
+		guiName = "Particle Lifetime" + suffixLabel;
 		if (ImGui::DragFloatRange2(guiName.c_str(), &particlesLifeTime[0], &particlesLifeTime[1], 0.25f, 0.1f, 100.0f, "Min: %.1f", "Max: %.1f"))
 			CalculatePoolSize();
 
-		guiName = "Particles per Second ##" + suffixLabel;
+		guiName = "Particles per Second" + suffixLabel;
 		if (ImGui::DragFloat(guiName.c_str(), &particlesPerSec))
 			SetParticlesPerSec(particlesPerSec);
 
@@ -360,7 +324,7 @@ void Emitter::OnEditor(int emitterIndex)
 		//guiName = "Start Speed" + suffixLabel;
 		//ImGui::DragFloatRange2(guiName.c_str(), &particlesSpeed[0], &particlesSpeed[1], 0.25f, 0.1f, 5.0f, "Min: %.1f", "Max: %.1f");			
 
-		guiName = "Start Color (RGBA) ##" + suffixLabel;
+		guiName = "Start Color (RGBA)" + suffixLabel;
 		ImGui::ColorPicker4(guiName.c_str(), particlesColor);
 
 		for (int i = (int)PARTICLE_EFFECT_TYPE::NONE + 1; i < (int)PARTICLE_EFFECT_TYPE::MAX; ++i)

@@ -2,6 +2,8 @@
 #include "Component.h"
 #include "ParticleEmitter.h"
 
+#include "Timer.h"
+
 class C_ParticleSystem : public Component
 {
 public:
@@ -26,4 +28,9 @@ private:
 	bool systemActive;
 	//emitter vector
 	std::vector<Emitter*> myEmitters;
+
+
+	bool looping = false;
+	float maxDuration = 0.0f;
+	Timer playTimer;
 };
