@@ -81,9 +81,9 @@ private:
 	std::vector<ParticleEffect*> myEffects;
 	C_Transform* objTransform = nullptr;
 
-	bool playing, looping;
-	float maxDuration;
-	Timer duration;
+	bool playing, delaying, looping;
+	float maxPlayDuration, maxDelay;
+	Timer playDuration, delay;
 };
 
 const float particleVertices[] = {
