@@ -7,6 +7,8 @@
 #include "PE_Size_Over_Lifetime.h"
 #include "PE_Color_Over_Lifetime.h"
 #include "PE_Velocity_Over_Lifetime.h"
+#include "PE_Spawn_Sphere.h"
+#include "PE_Spawn_Cone.h"
 
 #include <string>
 
@@ -559,6 +561,12 @@ std::string Emitter::ParticleEffectEnumToString(PARTICLE_EFFECT_TYPE type)
 	case PARTICLE_EFFECT_TYPE::AREA_SPAWN:
 		ret = "Spawn Shape Effect";
 		break;
+	case PARTICLE_EFFECT_TYPE::AREA_SPAWN_SPHERE:
+		ret = "Spawn in Sphere Shape Effect";
+		break;
+	case PARTICLE_EFFECT_TYPE::AREA_SPAWN_CONE:
+		ret = "Spawn in Cone Shape Effect";
+		break;
 	case PARTICLE_EFFECT_TYPE::FORCE_OVER_LIFETIME:
 		ret = "Force Over Lifetime Effect";
 		break;
@@ -592,6 +600,12 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 		break;
 	case PARTICLE_EFFECT_TYPE::AREA_SPAWN:
 		newEffect = new PE_SpawnArea();
+		break;
+	case PARTICLE_EFFECT_TYPE::AREA_SPAWN_SPHERE:
+		newEffect = new PE_SpawnSphere();
+		break;
+	case PARTICLE_EFFECT_TYPE::AREA_SPAWN_CONE:
+		newEffect = new PE_SpawnCone();
 		break;
 	case PARTICLE_EFFECT_TYPE::FORCE_OVER_LIFETIME:
 		newEffect = new PE_ForceOverLifetime();

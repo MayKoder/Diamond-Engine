@@ -210,3 +210,14 @@ void C_ParticleSystem::AddEmitter()
 	myEmitters.back()->AssignTransform(this->gameObject->transform);
 }
 
+
+bool C_ParticleSystem::IsSystemActive() const
+{
+	return systemActive;
+}
+
+
+bool C_ParticleSystem::IsSystemLooped() const
+{
+	return looping;
+}
