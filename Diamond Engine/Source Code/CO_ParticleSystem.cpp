@@ -151,6 +151,8 @@ void C_ParticleSystem::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
 	DEJson::WriteBool(nObj, "systemActive", systemActive);
+	DEJson::WriteBool(nObj, "looping", looping);
+	DEJson::WriteFloat(nObj, "maxDuration", maxDuration);
 
 	JSON_Value* emmitersArray = json_value_init_array();
 	JSON_Array* jsArray = json_value_get_array(emmitersArray);
@@ -172,6 +174,8 @@ void C_ParticleSystem::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
 	systemActive = nObj.ReadBool("systemActive");
+	looping = nObj.ReadBool("looping");
+	maxDuration = nObj.ReadFloat("maxDuration");
 
 	DEConfig conf(nullptr);
 	JSON_Array* effArray = json_object_get_array(nObj.nObj, "ParticleEmitters");
