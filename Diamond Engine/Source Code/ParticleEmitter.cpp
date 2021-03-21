@@ -109,6 +109,10 @@ Emitter::~Emitter()
 	glDeleteBuffers(1, &instanceVBO);
 	glDeleteBuffers(1, &VAO);
 
+	vertexVBO = 0u;
+	instanceVBO = 0u;
+	VAO = 0u;
+
 	if (texture != nullptr)
 	{
 		EngineExternal->moduleResources->UnloadResource(texture->GetUID());
@@ -334,12 +338,15 @@ void Emitter::OnEditor(int emitterIndex)
 		ImGui::Text("Playback time: %.2f", playDuration.Read() * 0.001f);
 		ImGui::Text("Delay time: %.2f", delay.Read() * 0.001f);
 		
-		ImGui::Checkbox("Looping", &looping);
-		ImGui::SliderFloat("Play Duration", &maxPlayDuration, 0.0f, 10.0f);
-		ImGui::SliderFloat("Delay", &maxDelay, 0.0f, 10.0f);
+		guiName = "Looping ##" + suffixLabel;
+		ImGui::Checkbox(guiName.c_str(), &looping);
+		guiName = "Play Duration ##" + suffixLabel;
+		ImGui::SliderFloat(guiName.c_str(), &maxPlayDuration, 0.0f, 10.0f);
+		guiName = "Delay ##" + suffixLabel;
+		ImGui::SliderFloat(guiName.c_str(), &maxDelay, 0.0f, 10.0f);
 
 		guiName = "Particle Lifetime ##" + suffixLabel;
-		if (ImGui::DragFloatRange2("Lifetime", &particlesLifeTime[0], &particlesLifeTime[1], 0.25f, 0.1f, 100.0f, "Min: %.1f", "Max: %.1f"))
+		if (ImGui::DragFloatRange2(guiName.c_str(), &particlesLifeTime[0], &particlesLifeTime[1], 0.25f, 0.1f, 100.0f, "Min: %.1f", "Max: %.1f"))
 			CalculatePoolSize();
 
 		guiName = "Particles per Second ##" + suffixLabel;
@@ -353,7 +360,7 @@ void Emitter::OnEditor(int emitterIndex)
 		//guiName = "Start Speed" + suffixLabel;
 		//ImGui::DragFloatRange2(guiName.c_str(), &particlesSpeed[0], &particlesSpeed[1], 0.25f, 0.1f, 5.0f, "Min: %.1f", "Max: %.1f");			
 
-		guiName = "Start Color (RGBA)" + suffixLabel;
+		guiName = "Start Color (RGBA) ##" + suffixLabel;
 		ImGui::ColorPicker4(guiName.c_str(), particlesColor);
 
 		for (int i = (int)PARTICLE_EFFECT_TYPE::NONE + 1; i < (int)PARTICLE_EFFECT_TYPE::MAX; ++i)
