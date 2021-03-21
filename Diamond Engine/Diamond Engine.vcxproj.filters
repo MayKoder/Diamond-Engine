@@ -886,6 +886,9 @@
     <ClInclude Include="Source Code\CO_SphereCollider.h">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CS_ParticleSystem_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
