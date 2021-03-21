@@ -58,6 +58,22 @@ bool C_Billboard::OnEditor()
 }
 #endif // !STANDALONE
 
+void C_Billboard::SaveData(JSON_Object* nObj)
+{
+	Component::SaveData(nObj);
+	DEJson::WriteInt(nObj, "billboardAlignment", (int)currentAlignment);
+	DEJson::WriteBool(nObj, "horizantalAligned", horizontalAligned);
+}
+
+
+void C_Billboard::LoadData(DEConfig& nObj)
+{
+	Component::LoadData(nObj);
+	currentAlignment = (BILLBOARD_ALIGNMENT)nObj.ReadInt("billboardAlignment");
+	horizontalAligned = nObj.ReadBool("horizantalAligned");
+}
+
+
 void C_Billboard::SetAlignment(BILLBOARD_ALIGNMENT new_alignment)
 {
 	currentAlignment = new_alignment;

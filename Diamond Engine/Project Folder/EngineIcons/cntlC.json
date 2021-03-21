@@ -1,7 +1,7 @@
 {
     "Game Objects": [
         {
-            "name": "Combo Bar",
+            "name": "stormtropper",
             "tag": "Untagged",
             "layer": "Default",
             "Active": true,
@@ -21,41 +21,111 @@
                 1,
                 1
             ],
-            "UID": 751315337,
+            "UID": 1383351044,
             "PrefabID": 0,
-            "ParentUID": 810407947,
+            "DontDestroy": false,
+            "ParentUID": 1316098133,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
                 },
                 {
-                    "Type": 6,
-                    "Active": true,
-                    "Position": [
-                        -5.9000000953674316,
-                        0
-                    ],
-                    "Rotation": 0,
-                    "Size": [
-                        14,
-                        2.0999999046325684
-                    ]
-                },
-                {
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Assets\/Materials\/ui_hud_combo_bar.mat",
-                    "MaterialLibraryPath": "Library\/Materials\/1816860359.mat",
-                    "MaterialUID": 1816860359
+                    "MaterialAssetPath": "Empty",
+                    "MaterialLibraryPath": "Library\/Materials\/355756108.mat",
+                    "MaterialUID": 355756108
                 },
                 {
-                    "Type": 11,
+                    "Type": 20,
                     "Active": true,
-                    "AssetPath": "Empty",
-                    "LibraryPath": "Library\/Textures\/315682035.dds",
-                    "UID": 315682035
+                    "systemActive": false,
+                    "looping": true,
+                    "maxDuration": 2.0559999942779541,
+                    "ParticleEmitters": [
+                        {
+                            "AssetPath": "Empty",
+                            "LibraryPath": "Library\/Textures\/627670173.dds",
+                            "texUID": 627670173,
+                            "paLifeTime": [
+                                1,
+                                1
+                            ],
+                            "paSpeed": [
+                                0,
+                                0
+                            ],
+                            "paSize": [
+                                3,
+                                3
+                            ],
+                            "paColor": [
+                                0.9686274528503418,
+                                0.015686275437474251,
+                                0.015686275437474251,
+                                1
+                            ],
+                            "paPerSec": 1,
+                            "ParticleEffects": [
+                                {
+                                    "paEffectType": 2,
+                                    "paROLT_rotation": [
+                                        0,
+                                        0
+                                    ],
+                                    "paROLT_rotationSpeed": [
+                                        2,
+                                        2
+                                    ]
+                                },
+                                {
+                                    "paEffectType": 3,
+                                    "Gradients": [
+                                        {
+                                            "paColorOLTcolor": [
+                                                0,
+                                                0,
+                                                0,
+                                                0.20866143703460693
+                                            ],
+                                            "paColorOLTposition": 0
+                                        },
+                                        {
+                                            "paColorOLTcolor": [
+                                                0.9686274528503418,
+                                                0.015686275437474251,
+                                                0.015686275437474251,
+                                                1
+                                            ],
+                                            "paColorOLTposition": 0.50966185331344604
+                                        },
+                                        {
+                                            "paColorOLTcolor": [
+                                                0,
+                                                0,
+                                                0,
+                                                0.20784313976764679
+                                            ],
+                                            "paColorOLTposition": 1
+                                        }
+                                    ]
+                                },
+                                {
+                                    "paEffectType": 4,
+                                    "paSizeOLTStartSize": 1.7000000476837158,
+                                    "paSizeOLTEndSize": 2.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "Type": 21,
+                    "Active": true,
+                    "billboardAlignment": 2,
+                    "horizantalAligned": true
                 }
             ]
         }
