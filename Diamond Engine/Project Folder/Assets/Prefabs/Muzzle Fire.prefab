@@ -1,0 +1,108 @@
+{
+    "assets_path": "Assets\/Prefabs\/Muzzle Fire.prefab",
+    "Game Objects": [
+        {
+            "name": "Muzzle Fire",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                4.518162727355957,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 6173293,
+            "PrefabID": 1604751915,
+            "DontDestroy": false,
+            "ParentUID": 621070814,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Muzzle",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                -4.518162727355957,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 294102553,
+            "PrefabID": 0,
+            "DontDestroy": false,
+            "ParentUID": 6173293,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/Particle.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/355756108.mat",
+                    "MaterialUID": 355756108
+                },
+                {
+                    "Type": 20,
+                    "Active": true,
+                    "systemActive": false,
+                    "looping": false,
+                    "maxDuration": 0,
+                    "ParticleEmitters": [
+                        {
+                            "paLifeTime": [
+                                0,
+                                0
+                            ],
+                            "paSpeed": [
+                                0,
+                                0
+                            ],
+                            "paSize": [
+                                1,
+                                1
+                            ],
+                            "paColor": [
+                                1,
+                                1,
+                                1,
+                                1
+                            ],
+                            "paPerSec": 0,
+                            "ParticleEffects": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

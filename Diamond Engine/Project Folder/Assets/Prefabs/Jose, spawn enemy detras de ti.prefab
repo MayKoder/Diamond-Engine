@@ -22,8 +22,8 @@
                 1,
                 1
             ],
-            "UID": 1492980581,
-            "PrefabID": 0,
+            "UID": 1666524538,
+            "PrefabID": 2054061864,
             "DontDestroy": false,
             "ParentUID": 621070814,
             "Components": [
@@ -54,10 +54,10 @@
                 1,
                 1
             ],
-            "UID": 383915052,
+            "UID": 858379982,
             "PrefabID": 0,
             "DontDestroy": false,
-            "ParentUID": 1492980581,
+            "ParentUID": 1666524538,
             "Components": [
                 {
                     "Type": 1,
@@ -74,8 +74,8 @@
                 {
                     "Type": 20,
                     "Active": true,
-                    "systemActive": true,
-                    "looping": true,
+                    "systemActive": false,
+                    "looping": false,
                     "maxDuration": 1.7070000171661377,
                     "ParticleEmitters": [
                         {
@@ -156,7 +156,9 @@
                 },
                 {
                     "Type": 21,
-                    "Active": true
+                    "Active": true,
+                    "billboardAlignment": 2,
+                    "horizantalAligned": true
                 }
             ]
         },
@@ -181,10 +183,10 @@
                 1,
                 1
             ],
-            "UID": 2112430985,
+            "UID": 1097798106,
             "PrefabID": 0,
             "DontDestroy": false,
-            "ParentUID": 1492980581,
+            "ParentUID": 1666524538,
             "Components": [
                 {
                     "Type": 1,
@@ -201,8 +203,8 @@
                 {
                     "Type": 20,
                     "Active": true,
-                    "systemActive": true,
-                    "looping": true,
+                    "systemActive": false,
+                    "looping": false,
                     "maxDuration": 1.7070000171661377,
                     "ParticleEmitters": [
                         {
@@ -283,7 +285,9 @@
                 },
                 {
                     "Type": 21,
-                    "Active": true
+                    "Active": true,
+                    "billboardAlignment": 2,
+                    "horizantalAligned": true
                 }
             ]
         },
@@ -308,10 +312,10 @@
                 1,
                 1
             ],
-            "UID": 1718081114,
+            "UID": 858941096,
             "PrefabID": 0,
             "DontDestroy": false,
-            "ParentUID": 1492980581,
+            "ParentUID": 1666524538,
             "Components": [
                 {
                     "Type": 1,
@@ -328,17 +332,17 @@
                 {
                     "Type": 20,
                     "Active": true,
-                    "systemActive": true,
-                    "looping": true,
-                    "maxDuration": 1.7070000171661377,
+                    "systemActive": false,
+                    "looping": false,
+                    "maxDuration": 1.0800000429153442,
                     "ParticleEmitters": [
                         {
                             "AssetPath": "Empty",
                             "LibraryPath": "Library\/Textures\/481592650.dds",
                             "texUID": 481592650,
                             "paLifeTime": [
-                                2,
-                                2
+                                3.7999999523162842,
+                                3.7999999523162842
                             ],
                             "paSpeed": [
                                 0,
@@ -354,13 +358,13 @@
                                 0.015686275437474251,
                                 1
                             ],
-                            "paPerSec": 3,
+                            "paPerSec": 5,
                             "ParticleEffects": [
                                 {
                                     "paEffectType": 1,
                                     "paFOLT_acceleration": [
                                         0,
-                                        1,
+                                        0,
                                         0
                                     ],
                                     "paFOLT_gravityMod": 0,
@@ -370,6 +374,14 @@
                                     "paEffectType": 4,
                                     "paSizeOLTStartSize": 2.5999999046325684,
                                     "paSizeOLTEndSize": 0.5
+                                },
+                                {
+                                    "paEffectType": 5,
+                                    "paVelocityOLTVelocity": [
+                                        0,
+                                        2,
+                                        0
+                                    ]
                                 }
                             ]
                         }
@@ -377,7 +389,9 @@
                 },
                 {
                     "Type": 21,
-                    "Active": true
+                    "Active": true,
+                    "billboardAlignment": 2,
+                    "horizantalAligned": true
                 }
             ]
         }
