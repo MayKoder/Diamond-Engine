@@ -38,7 +38,7 @@ bool IsPlayingParticles(MonoObject* goObj)
 
 	if (particleSystem != nullptr)
 	{
-		//ret = particleSystem.IsSystemActive();
+		ret = particleSystem->IsSystemActive();
 	}
 	return ret;
 }
@@ -51,7 +51,7 @@ bool GetLoopingParticles(MonoObject* goObj)
 
 	if (particleSystem != nullptr)
 	{
-		//ret= particleSystem.IsSystemLooped();
+		ret= particleSystem->IsSystemLooped();
 	}
 	return ret;
 }
