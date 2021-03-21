@@ -454,6 +454,13 @@ void Emitter::LoadData(DEConfig& nObj)
 }
 
 
+void Emitter::RestartEmitter()
+{
+	lastUsedParticle = 0;
+	lastParticeTime = 0.0f;
+}
+
+
 void Emitter::CalculatePoolSize()
 {
 	int poolSize = ceilf(particlesPerSec * max(particlesLifeTime[0], particlesLifeTime[1]));

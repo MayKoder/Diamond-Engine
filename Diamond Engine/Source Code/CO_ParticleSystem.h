@@ -21,6 +21,8 @@ public:
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
 
+	void Play();
+	void Stop();
 
 	void AddEmitter();
 private:
