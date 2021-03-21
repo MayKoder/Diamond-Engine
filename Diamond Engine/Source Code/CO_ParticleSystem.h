@@ -25,6 +25,10 @@ public:
 	void Stop();
 
 	void AddEmitter();
+	bool IsSystemActive() const;
+	bool IsSystemLooped() const;
+
+
 private:
 
 	bool systemActive;
