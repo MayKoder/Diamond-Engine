@@ -6,7 +6,7 @@
 
 #include "ImGui/imgui.h"
 
-PE_SpawnSphere::PE_SpawnSphere() :ParticleEffect(PARTICLE_EFFECT_TYPE::AREA_SPHERE)
+PE_SpawnSphere::PE_SpawnSphere() :ParticleEffect(PARTICLE_EFFECT_TYPE::AREA_SPAWN_SPHERE)
 {
 	memset(centerOfSphere, 0.f, sizeof(centerOfSphere));
 	radius = 1.0f;
@@ -43,10 +43,10 @@ void PE_SpawnSphere::OnEditor(int emitterIndex)
 		if (ImGui::Button("Delete Spawn in Sphere Area Effect"))
 			this->toDelete = true;
 
-		suffixLabel = "Offset##lPaSpdAreaSpawn";
+		suffixLabel = "Offset##lPaSpdSphereSpawn";
 		suffixLabel += emitterIndex;
 		ImGui::DragFloat3(suffixLabel.c_str(), centerOfSphere);
-		suffixLabel = "Radius##lPaSpdAreaRadius";
+		suffixLabel = "Radius##lPaSpdSphereRadius";
 		suffixLabel += emitterIndex;
 		ImGui::DragFloat(suffixLabel.c_str(), &radius);
 	}
