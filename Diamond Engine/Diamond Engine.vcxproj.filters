@@ -886,6 +886,9 @@
     <ClInclude Include="Source Code\CO_SphereCollider.h">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\PE_Spawn_Sphere.h">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Main.cpp">
@@ -1341,6 +1344,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\CO_SphereCollider.cpp">
       <Filter>Sources\Components\Derived\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\PE_Spawn_Sphere.cpp">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
