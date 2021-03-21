@@ -420,7 +420,7 @@ void Emitter::LoadData(DEConfig& nObj)
 	std::string texName = nObj.ReadString("LibraryPath");
 
 	if (texName != "")
-		texture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("UID"), texName.c_str()));
+		texture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("texUID"), texName.c_str()));
 
 	float2 paLife = nObj.ReadVector2("paLifeTime");
 	particlesLifeTime[0] = paLife.x;
