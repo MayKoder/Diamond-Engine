@@ -46,10 +46,11 @@ Emitter::Emitter() :
 	memset(particlesLifeTime, 0.1f, sizeof(particlesLifeTime));
 	memset(particlesSpeed, 0.0f, sizeof(particlesSpeed));
 	memset(particlesSize, 1.0f, sizeof(particlesSize));
+	memset(particlesColor, 1.0f, sizeof(particlesColor));
 
 	particlesSize[0] = 1.0f;
 	particlesSize[1] = 1.0f;
-	particlesColor = new float[4];
+
 	particlesColor[0] = 1;
 	particlesColor[1] = 1;
 	particlesColor[2] = 1;
@@ -119,7 +120,6 @@ Emitter::~Emitter()
 	myEffects.clear();
 	myParticles.clear();
 	objTransform = nullptr;
-	particlesColor = nullptr;
 }
 
 void Emitter::Update(float dt, bool systemActive)
@@ -183,6 +183,7 @@ void Emitter::Update(float dt, bool systemActive)
 		}
 	}
 }
+
 
 void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 {
