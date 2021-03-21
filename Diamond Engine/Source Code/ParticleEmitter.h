@@ -30,6 +30,8 @@ public:
 	void SaveData(JSON_Object* nObj);
 	void LoadData(DEConfig& nObj);
 
+	void RestartEmitter();
+
 private:
 	//calculates a new Pool Size from the particle spawn rate & particle lifeTime
 	void CalculatePoolSize();

@@ -43,13 +43,11 @@ bool C_ParticleSystem::OnEditor()
 	if (ImGui::Button(playButtonName.c_str())) {
 		if (systemActive)
 		{
-			playTimer.Stop();
-			systemActive = false;
+			Stop();
 		}
 		else 
 		{
-			playTimer.Start();
-			systemActive = true;
+			Play();
 		}
 	}
 	ImGui::SameLine();
@@ -187,8 +185,39 @@ void C_ParticleSystem::LoadData(DEConfig& nObj)
 	}
 }
 
+
+void C_ParticleSystem::Play()
+{
+	playTimer.Start();
+	systemActive = true;
+
+	int emittersCount = myEmitters.size();
+	for (int i = 0; i < emittersCount; ++i)
+		myEmitters[i]->RestartEmitter();
+}
+
+
+void C_ParticleSystem::Stop()
+{
+	playTimer.Stop();
+	systemActive = false;
+}
+
+
 void C_ParticleSystem::AddEmitter()
 {
 	myEmitters.push_back(new Emitter());
 	myEmitters.back()->AssignTransform(this->gameObject->transform);
+}
+
+
+bool C_ParticleSystem::IsSystemActive() const
+{
+	return systemActive;
+}
+
+
+bool C_ParticleSystem::IsSystemLooped() const
+{
+	return looping;
 }
