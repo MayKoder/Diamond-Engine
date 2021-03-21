@@ -460,6 +460,12 @@ void Emitter::RestartEmitter()
 {
 	lastUsedParticle = 0;
 	lastParticeTime = 0.0f;
+
+	int particlesCount = myParticles.size();
+	for (int i = 0; i < particlesCount; ++i)
+	{
+		myParticles[i].currentLifetime = 0.0f;
+	}
 }
 
 

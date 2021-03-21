@@ -35,7 +35,6 @@ private:
 	//emitter vector
 	std::vector<Emitter*> myEmitters;
 
-
 	bool looping = false;
 	float maxDuration = 0.0f;
 	Timer playTimer;
