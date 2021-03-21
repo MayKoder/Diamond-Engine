@@ -29,19 +29,22 @@
 
 Emitter::Emitter() :
 	toDelete(false),
+	VAO(0u),
+	instanceVBO(0u),
+	vertexVBO(0u),
 	texture(nullptr),
 	particlesPerSec(0.0f),
 	secPerParticle(0.0f),
-	lastParticeTime(0),
+	lastParticeTime(0.0f),
+	lastUsedParticle(0),
 	myParticles(),
 	myEffects(),
 	objTransform(nullptr),
-	lastUsedParticle(0),
-	maxPlayDuration(1.0f),
-	maxDelay(0.0f),
 	playing(false),
+	delaying(false),
 	looping(false),
-	delaying(false)
+	maxPlayDuration(1.0f),
+	maxDelay(0.0f)
 {
 	memset(particlesLifeTime, 0.1f, sizeof(particlesLifeTime));
 	memset(particlesSpeed, 0.0f, sizeof(particlesSpeed));
@@ -99,14 +102,18 @@ Emitter::Emitter() :
 	CalculatePoolSize();
 }
 
+
 Emitter::~Emitter()
 {
+	glDeleteBuffers(1, &vertexVBO);
+	glDeleteBuffers(1, &instanceVBO);
+	glDeleteBuffers(1, &VAO);
+
 	if (texture != nullptr)
 	{
 		EngineExternal->moduleResources->UnloadResource(texture->GetUID());
 		texture = nullptr;
 	}
-	VAO = 0u;
 
 	for (int i = myEffects.size() - 1; i >= 0; --i)
 	{
@@ -121,6 +128,7 @@ Emitter::~Emitter()
 	myParticles.clear();
 	objTransform = nullptr;
 }
+
 
 void Emitter::Update(float dt, bool systemActive)
 {
