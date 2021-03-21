@@ -38,7 +38,8 @@ Emitter::Emitter() :
 	objTransform(nullptr),
 	lastUsedParticle(0),
 	maxDuration(1.0f),
-	playing(false)
+	playing(false),
+	looping(false)
 {
 	memset(particlesLifeTime, 0.1f, sizeof(particlesLifeTime));
 	memset(particlesSpeed, 0.0f, sizeof(particlesSpeed));
@@ -135,9 +136,11 @@ void Emitter::Update(float dt, bool systemActive)
 		duration.Start();
 	}*/
 
-	if (duration.Read() >= maxDuration * 1000) {
-		playing = false;
+	if (duration.Read() >= maxDuration * 1000) 
+	{		
 		duration.Stop();
+		if(looping)	duration.Start();
+		else playing = false;		
 	}
 
 	if (playing)
@@ -298,6 +301,8 @@ void Emitter::OnEditor(int emitterIndex)
 		}
 		ImGui::SameLine();
 		ImGui::Text("Playback time: %d", duration.Read()/1000);
+		
+		ImGui::Checkbox("Looping", &looping);
 
 		guiName = "Particle Lifetime ##" + suffixLabel;
 		if (ImGui::DragFloatRange2("Lifetime", &particlesLifeTime[0], &particlesLifeTime[1], 0.25f, 0.1f, 100.0f, "Min: %.1f", "Max: %.1f"))

@@ -81,7 +81,7 @@ private:
 	std::vector<ParticleEffect*> myEffects;
 	C_Transform* objTransform = nullptr;
 
-	bool playing;
+	bool playing, looping;
 	float maxDuration;
 	Timer duration;
 };
