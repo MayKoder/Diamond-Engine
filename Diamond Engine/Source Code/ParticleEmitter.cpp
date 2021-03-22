@@ -459,12 +459,12 @@ void Emitter::LoadData(DEConfig& nObj)
 void Emitter::RestartEmitter()
 {
 	lastUsedParticle = 0;
-	lastParticeTime = 0.0f;
+	lastParticeTime = secPerParticle - 0.016f;
 
 	int particlesCount = myParticles.size();
 	for (int i = 0; i < particlesCount; ++i)
 	{
-		myParticles[i].currentLifetime = 0.0f;
+		myParticles[i].currentLifetime = -1.0f;
 	}
 }
 
