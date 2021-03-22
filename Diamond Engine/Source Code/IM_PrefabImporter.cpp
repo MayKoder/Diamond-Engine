@@ -16,7 +16,7 @@ int PrefabImporter::SavePrefab(const char* assets_path, GameObject* gameObject)
 	DEConfig root_object(json_value_get_object(file));
 
 	JSON_Value* goArray = json_value_init_array();
-	gameObject->SaveToJson(json_value_get_array(goArray));
+	gameObject->SaveToJson(json_value_get_array(goArray), true);
 
 	json_object_set_string(root_object.nObj, "assets_path", assets_path);
 	json_object_set_value(root_object.nObj, "Game Objects", goArray);
@@ -124,7 +124,7 @@ void PrefabImporter::OverridePrefabGameObjects(uint prefabID, GameObject* gameOb
 		assets_path = json_object_get_string(prefabObj, "assets_path");
 	}
 
-	SavePrefab(assets_path.c_str(), gameObject);
+	gameObject->prefabID = SavePrefab(assets_path.c_str(), gameObject);
 	//EngineExternal->moduleResources->ImportFile(assets_path.c_str(), Resource::Type::PREFAB);
 
 	json_value_free(prefab);

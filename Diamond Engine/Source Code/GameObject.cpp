@@ -334,16 +334,16 @@ void GameObject::Destroy()
 }
 
 
-void GameObject::SaveToJson(JSON_Array* _goArray)
+void GameObject::SaveToJson(JSON_Array* _goArray, bool skip_prefab_check)
 {
 	JSON_Value* goValue = json_value_init_object();
 	JSON_Object* goData = json_value_get_object(goValue);
 
-	//Save all gameObject data
 	json_object_set_string(goData, "name", name.c_str());
 	json_object_set_string(goData, "tag", tag);
 	json_object_set_string(goData, "layer", layer);
 
+	//Save all gameObject data
 	DEJson::WriteBool(goData, "Active", active);
 	DEJson::WriteVector3(goData, "Position", &transform->position[0]);
 	DEJson::WriteQuat(goData, "Rotation", &transform->rotation.x);
@@ -358,6 +358,9 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 		DEJson::WriteInt(goData, "ParentUID", parent->UID);
 
 	json_array_append_value(_goArray, goValue);
+
+	if (prefabID != 0u && !skip_prefab_check)
+		return;
 
 	//TODO: Move inside component base
 	{
