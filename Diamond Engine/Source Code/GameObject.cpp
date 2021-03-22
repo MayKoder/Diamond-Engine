@@ -301,23 +301,23 @@ void GameObject::Disable()
 
 void GameObject::EnableTopDown()
 {
-	Enable();
 	for (int i = 0;i< children.size(); i++) {
 		children[i]->EnableTopDown();
 	}
-	for (int i = 0; i < components.size(); i++) {
-		components[i]->Enable();
+	Component* nav = GetComponent(Component::TYPE::NAVIGATION);
+	if (nav != nullptr) {
+		nav->Enable();
 	}
 }
 
 void GameObject::DisableTopDown()
 {
-	Disable();
 	for (int i = 0; i < children.size(); i++) {
 		children[i]->DisableTopDown();
 	}
-	for (int i = 0; i < components.size(); i++) {
-		components[i]->Disable();
+	Component* nav = GetComponent(Component::TYPE::NAVIGATION);
+	if (nav != nullptr) {
+		nav->Disable();
 	}
 }
 
