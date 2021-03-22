@@ -35,6 +35,8 @@ public:
 	void ExecuteButton();
 	void ExecuteCheckbox(bool checkbox_active);
 
+	void OnApplicationQuit();
+
 	std::vector<std::string> methods;
 	std::vector<SerializedField> fields;
 
@@ -42,6 +44,8 @@ public:
 
 	MonoMethod* onCollisionEnter;
 	MonoMethod* onTriggerEnter;
+
+	MonoMethod* onApplicationQuit;
 	
 	MonoMethod* onExecuteButton;
 	MonoMethod* onExecuteCheckbox;

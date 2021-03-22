@@ -15,10 +15,13 @@
 #include <mono/metadata/debug-helpers.h>
 
 C_Script* C_Script::runningScript = nullptr;
-C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), noGCobject(0), updateMethod(nullptr)
+C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), noGCobject(0), updateMethod(nullptr),onCollisionEnter(nullptr),onTriggerEnter(nullptr),onApplicationQuit(nullptr)
+,onExecuteButton(nullptr),onExecuteCheckbox(nullptr)
 {
 	name = scriptName;
 	//strcpy(name, scriptName);
+
+	EngineExternal->moduleScene->activeScriptsVector.push_back(this);
 
 	//EngineExternal->moduleMono->DebugAllMethods(DE_SCRIPTS_NAMESPACE, "GameObject", methods);
 	LoadScriptData(scriptName);
@@ -41,7 +44,7 @@ C_Script::~C_Script()
 				fields[i].fiValue.goValue->csReferences.erase(ptr);
 		}
 	}
-
+	EngineExternal->moduleScene->activeScriptsVector.erase(std::find(EngineExternal->moduleScene->activeScriptsVector.begin(), EngineExternal->moduleScene->activeScriptsVector.end(), this));
 	methods.clear();
 	fields.clear();
 	name.clear();
@@ -305,6 +308,10 @@ void C_Script::LoadScriptData(const char* scriptName)
 	onTriggerEnter = mono_method_desc_search_in_class(oncDesc, klass);
 	mono_method_desc_free(oncDesc);
 
+	MonoMethodDesc* onaQuit = mono_method_desc_new(":OnApplicationQuit", false);
+	onApplicationQuit = mono_method_desc_search_in_class(onaQuit, klass);
+	mono_method_desc_free(onaQuit);
+
 	MonoMethodDesc* oncBut = mono_method_desc_new(":OnExecuteButton", false);
 	onExecuteButton = mono_method_desc_search_in_class(oncBut, klass);
 	mono_method_desc_free(oncBut);
@@ -344,11 +351,21 @@ void C_Script::CollisionCallback(bool isTrigger, GameObject* collidedGameObject)
 
 void C_Script::ExecuteButton()
 {
-	mono_runtime_invoke(onExecuteButton, mono_gchandle_get_target(noGCobject), NULL, NULL);
+	if (onExecuteButton != nullptr)
+		mono_runtime_invoke(onExecuteButton, mono_gchandle_get_target(noGCobject), NULL, NULL);
+}
+
+void C_Script::OnApplicationQuit()
+{
+	if (onApplicationQuit != nullptr)
+		mono_runtime_invoke(onApplicationQuit, mono_gchandle_get_target(noGCobject), NULL, NULL);
 }
 
 void C_Script::ExecuteCheckbox(bool checkbox_active)
 {
+	if (onExecuteCheckbox == nullptr)
+		return;
+
 	void* args[1];
 	args[0] = &checkbox_active;
 
