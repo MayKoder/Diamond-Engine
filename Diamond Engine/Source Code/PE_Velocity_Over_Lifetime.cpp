@@ -29,6 +29,9 @@ void PE_VelocityOverLifetime::OnEditor(int emitterIndex)
 	suffixLabel += emitterIndex;
 	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
 	{
+		if (ImGui::Button("Delete Velocity Effect"))
+			this->toDelete = true;
+
 		suffixLabel = "Velocity##vel";
 		suffixLabel += emitterIndex;
 		ImGui::DragFloat3(suffixLabel.c_str(), velocity, 0.1f);

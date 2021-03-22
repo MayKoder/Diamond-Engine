@@ -17,8 +17,7 @@ W_Console::W_Console() : Window(), collapseMode(true), scrollToBottom(false)
 
 W_Console::~W_Console()
 {
-	logs.clear();
-	visibleLogs.clear();
+	this->ClearLogs();
 }
 
 void W_Console::Draw()
@@ -139,6 +138,12 @@ void W_Console::FilterLogs()
 			visibleLogs.push_back(logs[i]);
 		}
 	}
+}
+
+void W_Console::ClearLogs()
+{
+	logs.clear();
+	visibleLogs.clear();
 }
 
 ImTextureID W_Console::GetMsgType(LogType type)

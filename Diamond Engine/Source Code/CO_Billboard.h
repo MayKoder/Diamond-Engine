@@ -19,9 +19,13 @@ public:
 	bool OnEditor() override;
 #endif // !STANDALONE
 
+	void SaveData(JSON_Object* nObj) override;
+	void LoadData(DEConfig& nObj) override;
+
 	void SetAlignment(BILLBOARD_ALIGNMENT new_alignment);
 	void Draw();
 	Quat GetAlignment();
+
 private:
 	Quat ScreenAlign();
 	Quat WorldAlign();
@@ -29,4 +33,5 @@ private:
 
 private:
 	BILLBOARD_ALIGNMENT currentAlignment;
+	bool horizontalAligned; //For axis alignment only
 };

@@ -254,7 +254,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	}
 
 	DrawParticleSystems();
-	skybox.DrawAsSkybox(&App->moduleCamera->editorCamera);
+	if(App->moduleCamera->editorCamera.drawSkybox)
+		skybox.DrawAsSkybox(&App->moduleCamera->editorCamera);
 
 	DebugLine(pickingDebug);
 	App->moduleCamera->editorCamera.EndDraw();
@@ -282,7 +283,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		}
 
 		DrawParticleSystems();
-		skybox.DrawAsSkybox(gameCamera);
+
+		if (gameCamera->drawSkybox)
+			skybox.DrawAsSkybox(gameCamera);
+
 		glClear(GL_DEPTH_BUFFER_BIT);
 		App->moduleGui->RenderCanvas2D();
 		gameCamera->EndDraw();

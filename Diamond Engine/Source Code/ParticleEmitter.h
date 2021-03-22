@@ -3,7 +3,8 @@
 #include "Particle.h"
 #include "ParticleEffects.h"
 #include "MathGeoLib/include/Math/Quat.h"
-#include"DEJsonSupport.h"
+#include "DEJsonSupport.h"
+#include "Timer.h"
 
 class C_Transform;
 class ResourceTexture;
@@ -28,6 +29,8 @@ public:
 
 	void SaveData(JSON_Object* nObj);
 	void LoadData(DEConfig& nObj);
+
+	void RestartEmitter();
 
 private:
 	//calculates a new Pool Size from the particle spawn rate & particle lifeTime
@@ -65,7 +68,7 @@ private:
 	float particlesSize[2];
 
 	//Particles Starting Color
-	float4 particlesColor;
+	float particlesColor[4];
 
 	//particles per second
 	float particlesPerSec;
@@ -79,9 +82,11 @@ private:
 	std::vector<Particle> myParticles;
 	std::vector<ParticleEffect*> myEffects;
 	C_Transform* objTransform = nullptr;
+
+	bool delaying = false;
+	float maxDelay;
+	Timer delay;
 };
-
-
 
 const float particleVertices[] = {
 -1, -1,

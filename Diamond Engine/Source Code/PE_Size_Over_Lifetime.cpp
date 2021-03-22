@@ -29,6 +29,9 @@ void PE_SizeOverLifetime::OnEditor(int emitterIndex)
 	suffixLabel += emitterIndex;
 	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
 	{
+		if (ImGui::Button("Delete Size Effect"))
+			this->toDelete = true;
+
 		suffixLabel = "Initial Size##SizeOverLife";
 		suffixLabel += emitterIndex;
 		ImGui::DragFloat(suffixLabel.c_str(), &startingSize, 0.1f, 0.0f, FLT_MAX);

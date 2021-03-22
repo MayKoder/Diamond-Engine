@@ -38,7 +38,7 @@ public:
 	Frustum camFrustrum;
 	float fov;
 	float orthoSize;
-	bool cullingState;
+	bool cullingState, drawSkybox;
 
 	float windowWidth;
 	float windowHeight;

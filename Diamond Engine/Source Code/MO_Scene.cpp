@@ -43,6 +43,7 @@ M_Scene::~M_Scene()
 	root = nullptr;
 	defaultMaterial = nullptr;
 
+	activeScriptsVector.clear();
 	tags.clear();
 	layers.clear();
 }
@@ -389,6 +390,21 @@ void M_Scene::RecursivePostUpdate(GameObject* parent)
 	}
 }
 
+void M_Scene::RecursiveDontDestroy(GameObject* child, std::vector<GameObject*>& dontDestroyList)
+{
+	if (child->dontDestroy) {
+		dontDestroyList.push_back(child);
+		child->parent->RemoveChild(child);
+	}
+	else {
+		for (size_t i = 0; i < child->children.size(); ++i)
+		{
+			RecursiveDontDestroy(child->children[i],dontDestroyList);
+		}
+	}
+
+}
+
 #ifndef STANDALONE
 void M_Scene::OnGUI()
 {
@@ -457,8 +473,16 @@ void M_Scene::LoadScene(const char* name)
 
 #ifndef STANDALONE
 	App->moduleEditor->shortcutManager.DeleteCommandHistory();
+	App->moduleEditor->ClearConsole();
 #endif // !STANDALONE
 
+	//TODO Save gameobjects to dont destroy list
+	std::vector<GameObject*> dontDestroyList;
+
+	if (DETime::state == GameState::PLAY) {
+
+		RecursiveDontDestroy(root, dontDestroyList);
+	}
 	//Clear all current scene memory
 	destroyList.clear();
 	CleanScene();
@@ -503,6 +527,13 @@ void M_Scene::LoadScene(const char* name)
 	LoadNavigationData();
 	LoadScriptsData();
 
+	//Insert Dont destroy objects to new scene
+	for (size_t i = 0; i < dontDestroyList.size(); i++)
+	{
+		dontDestroyList[i]->ChangeParent(root);
+	}
+
+
 	//Free memory
 	json_value_free(scene);
 	strcpy(current_scene, name);
@@ -511,6 +542,7 @@ void M_Scene::LoadScene(const char* name)
 	FileSystem::GetFileName(name, scene_name, false);
 
 	strcpy(current_scene_name, scene_name.c_str());
+
 }
 
 void M_Scene::LoadModelTree(const char* modelPath)

@@ -17,10 +17,8 @@ public:
 
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
-
 private:
-	//Sphere with a point and a radius the point is an offset from the transform
-	float centerOfSphere[3]; //(x,y,z)
+	//Quad with a point and a radius the point is an offset from the transform
+	float centerOfQuad[3]; //(x,y,z)
 	float radius;
-
 };

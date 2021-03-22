@@ -31,6 +31,9 @@ void PE_RotateOverLifetime::Update(Particle& particle, float dt)
 #ifndef STANDALONE
 void PE_RotateOverLifetime::OnEditor(int emitterIndex)
 {
+	if (ImGui::Button("Delete Rotation Effect"))
+		this->toDelete = true;
+
 	std::string suffixLabel = "Rotate Over Lifetime Effect##";
 	suffixLabel += emitterIndex;
 	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
@@ -45,7 +48,6 @@ void PE_RotateOverLifetime::OnEditor(int emitterIndex)
 	}
 }
 #endif //!STANDALONE
-
 
 void PE_RotateOverLifetime::SaveData(JSON_Object* nObj)
 {

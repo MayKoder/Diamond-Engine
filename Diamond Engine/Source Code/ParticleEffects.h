@@ -15,7 +15,9 @@ enum class PARTICLE_EFFECT_TYPE : int
     COLOR_OVER_LIFETIME,
 	SIZE_OVER_LIFETIME,
 	VELOCITY_OVER_LIFETIME,
-	MAX
+    AREA_SPAWN_SPHERE,
+    AREA_SPAWN_CONE,
+	MAX    
 };
 
 class ParticleEffect 
@@ -36,6 +38,7 @@ public:
 
 public:
     PARTICLE_EFFECT_TYPE type;
+    bool toDelete;
 };
 
 #endif // !__PARTICLE_EFFECTS

@@ -3,6 +3,7 @@
 #include "Module.h"
 #include<vector>
 #include<map>
+#include "CO_Script.h"
 
 #include"parson/parson.h"
 class GameObject;
@@ -65,6 +66,8 @@ public:
 	std::vector<std::string> tags;
 	std::vector<std::string> layers;
 
+	std::vector<C_Script*> activeScriptsVector;
+
 	void LoadHoldScene();
 private:
 	void Destroy(GameObject* gm);
@@ -74,5 +77,7 @@ private:
 	void RecursiveUpdate(GameObject* parent);
 
 	void RecursivePostUpdate(GameObject* parent);
+
+	void RecursiveDontDestroy(GameObject* parent, std::vector<GameObject*>& dontDestroyList);
 
 };

@@ -1,4 +1,6 @@
 #include "DETime.h"
+#include "Application.h"
+#include "MO_Scene.h"
 
 int DETime::frameCount;
 
@@ -28,11 +30,18 @@ void DETime::Play()
 void DETime::Stop()
 {
 	state = GameState::STOP;
+
+	for (size_t i = 0; i < EngineExternal->moduleScene->activeScriptsVector.size(); ++i)
+	{
+		EngineExternal->moduleScene->activeScriptsVector[i]->OnApplicationQuit();
+	}
+
 	time = 0.f;
 	deltaTime = 0.f;
 	frameCount = 0;
 
 	gameTimer.Stop();
+
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 }
 
