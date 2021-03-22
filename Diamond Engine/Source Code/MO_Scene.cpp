@@ -43,6 +43,7 @@ M_Scene::~M_Scene()
 	root = nullptr;
 	defaultMaterial = nullptr;
 
+	activeScriptsVector.clear();
 	tags.clear();
 	layers.clear();
 }
