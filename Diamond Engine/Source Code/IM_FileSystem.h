@@ -26,6 +26,7 @@ namespace StringLogic {
 #define SOUNDS_PATH "Library/Sounds/"
 #define ANIMATIONS_PATH "Library/Animations/"
 #define PREFABS_PATH "Library/Prefabs/"
+#define FONTS_PATH "Library/Fonts/"
 
 namespace FileSystem
 {
@@ -60,4 +61,5 @@ namespace FileSystem
 
 	//TEMPORAL FIX
 	void CreateLibrarySoundBanks();
+	void CreateLibraryFonts();
 }
