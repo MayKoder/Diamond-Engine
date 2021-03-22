@@ -9,8 +9,8 @@ public class QuitConfirmation : DiamondComponent
 	{
 		if (gameObject.Name == "Cancel")
 		{
-			bigBrother.Enable(true);
-			confirmScreen.Enable(false);
+			bigBrother.EnableNav(true);
+			confirmScreen.EnableNav(false);
 		}
 		if (gameObject.Name == "QuittoDesktop")
 			InternalCalls.CloseGame();
