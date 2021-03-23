@@ -23,6 +23,7 @@ public:
 
 #ifndef STANDALONE
 	void OnEditor(int emitterIndex);
+	void TryDeleteUnusedEffects();
 #endif // !STANDALONE
 
 	void AssignTransform(C_Transform* objTransform);
@@ -31,6 +32,7 @@ public:
 	void LoadData(DEConfig& nObj);
 
 	void RestartEmitter();
+
 
 private:
 	//calculates a new Pool Size from the particle spawn rate & particle lifeTime

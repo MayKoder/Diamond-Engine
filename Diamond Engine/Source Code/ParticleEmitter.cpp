@@ -130,26 +130,13 @@ Emitter::~Emitter()
 	myEffects.clear();
 	myParticles.clear();
 	objTransform = nullptr;
+	delay.Stop();
 }
 
 
 void Emitter::Update(float dt, bool systemActive)
 {
-	//Delete effects
-	for (int i = 0; i < myEffects.size(); i++) {
-		if (myEffects[i]->toDelete) {
-			myEffects[i]->~ParticleEffect();
-			myEffects.erase(myEffects.begin() + i);
-			i--;
-		}
-	}
-
-	/*if (EngineExternal->moduleEditor->GetSelectedGO() == objTransform->GetGO()) {
-		playing = true;
-		duration.Start();
-	}*/
-
-	if (delaying) 
+	if (delaying)
 	{
 		if (delay.Read() >= maxDelay * 1000)
 		{
@@ -285,12 +272,12 @@ void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 	glDrawArraysInstanced(GL_TRIANGLES, 0, 6, particlesAlive);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
-	glDisableVertexAttribArray(3);
-	glDisableVertexAttribArray(4);
 	glDisableVertexAttribArray(5);
+	glDisableVertexAttribArray(4);
+	glDisableVertexAttribArray(3);
+	glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(0);
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -307,7 +294,7 @@ void Emitter::OnEditor(int emitterIndex)
 	{
 		ImGui::SameLine();
 		ImGui::Text("Delay time: %.2f", delay.Read() * 0.001f);
-		
+
 		guiName = "Delay" + suffixLabel;
 		ImGui::SliderFloat(guiName.c_str(), &maxDelay, 0.0f, 10.0f);
 
@@ -320,7 +307,7 @@ void Emitter::OnEditor(int emitterIndex)
 			SetParticlesPerSec(particlesPerSec);
 
 		guiName = "Start Size" + suffixLabel;
-		ImGui::DragFloatRange2(guiName.c_str(), &particlesSize[0], &particlesSize[1], 0.25f, 0.1f, 5.0f, "Min: %.1f", "Max: %.1f");			
+		ImGui::DragFloatRange2(guiName.c_str(), &particlesSize[0], &particlesSize[1], 0.25f, 0.1f, 5.0f, "Min: %.1f", "Max: %.1f");
 
 		//It doesn't make sense to have Start Speed when we have the velocity effect
 		//guiName = "Start Speed" + suffixLabel;
@@ -373,6 +360,19 @@ void Emitter::OnEditor(int emitterIndex)
 		ImGui::Spacing();
 	}
 }
+
+void Emitter::TryDeleteUnusedEffects()
+{
+	//Delete effects
+	for (int i = 0; i < myEffects.size(); ++i) {
+		if (myEffects[i]->toDelete) {
+			delete(myEffects[i]);
+			myEffects[i] = nullptr;
+			myEffects.erase(myEffects.begin() + i);
+			--i;
+		}
+	}
+}
 #endif // !STANDALONE
 
 
@@ -396,10 +396,10 @@ void Emitter::SaveData(JSON_Object* nObj)
 	DEJson::WriteVector2(nObj, "paSize", particlesSize);
 	DEJson::WriteVector4(nObj, "paColor", &particlesColor[0]);
 	DEJson::WriteFloat(nObj, "paPerSec", particlesPerSec);
-	
+
 	JSON_Value* effectsArray = json_value_init_array();
 	JSON_Array* jsArray = json_value_get_array(effectsArray);
-	
+
 	int effectsCount = myEffects.size();
 	for (int i = 0; i < effectsCount; ++i)
 	{
@@ -541,7 +541,7 @@ void Emitter::ThrowParticles(float dt)
 				myEffects[j]->Spawn(myParticles[unusedIndex]);
 			}
 		}
-	}	
+	}
 }
 
 int Emitter::DoesEffectExist(PARTICLE_EFFECT_TYPE type)
@@ -670,7 +670,7 @@ void Emitter::PrepareParticleToSpawn(Particle& p, float3& startingPos)
 	p.speed = { 0.0f,0.0f,0.0f };
 	p.maxLifetime = p.currentLifetime = EngineExternal->GetRandomFloat(particlesLifeTime[0], particlesLifeTime[1]);
 	p.size = EngineExternal->GetRandomFloat(particlesSize[0], particlesSize[1]);
-	p.color[0] = particlesColor[0]; 
+	p.color[0] = particlesColor[0];
 	p.color[1] = particlesColor[1];
 	p.color[2] = particlesColor[2];
 	p.color[3] = particlesColor[3];
@@ -705,7 +705,7 @@ int Emitter::FindUnusedParticle()
 
 void Emitter::SetParticlesPerSec(int newParticlesPerSec)
 {
-	particlesPerSec = max(newParticlesPerSec,0.0f);
+	particlesPerSec = max(newParticlesPerSec, 0.0f);
 
 	if (particlesPerSec != 0.0f)
 		secPerParticle = 1 / particlesPerSec;

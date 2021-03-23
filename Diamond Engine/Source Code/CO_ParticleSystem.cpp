@@ -27,7 +27,7 @@ C_ParticleSystem::~C_ParticleSystem()
 		delete myEmitters[i];
 		myEmitters[i] = nullptr;
 	}
-	
+
 	myEmitters.clear();
 }
 
@@ -45,7 +45,7 @@ bool C_ParticleSystem::OnEditor()
 		{
 			Stop();
 		}
-		else 
+		else
 		{
 			Play();
 		}
@@ -96,13 +96,20 @@ void C_ParticleSystem::Update()
 		if (myEmitters[i]->toDelete)
 		{
 			delete myEmitters[i];
+			myEmitters[i] = nullptr;
 			myEmitters.erase(myEmitters.begin() + i);
 		}
+#ifndef STANDALONE
+		else
+		{
+			myEmitters[i]->TryDeleteUnusedEffects();
+		}
+#endif // !STANDALONE
 	}
 
 	if (systemActive == true)
 	{
-		if (playTimer.Read() >=  maxDuration * 1000)
+		if (playTimer.Read() >= maxDuration * 1000)
 		{
 			playTimer.Stop();
 			if (looping) playTimer.Start();
@@ -131,7 +138,7 @@ void C_ParticleSystem::Draw()
 		ResourceMaterial* material = static_cast<C_Material*>(mat)->material;
 		material->shader->Bind();
 		material->PushUniforms();
-		
+
 		for (int i = 0; i < myEmitters.size(); ++i)
 		{
 			myEmitters[i]->Draw(material->shader->shaderProgramID, bill->GetAlignment());
