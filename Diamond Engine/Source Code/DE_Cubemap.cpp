@@ -81,8 +81,9 @@ void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glDisableVertexAttribArray(0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	//glBindVertexArray(0);
 
 	//glDepthRange(0.f, 1.f);
@@ -91,7 +92,7 @@ void DE_Cubemap::DrawAsSkybox(C_Camera* _camera)
 	//glEnable(GL_DEPTH_TEST);
 	//glDepthFunc(GL_LESS);
 
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 
 	if(cameraNeedsChange)
 		_camera->camFrustrum.type = FrustumType::OrthographicFrustum;

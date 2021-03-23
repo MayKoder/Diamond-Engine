@@ -88,12 +88,12 @@ Emitter::Emitter() :
 	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), (void*)(16 * sizeof(float)));
 	glVertexAttribDivisor(5, 1);
 
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
-	glDisableVertexAttribArray(3);
-	glDisableVertexAttribArray(4);
 	glDisableVertexAttribArray(5);
+	glDisableVertexAttribArray(4);
+	glDisableVertexAttribArray(3);
+	glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -108,9 +108,9 @@ Emitter::~Emitter()
 	glDeleteBuffers(1, &instanceVBO);
 	glDeleteBuffers(1, &VAO);
 
-	vertexVBO = 0u;
-	instanceVBO = 0u;
-	VAO = 0u;
+	vertexVBO = 0;
+	instanceVBO = 0;
+	VAO = 0;
 
 	if (texture != nullptr)
 	{
@@ -237,14 +237,13 @@ void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 	glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * particlesAlive * INSTANCE_DATA_LENGHT, NULL, GL_STREAM_DRAW);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, vboInfo.size() * sizeof(float), &vboInfo[0]);
-
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glBindVertexArray(VAO);
 
 	//glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
 	glEnableVertexAttribArray(0);
 	//glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
-
 
 	//glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * MAX_PARTICLES * INSTANCE_DATA_LENGHT, NULL, GL_DYNAMIC_DRAW);
@@ -271,7 +270,6 @@ void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 
 	glDrawArraysInstanced(GL_TRIANGLES, 0, 6, particlesAlive);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisableVertexAttribArray(5);
 	glDisableVertexAttribArray(4);
 	glDisableVertexAttribArray(3);
@@ -279,7 +277,9 @@ void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(0);
 	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	vboInfo.clear();
 }
 
 
