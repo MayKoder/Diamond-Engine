@@ -27,6 +27,7 @@ faceNormals(false), vertexNormals(false), showAABB(false), showOBB(false), drawD
 {
 	name = "Mesh Renderer";
 	alternColor = float3::one;
+	gameObjectTransform = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM));
 }
 
 C_MeshRenderer::~C_MeshRenderer()
@@ -84,15 +85,18 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 	//Mesh array with transform matrix of each bone
 	if (rootBone != nullptr)
 	{
+		//float4x4 invertedMatrix = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM))->globalTransform.Inverted();
+		float4x4 invertedMatrix = gameObjectTransform->globalTransform.Inverted();
+
 		//Get each bone
 		for (std::map<std::string, uint>::iterator it = _mesh->bonesMap.begin(); it != _mesh->bonesMap.end(); ++it)
 		{
-			GameObject* bone = bonesMap[it->second];
+			C_Transform* bone = bonesMap[it->second];
 
 			if (bone != nullptr)
 			{
 				//Calcule of Delta Matrix
-				float4x4 Delta = CalculateDeltaMatrix(dynamic_cast<C_Transform*>(bone->GetComponent(Component::TYPE::TRANSFORM))->globalTransform, dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM))->globalTransform.Inverted());
+				float4x4 Delta = CalculateDeltaMatrix(bone->globalTransform, invertedMatrix);
 				Delta = Delta * _mesh->bonesOffsets[it->second];
 
 				//Storage of Delta Matrix (Transformation applied to each bone)
@@ -284,14 +288,7 @@ ResourceMesh* C_MeshRenderer::GetRenderMesh()
 
 float4x4 C_MeshRenderer::CalculateDeltaMatrix(float4x4 globalMat, float4x4 invertMat)
 {
-	float3 position;
-	Quat rotation;
-	float3 scale;
-
-	float4x4 mat;
-	mat = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM))->globalTransform.Inverted() * globalMat;
-
-	return mat;
+	return invertMat * globalMat;
 }
 
 void C_MeshRenderer::GetBoneMapping()
@@ -305,7 +302,7 @@ void C_MeshRenderer::GetBoneMapping()
 		std::map<std::string, uint>::iterator it = _mesh->bonesMap.find(gameObjects[i]->name);
 		if (it != _mesh->bonesMap.end())
 		{
-			bonesMap[it->second] = gameObjects[i];
+			bonesMap[it->second] = dynamic_cast<C_Transform*>(gameObjects[i]->GetComponent(Component::TYPE::TRANSFORM));
 		}
 	}
 }

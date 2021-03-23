@@ -3,6 +3,7 @@
 #include <map>
 #include"MathGeoLib/include/Geometry/AABB.h"
 #include"MathGeoLib/include/Geometry/OBB.h"
+#include "CO_Transform.h"
 
 class ResourceMesh;
 
@@ -28,7 +29,7 @@ public:
 	void SetRootBone(GameObject* _rootBone);
 	void SetRenderMesh(ResourceMesh* mesh);
 	ResourceMesh* GetRenderMesh();
-	float4x4 CalculateDeltaMatrix(float4x4 globalMat, float4x4 invertMat);
+	float4x4 CalculateDeltaMatrix(float4x4 globalMat , float4x4 invertMat);
 	void GetBoneMapping();
 	void DrawDebugVertices();
 
@@ -42,5 +43,6 @@ private:
 	ResourceMesh* _mesh;
 	float3 alternColor;
 	bool drawDebugVertices;
-	std::vector<GameObject*> bonesMap;
+	C_Transform* gameObjectTransform;
+	std::vector<C_Transform*> bonesMap;
 };
