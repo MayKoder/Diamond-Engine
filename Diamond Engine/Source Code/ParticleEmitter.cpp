@@ -106,7 +106,7 @@ Emitter::~Emitter()
 {
 	glDeleteBuffers(1, &vertexVBO);
 	glDeleteBuffers(1, &instanceVBO);
-	glDeleteBuffers(1, &VAO);
+	glDeleteVertexArrays(1, &VAO);
 
 	vertexVBO = 0u;
 	instanceVBO = 0u;
