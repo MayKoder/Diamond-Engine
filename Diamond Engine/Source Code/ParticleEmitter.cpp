@@ -1,14 +1,12 @@
 #include "ParticleEmitter.h"
 #include "Globals.h"
 
-#include "PE_Spawn_Area.h"
 #include "PE_Force_Over_Lifetime.h"
 #include "PE_Rotate_Over_Lifetime.h"
 #include "PE_Size_Over_Lifetime.h"
 #include "PE_Color_Over_Lifetime.h"
 #include "PE_Velocity_Over_Lifetime.h"
-#include "PE_Spawn_Sphere.h"
-#include "PE_Spawn_Cone.h"
+#include "PE_Shape.h"
 
 #include <string>
 
@@ -46,7 +44,6 @@ Emitter::Emitter() :
 	maxDelay(0.0f)
 {
 	memset(particlesLifeTime, 0.1f, sizeof(particlesLifeTime));
-	memset(particlesSpeed, 0.0f, sizeof(particlesSpeed));
 	memset(particlesSize, 1.0f, sizeof(particlesSize));
 	memset(particlesColor, 1.0f, sizeof(particlesColor));
 
@@ -392,7 +389,6 @@ void Emitter::SaveData(JSON_Object* nObj)
 	}
 
 	DEJson::WriteVector2(nObj, "paLifeTime", particlesLifeTime);
-	DEJson::WriteVector2(nObj, "paSpeed", particlesSpeed);
 	DEJson::WriteVector2(nObj, "paSize", particlesSize);
 	DEJson::WriteVector4(nObj, "paColor", &particlesColor[0]);
 	DEJson::WriteFloat(nObj, "paPerSec", particlesPerSec);
@@ -426,9 +422,6 @@ void Emitter::LoadData(DEConfig& nObj)
 	particlesLifeTime[0] = paLife.x;
 	particlesLifeTime[1] = paLife.y;
 
-	float2 paSpd = nObj.ReadVector2("paSpeed");
-	particlesSpeed[0] = paSpd.x;
-	particlesSpeed[1] = paSpd.y;
 
 	float2 paSize = nObj.ReadVector2("paSize");
 	particlesSize[0] = paSize.x;
@@ -564,15 +557,6 @@ std::string Emitter::ParticleEffectEnumToString(PARTICLE_EFFECT_TYPE type)
 	{
 	case PARTICLE_EFFECT_TYPE::NONE:
 		break;
-	case PARTICLE_EFFECT_TYPE::AREA_SPAWN:
-		ret = "Spawn Shape Effect";
-		break;
-	case PARTICLE_EFFECT_TYPE::AREA_SPAWN_SPHERE:
-		ret = "Spawn in Sphere Shape Effect";
-		break;
-	case PARTICLE_EFFECT_TYPE::AREA_SPAWN_CONE:
-		ret = "Spawn in Cone Shape Effect";
-		break;
 	case PARTICLE_EFFECT_TYPE::FORCE_OVER_LIFETIME:
 		ret = "Force Over Lifetime Effect";
 		break;
@@ -587,6 +571,9 @@ std::string Emitter::ParticleEffectEnumToString(PARTICLE_EFFECT_TYPE type)
 		break;
 	case PARTICLE_EFFECT_TYPE::VELOCITY_OVER_LIFETIME:
 		ret = "Velocity Over Lifetime Effect";
+		break;
+	case PARTICLE_EFFECT_TYPE::SHAPE:
+		ret = "Shape Effect";
 		break;
 	case PARTICLE_EFFECT_TYPE::MAX:
 		break;
@@ -604,15 +591,6 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 	{
 	case PARTICLE_EFFECT_TYPE::NONE:
 		break;
-	case PARTICLE_EFFECT_TYPE::AREA_SPAWN:
-		newEffect = new PE_SpawnArea();
-		break;
-	case PARTICLE_EFFECT_TYPE::AREA_SPAWN_SPHERE:
-		newEffect = new PE_SpawnSphere();
-		break;
-	case PARTICLE_EFFECT_TYPE::AREA_SPAWN_CONE:
-		newEffect = new PE_SpawnCone();
-		break;
 	case PARTICLE_EFFECT_TYPE::FORCE_OVER_LIFETIME:
 		newEffect = new PE_ForceOverLifetime();
 		break;
@@ -627,6 +605,9 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 		break;
 	case PARTICLE_EFFECT_TYPE::VELOCITY_OVER_LIFETIME:
 		newEffect = new PE_VelocityOverLifetime();
+		break;
+	case PARTICLE_EFFECT_TYPE::SHAPE:
+		newEffect = new PE_Shape();
 		break;
 	case PARTICLE_EFFECT_TYPE::MAX:
 		break;

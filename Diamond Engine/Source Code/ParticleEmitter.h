@@ -63,9 +63,6 @@ private:
 	//Min - Max Start particles lifeTime 
 	float particlesLifeTime[2];
 
-	//Min - Max Start particles speed 
-	float particlesSpeed[2]; //TODO move to emisison shape component
-
 	//Min - Max Start particles size 
 	float particlesSize[2];
 

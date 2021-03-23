@@ -1,66 +1,62 @@
 #include "PE_Spawn_Area.h"
 #include "Particle.h"
 #include "Application.h"
-#include "CO_Transform.h"
 
 #include "ImGui/imgui.h"
 
-PE_SpawnArea::PE_SpawnArea() :ParticleEffect(PARTICLE_EFFECT_TYPE::AREA_SPAWN)
+PE_SpawnShapeArea::PE_SpawnShapeArea() :PE_SpawnShapeBase(PE_SPAWN_SHAPE_TYPE::AREA)
 {
 	memset(centerOfQuad, 0.f, sizeof(centerOfQuad));
 	radius = 1.0f;
 }
 
-PE_SpawnArea::~PE_SpawnArea()
+PE_SpawnShapeArea::~PE_SpawnShapeArea()
 {
 
 }
 
-void PE_SpawnArea::Spawn(Particle& particle)
+void PE_SpawnShapeArea::Spawn(Particle& particle, bool hasInitialSpeed, float speed)
 {
 	//Get a random spawn point inside of a quad defined by a point and a radius
 	particle.pos.x += centerOfQuad[0] + EngineExternal->GetRandomFloat(-radius, radius);//TODO we take particle.pos. as an imput for the moment because we set the position to the transform origin when we spawn it BUT this won't work when we have different effect.spawn that change postitions
 	particle.pos.y += centerOfQuad[1] + EngineExternal->GetRandomFloat(-radius, radius);
 	particle.pos.z += centerOfQuad[2] + EngineExternal->GetRandomFloat(-radius, radius);
+
+	if (hasInitialSpeed)
+	{
+		particle.speed = (particle.pos - float3(centerOfQuad[0], centerOfQuad[1], centerOfQuad[2])).Normalized() * speed;
+	}
+
+
 }
 
 #ifndef STANDALONE
-void PE_SpawnArea::OnEditor(int emitterIndex)
+void PE_SpawnShapeArea::OnEditor(int emitterIndex)
 {
-	std::string suffixLabel = "Area Spawn Effect##";
+	std::string suffixLabel = "Offset##PaShapeArea";
 	suffixLabel += emitterIndex;
-	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
-	{
-		if (ImGui::Button("Delete Area Spawn Effect"))
-			this->toDelete = true;
+	ImGui::DragFloat3(suffixLabel.c_str(), centerOfQuad);
+	suffixLabel = "Radius##PaShapeArea";
+	suffixLabel += emitterIndex;
+	ImGui::DragFloat(suffixLabel.c_str(), &radius);
 
-		suffixLabel = "Offset##lPaSpdAreaSpawn";
-		suffixLabel += emitterIndex;
-		ImGui::DragFloat3(suffixLabel.c_str(), centerOfQuad);
-		suffixLabel = "Radius##lPaSpdAreaRadius";
-		suffixLabel += emitterIndex;
-		ImGui::DragFloat(suffixLabel.c_str(), &radius);
-	}
 }
 #endif // !STANDALONE
 
 
-void PE_SpawnArea::SaveData(JSON_Object* nObj)
+void PE_SpawnShapeArea::SaveData(JSON_Object* nObj)
 {
-	ParticleEffect::SaveData(nObj);
-
-	DEJson::WriteVector3(nObj, "paSpawnAreaPos", centerOfQuad);
-	DEJson::WriteFloat(nObj, "paSpawnAreaRadius", radius);
+	DEJson::WriteVector3(nObj, "PaShapeAreaPos", centerOfQuad);
+	DEJson::WriteFloat(nObj, "PaShapeAreaRadius", radius);
 }
 
 
-void PE_SpawnArea::LoadData(DEConfig& nObj)
+void PE_SpawnShapeArea::LoadData(DEConfig& nObj)
 {
-	ParticleEffect::LoadData(nObj);
-	float3 pos = nObj.ReadVector3("paSpawnAreaPos");
+	float3 pos = nObj.ReadVector3("PaShapeAreaPos");
 	centerOfQuad[0] = pos.x;
 	centerOfQuad[1] = pos.y;
 	centerOfQuad[2] = pos.z;
 
-	radius = nObj.ReadFloat("paSpawnAreaRadius");
+	radius = nObj.ReadFloat("PaShapeAreaRadius");
 }
