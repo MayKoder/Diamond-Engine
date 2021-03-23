@@ -36,7 +36,7 @@ public:
 	int ImportFile(const char* assetsFile, Resource::Type type);
 
 	void PopulateFileArray();
-	void UnloadResource(int uid);
+	void UnloadResource(int uid, bool releaseAtZero = true);
 	void GenerateMeta(const char* aPath, const char* lPath, unsigned int uid, Resource::Type type);
 
 	Resource* RequestResource(int uid, Resource::Type type);
@@ -56,6 +56,8 @@ public:
 	void UpdateMeshesDisplay();
 	void UpdateAnimationsDisplay();
 	void NeedsDirsUpdate(AssetDir& dir);
+
+	void ZeroReferenceCleanUp();
 
 private:
 	void LoadResource(int uid);

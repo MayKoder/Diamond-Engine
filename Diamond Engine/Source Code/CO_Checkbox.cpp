@@ -29,22 +29,22 @@ checkbox_active(false), is_selected(false)
 C_Checkbox::~C_Checkbox()
 {
 	if (sprite_checkbox_active != nullptr) {
-		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_active->GetUID());
+		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_active->GetUID(), !LOADING_SCENE);
 	}
 	if (sprite_checkbox_active_hovered != nullptr) {
-		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_active_hovered->GetUID());
+		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_active_hovered->GetUID(), !LOADING_SCENE);
 	}
 	if (sprite_checkbox_active_pressed != nullptr) {
-		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_active_pressed->GetUID());
+		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_active_pressed->GetUID(), !LOADING_SCENE);
 	}
 	if (sprite_checkbox_unactive != nullptr) {
-		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_unactive->GetUID());
+		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_unactive->GetUID(), !LOADING_SCENE);
 	}
 	if (sprite_checkbox_unactive_hovered != nullptr) {
-		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_unactive_hovered->GetUID());
+		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_unactive_hovered->GetUID(), !LOADING_SCENE);
 	}
 	if (sprite_checkbox_unactive_pressed != nullptr) {
-		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_unactive_pressed->GetUID());
+		EngineExternal->moduleResources->UnloadResource(sprite_checkbox_unactive_pressed->GetUID(), !LOADING_SCENE);
 	}
 	delete thisAudSource;
 	thisAudSource = nullptr;
