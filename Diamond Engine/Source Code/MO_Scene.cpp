@@ -28,6 +28,7 @@
 
 #include "COMM_DeleteGO.h"
 
+extern bool LOADING_SCENE = false;
 M_Scene::M_Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr),
 defaultMaterial(nullptr), holdUID(0)
 {
@@ -476,6 +477,8 @@ void M_Scene::LoadScene(const char* name)
 	App->moduleEditor->ClearConsole();
 #endif // !STANDALONE
 
+	LOADING_SCENE = true;
+
 	//TODO Save gameobjects to dont destroy list
 	std::vector<GameObject*> dontDestroyList;
 
@@ -542,6 +545,9 @@ void M_Scene::LoadScene(const char* name)
 	FileSystem::GetFileName(name, scene_name, false);
 
 	strcpy(current_scene_name, scene_name.c_str());
+	App->moduleResources->ZeroReferenceCleanUp();
+
+	LOADING_SCENE = false;
 
 }
 

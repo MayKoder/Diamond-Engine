@@ -20,7 +20,7 @@ C_Image2D::C_Image2D(GameObject* gameObject) : Component(gameObject),
 C_Image2D::~C_Image2D()
 {
 	if (texture != nullptr)
-		EngineExternal->moduleResources->UnloadResource(texture->GetUID());
+		EngineExternal->moduleResources->UnloadResource(texture->GetUID(), !LOADING_SCENE);
 }
 
 

@@ -226,6 +226,22 @@ void M_ResourceManager::NeedsDirsUpdate(AssetDir& dir)
 	fileCheckTime = 0.f;
 }
 
+void M_ResourceManager::ZeroReferenceCleanUp()
+{
+	std::vector<Resource*> toDelete;
+	for (auto i = resources.begin(); i != resources.end(); i++)
+	{
+		if (i->second->GetReferenceCount() <= 0)
+			toDelete.push_back(i->second);
+	}
+
+	for (size_t j = 0; j < toDelete.size(); ++j)
+	{
+		ReleaseResource(toDelete[j]->GetUID());
+	}
+	toDelete.clear();
+}
+
 void M_ResourceManager::UpdateMeshesDisplay()
 {
 	meshesLibraryRoot.childDirs.clear();
@@ -547,7 +563,7 @@ void M_ResourceManager::LoadResource(int uid)
 
 }
 
-void M_ResourceManager::UnloadResource(int uid)
+void M_ResourceManager::UnloadResource(int uid, bool releaseAtZero)
 {
 	Resource* res = nullptr;
 	
@@ -558,7 +574,7 @@ void M_ResourceManager::UnloadResource(int uid)
 	res = it->second;
 	res->DecreaseReferenceCount();
 
-	if (res->GetReferenceCount() <= 0) 
+	if (releaseAtZero == true && res->GetReferenceCount() <= 0)
 		ReleaseResource(res->GetUID());
 
 }

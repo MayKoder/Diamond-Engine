@@ -77,3 +77,4 @@ private:
 };
 
 extern Application* EngineExternal;
+extern bool LOADING_SCENE;

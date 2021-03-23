@@ -33,13 +33,13 @@ num_sprite_used(BUTTONSTATE::BUTTONUNHOVERED), is_selected(false)
 C_Button::~C_Button()
 {
 	if (sprite_button_pressed != nullptr) {
-		EngineExternal->moduleResources->UnloadResource(sprite_button_pressed->GetUID());
+		EngineExternal->moduleResources->UnloadResource(sprite_button_pressed->GetUID(), !LOADING_SCENE);
 	}
 	if (sprite_button_hovered != nullptr) {
-		EngineExternal->moduleResources->UnloadResource(sprite_button_hovered->GetUID());
+		EngineExternal->moduleResources->UnloadResource(sprite_button_hovered->GetUID(), !LOADING_SCENE);
 	}
 	if (sprite_button_unhovered != nullptr) {
-		EngineExternal->moduleResources->UnloadResource(sprite_button_unhovered->GetUID());
+		EngineExternal->moduleResources->UnloadResource(sprite_button_unhovered->GetUID(), !LOADING_SCENE);
 	}
 	delete thisAudSource;
 	thisAudSource = nullptr;
