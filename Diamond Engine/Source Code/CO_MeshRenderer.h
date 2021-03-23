@@ -3,9 +3,9 @@
 #include <map>
 #include"MathGeoLib/include/Geometry/AABB.h"
 #include"MathGeoLib/include/Geometry/OBB.h"
-#include "CO_Transform.h"
 
 class ResourceMesh;
+class C_Transform;
 
 class C_MeshRenderer : public Component
 {
