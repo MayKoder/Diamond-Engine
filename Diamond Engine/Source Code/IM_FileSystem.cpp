@@ -135,8 +135,10 @@ void FileSystem::CreateLibraryFolders()
 	CreateDir(ANIMATIONS_PATH);
 	CreateDir(SOUNDS_PATH);
 	CreateDir(PREFABS_PATH);
+	CreateDir(FONTS_PATH);
 
 	CreateLibrarySoundBanks();//TODO move this somewhere else? ask myke
+	CreateLibraryFonts();//TODO same bro
 }
 
 // Add a new zip file or folder
@@ -401,6 +403,37 @@ void FileSystem::CreateLibrarySoundBanks()
 			std::string output;
 			std::string fileDir = "Assets\\SoundBanks\\" + fileList[i];
 			Copy(fileDir.c_str(), SOUNDS_PATH, output);
+		}
+	}
+}
+
+
+void FileSystem::CreateLibraryFonts()
+{
+	std::string dir = "Assets/Fonts";
+	std::vector<std::string> fileList;
+
+	char** rc = PHYSFS_enumerateFiles(dir.c_str());
+	char** iter;
+
+	std::string directory = dir;
+
+	for (iter = rc; *iter != nullptr; iter++)
+	{
+		if (!PHYSFS_isDirectory((directory + *iter).c_str()))
+			fileList.push_back(*iter);
+	}
+
+	PHYSFS_freeList(rc);
+
+	for (int i = 0; i < fileList.size(); i++)
+	{
+		uint found = fileList[i].find(".meta");
+		if (found == std::string::npos)
+		{
+			std::string output;
+			std::string fileDir = "Assets\\Fonts\\" + fileList[i];
+			Copy(fileDir.c_str(), FONTS_PATH, output);
 		}
 	}
 }

@@ -1,4 +1,5 @@
 #include "IM_FontImporter.h"
+#include "IM_FileSystem.h"
 
 #include "Globals.h"
 
@@ -75,8 +76,13 @@ FreeType_Library::~FreeType_Library()
 
 void FreeType_Library::ImportNewFont(const char* path, int size)
 {
+	std::string fileName;
+	std::string fileExtension;
+	FileSystem::SplitFilePath(path, nullptr, &fileName, &fileExtension);
+	std::string libPath = FONTS_PATH + fileName + "." + fileExtension;
+
 	FT_Face new_face;
-	FT_Error error = FT_New_Face(library, path, 0, &new_face);
+	FT_Error error = FT_New_Face(library, libPath.c_str(), 0, &new_face);
 
 	if (error)
 	{
@@ -89,7 +95,7 @@ void FreeType_Library::ImportNewFont(const char* path, int size)
 
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		InitFontDictionary(new_face, path);
+		InitFontDictionary(new_face, libPath.c_str());
 	}
 }
 
@@ -127,15 +133,20 @@ void FreeType_Library::InitFontDictionary(FT_Face& face, const char* fontName)
 
 FontDictionary* FreeType_Library::GetFont(const char* name)
 {
-	std::map<std::string, FontDictionary>::iterator iterator = fontLibrary.find(name);
+	std::string fileName;
+	std::string fileExtension;
+	FileSystem::SplitFilePath(name, nullptr, &fileName, &fileExtension);
+	std::string libPath = FONTS_PATH + fileName + "." + fileExtension;
+
+	std::map<std::string, FontDictionary>::iterator iterator = fontLibrary.find(libPath.c_str());
 
 	if (iterator != fontLibrary.end())
 		return &iterator->second;
 
 	else
 	{
-		ImportNewFont(name, 48);
-		iterator = fontLibrary.find(name);
+		ImportNewFont(libPath.c_str(), 48);
+		iterator = fontLibrary.find(libPath.c_str());
 
 		return (iterator != fontLibrary.end() ? &iterator->second : nullptr);
 	}
