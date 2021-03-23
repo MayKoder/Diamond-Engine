@@ -87,7 +87,7 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 		//Get each bone
 		for (std::map<std::string, uint>::iterator it = _mesh->bonesMap.begin(); it != _mesh->bonesMap.end(); ++it)
 		{
-			GameObject* bone = bonesMap[it->first];
+			GameObject* bone = bonesMap[it->second];
 
 			if (bone != nullptr)
 			{
@@ -245,7 +245,7 @@ void C_MeshRenderer::SetRootBone(GameObject* _rootBone)
 	rootBone = _rootBone;
 
 	//Get all the bones
-	GetBoneMapping(bonesMap);
+	GetBoneMapping();
 
 	//Set bone Transforms array size using original bones transform array size
 	_mesh->boneTransforms.resize(_mesh->bonesOffsets.size());
@@ -262,7 +262,6 @@ void C_MeshRenderer::SetRootBone(GameObject* _rootBone)
 void C_MeshRenderer::SetRenderMesh(ResourceMesh* mesh)
 {
 	_mesh = mesh;
-	//_mesh->LoadCustomFormat(_mesh->GetLibraryPath());
 
 	if (mesh == nullptr)
 		return;
@@ -289,23 +288,25 @@ float4x4 C_MeshRenderer::CalculateDeltaMatrix(float4x4 globalMat, float4x4 inver
 	Quat rotation;
 	float3 scale;
 
-	float4x4 mat = globalMat;
-	mat.Decompose(position, rotation, scale);
-	mat = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM))->globalTransform.Inverted() * mat;
-	mat.Decompose(position, rotation, scale);
+	float4x4 mat;
+	mat = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM))->globalTransform.Inverted() * globalMat;
 
 	return mat;
 }
 
-void C_MeshRenderer::GetBoneMapping(std::map<std::string, GameObject*>& boneMapping)
+void C_MeshRenderer::GetBoneMapping()
 {
-	boneMapping.clear();
 	std::vector<GameObject*> gameObjects;
 	rootBone->CollectChilds(gameObjects);
 
+	bonesMap.resize(_mesh->bonesMap.size());
 	for (uint i = 0; i < gameObjects.size(); ++i)
 	{
-		boneMapping[gameObjects[i]->name] = gameObjects[i];
+		std::map<std::string, uint>::iterator it = _mesh->bonesMap.find(gameObjects[i]->name);
+		if (it != _mesh->bonesMap.end())
+		{
+			bonesMap[it->second] = gameObjects[i];
+		}
 	}
 }
 

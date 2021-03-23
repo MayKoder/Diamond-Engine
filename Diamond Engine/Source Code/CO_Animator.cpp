@@ -289,7 +289,7 @@ bool C_Animator::OnEditor()
 		}
 
 		//List of existing animations
-		static char newName[32];
+		static char newName[64];
 
 		std::string animation_to_remove = "";
 		ImGui::Text("Select a new animation");
