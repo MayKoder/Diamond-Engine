@@ -290,6 +290,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		skybox.DrawAsSkybox(&App->moduleCamera->editorCamera);
 
 	DebugLine(pickingDebug);
+	DrawDebugLines();
+
 	App->moduleCamera->editorCamera.EndDraw();
 #endif // !STANDALONE
 
@@ -442,43 +444,48 @@ void ModuleRenderer3D::OnGUI()
 
 	}
 }
+void ModuleRenderer3D::DrawDebugLines()
+{
+	glBegin(GL_LINES);
+	for (size_t i = 0; i < lines.size(); i++)
+	{
+		glColor3fv(lines[i].color.ptr());
+		glVertex3fv(lines[i].a.ptr());
+		glVertex3fv(lines[i].b.ptr());
+
+		glColor3f(255.f, 255.f, 255.f);
+	}
+	glEnd();
+
+	lines.clear();
+}
+void ModuleRenderer3D::AddDebugLines(float3& a, float3& b, float3& color)
+{
+	lines.push_back(LineRender(a, b, color));
+}
 #endif // !STANDALONE
 
 void ModuleRenderer3D::DrawBox(float3* points, float3 color)
 {
 	glColor3fv(&color.x);
 	glLineWidth(2.f);
-	glBegin(GL_LINES);
 
 	//Draw plane
-	glVertex3fv(&points[0].x);
-	glVertex3fv(&points[2].x);
-	glVertex3fv(&points[2].x);
-	glVertex3fv(&points[6].x);
-	glVertex3fv(&points[6].x);
-	glVertex3fv(&points[4].x);
-	glVertex3fv(&points[4].x);
-	glVertex3fv(&points[0].x);
+	EngineExternal->moduleRenderer3D->AddDebugLines(points[0], points[2], color);
+	EngineExternal->moduleRenderer3D->AddDebugLines(points[2], points[6], color);
+	EngineExternal->moduleRenderer3D->AddDebugLines(points[6], points[4], color);
+	EngineExternal->moduleRenderer3D->AddDebugLines(points[4], points[0], color);
 
-	glVertex3fv(&points[0].x);
-	glVertex3fv(&points[1].x);
-	glVertex3fv(&points[1].x);
-	glVertex3fv(&points[3].x);
-	glVertex3fv(&points[3].x);
-	glVertex3fv(&points[2].x);
-	glVertex3fv(&points[4].x);
-	glVertex3fv(&points[5].x);
+	EngineExternal->moduleRenderer3D->AddDebugLines(points[0], points[1], color);
+	EngineExternal->moduleRenderer3D->AddDebugLines(points[1], points[3], color);
+	EngineExternal->moduleRenderer3D->AddDebugLines(points[3], points[2], color);
+	EngineExternal->moduleRenderer3D->AddDebugLines(points[4], points[5], color);
 
-	glVertex3fv(&points[6].x);
-	glVertex3fv(&points[7].x);
-	glVertex3fv(&points[5].x);
-	glVertex3fv(&points[7].x);
-	glVertex3fv(&points[3].x);
-	glVertex3fv(&points[7].x);
-	glVertex3fv(&points[1].x);
-	glVertex3fv(&points[5].x);
+	EngineExternal->moduleRenderer3D->AddDebugLines(points[6], points[7], color);
+	EngineExternal->moduleRenderer3D->AddDebugLines(points[5], points[7], color);
+	EngineExternal->moduleRenderer3D->AddDebugLines(points[3], points[7], color);
+	EngineExternal->moduleRenderer3D->AddDebugLines(points[1], points[5], color);
 
-	glEnd();
 	glLineWidth(1.f);
 	glColor3f(1.f, 1.f, 1.f);
 }
@@ -564,14 +571,9 @@ void ModuleRenderer3D::RenderWithOrdering(bool rTex)
 
 void ModuleRenderer3D::DebugLine(LineSegment& line)
 {
-	glColor3f(1.f, 0.f, 0.f);
 	glLineWidth(2.f);
-	glBegin(GL_LINES);
-	glVertex3fv(&pickingDebug.a.x);
-	glVertex3fv(&pickingDebug.b.x);
-	glEnd();
+	this->AddDebugLines(pickingDebug.a, pickingDebug.b, float3(1.f, 0.f, 0.f));
 	glLineWidth(1.f);
-	glColor3f(1.f, 1.f, 1.f);
 }
 
 /*Get SDL caps*/
