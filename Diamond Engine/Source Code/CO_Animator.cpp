@@ -50,6 +50,8 @@ C_Animator::~C_Animator()
 	animations.clear();
 	boneMapping.clear();
 	clips.clear();
+	currentAnimationLUT.clear();
+	previousAnimationLUT.clear();
 }
 
 void C_Animator::Start()
@@ -514,6 +516,9 @@ void C_Animator::Play(std::string animName, float blendDuration)
 	blendTimeDuration = blendDuration;
 	blendTime = 0.0f;
 	time = 0;
+
+	SetAnimationLookUpTable(currentAnimation, currentAnimationLUT);
+	SetAnimationLookUpTable(previousAnimation, previousAnimationLUT);
 }
 
 void C_Animator::Pause()
@@ -565,36 +570,32 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* animation, con
 	}
 
 	//LOG(LogType::L_NORMAL, "%i", currentFrame);
-	std::map<std::string, C_Transform*>::iterator boneIt;
-	for (boneIt = boneMapping.begin(); boneIt != boneMapping.end(); ++boneIt)
+	std::map<C_Transform*, Channel*>::iterator boneIt;
+	for (boneIt = currentAnimationLUT.begin(); boneIt != currentAnimationLUT.end(); ++boneIt)
 	{
-		if (animation->channels.find(boneIt->first) == animation->channels.end())
-			continue;
-
-		const Channel& channel = animation->channels.find(boneIt->first.c_str())->second;
+		Channel& channel = *boneIt->second;
 		
-		float3 position = GetChannelPosition(channel, currentFrame, boneIt->second->position);
-		Quat   rotation = GetChannelRotation(channel, currentFrame, boneIt->second->rotation);
-		float3 scale = GetChannelScale(channel, currentFrame, boneIt->second->localScale);
+		float3 position = GetChannelPosition(channel, currentFrame, boneIt->first->position); 
+		Quat   rotation = GetChannelRotation(channel, currentFrame, boneIt->first->rotation);
+		float3 scale = GetChannelScale(channel, currentFrame, boneIt->first->localScale);
 
 		//BLEND
 		if (blend != nullptr)
 		{
-			std::map<std::string, Channel>::const_iterator foundChannel = blend->channels.find(boneIt->first.c_str());
-			if (foundChannel != blend->channels.end()) {
-				const Channel& blendChannel = foundChannel->second;
+			std::map<C_Transform*, Channel*>::iterator foundChannel = previousAnimationLUT.find(boneIt->first);
+			if (foundChannel != previousAnimationLUT.end()) {
+				const Channel& blendChannel = *foundChannel->second;
 
-				position = float3::Lerp(GetChannelPosition(blendChannel, prevBlendFrame, boneIt->second->position), position, blendRatio);
-				rotation = Quat::Slerp(GetChannelRotation(blendChannel, prevBlendFrame, boneIt->second->rotation), rotation, blendRatio);
-				scale = float3::Lerp(GetChannelScale(blendChannel, prevBlendFrame, boneIt->second->localScale), scale, blendRatio);
+				position = float3::Lerp(GetChannelPosition(blendChannel, prevBlendFrame, boneIt->first->position), position, blendRatio);
+				rotation = Quat::Slerp(GetChannelRotation(blendChannel, prevBlendFrame, boneIt->first->rotation), rotation, blendRatio);
+				scale = float3::Lerp(GetChannelScale(blendChannel, prevBlendFrame, boneIt->first->localScale), scale, blendRatio);
 			}
-
 		}
 
-		boneIt->second->position = position;
-		boneIt->second->eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
-		boneIt->second->localScale = scale;
-		boneIt->second->updateTransform = true;
+		boneIt->first->position = position;
+		boneIt->first->eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
+		boneIt->first->localScale = scale;
+		boneIt->first->updateTransform = true;
 	}
 }
 
@@ -608,7 +609,6 @@ Quat C_Animator::GetChannelRotation(const Channel& channel, float currentKey, Qu
 		std::map<double, Quat>::const_iterator next = channel.GetNextRotKey(currentKey);
 
 		if (channel.rotationKeys.begin()->first == -1) return rotation;
-
 
 		//If both keys are the same, no need to blend
 		if (previous == next)
@@ -711,6 +711,25 @@ bool C_Animator::FindRootBone()
 	}
 
 	return ret;
+}
+
+void C_Animator::SetAnimationLookUpTable(ResourceAnimation* animation, std::map<C_Transform*, Channel*>& lookUpTable)
+{
+	if (animation == nullptr)
+		return;
+
+	lookUpTable.clear();
+
+	std::map<std::string, C_Transform*>::iterator boneIt = boneMapping.begin();
+	for (boneIt; boneIt != boneMapping.end(); ++boneIt)
+	{
+		std::map<std::string, Channel>::iterator channelIt = animation->channels.find(boneIt->first);
+
+		if (channelIt != animation->channels.end())
+		{
+			lookUpTable[boneIt->second] = &channelIt->second;
+		}
+	}
 }
 
 void C_Animator::DrawBones(GameObject* gameObject)
