@@ -52,6 +52,7 @@ ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimati
 		Channel channel;
 
 		channel.boneName = importedAnimation->mChannels[i]->mNodeName.C_Str();
+
 		uint pos = channel.boneName.find("_$AssimpFbx$_");
 		if (pos != std::string::npos)
 		{
@@ -82,6 +83,7 @@ ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimati
 			channel.scaleKeys[importedAnimation->mChannels[i]->mScalingKeys[j].mTime] = scaleKey;
 		}
 		animation->channels[channel.boneName] = channel;
+		//animation->channels.push_back(channel);
 	}
 
 	//Save animation own format

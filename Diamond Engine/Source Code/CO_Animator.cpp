@@ -60,19 +60,6 @@ void C_Animator::Start()
 			return;
 	}
 
-	boneMapping.clear();
-
-	std::vector<GameObject*> bones;
-	rootBone->CollectChilds(bones);
-
-	for (uint i = 0; i < bones.size(); ++i)
-	{
-		C_Transform* transform = dynamic_cast<C_Transform*>(bones[i]->GetComponent(Component::TYPE::TRANSFORM));
-		
-		if(transform != nullptr)
-			boneMapping[bones[i]->name] = transform;
-	}
-
 	if (animations.size() > 0)
 	{
 		Play(animations.begin()->first, defaultBlend);
@@ -84,16 +71,19 @@ void C_Animator::Start()
 void C_Animator::Update()
 {
 	float dt = DETime::deltaTime;
+
+	if (rootBone == nullptr)
+	{
+		FindRootBone();
+	}
+
 	if (DETime::state == GameState::PLAY)
 	{
 		if (!started) {
 			Start();
 		}
 	}
-	else {
-		if (rootBone == nullptr)
-			FindRootBone();
-		
+	else {		
 		return;
 	}
 
@@ -538,8 +528,12 @@ void C_Animator::Resume()
 
 void C_Animator::AddAnimation(ResourceAnimation* anim)
 {
-	if (anim != nullptr) 
-		animations[anim->animationName] = anim;
+	if (anim == nullptr)
+		return;
+
+	animations[anim->animationName] = anim;
+
+	OrderAnimation(anim);
 }
 
 void C_Animator::AddClip(ResourceAnimation* anim)
@@ -557,7 +551,7 @@ void C_Animator::AddClip(ResourceAnimation* anim)
 	clips.push_back(clip);
 }
 
-void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, const ResourceAnimation* blend, float blendRatio)
+void C_Animator::UpdateChannelsTransform(const ResourceAnimation* animation, const ResourceAnimation* blend, float blendRatio)
 {
 	uint currentFrame = currentTimeAnimation;
 
@@ -574,14 +568,13 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, cons
 	std::map<std::string, C_Transform*>::iterator boneIt;
 	for (boneIt = boneMapping.begin(); boneIt != boneMapping.end(); ++boneIt)
 	{
-		if (settings->channels.find(boneIt->first.c_str()) == settings->channels.end()) 
+		if (animation->channels.find(boneIt->first) == animation->channels.end())
 			continue;
-		
-		const Channel& channel = settings->channels.find(boneIt->first.c_str())->second;
-	
+
+		const Channel& channel = animation->channels.find(boneIt->first.c_str())->second;
 		
 		float3 position = GetChannelPosition(channel, currentFrame, boneIt->second->position);
-		Quat rotation = GetChannelRotation(channel, currentFrame, boneIt->second->rotation);
+		Quat   rotation = GetChannelRotation(channel, currentFrame, boneIt->second->rotation);
 		float3 scale = GetChannelScale(channel, currentFrame, boneIt->second->localScale);
 
 		//BLEND
@@ -639,7 +632,8 @@ float3 C_Animator::GetChannelPosition(const Channel& channel, float currentKey, 
 		std::map<double, float3>::const_iterator previous = channel.GetPrevPosKey(currentKey);
 		std::map<double, float3>::const_iterator next = channel.GetNextPosKey(currentKey);
 
-		if (channel.positionKeys.begin()->first == -1) return position;
+		if (channel.positionKeys.begin()->first == -1) 
+			return position;
 
 		//If both keys are the same, no need to blend
 		if (previous == next)
@@ -693,6 +687,19 @@ bool C_Animator::FindRootBone()
 			if (meshRendererObject != nullptr)
 			{
 				dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::TYPE::MESH_RENDERER))->SetRootBone(rootBone);
+
+				boneMapping.clear();
+
+				std::vector<GameObject*> bones;
+				rootBone->CollectChilds(bones);
+
+				for (uint i = 0; i < bones.size(); ++i)
+				{
+					C_Transform* transform = dynamic_cast<C_Transform*>(bones[i]->GetComponent(Component::TYPE::TRANSFORM));
+
+					if (transform != nullptr)
+						boneMapping[bones[i]->name] = transform;
+				}
 			}
 		}
 
@@ -752,6 +759,19 @@ ResourceAnimation* C_Animator::ClipToAnimation(AnimationClip clip)
 	//Create .anim 
 
 	return animation;
+}
+
+void C_Animator::OrderAnimation(ResourceAnimation* animation)
+{
+	std::vector<Channel> orderedChannels;
+	std::map<std::string, C_Transform*>::iterator bone = boneMapping.begin();
+	for (bone; bone != boneMapping.end(); ++bone)
+	{
+		if (animation->channels.find(bone->first) != animation->channels.end())
+		{
+			orderedChannels.push_back(animation->channels[bone->first]);
+		}
+	}
 }
 
 AnimationClip::AnimationClip() : name("No name"), startFrame(0), endFrame(0), originalAnimation(nullptr), loop(false) {}

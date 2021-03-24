@@ -259,7 +259,6 @@ ResourceMesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 					}
 				}
 			}
-			//_mesh->joints.push_back(joint);
 		}
 	}
 

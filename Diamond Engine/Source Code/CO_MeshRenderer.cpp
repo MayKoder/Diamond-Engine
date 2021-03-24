@@ -91,18 +91,18 @@ void C_MeshRenderer::RenderMesh(bool rTex)
 		float4x4 invertedMatrix = gameObjectTransform->globalTransform.Inverted();
 
 		//Get each bone
-		for (std::map<std::string, uint>::iterator it = _mesh->bonesMap.begin(); it != _mesh->bonesMap.end(); ++it)
+		for (int i = 0; i<  _mesh->bonesMap.size(); ++i)
 		{
-			C_Transform* bone = bonesMap[it->second];
+			C_Transform* bone = bonesMap[i];
 
 			if (bone != nullptr)
 			{
 				//Calcule of Delta Matrix
 				float4x4 Delta = CalculateDeltaMatrix(bone->globalTransform, invertedMatrix);
-				Delta = Delta * _mesh->bonesOffsets[it->second];
+				Delta = Delta * _mesh->bonesOffsets[i];
 
 				//Storage of Delta Matrix (Transformation applied to each bone)
-				_mesh->boneTransforms[it->second] = Delta.Transposed();
+				_mesh->boneTransforms[i] = Delta.Transposed();
 			}
 		}
 	}

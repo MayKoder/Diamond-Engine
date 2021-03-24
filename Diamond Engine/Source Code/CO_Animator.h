@@ -63,6 +63,7 @@ public:
 private:
 	void DrawBones(GameObject*);
 	ResourceAnimation* ClipToAnimation(AnimationClip clip);
+	void OrderAnimation(ResourceAnimation* animation);
 
 public:
 	void Play(std::string animName, float blendDuration = 0.3f);
@@ -94,7 +95,7 @@ private:
 
 	ResourceAnimation* currentAnimation;
 	ResourceAnimation* previousAnimation;
-	std::map<std::string,ResourceAnimation*> animations;
+	std::map<std::string, ResourceAnimation*> animations;
 	std::vector<AnimationClip> clips;
 	AnimationClip* selectedClip;
 };
