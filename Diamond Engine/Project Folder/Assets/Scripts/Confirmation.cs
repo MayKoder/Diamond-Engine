@@ -11,8 +11,8 @@ public class Confirmation : DiamondComponent
 			InternalCalls.CloseGame();
 		if (gameObject.Name == "No")
         {
-			mainMenu.Enable(true);
-			confirmationWindow.Enable(false);
+			mainMenu.EnableNav(true);
+			confirmationWindow.EnableNav(false);
 		}
 	}
 	public void Update()
