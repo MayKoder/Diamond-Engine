@@ -131,7 +131,7 @@ Quat C_Billboard::CameraAlign()
 {
 	//Extract the rotation from the view matrix
 	Frustum camFrust = EngineExternal->moduleRenderer3D->activeRenderCamera->camFrustrum;
-	float3 billboardForward = (camFrust.pos-transf->GetCurrentGlobalMatrix().TranslatePart()).Normalized();
+	float3 billboardForward = (camFrust.pos-transf->globalTransform.TranslatePart()).Normalized();
 
 	float3 up = camFrust.up;
 	float3 right = up.Cross(billboardForward);

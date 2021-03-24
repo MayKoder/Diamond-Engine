@@ -12,9 +12,12 @@ void PE_SpawnShapeBase::Spawn(Particle& particle, bool hasInitialSpeed, float sp
 {
 }
 
+#ifndef STANDALONE
+
 void PE_SpawnShapeBase::OnEditor(int emitterIndex)
 {
 }
+#endif // !STANDALONE
 
 void PE_SpawnShapeBase::SaveData(JSON_Object* nObj)
 {
