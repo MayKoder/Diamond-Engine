@@ -222,6 +222,7 @@
     <ClInclude Include="Source Code\CO_Canvas.h" />
     <ClInclude Include="Source Code\CO_Checkbox.h" />
     <ClInclude Include="Source Code\CO_CubeCollider.h" />
+    <ClInclude Include="Source Code\CO_DirectionalLight.h" />
     <ClInclude Include="Source Code\CO_Image2D.h" />
     <ClInclude Include="Source Code\CO_Collider.h" />
     <ClInclude Include="Source Code\CO_MeshCollider.h" />
@@ -441,6 +442,7 @@
     <ClCompile Include="Source Code\CO_Camera.cpp" />
     <ClCompile Include="Source Code\CO_Canvas.cpp" />
     <ClCompile Include="Source Code\CO_Checkbox.cpp" />
+    <ClCompile Include="Source Code\CO_DirectionalLight.cpp" />
     <ClCompile Include="Source Code\CO_Image2D.cpp" />
     <ClCompile Include="Source Code\CO_Collider.cpp" />
     <ClCompile Include="Source Code\CO_Material.cpp" />

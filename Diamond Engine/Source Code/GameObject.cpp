@@ -23,6 +23,7 @@
 #include "CO_ParticleSystem.h"
 #include "CO_Billboard.h"
 #include "CO_Navigation.h"
+#include "CO_DirectionalLight.h"
 
 #include"MO_Scene.h"
 
@@ -198,6 +199,9 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 		break;
 	case Component::TYPE::BILLBOARD:
 		ret = new C_Billboard(this);
+		break;
+	case Component::TYPE::DIRECTIONAL_LIGHT:
+		ret = new C_DirectionalLight(this);
 		break;
 	}
 

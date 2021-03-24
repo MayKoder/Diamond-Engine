@@ -1,15 +1,20 @@
 #include "RE_Mesh.h"
+#include"Application.h"
+
 #include "OpenGL.h"
 #include "MeshArrays.h"
 #include "IM_FileSystem.h"
 #include"Globals.h"
+
 #include"RE_Shader.h"
 #include"RE_Material.h"
 
-#include"Application.h"
 #include"MO_Scene.h" //This can be removed
 #include"MO_Camera3D.h" //This can be deleted
+#include"MO_Renderer3D.h"
+
 #include"CO_Transform.h"
+#include"CO_DirectionalLight.h"
 #include"DETime.h"
 #include "GameObject.h"
 
@@ -148,13 +153,13 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 			glUniformMatrix4fv(modelLoc, boneTransforms.size(), GL_FALSE, (GLfloat*)&boneTransforms[0]);
 		}		
 
-		//glUniform4fv(modelLoc, bonesTransforms.size(), reinterpret_cast<GLfloat*>(bonesTransforms.data()));
+
+		if (EngineExternal->moduleRenderer3D->directLight)
+			EngineExternal->moduleRenderer3D->directLight->PushLightUniforms(material);
 	}
 
 	//vertices
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
-	glBindVertexArray(0);
+	OGL_GPU_Render();
 
 	//if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
 	//{
@@ -164,6 +169,14 @@ void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture
 
 	if (material->shader)
 		material->shader->Unbind();
+}
+
+void ResourceMesh::OGL_GPU_Render()
+{
+	//vertices
+	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
+	glBindVertexArray(0);
 }
 
 void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals, const float* globalTransform)

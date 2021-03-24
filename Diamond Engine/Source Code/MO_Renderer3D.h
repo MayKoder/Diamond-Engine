@@ -18,6 +18,7 @@ class C_MeshRenderer;
 class ResourceTexture;
 class C_Camera;
 class GameObject;
+class C_DirectionalLight;
 
 #define MAX_LIGHTS 1
 
@@ -73,6 +74,8 @@ public:
 
 	C_Camera* activeRenderCamera = nullptr; //TODO: This is temporal
 	DE_Cubemap skybox;
+	C_DirectionalLight* directLight;
+
 	unsigned int resolution;
 
 private:

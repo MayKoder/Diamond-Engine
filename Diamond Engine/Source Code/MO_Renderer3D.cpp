@@ -12,6 +12,7 @@
 
 #include "RE_Mesh.h"
 #include "RE_Texture.h"
+#include"RE_Shader.h"
 #include "mmgr/mmgr.h"
 
 #include"WI_Game.h"
@@ -22,6 +23,7 @@
 #include "CO_Camera.h"
 #include "CO_Transform.h"
 #include "CO_ParticleSystem.h"
+#include "CO_DirectionalLight.h"
 
 #include"Primitive.h"
 #include"MathGeoLib/include/Geometry/Triangle.h"
@@ -39,7 +41,7 @@
 
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), str_CAPS(""),
-vsync(false), wireframe(false), gameCamera(nullptr),resolution(2)
+vsync(false), wireframe(false), gameCamera(nullptr),resolution(2), directLight(nullptr)
 {
 	GetCAPS(str_CAPS);
 	/*depth =*/ cull = lightng = color_material = texture_2d = true;
@@ -213,18 +215,6 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
-
-#ifndef STANDALONE
-	App->moduleCamera->editorCamera.StartDraw();
-
-	//Light 0 on cam pos
-	lights[0].SetPos(5, 5, 5);
-
-	for(uint i = 0; i < MAX_LIGHTS; ++i)
-		lights[i].Render();
-
-#endif // !STANDALONE
-
 	return UPDATE_CONTINUE;
 }
 
@@ -232,10 +222,52 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 
+	//Render light depth pass
+	if (directLight)
+	{
+		directLight->StartPass();
+		if (!renderQueue.empty())
+		{
+			for (size_t i = 0; i < renderQueue.size(); i++)
+			{
+				float distance = directLight->orthoFrustum.pos.DistanceSq(renderQueue[i]->globalOBB.pos);
+				renderQueueMap.emplace(distance, renderQueue[i]);
+			}
+
+
+			if (!renderQueueMap.empty())
+			{
+				for (auto i = renderQueueMap.rbegin(); i != renderQueueMap.rend(); ++i)
+				{
+					// Get the range of the current key
+					auto range = renderQueueMap.equal_range(i->first);
+
+					// Now render out that whole range
+					for (auto d = range.first; d != range.second; ++d)
+					{
+						GLint modelLoc = glGetUniformLocation(directLight->depthShader->shaderProgramID, "model");
+						glUniformMatrix4fv(modelLoc, 1, GL_FALSE, d->second->GetGO()->transform->GetGlobalTransposed());
+
+						modelLoc = glGetUniformLocation(directLight->depthShader->shaderProgramID, "lightSpaceMatrix");
+						glUniformMatrix4fv(modelLoc, 1, GL_FALSE, directLight->spaceMatrixOpenGL.ptr());
+
+						d->second->GetRenderMesh()->OGL_GPU_Render();
+					}
+				}
+
+				renderQueueMap.clear();
+			}
+		}
+		directLight->EndPass();
+	}
+
+#ifndef STANDALONE
+
+	App->moduleCamera->editorCamera.StartDraw();
+
 	Grid p(0, 0, 0, 0);
 	p.axis = true;
 
-#ifndef STANDALONE
 	p.Render();
 
 	//TODO: This should not be here
