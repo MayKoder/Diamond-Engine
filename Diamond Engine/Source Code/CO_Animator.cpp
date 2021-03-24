@@ -37,20 +37,19 @@ C_Animator::~C_Animator()
 {
 	rootBone = nullptr;
 
-	selectedClip = nullptr;
-	clips.clear();
-
 	currentAnimation = nullptr;
 	previousAnimation = nullptr;
+	selectedClip = nullptr;
 
 	for(std::map<std::string, ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); it++)
 	{
 		EngineExternal->moduleResources->UnloadResource(it->second->GetUID());
 		it->second = nullptr;
 	}
-	animations.clear();
 
+	animations.clear();
 	boneMapping.clear();
+	clips.clear();
 }
 
 void C_Animator::Start()
@@ -93,9 +92,8 @@ void C_Animator::Update()
 	}
 	else {
 		if (rootBone == nullptr)
-		{
 			FindRootBone();
-		}
+		
 		return;
 	}
 
@@ -209,7 +207,6 @@ void C_Animator::OnRecursiveUIDChange(std::map<uint, GameObject*> gameObjects)
 						meshRendererUID = meshRendererIt->second->UID;
 					}
 				}
-	
 			}
 		}
 	}
@@ -572,18 +569,20 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, cons
 	{
 		prevBlendFrame = (blend->ticksPerSecond * prevAnimTime) + blend->initTimeAnim;
 	}
+
 	//LOG(LogType::L_NORMAL, "%i", currentFrame);
 	std::map<std::string, C_Transform*>::iterator boneIt;
 	for (boneIt = boneMapping.begin(); boneIt != boneMapping.end(); ++boneIt)
 	{
-		if (settings->channels.find(boneIt->first.c_str()) == settings->channels.end()) continue;
-
+		if (settings->channels.find(boneIt->first.c_str()) == settings->channels.end()) 
+			continue;
+		
 		const Channel& channel = settings->channels.find(boneIt->first.c_str())->second;
 	
+		
 		float3 position = GetChannelPosition(channel, currentFrame, boneIt->second->position);
 		Quat rotation = GetChannelRotation(channel, currentFrame, boneIt->second->rotation);
 		float3 scale = GetChannelScale(channel, currentFrame, boneIt->second->localScale);
-
 
 		//BLEND
 		if (blend != nullptr)

@@ -40,6 +40,8 @@ C_MeshRenderer::~C_MeshRenderer()
 		EngineExternal->moduleResources->UnloadResource(_mesh->GetUID());
 		_mesh = nullptr;
 	}
+
+	gameObjectTransform = nullptr;
 }
 
 void C_MeshRenderer::Update()
