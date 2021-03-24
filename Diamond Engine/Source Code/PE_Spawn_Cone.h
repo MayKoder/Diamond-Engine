@@ -17,7 +17,7 @@ public:
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
 private:
-	float coneTip[3]; //(x,y,z)
-	float centerOfSphere[3]; //(x,y,z)
+	float conePos[3]; //(x,y,z)
 	float radius;
+	float height;
 };
