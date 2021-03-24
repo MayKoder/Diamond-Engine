@@ -15,6 +15,7 @@
 #include"MaykMath.h"
 
 #include "IM_FileSystem.h"
+#include "IM_PrefabImporter.h"
 
 #include"DEJsonSupport.h"
 #include"CO_Transform.h"
@@ -60,7 +61,7 @@ bool M_Scene::Start()
 {
 	CreateGameCamera("Main Camera");
 	//LoadScene("Library/Scenes/1726826608.des");
-	LoadScene("Library/Scenes/1482507639.des");
+	//LoadScene("Library/Scenes/1482507639.des");
 
 	//LoadScene("Library/Scenes/884741631.des");
 	//LoadScene("Library/Scenes/tmp.des");
@@ -604,6 +605,24 @@ GameObject* M_Scene::LoadGOData(JSON_Object* goJsonObj, GameObject* parent)
 
 	if (parent == nullptr)
 		parent = originalParent;
+
+	int prefabID = json_object_get_number(goJsonObj, "PrefabID");
+
+	if(prefabID != 0)
+	{
+		std::string prefabPath = EngineExternal->moduleResources->GenLibraryPath(prefabID, Resource::Type::PREFAB);
+
+		if (FileSystem::Exists(prefabPath.c_str()))
+		{
+			GameObject* prefabObject = PrefabImporter::LoadPrefab(prefabPath.c_str());
+			
+			if (prefabObject != nullptr)
+			{
+				prefabObject->parent = parent;
+				return parent;
+			}
+		}
+	}
 
 	parent = CreateGameObject(json_object_get_string(goJsonObj, "name"), parent, json_object_get_number(goJsonObj, "UID"));
 	parent->LoadFromJson(goJsonObj);

@@ -36,7 +36,10 @@ void DEJson::WriteBool(JSON_Object* obj, const char* name, bool value)
 }
 bool DEJson::ReadBool(JSON_Object* obj, const char* name)
 {
-	return json_object_get_boolean(obj, name);
+	if (json_object_has_value(obj, name) == 1)
+		return json_object_get_boolean(obj, name);
+	else
+		return false;
 }
 void DEJson::WriteInt(JSON_Object* obj, const char* name, int value)
 {

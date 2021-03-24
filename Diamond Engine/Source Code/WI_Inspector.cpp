@@ -167,6 +167,11 @@ void W_Inspector::Draw()
 				if (ImGui::Button("Revert Changes")) {
 					PrefabImporter::OverrideGameObject(selectedGO->prefabID, selectedGO);
 				}
+
+				ImGui::SameLine();
+				if (ImGui::Button("Unlink Prefab")) {
+					selectedGO->prefabID = 0u;
+				}
 			}
 
 			ImGui::GreySeparator();

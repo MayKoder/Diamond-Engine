@@ -68,7 +68,10 @@ void C_Animator::Start()
 
 	for (uint i = 0; i < bones.size(); ++i)
 	{
-		boneMapping[bones[i]->name] = bones[i];
+		C_Transform* transform = dynamic_cast<C_Transform*>(bones[i]->GetComponent(Component::TYPE::TRANSFORM));
+		
+		if(transform != nullptr)
+			boneMapping[bones[i]->name] = transform;
 	}
 
 	if (animations.size() > 0)
@@ -289,7 +292,7 @@ bool C_Animator::OnEditor()
 		}
 
 		//List of existing animations
-		static char newName[32];
+		static char newName[64];
 
 		std::string animation_to_remove = "";
 		ImGui::Text("Select a new animation");
@@ -504,7 +507,8 @@ void C_Animator::SaveAnimation(ResourceAnimation* animation, const char* name)
 
 void C_Animator::StoreBoneMapping(GameObject* gameObject)
 {
-	boneMapping[gameObject->name] = gameObject;
+	boneMapping[gameObject->name] = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM));
+	
 	for (int i = 0; i < gameObject->children.size(); i++)
 	{
 		StoreBoneMapping(gameObject->children[i]);
@@ -569,18 +573,16 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, cons
 		prevBlendFrame = (blend->ticksPerSecond * prevAnimTime) + blend->initTimeAnim;
 	}
 	//LOG(LogType::L_NORMAL, "%i", currentFrame);
-	std::map<std::string, GameObject*>::iterator boneIt;
+	std::map<std::string, C_Transform*>::iterator boneIt;
 	for (boneIt = boneMapping.begin(); boneIt != boneMapping.end(); ++boneIt)
 	{
-		C_Transform* transform = dynamic_cast<C_Transform*>(boneIt->second->GetComponent(Component::TYPE::TRANSFORM));
-
 		if (settings->channels.find(boneIt->first.c_str()) == settings->channels.end()) continue;
 
 		const Channel& channel = settings->channels.find(boneIt->first.c_str())->second;
 	
-		float3 position = GetChannelPosition(channel, currentFrame, transform->position);
-		Quat rotation = GetChannelRotation(channel, currentFrame, transform->rotation);
-		float3 scale = GetChannelScale(channel, currentFrame, transform->localScale);
+		float3 position = GetChannelPosition(channel, currentFrame, boneIt->second->position);
+		Quat rotation = GetChannelRotation(channel, currentFrame, boneIt->second->rotation);
+		float3 scale = GetChannelScale(channel, currentFrame, boneIt->second->localScale);
 
 
 		//BLEND
@@ -590,17 +592,17 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, cons
 			if (foundChannel != blend->channels.end()) {
 				const Channel& blendChannel = foundChannel->second;
 
-				position = float3::Lerp(GetChannelPosition(blendChannel, prevBlendFrame, transform->position), position, blendRatio);
-				rotation = Quat::Slerp(GetChannelRotation(blendChannel, prevBlendFrame, transform->rotation), rotation, blendRatio);
-				scale = float3::Lerp(GetChannelScale(blendChannel, prevBlendFrame, transform->localScale), scale, blendRatio);
+				position = float3::Lerp(GetChannelPosition(blendChannel, prevBlendFrame, boneIt->second->position), position, blendRatio);
+				rotation = Quat::Slerp(GetChannelRotation(blendChannel, prevBlendFrame, boneIt->second->rotation), rotation, blendRatio);
+				scale = float3::Lerp(GetChannelScale(blendChannel, prevBlendFrame, boneIt->second->localScale), scale, blendRatio);
 			}
 
 		}
 
-		transform->position = position;
-		transform->eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
-		transform->localScale = scale;
-		transform->updateTransform = true;
+		boneIt->second->position = position;
+		boneIt->second->eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
+		boneIt->second->localScale = scale;
+		boneIt->second->updateTransform = true;
 	}
 }
 

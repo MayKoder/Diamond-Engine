@@ -13,8 +13,10 @@ class GameObject;
 class Channel;
 class ResourceAnimation;
 class Resource;
+class C_Transform;
 
 typedef unsigned int uint;
+
 
 struct AnimationClip
 {
@@ -71,7 +73,7 @@ public:
 	GameObject* rootBone = nullptr;
 	uint rootBoneUID;
 	uint meshRendererUID;
-	std::map<std::string, GameObject*> boneMapping;
+	std::map<std::string, C_Transform*> boneMapping;
 
 	//Used for blending
 	bool playing;
