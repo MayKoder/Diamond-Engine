@@ -136,13 +136,12 @@ void C_ParticleSystem::Draw()
 	if (mat != nullptr && bill != nullptr)
 	{
 		ResourceMaterial* material = static_cast<C_Material*>(mat)->material;
-		material->shader->Bind();
-		material->PushUniforms();
 
+		material->shader->Bind();
 		for (int i = 0; i < myEmitters.size(); ++i)
 		{
+			material->PushUniforms();
 			myEmitters[i]->Draw(material->shader->shaderProgramID, bill->GetAlignment());
-			//Draw instanced arrays
 		}
 
 		material->shader->Unbind();

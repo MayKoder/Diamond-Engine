@@ -5,6 +5,7 @@
 //  Created by David Gallardo on 11/06/16.
 //	Modified by Oscar Pérez on 13/03/21 to account for alpha
 //	Modified by Oscar Pérez on 16/03/21 to solve memory leaks when deleting the gradiend & removing marks
+//  Modified by Oscar Pérez on 25/03/21 to allow for multiple gradient buttons & editors to be opened at the same time (assign diferent labels to each one)
 
 #include "imgui_color_gradient.h"
 #include "imgui_internal.h"
@@ -328,7 +329,7 @@ namespace ImGui
 		ImGui::SetCursorScreenPos(ImVec2(bar_pos.x, bar_pos.y + height + 20.0f));
 	}
 
-	bool GradientButton(ImGradient* gradient)
+	bool GradientButton(ImGradient* gradient, const char* gradientLabel)
 	{
 		if (!gradient) return false;
 
@@ -336,7 +337,7 @@ namespace ImGui
 		// ImDrawList* draw_list = ImGui::GetWindowDrawList();
 
 		float maxWidth = ImMax(250.0f, ImGui::GetContentRegionAvailWidth() - 100.0f);
-		bool clicked = ImGui::InvisibleButton("gradient_bar", ImVec2(maxWidth, GRADIENT_BAR_WIDGET_HEIGHT));
+		bool clicked = ImGui::InvisibleButton(gradientLabel, ImVec2(maxWidth, GRADIENT_BAR_WIDGET_HEIGHT));
 
 		DrawGradientBar(gradient, widget_pos, maxWidth, GRADIENT_BAR_WIDGET_HEIGHT);
 
@@ -345,7 +346,8 @@ namespace ImGui
 
 	bool GradientEditor(ImGradient* gradient,
 		ImGradientMark*& draggingMark,
-		ImGradientMark*& selectedMark)
+		ImGradientMark*& selectedMark,
+		const char* gradientEditorLabel)
 	{
 		if (!gradient) return false;
 
@@ -356,7 +358,7 @@ namespace ImGui
 		float maxWidth = ImGui::GetContentRegionAvailWidth() - 20;
 		float barBottom = bar_pos.y + GRADIENT_BAR_EDITOR_HEIGHT;
 
-		ImGui::InvisibleButton("gradient_editor_bar", ImVec2(maxWidth, GRADIENT_BAR_EDITOR_HEIGHT));
+		ImGui::InvisibleButton(gradientEditorLabel, ImVec2(maxWidth, GRADIENT_BAR_EDITOR_HEIGHT));
 
 		if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(0))
 		{
@@ -409,7 +411,11 @@ namespace ImGui
 
 		if (selectedMark)
 		{
-			bool colorModified = ImGui::ColorPicker4("", selectedMark->color, ImGuiColorEditFlags_AlphaBar);
+			static char colorPicker[128];
+			sprintf_s(colorPicker, 128, "%sColorPicker",
+				gradientEditorLabel
+			);
+			bool colorModified = ImGui::ColorPicker4(colorPicker, selectedMark->color, ImGuiColorEditFlags_AlphaBar);
 
 			if (selectedMark && colorModified)
 			{

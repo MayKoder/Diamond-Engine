@@ -52,6 +52,9 @@ private:
 	//void PrepareVBO();
 	int FindUnusedParticle();
 	void SetParticlesPerSec(int newParticlesPerSec);
+
+	void AddInstancedAttribute(unsigned int vao, unsigned int vbo, int attributeIndex, int dataSize, int instancedDataLength, int offset);
+
 public:
 	bool toDelete;
 private:

@@ -77,11 +77,12 @@ private:
 
 namespace ImGui
 {
-    bool GradientButton(ImGradient* gradient);
+    bool GradientButton(ImGradient* gradient,const char* gradientLabel);
     
     bool GradientEditor(ImGradient* gradient,
                         ImGradientMark* & draggingMark,
-                        ImGradientMark* & selectedMark);
+                        ImGradientMark* & selectedMark,
+						const char* gradientEditorLabel);
     
 
 }

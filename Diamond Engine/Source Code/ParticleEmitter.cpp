@@ -63,38 +63,22 @@ Emitter::Emitter() :
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(particleVertices), particleVertices, GL_STATIC_DRAW);
-	//glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
 	glVertexAttribDivisor(0, 0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * MAX_PARTICLES * INSTANCE_DATA_LENGHT, NULL, GL_STREAM_DRAW);
-
-	//glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), 0);
-	glVertexAttribDivisor(1, 1);
-	//glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), (void*)(4 * sizeof(float)));
-	glVertexAttribDivisor(2, 1);
-	//glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), (void*)(8 * sizeof(float)));
-	glVertexAttribDivisor(3, 1);
-	//glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), (void*)(12 * sizeof(float)));
-	glVertexAttribDivisor(4, 1);
-	//glEnableVertexAttribArray(5);
-	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), (void*)(16 * sizeof(float)));
-	glVertexAttribDivisor(5, 1);
-
-	//glDisableVertexAttribArray(5);
-	//glDisableVertexAttribArray(4);
-	//glDisableVertexAttribArray(3);
-	//glDisableVertexAttribArray(2);
-	//glDisableVertexAttribArray(1);
-	//glDisableVertexAttribArray(0);
-
+	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	AddInstancedAttribute(VAO, instanceVBO, 1, 4, INSTANCE_DATA_LENGHT, 0);
+	AddInstancedAttribute(VAO, instanceVBO, 2, 4, INSTANCE_DATA_LENGHT, 4);
+	AddInstancedAttribute(VAO, instanceVBO, 3, 4, INSTANCE_DATA_LENGHT, 8);
+	AddInstancedAttribute(VAO, instanceVBO, 4, 4, INSTANCE_DATA_LENGHT, 12);
+	AddInstancedAttribute(VAO, instanceVBO, 5, 4, INSTANCE_DATA_LENGHT, 16);
+
 
 	CalculatePoolSize();
 }
@@ -177,6 +161,7 @@ void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 	if (myParticles.empty() == true)
 		return;
 
+
 	if (texture != nullptr)
 		glBindTexture(GL_TEXTURE_2D, texture->textureID);
 
@@ -209,34 +194,6 @@ void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 			memcpy(&vboInfo[lastIndex], matrix.v, sizeofFloat4x4);
 			memcpy(&vboInfo[lastIndex + 16], &myParticles[i].color, sizeofFloat4);
 			//end new
-			//old
-			//float3 eulerRot = newRotation.ToEulerXYZ();
-			//eulerRot.z += myParticles[i].rotation;
-			//float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1 * myParticles[i].size, 1 * myParticles[i].size, 1)).Transposed();
-
-			//vboInfo.push_back(matrix[0][0]);
-			//vboInfo.push_back(matrix[0][1]);
-			//vboInfo.push_back(matrix[0][2]);
-			//vboInfo.push_back(matrix[0][3]);
-			//vboInfo.push_back(matrix[1][0]);
-			//vboInfo.push_back(matrix[1][1]);
-			//vboInfo.push_back(matrix[1][2]);
-			//vboInfo.push_back(matrix[1][3]);
-			//vboInfo.push_back(matrix[2][0]);
-			//vboInfo.push_back(matrix[2][1]);
-			//vboInfo.push_back(matrix[2][2]);
-			//vboInfo.push_back(matrix[2][3]);
-			//vboInfo.push_back(matrix[3][0]);
-			//vboInfo.push_back(matrix[3][1]);
-			//vboInfo.push_back(matrix[3][2]);
-			//vboInfo.push_back(matrix[3][3]);
-
-			//vboInfo.push_back(myParticles[i].color.x);
-			//vboInfo.push_back(myParticles[i].color.y);
-			//vboInfo.push_back(myParticles[i].color.z);
-			//vboInfo.push_back(myParticles[i].color.w);
-
-			//end old
 
 			++particlesAlive;
 		}
@@ -256,21 +213,7 @@ void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 
 	glBindVertexArray(VAO);
 
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-	glEnableVertexAttribArray(3);
-	glEnableVertexAttribArray(4);
-	glEnableVertexAttribArray(5);
-
 	glDrawArraysInstanced(GL_TRIANGLES, 0, 6, particlesAlive);
-
-	glDisableVertexAttribArray(5);
-	glDisableVertexAttribArray(4);
-	glDisableVertexAttribArray(3);
-	glDisableVertexAttribArray(2);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(0);
 
 	glBindVertexArray(0);
 
@@ -282,9 +225,9 @@ void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 #ifndef STANDALONE
 void Emitter::OnEditor(int emitterIndex)
 {
-	std::string guiName = "Emitter";
 	std::string suffixLabel = "##";
 	suffixLabel += emitterIndex;
+	std::string guiName = "Emitter" + suffixLabel;
 
 	if (ImGui::CollapsingHeader(guiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 	{
@@ -693,4 +636,18 @@ void Emitter::SetParticlesPerSec(int newParticlesPerSec)
 		secPerParticle = 0.0f;
 
 	CalculatePoolSize();
+}
+
+void Emitter::AddInstancedAttribute(unsigned int vao, unsigned int vbo, int attributeIndex, int dataSize, int instancedDataLength, int offset)
+{
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER,vbo);
+
+	glEnableVertexAttribArray(attributeIndex);
+	glVertexAttribPointer(attributeIndex, dataSize, GL_FLOAT, GL_FALSE, instancedDataLength * sizeof(float), (void*)(offset * sizeof(float)));
+	glVertexAttribDivisor(attributeIndex, 1);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 }
