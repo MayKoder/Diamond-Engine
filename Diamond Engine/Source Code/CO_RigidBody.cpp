@@ -96,7 +96,6 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 
 	force = float3::zero;
 	torque = float3::zero;
-
 	linear_vel = float3::zero;
 	angular_vel = float3::zero;
 
@@ -136,6 +135,7 @@ C_RigidBody::C_RigidBody(GameObject* _gm): Component(_gm)
 C_RigidBody::~C_RigidBody()
 {
 	LOG(LogType::L_NORMAL, "Deleting Rigidbody");
+
 	for (int i = 0; i < collider_info.size(); i++)
 	{
 		C_Collider* colliderComponent = dynamic_cast<C_Collider*>(collider_info[i]);
@@ -157,33 +157,22 @@ void C_RigidBody::PostUpdate()
 		
 		Quat rot;
 		float3 pos, scale;	
-		
-		for (int i = 0; i < collider_info.size(); i++)
+		goTransform->globalTransform.Decompose(pos, rot, scale);
+
+		if (DETime::state == GameState::PLAY)
 		{
-			C_Collider* colliderComponent = dynamic_cast<C_Collider*>(collider_info[i]);
+			for (size_t i = 0; i < pos.Size; i++)
+			{
+				pos[i] = Round(pos[i] * 100) / 100;
+			}
+		}
+		pos += offset;
+		physx::PxQuat rotation = { rot.x,  rot.y, rot.z, rot.w };
+		rigid_dynamic->setGlobalPose(physx::PxTransform({ pos.x, pos.y, pos.z }, rotation));
 			
-			if (colliderComponent && colliderComponent->shape != ColliderShape::MESH)
-			{
-				float4x4 worldtrans = goTransform->globalTransform; //* global_to_pivot;
-				worldtrans.Decompose(pos, rot, scale);
-			}
-			else
-				goTransform->globalTransform.Decompose(pos, rot, scale);
-
-
-			if (DETime::state == GameState::PLAY)
-			{
-				for (size_t i = 0; i < pos.Size; i++)
-				{
-					pos[i] = Round(pos[i] * 100) / 100;
-				}
-			}
-			pos += offset;
-			physx::PxQuat rotation = { rot.x,  rot.y, rot.z, rot.w };
-			rigid_dynamic->setGlobalPose(physx::PxTransform({ pos.x, pos.y, pos.z }, rotation));
 
 		
-		}
+		
 
 		
 	
@@ -221,23 +210,25 @@ void C_RigidBody::Step()
 		}
 
 		worldtrans = float4x4::FromTRS(pos, rot, scale);
+			
+		C_Collider* colliderComponent = nullptr;
+			
+		if (!collider_info.empty())
+			C_Collider* colliderComponent = dynamic_cast<C_Collider*>(collider_info[0]);
 
-		for (int i = 0; i < collider_info.size(); i++)
+		if (colliderComponent && colliderComponent->shape == ColliderShape::MESH)
 		{
-			C_Collider* colliderComponent = dynamic_cast<C_Collider*>(collider_info[i]);
-
-			if (colliderComponent && colliderComponent->shape != ColliderShape::MESH)
-			{
-				float4x4 pivotrans = global_to_pivot.Inverted() * worldtrans;
-
-				worldtrans = float4x4::FromTRS(pos - offset, rot, scale);
-
-				goTransform->SetTransformWithGlobal(worldtrans);
-
-			}
-			else
-				goTransform->SetTransformWithGlobal(worldtrans);
+			goTransform->SetTransformWithGlobal(worldtrans);
 		}
+		else
+		{
+			float4x4 pivotrans = global_to_pivot.Inverted() * worldtrans;
+
+			worldtrans = float4x4::FromTRS(pos - offset, rot, scale);
+			goTransform->SetTransformWithGlobal(worldtrans);
+		}
+				
+		
 
 		
 

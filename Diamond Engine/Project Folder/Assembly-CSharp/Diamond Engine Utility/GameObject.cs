@@ -77,6 +77,6 @@ namespace DiamondEngine
         public extern void AddForce(Vector3 force);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern void AddVelocity(Vector3 velocity);
+        public extern void SetVelocity(Vector3 velocity);
     }
 }
