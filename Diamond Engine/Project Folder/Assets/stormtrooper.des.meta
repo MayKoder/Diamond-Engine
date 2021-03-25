@@ -1,7 +1,78 @@
 {
-    "Assets Path": "Assets\/stormtrooper.des",
-    "modTime": 1615968751,
-    "Library Path": "Library\/Scenes\/342132772.des",
-    "UID": 342132772,
-    "Type": 3
+    "EditorCameraPosition": [
+        23.764402389526367,
+        14.219550132751465,
+        35.427761077880859
+    ],
+    "EditorCameraZ": [
+        -0.031899068504571915,
+        -0.33144569396972656,
+        -0.94293487071990967
+    ],
+    "EditorCameraY": [
+        -0.011128218844532967,
+        0.94347429275512695,
+        -0.33125883340835571
+    ],
+    "tags": [],
+    "layers": [],
+    "Game Objects": [
+        {
+            "name": "Scene root",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 1716705355,
+            "PrefabID": 0,
+            "DontDestroy": false,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Stormtrooper",
+            "tag": "Untagged",
+            "layer": "Default",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "UID": 541146670,
+            "PrefabID": 37645049,
+            "DontDestroy": true,
+            "ParentUID": 1716705355
+        }
+    ]
 }

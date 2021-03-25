@@ -52,6 +52,7 @@ ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimati
 		Channel channel;
 
 		channel.boneName = importedAnimation->mChannels[i]->mNodeName.C_Str();
+
 		uint pos = channel.boneName.find("_$AssimpFbx$_");
 		if (pos != std::string::npos)
 		{
@@ -59,11 +60,10 @@ ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimati
 		}
 		for (int j = 0; j < importedAnimation->mChannels[i]->mNumPositionKeys; j++)
 		{
-				aiVector3t<float> aiValue = importedAnimation->mChannels[i]->mPositionKeys[j].mValue;
-				float3 positionKey = float3(aiValue.x, aiValue.y, aiValue.z);
+			aiVector3t<float> aiValue = importedAnimation->mChannels[i]->mPositionKeys[j].mValue;
+			float3 positionKey = float3(aiValue.x, aiValue.y, aiValue.z);
 
-				channel.positionKeys[importedAnimation->mChannels[i]->mPositionKeys[j].mTime] = positionKey;
-			
+			channel.positionKeys[importedAnimation->mChannels[i]->mPositionKeys[j].mTime] = positionKey;
 		}
 
 		for (int j = 0; j < importedAnimation->mChannels[i]->mNumRotationKeys; j++)
@@ -82,6 +82,7 @@ ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimati
 			channel.scaleKeys[importedAnimation->mChannels[i]->mScalingKeys[j].mTime] = scaleKey;
 		}
 		animation->channels[channel.boneName] = channel;
+		//animation->channels.push_back(channel);
 	}
 
 	//Save animation own format

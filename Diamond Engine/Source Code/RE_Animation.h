@@ -19,7 +19,7 @@ struct Channel
 
 	//Time & Value
 	std::map<double, float3> positionKeys;
-	std::map<double, Quat> rotationKeys;
+	std::map<double, Quat>   rotationKeys;
 	std::map<double, float3> scaleKeys;
 
 	//bool HasPosKey() const;
@@ -47,7 +47,6 @@ public:
 
 	uint SaveCustomFormat(ResourceAnimation* animation, char** buffer);
 	void LoadCustomFormat(const char* path);
-	std::map<std::string, Channel> GetAllChannelsInRange(float startFrame, float endFrame);
 
 public:
 
@@ -59,4 +58,5 @@ public:
 	float time;
 
 	std::map<std::string, Channel> channels;
+	std::map<std::string, Channel> bakedChannels;
 };
