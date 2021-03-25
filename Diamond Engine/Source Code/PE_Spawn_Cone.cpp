@@ -8,7 +8,6 @@
 
 PE_SpawnShapeCone::PE_SpawnShapeCone() :PE_SpawnShapeBase(PE_SPAWN_SHAPE_TYPE::CONE)
 {
-	memset(conePos, 0.0f, sizeof(conePos));
 	height = 1.0f;
 	radius = 1.0f;
 }
@@ -18,34 +17,33 @@ PE_SpawnShapeCone::~PE_SpawnShapeCone()
 
 }
 
-void PE_SpawnShapeCone::Spawn(Particle& particle, bool hasInitialSpeed, float speed)
+void PE_SpawnShapeCone::Spawn(Particle& particle, bool hasInitialSpeed, float speed, float4x4& gTrans, float* offset)
 {
-	//TODO: CHANGE SPAWN ALGORITHM TO NOT EAT THE PERFORMANCE FOR BREAKFAST
+	//TODO: CHANGE SPAWN ALGORITHM TO NOT EAT THE PERFORMANCE FOR BREAKFAST. UPDATE: this is not that much of a performance hit
 
 	float h = height * EngineExternal->GetRandomFloat(0.0f, 1.0f);
 	
 	float r = (radius / height) * h * sqrt(EngineExternal->GetRandomFloat(0.0f, 1.0f));
 
 	float t = 2 * PI * EngineExternal->GetRandomFloat(0.0f, 1.0f);
-
-	particle.pos.x = r * cos(t);
-	particle.pos.y = h;
-	particle.pos.z = r * sin(t);
+	
+	float3 localPos;
+	localPos.x = (r * cos(t))+ offset[0];
+	localPos.y = h + offset[1];
+	localPos.z = (r * sin(t))+ offset[2];
+	particle.pos = gTrans.TransformPos(localPos);
 
 	if (hasInitialSpeed)
 	{
-		particle.speed = (particle.pos - float3(conePos[0], conePos[1], conePos[2])).Normalized() * speed;
+		float3 localSpeed = (localPos - float3(offset[0], offset[1], offset[2])).Normalized() * speed;
+		particle.speed = gTrans.TransformDir(localSpeed).Normalized() * speed;
 	}
 }
 
 #ifndef STANDALONE
 void PE_SpawnShapeCone::OnEditor(int emitterIndex)
 {
-	std::string suffixLabel = "Cone Position##PaShapeCone"; //TODO consider putting 
-	suffixLabel += emitterIndex;
-	ImGui::DragFloat3(suffixLabel.c_str(), conePos);
-
-	suffixLabel = "Cone Height##PaShapeCone"; //TODO consider putting 
+	std::string suffixLabel = "Cone Height##PaShapeCone"; //TODO consider putting 
 	suffixLabel += emitterIndex;
 	ImGui::DragFloat(suffixLabel.c_str(), &height);
 
@@ -59,7 +57,6 @@ void PE_SpawnShapeCone::OnEditor(int emitterIndex)
 
 void PE_SpawnShapeCone::SaveData(JSON_Object* nObj)
 {
-	DEJson::WriteVector3(nObj, "PaShapeConePos", conePos);
 	DEJson::WriteFloat(nObj, "PaShapeConeRadius", radius);
 	DEJson::WriteFloat(nObj, "PaShapeConeHeight", height);
 }
@@ -67,11 +64,6 @@ void PE_SpawnShapeCone::SaveData(JSON_Object* nObj)
 
 void PE_SpawnShapeCone::LoadData(DEConfig& nObj)
 {
-	float3 pos = nObj.ReadVector3("PaShapeConePos");
-	conePos[0] = pos.x;
-	conePos[1] = pos.y;
-	conePos[2] = pos.z;
-
 	radius = nObj.ReadFloat("PaShapeConeRadius");
 	height = nObj.ReadFloat("PaShapeConeHeight");
 }

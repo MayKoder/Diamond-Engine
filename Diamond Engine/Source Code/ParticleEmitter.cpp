@@ -129,6 +129,12 @@ void Emitter::Update(float dt, bool systemActive)
 
 	if (delaying == false)
 	{
+		for (int i = 0; i < myEffects.size(); ++i)
+		{
+			myEffects[i]->PrepareEffect();
+		}
+
+
 		if (systemActive)
 			ThrowParticles(dt);
 
@@ -231,7 +237,6 @@ void Emitter::OnEditor(int emitterIndex)
 
 	if (ImGui::CollapsingHeader(guiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::SameLine();
 		ImGui::Text("Delay time: %.2f", delay.Read() * 0.001f);
 
 		guiName = "Delay" + suffixLabel;
@@ -549,7 +554,7 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 		newEffect = new PE_VelocityOverLifetime();
 		break;
 	case PARTICLE_EFFECT_TYPE::SHAPE:
-		newEffect = new PE_Shape();
+		newEffect = new PE_Shape(objTransform);
 		break;
 	case PARTICLE_EFFECT_TYPE::MAX:
 		break;

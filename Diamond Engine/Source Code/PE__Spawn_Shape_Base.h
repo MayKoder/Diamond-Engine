@@ -17,7 +17,7 @@ public:
 	PE_SpawnShapeBase(PE_SPAWN_SHAPE_TYPE type);
 	virtual ~PE_SpawnShapeBase();
 
-	virtual void Spawn(Particle& particle,bool hasInitialSpeed,float speed);
+	virtual void Spawn(Particle& particle,bool hasInitialSpeed,float speed,float4x4& gTrans,float* offset);
 
 #ifndef STANDALONE
 	virtual void OnEditor(int emitterIndex);

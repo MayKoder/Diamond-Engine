@@ -24,8 +24,9 @@ public:
     ParticleEffect(PARTICLE_EFFECT_TYPE type);
     virtual ~ParticleEffect();
 
-    virtual void Spawn(Particle& particle);
-    virtual void Update(Particle& particle, float dt);
+    virtual void Spawn(Particle& particle);//executes once per particle
+    virtual void Update(Particle& particle, float dt);//executes once per particle
+	virtual void PrepareEffect();//executes once per frame
 
 #ifndef STANDALONE
     virtual void OnEditor(int emitterIndex);

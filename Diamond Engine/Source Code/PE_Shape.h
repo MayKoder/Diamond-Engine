@@ -1,16 +1,19 @@
 #pragma once
 
 #include "ParticleEffects.h";
+
+class C_Transform;
 class PE_SpawnShapeBase;
 enum class PE_SPAWN_SHAPE_TYPE;
 
 class PE_Shape : public ParticleEffect //DEPRECATED CLASS TODO DELETE
 {
 public:
-	PE_Shape();
+	PE_Shape(C_Transform* objTransform);
 	~PE_Shape() override;
 
 	void Spawn(Particle& particle) override; 
+	void PrepareEffect()override;
 
 #ifndef STANDALONE
 	void OnEditor(int emitterIndex) override;
@@ -31,4 +34,7 @@ private:
 	float particlesSpeed; //speed in the spawn direction
 	float randomSpeedMultiplier;
 	PE_SpawnShapeBase* mySpawnShape;
+	C_Transform* objectTransform;
+	float shapeOffset[3];// (x, y, z)
+
 };

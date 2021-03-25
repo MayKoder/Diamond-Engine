@@ -8,7 +8,7 @@ PE_SpawnShapeBase::~PE_SpawnShapeBase()
 {
 }
 
-void PE_SpawnShapeBase::Spawn(Particle& particle, bool hasInitialSpeed, float speed)
+void PE_SpawnShapeBase::Spawn(Particle& particle, bool hasInitialSpeed, float speed, float4x4& gTrans,float* offset)
 {
 }
 

@@ -5,13 +5,17 @@
 #include "PE_Spawn_Cone.h"
 #include "PE_Spawn_Sphere.h"
 
+#include "CO_Transform.h"
+#include "MathGeoLib/include/Math/float4x4.h"
+
 #include "Application.h"
 #include "ImGui/imgui.h"
 
-PE_Shape::PE_Shape() : ParticleEffect(PARTICLE_EFFECT_TYPE::SHAPE),
-mySpawnShape(nullptr),hasInitialSpeed(false),particlesSpeed(0.0f),randomSpeedMultiplier(0.0f)
+PE_Shape::PE_Shape(C_Transform* objTransform) : ParticleEffect(PARTICLE_EFFECT_TYPE::SHAPE),
+mySpawnShape(nullptr), hasInitialSpeed(false), particlesSpeed(0.0f), randomSpeedMultiplier(0.0f), objectTransform(nullptr)
 {
-
+	memset(shapeOffset, 0.0f, sizeof(shapeOffset));
+	objectTransform = objTransform;
 }
 
 PE_Shape::~PE_Shape()
@@ -21,6 +25,7 @@ PE_Shape::~PE_Shape()
 		delete(mySpawnShape);
 		mySpawnShape = nullptr;
 	}
+	objectTransform = nullptr;
 }
 
 void PE_Shape::Spawn(Particle& particle)
@@ -38,8 +43,13 @@ void PE_Shape::Spawn(Particle& particle)
 			}
 		}
 
-		mySpawnShape->Spawn(particle, hasInitialSpeed, initSpeed);
+		mySpawnShape->Spawn(particle, hasInitialSpeed, initSpeed, objectTransform->globalTransform, shapeOffset);
 	}
+}
+
+void PE_Shape::PrepareEffect()
+{
+
 }
 
 
@@ -71,78 +81,81 @@ void PE_Shape::OnEditor(int emitterIndex)
 
 		}
 
-	}
-
-
-	//=========================================== Combo
-	suffixLabel = "Shape Type##PaShapeEf";
-	suffixLabel += emitterIndex;
-
-	std::string textNameDisplay = "NONE";
-	if (mySpawnShape != nullptr)
-	{
-		GetShapeTypeString(mySpawnShape->GetType(), textNameDisplay);
-	}
-
-	textNameDisplay += "##PaShapeEf";
-	textNameDisplay += emitterIndex;
-	if (ImGui::BeginCombo(suffixLabel.c_str(), textNameDisplay.c_str(), ImGuiComboFlags_PopupAlignLeft))
-	{
-		suffixLabel = "NONE##PaShapeEf";
+		suffixLabel = "Shape Offset##PaShapeEf";
 		suffixLabel += emitterIndex;
-		const bool noneSelected = (mySpawnShape == nullptr);
-		if (ImGui::Selectable(suffixLabel.c_str(), noneSelected))
+		ImGui::DragFloat3(suffixLabel.c_str(), shapeOffset);
+
+
+		//=========================================== Combo
+		suffixLabel = "Shape Type##PaShapeEf";
+		suffixLabel += emitterIndex;
+
+		std::string textNameDisplay = "NONE";
+		if (mySpawnShape != nullptr)
 		{
-			if (mySpawnShape != nullptr)
-			{
-				ChangeSpawnShape(PE_SPAWN_SHAPE_TYPE::MAX);
-			}
+			GetShapeTypeString(mySpawnShape->GetType(), textNameDisplay);
 		}
 
-		// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-		if (noneSelected)
-			ImGui::SetItemDefaultFocus();
-
-		//================================
-		for (int n = 0; n < (int)PE_SPAWN_SHAPE_TYPE::MAX; ++n)
+		textNameDisplay += "##PaShapeEf";
+		textNameDisplay += emitterIndex;
+		if (ImGui::BeginCombo(suffixLabel.c_str(), textNameDisplay.c_str(), ImGuiComboFlags_PopupAlignLeft))
 		{
-			PE_SPAWN_SHAPE_TYPE iterType = (PE_SPAWN_SHAPE_TYPE)n;
-
-			bool isShapeSelected = false;
-			if (mySpawnShape != nullptr)
-			{
-				isShapeSelected = (mySpawnShape->GetType() == iterType);
-			}
-
-			GetShapeTypeString(iterType, suffixLabel);
-			suffixLabel += "##ListPaShapeEf";
+			suffixLabel = "NONE##PaShapeEf";
 			suffixLabel += emitterIndex;
-
-			if (ImGui::Selectable(suffixLabel.c_str(), isShapeSelected))
+			const bool noneSelected = (mySpawnShape == nullptr);
+			if (ImGui::Selectable(suffixLabel.c_str(), noneSelected))
 			{
-				ChangeSpawnShape((PE_SPAWN_SHAPE_TYPE)n);
+				if (mySpawnShape != nullptr)
+				{
+					ChangeSpawnShape(PE_SPAWN_SHAPE_TYPE::MAX);
+				}
 			}
 
 			// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-			if (isShapeSelected)
+			if (noneSelected)
 				ImGui::SetItemDefaultFocus();
+
+			//================================
+			for (int n = 0; n < (int)PE_SPAWN_SHAPE_TYPE::MAX; ++n)
+			{
+				PE_SPAWN_SHAPE_TYPE iterType = (PE_SPAWN_SHAPE_TYPE)n;
+
+				bool isShapeSelected = false;
+				if (mySpawnShape != nullptr)
+				{
+					isShapeSelected = (mySpawnShape->GetType() == iterType);
+				}
+
+				GetShapeTypeString(iterType, suffixLabel);
+				suffixLabel += "##ListPaShapeEf";
+				suffixLabel += emitterIndex;
+
+				if (ImGui::Selectable(suffixLabel.c_str(), isShapeSelected))
+				{
+					ChangeSpawnShape((PE_SPAWN_SHAPE_TYPE)n);
+				}
+
+				// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+				if (isShapeSelected)
+					ImGui::SetItemDefaultFocus();
+			}
+
+			ImGui::EndCombo();
 		}
+		//=========================================== end combo
 
-		ImGui::EndCombo();
-	}
-	//=========================================== end combo
+		if (mySpawnShape != nullptr)
+		{
+			ImGui::Separator();
+			ImGui::Spacing();
+			ImGui::Indent();
 
-	if (mySpawnShape != nullptr)
-	{
-		ImGui::Separator();
-		ImGui::Spacing();
-		ImGui::Indent();
+			mySpawnShape->OnEditor(emitterIndex);
 
-		mySpawnShape->OnEditor(emitterIndex);
-		
-		ImGui::Unindent();
-		ImGui::Spacing();
-		ImGui::Separator();
+			ImGui::Unindent();
+			ImGui::Spacing();
+			ImGui::Separator();
+		}
 	}
 }
 #endif // !STANDALONE
@@ -161,6 +174,8 @@ void PE_Shape::SaveData(JSON_Object* nObj)
 		mySpawnShape->SaveData(nObj);
 	}
 	DEJson::WriteInt(nObj, "paShapeType", (int)saveType);
+	DEJson::WriteVector3(nObj, "PaShapeOffset", shapeOffset);
+
 }
 
 void PE_Shape::LoadData(DEConfig& nObj)
@@ -176,6 +191,11 @@ void PE_Shape::LoadData(DEConfig& nObj)
 	{
 		mySpawnShape->LoadData(nObj);
 	}
+
+	float3 offset = nObj.ReadVector3("PaShapeOffset");
+	shapeOffset[0] = offset.x;
+	shapeOffset[1] = offset.y;
+	shapeOffset[2] = offset.z;
 }
 
 PE_SpawnShapeBase* PE_Shape::ChangeSpawnShape(PE_SPAWN_SHAPE_TYPE newType)
