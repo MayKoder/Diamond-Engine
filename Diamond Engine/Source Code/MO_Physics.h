@@ -10,6 +10,7 @@
 #include "Globals.h"
 
 #define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
+#define DT60FRAMES 0.016
 
 class ComponentCollider;
 class C_Collider;
@@ -131,5 +132,6 @@ public:
     CollisionDetector detector;
 
     float3 gravity;
+    float acumTime = 0;
 };
 
