@@ -1200,9 +1200,6 @@
     <ClCompile Include="Source Code\IM_MaterialImporter.cpp">
       <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\CO_Animator.cpp">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\RE_Animation.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
@@ -1356,6 +1353,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\PE_Spawn_Cone.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Animator.cpp">
+      <Filter>Sources\Components\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

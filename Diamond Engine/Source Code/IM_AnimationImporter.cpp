@@ -60,11 +60,10 @@ ResourceAnimation* AnimationLoader::ImportAnimation(aiAnimation* importedAnimati
 		}
 		for (int j = 0; j < importedAnimation->mChannels[i]->mNumPositionKeys; j++)
 		{
-				aiVector3t<float> aiValue = importedAnimation->mChannels[i]->mPositionKeys[j].mValue;
-				float3 positionKey = float3(aiValue.x, aiValue.y, aiValue.z);
+			aiVector3t<float> aiValue = importedAnimation->mChannels[i]->mPositionKeys[j].mValue;
+			float3 positionKey = float3(aiValue.x, aiValue.y, aiValue.z);
 
-				channel.positionKeys[importedAnimation->mChannels[i]->mPositionKeys[j].mTime] = positionKey;
-			
+			channel.positionKeys[importedAnimation->mChannels[i]->mPositionKeys[j].mTime] = positionKey;
 		}
 
 		for (int j = 0; j < importedAnimation->mChannels[i]->mNumRotationKeys; j++)

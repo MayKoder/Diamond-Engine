@@ -194,9 +194,13 @@ void C_Animator::OnRecursiveUIDChange(std::map<uint, GameObject*> gameObjects)
 				if (meshRendererIt != gameObjects.end())
 				{
 					C_MeshRenderer* meshRenderer = dynamic_cast<C_MeshRenderer*>(meshRendererIt->second->GetComponent(Component::TYPE::MESH_RENDERER));
-					if (meshRenderer != nullptr) {
-						meshRenderer->rootBone = rootBone;
+					if (meshRenderer != nullptr) 
+					{
+						meshRenderer->SetRootBone(rootBone);
 						meshRendererUID = meshRendererIt->second->UID;
+						
+						boneMapping.clear();
+						StoreBoneMapping(rootBone);
 					}
 				}
 			}
@@ -577,7 +581,7 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* animation, con
 		
 		float3 position = GetChannelPosition(channel, currentFrame, boneIt->first->position); 
 		Quat   rotation = GetChannelRotation(channel, currentFrame, boneIt->first->rotation);
-		float3 scale = GetChannelScale(channel, currentFrame, boneIt->first->localScale);
+		float3 scale    = GetChannelScale(channel, currentFrame, boneIt->first->localScale);
 
 		//BLEND
 		if (blend != nullptr)
@@ -588,7 +592,7 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* animation, con
 
 				position = float3::Lerp(GetChannelPosition(blendChannel, prevBlendFrame, boneIt->first->position), position, blendRatio);
 				rotation = Quat::Slerp(GetChannelRotation(blendChannel, prevBlendFrame, boneIt->first->rotation), rotation, blendRatio);
-				scale = float3::Lerp(GetChannelScale(blendChannel, prevBlendFrame, boneIt->first->localScale), scale, blendRatio);
+				scale    = float3::Lerp(GetChannelScale(blendChannel, prevBlendFrame, boneIt->first->localScale), scale, blendRatio);
 			}
 		}
 
@@ -599,38 +603,12 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* animation, con
 	}
 }
 
-Quat C_Animator::GetChannelRotation(const Channel& channel, float currentKey, Quat default) const
+float3 C_Animator::GetChannelPosition(const Channel& channel, float currentKey, float3 position) const
 {
-	Quat rotation = default;
-
-	if (channel.rotationKeys.size() > 0)
-	{
-		std::map<double, Quat>::const_iterator previous = channel.GetPrevRotKey(currentKey);
-		std::map<double, Quat>::const_iterator next = channel.GetNextRotKey(currentKey);
-
-		if (channel.rotationKeys.begin()->first == -1) return rotation;
-
-		//If both keys are the same, no need to blend
-		if (previous == next)
-			rotation = previous->second;
-		else //blend between both keys
-		{
-			//0 to 1
-			float ratio = (currentKey - previous->first) / (next->first - previous->first);
-			rotation = previous->second.Slerp(next->second, ratio);
-		}
-	}
-	return rotation;
-}
-
-float3 C_Animator::GetChannelPosition(const Channel& channel, float currentKey, float3 default) const
-{
-	float3 position = default;
-
 	if (channel.positionKeys.size() > 0)
 	{
 		std::map<double, float3>::const_iterator previous = channel.GetPrevPosKey(currentKey);
-		std::map<double, float3>::const_iterator next = channel.GetNextPosKey(currentKey);
+		std::map<double, float3>::const_iterator next     = channel.GetNextPosKey(currentKey);
 
 		if (channel.positionKeys.begin()->first == -1) 
 			return position;
@@ -649,17 +627,38 @@ float3 C_Animator::GetChannelPosition(const Channel& channel, float currentKey, 
 	return position;
 }
 
-float3 C_Animator::GetChannelScale(const Channel & channel, float currentKey, float3 default) const
+Quat C_Animator::GetChannelRotation(const Channel& channel, float currentKey, Quat rotation) const
 {
-	float3 scale = default;
+	if (channel.rotationKeys.size() > 0)
+	{
+		std::map<double, Quat>::const_iterator previous = channel.GetPrevRotKey(currentKey);
+		std::map<double, Quat>::const_iterator next     = channel.GetNextRotKey(currentKey);
 
+		if (channel.rotationKeys.begin()->first == -1)
+			return rotation;
+
+		//If both keys are the same, no need to blend
+		if (previous == next)
+			rotation = previous->second;
+		else //blend between both keys
+		{
+			//0 to 1
+			float ratio = (currentKey - previous->first) / (next->first - previous->first);
+			rotation = previous->second.Slerp(next->second, ratio);
+		}
+	}
+	return rotation;
+}
+
+float3 C_Animator::GetChannelScale(const Channel & channel, float currentKey, float3 scale) const
+{
 	if (channel.scaleKeys.size() > 0)
 	{
 		std::map<double, float3>::const_iterator previous = channel.GetPrevScaleKey(currentKey);
-		std::map<double, float3>::const_iterator next = channel.GetPrevScaleKey(currentKey);
+		std::map<double, float3>::const_iterator next     = channel.GetPrevScaleKey(currentKey);
 
-		if (channel.scaleKeys.begin()->first == -1) return scale;
-
+		if (channel.scaleKeys.begin()->first == -1) 
+			return scale;
 
 		//If both keys are the same, no need to blend
 		if (previous == next)
@@ -686,11 +685,10 @@ bool C_Animator::FindRootBone()
 			GameObject* meshRendererObject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, meshRendererUID);
 			if (meshRendererObject != nullptr)
 			{
-				dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::TYPE::MESH_RENDERER))->SetRootBone(rootBone);
-
 				boneMapping.clear();
+				StoreBoneMapping(rootBone);
 
-				std::vector<GameObject*> bones;
+				/*std::vector<GameObject*> bones;
 				rootBone->CollectChilds(bones);
 
 				for (uint i = 0; i < bones.size(); ++i)
@@ -699,7 +697,9 @@ bool C_Animator::FindRootBone()
 
 					if (transform != nullptr)
 						boneMapping[bones[i]->name] = transform;
-				}
+				}*/
+
+				dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::TYPE::MESH_RENDERER))->SetRootBone(rootBone);
 			}
 		}
 
