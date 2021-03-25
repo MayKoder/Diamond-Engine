@@ -72,5 +72,11 @@ namespace DiamondEngine
         public extern bool IsEnabled();
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern bool CompareTag(string tag);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern void AddForce(Vector3 force);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern void AddVelocity(Vector3 velocity);
     }
 }
