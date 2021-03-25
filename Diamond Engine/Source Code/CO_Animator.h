@@ -63,7 +63,7 @@ public:
 	void SetAnimationLookUpTable(ResourceAnimation* animation, std::map<C_Transform*, Channel*>& lookUpTable);
 
 private:
-	void DrawBones(GameObject*);
+	void DrawBones();
 	ResourceAnimation* ClipToAnimation(AnimationClip clip);
 	void OrderAnimation(ResourceAnimation* animation);
 

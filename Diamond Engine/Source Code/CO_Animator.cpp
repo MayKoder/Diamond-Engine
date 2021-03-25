@@ -75,28 +75,23 @@ void C_Animator::Update()
 	float dt = DETime::deltaTime;
 
 	if (rootBone == nullptr)
-	{
 		FindRootBone();
-	}
-
+	
 	if (DETime::state == GameState::PLAY)
 	{
-		if (!started) {
+		if (!started) 
 			Start();
-		}
 	}
-	else {		
+	else 
+	{		
 		return;
 	}
 
 	if (rootBone != nullptr)
 	{
-		if (showBones) {
-			std::vector<GameObject*> bones;
-			rootBone->CollectChilds(bones);
-			DrawBones(bones[0]);
-		}
-
+		if (showBones) 
+			DrawBones();
+		
 		if (currentAnimation != nullptr)
 		{
 			//Updating animation blend
@@ -172,9 +167,8 @@ void C_Animator::LoadData(DEConfig& nObj)
 		uint animationUID = json_array_get_number(animationsArray, i);
 		ResourceAnimation* animation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(animationUID, Resource::Type::ANIMATION));
 
-		if (animation != nullptr) {
+		if (animation != nullptr) 
 			AddAnimation(animation);
-		}
 	}
 }
 
@@ -188,6 +182,9 @@ void C_Animator::OnRecursiveUIDChange(std::map<uint, GameObject*> gameObjects)
 			rootBone = boneIt->second;
 			rootBoneUID = rootBone->UID;
 
+			boneMapping.clear();
+			StoreBoneMapping(rootBone);
+
 			if (meshRendererUID != 0u) 
 			{
 				std::map<uint, GameObject*>::iterator meshRendererIt = gameObjects.find(meshRendererUID);
@@ -198,9 +195,6 @@ void C_Animator::OnRecursiveUIDChange(std::map<uint, GameObject*> gameObjects)
 					{
 						meshRenderer->SetRootBone(rootBone);
 						meshRendererUID = meshRendererIt->second->UID;
-						
-						boneMapping.clear();
-						StoreBoneMapping(rootBone);
 					}
 				}
 			}
@@ -680,33 +674,24 @@ bool C_Animator::FindRootBone()
 	{
 		rootBone = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, rootBoneUID);
 
-		if (meshRendererUID != 0u)
-		{
-			GameObject* meshRendererObject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, meshRendererUID);
-			if (meshRendererObject != nullptr)
-			{
-				boneMapping.clear();
-				StoreBoneMapping(rootBone);
-
-				/*std::vector<GameObject*> bones;
-				rootBone->CollectChilds(bones);
-
-				for (uint i = 0; i < bones.size(); ++i)
-				{
-					C_Transform* transform = dynamic_cast<C_Transform*>(bones[i]->GetComponent(Component::TYPE::TRANSFORM));
-
-					if (transform != nullptr)
-						boneMapping[bones[i]->name] = transform;
-				}*/
-
-				dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::TYPE::MESH_RENDERER))->SetRootBone(rootBone);
-			}
-		}
-
 		if (rootBone == nullptr)
 		{
 			rootBoneUID = 0u;
 			ret = false;
+		}
+		else
+		{
+			boneMapping.clear();
+			StoreBoneMapping(rootBone);
+
+			if (meshRendererUID != 0u)
+			{
+				GameObject* meshRendererObject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, meshRendererUID);
+				if (meshRendererObject != nullptr)
+				{
+					dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::TYPE::MESH_RENDERER))->SetRootBone(rootBone);
+				}
+			}
 		}
 	}
 
@@ -732,33 +717,23 @@ void C_Animator::SetAnimationLookUpTable(ResourceAnimation* animation, std::map<
 	}
 }
 
-void C_Animator::DrawBones(GameObject* gameObject)
+void C_Animator::DrawBones()
 {
 	glColor3f(1.f, 0.f, 0.f);
 	glLineWidth(4.f);
 	glBegin(GL_LINES);
 
 	//Draw lines
-	float3 position;
-	Quat rotation;
-	float3 scale;
 
-	if (gameObject->parent != nullptr) 
+	bool endLine = false;
+	std::map<std::string, C_Transform*>::iterator boneIt;
+	for (boneIt = boneMapping.begin(); boneIt != boneMapping.end(); ++boneIt)
 	{
-		gameObject->parent->transform->globalTransform.Decompose(position, rotation, scale);
+		float3 position = boneIt->second->position;
 		glVertex3f(position.x, position.y, position.z);
 	}
-
-	gameObject->transform->globalTransform.Decompose(position, rotation, scale);
-	glVertex3f(position.x, position.y, position.z);
+	
 	//LOG(LogType::L_NORMAL, "Name: %s  %f,%f,%f",bones->first.c_str(), position.x, position.y, position.z);
-
-	if (gameObject->children.size() > 0) {
-		for (uint i = 0; i < gameObject->children.size(); i++)
-		{
-			DrawBones(gameObject->children[i]);
-		}
-	}
 	glEnd();
 	glLineWidth(1.f);
 	glColor3f(1.f, 1.f, 1.f);
