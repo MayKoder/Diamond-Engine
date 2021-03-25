@@ -68,11 +68,6 @@ bool C_ParticleSystem::OnEditor()
 
 		myEmitters[i]->OnEditor(i);
 
-		guiName = "Delete Emitter" + suffixLabel;
-		if (ImGui::Button(guiName.c_str()))
-		{
-			myEmitters[i]->toDelete = true;
-		}
 	}
 
 	ImGui::Spacing();

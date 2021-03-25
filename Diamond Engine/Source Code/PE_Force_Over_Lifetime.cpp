@@ -46,11 +46,15 @@ void PE_ForceOverLifetime::OnEditor(int emitterIndex)
 {
 	std::string suffixLabel = "Force Over Lifetime Effect##";
 	suffixLabel += emitterIndex;
-	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
+	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Bullet))
 	{
-		if (ImGui::Button("Delete Force Effect"))
+		suffixLabel = "Delete Force Over Lifetime Effect##";
+		suffixLabel += emitterIndex;
+		if (ImGui::Button(suffixLabel.c_str()))
 			this->toDelete = true;
 
+		ImGui::Spacing();
+		ImGui::Indent();
 
 
 		//=========================================== Combo
@@ -113,6 +117,7 @@ void PE_ForceOverLifetime::OnEditor(int emitterIndex)
 			myGravity = -9.8f * gravityModifier;
 		}
 
+		ImGui::Unindent();
 	}
 }
 #endif // !STANDALONE

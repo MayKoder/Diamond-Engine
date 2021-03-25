@@ -88,6 +88,8 @@ private:
 	bool delaying = false;
 	float maxDelay;
 	Timer delay;
+	std::string emitterName;
+	char emitterNameChars[50];
 };
 
 const float particleVertices[] = {

@@ -58,12 +58,16 @@ void PE_Shape::OnEditor(int emitterIndex)
 {
 	std::string suffixLabel = "Shape Effect##";
 	suffixLabel += emitterIndex;
-	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
+	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Bullet))
 	{
 		suffixLabel = "Delete Shape Effect##";
 		suffixLabel += emitterIndex;
 		if (ImGui::Button(suffixLabel.c_str()))//TODO all particle effects delete buttons should look like this fix them
 			this->toDelete = true;
+
+
+		ImGui::Spacing();
+		ImGui::Indent();
 
 		suffixLabel = "Has Initial Speed##PaShapeEf";
 		suffixLabel += emitterIndex;
@@ -156,6 +160,7 @@ void PE_Shape::OnEditor(int emitterIndex)
 			ImGui::Spacing();
 			ImGui::Separator();
 		}
+		ImGui::Unindent();
 	}
 }
 #endif // !STANDALONE
