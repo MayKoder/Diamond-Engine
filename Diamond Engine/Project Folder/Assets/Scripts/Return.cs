@@ -9,8 +9,8 @@ public class Return : DiamondComponent
 	{
 		if (gameObject.Name == "Return")
         {
-			bigBrother.Enable(true);
-			controlsWindow.Enable(false);
+			bigBrother.EnableNav(true);
+			controlsWindow.EnableNav(false);
 		}
 	}
 	public void Update()

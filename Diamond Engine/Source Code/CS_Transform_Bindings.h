@@ -63,10 +63,26 @@ void CS_EnableGO(MonoObject* go, bool enable)
 	GameObject* ref = EngineExternal->moduleMono->GameObject_From_CSGO(go);
 	if (ref != nullptr) {
 		if (enable) {
-			ref->EnableTopDown();
+			ref->Enable();
 			
 		}
 		else {
+			ref->Disable();
+		}
+	}
+}
+
+void CS_EnableGONav(MonoObject* go, bool enable)
+{
+	GameObject* ref = EngineExternal->moduleMono->GameObject_From_CSGO(go);
+	if (ref != nullptr) {
+		if (enable) {
+			ref->Enable();
+			ref->EnableTopDown();
+
+		}
+		else {
+			ref->Disable();
 			ref->DisableTopDown();
 		}
 	}

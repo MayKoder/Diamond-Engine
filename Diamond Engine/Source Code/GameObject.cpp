@@ -23,6 +23,7 @@
 #include "CO_ParticleSystem.h"
 #include "CO_Billboard.h"
 #include "CO_Navigation.h"
+#include "CO_DirectionalLight.h"
 
 #include"MO_Scene.h"
 
@@ -199,6 +200,9 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 	case Component::TYPE::BILLBOARD:
 		ret = new C_Billboard(this);
 		break;
+	case Component::TYPE::DIRECTIONAL_LIGHT:
+		ret = new C_DirectionalLight(this);
+		break;
 	}
 
 	if (ret != nullptr)
@@ -301,23 +305,23 @@ void GameObject::Disable()
 
 void GameObject::EnableTopDown()
 {
-	Enable();
 	for (int i = 0;i< children.size(); i++) {
 		children[i]->EnableTopDown();
 	}
-	for (int i = 0; i < components.size(); i++) {
-		components[i]->Enable();
+	Component* nav = GetComponent(Component::TYPE::NAVIGATION);
+	if (nav != nullptr) {
+		nav->Enable();
 	}
 }
 
 void GameObject::DisableTopDown()
 {
-	Disable();
 	for (int i = 0; i < children.size(); i++) {
 		children[i]->DisableTopDown();
 	}
-	for (int i = 0; i < components.size(); i++) {
-		components[i]->Disable();
+	Component* nav = GetComponent(Component::TYPE::NAVIGATION);
+	if (nav != nullptr) {
+		nav->Disable();
 	}
 }
 

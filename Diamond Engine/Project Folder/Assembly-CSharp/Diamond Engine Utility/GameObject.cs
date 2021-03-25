@@ -66,6 +66,9 @@ namespace DiamondEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void Enable(bool enable);
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+
+        public extern void EnableNav(bool enable);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern bool IsEnabled();
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern bool CompareTag(string tag);

@@ -97,8 +97,8 @@ public class Settings : DiamondComponent
 
 		else if (gameObject.Name == "Return")
         {
-			bigBrother.Enable(true);
-			settingsWindow.Enable(false);
+			bigBrother.EnableNav(true);
+			settingsWindow.EnableNav(false);
 		}
 	}
 	public void Update()

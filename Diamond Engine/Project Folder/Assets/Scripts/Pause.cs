@@ -16,13 +16,13 @@ public class Pause : DiamondComponent
 		if (gameObject.Name == "Continue")
 		{
 			Time.ResumeGame();
-			background.Enable(false);
-			pauseWindow.Enable(false);
+			background.EnableNav(false);
+			pauseWindow.EnableNav(false);
 		}
 		if (gameObject.Name == "Settings")
         {
-			settingsWindow.Enable(true);
-			pauseWindow.Enable(false);
+			settingsWindow.EnableNav(true);
+			pauseWindow.EnableNav(false);
 			if (default_selected != null)
             {
 				default_selected.GetComponent<Navigation>().Select();
@@ -31,22 +31,22 @@ public class Pause : DiamondComponent
 		}
 		if (gameObject.Name == "Display")
 		{
-			displayWindow.Enable(true);
-			pauseWindow.Enable(false);
+			displayWindow.EnableNav(true);
+			pauseWindow.EnableNav(false);
 			if (default_selected != null)
 				default_selected.GetComponent<Navigation>().Select();
 		}
 		if (gameObject.Name == "Controls")
 		{
-			controlsWindow.Enable(true);
-			pauseWindow.Enable(false);
+			controlsWindow.EnableNav(true);
+			pauseWindow.EnableNav(false);
 			if (default_selected != null)
 				default_selected.GetComponent<Navigation>().Select();
 		}
 		if (gameObject.Name == "Quit")
 		{
-			quitWindow.Enable(true);
-			pauseWindow.Enable(false);
+			quitWindow.EnableNav(true);
+			pauseWindow.EnableNav(false);
 			if (default_selected != null)
 				default_selected.GetComponent<Navigation>().Select();
 		}

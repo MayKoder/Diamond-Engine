@@ -38,6 +38,8 @@ public:
 
 	vec3 GetVectorFromIndex(float* startValue);
 
+	void OGL_GPU_Render();
+
 public:
 
 	uint indices_id = 0; // index in VRAM

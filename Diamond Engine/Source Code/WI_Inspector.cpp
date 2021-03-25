@@ -248,6 +248,11 @@ void W_Inspector::Draw()
 					if (selectedGO->GetComponent(Component::TYPE::BILLBOARD) == nullptr)
 						selectedGO->AddComponent(Component::TYPE::BILLBOARD);
 				}
+				if (ImGui::Selectable("Directional Light"))
+				{
+					if (selectedGO->GetComponent(Component::TYPE::DIRECTIONAL_LIGHT) == nullptr)
+						selectedGO->AddComponent(Component::TYPE::DIRECTIONAL_LIGHT);
+				}
 
 				for (int i = 0; i < EngineExternal->moduleMono->userScripts.size(); i++)
 				{

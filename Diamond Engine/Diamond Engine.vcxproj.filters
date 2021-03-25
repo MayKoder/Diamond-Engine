@@ -136,6 +136,9 @@
     <Filter Include="Sources\Components\Derived\Physics">
       <UniqueIdentifier>{59fc5c3b-3544-4a28-b3b5-586bbbd669c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Components\Derived\Lights">
+      <UniqueIdentifier>{c98e8e11-450d-4034-a302-147ded921540}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -818,7 +821,6 @@
     <ClInclude Include="Source Code\CO_MeshCollider.h">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CO_CubeCollider.h" />
     <ClInclude Include="Source Code\CO_BoxCollider.h">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
@@ -894,6 +896,13 @@
     </ClInclude>
     <ClInclude Include="Source Code\CS_ParticleSystem_Bindings.h">
       <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_Camera_Bindings.h" />
+    <ClInclude Include="Source Code\CO_DirectionalLight.h">
+      <Filter>Sources\Components\Derived\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_CubeCollider.h">
+      <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1356,6 +1365,8 @@
     </ClCompile>
     <ClCompile Include="Source Code\CO_Animator.cpp">
       <Filter>Sources\Components\Derived</Filter>
+    <ClCompile Include="Source Code\CO_DirectionalLight.cpp">
+      <Filter>Sources\Components\Derived\Lights</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
