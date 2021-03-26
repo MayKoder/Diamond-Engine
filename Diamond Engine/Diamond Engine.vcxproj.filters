@@ -145,6 +145,9 @@
     <Filter Include="Sources\Containers\ParticleSystem\ParticleEffects\Derived\SpawnShapes\Derived">
       <UniqueIdentifier>{e6778b85-dd88-4592-bbf1-8270129fd73e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Components\Derived\Lights">
+      <UniqueIdentifier>{c98e8e11-450d-4034-a302-147ded921540}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Globals.h">
@@ -827,7 +830,6 @@
     <ClInclude Include="Source Code\CO_MeshCollider.h">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CO_CubeCollider.h" />
     <ClInclude Include="Source Code\CO_BoxCollider.h">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
@@ -892,9 +894,6 @@
     <ClInclude Include="Source Code\CO_SphereCollider.h">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CS_ParticleSystem_Bindings.h">
-      <Filter>Sources\Tools\Bindings</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\PE_Spawn_Sphere.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived\SpawnShapes\Derived</Filter>
     </ClInclude>
@@ -909,6 +908,16 @@
     </ClInclude>
     <ClInclude Include="Source Code\PE_Shape.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_ParticleSystem_Bindings.h">
+      <Filter>Sources\Tools\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CS_Camera_Bindings.h" />
+    <ClInclude Include="Source Code\CO_DirectionalLight.h">
+      <Filter>Sources\Components\Derived\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\CO_CubeCollider.h">
+      <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1215,9 +1224,6 @@
     <ClCompile Include="Source Code\IM_MaterialImporter.cpp">
       <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\CO_Animator.cpp">
-      <Filter>Sources\Components\Derived</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\RE_Animation.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
@@ -1377,6 +1383,11 @@
     </ClCompile>
     <ClCompile Include="Source Code\PE_Shape.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CO_Animator.cpp">
+      <Filter>Sources\Components\Derived</Filter>
+    <ClCompile Include="Source Code\CO_DirectionalLight.cpp">
+      <Filter>Sources\Components\Derived\Lights</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

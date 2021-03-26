@@ -106,39 +106,6 @@ void ResourceAnimation::LoadCustomFormat(const char* path)
 	RELEASE_ARRAY(buffer);
 }
 
-std::map<std::string, Channel> ResourceAnimation::GetAllChannelsInRange(float startFrame, float endFrame)
-{
-	std::map<std::string, Channel> channelsInRange;
-
-	std::map<std::string, Channel>::iterator channel_it = channels.begin();
-	for (channel_it; channel_it != channels.end(); channel_it++)
-	{
-		for (std::map<double, float3>::iterator position_key = channel_it->second.positionKeys.begin(); position_key != channel_it->second.positionKeys.end(); ++position_key) {
-			if (position_key->first >= startFrame) 
-			{
-				if (position_key->first < endFrame)  //Frame in range 
-				{
-					//channelsInRange[channel_it->first].positionKeys = position_key;
-				}
-				else //Frame out of range, needs to create intermediate frame
-				{
-
-				}
-			}
-		}
-
-		for (std::map<double, Quat>::iterator rotation_key = channel_it->second.rotationKeys.begin(); rotation_key != channel_it->second.rotationKeys.end(); ++rotation_key) {
-
-		}
-
-		for (std::map<double, float3>::iterator scale_key = channel_it->second.scaleKeys.begin(); scale_key != channel_it->second.scaleKeys.end(); ++scale_key) {
-
-		}
-	}
-
-	return channelsInRange;
-}
-
 Channel::~Channel()
 {
 	boneName.clear();

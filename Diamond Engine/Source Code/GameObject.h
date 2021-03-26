@@ -39,7 +39,7 @@ public:
 
 	void Destroy();
 
-	void SaveToJson(JSON_Array*);
+	void SaveToJson(JSON_Array* _goArray, bool skip_prefab_check = false);
 	void LoadFromJson(JSON_Object*);
 
 	void LoadComponents(JSON_Array* componentArray);

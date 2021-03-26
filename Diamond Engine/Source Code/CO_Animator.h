@@ -13,8 +13,11 @@ class GameObject;
 class Channel;
 class ResourceAnimation;
 class Resource;
+class C_Transform;
+struct Channel;
 
 typedef unsigned int uint;
+
 
 struct AnimationClip
 {
@@ -57,10 +60,12 @@ public:
 	float3	GetChannelScale(const Channel& channel, float currentKey, float3 default) const;
 
 	bool FindRootBone();
+	void SetAnimationLookUpTable(ResourceAnimation* animation, std::map<C_Transform*, Channel*>& lookUpTable);
 
 private:
-	void DrawBones(GameObject*);
+	void DrawBones();
 	ResourceAnimation* ClipToAnimation(AnimationClip clip);
+	void OrderAnimation(ResourceAnimation* animation);
 
 public:
 	void Play(std::string animName, float blendDuration = 0.3f);
@@ -71,7 +76,7 @@ public:
 	GameObject* rootBone = nullptr;
 	uint rootBoneUID;
 	uint meshRendererUID;
-	std::map<std::string, GameObject*> boneMapping;
+	std::map<std::string, C_Transform*> boneMapping; //cast to size_t
 
 	//Used for blending
 	bool playing;
@@ -92,8 +97,11 @@ private:
 
 	ResourceAnimation* currentAnimation;
 	ResourceAnimation* previousAnimation;
-	std::map<std::string,ResourceAnimation*> animations;
+	std::map<std::string, ResourceAnimation*> animations;
 	std::vector<AnimationClip> clips;
 	AnimationClip* selectedClip;
+
+	std::map<C_Transform*, Channel*> currentAnimationLUT;
+	std::map<C_Transform*, Channel*> previousAnimationLUT;
 };
 

@@ -62,29 +62,3 @@ void MaterialImporter::Save(ResourceMaterial* material, char** fileBuffer)
 	//LOG(LogType::L_NORMAL, "File saved at: %s", material->GetAssetPath());
 	LOG(LogType::L_NORMAL, "File saved at: %s", assets_path.c_str());
 }
-
-//void MaterialImporter::Save(uint uid, const char* path)
-//{
-	//Display material data
-	//Case of shader switch
-		//Remove from "references" vector from shader?
-		//Save and import new material data?
-
-//	JSON_Value* file = json_value_init_object();
-//	DEConfig root_object(json_value_get_object(file));
-//
-//	root_object.WriteInt("ShaderUID", uid);
-//
-//	JSON_Value* uniformsArray = json_value_init_array();
-//	material->SaveToJson(json_value_get_array(uniformsArray));
-//	json_object_set_value(root_object.nObj, "Uniforms", uniformsArray);
-//
-//	//Default shader does not have a library path
-//	//json_serialize_to_file_pretty(file, material->GetAssetPath());
-//	json_serialize_to_file_pretty(file, material->GetLibraryPath());
-//
-//	json_value_free(file);
-//
-//	//LOG(LogType::L_NORMAL, "File saved at: %s", material->GetAssetPath());
-//	LOG(LogType::L_NORMAL, "File saved at: %s", material->GetLibraryPath());
-//}

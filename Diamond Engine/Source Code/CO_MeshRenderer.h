@@ -5,6 +5,7 @@
 #include"MathGeoLib/include/Geometry/OBB.h"
 
 class ResourceMesh;
+class C_Transform;
 
 class C_MeshRenderer : public Component
 {
@@ -28,8 +29,8 @@ public:
 	void SetRootBone(GameObject* _rootBone);
 	void SetRenderMesh(ResourceMesh* mesh);
 	ResourceMesh* GetRenderMesh();
-	float4x4 CalculateDeltaMatrix(float4x4 globalMat, float4x4 invertMat);
-	void GetBoneMapping(std::map<std::string, GameObject*>& boneMapping);
+	float4x4 CalculateDeltaMatrix(float4x4 globalMat , float4x4 invertMat);
+	void GetBoneMapping();
 	void DrawDebugVertices();
 
 	OBB globalOBB;
@@ -42,5 +43,6 @@ private:
 	ResourceMesh* _mesh;
 	float3 alternColor;
 	bool drawDebugVertices;
-	std::map<std::string, GameObject*> bonesMap;
+	C_Transform* gameObjectTransform;
+	std::vector<C_Transform*> bonesMap;
 };

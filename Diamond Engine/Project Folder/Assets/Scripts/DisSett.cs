@@ -17,8 +17,8 @@ public class DisSett : DiamondComponent
 	{
 		if (gameObject.Name == "Return")
 		{
-			bigBrother.Enable(true);
-			displayScreen.Enable(false);
+			bigBrother.EnableNav(true);
+			displayScreen.EnableNav(false);
 		}
 		else if (gameObject.Name == "ResolutionUp")
 			Config.SetResolution(Config.GetResolution() + 1);

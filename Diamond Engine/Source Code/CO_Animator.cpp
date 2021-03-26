@@ -37,20 +37,21 @@ C_Animator::~C_Animator()
 {
 	rootBone = nullptr;
 
-	selectedClip = nullptr;
-	clips.clear();
-
 	currentAnimation = nullptr;
 	previousAnimation = nullptr;
+	selectedClip = nullptr;
 
 	for(std::map<std::string, ResourceAnimation*>::iterator it = animations.begin(); it != animations.end(); it++)
 	{
 		EngineExternal->moduleResources->UnloadResource(it->second->GetUID());
 		it->second = nullptr;
 	}
-	animations.clear();
 
+	animations.clear();
 	boneMapping.clear();
+	clips.clear();
+	currentAnimationLUT.clear();
+	previousAnimationLUT.clear();
 }
 
 void C_Animator::Start()
@@ -59,16 +60,6 @@ void C_Animator::Start()
 	{
 		if (!FindRootBone())
 			return;
-	}
-
-	boneMapping.clear();
-
-	std::vector<GameObject*> bones;
-	rootBone->CollectChilds(bones);
-
-	for (uint i = 0; i < bones.size(); ++i)
-	{
-		boneMapping[bones[i]->name] = bones[i];
 	}
 
 	if (animations.size() > 0)
@@ -82,28 +73,25 @@ void C_Animator::Start()
 void C_Animator::Update()
 {
 	float dt = DETime::deltaTime;
+
+	if (rootBone == nullptr)
+		FindRootBone();
+	
 	if (DETime::state == GameState::PLAY)
 	{
-		if (!started) {
+		if (!started) 
 			Start();
-		}
 	}
-	else {
-		if (rootBone == nullptr)
-		{
-			FindRootBone();
-		}
+	else 
+	{		
 		return;
 	}
 
 	if (rootBone != nullptr)
 	{
-		if (showBones) {
-			std::vector<GameObject*> bones;
-			rootBone->CollectChilds(bones);
-			DrawBones(bones[0]);
-		}
-
+		if (showBones) 
+			DrawBones();
+		
 		if (currentAnimation != nullptr)
 		{
 			//Updating animation blend
@@ -179,9 +167,8 @@ void C_Animator::LoadData(DEConfig& nObj)
 		uint animationUID = json_array_get_number(animationsArray, i);
 		ResourceAnimation* animation = dynamic_cast<ResourceAnimation*>(EngineExternal->moduleResources->RequestResource(animationUID, Resource::Type::ANIMATION));
 
-		if (animation != nullptr) {
+		if (animation != nullptr) 
 			AddAnimation(animation);
-		}
 	}
 }
 
@@ -195,18 +182,21 @@ void C_Animator::OnRecursiveUIDChange(std::map<uint, GameObject*> gameObjects)
 			rootBone = boneIt->second;
 			rootBoneUID = rootBone->UID;
 
+			boneMapping.clear();
+			StoreBoneMapping(rootBone);
+
 			if (meshRendererUID != 0u) 
 			{
 				std::map<uint, GameObject*>::iterator meshRendererIt = gameObjects.find(meshRendererUID);
 				if (meshRendererIt != gameObjects.end())
 				{
 					C_MeshRenderer* meshRenderer = dynamic_cast<C_MeshRenderer*>(meshRendererIt->second->GetComponent(Component::TYPE::MESH_RENDERER));
-					if (meshRenderer != nullptr) {
-						meshRenderer->rootBone = rootBone;
+					if (meshRenderer != nullptr) 
+					{
+						meshRenderer->SetRootBone(rootBone);
 						meshRendererUID = meshRendererIt->second->UID;
 					}
 				}
-	
 			}
 		}
 	}
@@ -289,7 +279,7 @@ bool C_Animator::OnEditor()
 		}
 
 		//List of existing animations
-		static char newName[32];
+		static char newName[64];
 
 		std::string animation_to_remove = "";
 		ImGui::Text("Select a new animation");
@@ -504,7 +494,8 @@ void C_Animator::SaveAnimation(ResourceAnimation* animation, const char* name)
 
 void C_Animator::StoreBoneMapping(GameObject* gameObject)
 {
-	boneMapping[gameObject->name] = gameObject;
+	boneMapping[gameObject->name] = dynamic_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM));
+	
 	for (int i = 0; i < gameObject->children.size(); i++)
 	{
 		StoreBoneMapping(gameObject->children[i]);
@@ -523,6 +514,9 @@ void C_Animator::Play(std::string animName, float blendDuration)
 	blendTimeDuration = blendDuration;
 	blendTime = 0.0f;
 	time = 0;
+
+	SetAnimationLookUpTable(currentAnimation, currentAnimationLUT);
+	SetAnimationLookUpTable(previousAnimation, previousAnimationLUT);
 }
 
 void C_Animator::Pause()
@@ -537,8 +531,12 @@ void C_Animator::Resume()
 
 void C_Animator::AddAnimation(ResourceAnimation* anim)
 {
-	if (anim != nullptr) 
-		animations[anim->animationName] = anim;
+	if (anim == nullptr)
+		return;
+
+	animations[anim->animationName] = anim;
+
+	OrderAnimation(anim);
 }
 
 void C_Animator::AddClip(ResourceAnimation* anim)
@@ -556,7 +554,7 @@ void C_Animator::AddClip(ResourceAnimation* anim)
 	clips.push_back(clip);
 }
 
-void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, const ResourceAnimation* blend, float blendRatio)
+void C_Animator::UpdateChannelsTransform(const ResourceAnimation* animation, const ResourceAnimation* blend, float blendRatio)
 {
 	uint currentFrame = currentTimeAnimation;
 
@@ -568,77 +566,46 @@ void C_Animator::UpdateChannelsTransform(const ResourceAnimation* settings, cons
 	{
 		prevBlendFrame = (blend->ticksPerSecond * prevAnimTime) + blend->initTimeAnim;
 	}
+
 	//LOG(LogType::L_NORMAL, "%i", currentFrame);
-	std::map<std::string, GameObject*>::iterator boneIt;
-	for (boneIt = boneMapping.begin(); boneIt != boneMapping.end(); ++boneIt)
+	std::map<C_Transform*, Channel*>::iterator boneIt;
+	for (boneIt = currentAnimationLUT.begin(); boneIt != currentAnimationLUT.end(); ++boneIt)
 	{
-		C_Transform* transform = dynamic_cast<C_Transform*>(boneIt->second->GetComponent(Component::TYPE::TRANSFORM));
-
-		if (settings->channels.find(boneIt->first.c_str()) == settings->channels.end()) continue;
-
-		const Channel& channel = settings->channels.find(boneIt->first.c_str())->second;
-	
-		float3 position = GetChannelPosition(channel, currentFrame, transform->position);
-		Quat rotation = GetChannelRotation(channel, currentFrame, transform->rotation);
-		float3 scale = GetChannelScale(channel, currentFrame, transform->localScale);
-
+		Channel& channel = *boneIt->second;
+		
+		float3 position = GetChannelPosition(channel, currentFrame, boneIt->first->position); 
+		Quat   rotation = GetChannelRotation(channel, currentFrame, boneIt->first->rotation);
+		float3 scale    = GetChannelScale(channel, currentFrame, boneIt->first->localScale);
 
 		//BLEND
 		if (blend != nullptr)
 		{
-			std::map<std::string, Channel>::const_iterator foundChannel = blend->channels.find(boneIt->first.c_str());
-			if (foundChannel != blend->channels.end()) {
-				const Channel& blendChannel = foundChannel->second;
+			std::map<C_Transform*, Channel*>::iterator foundChannel = previousAnimationLUT.find(boneIt->first);
+			if (foundChannel != previousAnimationLUT.end()) {
+				const Channel& blendChannel = *foundChannel->second;
 
-				position = float3::Lerp(GetChannelPosition(blendChannel, prevBlendFrame, transform->position), position, blendRatio);
-				rotation = Quat::Slerp(GetChannelRotation(blendChannel, prevBlendFrame, transform->rotation), rotation, blendRatio);
-				scale = float3::Lerp(GetChannelScale(blendChannel, prevBlendFrame, transform->localScale), scale, blendRatio);
+				position = float3::Lerp(GetChannelPosition(blendChannel, prevBlendFrame, boneIt->first->position), position, blendRatio);
+				rotation = Quat::Slerp(GetChannelRotation(blendChannel, prevBlendFrame, boneIt->first->rotation), rotation, blendRatio);
+				scale    = float3::Lerp(GetChannelScale(blendChannel, prevBlendFrame, boneIt->first->localScale), scale, blendRatio);
 			}
-
 		}
 
-		transform->position = position;
-		transform->eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
-		transform->localScale = scale;
-		transform->updateTransform = true;
+		boneIt->first->position = position;
+		boneIt->first->eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
+		boneIt->first->localScale = scale;
+		boneIt->first->updateTransform = true;
 	}
 }
 
-Quat C_Animator::GetChannelRotation(const Channel& channel, float currentKey, Quat default) const
+float3 C_Animator::GetChannelPosition(const Channel& channel, float currentKey, float3 position) const
 {
-	Quat rotation = default;
-
-	if (channel.rotationKeys.size() > 0)
-	{
-		std::map<double, Quat>::const_iterator previous = channel.GetPrevRotKey(currentKey);
-		std::map<double, Quat>::const_iterator next = channel.GetNextRotKey(currentKey);
-
-		if (channel.rotationKeys.begin()->first == -1) return rotation;
-
-
-		//If both keys are the same, no need to blend
-		if (previous == next)
-			rotation = previous->second;
-		else //blend between both keys
-		{
-			//0 to 1
-			float ratio = (currentKey - previous->first) / (next->first - previous->first);
-			rotation = previous->second.Slerp(next->second, ratio);
-		}
-	}
-	return rotation;
-}
-
-float3 C_Animator::GetChannelPosition(const Channel& channel, float currentKey, float3 default) const
-{
-	float3 position = default;
-
 	if (channel.positionKeys.size() > 0)
 	{
 		std::map<double, float3>::const_iterator previous = channel.GetPrevPosKey(currentKey);
-		std::map<double, float3>::const_iterator next = channel.GetNextPosKey(currentKey);
+		std::map<double, float3>::const_iterator next     = channel.GetNextPosKey(currentKey);
 
-		if (channel.positionKeys.begin()->first == -1) return position;
+		if (channel.positionKeys.begin()->first == -1) 
+			return position;
 
 		//If both keys are the same, no need to blend
 		if (previous == next)
@@ -654,17 +621,38 @@ float3 C_Animator::GetChannelPosition(const Channel& channel, float currentKey, 
 	return position;
 }
 
-float3 C_Animator::GetChannelScale(const Channel & channel, float currentKey, float3 default) const
+Quat C_Animator::GetChannelRotation(const Channel& channel, float currentKey, Quat rotation) const
 {
-	float3 scale = default;
+	if (channel.rotationKeys.size() > 0)
+	{
+		std::map<double, Quat>::const_iterator previous = channel.GetPrevRotKey(currentKey);
+		std::map<double, Quat>::const_iterator next     = channel.GetNextRotKey(currentKey);
 
+		if (channel.rotationKeys.begin()->first == -1)
+			return rotation;
+
+		//If both keys are the same, no need to blend
+		if (previous == next)
+			rotation = previous->second;
+		else //blend between both keys
+		{
+			//0 to 1
+			float ratio = (currentKey - previous->first) / (next->first - previous->first);
+			rotation = previous->second.Slerp(next->second, ratio);
+		}
+	}
+	return rotation;
+}
+
+float3 C_Animator::GetChannelScale(const Channel & channel, float currentKey, float3 scale) const
+{
 	if (channel.scaleKeys.size() > 0)
 	{
 		std::map<double, float3>::const_iterator previous = channel.GetPrevScaleKey(currentKey);
-		std::map<double, float3>::const_iterator next = channel.GetPrevScaleKey(currentKey);
+		std::map<double, float3>::const_iterator next     = channel.GetPrevScaleKey(currentKey);
 
-		if (channel.scaleKeys.begin()->first == -1) return scale;
-
+		if (channel.scaleKeys.begin()->first == -1) 
+			return scale;
 
 		//If both keys are the same, no need to blend
 		if (previous == next)
@@ -686,52 +674,66 @@ bool C_Animator::FindRootBone()
 	{
 		rootBone = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, rootBoneUID);
 
-		if (meshRendererUID != 0u)
-		{
-			GameObject* meshRendererObject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, meshRendererUID);
-			if (meshRendererObject != nullptr)
-			{
-				dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::TYPE::MESH_RENDERER))->SetRootBone(rootBone);
-			}
-		}
-
 		if (rootBone == nullptr)
 		{
 			rootBoneUID = 0u;
 			ret = false;
+		}
+		else
+		{
+			boneMapping.clear();
+			StoreBoneMapping(rootBone);
+
+			if (meshRendererUID != 0u)
+			{
+				GameObject* meshRendererObject = EngineExternal->moduleScene->GetGOFromUID(EngineExternal->moduleScene->root, meshRendererUID);
+				if (meshRendererObject != nullptr)
+				{
+					dynamic_cast<C_MeshRenderer*>(meshRendererObject->GetComponent(Component::TYPE::MESH_RENDERER))->SetRootBone(rootBone);
+				}
+			}
 		}
 	}
 
 	return ret;
 }
 
-void C_Animator::DrawBones(GameObject* gameObject)
+void C_Animator::SetAnimationLookUpTable(ResourceAnimation* animation, std::map<C_Transform*, Channel*>& lookUpTable)
+{
+	if (animation == nullptr)
+		return;
+
+	lookUpTable.clear();
+
+	std::map<std::string, C_Transform*>::iterator boneIt = boneMapping.begin();
+	for (boneIt; boneIt != boneMapping.end(); ++boneIt)
+	{
+		std::map<std::string, Channel>::iterator channelIt = animation->channels.find(boneIt->first);
+
+		if (channelIt != animation->channels.end())
+		{
+			lookUpTable[boneIt->second] = &channelIt->second;
+		}
+	}
+}
+
+void C_Animator::DrawBones()
 {
 	glColor3f(1.f, 0.f, 0.f);
 	glLineWidth(4.f);
 	glBegin(GL_LINES);
 
 	//Draw lines
-	float3 position;
-	Quat rotation;
-	float3 scale;
 
-	if (gameObject->parent != nullptr) 
+	bool endLine = false;
+	std::map<std::string, C_Transform*>::iterator boneIt;
+	for (boneIt = boneMapping.begin(); boneIt != boneMapping.end(); ++boneIt)
 	{
-		gameObject->parent->transform->globalTransform.Decompose(position, rotation, scale);
+		float3 position = boneIt->second->position;
 		glVertex3f(position.x, position.y, position.z);
 	}
-
-	gameObject->transform->globalTransform.Decompose(position, rotation, scale);
-	glVertex3f(position.x, position.y, position.z);
+	
 	//LOG(LogType::L_NORMAL, "Name: %s  %f,%f,%f",bones->first.c_str(), position.x, position.y, position.z);
-
-	if (gameObject->children.size() > 0) {
-		for (uint i = 0; i < gameObject->children.size(); i++)
-		{
-			DrawBones(gameObject->children[i]);
-		}
-	}
 	glEnd();
 	glLineWidth(1.f);
 	glColor3f(1.f, 1.f, 1.f);
@@ -751,6 +753,19 @@ ResourceAnimation* C_Animator::ClipToAnimation(AnimationClip clip)
 	//Create .anim 
 
 	return animation;
+}
+
+void C_Animator::OrderAnimation(ResourceAnimation* animation)
+{
+	std::vector<Channel> orderedChannels;
+	std::map<std::string, C_Transform*>::iterator bone = boneMapping.begin();
+	for (bone; bone != boneMapping.end(); ++bone)
+	{
+		if (animation->channels.find(bone->first) != animation->channels.end())
+		{
+			orderedChannels.push_back(animation->channels[bone->first]);
+		}
+	}
 }
 
 AnimationClip::AnimationClip() : name("No name"), startFrame(0), endFrame(0), originalAnimation(nullptr), loop(false) {}

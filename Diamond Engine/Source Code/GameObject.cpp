@@ -23,6 +23,7 @@
 #include "CO_ParticleSystem.h"
 #include "CO_Billboard.h"
 #include "CO_Navigation.h"
+#include "CO_DirectionalLight.h"
 
 #include"MO_Scene.h"
 
@@ -199,6 +200,9 @@ Component* GameObject::AddComponent(Component::TYPE _type, const char* params)
 	case Component::TYPE::BILLBOARD:
 		ret = new C_Billboard(this);
 		break;
+	case Component::TYPE::DIRECTIONAL_LIGHT:
+		ret = new C_DirectionalLight(this);
+		break;
 	}
 
 	if (ret != nullptr)
@@ -301,23 +305,23 @@ void GameObject::Disable()
 
 void GameObject::EnableTopDown()
 {
-	Enable();
 	for (int i = 0;i< children.size(); i++) {
 		children[i]->EnableTopDown();
 	}
-	for (int i = 0; i < components.size(); i++) {
-		components[i]->Enable();
+	Component* nav = GetComponent(Component::TYPE::NAVIGATION);
+	if (nav != nullptr) {
+		nav->Enable();
 	}
 }
 
 void GameObject::DisableTopDown()
 {
-	Disable();
 	for (int i = 0; i < children.size(); i++) {
 		children[i]->DisableTopDown();
 	}
-	for (int i = 0; i < components.size(); i++) {
-		components[i]->Disable();
+	Component* nav = GetComponent(Component::TYPE::NAVIGATION);
+	if (nav != nullptr) {
+		nav->Disable();
 	}
 }
 
@@ -334,16 +338,16 @@ void GameObject::Destroy()
 }
 
 
-void GameObject::SaveToJson(JSON_Array* _goArray)
+void GameObject::SaveToJson(JSON_Array* _goArray, bool skip_prefab_check)
 {
 	JSON_Value* goValue = json_value_init_object();
 	JSON_Object* goData = json_value_get_object(goValue);
 
-	//Save all gameObject data
 	json_object_set_string(goData, "name", name.c_str());
 	json_object_set_string(goData, "tag", tag);
 	json_object_set_string(goData, "layer", layer);
 
+	//Save all gameObject data
 	DEJson::WriteBool(goData, "Active", active);
 	DEJson::WriteVector3(goData, "Position", &transform->position[0]);
 	DEJson::WriteQuat(goData, "Rotation", &transform->rotation.x);
@@ -358,6 +362,9 @@ void GameObject::SaveToJson(JSON_Array* _goArray)
 		DEJson::WriteInt(goData, "ParentUID", parent->UID);
 
 	json_array_append_value(_goArray, goValue);
+
+	if (prefabID != 0u && !skip_prefab_check)
+		return;
 
 	//TODO: Move inside component base
 	{
