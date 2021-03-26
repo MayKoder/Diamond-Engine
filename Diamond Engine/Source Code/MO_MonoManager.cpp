@@ -164,6 +164,8 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.GameObject::IsEnabled", CS_IsGOEnabled);
 	mono_add_internal_call("DiamondEngine.GameObject::CompareTag", CompareTag);
 	mono_add_internal_call("DiamondEngine.GameObject::get_tag", GetTag);
+	mono_add_internal_call("DiamondEngine.GameObject::SetVelocity", SetVelocity);
+	mono_add_internal_call("DiamondEngine.GameObject::AddForce", AddForce);
 
 	mono_add_internal_call("DiamondEngine.Animator::Play", Play);
 	mono_add_internal_call("DiamondEngine.Animator::Pause", Pause);

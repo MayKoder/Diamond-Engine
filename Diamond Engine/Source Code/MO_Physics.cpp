@@ -166,13 +166,16 @@ bool ModulePhysics::Init() {
 	mScene->setVisualizationParameter(PxVisualizationParameter::eSCALE, 1.0f);
 	mScene->setVisualizationParameter(PxVisualizationParameter::eCOLLISION_SHAPES, 1.0f);
 
+	acumTime = 0;
 	return true;
 }
 
 update_status ModulePhysics::PreUpdate(float dt)
 {
-	if (DETime::state == GameState::PLAY)
+	acumTime += (DETime::deltaTime);
+	if (DETime::state == GameState::PLAY && acumTime > DT60FRAMES)
 		SceneSimulation(DETime::deltaTime);
+
 
 
 	
@@ -202,10 +205,11 @@ update_status ModulePhysics::Update(float gameTimestep) {
 }
 
 void ModulePhysics::SceneSimulation(double gameTimestep, bool fetchResults) {
+	acumTime = 0;
 	PxReal step = gameTimestep;
 	//if(step < 0.002)
 	//step = 0.002;
-	mScene->simulate(0.013f); //TODO: Temporal fix?
+	mScene->simulate(DT60FRAMES); //TODO: Temporal fix?
 	//mScene->simulate(step);
 		mScene->fetchResults(fetchResults);
 
