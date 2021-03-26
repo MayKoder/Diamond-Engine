@@ -1386,6 +1386,7 @@
     </ClCompile>
     <ClCompile Include="Source Code\CO_Animator.cpp">
       <Filter>Sources\Components\Derived</Filter>
+       </ClCompile>
     <ClCompile Include="Source Code\CO_DirectionalLight.cpp">
       <Filter>Sources\Components\Derived\Lights</Filter>
     </ClCompile>
