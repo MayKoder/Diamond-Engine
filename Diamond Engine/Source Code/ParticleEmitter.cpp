@@ -1,14 +1,12 @@
 #include "ParticleEmitter.h"
 #include "Globals.h"
 
-#include "PE_Spawn_Area.h"
 #include "PE_Force_Over_Lifetime.h"
 #include "PE_Rotate_Over_Lifetime.h"
 #include "PE_Size_Over_Lifetime.h"
 #include "PE_Color_Over_Lifetime.h"
 #include "PE_Velocity_Over_Lifetime.h"
-#include "PE_Spawn_Sphere.h"
-#include "PE_Spawn_Cone.h"
+#include "PE_Shape.h"
 
 #include <string>
 
@@ -43,10 +41,10 @@ Emitter::Emitter() :
 	myEffects(),
 	objTransform(nullptr),
 	delaying(false),
-	maxDelay(0.0f)
+	maxDelay(0.0f),
+	emitterName("")
 {
 	memset(particlesLifeTime, 0.1f, sizeof(particlesLifeTime));
-	memset(particlesSpeed, 0.0f, sizeof(particlesSpeed));
 	memset(particlesSize, 1.0f, sizeof(particlesSize));
 	memset(particlesColor, 1.0f, sizeof(particlesColor));
 
@@ -59,8 +57,8 @@ Emitter::Emitter() :
 	particlesColor[3] = 1;
 
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &instanceVBO);
 	glGenBuffers(1, &vertexVBO);
+	glGenBuffers(1, &instanceVBO);
 
 	glBindVertexArray(VAO);
 
@@ -72,31 +70,16 @@ Emitter::Emitter() :
 
 	glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * MAX_PARTICLES * INSTANCE_DATA_LENGHT, NULL, GL_STREAM_DRAW);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), 0);
-	glVertexAttribDivisor(1, 1);
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), (void*)(4 * sizeof(float)));
-	glVertexAttribDivisor(2, 1);
-	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), (void*)(8 * sizeof(float)));
-	glVertexAttribDivisor(3, 1);
-	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), (void*)(12 * sizeof(float)));
-	glVertexAttribDivisor(4, 1);
-	glEnableVertexAttribArray(5);
-	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, INSTANCE_DATA_LENGHT * sizeof(float), (void*)(16 * sizeof(float)));
-	glVertexAttribDivisor(5, 1);
-
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
-	glDisableVertexAttribArray(3);
-	glDisableVertexAttribArray(4);
-	glDisableVertexAttribArray(5);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	AddInstancedAttribute(VAO, instanceVBO, 1, 4, INSTANCE_DATA_LENGHT, 0);
+	AddInstancedAttribute(VAO, instanceVBO, 2, 4, INSTANCE_DATA_LENGHT, 4);
+	AddInstancedAttribute(VAO, instanceVBO, 3, 4, INSTANCE_DATA_LENGHT, 8);
+	AddInstancedAttribute(VAO, instanceVBO, 4, 4, INSTANCE_DATA_LENGHT, 12);
+	AddInstancedAttribute(VAO, instanceVBO, 5, 4, INSTANCE_DATA_LENGHT, 16);
+
 
 	CalculatePoolSize();
 }
@@ -106,11 +89,11 @@ Emitter::~Emitter()
 {
 	glDeleteBuffers(1, &vertexVBO);
 	glDeleteBuffers(1, &instanceVBO);
-	glDeleteBuffers(1, &VAO);
+	glDeleteVertexArrays(1, &VAO);
 
-	vertexVBO = 0u;
-	instanceVBO = 0u;
-	VAO = 0u;
+	vertexVBO = 0;
+	instanceVBO = 0;
+	VAO = 0;
 
 	if (texture != nullptr)
 	{
@@ -129,27 +112,15 @@ Emitter::~Emitter()
 	}
 	myEffects.clear();
 	myParticles.clear();
+	emitterName.clear();
 	objTransform = nullptr;
+	delay.Stop();
 }
 
 
 void Emitter::Update(float dt, bool systemActive)
 {
-	//Delete effects
-	for (int i = 0; i < myEffects.size(); i++) {
-		if (myEffects[i]->toDelete) {
-			myEffects[i]->~ParticleEffect();
-			myEffects.erase(myEffects.begin() + i);
-			i--;
-		}
-	}
-
-	/*if (EngineExternal->moduleEditor->GetSelectedGO() == objTransform->GetGO()) {
-		playing = true;
-		duration.Start();
-	}*/
-
-	if (delaying) 
+	if (delaying)
 	{
 		if (delay.Read() >= maxDelay * 1000)
 		{
@@ -160,6 +131,12 @@ void Emitter::Update(float dt, bool systemActive)
 
 	if (delaying == false)
 	{
+		for (int i = 0; i < myEffects.size(); ++i)
+		{
+			myEffects[i]->PrepareEffect();
+		}
+
+
 		if (systemActive)
 			ThrowParticles(dt);
 
@@ -192,6 +169,7 @@ void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 	if (myParticles.empty() == true)
 		return;
 
+
 	if (texture != nullptr)
 		glBindTexture(GL_TEXTURE_2D, texture->textureID);
 
@@ -206,113 +184,131 @@ void Emitter::Draw(unsigned int shaderId, Quat newRotation)
 	vboInfo.reserve(sizeof(float) * myParticles.size() * 16);
 
 	int particlesCount = myParticles.size();
+
+	const size_t sizeofFloat4x4 = sizeof(float4x4);
+	const size_t sizeofFloat4 = sizeof(float4);
+
 	for (int i = 0; i < particlesCount; ++i)	//Need to order particles
 	{
-		if (myParticles[i].currentLifetime > 0)
+		if (myParticles[i].currentLifetime > 0.0f)
 		{
-			//TODO: Update that rotation, get from billboard
-			//Quat::FromEulerXYZ(0, 0, myParticles[i].rotation)
-			//EngineExternal->moduleRenderer3D->activeRenderCamera
-			float3 eulerRot = newRotation.ToEulerXYZ();
-			eulerRot.z += myParticles[i].rotation;
+			//new
+			Quat finalParticleRot = newRotation * Quat::RotateAxisAngle({ 0.0f,0.0f,1.0f }, myParticles[i].rotation);
+			float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, finalParticleRot, float3(myParticles[i].size, myParticles[i].size, 1)).Transposed();
 
-			float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(eulerRot.x, eulerRot.y, eulerRot.z), float3(1 * myParticles[i].size, 1 * myParticles[i].size, 1)).Transposed();
-			//float4x4 matrix = float4x4::FromTRS(myParticles[i].pos, Quat::FromEulerXYZ(0, 0, myParticles[i].rotation), float3(1 * myParticles[i].size, 1 * myParticles[i].size, 1)).Transposed();
-			vboInfo.push_back(matrix[0][0]);
-			vboInfo.push_back(matrix[0][1]);
-			vboInfo.push_back(matrix[0][2]);
-			vboInfo.push_back(matrix[0][3]);
-			vboInfo.push_back(matrix[1][0]);
-			vboInfo.push_back(matrix[1][1]);
-			vboInfo.push_back(matrix[1][2]);
-			vboInfo.push_back(matrix[1][3]);
-			vboInfo.push_back(matrix[2][0]);
-			vboInfo.push_back(matrix[2][1]);
-			vboInfo.push_back(matrix[2][2]);
-			vboInfo.push_back(matrix[2][3]);
-			vboInfo.push_back(matrix[3][0]);
-			vboInfo.push_back(matrix[3][1]);
-			vboInfo.push_back(matrix[3][2]);
-			vboInfo.push_back(matrix[3][3]);
+			int lastIndex = vboInfo.size();
+			vboInfo.resize(lastIndex + INSTANCE_DATA_LENGHT);
 
-			vboInfo.push_back(myParticles[i].color.x);
-			vboInfo.push_back(myParticles[i].color.y);
-			vboInfo.push_back(myParticles[i].color.z);
-			vboInfo.push_back(myParticles[i].color.w);
+			memcpy(&vboInfo[lastIndex], matrix.v, sizeofFloat4x4);
+			memcpy(&vboInfo[lastIndex + 16], &myParticles[i].color, sizeofFloat4);
+			//end new
 
-			particlesAlive++;
+			++particlesAlive;
 		}
 	}
 
-	if (vboInfo.empty())
+	if (particlesAlive == 0)
 		return;
 
 	glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * particlesAlive * INSTANCE_DATA_LENGHT, NULL, GL_STREAM_DRAW);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, vboInfo.size() * sizeof(float), &vboInfo[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * particlesAlive * INSTANCE_DATA_LENGHT, NULL, GL_STREAM_DRAW);//possible problem here?
+	glBufferSubData(GL_ARRAY_BUFFER, 0, vboInfo.size() * sizeof(float), &vboInfo[0]);//possible problem here?
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+
+
+	//==================================
 
 	glBindVertexArray(VAO);
 
-	//glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
-	glEnableVertexAttribArray(0);
-	//glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
-
-
-	//glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * MAX_PARTICLES * INSTANCE_DATA_LENGHT, NULL, GL_DYNAMIC_DRAW);
-	glEnableVertexAttribArray(1);
-	//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), 0);
-	//glVertexAttribDivisor(1, 1);
-	glEnableVertexAttribArray(2);
-	//glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), (void*)(4 * sizeof(float)));
-	//glVertexAttribDivisor(2, 1);
-	glEnableVertexAttribArray(3);
-	//glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), (void*)(8 * sizeof(float)));
-	//glVertexAttribDivisor(3, 1);
-	glEnableVertexAttribArray(4);
-	//glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 16 * sizeof(float), (void*)(12 * sizeof(float)));
-	//glVertexAttribDivisor(4, 1);
-	glEnableVertexAttribArray(5);
-
-	glVertexAttribDivisor(0, 0); // particles vertices : always reuse the same 4 vertices -> 0
-	glVertexAttribDivisor(1, 1); // positions : one per quad (its center) -> 1
-	glVertexAttribDivisor(2, 1);
-	glVertexAttribDivisor(3, 1);
-	glVertexAttribDivisor(4, 1);
-	glVertexAttribDivisor(5, 1);
-
 	glDrawArraysInstanced(GL_TRIANGLES, 0, 6, particlesAlive);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
-	glDisableVertexAttribArray(3);
-	glDisableVertexAttribArray(4);
-	glDisableVertexAttribArray(5);
 	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	vboInfo.clear();
 }
 
 
 #ifndef STANDALONE
 void Emitter::OnEditor(int emitterIndex)
 {
-	std::string guiName = "Emitter";
 	std::string suffixLabel = "##";
 	suffixLabel += emitterIndex;
+	std::string guiName = "Emitter: '" + emitterName + "'" + suffixLabel;
 
 	if (ImGui::CollapsingHeader(guiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		strcpy(emitterNameChars, emitterName.c_str());
+		guiName = suffixLabel + "Name";
+		std::string hint = "Insert Emitter Name Here";
+		if (ImGui::InputTextWithHint(guiName.c_str(), hint.c_str(), &emitterNameChars[0], sizeof(emitterNameChars)))
+		{
+			if (emitterNameChars[0] != '\0')
+				emitterName = emitterNameChars;
+		}
 		ImGui::SameLine();
-		ImGui::Text("Delay time: %.2f", delay.Read() * 0.001f);
-		
+		guiName = "Delete Emitter" + suffixLabel;
+		if (ImGui::Button(guiName.c_str()))
+		{
+			toDelete = true;
+		}
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Indent();
+
+
+		//IMAGE TEXTURE ===================================================================================
+		{
+
+			if (texture != nullptr)
+			{
+				if (ImGui::ImageButton((ImTextureID)texture->textureID, ImVec2(64, 64), ImVec2(0, 1), ImVec2(1, 0)))
+				{
+					EngineExternal->moduleResources->UnloadResource(texture->GetUID());
+				}
+				if (ImGui::IsItemHovered())
+				{
+					ImGui::BeginTooltip();
+					ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.2f, 0.2f, 1.0f));
+					ImGui::Text("Click on the image to erase it");
+					ImGui::PopStyleColor();
+					ImGui::EndTooltip();
+				}
+			}
+			else
+			{
+				ImGui::Image((ImTextureID)0, ImVec2(64, 64), ImVec2(0, 1), ImVec2(1, 0));
+			}
+
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
+				{
+					//Drop asset from Asset window to scene window
+					std::string* metaFileDrop = (std::string*)payload->Data;
+
+					if (texture != nullptr)
+						EngineExternal->moduleResources->UnloadResource(texture->GetUID());
+
+					std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
+
+					texture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
+					LOG(LogType::L_WARNING, "File %s loaded to scene", (*metaFileDrop).c_str());
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+		}
+		//END OF IMAGE TEXTURE ============================================================================
+
 		guiName = "Delay" + suffixLabel;
 		ImGui::SliderFloat(guiName.c_str(), &maxDelay, 0.0f, 10.0f);
 
 		guiName = "Particle Lifetime" + suffixLabel;
-		if (ImGui::DragFloatRange2(guiName.c_str(), &particlesLifeTime[0], &particlesLifeTime[1], 0.25f, 0.1f, 100.0f, "Min: %.1f", "Max: %.1f"))
+		if (ImGui::DragFloatRange2(guiName.c_str(), &particlesLifeTime[0], &particlesLifeTime[1], 0.25f, 0.01f, 100.0f, "Min: %.01f", "Max: %.01f"))
 			CalculatePoolSize();
 
 		guiName = "Particles per Second" + suffixLabel;
@@ -320,7 +316,7 @@ void Emitter::OnEditor(int emitterIndex)
 			SetParticlesPerSec(particlesPerSec);
 
 		guiName = "Start Size" + suffixLabel;
-		ImGui::DragFloatRange2(guiName.c_str(), &particlesSize[0], &particlesSize[1], 0.25f, 0.1f, 5.0f, "Min: %.1f", "Max: %.1f");			
+		ImGui::DragFloatRange2(guiName.c_str(), &particlesSize[0], &particlesSize[1], 0.25f, 0.01f, 5.0f, "Min: %.01f", "Max: %.01f");
 
 		//It doesn't make sense to have Start Speed when we have the velocity effect
 		//guiName = "Start Speed" + suffixLabel;
@@ -334,43 +330,84 @@ void Emitter::OnEditor(int emitterIndex)
 			int index = DoesEffectExist((PARTICLE_EFFECT_TYPE)i);
 			if (index != -1)
 			{
+				ImGui::Spacing();
+				ImGui::Separator();
+				ImGui::Spacing();
+				ImGui::Spacing();
+
 				myEffects[index]->OnEditor(emitterIndex);
+
 			}
-			else
+			/*else
 			{
 				guiName = (ParticleEffectEnumToString((PARTICLE_EFFECT_TYPE)i)) + suffixLabel;
 				if (ImGui::Button(guiName.c_str()))
 				{
 					CreateEffect((PARTICLE_EFFECT_TYPE)i);
 				}
-			}
+			}*/
 		}
 
-		if (texture != nullptr)
-			ImGui::Image((ImTextureID)texture->textureID, ImVec2(64, 64), ImVec2(0, 1), ImVec2(1, 0));
 
-		else
-			ImGui::Image((ImTextureID)0, ImVec2(64, 64), ImVec2(0, 1), ImVec2(1, 0));
 
-		if (ImGui::BeginDragDropTarget())
-		{
-			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("_TEXTURE"))
-			{
-				//Drop asset from Asset window to scene window
-				std::string* metaFileDrop = (std::string*)payload->Data;
-
-				if (texture != nullptr)
-					EngineExternal->moduleResources->UnloadResource(texture->GetUID());
-
-				std::string libraryName = EngineExternal->moduleResources->LibraryFromMeta(metaFileDrop->c_str());
-
-				texture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(EngineExternal->moduleResources->GetMetaUID(metaFileDrop->c_str()), libraryName.c_str()));
-				LOG(LogType::L_WARNING, "File %s loaded to scene", (*metaFileDrop).c_str());
-			}
-			ImGui::EndDragDropTarget();
-		}
+		ImGui::Spacing();
 		ImGui::Separator();
 		ImGui::Spacing();
+		ImGui::Spacing();
+
+
+		//COMBO ===============================================
+		{
+
+			guiName = "Add Effect##PaShapeEf";
+			guiName += emitterIndex;
+
+			std::string textNameDisplay = "NEW EFFECT";
+
+			textNameDisplay += "##PaShapeEf";
+			textNameDisplay += emitterIndex;
+			if (ImGui::BeginCombo(guiName.c_str(), textNameDisplay.c_str()))
+			{
+				//================================
+				for (int n = (int)PARTICLE_EFFECT_TYPE::NONE + 1; n < (int)PARTICLE_EFFECT_TYPE::MAX; ++n)
+				{
+
+					guiName = (ParticleEffectEnumToString((PARTICLE_EFFECT_TYPE)n)) + suffixLabel;
+
+					int index = DoesEffectExist((PARTICLE_EFFECT_TYPE)n);
+					if (index == -1)
+					{
+						//if the effect hasnt been created
+						if (ImGui::Selectable(guiName.c_str()))
+						{
+							CreateEffect((PARTICLE_EFFECT_TYPE)n);
+						}
+					}
+				}
+
+				ImGui::EndCombo();
+			}
+		}
+		//END COMBO ===========================================
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Unindent();
+		ImGui::Separator();
+		ImGui::Spacing();
+
+	}
+}
+
+void Emitter::TryDeleteUnusedEffects()
+{
+	//Delete effects
+	for (int i = 0; i < myEffects.size(); ++i) {
+		if (myEffects[i]->toDelete) {
+			delete(myEffects[i]);
+			myEffects[i] = nullptr;
+			myEffects.erase(myEffects.begin() + i);
+			--i;
+		}
 	}
 }
 #endif // !STANDALONE
@@ -391,15 +428,15 @@ void Emitter::SaveData(JSON_Object* nObj)
 		DEJson::WriteInt(nObj, "texUID", texture->GetUID());
 	}
 
+	DEJson::WriteString(nObj, "paEmitterName", emitterName.c_str());
+
 	DEJson::WriteVector2(nObj, "paLifeTime", particlesLifeTime);
-	DEJson::WriteVector2(nObj, "paSpeed", particlesSpeed);
 	DEJson::WriteVector2(nObj, "paSize", particlesSize);
 	DEJson::WriteVector4(nObj, "paColor", &particlesColor[0]);
 	DEJson::WriteFloat(nObj, "paPerSec", particlesPerSec);
-	
 	JSON_Value* effectsArray = json_value_init_array();
 	JSON_Array* jsArray = json_value_get_array(effectsArray);
-	
+
 	int effectsCount = myEffects.size();
 	for (int i = 0; i < effectsCount; ++i)
 	{
@@ -419,6 +456,8 @@ void Emitter::LoadData(DEConfig& nObj)
 	std::string texPath = nObj.ReadString("AssetPath");
 	std::string texName = nObj.ReadString("LibraryPath");
 
+	emitterName = nObj.ReadString("paEmitterName");
+
 	if (texName != "")
 		texture = dynamic_cast<ResourceTexture*>(EngineExternal->moduleResources->RequestResource(nObj.ReadInt("texUID"), texName.c_str()));
 
@@ -426,9 +465,6 @@ void Emitter::LoadData(DEConfig& nObj)
 	particlesLifeTime[0] = paLife.x;
 	particlesLifeTime[1] = paLife.y;
 
-	float2 paSpd = nObj.ReadVector2("paSpeed");
-	particlesSpeed[0] = paSpd.x;
-	particlesSpeed[1] = paSpd.y;
 
 	float2 paSize = nObj.ReadVector2("paSize");
 	particlesSize[0] = paSize.x;
@@ -541,7 +577,7 @@ void Emitter::ThrowParticles(float dt)
 				myEffects[j]->Spawn(myParticles[unusedIndex]);
 			}
 		}
-	}	
+	}
 }
 
 int Emitter::DoesEffectExist(PARTICLE_EFFECT_TYPE type)
@@ -564,15 +600,6 @@ std::string Emitter::ParticleEffectEnumToString(PARTICLE_EFFECT_TYPE type)
 	{
 	case PARTICLE_EFFECT_TYPE::NONE:
 		break;
-	case PARTICLE_EFFECT_TYPE::AREA_SPAWN:
-		ret = "Spawn Shape Effect";
-		break;
-	case PARTICLE_EFFECT_TYPE::AREA_SPAWN_SPHERE:
-		ret = "Spawn in Sphere Shape Effect";
-		break;
-	case PARTICLE_EFFECT_TYPE::AREA_SPAWN_CONE:
-		ret = "Spawn in Cone Shape Effect";
-		break;
 	case PARTICLE_EFFECT_TYPE::FORCE_OVER_LIFETIME:
 		ret = "Force Over Lifetime Effect";
 		break;
@@ -587,6 +614,9 @@ std::string Emitter::ParticleEffectEnumToString(PARTICLE_EFFECT_TYPE type)
 		break;
 	case PARTICLE_EFFECT_TYPE::VELOCITY_OVER_LIFETIME:
 		ret = "Velocity Over Lifetime Effect";
+		break;
+	case PARTICLE_EFFECT_TYPE::SHAPE:
+		ret = "Shape Effect";
 		break;
 	case PARTICLE_EFFECT_TYPE::MAX:
 		break;
@@ -604,15 +634,6 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 	{
 	case PARTICLE_EFFECT_TYPE::NONE:
 		break;
-	case PARTICLE_EFFECT_TYPE::AREA_SPAWN:
-		newEffect = new PE_SpawnArea();
-		break;
-	case PARTICLE_EFFECT_TYPE::AREA_SPAWN_SPHERE:
-		newEffect = new PE_SpawnSphere();
-		break;
-	case PARTICLE_EFFECT_TYPE::AREA_SPAWN_CONE:
-		newEffect = new PE_SpawnCone();
-		break;
 	case PARTICLE_EFFECT_TYPE::FORCE_OVER_LIFETIME:
 		newEffect = new PE_ForceOverLifetime();
 		break;
@@ -627,6 +648,9 @@ void Emitter::CreateEffect(PARTICLE_EFFECT_TYPE type)
 		break;
 	case PARTICLE_EFFECT_TYPE::VELOCITY_OVER_LIFETIME:
 		newEffect = new PE_VelocityOverLifetime();
+		break;
+	case PARTICLE_EFFECT_TYPE::SHAPE:
+		newEffect = new PE_Shape(objTransform);
 		break;
 	case PARTICLE_EFFECT_TYPE::MAX:
 		break;
@@ -670,7 +694,7 @@ void Emitter::PrepareParticleToSpawn(Particle& p, float3& startingPos)
 	p.speed = { 0.0f,0.0f,0.0f };
 	p.maxLifetime = p.currentLifetime = EngineExternal->GetRandomFloat(particlesLifeTime[0], particlesLifeTime[1]);
 	p.size = EngineExternal->GetRandomFloat(particlesSize[0], particlesSize[1]);
-	p.color[0] = particlesColor[0]; 
+	p.color[0] = particlesColor[0];
 	p.color[1] = particlesColor[1];
 	p.color[2] = particlesColor[2];
 	p.color[3] = particlesColor[3];
@@ -705,7 +729,7 @@ int Emitter::FindUnusedParticle()
 
 void Emitter::SetParticlesPerSec(int newParticlesPerSec)
 {
-	particlesPerSec = max(newParticlesPerSec,0.0f);
+	particlesPerSec = max(newParticlesPerSec, 0.0f);
 
 	if (particlesPerSec != 0.0f)
 		secPerParticle = 1 / particlesPerSec;
@@ -713,4 +737,18 @@ void Emitter::SetParticlesPerSec(int newParticlesPerSec)
 		secPerParticle = 0.0f;
 
 	CalculatePoolSize();
+}
+
+void Emitter::AddInstancedAttribute(unsigned int vao, unsigned int vbo, int attributeIndex, int dataSize, int instancedDataLength, int offset)
+{
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+	glEnableVertexAttribArray(attributeIndex);
+	glVertexAttribPointer(attributeIndex, dataSize, GL_FLOAT, GL_FALSE, instancedDataLength * sizeof(float), (void*)(offset * sizeof(float)));
+	glVertexAttribDivisor(attributeIndex, 1);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 }

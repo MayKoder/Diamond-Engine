@@ -31,10 +31,15 @@ void PE_ColorOverLifetime::OnEditor(int emitterIndex)
 {
 	std::string suffixLabel = "Color Over Lifetime Effect##";
 	suffixLabel += emitterIndex;
-	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
+	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Bullet))
 	{
-		if (ImGui::Button("Delete Color Effect"))
+		suffixLabel = "Delete Color Over Lifetime Effect##";
+		suffixLabel += emitterIndex;
+		if (ImGui::Button(suffixLabel.c_str()))
 			this->toDelete = true;
+
+		ImGui::Spacing();
+		ImGui::Indent();
 
 		if (editGradient)
 		{
@@ -48,15 +53,23 @@ void PE_ColorOverLifetime::OnEditor(int emitterIndex)
 			static ImGradientMark* draggingMark = nullptr;
 			static ImGradientMark* selectedMark = nullptr;
 
-			ImGui::GradientEditor(&gradient, draggingMark, selectedMark);
+			suffixLabel = "GradientEditor##Gradient";
+			suffixLabel += emitterIndex;
+
+			ImGui::GradientEditor(&gradient, draggingMark, selectedMark, suffixLabel.c_str());
 		}
 		else
 		{
-			if (ImGui::GradientButton(&gradient))
+			suffixLabel = "GradientButton##Gradient";
+			suffixLabel += emitterIndex;
+			if (ImGui::GradientButton(&gradient,suffixLabel.c_str()))
 			{
+				static ImGradientMark* draggingMark = nullptr;
+				static ImGradientMark* selectedMark = nullptr;
 				editGradient = true;
 			}
 		}
+		ImGui::Unindent();
 	}
 }
 #endif // !STANDALONE

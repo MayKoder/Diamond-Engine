@@ -27,10 +27,15 @@ void PE_SizeOverLifetime::OnEditor(int emitterIndex)
 {
 	std::string suffixLabel = "Size Over Lifetime Effect##";
 	suffixLabel += emitterIndex;
-	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
+	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Bullet))
 	{
-		if (ImGui::Button("Delete Size Effect"))
+		suffixLabel = "Delete Size Over Lifetime Effect##";
+		suffixLabel += emitterIndex;
+		if (ImGui::Button(suffixLabel.c_str()))
 			this->toDelete = true;
+
+		ImGui::Spacing();
+		ImGui::Indent();
 
 		suffixLabel = "Initial Size##SizeOverLife";
 		suffixLabel += emitterIndex;
@@ -40,6 +45,7 @@ void PE_SizeOverLifetime::OnEditor(int emitterIndex)
 		suffixLabel += emitterIndex;
 		ImGui::DragFloat(suffixLabel.c_str(), &endSize, 0.1f, 0.0f, FLT_MAX);
 
+		ImGui::Unindent();
 	}
 
 }

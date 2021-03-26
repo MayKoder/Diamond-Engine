@@ -136,6 +136,15 @@
     <Filter Include="Sources\Components\Derived\Physics">
       <UniqueIdentifier>{59fc5c3b-3544-4a28-b3b5-586bbbd669c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Containers\ParticleSystem\ParticleEffects\Derived\SpawnShapes">
+      <UniqueIdentifier>{c43e0dc4-b248-46ee-a199-e3a95e1b3b46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Containers\ParticleSystem\ParticleEffects\Derived\SpawnShapes\Base">
+      <UniqueIdentifier>{98de4383-cd87-4b90-b8c0-4254c4bfb778}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Containers\ParticleSystem\ParticleEffects\Derived\SpawnShapes\Derived">
+      <UniqueIdentifier>{e6778b85-dd88-4592-bbf1-8270129fd73e}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Sources\Components\Derived\Lights">
       <UniqueIdentifier>{c98e8e11-450d-4034-a302-147ded921540}</UniqueIdentifier>
     </Filter>
@@ -843,9 +852,6 @@
     <ClInclude Include="Source Code\ParticleEffects.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\PE_Spawn_Area.h">
-      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\PE_Rotate_Over_Lifetime.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
@@ -889,9 +895,18 @@
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\PE_Spawn_Sphere.h">
-      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived\SpawnShapes\Derived</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\PE_Spawn_Cone.h">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived\SpawnShapes\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\PE_Spawn_Area.h">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived\SpawnShapes\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\PE__Spawn_Shape_Base.h">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived\SpawnShapes\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\PE_Shape.h">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\CS_ParticleSystem_Bindings.h">
@@ -1308,9 +1323,6 @@
     <ClCompile Include="Source Code\ParticleEffects.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\PE_Spawn_Area.cpp">
-      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\CO_Navigation.cpp">
       <Filter>Sources\Components\Derived\UI</Filter>
     </ClCompile>
@@ -1357,14 +1369,24 @@
     <ClCompile Include="Source Code\CO_SphereCollider.cpp">
       <Filter>Sources\Components\Derived\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Source Code\PE_Spawn_Area.cpp">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived\SpawnShapes\Derived</Filter>
+    </ClCompile>
     <ClCompile Include="Source Code\PE_Spawn_Sphere.cpp">
-      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived\SpawnShapes\Derived</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\PE_Spawn_Cone.cpp">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived\SpawnShapes\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\PE__Spawn_Shape_Base.cpp">
+      <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived\SpawnShapes\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\PE_Shape.cpp">
       <Filter>Sources\Containers\ParticleSystem\ParticleEffects\Derived</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\CO_Animator.cpp">
       <Filter>Sources\Components\Derived</Filter>
+       </ClCompile>
     <ClCompile Include="Source Code\CO_DirectionalLight.cpp">
       <Filter>Sources\Components\Derived\Lights</Filter>
     </ClCompile>

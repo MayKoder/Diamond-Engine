@@ -25,17 +25,26 @@ void PE_VelocityOverLifetime::Update(Particle& particle, float dt)
 #ifndef STANDALONE
 void PE_VelocityOverLifetime::OnEditor(int emitterIndex)
 {
+
 	std::string suffixLabel = "Velocity Over Lifetime Effect##";
 	suffixLabel += emitterIndex;
-	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
+	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Bullet))
 	{
-		if (ImGui::Button("Delete Velocity Effect"))
+		suffixLabel = "Delete Velocity Over Lifetime Effect##";
+		suffixLabel += emitterIndex;
+		if (ImGui::Button(suffixLabel.c_str()))
 			this->toDelete = true;
+
+		ImGui::Spacing();
+		ImGui::Indent();
 
 		suffixLabel = "Velocity##vel";
 		suffixLabel += emitterIndex;
 		ImGui::DragFloat3(suffixLabel.c_str(), velocity, 0.1f);
+
+		ImGui::Unindent();
 	}
+
 }
 #endif // !STANDALONE
 
