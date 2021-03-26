@@ -10,13 +10,18 @@
 #include "CO_Camera.h"
 #include "CO_Transform.h"
 
-C_Billboard::C_Billboard(GameObject* _gm):Component(_gm), currentAlignment(BILLBOARD_ALIGNMENT::SCREEN_ALIGNED), horizontalAligned(true)
+C_Billboard::C_Billboard(GameObject* _gm):Component(_gm), 
+currentAlignment(BILLBOARD_ALIGNMENT::SCREEN_ALIGNED), 
+horizontalAligned(true),
+transf(nullptr)
 {
 	name = "Billboard";
+	transf= static_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM));
 }
 
 C_Billboard::~C_Billboard()
 {
+	transf = nullptr;
 }
 
 #ifndef STANDALONE
@@ -31,12 +36,14 @@ bool C_Billboard::OnEditor()
 	switch (currentAlignment) {
 	case BILLBOARD_ALIGNMENT::AXIS_ALIGNED: tempAlignment = "Axis Aligned"; break;
 	case BILLBOARD_ALIGNMENT::SCREEN_ALIGNED: tempAlignment = "Screen Aligned"; break;
+	case BILLBOARD_ALIGNMENT::CAMERA_ALIGNED: tempAlignment = "Camera Aligned"; break;
 	case BILLBOARD_ALIGNMENT::WORLD_ALIGNED: tempAlignment = "World Aligned"; break;
 	}
 	ImGui::Text("Current Billboard: %s", tempAlignment.c_str());
 
 	if (ImGui::BeginMenu("Change billboard")) {
 		if (ImGui::MenuItem("Screen Aligned")) SetAlignment(BILLBOARD_ALIGNMENT::SCREEN_ALIGNED);
+		if (ImGui::MenuItem("Camera Aligned")) SetAlignment(BILLBOARD_ALIGNMENT::CAMERA_ALIGNED);
 		if (ImGui::MenuItem("World Aligned")) SetAlignment(BILLBOARD_ALIGNMENT::WORLD_ALIGNED);
 		if (ImGui::MenuItem("Axis Aligned")) SetAlignment(BILLBOARD_ALIGNMENT::AXIS_ALIGNED);
 
@@ -73,29 +80,11 @@ void C_Billboard::LoadData(DEConfig& nObj)
 	horizontalAligned = nObj.ReadBool("horizantalAligned");
 }
 
-
 void C_Billboard::SetAlignment(BILLBOARD_ALIGNMENT new_alignment)
 {
 	currentAlignment = new_alignment;
 }
 
-void C_Billboard::Draw()
-{
-	switch (currentAlignment)
-	{
-	case BILLBOARD_ALIGNMENT::SCREEN_ALIGNED:
-		ScreenAlign();
-		break;
-	case BILLBOARD_ALIGNMENT::WORLD_ALIGNED:
-		WorldAlign();
-		break;
-	case BILLBOARD_ALIGNMENT::AXIS_ALIGNED:
-		AxisAlign();
-		break;
-	default:
-		break;
-	}
-}
 
 Quat C_Billboard::GetAlignment()
 {
@@ -103,6 +92,9 @@ Quat C_Billboard::GetAlignment()
 	{
 	case BILLBOARD_ALIGNMENT::SCREEN_ALIGNED:
 		return ScreenAlign();
+		break;
+	case BILLBOARD_ALIGNMENT::CAMERA_ALIGNED:
+		return CameraAlign();
 		break;
 	case BILLBOARD_ALIGNMENT::WORLD_ALIGNED:
 		return WorldAlign();
@@ -121,18 +113,34 @@ Quat C_Billboard::ScreenAlign()
 {
 	//Extract the rotation from the view matrix
 
-	float3 cameraPos = EngineExternal->moduleRenderer3D->activeRenderCamera->GetPosition();
-	C_Transform* transform = static_cast<C_Transform*>(gameObject->GetComponent(Component::TYPE::TRANSFORM));
-	float3 normal = (cameraPos - transform->position).Normalized();
+	Frustum camFrust = EngineExternal->moduleRenderer3D->activeRenderCamera->camFrustrum;
+	float3 billboardForward = -camFrust.front;
 
-	float3 up = transform->GetUp();
-	float3 right = normal.Cross(up);
+	float3 up = camFrust.up;
+	float3 right = up.Cross(billboardForward);
 
 	float3x3 mat = float3x3::identity;
-	mat.Set(-right.x, -right.y, -right.z, up.x, up.y, up.z, normal.x, normal.y, normal.z);
+	mat.Set(right.x, right.y, right.z, up.x, up.y, up.z, billboardForward.x, billboardForward.y, billboardForward.z);
 
 	Quat ret = mat.Inverted().ToQuat();
 
+	return ret;
+}
+
+Quat C_Billboard::CameraAlign()
+{
+	//Extract the rotation from the view matrix
+	Frustum camFrust = EngineExternal->moduleRenderer3D->activeRenderCamera->camFrustrum;
+	float3 billboardForward = (camFrust.pos-transf->globalTransform.TranslatePart()).Normalized();
+
+	float3 up = camFrust.up;
+	float3 right = up.Cross(billboardForward);
+	up = billboardForward.Cross(right);
+
+	float3x3 mat = float3x3::identity;
+	mat.Set(right.x, right.y, right.z, up.x, up.y, up.z, billboardForward.x, billboardForward.y, billboardForward.z);
+
+	Quat ret = mat.Inverted().ToQuat();
 	return ret;
 }
 

@@ -18,6 +18,10 @@ void ParticleEffect::Update(Particle& particle, float dt)
 	
 }
 
+void ParticleEffect::PrepareEffect()
+{
+}
+
 #ifndef STANDALONE
 void ParticleEffect::OnEditor(int emitterIndex)
 {

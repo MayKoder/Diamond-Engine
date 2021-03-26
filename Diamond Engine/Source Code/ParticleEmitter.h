@@ -9,7 +9,7 @@
 class C_Transform;
 class ResourceTexture;
 
-#define MAX_PARTICLES 2000
+#define MAX_PARTICLES 50000
 #define INSTANCE_DATA_LENGHT 20
 
 class Emitter
@@ -23,6 +23,7 @@ public:
 
 #ifndef STANDALONE
 	void OnEditor(int emitterIndex);
+	void TryDeleteUnusedEffects();
 #endif // !STANDALONE
 
 	void AssignTransform(C_Transform* objTransform);
@@ -31,6 +32,7 @@ public:
 	void LoadData(DEConfig& nObj);
 
 	void RestartEmitter();
+
 
 private:
 	//calculates a new Pool Size from the particle spawn rate & particle lifeTime
@@ -50,6 +52,9 @@ private:
 	//void PrepareVBO();
 	int FindUnusedParticle();
 	void SetParticlesPerSec(int newParticlesPerSec);
+
+	void AddInstancedAttribute(unsigned int vao, unsigned int vbo, int attributeIndex, int dataSize, int instancedDataLength, int offset);
+
 public:
 	bool toDelete;
 private:
@@ -60,9 +65,6 @@ private:
 	
 	//Min - Max Start particles lifeTime 
 	float particlesLifeTime[2];
-
-	//Min - Max Start particles speed 
-	float particlesSpeed[2]; //TODO move to emisison shape component
 
 	//Min - Max Start particles size 
 	float particlesSize[2];
@@ -86,6 +88,8 @@ private:
 	bool delaying = false;
 	float maxDelay;
 	Timer delay;
+	std::string emitterName;
+	char emitterNameChars[50];
 };
 
 const float particleVertices[] = {

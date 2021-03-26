@@ -1,15 +1,14 @@
 #pragma once
 
-#include "ParticleEffects.h";
-class C_Transform;
+#include "PE__Spawn_Shape_Base.h"
 
-class PE_SpawnSphere : public ParticleEffect //DEPRECATED CLASS TODO DELETE
+class PE_SpawnShapeSphere : public PE_SpawnShapeBase
 {
 public:
-	PE_SpawnSphere();
-	~PE_SpawnSphere() override;
+	PE_SpawnShapeSphere();
+	~PE_SpawnShapeSphere() override;
 
-	void Spawn(Particle& particle) override; //Spawns in area
+	void Spawn(Particle& particle, bool hasInitialSpeed, float speed, float4x4& gTrans, float* offset) override; //Spawns in area
 
 #ifndef STANDALONE
 	void OnEditor(int emitterIndex) override;
@@ -19,6 +18,5 @@ public:
 	void LoadData(DEConfig& nObj) override;
 private:
 	//Sphere with a point and a radius the point is an offset from the transform
-	float centerOfSphere[3]; //(x,y,z)
 	float radius;
 };

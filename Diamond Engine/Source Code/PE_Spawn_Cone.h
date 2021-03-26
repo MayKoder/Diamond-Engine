@@ -1,15 +1,14 @@
 #pragma once
 
-#include "ParticleEffects.h";
-class C_Transform;
+#include "PE__Spawn_Shape_Base.h"
 
-class PE_SpawnCone : public ParticleEffect //DEPRECATED CLASS TODO DELETE
+class PE_SpawnShapeCone : public PE_SpawnShapeBase
 {
 public:
-	PE_SpawnCone();
-	~PE_SpawnCone() override;
+	PE_SpawnShapeCone();
+	~PE_SpawnShapeCone() override;
 
-	void Spawn(Particle& particle) override; //Spawns in area
+	void Spawn(Particle& particle,bool hasInitialSpeed, float speed, float4x4& gTrans, float* offset) override; //Spawns in area
 
 #ifndef STANDALONE
 	void OnEditor(int emitterIndex) override;
@@ -18,7 +17,6 @@ public:
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
 private:
-	float coneTip[3]; //(x,y,z)
-	float centerOfSphere[3]; //(x,y,z)
 	float radius;
+	float height;
 };

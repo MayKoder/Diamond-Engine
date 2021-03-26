@@ -31,13 +31,19 @@ void PE_RotateOverLifetime::Update(Particle& particle, float dt)
 #ifndef STANDALONE
 void PE_RotateOverLifetime::OnEditor(int emitterIndex)
 {
-	if (ImGui::Button("Delete Rotation Effect"))
-		this->toDelete = true;
 
 	std::string suffixLabel = "Rotate Over Lifetime Effect##";
 	suffixLabel += emitterIndex;
-	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Leaf))
+	if (ImGui::CollapsingHeader(suffixLabel.c_str(), ImGuiTreeNodeFlags_Bullet))
 	{
+		suffixLabel = "Delete Rotation Over Lifetime Effect##";
+		suffixLabel += emitterIndex;
+		if (ImGui::Button(suffixLabel.c_str()))
+			this->toDelete = true;
+
+		ImGui::Spacing();
+		ImGui::Indent();
+
 		suffixLabel = "Initial Rotation##";
 		suffixLabel += emitterIndex;
 		ImGui::DragFloat2(suffixLabel.c_str(), rotation);
@@ -45,6 +51,9 @@ void PE_RotateOverLifetime::OnEditor(int emitterIndex)
 		suffixLabel = "Rotation Speed##";
 		suffixLabel += emitterIndex;
 		ImGui::DragFloat2(suffixLabel.c_str(), rotationSpeed);
+		
+		ImGui::Unindent();
+
 	}
 }
 #endif //!STANDALONE

@@ -2,6 +2,14 @@
 
 #include "ParticleEffects.h"
 
+
+enum class FORCE_TYPE
+{
+	DIRECTION,
+	POINT,
+	MAX
+};
+
 class PE_ForceOverLifetime : public ParticleEffect
 {
 public:
@@ -17,8 +25,12 @@ public:
 	void SaveData(JSON_Object* nObj) override;
 	void LoadData(DEConfig& nObj) override;
 
+	std::string ForceTypeToString(FORCE_TYPE type);
+
 public:
-	float acceleration[3];
+	FORCE_TYPE forceType;
+	float direction[3];
+	float forceMagitude;
 	float gravityModifier;
 	float myGravity;
 };

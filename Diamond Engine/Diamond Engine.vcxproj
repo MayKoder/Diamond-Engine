@@ -382,11 +382,13 @@
     <ClInclude Include="Source Code\PE_Color_Over_Lifetime.h" />
     <ClInclude Include="Source Code\PE_Force_Over_Lifetime.h" />
     <ClInclude Include="Source Code\PE_Rotate_Over_Lifetime.h" />
+    <ClInclude Include="Source Code\PE_Shape.h" />
     <ClInclude Include="Source Code\PE_Size_Over_Lifetime.h" />
     <ClInclude Include="Source Code\PE_Spawn_Area.h" />
     <ClInclude Include="Source Code\PE_Spawn_Cone.h" />
     <ClInclude Include="Source Code\PE_Spawn_Sphere.h" />
     <ClInclude Include="Source Code\PE_Velocity_Over_Lifetime.h" />
+    <ClInclude Include="Source Code\PE__Spawn_Shape_Base.h" />
     <ClInclude Include="Source Code\RE_Animation.h" />
     <ClInclude Include="Source Code\MO_Physics.h" />
     <ClInclude Include="Source Code\MO_Physics\Header.h" />
@@ -538,11 +540,13 @@
     <ClCompile Include="Source Code\PE_Color_Over_Lifetime.cpp" />
     <ClCompile Include="Source Code\PE_Force_Over_Lifetime.cpp" />
     <ClCompile Include="Source Code\PE_Rotate_Over_Lifetime.cpp" />
+    <ClCompile Include="Source Code\PE_Shape.cpp" />
     <ClCompile Include="Source Code\PE_Size_Over_Lifetime.cpp" />
     <ClCompile Include="Source Code\PE_Spawn_Area.cpp" />
     <ClCompile Include="Source Code\PE_Spawn_Cone.cpp" />
     <ClCompile Include="Source Code\PE_Spawn_Sphere.cpp" />
     <ClCompile Include="Source Code\PE_Velocity_Over_Lifetime.cpp" />
+    <ClCompile Include="Source Code\PE__Spawn_Shape_Base.cpp" />
     <ClCompile Include="Source Code\RE_Animation.cpp" />
     <ClCompile Include="Source Code\MO_Physics.cpp" />
     <ClCompile Include="Source Code\RE_Material.cpp" />
