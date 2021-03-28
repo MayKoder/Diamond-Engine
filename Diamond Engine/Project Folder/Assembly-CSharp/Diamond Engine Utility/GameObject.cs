@@ -78,5 +78,8 @@ namespace DiamondEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void SetVelocity(Vector3 velocity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern void SetParent(GameObject newParent);
     }
 }

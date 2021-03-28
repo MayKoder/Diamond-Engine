@@ -63,6 +63,7 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.Input::GetKey", GetKey);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseClick", GetMouseClick);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CreateGameObject", CSCreateGameObject);
+	mono_add_internal_call("DiamondEngine.InternalCalls::FindObjectWithName", FindObjectWithName);
 	mono_add_internal_call("DiamondEngine.InternalCalls::CloseGame", CSCloseGame);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseX", MouseX);
 	mono_add_internal_call("DiamondEngine.Input::GetMouseY", MouseY);
@@ -166,6 +167,7 @@ bool M_MonoManager::Init()
 	mono_add_internal_call("DiamondEngine.GameObject::get_tag", GetTag);
 	mono_add_internal_call("DiamondEngine.GameObject::SetVelocity", SetVelocity);
 	mono_add_internal_call("DiamondEngine.GameObject::AddForce", AddForce);
+	mono_add_internal_call("DiamondEngine.GameObject::SetParent", CS_SetParent);
 
 	mono_add_internal_call("DiamondEngine.Animator::Play", Play);
 	mono_add_internal_call("DiamondEngine.Animator::Pause", Pause);

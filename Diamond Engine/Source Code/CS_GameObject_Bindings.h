@@ -40,3 +40,41 @@ void AddForce(MonoObject* cs_GameObject, MonoObject* cs_Force)
 	rigidbody->AddForce(force);
 
 }
+
+
+MonoObject* FindObjectWithName(MonoString* name) {
+
+	std::vector<GameObject*> gameObjectVec;
+	EngineExternal->moduleScene->root->CollectChilds(gameObjectVec);
+
+	if (name == NULL) {
+		assert("The name you passed is null. >:/");
+		return nullptr;
+	}
+
+	char* _name = mono_string_to_utf8(name);
+	mono_free(_name);
+
+	for (int i = 0; i < gameObjectVec.size(); i++) {
+
+		if(strcmp(gameObjectVec[i]->name.c_str(), _name) == 0){
+		
+			return EngineExternal->moduleMono->GoToCSGO(gameObjectVec[i]);
+
+		}
+
+	}
+
+	assert("The object you searched for doesn't exist. :/");
+	return nullptr;
+
+}
+
+
+void CS_SetParent(MonoObject* gameObject, MonoObject* newParent) {
+
+	GameObject* cpp_gameObject = EngineExternal->moduleMono->GameObject_From_CSGO(gameObject);
+	GameObject* cpp_parent = EngineExternal->moduleMono->GameObject_From_CSGO(newParent);
+	cpp_gameObject->ChangeParent(cpp_parent);
+
+}

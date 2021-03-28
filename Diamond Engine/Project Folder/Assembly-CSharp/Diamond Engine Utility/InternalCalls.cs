@@ -25,6 +25,10 @@ namespace DiamondEngine
         public static extern void CreatePrefab(object prefab_path, object position, object rotation, object scale);
         //[MethodImplAttribute(MethodImplOptions.InternalCall)]
         //public static extern GameObject CreatePrefab(object prefab_path, object position, object rotation, object scale);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern GameObject FindObjectWithName(string name);
+
     }
     public class Config
     {
