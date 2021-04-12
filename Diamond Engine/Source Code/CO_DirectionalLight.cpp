@@ -44,14 +44,16 @@ C_DirectionalLight::C_DirectionalLight(GameObject* _gm) : Component(_gm)
 	glReadBuffer(GL_NONE);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+glBindTexture(GL_TEXTURE_2D, 0);
+
 	depthShader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(248150058, Resource::Type::SHADER));
 	EngineExternal->moduleRenderer3D->directLight = this;
 }
 
 C_DirectionalLight::~C_DirectionalLight()
 {
-	glDeleteBuffers(1, &depthMapFBO);
-	glDeleteTextures(1, &depthMap);
+	glDeleteFramebuffers(1, (GLuint*)&depthMapFBO);
+	glDeleteTextures(1, (GLuint*)&depthMap);
 	EngineExternal->moduleResources->UnloadResource(depthShader->GetUID());
 	EngineExternal->moduleRenderer3D->directLight = nullptr;
 }
