@@ -1,18 +1,18 @@
 {
     "EditorCameraPosition": [
-        -37.904758453369141,
-        16.533805847167969,
-        -9.7058219909667969
+        -20.089151382446289,
+        11.134501457214355,
+        3.6917192935943604
     ],
     "EditorCameraZ": [
-        0.97349214553833008,
-        -0.084958851337432861,
-        0.2123560905456543
+        0.53882104158401489,
+        -0.68393945693969727,
+        -0.49183207750320435
     ],
     "EditorCameraY": [
-        0.083000853657722473,
-        0.99638444185256958,
-        0.018134646117687225
+        0.50512778759002686,
+        0.72953879833221436,
+        -0.46110630035400391
     ],
     "Game Objects": [
         {
@@ -34,7 +34,7 @@
                 1,
                 1
             ],
-            "UID": 547579300,
+            "UID": 2090858875,
             "Components": [
                 {
                     "Type": 1,
@@ -43,11 +43,11 @@
             ]
         },
         {
-            "name": "Plane",
+            "name": "Room1",
             "Active": true,
             "Position": [
                 0,
-                3.7502326965332031,
+                0,
                 0
             ],
             "Rotation": [
@@ -57,59 +57,68 @@
                 1
             ],
             "Scale": [
-                103.81325531005859,
-                103.81325531005859,
-                103.81325531005859
+                1,
+                1,
+                1
             ],
-            "UID": 888743756,
-            "ParentUID": 547579300,
+            "UID": 506724480,
+            "ParentUID": 2090858875,
             "Components": [
                 {
                     "Type": 1,
                     "Active": true
-                },
-                {
-                    "Type": 2,
-                    "Active": true,
-                    "Path": "Library\/Meshes\/1342727876.mmh",
-                    "UID": 1342727876,
-                    "alternColor": [
-                        1,
-                        1,
-                        1
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Active": true,
-                    "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
-                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
-                    "MaterialUID": 1051418604
                 }
             ]
         },
         {
-            "name": "Cube",
+            "name": "group1",
             "Active": true,
             "Position": [
-                -0.11655869334936142,
-                0.14419083297252655,
-                -0.083029367029666901
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "Scale": [
+                7.5999999046325684,
+                7.5999999046325684,
+                7.5999999046325684
+            ],
+            "UID": 1951152811,
+            "ParentUID": 506724480,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                }
+            ]
+        },
+        {
+            "name": "Box001",
+            "Active": true,
+            "Position": [
+                0,
+                0,
+                2.0999999046325684
             ],
             "Rotation": [
                 -0.7071068286895752,
                 0,
                 0,
-                0.70710670948028564
+                0.7071068286895752
             ],
             "Scale": [
-                0.023118436336517334,
-                0.023118432611227036,
-                0.023118432611227036
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
             ],
-            "UID": 1930199112,
-            "ParentUID": 888743756,
+            "UID": 2131763646,
+            "ParentUID": 1951152811,
             "Components": [
                 {
                     "Type": 1,
@@ -118,8 +127,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1313575480.mmh",
-                    "UID": 1313575480,
+                    "Path": "Library\/Meshes\/367481042.mmh",
+                    "UID": 367481042,
                     "alternColor": [
                         1,
                         1,
@@ -130,14 +139,14 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
                     "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
                     "MaterialUID": 1051418604
                 }
             ]
         },
         {
-            "name": "BakerHouse",
+            "name": "Box002",
             "Active": true,
             "Position": [
                 0,
@@ -145,46 +154,18 @@
                 0
             ],
             "Rotation": [
+                -0.7071068286895752,
                 0,
                 0,
-                0,
-                1
+                0.7071068286895752
             ],
             "Scale": [
-                0.03747113049030304,
-                0.03747113049030304,
-                0.03747113049030304
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
             ],
-            "UID": 1455681880,
-            "ParentUID": 888743756,
-            "Components": [
-                {
-                    "Type": 1,
-                    "Active": true
-                }
-            ]
-        },
-        {
-            "name": "Chimney",
-            "Active": true,
-            "Position": [
-                0,
-                0,
-                0
-            ],
-            "Rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "UID": 1979898256,
-            "ParentUID": 1455681880,
+            "UID": 774470349,
+            "ParentUID": 1951152811,
             "Components": [
                 {
                     "Type": 1,
@@ -193,8 +174,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1693765207.mmh",
-                    "UID": 1693765207,
+                    "Path": "Library\/Meshes\/905740972.mmh",
+                    "UID": 905740972,
                     "alternColor": [
                         1,
                         1,
@@ -205,33 +186,33 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
                     "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
                     "MaterialUID": 1051418604
                 }
             ]
         },
         {
-            "name": "Baker_house",
+            "name": "Box003",
             "Active": true,
             "Position": [
                 0,
                 0,
-                0
+                3.5999999046325684
             ],
             "Rotation": [
+                -0.7071068286895752,
                 0,
                 0,
-                0,
-                1
+                0.7071068286895752
             ],
             "Scale": [
-                1,
-                1,
-                1
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
             ],
-            "UID": 1963630987,
-            "ParentUID": 1455681880,
+            "UID": 380758853,
+            "ParentUID": 1951152811,
             "Components": [
                 {
                     "Type": 1,
@@ -240,8 +221,8 @@
                 {
                     "Type": 2,
                     "Active": true,
-                    "Path": "Library\/Meshes\/1152936130.mmh",
-                    "UID": 1152936130,
+                    "Path": "Library\/Meshes\/905740972.mmh",
+                    "UID": 905740972,
                     "alternColor": [
                         1,
                         1,
@@ -252,7 +233,806 @@
                     "Type": 3,
                     "Active": true,
                     "IsEmpty": true,
-                    "MaterialAssetPath": "Empty",
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Box004",
+            "Active": true,
+            "Position": [
+                2.2000000476837158,
+                0,
+                3.7999999523162842
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 273966145,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1424938371.mmh",
+                    "UID": 1424938371,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Box005",
+            "Active": true,
+            "Position": [
+                -1,
+                0,
+                3.7999999523162842
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 1994712038,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/479770579.mmh",
+                    "UID": 479770579,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Box006",
+            "Active": true,
+            "Position": [
+                -1,
+                0,
+                0.60000002384185791
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 374313402,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/146835121.mmh",
+                    "UID": 146835121,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Box007",
+            "Active": true,
+            "Position": [
+                2.2000000476837158,
+                0,
+                0.60000002384185791
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 359304297,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/785799421.mmh",
+                    "UID": 785799421,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Obstacle001",
+            "Active": true,
+            "Position": [
+                0,
+                0.79999512434005737,
+                1.3999999761581421
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 1234941181,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/2029884751.mmh",
+                    "UID": 2029884751,
+                    "alternColor": [
+                        0.42533934116363525,
+                        0.42533507943153381,
+                        0.42533507943153381
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Obstacle002",
+            "Active": true,
+            "Position": [
+                0,
+                0.79999512434005737,
+                -1.3999999761581421
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 1184671109,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/2029884751.mmh",
+                    "UID": 2029884751,
+                    "alternColor": [
+                        0.49773752689361572,
+                        0.49773254990577698,
+                        0.49773254990577698
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Obstacle003",
+            "Active": true,
+            "Position": [
+                -1.6000000238418579,
+                0.79999512434005737,
+                3.4968898887655087e-08
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 1730333007,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/2029884751.mmh",
+                    "UID": 2029884751,
+                    "alternColor": [
+                        0.56561088562011719,
+                        0.56560522317886353,
+                        0.56560522317886353
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Obstacle004",
+            "Active": true,
+            "Position": [
+                1.6000000238418579,
+                0.79999512434005737,
+                3.4968898887655087e-08
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 124134588,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/2029884751.mmh",
+                    "UID": 2029884751,
+                    "alternColor": [
+                        0.44796377420425415,
+                        0.44795927405357361,
+                        0.44795927405357361
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Explosive_prop001",
+            "Active": true,
+            "Position": [
+                0,
+                0.79998892545700073,
+                2.4000000953674316
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 899955620,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1002407595.mmh",
+                    "UID": 1002407595,
+                    "alternColor": [
+                        1,
+                        0,
+                        0.95238161087036133
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Explosive_prop002",
+            "Active": true,
+            "Position": [
+                -2.4000000953674316,
+                0.79998892545700073,
+                3.4968625328701819e-08
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 827335148,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1002407595.mmh",
+                    "UID": 1002407595,
+                    "alternColor": [
+                        1,
+                        0.090497732162475586,
+                        0.90796780586242676
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Explosive_prop003",
+            "Active": true,
+            "Position": [
+                2.4000000953674316,
+                0.79998892545700073,
+                3.4968625328701819e-08
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 93959074,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1002407595.mmh",
+                    "UID": 1002407595,
+                    "alternColor": [
+                        1,
+                        0.072398185729980469,
+                        0.92822200059890747
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Explosive_prop004",
+            "Active": true,
+            "Position": [
+                0,
+                0.79998892545700073,
+                -2.4000000953674316
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 289502192,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1002407595.mmh",
+                    "UID": 1002407595,
+                    "alternColor": [
+                        1,
+                        0,
+                        0.97737550735473633
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Trap001",
+            "Active": true,
+            "Position": [
+                0,
+                0.62814599275588989,
+                2.7457133455754956e-08
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 1298082137,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1843094936.mmh",
+                    "UID": 1843094936,
+                    "alternColor": [
+                        0.14723286032676697,
+                        0.25826811790466309,
+                        0.63800907135009766
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Trap002",
+            "Active": true,
+            "Position": [
+                -1.2000000476837158,
+                0.62814599275588989,
+                -1.2000000476837158
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 1222143376,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1843094936.mmh",
+                    "UID": 1843094936,
+                    "alternColor": [
+                        0.16553714871406555,
+                        0.35887664556503296,
+                        0.66515839099884033
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Trap003",
+            "Active": true,
+            "Position": [
+                -1.2000000476837158,
+                0.62814599275588989,
+                1.2000000476837158
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 1394402709,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1843094936.mmh",
+                    "UID": 1843094936,
+                    "alternColor": [
+                        0.18574556708335876,
+                        0.19231614470481873,
+                        0.73303163051605225
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Trap004",
+            "Active": true,
+            "Position": [
+                1.2000000476837158,
+                0.62814599275588989,
+                1.2000000476837158
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 565257007,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1843094936.mmh",
+                    "UID": 1843094936,
+                    "alternColor": [
+                        0.17100386321544647,
+                        0.32892292737960815,
+                        0.78733032941818237
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Trap005",
+            "Active": true,
+            "Position": [
+                1.2000000476837158,
+                0.62814599275588989,
+                -1.2000000476837158
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 1120253072,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1843094936.mmh",
+                    "UID": 1843094936,
+                    "alternColor": [
+                        0.17254902422428131,
+                        0.32941177487373352,
+                        0.78823530673980713
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
                     "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
                     "MaterialUID": 1051418604
                 }
@@ -262,9 +1042,440 @@
             "name": "Empty",
             "Active": true,
             "Position": [
-                -13.906082153320313,
-                12.56843090057373,
-                -18.963985443115234
+                171.07931518554688,
+                26.974433898925781,
+                152.94245910644531
+            ],
+            "Rotation": [
+                0.058285586535930634,
+                0.81868332624435425,
+                -0.46781036257743835,
+                0.32789328694343567
+            ],
+            "Scale": [
+                1.0000089406967163,
+                0.99999982118606567,
+                1.0000035762786865
+            ],
+            "UID": 688211517,
+            "ParentUID": 1120253072,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 6,
+                    "Active": true,
+                    "orthoSize": [
+                        1,
+                        1
+                    ],
+                    "lightColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Enemy001",
+            "Active": true,
+            "Position": [
+                -2.4000000953674316,
+                0.79999637603759766,
+                -0.59999996423721313
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 828033966,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1669663712.mmh",
+                    "UID": 1669663712,
+                    "alternColor": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Enemy002",
+            "Active": true,
+            "Position": [
+                -2.4000000953674316,
+                0.79999637603759766,
+                0.60000002384185791
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 1501726818,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1669663712.mmh",
+                    "UID": 1669663712,
+                    "alternColor": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Enemy003",
+            "Active": true,
+            "Position": [
+                -0.60000002384185791,
+                0.79999637603759766,
+                2.4000000953674316
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 1481441783,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1669663712.mmh",
+                    "UID": 1669663712,
+                    "alternColor": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Enemy004",
+            "Active": true,
+            "Position": [
+                0.60000002384185791,
+                0.79999637603759766,
+                2.4000000953674316
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 113776127,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1669663712.mmh",
+                    "UID": 1669663712,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Enemy005",
+            "Active": true,
+            "Position": [
+                2.4000000953674316,
+                0.79999637603759766,
+                0.60000002384185791
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 1288047731,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1669663712.mmh",
+                    "UID": 1669663712,
+                    "alternColor": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Enemy006",
+            "Active": true,
+            "Position": [
+                2.4000000953674316,
+                0.79999637603759766,
+                -0.59999996423721313
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 548948525,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1669663712.mmh",
+                    "UID": 1669663712,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Enemy007",
+            "Active": true,
+            "Position": [
+                0.60000002384185791,
+                0.79999637603759766,
+                -2.4000000953674316
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 1726277013,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1669663712.mmh",
+                    "UID": 1669663712,
+                    "alternColor": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "Type": 3,
+                    "Active": true,
+                    "IsEmpty": true,
+                    "MaterialAssetPath": "Assets\/Materials\/noNormals.mat",
+                    "MaterialLibraryPath": "Library\/Materials\/1051418604.mat",
+                    "MaterialUID": 1051418604
+                }
+            ]
+        },
+        {
+            "name": "Enemy008",
+            "Active": true,
+            "Position": [
+                -0.60000002384185791,
+                0.79999637603759766,
+                -2.4000000953674316
+            ],
+            "Rotation": [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "Scale": [
+                0.10000000149011612,
+                0.10000000149011612,
+                0.10000000149011612
+            ],
+            "UID": 1209617718,
+            "ParentUID": 1951152811,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 2,
+                    "Active": true,
+                    "Path": "Library\/Meshes\/1669663712.mmh",
+                    "UID": 1669663712,
+                    "alternColor": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Game Camera",
+            "Active": true,
+            "Position": [
+                -14.342864036560059,
+                18.17192268371582,
+                9.4347734451293945
+            ],
+            "Rotation": [
+                0.097834721207618713,
+                0.85470539331436157,
+                -0.17457552254199982,
+                0.47898894548416138
+            ],
+            "Scale": [
+                1.0000673532485962,
+                0.99999958276748657,
+                1.0000451803207397
+            ],
+            "UID": 1223927773,
+            "ParentUID": 2090858875,
+            "Components": [
+                {
+                    "Type": 1,
+                    "Active": true
+                },
+                {
+                    "Type": 4,
+                    "Active": true,
+                    "fType": 2,
+                    "nearPlaneDist": 1,
+                    "farPlaneDist": 300,
+                    "vFOV": 1.0471975803375244,
+                    "hFOV": 1.5521194934844971,
+                    "culling": false
+                }
+            ]
+        },
+        {
+            "name": "Empty",
+            "Active": true,
+            "Position": [
+                -12.753749847412109,
+                17.908365249633789,
+                -6.1822233200073242
             ],
             "Rotation": [
                 0,
@@ -277,8 +1488,8 @@
                 1,
                 1
             ],
-            "UID": 1143977907,
-            "ParentUID": 547579300,
+            "UID": 1071854720,
+            "ParentUID": 2090858875,
             "Components": [
                 {
                     "Type": 1,
@@ -286,7 +1497,16 @@
                 },
                 {
                     "Type": 6,
-                    "Active": true
+                    "Active": true,
+                    "orthoSize": [
+                        23,
+                        23
+                    ],
+                    "lightColor": [
+                        1,
+                        1,
+                        1
+                    ]
                 }
             ]
         }

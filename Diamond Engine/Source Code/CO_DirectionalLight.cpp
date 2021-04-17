@@ -15,7 +15,7 @@
 #include"MO_Window.h"
 
 const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
-C_DirectionalLight::C_DirectionalLight(GameObject* _gm) : Component(_gm)
+C_DirectionalLight::C_DirectionalLight(GameObject* _gm) : Component(_gm), orthoSize(10.0f, 10.0f), lightColor(float3::one)
 {
 	name = "Directional Light";
 
@@ -35,8 +35,11 @@ C_DirectionalLight::C_DirectionalLight(GameObject* _gm) : Component(_gm)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
@@ -61,20 +64,23 @@ C_DirectionalLight::~C_DirectionalLight()
 void C_DirectionalLight::Update()
 {
 	//Maybe dont update every frame?
-	orthoFrustum.pos = gameObject->transform->globalTransform.TranslatePart();
-	orthoFrustum.front = gameObject->transform->GetForward();
-	orthoFrustum.up = gameObject->transform->GetUp();
+	//if (gameObject->transform->updateTransform) 
+	//{
+		orthoFrustum.pos = gameObject->transform->globalTransform.TranslatePart();
+		orthoFrustum.front = gameObject->transform->GetForward();
+		orthoFrustum.up = gameObject->transform->GetUp();
 
-	C_Camera::LookAt(orthoFrustum, float3::zero);
+		C_Camera::LookAt(orthoFrustum, float3::zero);
+		spaceMatrixOpenGL = (orthoFrustum.ProjectionMatrix() * orthoFrustum.ViewMatrix()).Transposed();
+	//}
 
 #ifndef STANDALONE
 	float3 points[8];
 	orthoFrustum.GetCornerPoints(points);
 
-	ModuleRenderer3D::DrawBox(points, float3(0.180f, 1.f, 0.937f));
+	ModuleRenderer3D::DrawBox(points, float3(0.0f, 1.f, 0.0f));
 #endif // !STANDALONE
 
-	spaceMatrixOpenGL = (orthoFrustum.ProjectionMatrix() * orthoFrustum.ViewMatrix()).Transposed();
 }
 
 #ifndef STANDALONE
@@ -90,6 +96,8 @@ bool C_DirectionalLight::OnEditor()
 			orthoFrustum.orthographicHeight = SHADOW_HEIGHT / orthoSize.y;
 		}
 
+		ImGui::ColorPicker3("Color", lightColor.ptr());
+
 		return true;
 	}
 	return false;
@@ -99,12 +107,17 @@ bool C_DirectionalLight::OnEditor()
 void C_DirectionalLight::SaveData(JSON_Object* nObj)
 {
 	Component::SaveData(nObj);
-
+	
+	DEConfig data(nObj);
+	data.WriteVector2("orthoSize", orthoSize.ptr());
+	data.WriteVector3("lightColor", lightColor.ptr());
 }
 void C_DirectionalLight::LoadData(DEConfig& nObj)
 {
 	Component::LoadData(nObj);
 
+	orthoSize = nObj.ReadVector2("orthoSize");
+	lightColor = nObj.ReadVector3("lightColor");
 
 }
 
@@ -147,6 +160,9 @@ void C_DirectionalLight::PushLightUniforms(ResourceMaterial* material)
 	modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "viewPos");
 	glUniform3fv(modelLoc, 1, EngineExternal->moduleRenderer3D->activeRenderCamera->GetPosition().ptr());
 
+	modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "lightColor");
+	glUniform3fv(modelLoc, 1, &lightColor.x);
+
 	//glUniform1i(glGetUniformLocation(material->shader->shaderProgramID, shadowMap), used_textures);
 
 	glActiveTexture(GL_TEXTURE0 + 5);
@@ -160,7 +176,7 @@ void C_DirectionalLight::EndPass()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glActiveTexture(GL_TEXTURE0 + 2);
+	glActiveTexture(GL_TEXTURE0 + 5);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	//glBindTexture(GL_TEXTURE_2D, depthMap);

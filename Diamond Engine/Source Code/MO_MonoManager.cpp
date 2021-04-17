@@ -180,19 +180,21 @@ Quat M_MonoManager::UnboxQuat(MonoObject* _obj)
 	return ret;
 }
 
-void M_MonoManager::DebugAllFields(const char* className, std::vector<SerializedField>& _data, MonoObject* obj, C_Script* script)
+void M_MonoManager::DebugAllFields(const char* className, std::vector<SerializedField>& _data, MonoObject* obj, C_Script* script, const char* nameSpace)
 {
 	void* iter = NULL;
 	MonoClassField* field;
-	MonoClass* klass = mono_class_from_name(mono_assembly_get_image(EngineExternal->moduleMono->assembly), USER_SCRIPTS_NAMESPACE, className);
+	MonoClass* klass = mono_class_from_name(mono_assembly_get_image(EngineExternal->moduleMono->assembly), nameSpace, className);
 	while (field = mono_class_get_fields(klass, &iter))
 	{
-		SerializedField pushField = SerializedField(field, obj, script);
+		if (mono_field_get_flags(field) != 1) //TODO: Hardcoded private = 1, public = 6, static = 22, wtf does this mean?
+		{
+			SerializedField pushField = SerializedField(field, obj, script);
+			//uint32_t test = mono_field_get_flags(field);
 
-
-
-		_data.push_back(pushField);
-		//LOG(LogType::L_NORMAL, mono_field_full_name(method2));
+			_data.push_back(pushField);
+			//LOG(LogType::L_NORMAL, mono_field_full_name(method2));
+		}
 	}
 }
 

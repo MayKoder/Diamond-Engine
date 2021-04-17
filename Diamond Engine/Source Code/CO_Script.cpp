@@ -46,7 +46,7 @@ C_Script::~C_Script()
 	{
 		if (fields[i].type == MonoTypeEnum::MONO_TYPE_CLASS && fields[i].fiValue.goValue != nullptr && fields[i].fiValue.goValue->csReferences.size() != 0)
 		{
-			fields[i].fiValue.goValue->csReferences.erase(std::find(fields[i].fiValue.goValue->csReferences.begin(), fields[i].fiValue.goValue->csReferences.end(), &fields[i]));
+			//fields[i].fiValue.goValue->csReferences.erase(std::find(fields[i].fiValue.goValue->csReferences.begin(), fields[i].fiValue.goValue->csReferences.end(), &fields[i]));
 			auto ptr = std::find(fields[i].fiValue.goValue->csReferences.begin(), fields[i].fiValue.goValue->csReferences.end(), &fields[i]);
 			if (ptr != fields[i].fiValue.goValue->csReferences.end())
 				fields[i].fiValue.goValue->csReferences.erase(ptr);
@@ -305,7 +305,11 @@ void C_Script::LoadScriptData(const char* scriptName)
 	updateMethod = mono_method_desc_search_in_class(mdesc, klass);
 	mono_method_desc_free(mdesc);
 
-	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject), this);
+	MonoClass* baseClass = mono_class_get_parent(klass);
+	if(baseClass != nullptr)
+		EngineExternal->moduleMono->DebugAllFields(mono_class_get_name(baseClass), fields, mono_gchandle_get_target(noGCobject), this, mono_class_get_namespace(baseClass));
+
+	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject), this, mono_class_get_namespace(goClass));
 }
 
 //void C_Script::SetField(MonoObject* obj, SerializedField& field)

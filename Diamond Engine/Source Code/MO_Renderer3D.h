@@ -46,10 +46,11 @@ public:
 
 #ifndef STANDALONE
 	void OnGUI() override;
-#endif // !STANDALONE
 
 	void DrawDebugLines();
 	void AddDebugLines(float3& a, float3& b, float3& color);
+#endif // !STANDALONE
+
 
 	static void DrawBox(float3* points, float3 color = float3::one);
 	

@@ -37,4 +37,6 @@ public:
 private:
 	unsigned int depthMapFBO;	//Framebuffer
 	unsigned int depthMap;		//Depth texture
+
+	float3 lightColor;
 };

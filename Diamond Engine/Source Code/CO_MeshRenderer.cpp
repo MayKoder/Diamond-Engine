@@ -40,9 +40,14 @@ C_MeshRenderer::~C_MeshRenderer()
 
 void C_MeshRenderer::Update()
 {
-	if (EngineExternal->moduleRenderer3D->GetGameRenderTarget() != nullptr && EngineExternal->moduleRenderer3D->GetGameRenderTarget()->cullingState == true && !IsInsideFrustum(&EngineExternal->moduleRenderer3D->GetGameRenderTarget()->camFrustrum)) 
+	if (EngineExternal->moduleRenderer3D->GetGameRenderTarget() != nullptr 
+		&& EngineExternal->moduleRenderer3D->GetGameRenderTarget()->cullingState == true 
+		&& !IsInsideFrustum(&EngineExternal->moduleRenderer3D->GetGameRenderTarget()->camFrustrum)) 
 		return;
-	
+
+	if (_mesh == nullptr)
+		return;
+
 	EngineExternal->moduleRenderer3D->renderQueue.push_back(this);
 
 #ifndef STANDALONE
