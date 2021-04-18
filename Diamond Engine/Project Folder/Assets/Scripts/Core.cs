@@ -2,6 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
+using System.Collections.Generic;
+
 using DiamondEngine;
 
 public class Core : DiamondComponent
@@ -15,6 +17,9 @@ public class Core : DiamondComponent
 
 	public bool testBool = false;
 	public string testString = "Hello World";
+
+    public int[] hola = new int[5] {8,2, 1, 3, 4 };
+    //public List<int> holas = new List<int>() {5, 80, 2, 1};
 
     //public Vector3 testOtherClass; //Should find a way to tell if the class is a gameobject or not
 

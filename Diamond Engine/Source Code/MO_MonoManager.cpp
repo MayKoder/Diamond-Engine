@@ -271,6 +271,42 @@ void M_MonoManager::LoadFieldData(SerializedField& _field, MonoObject* _object)
 		_field.fiValue.goValue = nullptr;
 		break;
 
+	case MonoTypeEnum::MONO_TYPE_GENERICINST:
+	{
+		/*const char* className = mono_type_get_name(mono_field_get_type(_field.field));
+
+		int* data = nullptr;
+		mono_field_get_value(_object, _field.field, &data);
+
+		std::vector<int> test;
+		while (data != nullptr)
+		{
+			test.push_back(*data);
+			data++;
+		}
+
+
+		if (strcmp(className, "GameObject") == 0)
+			_field.fiValue.goValue = nullptr;
+		else if (strcmp(className, "GameObject") == 0)
+			LOG(LogType::L_WARNING, "%s", className);*/
+		break;
+	}
+
+	case MonoTypeEnum::MONO_TYPE_SZARRAY:
+	{
+
+		_field.fiValue.arrValue = nullptr;
+
+		MonoArray* arr;
+		mono_field_get_value(_object, _field.field, &_field.fiValue.arrValue);
+
+		//int monoString = mono_array_get(_field.fiValue.arrValue, int, 0);
+
+
+		break;
+	}
+
 	case MonoTypeEnum::MONO_TYPE_R4:
 		mono_field_get_value(_object, _field.field, &_field.fiValue.fValue);
 		break;

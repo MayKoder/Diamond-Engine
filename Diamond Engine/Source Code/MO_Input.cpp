@@ -203,6 +203,7 @@ update_status ModuleInput::PreUpdate(float dt)
 					if (i == 0) {
 						if (SDL_GameControllerGetAttached(controller_player) == SDL_FALSE) {
 							controller_player = SDL_GameControllerOpen(i);
+							//SDL_GameControllerType type = SDL_GameControllerGetType(controller_player);
 							continue;
 						}
 					}

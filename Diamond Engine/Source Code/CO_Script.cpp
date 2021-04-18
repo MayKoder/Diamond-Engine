@@ -23,15 +23,15 @@ C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), no
 	//EngineExternal->moduleMono->DebugAllMethods(DE_SCRIPTS_NAMESPACE, "GameObject", methods);
 	LoadScriptData(scriptName);
 
-	for (unsigned int i = 0; i < fields.size(); i++)
-	{
-		const char* name = mono_field_get_name(fields[i].field);
-		if (strcmp(mono_field_get_name(fields[i].field), "thisReference") == 0) 
-		{
-			fields[i].fiValue.goValue = _gm;
-			SetField(fields[i].field, _gm);
-		}
-	}
+	//for (unsigned int i = 0; i < fields.size(); i++)
+	//{
+	//	const char* name = mono_field_get_name(fields[i].field);
+	//	if (strcmp(mono_field_get_name(fields[i].field), "thisReference") == 0) 
+	//	{
+	//		fields[i].fiValue.goValue = _gm;
+	//		SetField(fields[i].field, _gm);
+	//	}
+	//}
 
 }
 
@@ -154,6 +154,23 @@ void C_Script::DropField(SerializedField& field, const char* dropType)
 		break;
 	}
 
+	case MonoTypeEnum::MONO_TYPE_SZARRAY:
+	{
+		if (field.fiValue.arrValue == nullptr)
+			break;
+
+		MonoArrayType* test = mono_type_get_array_type(mono_field_get_type(field.field));
+		MonoTypeEnum _type = static_cast<MonoTypeEnum>(mono_type_get_type(mono_class_get_type(test->eklass)));
+
+
+		for (size_t i = 0; i < mono_array_length(field.fiValue.arrValue); i++)
+		{
+			ImGui::InputInt(std::to_string(i).c_str(), mono_array_addr(field.fiValue.arrValue, int, i));
+		}
+
+		break; 
+	}
+
 	case MonoTypeEnum::MONO_TYPE_STRING:
 	{
 
@@ -249,6 +266,10 @@ void C_Script::LoadData(DEConfig& nObj)
 
 			break;
 		}
+
+		case MonoTypeEnum::MONO_TYPE_SZARRAY:
+			break;
+
 		case MonoTypeEnum::MONO_TYPE_R4:
 			_field->fiValue.fValue = nObj.ReadFloat(mono_field_get_name(_field->field));
 			mono_field_set_value(mono_gchandle_get_target(noGCobject), _field->field, &_field->fiValue.fValue);
