@@ -34,6 +34,8 @@ public:
 
 	void PushCameraMatrix();
 
+	bool IsInsideFrustum(AABB& globalAABB);
+
 	DE_FrameBuffer resolvedFBO;
 	DE_FrameBuffer msaaFBO;
 
@@ -41,6 +43,10 @@ public:
 	float fov;
 	float orthoSize;
 	bool cullingState;
+
+private:
+	bool OrthoCulling(AABB& globalAABB);
+	bool PrespectiveCulling(AABB& globalAABB);
 
 //Movement logic
 public: 

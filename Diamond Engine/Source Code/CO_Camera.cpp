@@ -5,6 +5,7 @@
 
 #include"MathGeoLib/include/Math/float3.h"
 #include"MathGeoLib/include/Geometry/Plane.h"
+#include"MathGeoLib/include/Geometry/AABB.h"
 
 #include"MO_Renderer3D.h"
 #include"MO_Scene.h"
@@ -15,7 +16,7 @@
 #include"MO_Window.h"
 
 C_Camera::C_Camera() : Component(nullptr), fov(60.0f), cullingState(true),
-msaaSamples(4), orthoSize(0.0f)
+msaaSamples(4), orthoSize(1.0f)
 {
 	name = "Camera";
 	camFrustrum.type = FrustumType::PerspectiveFrustum;
@@ -32,7 +33,7 @@ msaaSamples(4), orthoSize(0.0f)
 }
 
 C_Camera::C_Camera(GameObject* _gm) : Component(_gm), fov(60.0f), cullingState(true),
-msaaSamples(4), orthoSize(0.0f)
+msaaSamples(4), orthoSize(1.0f)
 {
 
 	name = "Camera";
@@ -289,4 +290,93 @@ float4x4 C_Camera::ProjectionMatrixOpenGL() const
 void C_Camera::SetAspectRatio(float aspectRatio)
 {
 	camFrustrum.horizontalFov = 2.f * atanf(tanf(camFrustrum.verticalFov * 0.5f) * aspectRatio);
+}
+
+bool C_Camera::IsInsideFrustum(AABB& globalAABB)
+{
+	return (this->camFrustrum.type == FrustumType::PerspectiveFrustum) ? PrespectiveCulling(globalAABB) : OrthoCulling(globalAABB);
+}
+bool C_Camera::OrthoCulling(AABB& globalAABB)
+{
+	float3 obbPoints[8];
+
+
+	float3 orthoNormals[6];
+	orthoNormals[0] = -camFrustrum.front;
+	orthoNormals[1] = camFrustrum.front;
+	orthoNormals[2] = -camFrustrum.front.Cross(camFrustrum.up);
+	orthoNormals[3] = camFrustrum.front.Cross(camFrustrum.up);
+	orthoNormals[4] = camFrustrum.up;
+	orthoNormals[5] = -camFrustrum.up;
+
+	float3 planePoints[6];
+	planePoints[0] = camFrustrum.pos;
+	planePoints[1] = camFrustrum.pos + (camFrustrum.front * camFrustrum.farPlaneDistance);
+	planePoints[2] = (camFrustrum.pos + (camFrustrum.front * (camFrustrum.farPlaneDistance / 2))) + (orthoNormals[2] * (camFrustrum.orthographicWidth / 2));
+	planePoints[3] = (camFrustrum.pos + (camFrustrum.front * (camFrustrum.farPlaneDistance / 2))) + (orthoNormals[3] * (camFrustrum.orthographicWidth / 2));
+	planePoints[4] = (camFrustrum.pos + (camFrustrum.front * (camFrustrum.farPlaneDistance / 2))) + (orthoNormals[4] * (camFrustrum.orthographicHeight / 2));
+	planePoints[5] = (camFrustrum.pos + (camFrustrum.front * (camFrustrum.farPlaneDistance / 2))) + (orthoNormals[5] * (camFrustrum.orthographicHeight / 2));
+
+	int totalIn = 0;
+	globalAABB.GetCornerPoints(obbPoints);
+
+	for (size_t i = 2; i < 6; i++)
+	{
+		int inCount = 8;
+		int iPtIn = 1;
+
+		for (size_t k = 0; k < 8; k++)
+		{
+			if (orthoNormals[i].Dot(obbPoints[k]) - Dot(planePoints[i], orthoNormals[i]) >= 0.f)
+			{
+				iPtIn = 0;
+				--inCount;
+			}
+			if (inCount == 0)
+				return false;
+
+			totalIn += iPtIn;
+		}
+	}
+
+	if (totalIn == 6)
+		return true;
+
+	return true;
+}
+
+bool C_Camera::PrespectiveCulling(AABB& globalAABB)
+{
+	float3 obbPoints[8];
+	Plane camFrustrumumPlanes[6];
+
+	int totalIn = 0;
+
+	globalAABB.GetCornerPoints(obbPoints);
+	camFrustrum.GetPlanes(camFrustrumumPlanes);
+
+	for (size_t i = 0; i < 6; i++)
+	{
+		int inCount = 8;
+		int iPtIn = 1;
+
+		for (size_t k = 0; k < 8; k++)
+		{
+			//Is "IsOnPositiveSide" slow?
+			if (camFrustrumumPlanes[i].IsOnPositiveSide(obbPoints[k]))
+			{
+				iPtIn = 0;
+				--inCount;
+			}
+			if (inCount == 0)
+				return false;
+
+			totalIn += iPtIn;
+		}
+	}
+
+	if (totalIn == 6)
+		return true;
+
+	return true;
 }

@@ -168,7 +168,7 @@ void RecievePosition(MonoObject* obj, MonoObject* secObj) //Allows to send float
 }
 MonoObject* GetForward(MonoObject* go)
 {
-	if (EngineExternal == nullptr || C_Script::runningScript == nullptr)
+	if (EngineExternal == nullptr)
 		return nullptr;
 
 	C_Transform* trans = DECS_CompToComp<C_Transform*>(go);

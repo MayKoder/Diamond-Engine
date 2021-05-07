@@ -12,27 +12,14 @@
 #include"DEJsonSupport.h"
 #include <mono/metadata/class.h>
 #include <mono/metadata/object.h>
+#include <mono/metadata/object-forward.h>
 #include <mono/metadata/debug-helpers.h>
 
 C_Script* C_Script::runningScript = nullptr;
 C_Script::C_Script(GameObject* _gm, const char* scriptName) : Component(_gm), noGCobject(0), updateMethod(nullptr)
 {
 	name = scriptName;
-	//strcpy(name, scriptName);
-
-	//EngineExternal->moduleMono->DebugAllMethods(DE_SCRIPTS_NAMESPACE, "GameObject", methods);
 	LoadScriptData(scriptName);
-
-	//for (unsigned int i = 0; i < fields.size(); i++)
-	//{
-	//	const char* name = mono_field_get_name(fields[i].field);
-	//	if (strcmp(mono_field_get_name(fields[i].field), "thisReference") == 0) 
-	//	{
-	//		fields[i].fiValue.goValue = _gm;
-	//		SetField(fields[i].field, _gm);
-	//	}
-	//}
-
 }
 
 C_Script::~C_Script()
@@ -76,7 +63,7 @@ void C_Script::Update()
 		}
 		else 
 		{
-			LOG(LogType::L_ERROR, "Something went wrong");
+			LOG(LogType::L_ERROR, mono_class_get_name(mono_object_get_class(exec)));
 		}
 	}
 }
@@ -103,15 +90,8 @@ bool C_Script::OnEditor()
 	return false;
 }
 
-void C_Script::DropField(SerializedField& field, const char* dropType)
+void C_Script::DisplayField(SerializedField& field, const char* dropType)
 {
-
-	const char* fieldName = mono_field_get_name(field.field);
-	ImGui::PushID(fieldName);
-
-	ImGui::Text(fieldName);
-	ImGui::SameLine();
-
 	switch (field.type)
 	{
 	case MonoTypeEnum::MONO_TYPE_BOOLEAN:
@@ -160,15 +140,75 @@ void C_Script::DropField(SerializedField& field, const char* dropType)
 			break;
 
 		MonoArrayType* test = mono_type_get_array_type(mono_field_get_type(field.field));
+
+		const char* name = mono_class_get_name(test->eklass);
 		MonoTypeEnum _type = static_cast<MonoTypeEnum>(mono_type_get_type(mono_class_get_type(test->eklass)));
 
-
+		ImGui::NewLine();
 		for (size_t i = 0; i < mono_array_length(field.fiValue.arrValue); i++)
 		{
-			ImGui::InputInt(std::to_string(i).c_str(), mono_array_addr(field.fiValue.arrValue, int, i));
+			switch (_type)
+			{
+
+			case MonoTypeEnum::MONO_TYPE_BOOLEAN:
+				ImGui::Checkbox(std::to_string(i).c_str(), mono_array_addr(field.fiValue.arrValue, bool, i));
+				break;
+
+			case MonoTypeEnum::MONO_TYPE_I4:
+				ImGui::InputInt(std::to_string(i).c_str(), mono_array_addr(field.fiValue.arrValue, int, i));
+				break;
+
+			case MonoTypeEnum::MONO_TYPE_CLASS:
+			{
+				if (strcmp(name, "GameObject") != 0)
+				{
+					ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "The array element can't be serialized yet");
+					break;
+				}
+
+				MonoObject* arrayElementGO = mono_array_addr(field.fiValue.arrValue, MonoObject, i);
+				//int hash = mono_object_hash(arrayElementGO);
+				//if (arrayElementGO->synchronisation == nullptr && arrayElementGO->vtable == nullptr)
+				//{
+				//	ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "None");
+				//	break;
+				//}
+				//MonoClass* cls = mono_object(arrayElementGO);
+				GameObject* cpp_obj = EngineExternal->moduleMono->GameObject_From_CSGO(arrayElementGO);
+				ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), (cpp_obj == nullptr) ? "None" : cpp_obj->name.c_str());
+				if (ImGui::BeginDragDropTarget())
+				{
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(dropType))
+					{
+						cpp_obj  = EngineExternal->moduleEditor->GetDraggingGO();
+						arrayElementGO = EngineExternal->moduleMono->GoToCSGO(cpp_obj);
+						mono_array_set(field.fiValue.arrValue, MonoObject*, i, arrayElementGO);
+					}
+					ImGui::EndDragDropTarget();
+				}
+
+				break;
+			}
+
+			case MonoTypeEnum::MONO_TYPE_R4:
+				ImGui::InputFloat(std::to_string(i).c_str(), mono_array_addr(field.fiValue.arrValue, float, i), 0.01f, 0.5f);
+				break;
+
+			//Array inside array? maybe another time when i learn how to structure this shit without a 50 case switch
+
+			//case MonoTypeEnum::MONO_TYPE_STRING:
+			//	ImGui::InputText(std::to_string(i).c_str(), mono_array_addr(field.fiValue.arrValue, char, i), 256);
+			//	break;
+
+
+			default:
+				ImGui::Text("Ya mate, this class can't be serialized until I learn to code :D");
+				break;
+			}
+
 		}
 
-		break; 
+		break;
 	}
 
 	case MonoTypeEnum::MONO_TYPE_STRING:
@@ -194,6 +234,18 @@ void C_Script::DropField(SerializedField& field, const char* dropType)
 		ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), mono_type_get_name(mono_field_get_type(field.field)));
 		break;
 	}
+}
+
+void C_Script::DropField(SerializedField& field, const char* dropType)
+{
+
+	const char* fieldName = mono_field_get_name(field.field);
+	ImGui::PushID(fieldName);
+
+	ImGui::Text(fieldName);
+	ImGui::SameLine();
+
+	DisplayField(field, dropType);
 
 	ImGui::PopID();
 }
@@ -332,40 +384,6 @@ void C_Script::LoadScriptData(const char* scriptName)
 
 	EngineExternal->moduleMono->DebugAllFields(scriptName, fields, mono_gchandle_get_target(noGCobject), this, mono_class_get_namespace(goClass));
 }
-
-//void C_Script::SetField(MonoObject* obj, SerializedField& field)
-//{
-//	switch (field.type)
-//	{
-//	case MonoTypeEnum::MONO_TYPE_BOOLEAN:
-//			mono_field_set_value(obj, field.field, &field.fiValue.bValue);
-//		break;
-//
-//	case MonoTypeEnum::MONO_TYPE_I4:
-//			mono_field_set_value(obj, field.field, &field.fiValue.iValue);
-//		break;
-//
-//	case MonoTypeEnum::MONO_TYPE_CLASS:
-//
-//		if (strcmp(mono_type_get_name(mono_field_get_type(field.field)), "DiamondEngine.GameObject") != 0)
-//			break;
-//
-//		SetField(field.field, field.fiValue.goValue);
-//		break;
-//
-//	case MonoTypeEnum::MONO_TYPE_R4:
-//		mono_field_set_value(obj, field.field, &field.fiValue.fValue);
-//		break;
-//
-//	case MonoTypeEnum::MONO_TYPE_STRING:
-//	{
-//		MonoString* str = mono_string_new(EngineExternal->moduleMono->domain, field.fiValue.strValue);
-//		mono_field_set_value(obj, field.field, str);
-//		//mono_free(str);
-//		break;
-//	}
-//	}
-//}
 
 void C_Script::SetField(MonoClassField* field, GameObject* value)
 {

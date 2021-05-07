@@ -25,8 +25,6 @@ public:
 
 	static inline Type GetType() { return Type::MeshRenderer; }; //This will allow us to get the type from a template
 
-	bool IsInsideFrustum(Frustum* camFrustum);
-
 	void SetRenderMesh(ResourceMesh* mesh);
 	ResourceMesh* GetRenderMesh();
 

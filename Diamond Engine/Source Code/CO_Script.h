@@ -18,9 +18,6 @@ public:
 
 	void Update() override;
 
-#ifndef STANDALONE
-	bool OnEditor() override;
-#endif // !STANDALONE
 
 	static inline Type GetType() { return Type::Script; }; //This will allow us to get the type from a template
 
@@ -32,6 +29,13 @@ public:
 
 	void LoadScriptData(const char*);
 
+private:
+#ifndef STANDALONE
+	bool OnEditor() override;
+	void DisplayField(SerializedField& field, const char* dropType);
+#endif // !STANDALONE
+
+public:
 	std::vector<std::string> methods;
 	std::vector<SerializedField> fields;
 

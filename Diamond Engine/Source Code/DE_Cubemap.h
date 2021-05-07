@@ -9,24 +9,23 @@ class DE_Cubemap
 {
 
 public:
-	DE_Cubemap();
-	~DE_Cubemap();
+    DE_Cubemap();
+    ~DE_Cubemap();
 
-	//LoadCubeMap();
-	void CreateGLData();
-	void ClearMemory();
+    //LoadCubeMap();
+    void CreateGLData();
+    void ClearMemory();
 
-	void DrawAsSkybox(C_Camera* _transform);
+    void DrawAsSkybox(C_Camera* _transform);
 
-	ResourceShader* shaderRes;
-	unsigned int textureID;
+    ResourceShader* shaderRes;
+    unsigned int textureID;
 
-	unsigned int vboId;
-	unsigned int vaoID;
+    unsigned int vboId;
 };
 
-static const float skyboxVertices[] = 
-{         
+static const float skyboxVertices[] =
+{
     -0.5f,  0.5f, -0.5f,
     -0.5f, -0.5f, -0.5f,
      0.5f, -0.5f, -0.5f,

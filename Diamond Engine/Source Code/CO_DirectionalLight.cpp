@@ -46,8 +46,7 @@ C_DirectionalLight::C_DirectionalLight(GameObject* _gm) : Component(_gm), orthoS
 	glDrawBuffer(GL_NONE);
 	glReadBuffer(GL_NONE);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	depthShader = dynamic_cast<ResourceShader*>(EngineExternal->moduleResources->RequestResource(248150058, Resource::Type::SHADER));
 	EngineExternal->moduleRenderer3D->directLight = this;
@@ -55,8 +54,12 @@ glBindTexture(GL_TEXTURE_2D, 0);
 
 C_DirectionalLight::~C_DirectionalLight()
 {
-	glDeleteFramebuffers(1, (GLuint*)&depthMapFBO);
-	glDeleteTextures(1, (GLuint*)&depthMap);
+	if (depthMapFBO != 0)
+		glDeleteFramebuffers(1, (GLuint*)&depthMapFBO);
+
+	if (depthMap != 0)
+		glDeleteTextures(1, (GLuint*)&depthMap);
+
 	EngineExternal->moduleResources->UnloadResource(depthShader->GetUID());
 	EngineExternal->moduleRenderer3D->directLight = nullptr;
 }
@@ -165,7 +168,7 @@ void C_DirectionalLight::PushLightUniforms(ResourceMaterial* material)
 
 	//glUniform1i(glGetUniformLocation(material->shader->shaderProgramID, shadowMap), used_textures);
 
-	glActiveTexture(GL_TEXTURE0 + 5);
+	glActiveTexture(GL_TEXTURE5);
 	modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "shadowMap");
 	glUniform1i(modelLoc, 5);
 	glBindTexture(GL_TEXTURE_2D, depthMap);
@@ -176,10 +179,10 @@ void C_DirectionalLight::EndPass()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glActiveTexture(GL_TEXTURE0 + 5);
+	glActiveTexture(GL_TEXTURE5);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	//glBindTexture(GL_TEXTURE_2D, depthMap);
+	glActiveTexture(GL_TEXTURE0);
 
 	depthShader->Unbind();
 

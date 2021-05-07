@@ -18,13 +18,19 @@ public class Core : DiamondComponent
 	public bool testBool = false;
 	public string testString = "Hello World";
 
-    public int[] hola = new int[5] {8,2, 1, 3, 4 };
+    public GameObject[] hola = new GameObject[5] {null, null, null, null, null, };
     //public List<int> holas = new List<int>() {5, 80, 2, 1};
 
     //public Vector3 testOtherClass; //Should find a way to tell if the class is a gameobject or not
 
 	public void Update(/*int x*/)
 	{
+        for (int i = 0; i < hola.Length; i++)
+        {
+            Debug.Log(hola[i].ToString());
+        }
+
+
         if (Input.GetKey(DEKeyCode.W) == KeyState.KEY_REPEAT)
             gameObject.transform.localPosition += gameObject.transform.GetForward() * movementSpeed * Time.deltaTime;
         if (Input.GetKey(DEKeyCode.S) == KeyState.KEY_REPEAT)

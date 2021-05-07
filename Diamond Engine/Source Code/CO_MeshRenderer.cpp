@@ -40,11 +40,6 @@ C_MeshRenderer::~C_MeshRenderer()
 
 void C_MeshRenderer::Update()
 {
-	if (EngineExternal->moduleRenderer3D->GetGameRenderTarget() != nullptr 
-		&& EngineExternal->moduleRenderer3D->GetGameRenderTarget()->cullingState == true 
-		&& !IsInsideFrustum(&EngineExternal->moduleRenderer3D->GetGameRenderTarget()->camFrustrum)) 
-		return;
-
 	if (_mesh == nullptr)
 		return;
 
@@ -179,42 +174,6 @@ bool C_MeshRenderer::OnEditor()
 	return false;
 }
 #endif // !STANDALONE
-
-bool C_MeshRenderer::IsInsideFrustum(Frustum* camFrustum)
-{
-	float3 obbPoints[8];
-	Plane frustumPlanes[6];
-
-	int totalIn = 0;
-
-	globalAABB.GetCornerPoints(obbPoints);
-	camFrustum->GetPlanes(frustumPlanes);
-
-	for (size_t i = 0; i < 6; i++)
-	{
-		int inCount = 8;
-		int iPtIn = 1;
-
-		for (size_t k = 0; k < 8; k++)
-		{
-			//Is "IsOnPositiveSide" slow?
-			if (frustumPlanes[i].IsOnPositiveSide(obbPoints[k])) 
-			{
-				iPtIn = 0;
-				--inCount;
-			}
-			if (inCount == 0)
-				return false;
-
-			totalIn += iPtIn;
-		}
-	}
-
-	if (totalIn == 6)
-		return true;
-
-	return true;
-}
 
 void C_MeshRenderer::SetRenderMesh(ResourceMesh* mesh)
 { 
