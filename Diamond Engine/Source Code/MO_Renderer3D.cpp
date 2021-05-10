@@ -609,4 +609,6 @@ void ModuleRenderer3D::ClearAllRenderData()
 {
 	renderQueueMap.clear();
 	renderQueue.clear();
+	
+	lines.clear();
 }
