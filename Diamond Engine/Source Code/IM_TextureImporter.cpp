@@ -122,7 +122,7 @@ void TextureImporter::LoadCubeMap(std::vector<std::string>& faces, DE_Cubemap& c
 		ilGenImages(1, &imageID);
 		ilBindImage(imageID);
 
-		if (!ilLoadL(IL_TYPE_UNKNOWN, buffer, size))
+		if (!ilLoadL(IL_DDS, buffer, size))
 			LOG(LogType::L_ERROR, "Image not loaded");
 
 		width = ilGetInteger(IL_IMAGE_WIDTH);
