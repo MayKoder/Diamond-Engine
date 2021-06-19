@@ -168,7 +168,7 @@ void C_Transform::UpdateBoxes()
 {
 	C_MeshRenderer* mesh = nullptr;
 	mesh = dynamic_cast<C_MeshRenderer*>(gameObject->GetComponent(Component::Type::MeshRenderer));
-	if (mesh != nullptr)
+	if (mesh != nullptr && mesh->GetRenderMesh() != nullptr)
 	{
 		mesh->globalOBB = mesh->GetRenderMesh()->localAABB;
 		mesh->globalOBB.Transform(globalTransform);
